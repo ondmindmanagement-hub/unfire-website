@@ -1,14 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#000000">
-<meta name="description" content="Unfire builds reusable technology systems for software production, AI-assisted workflows and new digital products.">
-<meta name="google" content="notranslate">
-
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="#000000" name="theme-color"/>
+<meta content="Unfire builds reusable technology systems for software production, AI-assisted workflows and new digital products." name="description"/>
+<meta content="notranslate" name="google"/>
 <title>Unfire — Technology Company</title>
-
 <style>
 :root{
   --bg:#000;
@@ -729,7 +728,6 @@ h3{
   }
 }
 </style>
-
 <style id="unfire-layout-fix">
 
 /* -------------------------------------------------------
@@ -886,8 +884,6 @@ h2{
 }
 
 </style>
-
-
 <style id="work-detail-upgrade">
 
 #work .lead{
@@ -930,689 +926,13 @@ h2{
 }
 
 </style>
-
-
-
-
-
-
-
-
-<style id="unfire-reader-final-style">
-
-body{
-  padding-bottom:150px !important;
-}
-
-/* Independent centered dock */
+<style id="unfire-reader-canonical-style">
 #reader{
   position:fixed !important;
-
-  left:50% !important;
-  right:auto !important;
-
-  top:auto !important;
-  bottom:24px !important;
-
-  transform:translateX(-50%) !important;
-
-  width:420px !important;
-  max-width:calc(100vw - 32px) !important;
-
-  padding:12px 14px 10px !important;
-
-  border:1px solid rgba(255,255,255,.11) !important;
-  border-radius:22px !important;
-
-  background:rgba(20,20,22,.78) !important;
-
-  box-shadow:
-    0 18px 60px rgba(0,0,0,.46),
-    inset 0 1px 0 rgba(255,255,255,.045) !important;
-
-  backdrop-filter:blur(30px) saturate(150%) !important;
-  -webkit-backdrop-filter:blur(30px) saturate(150%) !important;
-
-  z-index:10000 !important;
-}
-
-#reader .reader-top{
-  display:flex !important;
-  align-items:center !important;
-  gap:9px !important;
-}
-
-#reader-play{
-  flex:1 !important;
-
-  height:38px !important;
-
-  border:0 !important;
-  border-radius:999px !important;
-
-  background:#f5f5f7 !important;
-  color:#000 !important;
-
-  font-size:12px !important;
-  font-weight:650 !important;
-
-  cursor:pointer !important;
-}
-
-#reader-pause{
-  width:38px !important;
-  height:38px !important;
-
-  flex:none !important;
-
-  border:0 !important;
-  border-radius:50% !important;
-
-  background:#2a2a2e !important;
-  color:#d8d8dc !important;
-
-  cursor:pointer !important;
-}
-
-#reader-range{
-  display:block !important;
-
-  width:100% !important;
-  height:5px !important;
-
-  margin:11px 0 0 !important;
-
-  accent-color:#f5f5f7 !important;
-  cursor:pointer !important;
-}
-
-#reader-percent{
-  margin-top:6px !important;
-
-  text-align:center !important;
-
-  color:#8e8e93 !important;
-
-  font-size:10px !important;
-  font-weight:500 !important;
-
-  letter-spacing:.025em !important;
-  font-variant-numeric:tabular-nums !important;
-}
-
-@media(max-width:620px){
-
-  body{
-    padding-bottom:135px !important;
-  }
-
-  #reader{
-    width:calc(100vw - 24px) !important;
-
-    bottom:12px !important;
-
-    padding:10px 11px 9px !important;
-
-    border-radius:19px !important;
-  }
-
-}
-
-</style>
-
-
-<style id="unfire-section-reader-style">
-
-/* current section */
-main section.unfire-reading-section{
-  background:
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,.018),
-      transparent 22%,
-      transparent 78%,
-      rgba(255,255,255,.018)
-    );
-}
-
-/* Exact spoken word — CSS Highlight API */
-::highlight(unfire-reading-word){
-  background:rgba(255,255,255,.16);
-  color:#fff;
-}
-
-/* Section navigation inside player */
-#reader .reader-section-nav{
-  display:grid;
-  grid-template-columns:30px 1fr 30px;
-  align-items:center;
-  gap:8px;
-
-  margin-top:8px;
-  padding-top:8px;
-
-  border-top:1px solid rgba(255,255,255,.07);
-}
-
-#reader .reader-section-nav button{
-  width:30px;
-  height:26px;
-
-  padding:0;
-  border:0;
-  border-radius:999px;
-
-  background:rgba(255,255,255,.07);
-  color:#b7b7bd;
-
-  cursor:pointer;
-
-  font-size:17px;
-  line-height:1;
-}
-
-#reader .reader-section-nav button:hover{
-  background:rgba(255,255,255,.12);
-  color:#fff;
-}
-
-#reader-section-name{
-  overflow:hidden;
-
-  color:#86868d;
-
-  font-size:10px;
-  font-weight:550;
-
-  text-align:center;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-
-/* The section itself is playable */
-main section{
-  cursor:default;
-}
-
-main section[data-reader-section]{
-  transition:background .25s ease;
-}
-
-</style>
-
-
-<style id="unfire-reader-follow-style">
-
-main section{
-  scroll-margin-top:90px;
-}
-
-.unfire-reader-follow-target{
-  scroll-margin-top:120px;
-}
-
-</style>
-
-
-<style id="unfire-structured-reader-style">
-
-main section{
-  scroll-margin-top:90px;
-}
-
-main section.unfire-reading-section{
-  background:
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,.018),
-      transparent 18%,
-      transparent 82%,
-      rgba(255,255,255,.018)
-    );
-}
-
-.unfire-reading-block{
-  background:rgba(255,255,255,.035);
-  border-radius:8px;
-  transition:background .2s ease;
-}
-
-::highlight(unfire-reading-word){
-  background:rgba(255,255,255,.20);
-  color:#fff;
-}
-
-#reader .reader-section-nav{
-  display:grid;
-  grid-template-columns:30px 1fr 30px;
-  align-items:center;
-  gap:8px;
-  margin-top:8px;
-  padding-top:8px;
-  border-top:1px solid rgba(255,255,255,.07);
-}
-
-#reader .reader-section-nav button{
-  width:30px;
-  height:26px;
-  padding:0;
-  border:0;
-  border-radius:999px;
-  background:rgba(255,255,255,.07);
-  color:#b7b7bd;
-  cursor:pointer;
-  font-size:17px;
-}
-
-#reader-section-name{
-  overflow:hidden;
-  color:#86868d;
-  font-size:10px;
-  font-weight:550;
-  text-align:center;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-
-</style>
-
-
-<style id="unfire-reader-apple-polish">
-
-#reader{
-  position:fixed !important;
-  z-index:9999 !important;
-
-  left:50% !important;
-  right:auto !important;
-  bottom:max(18px, env(safe-area-inset-bottom)) !important;
-
-  width:min(360px, calc(100vw - 28px)) !important;
-  min-width:0 !important;
-
-  transform:translateX(-50%) !important;
-
-  padding:10px 12px 9px !important;
-
-  border:1px solid rgba(255,255,255,.10) !important;
-  border-radius:22px !important;
-
-  background:rgba(18,18,20,.78) !important;
-
-  -webkit-backdrop-filter:
-    saturate(180%)
-    blur(26px) !important;
-
-  backdrop-filter:
-    saturate(180%)
-    blur(26px) !important;
-
-  box-shadow:
-    0 8px 30px rgba(0,0,0,.28) !important;
-
-  color:#f5f5f7 !important;
-
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "SF Pro Display",
-    "SF Pro Text",
-    sans-serif !important;
-}
-
-
-/* TOP CONTROLS */
-
-#reader .reader-top{
-  display:grid !important;
-  grid-template-columns:1fr 34px !important;
-  gap:8px !important;
-  align-items:center !important;
-
-  margin:0 !important;
-}
-
-
-#reader .reader-btn{
-  height:34px !important;
-
-  border:0 !important;
-  border-radius:17px !important;
-
-  font-size:12px !important;
-  font-weight:600 !important;
-  letter-spacing:-.01em !important;
-
-  box-shadow:none !important;
-}
-
-
-#reader-play{
-  background:#f5f5f7 !important;
-  color:#111114 !important;
-}
-
-
-#reader-pause{
-  width:34px !important;
-  min-width:34px !important;
-  padding:0 !important;
-
-  background:rgba(255,255,255,.08) !important;
-  color:#f5f5f7 !important;
-}
-
-
-/* PROGRESS */
-
-#reader-range{
-  display:block !important;
-
-  width:100% !important;
-  height:14px !important;
-
-  margin:7px 0 2px !important;
-
-  accent-color:#f5f5f7 !important;
-
-  cursor:pointer !important;
-}
-
-
-#reader-range::-webkit-slider-runnable-track{
-  height:3px !important;
-  border-radius:99px !important;
-
-  background:
-    rgba(255,255,255,.22) !important;
-}
-
-
-#reader-range::-webkit-slider-thumb{
-  width:12px !important;
-  height:12px !important;
-
-  margin-top:-4.5px !important;
-
-  border:0 !important;
-  border-radius:50% !important;
-
-  background:#f5f5f7 !important;
-
-  -webkit-appearance:none !important;
-}
-
-
-#reader-percent{
-  display:none !important;
-}
-
-
-/* SECTION NAV */
-
-#reader .reader-section-nav{
-  display:grid !important;
-  grid-template-columns:24px minmax(0,1fr) 24px !important;
-
-  gap:5px !important;
-  align-items:center !important;
-
-  margin:1px 0 0 !important;
-  padding:3px 0 0 !important;
-
-  border:0 !important;
-}
-
-
-#reader .reader-section-nav button{
-  width:24px !important;
-  height:24px !important;
-
-  padding:0 !important;
-
-  border:0 !important;
-  border-radius:50% !important;
-
-  background:transparent !important;
-
-  color:#86868b !important;
-
-  font-size:17px !important;
-  line-height:24px !important;
-
-  box-shadow:none !important;
-}
-
-
-#reader .reader-section-nav button:hover{
-  color:#f5f5f7 !important;
-  background:rgba(255,255,255,.06) !important;
-}
-
-
-#reader-section-name{
-  overflow:hidden !important;
-
-  color:#8e8e93 !important;
-
-  font-size:9px !important;
-  font-weight:500 !important;
-
-  letter-spacing:.01em !important;
-
-  text-align:center !important;
-  text-overflow:ellipsis !important;
-  white-space:nowrap !important;
-}
-
-
-/* Reading highlight should be subtle */
-
-.unfire-reading-block{
-  background:rgba(255,255,255,.018) !important;
-  border-radius:6px !important;
-}
-
-
-main section.unfire-reading-section{
-  background:transparent !important;
-}
-
-
-::highlight(unfire-reading-word){
-  background:rgba(255,255,255,.15);
-  color:inherit;
-}
-
-
-/* MOBILE */
-
-@media (max-width:700px){
-
-  #reader{
-    bottom:max(
-      10px,
-      env(safe-area-inset-bottom)
-    ) !important;
-
-    width:calc(100vw - 20px) !important;
-
-    padding:9px 10px 8px !important;
-
-    border-radius:20px !important;
-  }
-
-  #reader .reader-top{
-    grid-template-columns:
-      1fr
-      32px !important;
-  }
-
-  #reader .reader-btn{
-    height:32px !important;
-  }
-
-  #reader-pause{
-    width:32px !important;
-    min-width:32px !important;
-  }
-
-}
-
-
-/* Respect reduced motion */
-
-@media (prefers-reduced-motion:reduce){
-
-  html{
-    scroll-behavior:auto !important;
-  }
-
-}
-
-</style>
-
-
-
-
-
-
-
-
-<style id="unfire-reader-v11-style">
-
-#reader{
-  position:fixed !important;
-  left:auto !important;
   right:24px !important;
   bottom:24px !important;
-  transform:none !important;
-
-  width:270px !important;
-  height:52px !important;
-
-  padding:8px 11px !important;
-
-  display:grid !important;
-  grid-template-columns:36px 1fr !important;
-  align-items:center !important;
-  gap:10px !important;
-
-  background:rgba(22,22,24,.72) !important;
-  border:1px solid rgba(255,255,255,.11) !important;
-  border-radius:18px !important;
-
-  -webkit-backdrop-filter:
-    blur(30px) saturate(170%) !important;
-
-  backdrop-filter:
-    blur(30px) saturate(170%) !important;
-
-  box-shadow:
-    0 18px 55px rgba(0,0,0,.38),
-    inset 0 1px 0 rgba(255,255,255,.07) !important;
-
+  left:auto !important;
   z-index:999999 !important;
-}
-
-#reader .reader-top{
-  display:block !important;
-  width:36px !important;
-  height:36px !important;
-}
-
-#reader-play{
-  width:36px !important;
-  min-width:36px !important;
-  height:36px !important;
-
-  padding:0 !important;
-
-  border:0 !important;
-  border-radius:50% !important;
-
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-
-  font-size:13px !important;
-  line-height:1 !important;
-
-  background:#f5f5f7 !important;
-  color:#111 !important;
-}
-
-#reader-pause{
-  display:none !important;
-}
-
-#reader-range{
-  grid-column:2 !important;
-
-  width:100% !important;
-  height:12px !important;
-
-  margin:0 !important;
-  padding:0 !important;
-
-  cursor:pointer !important;
-}
-
-#reader-percent,
-#reader-language,
-.reader-section-nav,
-#reader-section-name,
-#reader-prev,
-#reader-next{
-  display:none !important;
-}
-
-::highlight(unfire-speaking-word){
-  color:inherit !important;
-  background:transparent !important;
-}
-
-.unfire-speaking-block{
-  opacity:1 !important;
-}
-
-@media (max-width:700px){
-
-  #reader{
-    left:50% !important;
-    right:auto !important;
-
-    bottom:
-      max(
-        10px,
-        env(safe-area-inset-bottom)
-      ) !important;
-
-    transform:translateX(-50%) !important;
-
-    width:calc(100vw - 22px) !important;
-    max-width:360px !important;
-
-    height:50px !important;
-
-    padding:7px 10px !important;
-
-    border-radius:17px !important;
-  }
-
-}
-
-</style>
-
-
-<style id="unfire-reader-production">
-
-#reader{
-  position:fixed !important;
-  right:24px !important;
-  left:auto !important;
-  bottom:24px !important;
-  transform:none !important;
 
   width:270px !important;
   height:52px !important;
@@ -1623,44 +943,50 @@ main section.unfire-reading-section{
   align-items:center !important;
   gap:10px !important;
 
-  background:rgba(22,22,24,.72) !important;
   border:1px solid rgba(255,255,255,.10) !important;
   border-radius:18px !important;
 
-  -webkit-backdrop-filter:blur(30px) saturate(165%) !important;
-  backdrop-filter:blur(30px) saturate(165%) !important;
+  background:rgba(18,18,20,.76) !important;
+
+  -webkit-backdrop-filter:
+    blur(30px)
+    saturate(165%) !important;
+
+  backdrop-filter:
+    blur(30px)
+    saturate(165%) !important;
 
   box-shadow:
     0 18px 52px rgba(0,0,0,.34),
     inset 0 1px 0 rgba(255,255,255,.06) !important;
-
-  z-index:99999 !important;
 }
 
 #reader .reader-top{
-  display:block !important;
   width:36px !important;
   height:36px !important;
+  display:block !important;
 }
 
 #reader-play{
   width:36px !important;
   min-width:36px !important;
   height:36px !important;
+
   padding:0 !important;
+  border:0 !important;
+  border-radius:50% !important;
 
   display:flex !important;
   align-items:center !important;
   justify-content:center !important;
-
-  border:0 !important;
-  border-radius:50% !important;
 
   background:#f5f5f7 !important;
   color:#111 !important;
 
   font-size:13px !important;
   line-height:1 !important;
+
+  cursor:pointer !important;
 }
 
 #reader-pause,
@@ -1675,16 +1001,20 @@ main section.unfire-reading-section{
 
 #reader-range{
   grid-column:2 !important;
+
   width:100% !important;
   height:12px !important;
+
   margin:0 !important;
   padding:0 !important;
+
+  cursor:pointer !important;
+  accent-color:#f5f5f7 !important;
 }
 
-::highlight(unfire-speaking-word){
-  color:inherit !important;
-  background:transparent !important;
-}
+
+
+
 
 @media(max-width:700px){
   #reader{
@@ -1700,6 +1030,7 @@ main section.unfire-reading-section{
 
     width:calc(100vw - 22px) !important;
     max-width:360px !important;
+
     height:50px !important;
 
     padding:7px 10px !important;
@@ -1712,344 +1043,426 @@ main section.unfire-reading-section{
     scroll-behavior:auto !important;
   }
 }
-
-</style>
-
-
-<style id="unfire-line-fill-v1">
-
-.unfire-reading-line{
-  position:relative !important;
-}
-
-.unfire-reading-line-overlay{
+</style><style id="unfire-fixed-film-style">
+#unfire-fixed-film{
   position:fixed;
-  z-index:20;
+  inset:0;
+
+  width:100vw;
+  height:100vh;
+
+  z-index:1;
+
   pointer-events:none;
-  overflow:hidden;
-  white-space:pre;
-  color:#ffffff;
-  background:transparent;
-  width:0;
-  will-change:width,transform;
-  contain:layout paint style;
+
+  opacity:.82;
+
+  display:block;
+
+  background:#000;
 }
 
-</style>
+header,
+main,
+footer,
+#reader{
+  position:relative;
+  z-index:2;
+}
 
-</head>
+main,
+main section{
+  background:transparent !important;
+}
 
-<body>
+body{
+  background:#000 !important;
+}
 
+@media(max-width:700px){
+  #unfire-fixed-film{
+    opacity:.68;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  #unfire-fixed-film{
+    opacity:.55;
+  }
+}
+</style><style id="unfire-web2-story-style">
+#unfire-web2-story{
+  position:fixed;
+  right:clamp(18px,3vw,40px);
+  top:50%;
+  transform:translateY(-50%);
+  width:min(42vw,620px);
+  height:min(72vh,760px);
+  z-index:40;
+  pointer-events:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#unfire-web2-story .uw2-shell{
+  position:relative;
+  width:100%;
+  height:100%;
+  border-radius:34px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,.08), rgba(255,255,255,.02) 35%, rgba(0,0,0,.0) 70%),
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:
+    0 20px 80px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+}
+
+#unfire-web2-story .uw2-glow{
+  position:absolute;
+  inset:-12%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.07), rgba(255,255,255,0) 60%);
+  filter: blur(30px);
+  opacity:.9;
+}
+
+#unfire-web2-story .uw2-layer{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  padding:6%;
+  opacity:0;
+  transform:scale(1.02);
+  transition:
+    opacity .8s ease,
+    transform 1.4s ease;
+  will-change:opacity, transform;
+}
+
+#unfire-web2-story .uw2-layer.is-active{
+  opacity:1;
+  transform:scale(1);
+}
+
+#unfire-web2-story .uw2-vignette{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)),
+    radial-gradient(circle at center, rgba(0,0,0,0) 52%, rgba(0,0,0,.16) 100%);
+  pointer-events:none;
+}
+
+#unfire-web2-story .uw2-caption{
+  position:absolute;
+  left:24px;
+  right:24px;
+  bottom:20px;
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.62);
+  text-align:center;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+@media (min-width: 1180px){
+  main,
+  footer{
+    padding-right:min(44vw,640px);
+  }
+}
+
+@media (max-width: 1179px){
+  #unfire-web2-story{
+    position:relative;
+    inset:auto;
+    transform:none;
+    width:100%;
+    height:min(58vw,420px);
+    max-height:420px;
+    margin:28px 0 36px;
+    right:auto;
+    top:auto;
+    z-index:1;
+    pointer-events:none;
+  }
+
+  #unfire-web2-story .uw2-shell{
+    border-radius:28px;
+  }
+
+  main,
+  footer{
+    padding-right:0 !important;
+  }
+}
+
+@media (max-width: 700px){
+  #unfire-web2-story{
+    height:280px;
+    margin:20px 0 28px;
+  }
+
+  #unfire-web2-story .uw2-caption{
+    font-size:10px;
+    bottom:14px;
+    left:16px;
+    right:16px;
+  }
+}
+</style></head>
+<body><canvas aria-hidden="true" id="unfire-fixed-film"></canvas>
 <header>
-  <div class="wrap nav">
-    <a class="brand notranslate" translate="no" href="#top">Unfire</a>
-
-    <nav class="nav-links">
-      <a href="#company">Company</a>
-      <a href="#work">Work</a>
-      <a href="#system">System</a>
-      <a href="#scale">Scale</a>
-      <a href="#funding">Funding</a>
-    </nav>
-  </div>
+<div class="wrap nav">
+<a class="brand notranslate" href="#top" translate="no">Unfire</a>
+<nav class="nav-links">
+<a href="#company">Company</a>
+<a href="#work">Work</a>
+<a href="#system">System</a>
+<a href="#scale">Scale</a>
+<a href="#funding">Funding</a>
+</nav>
+</div>
 </header>
-
 <main id="top">
+<div aria-hidden="true" id="unfire-web2-story">
+<div class="uw2-shell">
+<div class="uw2-glow"></div>
+<img alt="" class="uw2-layer is-active" id="uw2-a" src="assets/scenes/web2-01.png"/>
+<img alt="" class="uw2-layer" id="uw2-b" src="assets/scenes/web2-01.png"/>
+<div class="uw2-vignette"></div>
+<div class="uw2-caption" id="uw2-caption">Unfire visual sequence</div>
+</div>
+</div>
 
 <section class="hero">
-  <div class="wrap hero-inner">
-
-    <div class="hero-kicker">
+<div class="wrap hero-inner">
+<div class="hero-kicker">
       Independent technology company
     </div>
-
-    <h1>
-      Build technology.<br>
+<h1>
+      Build technology.<br/>
       Reuse the advantage.
     </h1>
-
-    <p>
+<p>
       Unfire develops reusable software
       systems designed to turn one technological foundation into multiple products,
       workflows and future applications.
     </p>
-
-    <div class="hero-actions">
-      <a class="button primary" href="#system">Explore the system</a>
-      <a class="button" href="#funding">Funding & collaboration</a>
-    </div>
-
-  </div>
+<div class="hero-actions">
+<a class="button primary" href="#system">Explore the system</a>
+<a class="button" href="#funding">Funding &amp; collaboration</a>
+</div>
+</div>
 </section>
-
-
 <section id="company">
-  <div class="wrap">
-
-    <div class="eyebrow">Company</div>
-
-    <div class="statement">
+<div class="wrap">
+<div class="eyebrow">Company</div>
+<div class="statement">
       A software company designed around
       <span class="statement-muted">compounding technology.</span>
-    </div>
-
-    <p class="lead" style="margin-top:38px">
+</div>
+<p class="lead" style="margin-top:38px">
       Instead of treating every application as an isolated project,
       Unfire develops technology that can
       be reused, extended and transferred into future products.
     </p>
-
-    <div class="three">
-
-      <div class="simple-card">
-        <span>01</span>
-        <h3>Build once.</h3>
-        <p>
+<div class="three">
+<div class="simple-card">
+<span>01</span>
+<h3>Build once.</h3>
+<p>
           Core capabilities can become reusable building blocks rather than
           disappearing inside a single product.
         </p>
-      </div>
-
-      <div class="simple-card">
-        <span>02</span>
-        <h3>Extend continuously.</h3>
-        <p>
+</div>
+<div class="simple-card">
+<span>02</span>
+<h3>Extend continuously.</h3>
+<p>
           New software can inherit existing infrastructure, reducing repeated
           engineering when the architecture applies.
         </p>
-      </div>
-
-      <div class="simple-card">
-        <span>03</span>
-        <h3>Scale the system.</h3>
-        <p>
+</div>
+<div class="simple-card">
+<span>03</span>
+<h3>Scale the system.</h3>
+<p>
           Additional storage, compute, testing and distribution infrastructure
           can increase production capacity without recreating the underlying system.
         </p>
-      </div>
-
-    </div>
-
-  </div>
+</div>
+</div>
+</div>
 </section>
-
-
-
 <section id="work">
-  <div class="wrap">
-
-    <div class="eyebrow">Selected work</div>
-
-    <h2>
-      Different products.<br>
+<div class="wrap">
+<div class="eyebrow">Selected work</div>
+<h2>
+      Different products.<br/>
       Technology that compounds.
     </h2>
-
-    <p class="lead">
+<p class="lead">
       Each project addresses a different problem, but the underlying objective
       is the same: develop technology, systems and production knowledge that can
       be reused across future software rather than remaining isolated inside
       a single application.
     </p>
-
-    <div class="work-grid">
-
-
-      <article class="product">
-
-        <div>
-          <div class="product-type">AI · Automation · Computer workflows</div>
-
-          <h3 class="notranslate" translate="no">Bolt</h3>
-
-          <p>
+<div class="work-grid">
+<article class="product">
+<div>
+<div class="product-type">AI · Automation · Computer workflows</div>
+<h3 class="notranslate" translate="no">Bolt</h3>
+<p>
             Bolt explores controlled AI orchestration for complex computer work.
             It is designed to coordinate AI systems, local tools and execution
             processes while preserving visibility, permissions and human control.
           </p>
-
-          <p>
+<p>
             The project investigates how repetitive interaction between people,
             models and software can be reduced by allowing a validated plan to
             continue through execution, testing and repair cycles with fewer
             unnecessary interruptions.
           </p>
-
-          <p>
+<p>
             Technology developed around Bolt can contribute to future automation,
             development and computer-control systems across the wider Unfire
             ecosystem.
           </p>
-        </div>
-
-        <footer>
+</div>
+<footer>
           Orchestration · Local execution · Controlled autonomy · Reusable automation
         </footer>
-
-      </article>
-
-
-      <article class="product">
-
-        <div>
-          <div class="product-type">Energy · Data · Information systems</div>
-
-          <h3 class="notranslate" translate="no">Power</h3>
-
-          <p>
+</article>
+<article class="product">
+<div>
+<div class="product-type">Energy · Data · Information systems</div>
+<h3 class="notranslate" translate="no">Power</h3>
+<p>
             Power explores how complex electricity and energy-market information
             can be converted into software that is easier to understand, compare
             and use.
           </p>
-
-          <p>
+<p>
             The project combines regional data, pricing information and structured
             interpretation into a clearer interface, creating a foundation for
             future energy intelligence tools.
           </p>
-
-          <p>
+<p>
             The same approach can later support other information-heavy products
             where fragmented external data needs to become understandable and
             actionable software.
           </p>
-        </div>
-
-        <footer>
+</div>
+<footer>
           Energy intelligence · Data interpretation · Information architecture
         </footer>
-
-      </article>
-
-
-      <article class="product">
-
-        <div>
-          <div class="product-type">Internal infrastructure · Software production</div>
-
-          <h3 class="notranslate" translate="no">UnfireSuite</h3>
-
-          <p>
+</article>
+<article class="product">
+<div>
+<div class="product-type">Internal infrastructure · Software production</div>
+<h3 class="notranslate" translate="no">UnfireSuite</h3>
+<p>
             UnfireSuite represents the internal production layer behind multiple
             Unfire projects.
           </p>
-
-          <p>
+<p>
             Its purpose is to reduce repeated engineering by allowing software
             components, validation processes, production systems and accumulated
             technical knowledge to be reused where appropriate.
           </p>
-
-          <p>
+<p>
             This is important because the value of one project does not need to
             end when that project is completed. Parts of the technology can become
             infrastructure for the next product, allowing the production system
             itself to improve over time.
           </p>
-        </div>
-
-        <footer>
+</div>
+<footer>
           Shared infrastructure · Validation · Reuse · Production systems
         </footer>
-
-      </article>
-
-
-      <article class="product">
-
-        <div>
-          <div class="product-type">Unfire Audio · First implementation</div>
-
-          <h3 class="notranslate" translate="no">Archer</h3>
-
-          <p>
+</article>
+<article class="product">
+<div>
+<div class="product-type">Unfire Audio · First implementation</div>
+<h3 class="notranslate" translate="no">Archer</h3>
+<p>
             Archer is the first product developed within the broader
             <span class="notranslate" translate="no">Unfire Audio</span> direction.
           </p>
-
-          <p>
+<p>
             It is a precision audio clipping tool built around Gain, Threshold
             and Atmosphere, designed to give producers and engineers direct control
             over clipping behaviour, peaks, transients and sonic character.
           </p>
-
-          <p>
+<p>
             Its strategic role is broader than a single audio effect. Archer provides
             a practical environment for developing and validating audio technology,
             interface systems and production components that can later contribute
             to future creative-software products.
           </p>
-
-          <p>
+<p>
             Unfire Audio is also exploring how AI-assisted systems, procedural
             processing and reusable software technology can converge into new
             plugin concepts and creative workflows beyond conventional fixed
             audio-processing tools.
           </p>
-        </div>
-
-        <footer>
+</div>
+<footer>
           Audio technology · DSP · Procedural processing · Creative software
         </footer>
-
-      </article>
-
-
-    </div>
-
-  </div>
+</article>
+</div>
+</div>
 </section>
-
-
-
 <section id="audio">
-  <div class="wrap">
-
-    <div class="eyebrow">Unfire Audio</div>
-
-    <h2>
+<div class="wrap">
+<div class="eyebrow">Unfire Audio</div>
+<h2>
       From plugins to new software concepts.
     </h2>
-
-    <p class="lead">
-      <span class="notranslate" translate="no">Unfire Audio</span> explores how
+<p class="lead">
+<span class="notranslate" translate="no">Unfire Audio</span> explores how
       AI-assisted systems, procedural processing and reusable software components
       can converge into creative tools that extend beyond conventional plugin workflows.
     </p>
-
-    <div class="audio-grid">
-
-      <div class="audio-item">
-        <span>01</span>
-        <strong>AI-assisted systems</strong>
-        <p>
+<div class="audio-grid">
+<div class="audio-item">
+<span>01</span>
+<strong>AI-assisted systems</strong>
+<p>
           AI can become part of the creative software environment rather than
           existing only as a separate assistant.
         </p>
-      </div>
-
-      <div class="audio-item">
-        <span>02</span>
-        <strong>Procedural transformation</strong>
-        <p>
+</div>
+<div class="audio-item">
+<span>02</span>
+<strong>Procedural transformation</strong>
+<p>
           Parameters, sound and software behaviour can be transformed dynamically,
           opening space for new creative interaction models.
         </p>
-      </div>
-
-      <div class="audio-item">
-        <span>03</span>
-        <strong>Transferable technology</strong>
-        <p>
+</div>
+<div class="audio-item">
+<span>03</span>
+<strong>Transferable technology</strong>
+<p>
           Successful components developed in one product can later be reused,
           extended or integrated into other projects.
         </p>
-      </div>
-
-    </div>
-
-    <div class="big-message">
+</div>
+</div>
+<div class="big-message">
       Research in one product can strengthen the next.
 
       <p>
@@ -2057,300 +1470,207 @@ main section.unfire-reading-section{
         It is to create a reusable creative-technology base capable of supporting
         future tools, broader environments and new product concepts.
       </p>
-    </div>
-
-  </div>
+</div>
+</div>
 </section>
-
-
 <section id="system">
-  <div class="wrap">
-
-    <div class="eyebrow">System</div>
-
-    <h2>
+<div class="wrap">
+<div class="eyebrow">System</div>
+<h2>
       Software production without starting over.
     </h2>
-
-    <p class="lead">
+<p class="lead">
       The central idea is simple: when a new product can use technology that already
       exists inside Unfire,
       development should reuse that advantage instead of rebuilding it.
     </p>
-
-    <div class="system-diagram">
-
-      <div class="system-row">
-        <strong>Shared foundation</strong>
-        <p>
+<div class="system-diagram">
+<div class="system-row">
+<strong>Shared foundation</strong>
+<p>
           Reusable software components, production knowledge and validation systems
           form a base that can continue evolving.
         </p>
-      </div>
-
-      <div class="system-row">
-        <strong>Product layer</strong>
-        <p>
+</div>
+<div class="system-row">
+<strong>Product layer</strong>
+<p>
           New applications can combine existing capabilities with product-specific
           technology rather than beginning from an empty architecture.
         </p>
-      </div>
-
-      <div class="system-row">
-        <strong>Validation</strong>
-        <p>
+</div>
+<div class="system-row">
+<strong>Validation</strong>
+<p>
           Builds, tests and internal checkpoints provide measurable evidence of
           whether software candidates are functioning as intended.
         </p>
-      </div>
-
-      <div class="system-row">
-        <strong>Expansion</strong>
-        <p>
+</div>
+<div class="system-row">
+<strong>Expansion</strong>
+<p>
           Infrastructure can grow through additional compute, storage, testing,
           quality assurance and deployment capacity.
         </p>
-      </div>
-
-    </div>
-
-  </div>
+</div>
+</div>
+</div>
 </section>
-
-
 <section id="scale">
-  <div class="wrap">
-
-    <div class="eyebrow">Production scale</div>
-
-    <h2>
+<div class="wrap">
+<div class="eyebrow">Production scale</div>
+<h2>
       The bottleneck is changing.
     </h2>
-
-    <p class="lead">
+<p class="lead">
       Where the existing architecture applies, internal development has demonstrated
       that working software candidates can move through extremely short build cycles —
       in some cases measured in minutes.
     </p>
-
-    <div class="scale-panel">
-
-      <div class="scale-panel-title">
+<div class="scale-panel">
+<div class="scale-panel-title">
         From rebuilding software to scaling infrastructure.
       </div>
-
-      <p>
+<p>
         As reusable technology expands, the limiting factors increasingly become
         infrastructure resources such as compute, storage, testing, quality assurance
         and commercial deployment — resources that can themselves be expanded.
       </p>
-
-    </div>
-
-    <div class="metrics">
-
-      <div class="metric">
-        <strong>3</strong>
-        <span>
+</div>
+<div class="metrics">
+<div class="metric">
+<strong>3</strong>
+<span>
           Flagship product tracks currently used to demonstrate the broader technology direction.
         </span>
-      </div>
-
-      <div class="metric">
-        <strong>8</strong>
-        <span>
+</div>
+<div class="metric">
+<strong>8</strong>
+<span>
           Priority Wave 1 software candidates identified for focused development.
         </span>
-      </div>
-
-      <div class="metric">
-        <strong>53</strong>
-        <span>
+</div>
+<div class="metric">
+<strong>53</strong>
+<span>
           Standalone software candidates built and internally audited.
         </span>
-      </div>
-
-      <div class="metric">
-        <strong>53/53</strong>
-        <span>
+</div>
+<div class="metric">
+<strong>53/53</strong>
+<span>
           Successful standalone builds at the September 2026 internal checkpoint.
         </span>
-      </div>
-
-    </div>
-
-    <div class="flow">
-
-      <div class="flow-step">
-        <div class="flow-num">01</div>
-        <strong>Reuse</strong>
-        <p>Start from existing technology where possible.</p>
-      </div>
-
-      <div class="arrow">→</div>
-
-      <div class="flow-step">
-        <div class="flow-num">02</div>
-        <strong>Build</strong>
-        <p>Create the product-specific layer.</p>
-      </div>
-
-      <div class="arrow">→</div>
-
-      <div class="flow-step">
-        <div class="flow-num">03</div>
-        <strong>Scale</strong>
-        <p>Expand infrastructure as production grows.</p>
-      </div>
-
-    </div>
-
-    <div class="sector-grid">
-
-      <div class="sector">
-        <div class="eyebrow">Companies</div>
-        <h3>Dedicated software systems.</h3>
-        <p>
+</div>
+</div>
+<div class="flow">
+<div class="flow-step">
+<div class="flow-num">01</div>
+<strong>Reuse</strong>
+<p>Start from existing technology where possible.</p>
+</div>
+<div class="arrow">→</div>
+<div class="flow-step">
+<div class="flow-num">02</div>
+<strong>Build</strong>
+<p>Create the product-specific layer.</p>
+</div>
+<div class="arrow">→</div>
+<div class="flow-step">
+<div class="flow-num">03</div>
+<strong>Scale</strong>
+<p>Expand infrastructure as production grows.</p>
+</div>
+</div>
+<div class="sector-grid">
+<div class="sector">
+<div class="eyebrow">Companies</div>
+<h3>Dedicated software systems.</h3>
+<p>
           The same production foundation can support specialised applications
           and environments designed around organisational requirements.
         </p>
-      </div>
-
-      <div class="sector">
-        <div class="eyebrow">Institutions</div>
-        <h3>Controlled environments.</h3>
-        <p>
+</div>
+<div class="sector">
+<div class="eyebrow">Institutions</div>
+<h3>Controlled environments.</h3>
+<p>
           Projects can remain isolated while benefiting from reusable underlying
           technology, validation processes and production infrastructure.
         </p>
-      </div>
-
-      <div class="sector">
-        <div class="eyebrow">Public sector</div>
-        <h3>Scalable digital tools.</h3>
-        <p>
+</div>
+<div class="sector">
+<div class="eyebrow">Public sector</div>
+<h3>Scalable digital tools.</h3>
+<p>
           The architecture is being prepared for future collaboration where
           control, traceability, validation and long-term maintainability matter.
         </p>
-      </div>
-
-    </div>
-
-    <div class="proprietary">
-      <strong>The capability can be demonstrated. The mechanism remains proprietary.</strong>
-
-      <p>
+</div>
+</div>
+<div class="proprietary">
+<strong>The capability can be demonstrated. The mechanism remains proprietary.</strong>
+<p>
         Unfire can show products,
         builds, internal checkpoints and production capacity without exposing the
         implementation methods that create the underlying leverage.
       </p>
-    </div>
-
-  </div>
+</div>
+</div>
 </section>
-
-
 <section id="funding">
-  <div class="wrap">
-
-    <div class="eyebrow">Funding & collaboration</div>
-
-    <h2>
+<div class="wrap">
+<div class="eyebrow">Funding &amp; collaboration</div>
+<h2>
       Expand what already exists.
     </h2>
-
-    <div class="funding-panel">
-
-      <div class="funding-big">
-        More infrastructure.<br>
-        More validation.<br>
+<div class="funding-panel">
+<div class="funding-big">
+        More infrastructure.<br/>
+        More validation.<br/>
         More products.
       </div>
-
-      <div class="funding-copy">
+<div class="funding-copy">
         Funding can accelerate infrastructure, testing, product hardening,
         deployment and the transition from internal technology validation
         toward larger commercial and institutional applications.
 
-        <br><br>
+        <br/><br/>
 
         Unfire is interested in
         funding programmes, strategic partnerships and future projects with
         companies, research institutions and public-sector organisations.
 
-        <br>
-
-        <a
-          class="contact notranslate"
-          translate="no"
-          href="mailto:hello@unfire.technology"
-        >hello@unfire.technology</a>
-      </div>
-
-    </div>
-
-  </div>
+        <br/>
+<a class="contact notranslate" href="mailto:hello@unfire.technology" translate="no">hello@unfire.technology</a>
+</div>
+</div>
+</div>
 </section>
-
 </main>
-
-
 <footer class="site-footer">
-  <div class="wrap footer-inner">
-
-    <div>
+<div class="wrap footer-inner">
+<div>
       © 2026 Unfire
     </div>
-
-    <div>
+<div>
       Technology · Software · Research
     </div>
-
-  </div>
-</footer>
-
-
-<div id="reader" translate="no" class="notranslate">
-
-  <div class="reader-top">
-    <button id="reader-play" class="reader-btn">▶ Listen</button>
-    <button id="reader-pause" class="reader-btn">Ⅱ</button>
-  </div>
-
-  <input
-    id="reader-range"
-    class="reader-range"
-    type="range"
-    min="0"
-    max="100000"
-    value="0"
-  >
-
-  
-
 </div>
-
-
-
-
-<audio
-  id="unfire-narration"
-  src="audio/unfire-master-en.mp3"
-  preload="metadata"
-></audio>
-
-<script id="unfire-reader-production">
+</footer>
+<div class="notranslate" id="reader" translate="no">
+<div class="reader-top">
+<button class="reader-btn" id="reader-play">▶ Listen</button>
+<button class="reader-btn" id="reader-pause">Ⅱ</button>
+</div>
+<input class="reader-range" id="reader-range" max="100000" min="0" type="range" value="0"/>
+</div>
+<audio id="unfire-narration" preload="metadata" src="audio/unfire-master-en.mp3"></audio><script id="unfire-reader-canonical">
 (() => {
+  "use strict";
 
   const audio =
     document.getElementById("unfire-narration");
-
-  audio.playbackRate = 1.06;
-  audio.defaultPlaybackRate = 1.06;
-
-  if ("preservesPitch" in audio) {
-    audio.preservesPitch = true;
-  }
 
   const playBtn =
     document.getElementById("reader-play");
@@ -2359,116 +1679,108 @@ main section.unfire-reading-section{
     document.getElementById("reader-range");
 
   if (!audio || !playBtn || !range) {
+    console.error(
+      "Unfire reader: required controls missing"
+    );
     return;
   }
 
-
   const FILES = {
     en: {
-      audio:"audio/unfire-master-en.mp3",
-      words:"audio/unfire-master-en.words.json"
+      audio:
+        "audio/unfire-master-en.mp3",
+      timeline:
+        "audio/unfire-master-en.canonical.json"
     },
     es: {
-      audio:"audio/unfire-master-es.mp3",
-      words:"audio/unfire-master-es.words.json"
+      audio:
+        "audio/unfire-master-es.mp3",
+      timeline:
+        "audio/unfire-master-es.canonical.json"
     }
   };
-
 
   let language = "en";
-
-  let transcript = [];
-  let visibleWords = [];
-  let wordMap = [];
-
-  let currentWordIndex = -1;
-
+  let timeline = null;
+  let words = [];
   let dragging = false;
 
-  let scrollCurrent =
+  let cameraTarget =
     window.scrollY;
 
-  let scrollTarget =
-    window.scrollY;
+  let cameraBlock =
+    null;
 
-  let userScrollUntil = 0;
+  let manualUntil = 0;
 
-  let switchingLanguage = false;
+  let lastFrame =
+    performance.now();
 
-  let previousBlock = null;
+  const clamp = (
+    value,
+    min,
+    max
+  ) =>
+    Math.max(
+      min,
+      Math.min(max, value)
+    );
 
-  let cameraTarget = window.scrollY;
-  let cameraPosition = window.scrollY;
-  let cameraBlock = null;
-  let cameraLastFrame = performance.now();
-
-
-  const normalizeWord = value =>
-    (value || "")
-      .toLocaleLowerCase()
-      .normalize("NFD")
-      .replace(/\p{Diacritic}/gu, "")
-      .replace(/[^\p{L}\p{N}]/gu, "");
-
-
-  const detectLanguage = () => {
-
-    const hero =
-      document.querySelector("main h1") ||
-      document.querySelector("h1");
-
-    const text =
-      (hero?.innerText || hero?.textContent || "")
-        .toLocaleLowerCase()
-        .replace(/\s+/g, " ")
-        .trim();
-
+  const getWords = data => {
     if (
-      text.includes("construir tecnología") ||
-      text.includes("reutilizar la ventaja")
+      data &&
+      Array.isArray(data.words)
     ) {
-      return "es";
+      return data.words;
     }
 
-    if (
-      text.includes("build technology") ||
-      text.includes("reuse the advantage")
-    ) {
-      return "en";
-    }
-
-    const body =
-      (document.querySelector("main")?.innerText || "")
-        .toLocaleLowerCase();
-
-    const spanish =
-      [
-        "financiación",
-        "empresa",
-        "tecnología",
-        "reutilizar",
-        "sistema"
-      ]
-      .filter(x => body.includes(x))
-      .length;
-
-    const english =
-      [
-        "funding",
-        "company",
-        "technology",
-        "reuse",
-        "system"
-      ]
-      .filter(x => body.includes(x))
-      .length;
-
-    return spanish > english ? "es" : "en";
+    return [];
   };
 
+  const fetchTimeline = async lang => {
+    const response =
+      await fetch(
+        FILES[lang].timeline,
+        {
+          cache:"force-cache"
+        }
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        "Canonical timeline unavailable"
+      );
+    }
+
+    return response.json();
+  };
+
+  const findWordIndex = time => {
+    let lo = 0;
+    let hi = words.length - 1;
+    let result = -1;
+
+    while (lo <= hi) {
+      const mid =
+        (lo + hi) >> 1;
+
+      const word =
+        words[mid];
+
+      if (
+        Number(word.start) <= time
+      ) {
+        result = mid;
+        lo = mid + 1;
+      } else {
+        hi = mid - 1;
+      }
+    }
+
+    return result;
+  };
 
   const narrationElements = () => {
-
     const selector = [
       "main .hero-kicker",
       "main .eyebrow",
@@ -2489,694 +1801,122 @@ main section.unfire-reading-section{
     ].join(",");
 
     return Array.from(
-      document.querySelectorAll(selector)
+      document.querySelectorAll(
+        selector
+      )
     );
   };
 
 
-  const collectVisibleWords = () => {
-
-    const result = [];
-    const seenNodes = new Set();
-
-    for (const element of narrationElements()) {
-
-      if (!element) continue;
-
-      const style =
-        getComputedStyle(element);
-
-      if (
-        style.display === "none" ||
-        style.visibility === "hidden"
-      ) {
-        continue;
-      }
-
-      const walker =
-        document.createTreeWalker(
-          element,
-          NodeFilter.SHOW_TEXT
-        );
-
-      let node;
-
-      while ((node = walker.nextNode())) {
-
-        if (seenNodes.has(node)) {
-          continue;
-        }
-
-        seenNodes.add(node);
-
-        const text = node.nodeValue || "";
-
-        const regex =
-          /[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*/gu;
-
-        let match;
-
-        while ((match = regex.exec(text))) {
-
-          result.push({
-            key: normalizeWord(match[0]),
-            node,
-            start: match.index,
-            end: match.index + match[0].length,
-            element
-          });
-        }
-      }
-    }
-
-    visibleWords = result;
-  };
-
-
-  const alignWords = () => {
-
-    collectVisibleWords();
-
-    wordMap =
-      new Array(transcript.length)
-        .fill(null);
-
-    let visibleIndex = 0;
-
-    for (
-      let transcriptIndex = 0;
-      transcriptIndex < transcript.length;
-      transcriptIndex++
-    ) {
-
-      const wanted =
-        normalizeWord(
-          transcript[transcriptIndex].word
-        );
-
-      if (!wanted) continue;
-
-      let matchIndex = -1;
-
-      const limit =
-        Math.min(
-          visibleWords.length,
-          visibleIndex + 18
-        );
-
-      for (
-        let j = visibleIndex;
-        j < limit;
-        j++
-      ) {
-
-        if (
-          visibleWords[j].key === wanted
-        ) {
-          matchIndex = j;
-          break;
-        }
-      }
-
-      if (matchIndex >= 0) {
-
-        wordMap[transcriptIndex] =
-          visibleWords[matchIndex];
-
-        visibleIndex =
-          matchIndex + 1;
-      }
-    }
-  };
-
-
-  const loadTranscript = async lang => {
-
-    try {
-
-      const response =
-        await fetch(
-          FILES[lang].words,
-          { cache:"force-cache" }
-        );
-
-      if (!response.ok) {
-        throw new Error(
-          "Timestamp file not available"
-        );
-      }
-
-      const data =
-        await response.json();
-
-      transcript =
-        Array.isArray(data.words)
-          ? data.words
-          : [];
-
-      alignWords();
-
-    } catch (error) {
-
-      console.error(
-        "Narration timing error:",
-        error
-      );
-
-      transcript = [];
-      wordMap = [];
-    }
-  };
-
-
-  const findWordIndex = time => {
-
-    let lo = 0;
-    let hi = transcript.length - 1;
-    let result = -1;
-
-    while (lo <= hi) {
-
-      const mid =
-        (lo + hi) >> 1;
-
-      const word =
-        transcript[mid];
-
-      if (time >= word.start) {
-        result = mid;
-        lo = mid + 1;
-      } else {
-        hi = mid - 1;
-      }
-    }
-
-    return result;
-  };
-
-
-  const nearestMappedWord = index => {
-
+  const updateCameraTarget = () => {
     if (
-      index >= 0 &&
-      wordMap[index]
+      performance.now() < manualUntil
     ) {
-      return {
-        index,
-        value:wordMap[index]
-      };
-    }
-
-    for (let offset = 1; offset <= 10; offset++) {
-
-      if (
-        index - offset >= 0 &&
-        wordMap[index - offset]
-      ) {
-        return {
-          index:index - offset,
-          value:wordMap[index - offset]
-        };
-      }
-
-      if (
-        index + offset < wordMap.length &&
-        wordMap[index + offset]
-      ) {
-        return {
-          index:index + offset,
-          value:wordMap[index + offset]
-        };
-      }
-    }
-
-    return null;
-  };
-
-
-  const rangeForWord = word => {
-
-    if (!word?.node?.isConnected) {
-      return null;
-    }
-
-    const range =
-      document.createRange();
-
-    try {
-
-      range.setStart(
-        word.node,
-        word.start
-      );
-
-      range.setEnd(
-        word.node,
-        word.end
-      );
-
-      return range;
-
-    } catch (_) {
-
-      return null;
-    }
-  };
-
-
-  const highlightWord = index => {
-
-    if (index === currentWordIndex) {
       return;
     }
 
-    currentWordIndex = index;
+    const elements =
+      narrationElements();
 
-    const mapped =
-      nearestMappedWord(index);
-
-    if (!mapped) return;
-
-    const wordRange =
-      rangeForWord(mapped.value);
-
-    if (!wordRange) {
+    if (
+      elements.length < 2 ||
+      !Number.isFinite(audio.duration) ||
+      audio.duration <= 0
+    ) {
       return;
     }
 
-
-    if (
-      window.CSS &&
-      CSS.highlights &&
-      window.Highlight
-    ) {
-
-      const highlight =
-        new Highlight(wordRange);
-
-      CSS.highlights.set(
-        "unfire-speaking-word",
-        highlight
+    const progress =
+      clamp(
+        audio.currentTime /
+        audio.duration,
+        0,
+        1
       );
-    }
 
+    const floatingIndex =
+      progress *
+      (elements.length - 1);
 
-    if (previousBlock) {
-      previousBlock.classList.remove(
-        "unfire-speaking-block"
+    const firstIndex =
+      Math.floor(
+        floatingIndex
       );
+
+    const secondIndex =
+      Math.min(
+        elements.length - 1,
+        firstIndex + 1
+      );
+
+    const mix =
+      floatingIndex -
+      firstIndex;
+
+    const first =
+      elements[firstIndex];
+
+    const second =
+      elements[secondIndex];
+
+    if (!first || !second) {
+      return;
     }
 
-    previousBlock =
-      mapped.value.element;
+    const firstRect =
+      first.getBoundingClientRect();
 
-    previousBlock?.classList.add(
-      "unfire-speaking-block"
-    );
-  };
+    const secondRect =
+      second.getBoundingClientRect();
 
-
-  const wordPageY = word => {
-
-    const wordRange =
-      rangeForWord(word);
-
-    if (!wordRange) {
-      return null;
-    }
-
-    const rect =
-      wordRange.getBoundingClientRect();
-
-    return (
+    const firstY =
       window.scrollY +
-      rect.top +
-      rect.height * .5
-    );
-  };
+      firstRect.top +
+      firstRect.height * .5;
 
+    const secondY =
+      window.scrollY +
+      secondRect.top +
+      secondRect.height * .5;
 
-  const updateScrollTarget = index => {
-
-    if (
-      performance.now() <
-      userScrollUntil
-    ) {
-      return;
-    }
-
-    const mapped =
-      nearestMappedWord(index);
-
-    if (!mapped?.value?.element) {
-      return;
-    }
-
-    const block =
-      mapped.value.element;
-
-    /*
-      No perseguimos cada palabra.
-      Solo cambiamos el objetivo cuando cambia
-      el bloque de lectura.
-    */
-
-    if (block === cameraBlock) {
-      return;
-    }
-
-    cameraBlock = block;
-
-    const rect =
-      block.getBoundingClientRect();
+    const readingY =
+      firstY +
+      (
+        secondY -
+        firstY
+      ) *
+      mix;
 
     const viewport =
       window.visualViewport
         ? window.visualViewport.height
         : window.innerHeight;
 
-    const absoluteY =
-      window.scrollY +
-      rect.top;
-
-    const candidate =
+    const maxScroll =
       Math.max(
         0,
-        absoluteY -
-        viewport * .34
+        document.documentElement.scrollHeight -
+        viewport
       );
-
-    /*
-      Durante lectura normal jamás hacemos
-      una corrección automática hacia arriba.
-    */
 
     cameraTarget =
-      Math.max(
-        window.scrollY,
-        cameraTarget,
-        candidate
-      );
-  };
-
-
-
-  let lineOverlay = null;
-  let activeLineElement = null;
-  let activeLineStart = 0;
-  let activeLineEnd = 0;
-
-
-  const createLineOverlay = () => {
-
-    if (lineOverlay) {
-      return;
-    }
-
-    lineOverlay =
-      document.createElement("div");
-
-    lineOverlay.className =
-      "unfire-reading-line-overlay";
-
-    document.body.appendChild(
-      lineOverlay
-    );
-  };
-
-
-  const clearLineFill = () => {
-
-    if (!lineOverlay) {
-      return;
-    }
-
-    lineOverlay.style.width =
-      "0px";
-
-    lineOverlay.style.opacity =
-      "0";
-
-    activeLineElement =
-      null;
-  };
-
-
-  const readingElementForIndex = index => {
-
-    const mapped =
-      nearestMappedWord(index);
-
-    if (!mapped?.value) {
-      return null;
-    }
-
-    return (
-      mapped.value.element ||
-      mapped.value.node?.parentElement ||
-      null
-    );
-  };
-
-
-  const timingWindowForElement = (
-    element,
-    currentIndex
-  ) => {
-
-    if (!element) {
-      return null;
-    }
-
-    let first = currentIndex;
-    let last = currentIndex;
-
-    /*
-      Search backwards while words belong
-      to the same visible reading element.
-    */
-
-    for (
-      let i = currentIndex - 1;
-      i >= 0;
-      i--
-    ) {
-
-      const mapped =
-        nearestMappedWord(i);
-
-      const el =
-        mapped?.value?.element ||
-        mapped?.value?.node?.parentElement;
-
-      if (el !== element) {
-        break;
-      }
-
-      first = i;
-    }
-
-
-    /*
-      Search forwards through the same element.
-    */
-
-    for (
-      let i = currentIndex + 1;
-      i < transcript.length;
-      i++
-    ) {
-
-      const mapped =
-        nearestMappedWord(i);
-
-      const el =
-        mapped?.value?.element ||
-        mapped?.value?.node?.parentElement;
-
-      if (el !== element) {
-        break;
-      }
-
-      last = i;
-    }
-
-
-    const start =
-      transcript[first]?.start;
-
-    const end =
-      transcript[last]?.end;
-
-
-    if (
-      !Number.isFinite(start) ||
-      !Number.isFinite(end) ||
-      end <= start
-    ) {
-      return null;
-    }
-
-    return {
-      start,
-      end
-    };
-  };
-
-
-  const paintLineFill = index => {
-
-    createLineOverlay();
-
-    const element =
-      readingElementForIndex(index);
-
-    if (!element) {
-      clearLineFill();
-      return;
-    }
-
-
-    /*
-      Rebuild geometry only when narration
-      moves into another text element.
-    */
-
-    if (
-      element !== activeLineElement
-    ) {
-
-      activeLineElement =
-        element;
-
-      const timing =
-        timingWindowForElement(
-          element,
-          index
-        );
-
-      if (!timing) {
-        clearLineFill();
-        return;
-      }
-
-      activeLineStart =
-        timing.start;
-
-      activeLineEnd =
-        timing.end;
-
-
-      const rect =
-        element.getBoundingClientRect();
-
-      const style =
-        getComputedStyle(element);
-
-
-      lineOverlay.textContent =
-        element.innerText ||
-        element.textContent ||
-        "";
-
-
-      lineOverlay.style.left =
-        `${rect.left}px`;
-
-      lineOverlay.style.top =
-        `${rect.top}px`;
-
-      lineOverlay.style.height =
-        `${rect.height}px`;
-
-      lineOverlay.style.maxWidth =
-        `${rect.width}px`;
-
-      lineOverlay.style.font =
-        style.font;
-
-      lineOverlay.style.fontFamily =
-        style.fontFamily;
-
-      lineOverlay.style.fontSize =
-        style.fontSize;
-
-      lineOverlay.style.fontWeight =
-        style.fontWeight;
-
-      lineOverlay.style.lineHeight =
-        style.lineHeight;
-
-      lineOverlay.style.letterSpacing =
-        style.letterSpacing;
-
-      lineOverlay.style.textAlign =
-        style.textAlign;
-
-      lineOverlay.style.opacity =
-        "1";
-    }
-
-
-    const duration =
-      Math.max(
-        .001,
-        activeLineEnd -
-        activeLineStart
-      );
-
-
-    const progress =
-      Math.max(
+      clamp(
+        readingY -
+        viewport * .36,
         0,
-        Math.min(
-          1,
-          (
-            audio.currentTime -
-            activeLineStart
-          ) /
-          duration
-        )
+        maxScroll
       );
 
-
-    const rect =
-      activeLineElement
-        .getBoundingClientRect();
-
-
-    /*
-      Overlay stays attached to the text
-      while the page itself moves.
-    */
-
-    lineOverlay.style.left =
-      `${rect.left}px`;
-
-    lineOverlay.style.top =
-      `${rect.top}px`;
-
-    lineOverlay.style.height =
-      `${rect.height}px`;
-
-    lineOverlay.style.maxWidth =
-      `${rect.width}px`;
-
-
-    /*
-      Continuous left-to-right fill.
-    */
-
-    lineOverlay.style.width =
-      `${rect.width * progress}px`;
+    cameraBlock =
+      first;
   };
 
-
-  const updateProgress = () => {
-
+  const updateRange = () => {
     if (
       dragging ||
-      !Number.isFinite(audio.duration) ||
+      !Number.isFinite(
+        audio.duration
+      ) ||
       audio.duration <= 0
     ) {
       return;
@@ -3187,163 +1927,107 @@ main section.unfire-reading-section{
         (
           audio.currentTime /
           audio.duration
-        ) * 100000
+        ) *
+        100000
       );
   };
 
-
   const animationLoop = now => {
-
-    cameraLastFrame =
-      performance.now();
-
     requestAnimationFrame(
       animationLoop
     );
 
-    updateProgress();
-
-    if (
-      !audio.paused &&
-      !audio.ended &&
-      transcript.length
-    ) {
-
-      const index =
-        findWordIndex(
-          audio.currentTime
-        );
-
-      if (index >= 0) {
-
-        paintLineFill(index);
-
-        updateScrollTarget(index);
-      }
-
-    } else {
-
-      clearLineFill();
-    }
-
+    updateCameraTarget();
+    updateRange();
 
     if (
       performance.now() <
-      userScrollUntil
+      manualUntil
     ) {
-
-      cameraPosition =
-        window.scrollY;
-
+      lastFrame = now;
       cameraTarget =
-        Math.max(
-          cameraTarget,
-          window.scrollY
-        );
-
-      cameraLastFrame = now;
-
+        window.scrollY;
       return;
     }
-
 
     const dt =
       Math.min(
         40,
         Math.max(
           1,
-          now - cameraLastFrame
+          now - lastFrame
         )
       );
 
-    cameraLastFrame = now;
-
+    lastFrame = now;
 
     const current =
       window.scrollY;
 
-    /*
-      Interpolación basada en tiempo,
-      no en número de frames.
-    */
-
-    const alpha =
-      1 -
-      Math.exp(
-        -dt / 260
-      );
-
-
     const destination =
-      Math.max(
-        current,
-        cameraTarget
-      );
-
+      cameraTarget;
 
     const distance =
       destination -
       current;
 
-
-    if (distance > .4) {
-
-      cameraPosition =
-        current +
-        distance * alpha;
-
-      /*
-        Seguridad absoluta:
-        nunca mover automáticamente hacia arriba.
-      */
-
-      if (
-        cameraPosition >
-        current
-      ) {
-
-        window.scrollTo(
-          0,
-          cameraPosition
+    if (
+      Math.abs(distance) >
+      .15
+    ) {
+      const alpha =
+        1 -
+        Math.exp(
+          -dt / 520
         );
-      }
+
+      let movement =
+        distance *
+        alpha;
+
+      const maxMovement =
+        Math.max(
+          1.2,
+          dt * .20
+        );
+
+      movement =
+        clamp(
+          movement,
+          -maxMovement,
+          maxMovement
+        );
+
+      window.scrollTo(
+        0,
+        current +
+        movement
+      );
     }
   };
 
+  const setLanguage =
+    async (
+      lang,
+      preservePosition = true
+    ) => {
 
-  const setLanguage = async (
-    lang,
-    preservePosition = true
-  ) => {
-
-    if (
-      !FILES[lang] ||
-      switchingLanguage
-    ) {
+    if (!FILES[lang]) {
       return;
     }
-
-    if (
-      lang === language &&
-      audio.getAttribute("src") ===
-      FILES[lang].audio
-    ) {
-      return;
-    }
-
-    switchingLanguage = true;
 
     const wasPlaying =
       !audio.paused;
 
     const ratio =
       preservePosition &&
-      Number.isFinite(audio.duration) &&
+      Number.isFinite(
+        audio.duration
+      ) &&
       audio.duration > 0
         ? audio.currentTime /
           audio.duration
         : 0;
-
 
     language = lang;
 
@@ -3354,35 +2038,40 @@ main section.unfire-reading-section{
 
     audio.load();
 
-    await loadTranscript(lang);
+    timeline =
+      await fetchTimeline(lang);
 
+    words =
+      getWords(timeline);
 
-    await new Promise(resolve => {
+    await new Promise(
+      resolve => {
+        if (
+          Number.isFinite(
+            audio.duration
+          ) &&
+          audio.duration > 0
+        ) {
+          resolve();
+          return;
+        }
 
-      if (
-        Number.isFinite(audio.duration) &&
-        audio.duration > 0
-      ) {
-        resolve();
-        return;
+        audio.addEventListener(
+          "loadedmetadata",
+          resolve,
+          { once:true }
+        );
       }
-
-      audio.addEventListener(
-        "loadedmetadata",
-        resolve,
-        { once:true }
-      );
-    });
-
+    );
 
     if (
       preservePosition &&
       ratio > 0
     ) {
-
       audio.currentTime =
         Math.min(
-          audio.duration * ratio,
+          audio.duration *
+          ratio,
           Math.max(
             0,
             audio.duration - .1
@@ -3390,14 +2079,7 @@ main section.unfire-reading-section{
         );
     }
 
-
-    currentWordIndex = -1;
-
-    scrollCurrent =
-      window.scrollY;
-
-    scrollTarget =
-      window.scrollY;
+    cameraBlock = null;
 
 
     if (wasPlaying) {
@@ -3405,40 +2087,25 @@ main section.unfire-reading-section{
         await audio.play();
       } catch (_) {}
     }
-
-    switchingLanguage = false;
   };
-
 
   playBtn.addEventListener(
     "click",
     async () => {
-
       if (audio.paused) {
-
         try {
-
           await audio.play();
-
-          playBtn.textContent = "Ⅱ";
-
         } catch (error) {
-
           console.error(
-            "Playback failed:",
+            "Narration playback failed:",
             error
           );
         }
-
       } else {
-
         audio.pause();
-
-        playBtn.textContent = "▶";
       }
     }
   );
-
 
   audio.addEventListener(
     "play",
@@ -3447,79 +2114,61 @@ main section.unfire-reading-section{
     }
   );
 
-
   audio.addEventListener(
     "pause",
     () => {
-
-      clearLineFill();
-
       if (!audio.ended) {
         playBtn.textContent = "▶";
       }
     }
   );
 
-
   audio.addEventListener(
     "ended",
     () => {
-
-      clearLineFill();
-
       playBtn.textContent = "▶";
-
-      clearLineFill();
+      updateCameraTarget();
     }
   );
-
 
   range.addEventListener(
     "pointerdown",
     () => {
-
       dragging = true;
-
-      userScrollUntil =
-        performance.now() + 800;
+      manualUntil =
+        performance.now() +
+        900;
     }
   );
-
 
   range.addEventListener(
     "input",
     () => {
-
       if (
         Number.isFinite(
           audio.duration
-        )
+        ) &&
+        audio.duration > 0
       ) {
-
         audio.currentTime =
           audio.duration *
           (
-            Number(range.value) /
+            Number(
+              range.value
+            ) /
             100000
           );
 
-        currentWordIndex = -1;
+        updateCameraTarget();
       }
     }
   );
 
-
   const finishSeek = () => {
-
     dragging = false;
-
-    scrollCurrent =
-      window.scrollY;
-
-    scrollTarget =
-      window.scrollY;
+    cameraBlock = null;
+    updateCameraTarget();
   };
-
 
   range.addEventListener(
     "pointerup",
@@ -3531,207 +2180,1318 @@ main section.unfire-reading-section{
     finishSeek
   );
 
-
-  const pauseAutoFollow = () => {
-
-    userScrollUntil =
-      performance.now() + 1800;
-
-    cameraPosition =
-      window.scrollY;
+  const pauseFollow = () => {
+    manualUntil =
+      performance.now() +
+      1900;
 
     cameraTarget =
       window.scrollY;
 
-    cameraBlock = null;
-
-    cameraLastFrame =
-      performance.now();
+    cameraBlock =
+      null;
   };
-
 
   window.addEventListener(
     "wheel",
-    pauseAutoFollow,
+    pauseFollow,
     { passive:true }
   );
 
   window.addEventListener(
     "touchstart",
-    pauseAutoFollow,
+    pauseFollow,
     { passive:true }
   );
-
-
-  let detectedLanguage =
-    detectLanguage();
-
-
-  const watchLanguage = async () => {
-
-    const detected =
-      detectLanguage();
-
-    if (
-      detected !== detectedLanguage
-    ) {
-
-      detectedLanguage =
-        detected;
-
-      /*
-        Give Safari a moment to finish
-        replacing the translated DOM.
-      */
-
-      await new Promise(
-        resolve =>
-          setTimeout(resolve, 650)
-      );
-
-      await setLanguage(
-        detected,
-        true
-      );
-
-      /*
-        Rebuild alignment against the
-        text that is actually visible.
-      */
-
-      setTimeout(
-        alignWords,
-        500
-      );
-    }
-  };
-
-
-  setInterval(
-    watchLanguage,
-    400
-  );
-
 
   window.addEventListener(
     "resize",
     () => {
-
-      scrollCurrent =
-        window.scrollY;
-
-      scrollTarget =
-        window.scrollY;
-
-      alignWords();
+      cameraBlock = null;
+      updateCameraTarget();
     }
   );
 
+  let automaticLanguageSwitch = false;
 
-  document.addEventListener(
-    "visibilitychange",
-    () => {
+  const detectVisibleLanguage = () => {
+    const main =
+      document.querySelector("main");
 
-      if (
-        !document.hidden &&
-        transcript.length
-      ) {
-        alignWords();
-      }
+    if (!main) {
+      return language;
     }
-  );
 
+    const hero =
+      main.querySelector("h1");
 
+    const heroText =
+      (
+        hero?.innerText ||
+        hero?.textContent ||
+        ""
+      )
+      .toLocaleLowerCase()
+      .replace(/\s+/g, " ")
+      .trim();
 
+    if (
+      heroText.includes(
+        "construir tecnología"
+      ) ||
+      heroText.includes(
+        "reutilizar la ventaja"
+      )
+    ) {
+      return "es";
+    }
 
-  let translationRemapTimer = null;
+    if (
+      heroText.includes(
+        "build technology"
+      ) ||
+      heroText.includes(
+        "reuse the advantage"
+      )
+    ) {
+      return "en";
+    }
 
-  const narrationRoot =
-    document.querySelector("main");
+    const body =
+      (
+        main.innerText ||
+        main.textContent ||
+        ""
+      )
+      .toLocaleLowerCase();
 
-  if (narrationRoot) {
+    const spanishWords = [
+      "financiación",
+      "tecnología",
+      "empresa",
+      "reutilizar",
+      "sistema",
+      "producción"
+    ];
 
-    const translationObserver =
-      new MutationObserver(() => {
+    const englishWords = [
+      "funding",
+      "technology",
+      "company",
+      "reuse",
+      "system",
+      "production"
+    ];
 
-        clearTimeout(
-          translationRemapTimer
-        );
+    const spanishScore =
+      spanishWords.filter(
+        word => body.includes(word)
+      ).length;
 
-        translationRemapTimer =
-          setTimeout(() => {
+    const englishScore =
+      englishWords.filter(
+        word => body.includes(word)
+      ).length;
 
-            if (
-              switchingLanguage
-            ) {
-              return;
-            }
+    if (
+      spanishScore >
+      englishScore
+    ) {
+      return "es";
+    }
 
-            /*
-              Eliminar cualquier Range que apunte
-              al DOM anterior.
-            */
+    if (
+      englishScore >
+      spanishScore
+    ) {
+      return "en";
+    }
 
-            if (
-              window.CSS &&
-              CSS.highlights
-            ) {
-              CSS.highlights.delete(
-                "unfire-speaking-word"
-              );
-            }
+    return (
+      document.documentElement.lang
+        ?.toLowerCase()
+        .startsWith("es")
+    )
+      ? "es"
+      : "en";
+  };
 
-            currentWordIndex = -1;
+  const watchVisibleLanguage =
+    async () => {
 
-            alignWords();
+    if (automaticLanguageSwitch) {
+      return;
+    }
 
-            cameraBlock = null;
+    const detected =
+      detectVisibleLanguage();
 
-          }, 750);
-      });
+    if (
+      detected === language
+    ) {
+      return;
+    }
 
-    translationObserver.observe(
-      narrationRoot,
-      {
-        subtree:true,
-        childList:true,
-        characterData:true
-      }
-    );
-  }
+    automaticLanguageSwitch = true;
+
+    try {
+      await setLanguage(
+        detected,
+        true
+      );
+    } catch (error) {
+      console.error(
+        "Language switch failed:",
+        error
+      );
+    } finally {
+      automaticLanguageSwitch = false;
+    }
+  };
 
   const start = async () => {
+    try {
+      language =
+        detectVisibleLanguage();
 
-    detectedLanguage =
-      detectLanguage();
+      audio.src =
+        FILES[language].audio;
 
-    language =
-      detectedLanguage;
+      audio.load();
 
-    audio.src =
-      FILES[language].audio;
+      timeline =
+        await fetchTimeline(
+          language
+        );
 
-    audio.load();
+      words =
+        getWords(timeline);
 
-    await loadTranscript(
-      language
+      playBtn.textContent =
+        "▶";
+
+      requestAnimationFrame(
+        animationLoop
+      );
+
+      window.unfireReader = {
+        setLanguage,
+        detectVisibleLanguage
+      };
+
+      window.setInterval(
+        watchVisibleLanguage,
+        700
+      );
+
+    } catch (error) {
+      console.error(
+        "Unfire canonical reader failed:",
+        error
+      );
+    }
+  };
+
+  start();
+})();
+</script>
+<script id="unfire-fixed-film-script">
+(() => {
+  "use strict";
+
+  const canvas =
+    document.getElementById(
+      "unfire-fixed-film"
     );
 
-    playBtn.textContent = "▶";
+  if (!canvas) return;
 
-    requestAnimationFrame(
-      animationLoop
+  const ctx =
+    canvas.getContext(
+      "2d",
+      {
+        alpha:false
+      }
+    );
+
+  const audio =
+    document.getElementById(
+      "unfire-narration"
+    );
+
+  let W = 0;
+  let H = 0;
+  let DPR = 1;
+
+  let targetScene = 0;
+  let visualScene = 0;
+
+  const clamp =
+    (v,a,b) =>
+      Math.max(
+        a,
+        Math.min(
+          b,
+          v
+        )
+      );
+
+  const lerp =
+    (a,b,t) =>
+      a +
+      (b-a)*t;
+
+  const resize = () => {
+
+    DPR =
+      Math.min(
+        window.devicePixelRatio || 1,
+        2
+      );
+
+    W =
+      window.innerWidth;
+
+    H =
+      window.innerHeight;
+
+    canvas.width =
+      Math.round(
+        W*DPR
+      );
+
+    canvas.height =
+      Math.round(
+        H*DPR
+      );
+
+    ctx.setTransform(
+      DPR,
+      0,
+      0,
+      DPR,
+      0,
+      0
     );
   };
 
+  const line = (
+    x1,y1,
+    x2,y2,
+    alpha=.35,
+    width=1
+  ) => {
 
-  start();
+    ctx.beginPath();
 
+    ctx.moveTo(
+      x1,y1
+    );
+
+    ctx.lineTo(
+      x2,y2
+    );
+
+    ctx.strokeStyle =
+      `rgba(225,235,255,${alpha})`;
+
+    ctx.lineWidth =
+      width;
+
+    ctx.stroke();
+  };
+
+  const box = (
+    x,y,
+    w,h,
+    alpha=.28
+  ) => {
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+      x-w/2,
+      y-h/2,
+      w,
+      h,
+      Math.min(
+        34,
+        h*.28
+      )
+    );
+
+    ctx.fillStyle =
+      "rgba(130,165,225,.025)";
+
+    ctx.fill();
+
+    ctx.strokeStyle =
+      `rgba(225,235,255,${alpha})`;
+
+    ctx.lineWidth = 1;
+
+    ctx.stroke();
+  };
+
+  const circle = (
+    x,y,
+    r,
+    alpha=.35,
+    fill=.025
+  ) => {
+
+    ctx.beginPath();
+
+    ctx.arc(
+      x,y,r,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fillStyle =
+      `rgba(145,180,235,${fill})`;
+
+    ctx.fill();
+
+    ctx.strokeStyle =
+      `rgba(225,235,255,${alpha})`;
+
+    ctx.lineWidth = 1;
+
+    ctx.stroke();
+  };
+
+  const dot = (
+    x,y,
+    r=4
+  ) => {
+
+    ctx.beginPath();
+
+    ctx.arc(
+      x,y,r,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fillStyle =
+      "rgba(245,248,255,.78)";
+
+    ctx.fill();
+  };
+
+  const sceneNames = [
+    "hero",
+    "company",
+    "bolt",
+    "power",
+    "suite",
+    "archer",
+    "audio",
+    "system",
+    "scale",
+    "companies",
+    "institutions",
+    "public",
+    "funding"
+  ];
+
+  const getWorkScene = () => {
+
+    const cards =
+      Array.from(
+        document.querySelectorAll(
+          "#work .product"
+        )
+      );
+
+    const point =
+      H*.5;
+
+    let best = null;
+    let bestDistance = Infinity;
+
+    for (const card of cards) {
+
+      const rect =
+        card.getBoundingClientRect();
+
+      const distance =
+        Math.abs(
+          rect.top +
+          rect.height*.5 -
+          point
+        );
+
+      if (
+        distance <
+        bestDistance
+      ) {
+        bestDistance =
+          distance;
+
+        best = card;
+      }
+    }
+
+    const title =
+      best
+      ?.querySelector("h3")
+      ?.textContent
+      ?.trim()
+      ?.toLowerCase() || "";
+
+    if (
+      title.includes("power")
+    ) {
+      return 3;
+    }
+
+    if (
+      title.includes("suite")
+    ) {
+      return 4;
+    }
+
+    if (
+      title.includes("archer")
+    ) {
+      return 5;
+    }
+
+    return 2;
+  };
+
+  const detectScene = () => {
+
+    const point =
+      H*.48;
+
+    const ids = [
+      "company",
+      "work",
+      "audio",
+      "system",
+      "scale",
+      "funding"
+    ];
+
+    let current =
+      "hero";
+
+    for (const id of ids) {
+
+      const section =
+        document.getElementById(id);
+
+      if (!section) continue;
+
+      const rect =
+        section.getBoundingClientRect();
+
+      if (
+        rect.top <= point
+      ) {
+        current = id;
+      }
+    }
+
+    if (
+      current === "company"
+    ) {
+      return 1;
+    }
+
+    if (
+      current === "work"
+    ) {
+      return getWorkScene();
+    }
+
+    if (
+      current === "audio"
+    ) {
+      return 6;
+    }
+
+    if (
+      current === "system"
+    ) {
+      return 7;
+    }
+
+    if (
+      current === "scale"
+    ) {
+      return 8;
+    }
+
+    if (
+      current === "funding"
+    ) {
+      return 12;
+    }
+
+    return 0;
+  };
+
+  const drawFoundation = t => {
+
+    const x =
+      W*.72;
+
+    const y =
+      H*.50;
+
+    circle(
+      x,y,
+      78,
+      .62,
+      .055
+    );
+
+    const targets = [
+      [-230,-170],
+      [230,-170],
+      [-230,170],
+      [230,170]
+    ];
+
+    targets.forEach(
+      ([dx,dy],i) => {
+
+        const pulse =
+          .92 +
+          Math.sin(
+            t*.001 +
+            i
+          )*.025;
+
+        line(
+          x,y,
+          x+dx,
+          y+dy,
+          .32
+        );
+
+        box(
+          x+dx,
+          y+dy,
+          155*pulse,
+          94*pulse,
+          .26
+        );
+      }
+    );
+  };
+
+  const drawCompany = t => {
+
+    const cx =
+      W*.72;
+
+    const cy =
+      H*.50;
+
+    box(
+      cx,
+      cy,
+      420,
+      250,
+      .34
+    );
+
+    const xs = [
+      -120,
+      0,
+      120
+    ];
+
+    xs.forEach(
+      (dx,i) => {
+
+        box(
+          cx+dx,
+          cy-45,
+          90,
+          65,
+          .24
+        );
+
+        box(
+          cx+dx,
+          cy+55,
+          90,
+          65,
+          .24
+        );
+
+        line(
+          cx+dx,
+          cy-12,
+          cx+dx,
+          cy+22,
+          .28
+        );
+      }
+    );
+  };
+
+  const drawBolt = t => {
+
+    const cx =
+      W*.72;
+
+    const top =
+      H*.26;
+
+    circle(
+      cx,
+      top,
+      60,
+      .62,
+      .055
+    );
+
+    const targets = [
+      [
+        W*.55,
+        H*.60
+      ],
+      [
+        W*.72,
+        H*.70
+      ],
+      [
+        W*.89,
+        H*.60
+      ]
+    ];
+
+    targets.forEach(
+      ([x,y],i) => {
+
+        line(
+          cx,
+          top+60,
+          x,
+          y-45,
+          .38
+        );
+
+        box(
+          x,y,
+          150,
+          90,
+          .30
+        );
+
+        const f =
+          (
+            Math.sin(
+              t*.0015 +
+              i*2
+            ) +
+            1
+          )*.5;
+
+        dot(
+          lerp(
+            cx,
+            x,
+            f
+          ),
+          lerp(
+            top+60,
+            y-45,
+            f
+          ),
+          4
+        );
+      }
+    );
+  };
+
+  const drawPower = t => {
+
+    const left =
+      W*.51;
+
+    const right =
+      W*.81;
+
+    for (
+      let i=0;
+      i<4;
+      i++
+    ) {
+      box(
+        left,
+        H*
+        (
+          .28 +
+          i*.15
+        ),
+        115,
+        66,
+        .22
+      );
+
+      line(
+        left+60,
+        H*
+        (
+          .28 +
+          i*.15
+        ),
+        right-170,
+        H*.48,
+        .25
+      );
+    }
+
+    box(
+      right,
+      H*.48,
+      310,
+      220,
+      .40
+    );
+
+    ctx.beginPath();
+
+    for (
+      let i=0;
+      i<=90;
+      i++
+    ) {
+
+      const p =
+        i/90;
+
+      const x =
+        right-130 +
+        p*260;
+
+      const y =
+        H*.50 +
+        Math.sin(
+          p*8 +
+          t*.001
+        )*32 -
+        p*45;
+
+      if (!i) {
+        ctx.moveTo(
+          x,y
+        );
+      } else {
+        ctx.lineTo(
+          x,y
+        );
+      }
+    }
+
+    ctx.strokeStyle =
+      "rgba(235,242,255,.58)";
+
+    ctx.lineWidth =
+      1.2;
+
+    ctx.stroke();
+  };
+
+  const drawSuite = t => {
+
+    const cx =
+      W*.72;
+
+    for (
+      let i=0;
+      i<4;
+      i++
+    ) {
+
+      box(
+        cx,
+        H*.73 -
+        i*95,
+        410 -
+        i*65,
+        70,
+        .24 +
+        i*.05
+      );
+    }
+
+    line(
+      cx,
+      H*.73,
+      cx,
+      H*.30,
+      .38
+    );
+  };
+
+  const drawArcher = t => {
+
+    ctx.beginPath();
+
+    for (
+      let i=0;
+      i<=170;
+      i++
+    ) {
+
+      const p =
+        i/170;
+
+      const x =
+        W*.44 +
+        p*W*.52;
+
+      const amp =
+        62 *
+        Math.sin(
+          p*Math.PI
+        );
+
+      const y =
+        H*.5 +
+        Math.sin(
+          p*32 +
+          t*.002
+        )*
+        amp;
+
+      if (!i) {
+        ctx.moveTo(
+          x,y
+        );
+      } else {
+        ctx.lineTo(
+          x,y
+        );
+      }
+    }
+
+    ctx.strokeStyle =
+      "rgba(238,244,255,.65)";
+
+    ctx.lineWidth =
+      1.3;
+
+    ctx.stroke();
+
+    [
+      .58,
+      .72,
+      .86
+    ].forEach(
+      x => {
+
+        circle(
+          W*x,
+          H*.5,
+          32,
+          .45,
+          .035
+        );
+      }
+    );
+  };
+
+  const drawAudio = t => {
+
+    const cx =
+      W*.72;
+
+    const cy =
+      H*.5;
+
+    for (
+      let i=0;
+      i<4;
+      i++
+    ) {
+      circle(
+        cx,
+        cy,
+        75+i*52,
+        .16,
+        0
+      );
+    }
+
+    for (
+      let i=0;
+      i<5;
+      i++
+    ) {
+
+      const a =
+        i*Math.PI*2/5 +
+        t*.00012;
+
+      const x =
+        cx +
+        Math.cos(a)*220;
+
+      const y =
+        cy +
+        Math.sin(a)*165;
+
+      line(
+        cx,
+        cy,
+        x,
+        y,
+        .28
+      );
+
+      box(
+        x,
+        y,
+        110,
+        70,
+        .25
+      );
+    }
+  };
+
+  const drawSystem = t => {
+
+    const cx =
+      W*.72;
+
+    const ys = [
+      .72,
+      .59,
+      .46,
+      .33
+    ];
+
+    ys.forEach(
+      (y,i) => {
+
+        box(
+          cx,
+          H*y,
+          430-i*70,
+          72,
+          .25 +
+          i*.05
+        );
+      }
+    );
+
+    line(
+      cx,
+      H*.72,
+      cx,
+      H*.33,
+      .38
+    );
+  };
+
+  const drawScale = t => {
+
+    const rootX =
+      W*.72;
+
+    const rootY =
+      H*.74;
+
+    circle(
+      rootX,
+      rootY,
+      48,
+      .55,
+      .04
+    );
+
+    const targets = [
+      [W*.52,H*.40],
+      [W*.72,H*.22],
+      [W*.90,H*.40],
+      [W*.56,H*.62],
+      [W*.87,H*.62]
+    ];
+
+    targets.forEach(
+      ([x,y],i) => {
+
+        line(
+          rootX,
+          rootY,
+          x,
+          y,
+          .30
+        );
+
+        box(
+          x,
+          y,
+          120,
+          78,
+          .24
+        );
+      }
+    );
+  };
+
+  const drawFunding = t => {
+
+    const cx =
+      W*.72;
+
+    const cy =
+      H*.5;
+
+    circle(
+      cx,
+      cy,
+      60,
+      .55,
+      .05
+    );
+
+    for (
+      let i=0;
+      i<3;
+      i++
+    ) {
+      circle(
+        cx,
+        cy,
+        130+i*72+
+        Math.sin(
+          t*.001
+        )*8,
+        .15,
+        0
+      );
+    }
+
+    const nodes = [
+      [W*.53,H*.30],
+      [W*.72,H*.20],
+      [W*.91,H*.30],
+      [W*.55,H*.71],
+      [W*.89,H*.71]
+    ];
+
+    nodes.forEach(
+      ([x,y]) => {
+
+        line(
+          cx,
+          cy,
+          x,
+          y,
+          .28
+        );
+
+        box(
+          x,
+          y,
+          118,
+          74,
+          .22
+        );
+      }
+    );
+  };
+
+  const painters = [
+    drawFoundation,
+    drawCompany,
+    drawBolt,
+    drawPower,
+    drawSuite,
+    drawArcher,
+    drawAudio,
+    drawSystem,
+    drawScale,
+    drawScale,
+    drawSystem,
+    drawCompany,
+    drawFunding
+  ];
+
+  const render =
+    time => {
+
+    targetScene =
+      detectScene();
+
+    visualScene +=
+      (
+        targetScene -
+        visualScene
+      )*.045;
+
+    const index =
+      clamp(
+        Math.round(
+          visualScene
+        ),
+        0,
+        painters.length-1
+      );
+
+    ctx.fillStyle =
+      "#000";
+
+    ctx.fillRect(
+      0,0,
+      W,H
+    );
+
+    const glow =
+      ctx.createRadialGradient(
+        W*.72,
+        H*.5,
+        40,
+        W*.72,
+        H*.5,
+        Math.max(
+          W,H
+        )*.55
+      );
+
+    glow.addColorStop(
+      0,
+      "rgba(50,70,110,.13)"
+    );
+
+    glow.addColorStop(
+      1,
+      "rgba(0,0,0,0)"
+    );
+
+    ctx.fillStyle =
+      glow;
+
+    ctx.fillRect(
+      0,0,
+      W,H
+    );
+
+    painters[index](
+      time
+    );
+
+    requestAnimationFrame(
+      render
+    );
+  };
+
+  window.addEventListener(
+    "resize",
+    resize,
+    {
+      passive:true
+    }
+  );
+
+  resize();
+
+  requestAnimationFrame(
+    render
+  );
+
+  console.log(
+    "UNFIRE FIXED FILM READY"
+  );
 })();
-</script>
+</script><script id="unfire-web2-story-script">
+(() => {
+  const stage = document.getElementById("unfire-web2-story");
+  const layerA = document.getElementById("uw2-a");
+  const layerB = document.getElementById("uw2-b");
+  const caption = document.getElementById("uw2-caption");
+  if (!stage || !layerA || !layerB || !caption) return;
 
+  const scenes = [
+    { key:"top",     label:"Foundation",   src:"assets/scenes/web2-01.png" },
+    { key:"company", label:"Company",      src:"assets/scenes/web2-02.png" },
+    { key:"work",    label:"Work",         src:"assets/scenes/web2-03.png" },
+    { key:"audio",   label:"Unfire Audio", src:"assets/scenes/web2-04.png" },
+    { key:"system",  label:"System",       src:"assets/scenes/web2-05.png" },
+    { key:"scale",   label:"Scale",        src:"assets/scenes/web2-06.png" },
+    { key:"funding", label:"Funding",      src:"assets/scenes/web2-07.png" }
+  ];
 
+  let activeIndex = 0;
+  let showingA = true;
+  let ticking = false;
 
+  const preload = src => {
+    const img = new Image();
+    img.src = src;
+  };
 
-</body>
+  scenes.forEach(scene => preload(scene.src));
+
+  const getSectionElements = () => {
+    return scenes.map(scene => {
+      let el = null;
+      if (scene.key === "top") {
+        el = document.getElementById("top") || document.querySelector("main");
+      } else {
+        el = document.getElementById(scene.key);
+      }
+      return { ...scene, el };
+    }).filter(x => x.el);
+  };
+
+  const sectionElements = getSectionElements();
+
+  const setScene = index => {
+    if (index === activeIndex || !scenes[index]) return;
+
+    const next = scenes[index];
+    const incoming = showingA ? layerB : layerA;
+    const outgoing = showingA ? layerA : layerB;
+
+    incoming.src = next.src;
+    incoming.classList.add("is-active");
+    outgoing.classList.remove("is-active");
+
+    caption.textContent = next.label;
+
+    showingA = !showingA;
+    activeIndex = index;
+  };
+
+  const detectActiveIndex = () => {
+    const marker = window.innerHeight * 0.42;
+    let best = 0;
+
+    sectionElements.forEach((item, index) => {
+      const rect = item.el.getBoundingClientRect();
+      if (rect.top <= marker) best = index;
+    });
+
+    return best;
+  };
+
+  const update = () => {
+    ticking = false;
+    setScene(detectActiveIndex());
+  };
+
+  const requestUpdate = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  };
+
+  window.addEventListener("scroll", requestUpdate, { passive:true });
+  window.addEventListener("resize", requestUpdate);
+
+  requestUpdate();
+})();
+</script></body>
 </html>
