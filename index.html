@@ -302,130 +302,177 @@ h2{
 }
 </style>
 
+
+
+
 <!-- UNFIRE TYPOGRAPHY SYSTEM START -->
 <style>
+
+/* GLOBAL TYPOGRAPHY RESET */
+h1, h2, h3, h4,
+.hero h1,
+.product h3,
+.stat strong {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+               "Helvetica Neue", Arial, sans-serif !important;
+  font-kerning: normal !important;
+  font-feature-settings: "kern" 1 !important;
+  text-rendering: optimizeLegibility;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+}
+
+/* HERO */
 .hero h1,
 h1 {
-  font-size: clamp(3.6rem, 7vw, 7.4rem) !important;
-  line-height: 1.04 !important;
-  letter-spacing: -0.01em !important;
-  font-weight: 620 !important;
-  max-width: 1050px !important;
+  font-size: clamp(3.7rem, 6.4vw, 6.7rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: 0.005em !important;
+  font-weight: 600 !important;
+  max-width: 980px !important;
+  margin-bottom: 0 !important;
   text-wrap: balance;
-  overflow-wrap: normal;
-  word-break: normal;
 }
 
+/* SECTION HEADINGS */
 section h2,
 h2 {
-  font-size: clamp(2.8rem, 5vw, 5.15rem) !important;
-  line-height: 1.08 !important;
-  letter-spacing: -0.005em !important;
-  font-weight: 610 !important;
-  max-width: 980px !important;
+  font-size: clamp(2.75rem, 4.35vw, 4.75rem) !important;
+  line-height: 1.12 !important;
+  letter-spacing: 0.004em !important;
+  font-weight: 590 !important;
+  max-width: 1050px !important;
+  margin-bottom: 0 !important;
   text-wrap: balance;
-  overflow-wrap: normal;
-  word-break: normal;
 }
 
+/* PRODUCT / CARD TITLES */
 .product h3,
 .card h3,
 .info h3,
 .event h3,
 h3 {
-  line-height: 1.12 !important;
-  letter-spacing: 0 !important;
-  font-weight: 600 !important;
+  font-size: clamp(2.15rem, 3vw, 3.35rem) !important;
+  line-height: 1.16 !important;
+  letter-spacing: 0.006em !important;
+  font-weight: 590 !important;
   text-wrap: balance;
-  overflow-wrap: normal;
-  word-break: normal;
 }
 
-.product h3 {
-  font-size: clamp(2.5rem, 3.7vw, 3.8rem) !important;
-}
-
+/* NUMBERS */
 .stat strong,
 .metric strong {
-  line-height: 1.05 !important;
-  letter-spacing: -0.01em !important;
-  font-weight: 610 !important;
+  font-size: clamp(3.25rem, 4.2vw, 4.7rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: 0 !important;
+  font-weight: 600 !important;
 }
 
-.hero p,
+/* BODY COPY */
+.hero p {
+  max-width: 760px !important;
+  font-size: clamp(1.15rem, 1.55vw, 1.45rem) !important;
+  line-height: 1.62 !important;
+  letter-spacing: 0.005em !important;
+  margin-top: 2.6rem !important;
+}
+
 .lead,
 .product p,
 .card p,
 .info p,
 .point span,
+.stat span,
 .funding-box p {
-  letter-spacing: 0 !important;
-  line-height: 1.68 !important;
+  line-height: 1.7 !important;
+  letter-spacing: 0.006em !important;
 }
 
-.hero p {
-  max-width: 760px !important;
-  font-size: clamp(1.15rem, 1.7vw, 1.55rem) !important;
-  margin-top: 2.4rem !important;
+/* LABELS */
+.eyebrow,
+.product-type {
+  letter-spacing: 0.16em !important;
+  line-height: 1.45 !important;
 }
 
-.eyebrow {
-  letter-spacing: 0.14em !important;
-  line-height: 1.4 !important;
+/* SPACE BETWEEN TITLE AND CONTENT */
+section h2 + .lead {
+  margin-top: 2.2rem !important;
 }
 
-nav {
-  letter-spacing: 0 !important;
+.products,
+.stats,
+.points {
+  margin-top: 3.8rem !important;
 }
 
-section {
-  scroll-margin-top: 90px;
+/* CARDS */
+.product {
+  padding: 2.2rem !important;
 }
 
+.product h3 {
+  margin-top: 2rem !important;
+  margin-bottom: 1.35rem !important;
+}
+
+/* TABLET */
 @media (max-width: 900px) {
   .hero h1,
   h1 {
-    font-size: clamp(3.2rem, 10vw, 5.6rem) !important;
-    line-height: 1.05 !important;
-    letter-spacing: 0 !important;
+    font-size: clamp(3.25rem, 8.5vw, 5.4rem) !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0.006em !important;
   }
 
   section h2,
   h2 {
-    font-size: clamp(2.5rem, 7.5vw, 4.4rem) !important;
-    line-height: 1.09 !important;
-    letter-spacing: 0 !important;
+    font-size: clamp(2.65rem, 6.8vw, 4.1rem) !important;
+    line-height: 1.13 !important;
+    letter-spacing: 0.006em !important;
   }
 
   .product h3,
   h3 {
-    letter-spacing: 0 !important;
-    line-height: 1.12 !important;
+    font-size: clamp(2.2rem, 5vw, 3rem) !important;
+    line-height: 1.17 !important;
+    letter-spacing: 0.008em !important;
   }
 }
 
+/* MOBILE */
 @media (max-width: 600px) {
   .hero h1,
   h1 {
-    font-size: clamp(3rem, 14vw, 4.4rem) !important;
-    line-height: 1.06 !important;
+    font-size: clamp(3rem, 12vw, 4.25rem) !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0.008em !important;
+    text-wrap: pretty;
   }
 
   section h2,
   h2 {
-    font-size: clamp(2.35rem, 11vw, 3.6rem) !important;
-    line-height: 1.1 !important;
+    font-size: clamp(2.35rem, 9.5vw, 3.35rem) !important;
+    line-height: 1.15 !important;
+    letter-spacing: 0.008em !important;
+    text-wrap: pretty;
   }
 
-  .hero p {
-    font-size: 1.08rem !important;
-    line-height: 1.65 !important;
+  .product h3,
+  h3 {
+    font-size: clamp(2rem, 8vw, 2.65rem) !important;
+    line-height: 1.18 !important;
+    letter-spacing: 0.01em !important;
   }
 
-  .product h3 {
-    font-size: clamp(2.2rem, 10vw, 3rem) !important;
+  .hero p,
+  .lead {
+    font-size: 1.05rem !important;
+    line-height: 1.7 !important;
   }
 }
+
 </style>
 <!-- UNFIRE TYPOGRAPHY SYSTEM END -->
 
