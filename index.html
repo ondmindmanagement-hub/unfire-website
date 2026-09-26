@@ -1241,6 +1241,246 @@ section h2 + .lead {
 }
 </style>
 
+
+<style>
+
+/* SIMPLE SCALE — APPLE-LIKE */
+
+.simple-scale{
+  padding-top:130px;
+  padding-bottom:130px;
+}
+
+.scale-hero-card{
+  margin-top:58px;
+  padding:42px;
+  border:1px solid var(--line);
+  border-radius:28px;
+  background:#0b0b0d;
+}
+
+.scale-big{
+  max-width:950px;
+  font-size:clamp(2.8rem,5vw,5.6rem);
+  line-height:1.02;
+  letter-spacing:-.01em;
+  font-weight:590;
+}
+
+.scale-hero-card p{
+  max-width:760px;
+  margin:28px 0 0;
+  color:var(--muted);
+  line-height:1.72;
+}
+
+.simple-metrics{
+  margin-top:16px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.simple-metrics > div{
+  padding:28px;
+  min-height:180px;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:#0b0b0d;
+}
+
+.simple-metrics strong{
+  display:block;
+  font-size:clamp(2.6rem,4vw,4.5rem);
+  line-height:1.02;
+  letter-spacing:-.01em;
+}
+
+.simple-metrics span{
+  display:block;
+  margin-top:24px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.55;
+}
+
+.simple-flow{
+  margin-top:80px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr auto 1fr;
+  align-items:center;
+  gap:22px;
+}
+
+.simple-flow > div:not(.flow-arrow){
+  padding:26px 0;
+}
+
+.simple-flow span{
+  color:#686870;
+  font-size:11px;
+}
+
+.simple-flow strong{
+  display:block;
+  margin-top:12px;
+  font-size:20px;
+}
+
+.simple-flow p{
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.flow-arrow{
+  color:#505057;
+  font-size:24px;
+}
+
+.scale-message{
+  margin-top:80px;
+  max-width:960px;
+}
+
+.scale-message h3{
+  margin:0;
+  font-size:clamp(2.5rem,4.5vw,5rem) !important;
+  line-height:1.08 !important;
+  letter-spacing:0 !important;
+}
+
+.scale-message p{
+  max-width:750px;
+  margin:26px 0 0;
+  color:var(--muted);
+  line-height:1.72;
+}
+
+.simple-grid{
+  margin-top:70px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.simple-grid > div{
+  padding:30px;
+  border-top:1px solid var(--line);
+}
+
+.simple-grid h3{
+  margin:15px 0 0;
+  font-size:25px !important;
+  line-height:1.2 !important;
+}
+
+.simple-grid p{
+  margin:16px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+}
+
+.confidential-line{
+  margin-top:90px;
+  padding-top:30px;
+  border-top:1px solid var(--line);
+}
+
+.confidential-line strong{
+  display:block;
+  font-size:18px;
+}
+
+.confidential-line span{
+  display:block;
+  max-width:720px;
+  margin-top:12px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+}
+
+
+/* AUDIO PLAYER — MINIMAL */
+
+#unfire-player-v6{
+  width:270px !important;
+  padding:11px 13px 10px !important;
+  border-radius:16px !important;
+}
+
+#unfire-player-v6 .up6-info{
+  display:none !important;
+}
+
+#unfire-player-v6 .up6-top{
+  justify-content:flex-end !important;
+}
+
+#unfire-player-v6 .up6-controls{
+  width:100%;
+  justify-content:flex-end;
+}
+
+#unfire-player-v6 #up6-back{
+  display:none !important;
+}
+
+#unfire-player-v6 #up6-stop{
+  display:none !important;
+}
+
+#unfire-player-v6 #up6-play{
+  flex:1;
+  height:32px !important;
+}
+
+#unfire-player-v6 #up6-pause{
+  height:32px !important;
+  min-width:32px !important;
+}
+
+#unfire-player-v6 .up6-progress{
+  margin-top:8px !important;
+}
+
+#unfire-player-v6 .up6-meta{
+  margin-top:3px !important;
+}
+
+#up6-language{
+  display:none !important;
+}
+
+#up6-percent{
+  width:100%;
+  text-align:right;
+  font-size:9px;
+  font-variant-numeric:tabular-nums;
+}
+
+@media(max-width:900px){
+  .simple-metrics,
+  .simple-grid{
+    grid-template-columns:1fr;
+  }
+
+  .simple-flow{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+
+  .flow-arrow{
+    transform:rotate(90deg);
+    text-align:center;
+  }
+}
+
+</style>
+
 </head>
 
 <body>
@@ -1340,8 +1580,10 @@ repeatability and reliability of future development.
 <div class="product-type">Audio · Creative technology</div>
 <h3>Archer</h3>
 <p>
-Precision audio software used to validate DSP, plugin formats, standalone
-applications, signing, packaging and commercial distribution workflows.
+A precision clipping tool for music producers and engineers.
+Gain drives the signal, Threshold defines the clipping point,
+and Atmosphere shapes character — giving fast control over peaks,
+transients and intensity without slowing down the creative process.
 </p>
 </div>
 <footer>Flagship product</footer>
@@ -1437,245 +1679,147 @@ confidential.
 
 
 
+
 <div class="wrap">
-<section id="capacity">
+<section id="capacity" class="simple-scale">
 
-<div class="eyebrow">Production Scale</div>
+<div class="eyebrow">Production capacity</div>
 
-<h2>Software production without starting over.</h2>
+<h2>Build more.<br>Start over less.</h2>
 
-<p class="lead scale-intro">
-Unfire has built a reusable software-production foundation designed to turn
-new product concepts into working applications with substantially less
-repeated engineering.
+<p class="lead">
+Unfire has developed a reusable software foundation that allows new products
+to inherit existing technology instead of rebuilding the same foundations
+for every application.
 </p>
 
 
-<div class="scale-statement">
+<div class="scale-hero-card">
 
-<strong>
-The objective is not to make one application faster.
-It is to build the capacity to produce software repeatedly
-at a fundamentally different scale.
-</strong>
+<div class="scale-big">
+The bottleneck is moving.
+</div>
 
 <p>
-Instead of rebuilding the same technical foundations for every new product,
-Unfire reuses a growing internal technology base across independent apps,
-shared modules and larger software environments.
+When a new product fits the existing Unfire architecture, internal development
+has shown that working software candidates can be created and validated on
+very short cycles — in some cases measured in minutes rather than conventional
+multi-stage rebuilds.
+</p>
+
+<p>
+As production capacity grows, the next constraints become expandable
+infrastructure: storage, compute, testing, quality assurance and distribution.
+Those resources can scale without rebuilding the production system itself.
 </p>
 
 </div>
 
 
-<div class="scale-metrics">
+<div class="simple-metrics">
 
-<div class="scale-metric">
-<strong>3</strong>
-<span>Flagship product tracks already used to develop and validate the model.</span>
-</div>
-
-<div class="scale-metric">
-<strong>8</strong>
-<span>Priority Wave 1 software candidates identified for further development.</span>
-</div>
-
-<div class="scale-metric">
+<div>
 <strong>53</strong>
 <span>Standalone software candidates built and internally audited.</span>
 </div>
 
-<div class="scale-metric">
+<div>
 <strong>53/53</strong>
 <span>Successful standalone builds at the September 2026 internal checkpoint.</span>
 </div>
 
-</div>
-
-
-<div class="scale-grid">
-
-<div class="scale-card">
-
-<div class="scale-card-label">
-Production leverage
-</div>
-
-<h3>Less reconstruction. More output.</h3>
-
-<p>
-Traditional product development repeatedly recreates architecture,
-infrastructure, validation and deployment work. Unfire is designed to
-reuse those capabilities across future products.
-</p>
-
-<div class="pipeline">
-
-<div class="pipeline-row">
-<div class="pipeline-name">Isolated development</div>
-<div class="pipeline-track">
-<div class="pipeline-fill old"></div>
-</div>
-</div>
-
-<div class="pipeline-row">
-<div class="pipeline-name">Shared foundation</div>
-<div class="pipeline-track">
-<div class="pipeline-fill shared"></div>
-</div>
-</div>
-
-<div class="pipeline-row">
-<div class="pipeline-name">Compounding system</div>
-<div class="pipeline-track">
-<div class="pipeline-fill compound"></div>
-</div>
+<div>
+<strong>Scalable</strong>
+<span>Production capacity can expand through additional infrastructure without rebuilding the underlying system.</span>
 </div>
 
 </div>
 
-<p class="pipeline-note">
-Illustrative operating model. The chart represents internal leverage potential,
-not an externally audited competitor benchmark.
-</p>
 
-</div>
+<div class="simple-flow">
 
-
-<div class="scale-card">
-
-<div class="scale-card-label">
-Development cycle
-</div>
-
-<h3>From concept to working software.</h3>
-
-<p>
-When a new concept fits the existing Unfire architecture, internal experiments
-have shown that software candidates can be assembled and technically validated
-on very short development cycles.
-</p>
-
-<div class="bottleneck">
-
-<div class="bottleneck-node">
+<div>
+<span>01</span>
 <strong>Shared foundation</strong>
-<span>Existing reusable technology and production infrastructure.</span>
+<p>Reusable technology already exists.</p>
 </div>
 
-<div class="bottleneck-arrow">→</div>
+<div class="flow-arrow">→</div>
 
-<div class="bottleneck-node">
-<strong>New software</strong>
-<span>Independent product, module or specialised application.</span>
+<div>
+<span>02</span>
+<strong>New product</strong>
+<p>Build on top instead of beginning again.</p>
 </div>
 
-<div class="bottleneck-arrow">→</div>
+<div class="flow-arrow">→</div>
 
-<div class="bottleneck-node">
-<strong>Validation</strong>
-<span>Build, test, prioritise and prepare successful candidates.</span>
+<div>
+<span>03</span>
+<strong>Scale infrastructure</strong>
+<p>Add storage, compute, QA and distribution capacity.</p>
 </div>
 
 </div>
 
-</div>
 
-</div>
+<div class="scale-message">
 
-
-<div class="limit-box">
-
-<div class="eyebrow">The bottleneck is changing</div>
-
-<h3>
-From rebuilding software to scaling infrastructure.
-</h3>
+<h3>The production method scales separately from the infrastructure.</h3>
 
 <p>
-As Unfire's reusable foundation expands, production capacity increasingly
-depends on expandable resources such as compute, storage, testing capacity,
-quality assurance and commercial deployment rather than recreating the same
-technical foundations for every application.
-</p>
-
-<p>
-This means additional infrastructure can increase the number and complexity
-of products the system can support without requiring the underlying production
-method to be rebuilt from zero.
-</p>
-
-<div class="expansion">
-
-<div class="expansion-item">
-<strong>Storage</strong>
-<span>Expandable capacity for larger product portfolios and development assets.</span>
-</div>
-
-<div class="expansion-item">
-<strong>Compute</strong>
-<span>More simultaneous builds, validation and automated production workloads.</span>
-</div>
-
-<div class="expansion-item">
-<strong>Quality</strong>
-<span>Independent QA, security, accessibility and release hardening.</span>
-</div>
-
-<div class="expansion-item">
-<strong>Distribution</strong>
-<span>Commercial launches, internationalisation and scalable delivery.</span>
-</div>
-
-</div>
-
-</div>
-
-
-<div class="scale-statement">
-
-<div class="eyebrow">Beyond individual products</div>
-
-<strong>
-Independent applications today.
-Larger software environments tomorrow.
-</strong>
-
-<p>
-The same foundation can support focused standalone applications or combine
-multiple capabilities into broader software suites when that creates a better
-product.
-</p>
-
-<p>
-Unfire has also established project pathways for scaling this model through
-future collaboration with companies, institutions and public-sector
-organisations, while keeping individual projects controlled and separated.
+Increasing storage, compute and validation capacity can expand the number,
+size and complexity of projects Unfire can support. The underlying production
+capability does not need to be recreated for every additional application.
 </p>
 
 </div>
 
 
-<div class="scale-statement">
+<div class="simple-grid">
 
-<div class="eyebrow">What remains confidential</div>
-
-<strong>
-The capability is visible.
-The underlying method is not.
-</strong>
-
+<div>
+<div class="eyebrow">Companies</div>
+<h3>Dedicated software.</h3>
 <p>
-Unfire publicly describes the output, architecture principles and measurable
-technical checkpoints of its production system. Proprietary implementation,
-internal operating methods and the mechanisms responsible for this leverage
-remain confidential.
+The same foundation can support specialised applications and software
+environments developed around an organisation's needs.
 </p>
+</div>
 
+<div>
+<div class="eyebrow">Institutions</div>
+<h3>Controlled environments.</h3>
+<p>
+Projects can remain separated while benefiting from the same underlying
+production infrastructure.
+</p>
+</div>
+
+<div>
+<div class="eyebrow">Public sector</div>
+<h3>Scalable digital tools.</h3>
+<p>
+The architecture is being prepared for future collaboration with institutions
+and public-sector organisations where control, validation and traceability
+matter.
+</p>
+</div>
+
+</div>
+
+
+<div class="confidential-line">
+<strong>The output can be demonstrated. The mechanism remains proprietary.</strong>
+<span>
+Unfire can disclose measurable builds, products and production capacity
+without exposing the internal methods that create that leverage.
+</span>
 </div>
 
 </section>
 </div>
+
 
 
 
