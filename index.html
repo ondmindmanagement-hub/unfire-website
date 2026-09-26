@@ -864,6 +864,117 @@ section h2 + .lead {
 }
 </style>
 
+
+<style>
+#unfire-player-v6{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  z-index:99999;
+  width:min(390px,calc(100vw - 32px));
+  padding:16px 17px 14px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:20px;
+  background:rgba(14,14,16,.95);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  box-shadow:0 20px 60px rgba(0,0,0,.42);
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  overflow:hidden;
+}
+
+.up6-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+
+.up6-info{
+  flex:1;
+  min-width:0;
+}
+
+.up6-info strong{
+  display:block;
+  color:#f5f5f7;
+  font-size:13px;
+  font-weight:600;
+}
+
+#up6-status{
+  display:block;
+  margin-top:3px;
+  color:#85858d;
+  font-size:10px;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
+.up6-controls{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-shrink:0;
+}
+
+.up6-controls button{
+  height:36px;
+  min-width:36px;
+  padding:0 11px;
+  border:1px solid #303036;
+  border-radius:999px;
+  background:#1c1c20;
+  color:#f5f5f7;
+  cursor:pointer;
+  font-size:11px;
+}
+
+#up6-play{
+  padding:0 16px;
+  background:#f5f5f7;
+  border-color:#f5f5f7;
+  color:#050505;
+  font-weight:600;
+}
+
+.up6-progress{
+  margin-top:15px;
+}
+
+#up6-seek{
+  display:block;
+  width:100%;
+  margin:0;
+  cursor:pointer;
+  accent-color:#f5f5f7;
+}
+
+.up6-meta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:6px;
+  color:#72727a;
+  font-size:9px;
+}
+
+#up6-percent{
+  font-variant-numeric:tabular-nums;
+  color:#a4a4ab;
+}
+
+@media(max-width:600px){
+  #unfire-player-v6{
+    left:16px;
+    right:16px;
+    bottom:16px;
+    width:auto;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -1432,232 +1543,284 @@ selector.addEventListener("change", () => {
 
 
 
-<div id="unfire-player-v5">
-  <div class="up5-top">
 
-    <div class="up5-info">
+
+
+<div id="unfire-player-v6">
+
+  <div class="up6-top">
+
+    <div class="up6-info">
       <strong>Listen to Unfire</strong>
-      <span id="up5-status">Ready</span>
+      <span id="up6-status">Preparing voice…</span>
     </div>
 
-    <div class="up5-buttons">
-      <button id="up5-back" aria-label="Go back">−15</button>
-      <button id="up5-play">▶ Listen</button>
-      <button id="up5-pause" aria-label="Pause">Ⅱ</button>
-      <button id="up5-stop" aria-label="Stop">■</button>
+    <div class="up6-controls">
+      <button id="up6-back" aria-label="Go back ten percent">−10%</button>
+      <button id="up6-play">▶ Listen</button>
+      <button id="up6-pause" aria-label="Pause">Ⅱ</button>
+      <button id="up6-stop" aria-label="Stop">■</button>
     </div>
 
   </div>
 
-  <div class="up5-timeline">
+  <div class="up6-progress">
+
     <input
-      id="up5-seek"
+      id="up6-seek"
       type="range"
       min="0"
       max="100"
       value="0"
       step="0.1"
-      aria-label="Audio position"
+      aria-label="Narration progress"
     >
 
-    <div class="up5-time">
-      <span id="up5-current">0%</span>
-      <span id="up5-language">Auto language</span>
+    <div class="up6-meta">
+      <span id="up6-percent">0.0%</span>
+      <span id="up6-language">Auto</span>
     </div>
+
   </div>
 </div>
 
 
-<!-- UNFIRE_PLAYER_V5 -->
+<!-- UNFIRE_PLAYER_V6 -->
 <script>
 (() => {
+
   const synth = window.speechSynthesis;
 
-  const play = document.getElementById("up5-play");
-  const pause = document.getElementById("up5-pause");
-  const stop = document.getElementById("up5-stop");
-  const back = document.getElementById("up5-back");
-  const seek = document.getElementById("up5-seek");
-  const status = document.getElementById("up5-status");
-  const currentLabel = document.getElementById("up5-current");
-  const languageLabel = document.getElementById("up5-language");
+  const play = document.getElementById("up6-play");
+  const pause = document.getElementById("up6-pause");
+  const stop = document.getElementById("up6-stop");
+  const back = document.getElementById("up6-back");
+
+  const seek = document.getElementById("up6-seek");
+  const percentLabel = document.getElementById("up6-percent");
+  const status = document.getElementById("up6-status");
+  const languageLabel = document.getElementById("up6-language");
 
   if (!synth || !play) return;
 
-  let chunks = [];
-  let index = 0;
+  let fullText = "";
+  let activeText = "";
+
+  let startCharacter = 0;
+  let absoluteCharacter = 0;
+
   let active = false;
   let paused = false;
   let selectedVoice = null;
 
-  const languages = {
-    es:["es","Español"],
-    ca:["ca","Català"],
-    fr:["fr","Français"],
-    de:["de","Deutsch"],
-    it:["it","Italiano"],
-    pt:["pt","Português"],
-    ja:["ja","日本語"],
-    ko:["ko","한국어"],
-    zh:["zh","中文"],
-    en:["en","English"]
+  const languageNames = {
+    en:"English",
+    es:"Español",
+    ca:"Català",
+    fr:"Français",
+    de:"Deutsch",
+    it:"Italiano",
+    pt:"Português",
+    ja:"日本語",
+    ko:"한국어",
+    zh:"中文"
   };
 
-  function visibleText(){
+  function pageText(){
     return (document.querySelector("main")?.innerText || "")
       .replace(/\s+/g," ")
       .trim();
   }
 
   function detectLanguage(text){
+
     const t = " " + text.toLowerCase() + " ";
 
     if (/[\u3040-\u30ff]/.test(t)) return "ja";
     if (/[\uac00-\ud7af]/.test(t)) return "ko";
     if (/[\u4e00-\u9fff]/.test(t)) return "zh";
 
-    const tests = {
-      es:[" el "," la "," para "," con "," desarrollo "," tecnología "," productos "," capacidad "],
+    const patterns = {
+      es:[" el "," la "," para "," con "," desarrollo "," tecnología "," capacidad "," productos "],
       ca:[" els "," les "," amb "," desenvolupament "," tecnologia "," capacitat "," productes "],
-      fr:[" le "," les "," avec "," développement "," technologie "," produits "," capacité "],
-      de:[" der "," die "," und "," mit "," entwicklung "," technologie "," produkte "],
-      it:[" il "," gli "," con "," sviluppo "," tecnologia "," prodotti "," capacità "],
-      pt:[" os "," com "," desenvolvimento "," tecnologia "," produtos "," capacidade "],
-      en:[" the "," and "," with "," development "," technology "," products "," capacity "]
+      fr:[" le "," les "," avec "," développement "," technologie "," capacité "," produits "],
+      de:[" der "," die "," das "," und "," entwicklung "," technologie "," produkte "],
+      it:[" il "," gli "," con "," sviluppo "," tecnologia "," capacità "," prodotti "],
+      pt:[" os "," com "," desenvolvimento "," tecnologia "," capacidade "," produtos "],
+      en:[" the "," and "," with "," development "," technology "," capacity "," products "]
     };
 
     let best = "en";
-    let score = -1;
+    let bestScore = -1;
 
-    Object.entries(tests).forEach(([lang, words]) => {
-      let s = 0;
-      words.forEach(w => {
-        if(t.includes(w)) s++;
+    for (const [lang, words] of Object.entries(patterns)){
+
+      let score = 0;
+
+      words.forEach(word => {
+        if(t.includes(word)) score++;
       });
 
-      if(s > score){
-        score = s;
+      if(score > bestScore){
+        bestScore = score;
         best = lang;
       }
-    });
+    }
 
     return best;
   }
 
   function findVoice(lang){
+
     const voices = synth.getVoices();
 
-    const matches = voices.filter(v =>
+    const matching = voices.filter(v =>
       (v.lang || "").toLowerCase().startsWith(lang)
     );
 
-    return matches.find(v => /premium|enhanced/i.test(v.name))
-      || matches[0]
-      || null;
+    return (
+      matching.find(v => /premium/i.test(v.name)) ||
+      matching.find(v => /enhanced/i.test(v.name)) ||
+      matching[0] ||
+      null
+    );
   }
 
-  function createChunks(text){
-    const sentences =
-      text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+  function percentage(){
 
-    const result = [];
-    let buffer = "";
+    if(!fullText.length) return 0;
 
-    sentences.forEach(sentence => {
-      if((buffer + " " + sentence).length > 350){
-        if(buffer.trim()) result.push(buffer.trim());
-        buffer = sentence;
-      } else {
-        buffer += " " + sentence;
-      }
-    });
-
-    if(buffer.trim()) result.push(buffer.trim());
-
-    return result;
-  }
-
-  function progress(){
-    if(!chunks.length) return 0;
-    return Math.min(100,(index / chunks.length) * 100);
+    return Math.max(
+      0,
+      Math.min(
+        100,
+        (absoluteCharacter / fullText.length) * 100
+      )
+    );
   }
 
   function updateProgress(){
-    const p = progress();
-    seek.value = p;
-    currentLabel.textContent = Math.round(p) + "%";
+
+    const value = percentage();
+
+    seek.value = value.toFixed(1);
+    percentLabel.textContent = value.toFixed(1) + "%";
   }
 
   function prepare(){
-    const text = visibleText();
 
-    chunks = createChunks(text);
+    fullText = pageText();
 
-    const lang = detectLanguage(text);
+    const lang = detectLanguage(fullText);
+
     selectedVoice = findVoice(lang);
 
     languageLabel.textContent =
-      languages[lang]?.[1] || lang.toUpperCase();
+      languageNames[lang] || lang.toUpperCase();
 
     if(selectedVoice){
+
       status.textContent =
-        "Ready · " +
         selectedVoice.name +
         " · " +
         selectedVoice.lang;
+
       play.disabled = false;
+
     } else {
+
       status.textContent =
-        "No compatible " +
-        (languages[lang]?.[1] || lang) +
+        "No " +
+        (languageNames[lang] || lang) +
         " voice available";
+
       play.disabled = true;
     }
   }
 
-  function speak(){
-    if(!active || index >= chunks.length){
-      active = false;
-      paused = false;
-      index = chunks.length;
-      updateProgress();
-      play.textContent = "▶ Listen";
-      status.textContent = "Finished";
-      return;
-    }
+  function speakFrom(character){
 
-    if(!selectedVoice){
-      prepare();
-      if(!selectedVoice) return;
-    }
+    synth.cancel();
+
+    if(!fullText.length) prepare();
+    if(!selectedVoice) return;
+
+    startCharacter = Math.max(
+      0,
+      Math.min(fullText.length - 1, character)
+    );
+
+    absoluteCharacter = startCharacter;
+
+    activeText = fullText.slice(startCharacter);
 
     const utterance =
-      new SpeechSynthesisUtterance(chunks[index]);
+      new SpeechSynthesisUtterance(activeText);
 
     utterance.voice = selectedVoice;
     utterance.lang = selectedVoice.lang;
+
     utterance.rate = 0.95;
     utterance.pitch = 1;
+    utterance.volume = 1;
 
     utterance.onstart = () => {
+
+      active = true;
+      paused = false;
+
       play.textContent = "Playing";
+
       status.textContent =
         "Playing · " +
         selectedVoice.name +
         " · " +
         selectedVoice.lang;
+
       updateProgress();
+    };
+
+    /*
+      El navegador informa de la posición del carácter/palabra
+      que está pronunciando. Usamos esa posición para mover
+      el cursor en directo.
+    */
+    utterance.onboundary = event => {
+
+      if(typeof event.charIndex === "number"){
+
+        absoluteCharacter =
+          startCharacter + event.charIndex;
+
+        updateProgress();
+      }
     };
 
     utterance.onend = () => {
+
       if(!active) return;
-      index++;
+
+      absoluteCharacter = fullText.length;
+
       updateProgress();
-      speak();
+
+      active = false;
+      paused = false;
+
+      play.textContent = "▶ Listen";
+      status.textContent = "Finished";
     };
 
-    utterance.onerror = () => {
+    utterance.onerror = event => {
+
+      if(event.error === "interrupted" ||
+         event.error === "canceled"){
+        return;
+      }
+
       active = false;
+      paused = false;
+
       play.textContent = "▶ Listen";
       status.textContent = "Audio error";
     };
@@ -1665,101 +1828,117 @@ selector.addEventListener("change", () => {
     synth.speak(utterance);
   }
 
-  function jumpToPercent(percent){
-    if(!chunks.length) prepare();
-    if(!chunks.length) return;
+  function seekTo(percent){
 
-    const wasActive = active;
+    prepare();
 
-    synth.cancel();
+    const target =
+      Math.floor(
+        fullText.length *
+        (percent / 100)
+      );
 
-    index = Math.min(
-      chunks.length - 1,
-      Math.max(
-        0,
-        Math.floor((percent / 100) * chunks.length)
-      )
-    );
+    absoluteCharacter = target;
 
-    paused = false;
     updateProgress();
 
-    if(wasActive){
-      active = true;
-      setTimeout(speak,80);
+    if(active){
+
+      setTimeout(() => {
+        speakFrom(target);
+      },80);
+
+    } else {
+
+      startCharacter = target;
     }
   }
 
   play.addEventListener("click", () => {
+
     if(paused){
+
       synth.resume();
+
       paused = false;
+
       play.textContent = "Playing";
+      status.textContent = "Playing";
+
       return;
     }
 
-    synth.cancel();
     prepare();
 
     if(!selectedVoice) return;
 
-    if(index >= chunks.length) index = 0;
+    if(absoluteCharacter >= fullText.length){
+      absoluteCharacter = 0;
+    }
 
-    active = true;
-    paused = false;
-    speak();
+    speakFrom(absoluteCharacter);
   });
 
   pause.addEventListener("click", () => {
+
     if(!active) return;
 
     if(!paused){
+
       synth.pause();
+
       paused = true;
+
       play.textContent = "▶ Resume";
       status.textContent = "Paused";
+
     } else {
+
       synth.resume();
+
       paused = false;
+
       play.textContent = "Playing";
+      status.textContent = "Playing";
     }
   });
 
   stop.addEventListener("click", () => {
+
     synth.cancel();
+
     active = false;
     paused = false;
-    index = 0;
-    updateProgress();
+
     play.textContent = "▶ Listen";
     status.textContent = "Stopped";
   });
 
   back.addEventListener("click", () => {
-    if(!chunks.length) prepare();
 
-    const percent =
-      Math.max(
-        0,
-        ((index - 2) / Math.max(1,chunks.length)) * 100
-      );
+    const target =
+      Math.max(0, percentage() - 10);
 
-    jumpToPercent(percent);
+    seekTo(target);
   });
 
   seek.addEventListener("input", () => {
-    currentLabel.textContent =
-      Math.round(Number(seek.value)) + "%";
+
+    percentLabel.textContent =
+      Number(seek.value).toFixed(1) + "%";
   });
 
   seek.addEventListener("change", () => {
-    jumpToPercent(Number(seek.value));
+
+    seekTo(Number(seek.value));
   });
 
   synth.onvoiceschanged = prepare;
 
   prepare();
+
   setTimeout(prepare,600);
+
 })();
 </script>
 
