@@ -2384,6 +2384,10 @@ main section.unfire-reading-section{
   const audio =
     document.getElementById("unfire-narration");
 
+  audio.playbackRate = 1.08;
+  audio.defaultPlaybackRate = 1.08;
+  audio.preservesPitch = true;
+
   const playBtn =
     document.getElementById("reader-play");
 
