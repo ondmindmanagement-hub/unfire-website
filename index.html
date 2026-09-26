@@ -674,123 +674,91 @@ section h2 + .lead {
 </style>
 
 
+
+
+
 <style>
-.audio-reader{
+#unfire-voice-v4{
   position:fixed;
-  right:26px;
-  bottom:26px;
-  z-index:9999;
-  width:min(360px,calc(100vw - 32px));
+  right:24px;
+  bottom:24px;
+  z-index:99999;
+  width:min(390px,calc(100vw - 32px));
   padding:16px;
   border:1px solid rgba(255,255,255,.13);
   border-radius:20px;
-  background:rgba(15,15,17,.88);
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  box-shadow:0 18px 60px rgba(0,0,0,.35);
+  background:rgba(14,14,16,.94);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  box-shadow:0 20px 60px rgba(0,0,0,.4);
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
 }
 
-.audio-reader-top{
+#unfire-voice-v4 .uv-head{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  gap:16px;
-}
-
-.audio-reader-title{
-  display:flex;
   align-items:center;
-  gap:10px;
-  min-width:0;
+  gap:14px;
+  margin-bottom:12px;
 }
 
-.audio-reader-icon{
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  background:#f5f5f7;
-  color:#050505;
-  display:grid;
-  place-items:center;
-  flex:0 0 auto;
-  font-size:14px;
-}
-
-.audio-reader-copy strong{
+#unfire-voice-v4 strong{
   display:block;
   font-size:13px;
-  font-weight:600;
-  line-height:1.3;
 }
 
-.audio-reader-copy span{
-  display:block;
-  margin-top:3px;
-  color:#8f8f96;
+#unfire-voice-v4 .uv-status{
+  margin-top:4px;
+  color:#888890;
   font-size:11px;
 }
 
-.audio-reader-controls{
-  display:flex;
-  align-items:center;
-  gap:7px;
-}
-
-.audio-reader button{
-  appearance:none;
-  border:1px solid #323237;
-  background:#1a1a1d;
+#unfire-voice-v4 select{
+  width:100%;
+  height:38px;
+  margin-bottom:10px;
+  padding:0 10px;
   color:#f5f5f7;
-  height:34px;
-  min-width:34px;
-  padding:0 11px;
-  border-radius:999px;
-  cursor:pointer;
-  font:inherit;
+  background:#19191c;
+  border:1px solid #303036;
+  border-radius:11px;
   font-size:12px;
 }
 
-.audio-reader button:hover{
-  background:#242428;
+#unfire-voice-v4 .uv-controls{
+  display:flex;
+  gap:8px;
 }
 
-.audio-reader .listen-main{
+#unfire-voice-v4 button{
+  height:38px;
+  border-radius:999px;
+  border:1px solid #303036;
+  background:#1b1b1f;
+  color:#f5f5f7;
+  padding:0 14px;
+  cursor:pointer;
+}
+
+#unfire-voice-v4 .uv-play{
+  flex:1;
   background:#f5f5f7;
   color:#050505;
   border-color:#f5f5f7;
-  padding:0 15px;
   font-weight:600;
 }
 
-.audio-reader .listen-main:hover{
-  background:#dddde1;
-}
-
-.audio-progress{
-  height:2px;
-  margin-top:13px;
-  background:#29292d;
-  border-radius:999px;
-  overflow:hidden;
-}
-
-.audio-progress-fill{
-  width:0%;
-  height:100%;
-  background:#f5f5f7;
-  transition:width .25s ease;
+#unfire-voice-v4 button:disabled{
+  opacity:.4;
+  cursor:not-allowed;
 }
 
 @media(max-width:600px){
-  .audio-reader{
+  #unfire-voice-v4{
     left:16px;
     right:16px;
     bottom:16px;
     width:auto;
-  }
-
-  .audio-reader-copy span{
-    display:none;
   }
 }
 </style>
@@ -1189,230 +1157,7 @@ hello@unfire.technology
 </div>
 
 
-<div class="audio-reader" id="unfire-audio-reader">
-  <div class="audio-reader-top">
 
-    <div class="audio-reader-title">
-      <div class="audio-reader-icon" id="audio-reader-icon">▶</div>
-
-      <div class="audio-reader-copy">
-        <strong id="audio-reader-status">Listen to Unfire</strong>
-        <span>Audio overview of this page</span>
-      </div>
-    </div>
-
-    <div class="audio-reader-controls">
-      <button class="listen-main" id="audio-reader-play">Listen</button>
-      <button id="audio-reader-pause" aria-label="Pause audio">Ⅱ</button>
-      <button id="audio-reader-stop" aria-label="Stop audio">■</button>
-    </div>
-
-  </div>
-
-  <div class="audio-progress">
-    <div class="audio-progress-fill" id="audio-progress-fill"></div>
-  </div>
-</div>
-
-
-<script>
-(() => {
-  const play = document.getElementById("audio-reader-play");
-  const pause = document.getElementById("audio-reader-pause");
-  const stop = document.getElementById("audio-reader-stop");
-  const status = document.getElementById("audio-reader-status");
-  const icon = document.getElementById("audio-reader-icon");
-  const progress = document.getElementById("audio-progress-fill");
-
-  if (!("speechSynthesis" in window)) {
-    status.textContent = "Audio unavailable";
-    play.disabled = true;
-    pause.disabled = true;
-    stop.disabled = true;
-    return;
-  }
-
-  let chunks = [];
-  let current = 0;
-  let active = false;
-  let paused = false;
-
-  function cleanText(text) {
-    return text
-      .replace(/\s+/g, " ")
-      .replace(/·/g, ". ")
-      .trim();
-  }
-
-  function collectContent() {
-    const nodes = document.querySelectorAll(
-      "main h1, main h2, main h3, main p, main .stat span, main .history-text"
-    );
-
-    const texts = [];
-
-    nodes.forEach(node => {
-      if (
-        node.closest("#unfire-audio-reader") ||
-        node.closest("nav") ||
-        node.getAttribute("aria-hidden") === "true"
-      ) return;
-
-      const t = cleanText(node.innerText || node.textContent || "");
-      if (t && !texts.includes(t)) texts.push(t);
-    });
-
-    const full = texts.join(". ");
-
-    const sentences =
-      full.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [];
-
-    chunks = [];
-    let buffer = "";
-
-    sentences.forEach(sentence => {
-      if ((buffer + " " + sentence).length > 900) {
-        if (buffer.trim()) chunks.push(buffer.trim());
-        buffer = sentence;
-      } else {
-        buffer += " " + sentence;
-      }
-    });
-
-    if (buffer.trim()) chunks.push(buffer.trim());
-  }
-
-  function chooseVoice() {
-    const voices = speechSynthesis.getVoices();
-
-    return (
-      voices.find(v =>
-        v.lang.toLowerCase().startsWith("en") &&
-        /samantha|daniel|alex|serena|ava/i.test(v.name)
-      ) ||
-      voices.find(v => v.lang.toLowerCase().startsWith("en-gb")) ||
-      voices.find(v => v.lang.toLowerCase().startsWith("en-us")) ||
-      voices.find(v => v.lang.toLowerCase().startsWith("en")) ||
-      voices[0]
-    );
-  }
-
-  function updateProgress() {
-    const pct = chunks.length
-      ? Math.min(100, (current / chunks.length) * 100)
-      : 0;
-
-    progress.style.width = pct + "%";
-  }
-
-  function speakCurrent() {
-    if (!active || current >= chunks.length) {
-      active = false;
-      paused = false;
-      current = 0;
-
-      status.textContent = "Listen to Unfire";
-      play.textContent = "Listen";
-      icon.textContent = "▶";
-      progress.style.width = "100%";
-
-      setTimeout(() => {
-        if (!active) progress.style.width = "0%";
-      }, 900);
-
-      return;
-    }
-
-    const utterance = new SpeechSynthesisUtterance(chunks[current]);
-
-    const voice = chooseVoice();
-    if (voice) utterance.voice = voice;
-
-    utterance.lang = voice?.lang || "en-US";
-    utterance.rate = 0.94;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-
-    utterance.onstart = () => {
-      status.textContent = "Playing Unfire overview";
-      icon.textContent = "●";
-      play.textContent = "Playing";
-      updateProgress();
-    };
-
-    utterance.onend = () => {
-      if (!active) return;
-
-      current += 1;
-      updateProgress();
-      speakCurrent();
-    };
-
-    utterance.onerror = () => {
-      if (active) {
-        current += 1;
-        speakCurrent();
-      }
-    };
-
-    speechSynthesis.speak(utterance);
-  }
-
-  play.addEventListener("click", () => {
-    if (paused) {
-      speechSynthesis.resume();
-      paused = false;
-      status.textContent = "Playing Unfire overview";
-      play.textContent = "Playing";
-      icon.textContent = "●";
-      return;
-    }
-
-    speechSynthesis.cancel();
-
-    collectContent();
-
-    current = 0;
-    active = true;
-    paused = false;
-
-    speakCurrent();
-  });
-
-  pause.addEventListener("click", () => {
-    if (!active) return;
-
-    if (!paused) {
-      speechSynthesis.pause();
-      paused = true;
-      status.textContent = "Audio paused";
-      play.textContent = "Resume";
-      icon.textContent = "Ⅱ";
-    } else {
-      speechSynthesis.resume();
-      paused = false;
-      status.textContent = "Playing Unfire overview";
-      play.textContent = "Playing";
-      icon.textContent = "●";
-    }
-  });
-
-  stop.addEventListener("click", () => {
-    speechSynthesis.cancel();
-
-    active = false;
-    paused = false;
-    current = 0;
-
-    status.textContent = "Listen to Unfire";
-    play.textContent = "Listen";
-    icon.textContent = "▶";
-    progress.style.width = "0%";
-  });
-
-  speechSynthesis.getVoices();
-})();
-</script>
 
 
 <script>
@@ -1577,423 +1322,276 @@ selector.addEventListener("change", () => {
 })();
 </script>
 
-<!-- UNFIRE_VOICE_AUTOSYNC_V2 -->
 
+
+
+
+
+
+<div id="unfire-voice-v4">
+  <div class="uv-head">
+    <div>
+      <strong>Listen to Unfire</strong>
+      <div class="uv-status" id="uv-status">Loading voice…</div>
+    </div>
+  </div>
+
+  <select id="uv-voice"></select>
+
+  <div class="uv-controls">
+    <button class="uv-play" id="uv-play">▶ Play</button>
+    <button id="uv-pause">Ⅱ</button>
+    <button id="uv-stop">■</button>
+  </div>
+</div>
+
+
+<!-- UNFIRE_VOICE_V4 -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const languageSelect = document.getElementById("voice-language");
-  const voiceSelect = document.getElementById("voice-select");
+(() => {
+  const synth = window.speechSynthesis;
+  const play = document.getElementById("uv-play");
+  const pause = document.getElementById("uv-pause");
+  const stop = document.getElementById("uv-stop");
+  const voiceSelect = document.getElementById("uv-voice");
+  const status = document.getElementById("uv-status");
   const siteLanguage = document.getElementById("site-language");
-  const status = document.getElementById("voice-status");
 
-  if (!languageSelect || !voiceSelect) return;
+  if (!synth || !play || !voiceSelect) return;
 
-  const supported = {
-    en: ["en-GB", "en-US", "en"],
-    es: ["es-ES", "es-MX", "es"],
-    ca: ["ca-ES", "ca"],
-    fr: ["fr-FR", "fr-CA", "fr"],
-    de: ["de-DE", "de"],
-    it: ["it-IT", "it"],
-    pt: ["pt-PT", "pt-BR", "pt"],
-    ja: ["ja-JP", "ja"],
-    ko: ["ko-KR", "ko"],
-    zh: ["zh-CN", "zh-TW", "zh-HK", "zh"]
+  const languageNames = {
+    en:"English",
+    es:"Español",
+    ca:"Català",
+    fr:"Français",
+    de:"Deutsch",
+    it:"Italiano",
+    pt:"Português",
+    ja:"日本語",
+    ko:"한국어",
+    zh:"中文"
   };
 
-  let allVoices = [];
-
-  function baseLanguage() {
-    if (siteLanguage && siteLanguage.value) {
-      return siteLanguage.value.toLowerCase().split("-")[0];
-    }
-
-    const htmlLang =
-      (document.documentElement.lang || "").toLowerCase().split("-")[0];
-
-    if (supported[htmlLang]) return htmlLang;
-
-    const browserLang =
-      (navigator.language || "en").toLowerCase().split("-")[0];
-
-    return supported[browserLang] ? browserLang : "en";
-  }
-
-  function voicesForLanguage(lang) {
-    const preferences = supported[lang] || [lang];
-
-    return allVoices
-      .filter(v => {
-        const vl = v.lang.toLowerCase();
-        return preferences.some(pref =>
-          vl.startsWith(pref.toLowerCase())
-        );
-      })
-      .sort((a, b) => {
-        const pref = supported[lang]?.[0]?.toLowerCase() || lang;
-        const ae = a.lang.toLowerCase() === pref ? 0 : 1;
-        const be = b.lang.toLowerCase() === pref ? 0 : 1;
-        return ae - be;
-      });
-  }
-
-  function syncVoiceLanguage() {
-    allVoices = speechSynthesis.getVoices();
-
-    const lang = baseLanguage();
-
-    languageSelect.value = lang;
-
-    const matches = voicesForLanguage(lang);
-
-    voiceSelect.innerHTML = "";
-
-    if (matches.length) {
-      matches.forEach((voice, index) => {
-        const option = document.createElement("option");
-        option.value = voice.name;
-        option.textContent = voice.name + " · " + voice.lang;
-
-        if (index === 0) option.selected = true;
-
-        voiceSelect.appendChild(option);
-      });
-
-      if (status) {
-        status.textContent =
-          "Auto · " +
-          lang.toUpperCase() +
-          " · " +
-          matches[0].name;
-      }
-    } else {
-      const option = document.createElement("option");
-      option.value = "";
-      option.textContent =
-        "No " + lang.toUpperCase() + " voice installed";
-
-      voiceSelect.appendChild(option);
-
-      if (status) {
-        status.textContent =
-          "No compatible " +
-          lang.toUpperCase() +
-          " voice available";
-      }
-    }
-
-    languageSelect.dispatchEvent(
-      new Event("change", { bubbles: true })
-    );
-  }
-
-  let attempts = 0;
-
-  function waitForVoices() {
-    allVoices = speechSynthesis.getVoices();
-
-    if (allVoices.length || attempts > 20) {
-      syncVoiceLanguage();
-      return;
-    }
-
-    attempts++;
-    setTimeout(waitForVoices, 200);
-  }
-
-  speechSynthesis.addEventListener?.(
-    "voiceschanged",
-    syncVoiceLanguage
-  );
-
-  if ("onvoiceschanged" in speechSynthesis) {
-    speechSynthesis.onvoiceschanged = syncVoiceLanguage;
-  }
-
-  if (siteLanguage) {
-    siteLanguage.addEventListener("change", () => {
-      speechSynthesis.cancel();
-
-      document.documentElement.lang =
-        siteLanguage.value;
-
-      setTimeout(syncVoiceLanguage, 150);
-    });
-  }
-
-  const observer = new MutationObserver(() => {
-    setTimeout(syncVoiceLanguage, 150);
-  });
-
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ["lang"]
-  });
-
-  waitForVoices();
-});
-</script>
-
-
-<!-- UNFIRE_STRICT_VOICE_V3 -->
-<script>
-window.addEventListener("load", () => {
-  const langSelect = document.getElementById("voice-language");
-  const voiceSelect = document.getElementById("voice-select");
-  const siteLang = document.getElementById("site-language");
-  const oldPlay = document.getElementById("voice-play");
-  const oldPause = document.getElementById("voice-pause");
-  const oldStop = document.getElementById("voice-stop");
-  const status = document.getElementById("voice-status");
-  const icon = document.getElementById("voice-reader-icon");
-
-  if (!langSelect || !voiceSelect || !oldPlay) return;
-
-  /* Clone controls to remove ALL previous conflicting listeners */
-  const play = oldPlay.cloneNode(true);
-  const pause = oldPause.cloneNode(true);
-  const stop = oldStop.cloneNode(true);
-
-  oldPlay.replaceWith(play);
-  oldPause.replaceWith(pause);
-  oldStop.replaceWith(stop);
-
-  let currentUtterance = null;
+  let chunks = [];
+  let chunkIndex = 0;
+  let active = false;
   let paused = false;
 
-  const exactLocales = {
-    en: ["en-GB","en-US","en-AU","en-IE","en"],
-    es: ["es-ES","es-MX","es-US","es"],
-    ca: ["ca-ES","ca"],
-    fr: ["fr-FR","fr-CA","fr-BE","fr"],
-    de: ["de-DE","de-AT","de-CH","de"],
-    it: ["it-IT","it"],
-    pt: ["pt-PT","pt-BR","pt"],
-    ja: ["ja-JP","ja"],
-    ko: ["ko-KR","ko"],
-    zh: ["zh-CN","zh-TW","zh-HK","zh"]
-  };
+  function currentLanguage(){
+    const selected = siteLanguage?.value;
+    if (selected) return selected.toLowerCase().split("-")[0];
 
-  function activeLanguage() {
-    if (siteLang && siteLang.value) {
-      return siteLang.value.toLowerCase().split("-")[0];
-    }
-
-    const htmlLang =
-      (document.documentElement.lang || "en")
-      .toLowerCase()
-      .split("-")[0];
-
-    return exactLocales[htmlLang] ? htmlLang : "en";
+    const htmlLang = document.documentElement.lang || "en";
+    return htmlLang.toLowerCase().split("-")[0];
   }
 
-  function compatibleVoices(lang) {
-    const voices = speechSynthesis.getVoices();
-    const allowed = exactLocales[lang] || [lang];
+  function compatibleVoices(){
+    const lang = currentLanguage();
 
-    return voices.filter(v => {
-      const vl = v.lang.toLowerCase();
+    return synth.getVoices().filter(v => {
+      const voiceLang = (v.lang || "")
+        .toLowerCase()
+        .replace("_","-");
 
-      return allowed.some(locale => {
-        const l = locale.toLowerCase();
-        return vl === l || vl.startsWith(l + "-");
-      });
+      return voiceLang === lang ||
+             voiceLang.startsWith(lang + "-");
     });
   }
 
-  function bestVoice(lang) {
-    const matches = compatibleVoices(lang);
-    if (!matches.length) return null;
+  function refreshVoices(){
+    const lang = currentLanguage();
+    const voices = compatibleVoices();
 
-    const preferred = exactLocales[lang] || [];
-
-    for (const locale of preferred) {
-      const exact = matches.find(
-        v => v.lang.toLowerCase() === locale.toLowerCase()
-      );
-      if (exact) return exact;
-    }
-
-    return matches[0];
-  }
-
-  function refreshVoices() {
-    const lang = activeLanguage();
-
-    langSelect.value = lang;
     voiceSelect.innerHTML = "";
 
-    const matches = compatibleVoices(lang);
-
-    if (!matches.length) {
+    if (!voices.length){
       const option = document.createElement("option");
       option.value = "";
       option.textContent =
-        "No " + lang.toUpperCase() + " voice installed";
+        "No " + (languageNames[lang] || lang.toUpperCase()) + " voice available";
+
       voiceSelect.appendChild(option);
 
       status.textContent =
-        "No compatible " + lang.toUpperCase() + " voice on this device";
+        "No compatible voice for " +
+        (languageNames[lang] || lang.toUpperCase());
 
       play.disabled = true;
       return;
     }
 
-    matches.forEach(voice => {
+    voices.forEach((voice, i) => {
       const option = document.createElement("option");
       option.value = voice.name;
       option.textContent = voice.name + " · " + voice.lang;
+
+      if (i === 0) option.selected = true;
+
       voiceSelect.appendChild(option);
     });
 
-    const best = bestVoice(lang);
-    if (best) voiceSelect.value = best.name;
+    play.disabled = false;
 
     status.textContent =
-      "Auto · " + lang.toUpperCase() +
-      " · " + (best ? best.name : "");
-
-    play.disabled = false;
+      "Auto · " +
+      (languageNames[lang] || lang.toUpperCase()) +
+      " · " +
+      voices[0].name;
   }
 
-  function pageText() {
-    const main = document.querySelector("main");
-    if (!main) return "";
+  function selectedVoice(){
+    const voices = compatibleVoices();
 
-    return main.innerText
-      .replace(/\s+/g, " ")
+    return voices.find(v => v.name === voiceSelect.value) ||
+           voices[0] ||
+           null;
+  }
+
+  function buildChunks(){
+    const main = document.querySelector("main");
+    if (!main) return [];
+
+    const text = main.innerText
+      .replace(/\s+/g," ")
       .trim();
+
+    const sentences =
+      text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+
+    const result = [];
+    let buffer = "";
+
+    sentences.forEach(sentence => {
+      if ((buffer + " " + sentence).length > 700){
+        if (buffer.trim()) result.push(buffer.trim());
+        buffer = sentence;
+      } else {
+        buffer += " " + sentence;
+      }
+    });
+
+    if (buffer.trim()) result.push(buffer.trim());
+
+    return result;
+  }
+
+  function speakNext(){
+    if (!active || chunkIndex >= chunks.length){
+      active = false;
+      paused = false;
+      chunkIndex = 0;
+      play.textContent = "▶ Play";
+      status.textContent =
+        "Ready · " +
+        (languageNames[currentLanguage()] || currentLanguage().toUpperCase());
+      return;
+    }
+
+    const voice = selectedVoice();
+
+    if (!voice){
+      active = false;
+      play.textContent = "▶ Play";
+      status.textContent = "No compatible voice available";
+      return;
+    }
+
+    const utterance =
+      new SpeechSynthesisUtterance(chunks[chunkIndex]);
+
+    utterance.voice = voice;
+    utterance.lang = voice.lang;
+    utterance.rate = 0.95;
+    utterance.pitch = 1;
+
+    utterance.onstart = () => {
+      play.textContent = "Playing";
+      status.textContent =
+        "Playing · " +
+        voice.lang +
+        " · " +
+        voice.name;
+    };
+
+    utterance.onend = () => {
+      if (!active) return;
+      chunkIndex++;
+      speakNext();
+    };
+
+    utterance.onerror = () => {
+      active = false;
+      play.textContent = "▶ Play";
+      status.textContent = "Audio error";
+    };
+
+    synth.speak(utterance);
   }
 
   play.addEventListener("click", () => {
-    if (paused) {
-      speechSynthesis.resume();
+    if (paused){
+      synth.resume();
       paused = false;
       play.textContent = "Playing";
-      status.textContent = "Playing";
-      if (icon) icon.textContent = "●";
       return;
     }
 
-    speechSynthesis.cancel();
+    synth.cancel();
 
-    const lang = activeLanguage();
-    const voices = compatibleVoices(lang);
+    refreshVoices();
 
-    if (!voices.length) {
-      status.textContent =
-        "No " + lang.toUpperCase() + " voice installed";
-      return;
-    }
+    if (!compatibleVoices().length) return;
 
-    let voice =
-      voices.find(v => v.name === voiceSelect.value) ||
-      bestVoice(lang);
+    chunks = buildChunks();
+    chunkIndex = 0;
+    active = true;
+    paused = false;
 
-    if (!voice) {
-      status.textContent =
-        "No compatible voice found";
-      return;
-    }
-
-    const text = pageText();
-
-    if (!text) return;
-
-    currentUtterance =
-      new SpeechSynthesisUtterance(text);
-
-    currentUtterance.voice = voice;
-    currentUtterance.lang = voice.lang;
-    currentUtterance.rate =
-      parseFloat(
-        document.getElementById("voice-speed")?.value || "1"
-      );
-
-    currentUtterance.onstart = () => {
-      play.textContent = "Playing";
-      status.textContent =
-        "Playing · " + voice.lang + " · " + voice.name;
-
-      if (icon) icon.textContent = "●";
-    };
-
-    currentUtterance.onend = () => {
-      play.textContent = "▶ Play";
-      status.textContent =
-        "Finished · " + voice.lang;
-
-      if (icon) icon.textContent = "▶";
-      paused = false;
-    };
-
-    currentUtterance.onerror = () => {
-      play.textContent = "▶ Play";
-      status.textContent = "Audio error";
-      if (icon) icon.textContent = "▶";
-      paused = false;
-    };
-
-    speechSynthesis.speak(currentUtterance);
+    speakNext();
   });
 
   pause.addEventListener("click", () => {
-    if (!speechSynthesis.speaking) return;
+    if (!active) return;
 
-    if (!paused) {
-      speechSynthesis.pause();
+    if (!paused){
+      synth.pause();
       paused = true;
       play.textContent = "▶ Resume";
       status.textContent = "Paused";
     } else {
-      speechSynthesis.resume();
+      synth.resume();
       paused = false;
       play.textContent = "Playing";
-      status.textContent = "Playing";
     }
   });
 
   stop.addEventListener("click", () => {
-    speechSynthesis.cancel();
+    synth.cancel();
+    active = false;
     paused = false;
+    chunkIndex = 0;
 
     play.textContent = "▶ Play";
     status.textContent = "Stopped";
-
-    if (icon) icon.textContent = "▶";
   });
 
-  function languageChanged() {
-    speechSynthesis.cancel();
+  function languageChanged(){
+    synth.cancel();
+    active = false;
+    paused = false;
+    play.textContent = "▶ Play";
 
-    setTimeout(() => {
-      refreshVoices();
-    }, 400);
+    setTimeout(refreshVoices,250);
   }
 
-  if (siteLang) {
-    siteLang.addEventListener("change", languageChanged);
-  }
+  siteLanguage?.addEventListener("change",languageChanged);
 
-  langSelect.addEventListener("change", () => {
-    if (siteLang) {
-      siteLang.value = langSelect.value;
-      siteLang.dispatchEvent(new Event("change"));
-    } else {
-      document.documentElement.lang = langSelect.value;
-      refreshVoices();
-    }
-  });
+  synth.onvoiceschanged = refreshVoices;
 
-  if ("onvoiceschanged" in speechSynthesis) {
-    speechSynthesis.onvoiceschanged = refreshVoices;
-  }
-
-  setTimeout(refreshVoices, 300);
-  setTimeout(refreshVoices, 1000);
-  setTimeout(refreshVoices, 2500);
-});
+  refreshVoices();
+  setTimeout(refreshVoices,500);
+  setTimeout(refreshVoices,1500);
+})();
 </script>
 
 </body>
