@@ -1216,6 +1216,262 @@ main section.unfire-reading-section{
 
 </style>
 
+
+<style id="unfire-reader-apple-polish">
+
+#reader{
+  position:fixed !important;
+  z-index:9999 !important;
+
+  left:50% !important;
+  right:auto !important;
+  bottom:max(18px, env(safe-area-inset-bottom)) !important;
+
+  width:min(360px, calc(100vw - 28px)) !important;
+  min-width:0 !important;
+
+  transform:translateX(-50%) !important;
+
+  padding:10px 12px 9px !important;
+
+  border:1px solid rgba(255,255,255,.10) !important;
+  border-radius:22px !important;
+
+  background:rgba(18,18,20,.78) !important;
+
+  -webkit-backdrop-filter:
+    saturate(180%)
+    blur(26px) !important;
+
+  backdrop-filter:
+    saturate(180%)
+    blur(26px) !important;
+
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.28) !important;
+
+  color:#f5f5f7 !important;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    sans-serif !important;
+}
+
+
+/* TOP CONTROLS */
+
+#reader .reader-top{
+  display:grid !important;
+  grid-template-columns:1fr 34px !important;
+  gap:8px !important;
+  align-items:center !important;
+
+  margin:0 !important;
+}
+
+
+#reader .reader-btn{
+  height:34px !important;
+
+  border:0 !important;
+  border-radius:17px !important;
+
+  font-size:12px !important;
+  font-weight:600 !important;
+  letter-spacing:-.01em !important;
+
+  box-shadow:none !important;
+}
+
+
+#reader-play{
+  background:#f5f5f7 !important;
+  color:#111114 !important;
+}
+
+
+#reader-pause{
+  width:34px !important;
+  min-width:34px !important;
+  padding:0 !important;
+
+  background:rgba(255,255,255,.08) !important;
+  color:#f5f5f7 !important;
+}
+
+
+/* PROGRESS */
+
+#reader-range{
+  display:block !important;
+
+  width:100% !important;
+  height:14px !important;
+
+  margin:7px 0 2px !important;
+
+  accent-color:#f5f5f7 !important;
+
+  cursor:pointer !important;
+}
+
+
+#reader-range::-webkit-slider-runnable-track{
+  height:3px !important;
+  border-radius:99px !important;
+
+  background:
+    rgba(255,255,255,.22) !important;
+}
+
+
+#reader-range::-webkit-slider-thumb{
+  width:12px !important;
+  height:12px !important;
+
+  margin-top:-4.5px !important;
+
+  border:0 !important;
+  border-radius:50% !important;
+
+  background:#f5f5f7 !important;
+
+  -webkit-appearance:none !important;
+}
+
+
+#reader-percent{
+  display:none !important;
+}
+
+
+/* SECTION NAV */
+
+#reader .reader-section-nav{
+  display:grid !important;
+  grid-template-columns:24px minmax(0,1fr) 24px !important;
+
+  gap:5px !important;
+  align-items:center !important;
+
+  margin:1px 0 0 !important;
+  padding:3px 0 0 !important;
+
+  border:0 !important;
+}
+
+
+#reader .reader-section-nav button{
+  width:24px !important;
+  height:24px !important;
+
+  padding:0 !important;
+
+  border:0 !important;
+  border-radius:50% !important;
+
+  background:transparent !important;
+
+  color:#86868b !important;
+
+  font-size:17px !important;
+  line-height:24px !important;
+
+  box-shadow:none !important;
+}
+
+
+#reader .reader-section-nav button:hover{
+  color:#f5f5f7 !important;
+  background:rgba(255,255,255,.06) !important;
+}
+
+
+#reader-section-name{
+  overflow:hidden !important;
+
+  color:#8e8e93 !important;
+
+  font-size:9px !important;
+  font-weight:500 !important;
+
+  letter-spacing:.01em !important;
+
+  text-align:center !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+}
+
+
+/* Reading highlight should be subtle */
+
+.unfire-reading-block{
+  background:rgba(255,255,255,.018) !important;
+  border-radius:6px !important;
+}
+
+
+main section.unfire-reading-section{
+  background:transparent !important;
+}
+
+
+::highlight(unfire-reading-word){
+  background:rgba(255,255,255,.15);
+  color:inherit;
+}
+
+
+/* MOBILE */
+
+@media (max-width:700px){
+
+  #reader{
+    bottom:max(
+      10px,
+      env(safe-area-inset-bottom)
+    ) !important;
+
+    width:calc(100vw - 20px) !important;
+
+    padding:9px 10px 8px !important;
+
+    border-radius:20px !important;
+  }
+
+  #reader .reader-top{
+    grid-template-columns:
+      1fr
+      32px !important;
+  }
+
+  #reader .reader-btn{
+    height:32px !important;
+  }
+
+  #reader-pause{
+    width:32px !important;
+    min-width:32px !important;
+  }
+
+}
+
+
+/* Respect reduced motion */
+
+@media (prefers-reduced-motion:reduce){
+
+  html{
+    scroll-behavior:auto !important;
+  }
+
+}
+
+</style>
+
 </head>
 
 <body>
@@ -2292,22 +2548,22 @@ main section.unfire-reading-section{
   };
 
   /* ========================================
-     SMOOTH READING CAMERA
-     Keeps spoken content near screen center
+     FORWARD READING CAMERA
+     Smooth, stable, downward-only reading follow
   ======================================== */
 
   let followTarget = null;
   let followRAF = null;
-  let followEnabled = true;
+  let cameraTargetY = window.scrollY;
+  let cameraCurrentY = window.scrollY;
+  let cameraActive = false;
+  let cameraUserJump = false;
 
 
-  const targetRect = target => {
+  const getFollowRect = target => {
 
     if (!target) return null;
 
-    /*
-      Exact spoken word
-    */
     if (
       target.node &&
       typeof target.start === "number" &&
@@ -2331,9 +2587,6 @@ main section.unfire-reading-section{
       } catch (_) {}
     }
 
-    /*
-      Normal DOM element
-    */
     if (
       target.getBoundingClientRect
     ) {
@@ -2341,6 +2594,83 @@ main section.unfire-reading-section{
     }
 
     return null;
+  };
+
+
+  const computeReadingPosition = target => {
+
+    const rect =
+      getFollowRect(target);
+
+    if (!rect) return null;
+
+    const viewport =
+      window.innerHeight ||
+      document.documentElement.clientHeight;
+
+    const mobile =
+      window.matchMedia(
+        "(max-width: 700px)"
+      ).matches;
+
+    /*
+      Keep reading slightly above exact center.
+      This leaves breathing room for the player.
+    */
+    const desiredViewportY =
+      viewport * (mobile ? .40 : .45);
+
+    const absoluteCenter =
+      window.scrollY +
+      rect.top +
+      rect.height / 2;
+
+    return Math.max(
+      0,
+      absoluteCenter -
+      desiredViewportY
+    );
+  };
+
+
+  const setFollowTarget = (
+    target,
+    allowBackward = false
+  ) => {
+
+    if (!target) return;
+
+    followTarget = target;
+
+    const position =
+      computeReadingPosition(target);
+
+    if (position === null) return;
+
+    /*
+      During normal reading the camera can only
+      move forward.
+
+      Backward movement is only permitted for an
+      intentional user jump/seek/navigation.
+    */
+    if (allowBackward) {
+
+      cameraTargetY = position;
+      cameraCurrentY = window.scrollY;
+      cameraUserJump = true;
+
+    } else {
+
+      cameraTargetY =
+        Math.max(
+          cameraTargetY,
+          position,
+          window.scrollY
+        );
+    }
+
+    cameraActive = true;
   };
 
 
@@ -2352,89 +2682,106 @@ main section.unfire-reading-section{
       );
 
     if (
-      !followEnabled ||
+      !cameraActive ||
       !playing ||
       paused ||
-      sliderDown ||
-      !followTarget
+      sliderDown
     ) {
+      cameraCurrentY =
+        window.scrollY;
+
       return;
     }
 
-    const rect =
-      targetRect(
-        followTarget
-      );
-
-    if (
-      !rect ||
-      !rect.height
-    ) {
-      return;
-    }
-
-    const viewport =
-      window.innerHeight ||
-      document.documentElement.clientHeight;
+    const actualY =
+      window.scrollY;
 
     /*
-      Position of spoken content
-      relative to center of screen.
+      If the visitor manually scrolls downward,
+      accept that position instead of fighting it.
     */
-    const currentCenter =
-      rect.top +
-      rect.height / 2;
+    if (
+      actualY >
+      cameraCurrentY + 18
+    ) {
+      cameraCurrentY =
+        actualY;
 
-    const desiredCenter =
-      viewport * .50;
+      cameraTargetY =
+        Math.max(
+          cameraTargetY,
+          actualY
+        );
+    }
 
     const difference =
-      currentCenter -
-      desiredCenter;
+      cameraTargetY -
+      actualY;
 
-    /*
-      Small dead zone prevents tiny shaking.
-    */
     if (
-      Math.abs(difference) < 8
+      Math.abs(difference) < 0.6
     ) {
+      cameraCurrentY =
+        actualY;
+
+      cameraUserJump = false;
+
       return;
     }
 
     /*
-      Camera easing.
-
-      Large distances move faster.
-      Small distances settle gently.
+      Smooth ease:
+      big distances move confidently,
+      small distances settle softly.
     */
-    let movement =
-      difference * .115;
+    const mobile =
+      window.matchMedia(
+        "(max-width: 700px)"
+      ).matches;
 
-    const maxMovement =
-      Math.max(
-        5,
-        viewport * .035
-      );
+    const easing =
+      cameraUserJump
+        ? .13
+        : (mobile ? .075 : .065);
 
-    movement =
-      Math.max(
-        -maxMovement,
+    let step =
+      difference * easing;
+
+    const maxStep =
+      mobile ? 15 : 18;
+
+    if (step > 0) {
+      step =
         Math.min(
-          maxMovement,
-          movement
-        )
-      );
+          step,
+          maxStep
+        );
+    } else {
+      /*
+        Never move upward during normal reading.
+        Only a deliberate user jump may do so.
+      */
+      if (!cameraUserJump) {
+        return;
+      }
 
-    window.scrollBy({
-      top: movement,
-      left: 0,
-      behavior:"auto"
-    });
-  };
+      step =
+        Math.max(
+          step,
+          -maxStep
+        );
+    }
 
+    const nextY =
+      actualY + step;
 
-  const setFollowTarget = target => {
-    followTarget = target;
+    window.scrollTo(
+      0,
+      nextY
+    );
+
+    cameraCurrentY =
+      nextY;
   };
 
 
@@ -2448,16 +2795,15 @@ main section.unfire-reading-section{
     }
 
     setFollowTarget(
-      item.element
+      item.element,
+      false
     );
   };
 
 
-  if (!followRAF) {
-    readingCamera();
-  };
+  readingCamera();
 
-/* end smooth reading camera */
+/* end forward reading camera */
 
   const stopClock = () => {
     if (progressTimer) {
@@ -2509,6 +2855,10 @@ main section.unfire-reading-section{
     clearWord();
 
     followTarget = null;
+    cameraActive = false;
+    cameraTargetY = window.scrollY;
+    cameraCurrentY = window.scrollY;
+    cameraUserJump = false;
 
     playing = false;
     paused = false;
@@ -2706,6 +3056,24 @@ main section.unfire-reading-section{
       queue.indexOf(section.items[0]);
 
     if (queueIndex >= 0) {
+
+      /*
+        A deliberate section change may move
+        upward or downward once.
+      */
+      const firstItem =
+        section.items[0];
+
+      if (
+        firstItem &&
+        firstItem.element
+      ) {
+        setFollowTarget(
+          firstItem.element,
+          true
+        );
+      }
+
       startAt(queueIndex);
     }
   };
@@ -2729,6 +3097,19 @@ main section.unfire-reading-section{
     }
 
     drawProgress(value);
+
+    const selected =
+      queue[found];
+
+    if (
+      selected &&
+      selected.element
+    ) {
+      setFollowTarget(
+        selected.element,
+        true
+      );
+    }
 
     if (playing) {
       startAt(found);
