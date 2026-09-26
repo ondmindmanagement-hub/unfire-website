@@ -1473,182 +1473,10 @@ main section.unfire-reading-section{
 </style>
 
 
-<style id="unfire-reader-redesign">
-#reader{
-  position:fixed !important;
-  left:50% !important;
-  right:auto !important;
-  bottom:18px !important;
-  transform:translateX(-50%) !important;
-
-  width:min(440px, calc(100vw - 28px)) !important;
-  padding:10px 12px 9px !important;
-
-  background:rgba(20,20,22,.78) !important;
-  border:1px solid rgba(255,255,255,.10) !important;
-  border-radius:18px !important;
-
-  backdrop-filter:blur(28px) saturate(160%) !important;
-  -webkit-backdrop-filter:blur(28px) saturate(160%) !important;
-
-  box-shadow:
-    0 18px 50px rgba(0,0,0,.40),
-    inset 0 1px 0 rgba(255,255,255,.06) !important;
-
-  z-index:9999 !important;
-}
-
-#reader .reader-top{
-  display:flex !important;
-  align-items:center !important;
-  gap:8px !important;
-}
-
-#reader-play{
-  flex:1 !important;
-  height:38px !important;
-  border-radius:12px !important;
-  border:0 !important;
-  font-size:13px !important;
-  font-weight:600 !important;
-}
-
-#reader-pause{
-  width:38px !important;
-  height:38px !important;
-  min-width:38px !important;
-  border-radius:50% !important;
-  font-size:13px !important;
-}
-
-#reader-range{
-  width:100% !important;
-  margin:8px 0 4px !important;
-  height:10px !important;
-}
-
-#reader-percent{
-  display:none !important;
-}
-
-#reader .reader-section-nav{
-  display:grid !important;
-  grid-template-columns:28px 1fr 28px !important;
-  align-items:center !important;
-  gap:4px !important;
-  margin-top:1px !important;
-}
-
-#reader-prev,
-#reader-next{
-  width:28px !important;
-  height:24px !important;
-  border:0 !important;
-  background:transparent !important;
-  opacity:.55 !important;
-  padding:0 !important;
-}
-
-#reader-section-name{
-  overflow:hidden !important;
-  white-space:nowrap !important;
-  text-overflow:ellipsis !important;
-  text-align:center !important;
-  font-size:11px !important;
-  opacity:.55 !important;
-}
-
-@media (max-width:700px){
-  #reader{
-    bottom:10px !important;
-    width:calc(100vw - 18px) !important;
-    padding:9px 10px 8px !important;
-    border-radius:16px !important;
-  }
-
-  #reader-play{
-    height:36px !important;
-  }
-
-  #reader-pause{
-    width:36px !important;
-    height:36px !important;
-    min-width:36px !important;
-  }
-}
-</style>
 
 
-<style id="unfire-reader-minimal">
-#reader{
-  position:fixed !important;
-  left:50% !important;
-  bottom:16px !important;
-  transform:translateX(-50%) !important;
 
-  width:min(360px, calc(100vw - 24px)) !important;
-  padding:9px 10px 8px !important;
 
-  background:rgba(18,18,20,.74) !important;
-  border:1px solid rgba(255,255,255,.10) !important;
-  border-radius:18px !important;
-
-  -webkit-backdrop-filter:blur(26px) saturate(160%) !important;
-  backdrop-filter:blur(26px) saturate(160%) !important;
-
-  box-shadow:
-    0 16px 45px rgba(0,0,0,.35),
-    inset 0 1px 0 rgba(255,255,255,.05) !important;
-
-  z-index:9999 !important;
-}
-
-#reader .reader-top{
-  display:flex !important;
-  align-items:center !important;
-  gap:8px !important;
-}
-
-#reader-play{
-  flex:1 !important;
-  height:36px !important;
-  border-radius:12px !important;
-  font-size:13px !important;
-  font-weight:600 !important;
-}
-
-#reader-pause{
-  width:36px !important;
-  height:36px !important;
-  min-width:36px !important;
-  border-radius:50% !important;
-  padding:0 !important;
-}
-
-#reader-range{
-  display:block !important;
-  width:100% !important;
-  height:10px !important;
-  margin:8px 0 0 !important;
-}
-
-#reader-percent,
-#reader-language,
-.reader-section-nav,
-#reader-section-name,
-#reader-prev,
-#reader-next{
-  display:none !important;
-}
-
-@media (max-width:700px){
-  #reader{
-    bottom:10px !important;
-    width:calc(100vw - 18px) !important;
-    border-radius:16px !important;
-  }
-}
-</style>
 
 
 <style id="unfire-reader-v11-style">
@@ -1740,9 +1568,8 @@ main section.unfire-reading-section{
 }
 
 ::highlight(unfire-speaking-word){
-  color:#ffffff;
-  background-color:transparent;
-  text-shadow:0 0 8px rgba(255,255,255,.18);
+  color:#fff;
+  background-color:rgba(255,255,255,.16);
 }
 
 .unfire-speaking-block{
@@ -1778,53 +1605,113 @@ main section.unfire-reading-section{
 </style>
 
 
+<style id="unfire-reader-production">
 
+#reader{
+  position:fixed !important;
+  right:24px !important;
+  left:auto !important;
+  bottom:24px !important;
+  transform:none !important;
 
+  width:270px !important;
+  height:52px !important;
+  padding:8px 11px !important;
 
-<style id="unfire-karaoke-strict-v3">
+  display:grid !important;
+  grid-template-columns:36px 1fr !important;
+  align-items:center !important;
+  gap:10px !important;
+
+  background:rgba(22,22,24,.72) !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  border-radius:18px !important;
+
+  -webkit-backdrop-filter:blur(30px) saturate(165%) !important;
+  backdrop-filter:blur(30px) saturate(165%) !important;
+
+  box-shadow:
+    0 18px 52px rgba(0,0,0,.34),
+    inset 0 1px 0 rgba(255,255,255,.06) !important;
+
+  z-index:99999 !important;
+}
+
+#reader .reader-top{
+  display:block !important;
+  width:36px !important;
+  height:36px !important;
+}
+
+#reader-play{
+  width:36px !important;
+  min-width:36px !important;
+  height:36px !important;
+  padding:0 !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  border:0 !important;
+  border-radius:50% !important;
+
+  background:#f5f5f7 !important;
+  color:#111 !important;
+
+  font-size:13px !important;
+  line-height:1 !important;
+}
+
+#reader-pause,
+#reader-percent,
+#reader-language,
+.reader-section-nav,
+#reader-section-name,
+#reader-prev,
+#reader-next{
+  display:none !important;
+}
+
+#reader-range{
+  grid-column:2 !important;
+  width:100% !important;
+  height:12px !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
 ::highlight(unfire-speaking-word){
   color:#ffffff !important;
   background:transparent !important;
   text-shadow:none !important;
 }
 
-.unfire-reader-word,
-.unfire-reader-word.unfire-word-active{
-  transition:none !important;
+@media(max-width:700px){
+  #reader{
+    left:50% !important;
+    right:auto !important;
+
+    bottom:max(
+      10px,
+      env(safe-area-inset-bottom)
+    ) !important;
+
+    transform:translateX(-50%) !important;
+
+    width:calc(100vw - 22px) !important;
+    max-width:360px !important;
+    height:50px !important;
+
+    padding:7px 10px !important;
+    border-radius:17px !important;
+  }
 }
 
-.unfire-reader-word.unfire-word-active{
-  color:#ffffff !important;
-  opacity:1 !important;
-  text-shadow:none !important;
-}
-</style>
-
-
-<style id="unfire-letter-karaoke-v1">
-
-.unfire-letter-karaoke-word{
-  position:relative;
-  display:inline;
-  color:inherit;
-}
-
-.unfire-letter-karaoke-word::after{
-  content:attr(data-word);
-  position:absolute;
-  left:0;
-  top:0;
-  width:var(--karaoke-progress, 0%);
-  overflow:hidden;
-  white-space:pre;
-  color:#ffffff;
-  pointer-events:none;
-  clip-path:inset(0 calc(100% - var(--karaoke-progress, 0%)) 0 0);
-}
-
-.unfire-letter-karaoke-word[data-active="0"]::after{
-  width:0%;
-  clip-path:inset(0 100% 0 0);
+@media(prefers-reduced-motion:reduce){
+  html{
+    scroll-behavior:auto !important;
+  }
 }
 
 </style>
@@ -2431,11 +2318,18 @@ main section.unfire-reading-section{
   preload="metadata"
 ></audio>
 
-<script id="unfire-reader-v11">
+<script id="unfire-reader-production">
 (() => {
 
   const audio =
     document.getElementById("unfire-narration");
+
+  audio.playbackRate = 1.06;
+  audio.defaultPlaybackRate = 1.06;
+
+  if ("preservesPitch" in audio) {
+    audio.preservesPitch = true;
+  }
 
   const playBtn =
     document.getElementById("reader-play");
@@ -2468,9 +2362,6 @@ main section.unfire-reading-section{
 
   let currentWordIndex = -1;
 
-  let karaokeTimeline = [];
-  let karaokeVisibleIndex = -1;
-
   let dragging = false;
 
   let scrollCurrent =
@@ -2484,6 +2375,11 @@ main section.unfire-reading-section{
   let switchingLanguage = false;
 
   let previousBlock = null;
+
+  let cameraTarget = window.scrollY;
+  let cameraPosition = window.scrollY;
+  let cameraBlock = null;
+  let cameraLastFrame = performance.now();
 
 
   const normalizeWord = value =>
@@ -2693,731 +2589,6 @@ main section.unfire-reading-section{
   };
 
 
-
-
-  const prepareLetterKaraoke = () => {
-
-    const selectors = [
-      "main .hero-kicker",
-      "main .eyebrow",
-      "main h1",
-      "main h2",
-      "main h3",
-      "main p",
-      "main .product-type",
-      "main .subproduct-label",
-      "main .subproduct-name",
-      "main .metric strong",
-      "main .metric span",
-      "main .flow-num",
-      "main .flow-step strong",
-      "main .system-row strong",
-      "main .product footer",
-      "main .contact"
-    ].join(",");
-
-    const elements =
-      Array.from(
-        document.querySelectorAll(selectors)
-      );
-
-    for (const element of elements) {
-
-      if (
-        element.querySelector(
-          ".unfire-letter-karaoke-word"
-        )
-      ) {
-        continue;
-      }
-
-      const walker =
-        document.createTreeWalker(
-          element,
-          NodeFilter.SHOW_TEXT
-        );
-
-      const nodes = [];
-      let node;
-
-      while ((node = walker.nextNode())) {
-
-        if (
-          node.parentElement?.closest(
-            ".unfire-letter-karaoke-word"
-          )
-        ) {
-          continue;
-        }
-
-        if (
-          node.nodeValue &&
-          node.nodeValue.trim()
-        ) {
-          nodes.push(node);
-        }
-      }
-
-      for (const textNode of nodes) {
-
-        const text =
-          textNode.nodeValue;
-
-        const regex =
-          /[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*/gu;
-
-        const fragment =
-          document.createDocumentFragment();
-
-        let cursor = 0;
-        let match;
-
-        while ((match = regex.exec(text))) {
-
-          if (match.index > cursor) {
-            fragment.appendChild(
-              document.createTextNode(
-                text.slice(
-                  cursor,
-                  match.index
-                )
-              )
-            );
-          }
-
-          const span =
-            document.createElement("span");
-
-          span.className =
-            "unfire-letter-karaoke-word";
-
-          span.dataset.word =
-            match[0];
-
-          span.dataset.active =
-            "0";
-
-          span.textContent =
-            match[0];
-
-          span.style.setProperty(
-            "--karaoke-progress",
-            "0%"
-          );
-
-          fragment.appendChild(span);
-
-          cursor =
-            match.index +
-            match[0].length;
-        }
-
-        if (cursor === 0) {
-          continue;
-        }
-
-        if (cursor < text.length) {
-          fragment.appendChild(
-            document.createTextNode(
-              text.slice(cursor)
-            )
-          );
-        }
-
-        textNode.replaceWith(fragment);
-      }
-    }
-  };
-
-
-  const collectLetterWords = () => {
-
-    return Array.from(
-      document.querySelectorAll(
-        "main .unfire-letter-karaoke-word"
-      )
-    );
-  };
-
-
-  let letterWords = [];
-  let letterActiveIndex = -1;
-
-
-  const resetLetterKaraoke = () => {
-
-    if (
-      letterActiveIndex >= 0 &&
-      letterWords[letterActiveIndex]
-    ) {
-
-      const old =
-        letterWords[letterActiveIndex];
-
-      old.dataset.active = "0";
-
-      old.style.setProperty(
-        "--karaoke-progress",
-        "0%"
-      );
-    }
-
-    letterActiveIndex = -1;
-  };
-
-
-  const paintLetterKaraoke = time => {
-
-    if (!karaokeTimeline.length) {
-      resetLetterKaraoke();
-      return;
-    }
-
-    let low = 0;
-    let high =
-      karaokeTimeline.length - 1;
-
-    let index = -1;
-
-    while (low <= high) {
-
-      const mid =
-        (low + high) >> 1;
-
-      const item =
-        karaokeTimeline[mid];
-
-      if (time < item.start) {
-
-        high = mid - 1;
-
-      } else if (time >= item.end) {
-
-        low = mid + 1;
-
-      } else {
-
-        index = mid;
-        break;
-      }
-    }
-
-    if (index < 0) {
-
-      resetLetterKaraoke();
-      return;
-    }
-
-    const item =
-      karaokeTimeline[index];
-
-    const duration =
-      Math.max(
-        0.001,
-        item.end - item.start
-      );
-
-    const phase =
-      Math.max(
-        0,
-        Math.min(
-          1,
-          (time - item.start) /
-          duration
-        )
-      );
-
-    if (
-      index !== letterActiveIndex
-    ) {
-
-      resetLetterKaraoke();
-
-      letterActiveIndex =
-        index;
-    }
-
-    const el =
-      letterWords[index];
-
-    if (!el) {
-      return;
-    }
-
-    el.dataset.active = "1";
-
-    el.style.setProperty(
-      "--karaoke-progress",
-      `${phase * 100}%`
-    );
-  };
-
-
-  const buildKaraokeTimeline = () => {
-
-    karaokeTimeline = [];
-
-    if (
-      !visibleWords.length ||
-      !transcript.length
-    ) {
-      return;
-    }
-
-    /*
-      Buscamos anclas fiables entre el texto visible
-      y la transcripción del audio.
-    */
-
-    const anchors = [];
-
-    let transcriptCursor = 0;
-
-    for (
-      let visibleIndex = 0;
-      visibleIndex < visibleWords.length;
-      visibleIndex++
-    ) {
-
-      const wanted =
-        visibleWords[visibleIndex].key;
-
-      if (!wanted) continue;
-
-      let found = -1;
-
-      const limit =
-        Math.min(
-          transcript.length,
-          transcriptCursor + 60
-        );
-
-      for (
-        let transcriptIndex = transcriptCursor;
-        transcriptIndex < limit;
-        transcriptIndex++
-      ) {
-
-        if (
-          normalizeWord(
-            transcript[transcriptIndex].word
-          ) === wanted
-        ) {
-          found = transcriptIndex;
-          break;
-        }
-      }
-
-      if (found >= 0) {
-
-        anchors.push({
-          visible: visibleIndex,
-          transcript: found
-        });
-
-        transcriptCursor =
-          found + 1;
-      }
-    }
-
-
-    /*
-      Línea temporal inicial:
-      todas las palabras visibles existen aquí,
-      incluso las que Whisper haya omitido.
-    */
-
-    karaokeTimeline =
-      visibleWords.map((word, index) => ({
-        word,
-        visibleIndex:index,
-        start:null,
-        end:null,
-        exact:false
-      }));
-
-
-    /*
-      Aplicamos tiempos exactos a las palabras
-      que sí tienen correspondencia directa.
-    */
-
-    for (const anchor of anchors) {
-
-      const timing =
-        transcript[anchor.transcript];
-
-      if (!timing) continue;
-
-      const item =
-        karaokeTimeline[anchor.visible];
-
-      item.start =
-        Number(timing.start);
-
-      item.end =
-        Number(timing.end);
-
-      item.exact = true;
-    }
-
-
-    /*
-      Rellenamos cualquier palabra que Whisper
-      se haya saltado utilizando las dos palabras
-      reconocidas que la rodean.
-    */
-
-    let cursor = 0;
-
-    while (cursor < karaokeTimeline.length) {
-
-      if (
-        karaokeTimeline[cursor].start != null
-      ) {
-        cursor++;
-        continue;
-      }
-
-      const runStart = cursor;
-
-      while (
-        cursor < karaokeTimeline.length &&
-        karaokeTimeline[cursor].start == null
-      ) {
-        cursor++;
-      }
-
-      const runEnd =
-        cursor - 1;
-
-      const count =
-        runEnd - runStart + 1;
-
-      const previous =
-        runStart > 0
-          ? karaokeTimeline[runStart - 1]
-          : null;
-
-      const next =
-        cursor < karaokeTimeline.length
-          ? karaokeTimeline[cursor]
-          : null;
-
-
-      let availableStart =
-        previous?.end != null
-          ? previous.end
-          : 0;
-
-
-      let availableEnd;
-
-      if (next?.start != null) {
-
-        availableEnd =
-          next.start;
-
-      } else if (
-        Number.isFinite(audio.duration)
-      ) {
-
-        availableEnd =
-          audio.duration;
-
-      } else {
-
-        const lastTranscript =
-          transcript[
-            transcript.length - 1
-          ];
-
-        availableEnd =
-          Number(
-            lastTranscript?.end ||
-            availableStart +
-            count * .25
-          );
-      }
-
-
-      let available =
-        Math.max(
-          .04 * count,
-          availableEnd -
-          availableStart
-        );
-
-
-      /*
-        No extendemos palabras durante pausas
-        largas de la narración.
-      */
-
-      const speakingWindow =
-        Math.min(
-          available,
-          count * .30
-        );
-
-
-      const slot =
-        speakingWindow /
-        Math.max(1, count);
-
-
-      for (
-        let i = 0;
-        i < count;
-        i++
-      ) {
-
-        const item =
-          karaokeTimeline[
-            runStart + i
-          ];
-
-        item.start =
-          availableStart +
-          i * slot;
-
-        item.end =
-          Math.min(
-            availableEnd,
-            item.start +
-            Math.max(
-              .055,
-              slot * .92
-            )
-          );
-      }
-    }
-
-
-    /*
-      Seguridad:
-      ningún intervalo puede solaparse hacia atrás.
-    */
-
-    let lastTime = 0;
-
-    for (
-      const item of karaokeTimeline
-    ) {
-
-      item.start =
-        Math.max(
-          lastTime,
-          Number(item.start || 0)
-        );
-
-      item.end =
-        Math.max(
-          item.start + .035,
-          Number(item.end || item.start + .12)
-        );
-
-      lastTime =
-        item.start;
-    }
-
-    karaokeVisibleIndex = -1;
-
-    console.log(
-      "Karaoke timeline:",
-      karaokeTimeline.length,
-      "palabras visibles /",
-      anchors.length,
-      "anclas exactas"
-    );
-  };
-
-
-  const findKaraokeWord = time => {
-
-    let low = 0;
-    let high =
-      karaokeTimeline.length - 1;
-
-    let candidate = -1;
-
-    while (low <= high) {
-
-      const mid =
-        (low + high) >> 1;
-
-      if (
-        karaokeTimeline[mid].start <= time
-      ) {
-
-        candidate = mid;
-        low = mid + 1;
-
-      } else {
-
-        high = mid - 1;
-      }
-    }
-
-    if (candidate < 0) {
-      return -1;
-    }
-
-    const item =
-      karaokeTimeline[candidate];
-
-    /*
-      Fundamental:
-      después de end la palabra deja de estar
-      marcada aunque la siguiente aún no empiece.
-    */
-
-    if (
-      time < item.start ||
-      time > item.end
-    ) {
-      return -1;
-    }
-
-    return candidate;
-  };
-
-
-  const clearKaraoke = () => {
-
-    if (
-      window.CSS &&
-      CSS.highlights
-    ) {
-
-      CSS.highlights.delete(
-        "unfire-speaking-word"
-      );
-    }
-
-    karaokeVisibleIndex = -1;
-  };
-
-
-  const paintKaraoke = time => {
-
-    if (!karaokeTimeline.length) {
-      resetLetterKaraoke();
-      clearKaraoke();
-      return;
-    }
-
-    let low = 0;
-    let high = karaokeTimeline.length - 1;
-    let index = -1;
-
-    while (low <= high) {
-
-      const mid = (low + high) >> 1;
-      const item = karaokeTimeline[mid];
-
-      if (time < item.start) {
-
-        high = mid - 1;
-
-      } else if (time >= item.end) {
-
-        low = mid + 1;
-
-      } else {
-
-        index = mid;
-        break;
-      }
-    }
-
-    if (index < 0) {
-
-      if (karaokeVisibleIndex !== -1) {
-        resetLetterKaraoke();
-      clearKaraoke();
-      }
-
-      return;
-    }
-
-    if (index === karaokeVisibleIndex) {
-      return;
-    }
-
-    clearKaraoke();
-
-    const visible = karaokeTimeline[index]?.word;
-
-    if (!visible) {
-      return;
-    }
-
-    let wordRange = null;
-
-    if (
-      visible.node &&
-      visible.node.isConnected
-    ) {
-
-      try {
-
-        wordRange = document.createRange();
-
-        wordRange.setStart(
-          visible.node,
-          visible.start
-        );
-
-        wordRange.setEnd(
-          visible.node,
-          visible.end
-        );
-
-      } catch (_) {
-
-        wordRange = null;
-      }
-
-    } else if (
-      visible.element &&
-      visible.element.isConnected
-    ) {
-
-      try {
-
-        wordRange = document.createRange();
-
-        wordRange.selectNodeContents(
-          visible.element
-        );
-
-      } catch (_) {
-
-        wordRange = null;
-      }
-    }
-
-    if (!wordRange) {
-      return;
-    }
-
-    if (
-      window.CSS &&
-      CSS.highlights &&
-      window.Highlight
-    ) {
-
-      CSS.highlights.set(
-        "unfire-speaking-word",
-        new Highlight(wordRange)
-      );
-
-      karaokeVisibleIndex = index;
-    }
-  };
-
-
   const loadTranscript = async lang => {
 
     try {
@@ -3442,13 +2613,7 @@ main section.unfire-reading-section{
           ? data.words
           : [];
 
-      prepareLetterKaraoke();
-
-      letterWords =
-        collectLetterWords();
-
       alignWords();
-      buildKaraokeTimeline();
 
     } catch (error) {
 
@@ -3639,95 +2804,57 @@ main section.unfire-reading-section{
       return;
     }
 
-    const current =
+    const mapped =
       nearestMappedWord(index);
 
-    if (!current) return;
-
-    const y1 =
-      wordPageY(current.value);
-
-    if (y1 == null) return;
-
-    let y2 = y1;
-    let nextIndex = current.index + 1;
-
-    while (
-      nextIndex < wordMap.length &&
-      !wordMap[nextIndex] &&
-      nextIndex <
-      current.index + 12
-    ) {
-      nextIndex++;
+    if (!mapped?.value?.element) {
+      return;
     }
 
-    if (wordMap[nextIndex]) {
+    const block =
+      mapped.value.element;
 
-      const candidate =
-        wordPageY(
-          wordMap[nextIndex]
-        );
+    /*
+      No perseguimos cada palabra.
+      Solo cambiamos el objetivo cuando cambia
+      el bloque de lectura.
+    */
 
-      if (candidate != null) {
-        y2 = candidate;
-      }
+    if (block === cameraBlock) {
+      return;
     }
 
+    cameraBlock = block;
 
-    const currentTiming =
-      transcript[index];
-
-    const nextTiming =
-      transcript[
-        Math.min(
-          transcript.length - 1,
-          index + 1
-        )
-      ];
-
-    let phase = 0;
-
-    if (
-      currentTiming &&
-      nextTiming &&
-      nextTiming.start >
-      currentTiming.start
-    ) {
-
-      phase =
-        (
-          audio.currentTime -
-          currentTiming.start
-        ) /
-        (
-          nextTiming.start -
-          currentTiming.start
-        );
-
-      phase =
-        Math.max(
-          0,
-          Math.min(1, phase)
-        );
-    }
-
-
-    const pageY =
-      y1 +
-      (y2 - y1) * phase;
-
+    const rect =
+      block.getBoundingClientRect();
 
     const viewport =
       window.visualViewport
         ? window.visualViewport.height
         : window.innerHeight;
 
+    const absoluteY =
+      window.scrollY +
+      rect.top;
 
-    scrollTarget =
+    const candidate =
       Math.max(
         0,
-        pageY -
-        viewport * .42
+        absoluteY -
+        viewport * .34
+      );
+
+    /*
+      Durante lectura normal jamás hacemos
+      una corrección automática hacia arriba.
+    */
+
+    cameraTarget =
+      Math.max(
+        window.scrollY,
+        cameraTarget,
+        candidate
       );
   };
 
@@ -3752,15 +2879,16 @@ main section.unfire-reading-section{
   };
 
 
-  const animationLoop = () => {
+  const animationLoop = now => {
+
+    cameraLastFrame =
+      performance.now();
 
     requestAnimationFrame(
       animationLoop
     );
 
-
     updateProgress();
-
 
     if (
       !audio.paused &&
@@ -3775,42 +2903,102 @@ main section.unfire-reading-section{
 
       if (index >= 0) {
 
-        paintLetterKaraoke(
-          audio.currentTime
-        );
+        highlightWord(index);
 
         updateScrollTarget(index);
       }
+
     } else {
 
-      resetLetterKaraoke();
-      clearKaraoke();
+      if (
+        window.CSS &&
+        CSS.highlights
+      ) {
+        CSS.highlights.delete(
+          "unfire-speaking-word"
+        );
+      }
     }
 
 
     if (
-      performance.now() >=
+      performance.now() <
       userScrollUntil
     ) {
 
-      scrollCurrent =
-        window.scrollY +
-        (
-          scrollTarget -
-          window.scrollY
-        ) * .085;
+      cameraPosition =
+        window.scrollY;
 
+      cameraTarget =
+        Math.max(
+          cameraTarget,
+          window.scrollY
+        );
+
+      cameraLastFrame = now;
+
+      return;
+    }
+
+
+    const dt =
+      Math.min(
+        40,
+        Math.max(
+          1,
+          now - cameraLastFrame
+        )
+      );
+
+    cameraLastFrame = now;
+
+
+    const current =
+      window.scrollY;
+
+    /*
+      Interpolación basada en tiempo,
+      no en número de frames.
+    */
+
+    const alpha =
+      1 -
+      Math.exp(
+        -dt / 260
+      );
+
+
+    const destination =
+      Math.max(
+        current,
+        cameraTarget
+      );
+
+
+    const distance =
+      destination -
+      current;
+
+
+    if (distance > .4) {
+
+      cameraPosition =
+        current +
+        distance * alpha;
+
+      /*
+        Seguridad absoluta:
+        nunca mover automáticamente hacia arriba.
+      */
 
       if (
-        Math.abs(
-          scrollTarget -
-          window.scrollY
-        ) > .35
+        cameraPosition >
+        current
       ) {
 
         window.scrollTo(
           0,
-          scrollCurrent
+          cameraPosition
         );
       }
     }
@@ -4044,13 +3232,18 @@ main section.unfire-reading-section{
   const pauseAutoFollow = () => {
 
     userScrollUntil =
-      performance.now() + 1600;
+      performance.now() + 1800;
 
-    scrollCurrent =
+    cameraPosition =
       window.scrollY;
 
-    scrollTarget =
+    cameraTarget =
       window.scrollY;
+
+    cameraBlock = null;
+
+    cameraLastFrame =
+      performance.now();
   };
 
 
@@ -4141,11 +3334,68 @@ main section.unfire-reading-section{
         transcript.length
       ) {
         alignWords();
-        buildKaraokeTimeline();
       }
     }
   );
 
+
+
+
+  let translationRemapTimer = null;
+
+  const narrationRoot =
+    document.querySelector("main");
+
+  if (narrationRoot) {
+
+    const translationObserver =
+      new MutationObserver(() => {
+
+        clearTimeout(
+          translationRemapTimer
+        );
+
+        translationRemapTimer =
+          setTimeout(() => {
+
+            if (
+              switchingLanguage
+            ) {
+              return;
+            }
+
+            /*
+              Eliminar cualquier Range que apunte
+              al DOM anterior.
+            */
+
+            if (
+              window.CSS &&
+              CSS.highlights
+            ) {
+              CSS.highlights.delete(
+                "unfire-speaking-word"
+              );
+            }
+
+            currentWordIndex = -1;
+
+            alignWords();
+
+            cameraBlock = null;
+
+          }, 750);
+      });
+
+    translationObserver.observe(
+      narrationRoot,
+      {
+        subtree:true,
+        childList:true,
+        characterData:true
+      }
+    );
+  }
 
   const start = async () => {
 
