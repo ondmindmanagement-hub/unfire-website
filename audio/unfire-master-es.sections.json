@@ -1,0 +1,136 @@
+{
+  "language": "es",
+  "source": "audio/unfire-master-es.txt",
+  "sections": {
+    "hero": [
+      "Empresa tecnológica independiente.",
+      "Construir tecnología.",
+      "Reutilizar la ventaja.",
+      "Unfire desarrolla sistemas de software reutilizables diseñados para convertir una misma base tecnológica en múltiples productos, flujos de trabajo y futuras aplicaciones."
+    ],
+    "company": [
+      "Empresa.",
+      "Una compañía de software diseñada para que la tecnología acumule valor con el tiempo.",
+      "En lugar de tratar cada aplicación como un proyecto aislado, Unfire desarrolla tecnología que puede reutilizarse, ampliarse y transferirse a futuros productos.",
+      "Uno. Construir una vez.",
+      "Las capacidades principales pueden convertirse en componentes reutilizables, en lugar de quedar encerradas dentro de un único producto.",
+      "Dos. Ampliar continuamente.",
+      "El nuevo software puede heredar infraestructura ya existente, reduciendo trabajo de ingeniería repetido cuando la arquitectura lo permite.",
+      "Tres. Escalar el sistema.",
+      "La incorporación de más almacenamiento, capacidad de cálculo, pruebas e infraestructura de distribución puede aumentar la capacidad de producción sin tener que reconstruir el sistema desde cero."
+    ],
+    "work": [
+      "Proyectos seleccionados.",
+      "Productos diferentes.",
+      "Tecnología que acumula valor.",
+      "Cada proyecto resuelve un problema distinto, pero el objetivo subyacente es el mismo: desarrollar tecnología, sistemas y conocimiento de producción que puedan reutilizarse en software futuro, en lugar de permanecer aislados dentro de una sola aplicación.",
+      "Inteligencia artificial. Automatización. Flujos de trabajo informáticos."
+    ],
+    "bolt": [
+      "Bolt.",
+      "Bolt explora la orquestación controlada de inteligencia artificial para trabajos complejos realizados con ordenadores. Está diseñado para coordinar sistemas de inteligencia artificial, herramientas locales y procesos de ejecución, manteniendo visibilidad, permisos y control humano.",
+      "El proyecto investiga cómo reducir la interacción repetitiva entre personas, modelos y software, permitiendo que un plan previamente validado continúe a través de ciclos de ejecución, pruebas y reparación con menos interrupciones innecesarias.",
+      "La tecnología desarrollada alrededor de Bolt puede contribuir a futuros sistemas de automatización, desarrollo y control informático dentro del ecosistema general de Unfire.",
+      "Orquestación. Ejecución local. Autonomía controlada. Automatización reutilizable.",
+      "Energía. Datos. Sistemas de información."
+    ],
+    "power": [
+      "Power.",
+      "Power explora cómo convertir información compleja sobre electricidad y mercados energéticos en software más fácil de comprender, comparar y utilizar.",
+      "El proyecto combina datos regionales, información de precios e interpretación estructurada dentro de una interfaz más clara, creando una base para futuras herramientas de inteligencia energética.",
+      "Este mismo enfoque podrá aplicarse más adelante a otros productos con grandes cantidades de información, donde los datos externos fragmentados deban convertirse en software comprensible y útil.",
+      "Inteligencia energética. Interpretación de datos. Arquitectura de información.",
+      "Infraestructura interna. Producción de software."
+    ],
+    "suite": [
+      "UnfireSuite.",
+      "UnfireSuite representa la capa interna de producción que existe detrás de múltiples proyectos de Unfire.",
+      "Su objetivo es reducir trabajo de ingeniería repetido permitiendo reutilizar, cuando resulte adecuado, componentes de software, procesos de validación, sistemas de producción y conocimiento técnico acumulado.",
+      "Esto es importante porque el valor de un proyecto no tiene por qué terminar cuando ese proyecto se completa. Parte de su tecnología puede convertirse en infraestructura para el siguiente producto, permitiendo que el propio sistema de producción mejore con el tiempo.",
+      "Infraestructura compartida. Validación. Reutilización. Sistemas de producción."
+    ],
+    "archer_intro": [
+      "Unfire Audio. Primera implementación."
+    ],
+    "archer": [
+      "Archer.",
+      "Archer es el primer producto desarrollado dentro de la dirección general de Unfire Audio.",
+      "Es una herramienta de clipping de audio de precisión basada en Gain, Threshold y Atmosphere, diseñada para ofrecer a productores e ingenieros un control directo sobre el comportamiento del clipping, los picos, los transitorios y el carácter sonoro.",
+      "Su función estratégica va más allá de un único efecto de audio. Archer proporciona un entorno práctico para desarrollar y validar tecnología de audio, sistemas de interfaz y componentes de producción que posteriormente pueden contribuir a futuros productos de software creativo.",
+      "Unfire Audio también explora cómo los sistemas asistidos por inteligencia artificial, el procesamiento procedural y la tecnología de software reutilizable pueden converger en nuevos conceptos de plugins y nuevos flujos de trabajo creativos más allá de las herramientas tradicionales de procesamiento de audio.",
+      "Tecnología de audio. Procesamiento digital de señal. Procesamiento procedural. Software creativo."
+    ],
+    "audio": [
+      "Unfire Audio.",
+      "De los plugins a nuevos conceptos de software.",
+      "Unfire Audio explora cómo los sistemas asistidos por inteligencia artificial, el procesamiento procedural y los componentes reutilizables de software pueden converger en herramientas creativas que vayan más allá de los flujos de trabajo tradicionales basados en plugins.",
+      "Uno. Sistemas asistidos por inteligencia artificial.",
+      "La inteligencia artificial puede formar parte del propio entorno de software creativo, en lugar de existir únicamente como un asistente separado.",
+      "Dos. Transformación procedural.",
+      "Los parámetros, el sonido y el comportamiento del software pueden transformarse dinámicamente, abriendo nuevas posibilidades para modelos de interacción creativa.",
+      "Tres. Tecnología transferible.",
+      "Los componentes que funcionan correctamente en un producto pueden reutilizarse, ampliarse o integrarse posteriormente en otros proyectos.",
+      "La investigación realizada en un producto puede reforzar el siguiente.",
+      "El objetivo no es simplemente producir plugins de audio aislados. Es crear una base tecnológica creativa reutilizable capaz de sostener futuras herramientas, entornos más amplios y nuevos conceptos de producto."
+    ],
+    "system": [
+      "Sistema.",
+      "Producción de software sin empezar desde cero.",
+      "La idea central es sencilla: cuando un nuevo producto puede utilizar tecnología que ya existe dentro de Unfire, el desarrollo debe aprovechar esa ventaja en lugar de reconstruirla.",
+      "Base compartida.",
+      "Los componentes reutilizables de software, el conocimiento de producción y los sistemas de validación forman una base que puede seguir evolucionando.",
+      "Capa de producto.",
+      "Las nuevas aplicaciones pueden combinar capacidades ya existentes con tecnología específica de cada producto, en lugar de comenzar desde una arquitectura vacía.",
+      "Validación.",
+      "Las compilaciones, las pruebas y los controles internos proporcionan evidencia medible de si los candidatos de software funcionan según lo previsto.",
+      "Expansión.",
+      "La infraestructura puede crecer mediante capacidad adicional de cálculo, almacenamiento, pruebas, control de calidad y despliegue."
+    ],
+    "scale": [
+      "Escala de producción.",
+      "El cuello de botella está cambiando.",
+      "Cuando la arquitectura existente resulta aplicable, el desarrollo interno ha demostrado que candidatos funcionales de software pueden recorrer ciclos de construcción extremadamente cortos, en algunos casos medidos en minutos.",
+      "De reconstruir software a escalar infraestructura.",
+      "A medida que aumenta la tecnología reutilizable, los factores limitantes pasan progresivamente a ser recursos de infraestructura como capacidad de cálculo, almacenamiento, pruebas, control de calidad y despliegue comercial; recursos que, a su vez, pueden ampliarse.",
+      "Tres líneas principales de producto utilizadas actualmente para demostrar la dirección tecnológica general.",
+      "Ocho candidatos prioritarios de software identificados para la primera fase de desarrollo.",
+      "Cincuenta y tres candidatos de software independientes construidos y auditados internamente.",
+      "Cincuenta y tres de cincuenta y tres compilaciones independientes completadas correctamente en el control interno de septiembre de dos mil veintiséis.",
+      "Uno. Reutilizar.",
+      "Partir de tecnología existente siempre que sea posible.",
+      "Dos. Construir.",
+      "Crear la capa específica de cada producto.",
+      "Tres. Escalar.",
+      "Ampliar la infraestructura a medida que crece la producción."
+    ],
+    "companies": [
+      "Empresas.",
+      "Sistemas de software especializados.",
+      "La misma base de producción puede respaldar aplicaciones y entornos especializados diseñados alrededor de las necesidades de cada organización."
+    ],
+    "institutions": [
+      "Instituciones.",
+      "Entornos controlados.",
+      "Los proyectos pueden permanecer aislados mientras se benefician de tecnología subyacente reutilizable, procesos de validación e infraestructura de producción."
+    ],
+    "public": [
+      "Sector público.",
+      "Herramientas digitales escalables.",
+      "La arquitectura está siendo preparada para futuras colaboraciones en las que sean importantes el control, la trazabilidad, la validación y el mantenimiento a largo plazo.",
+      "La capacidad puede demostrarse.",
+      "El mecanismo continúa siendo propietario.",
+      "Unfire puede mostrar productos, compilaciones, controles internos y capacidad de producción sin exponer los métodos de implementación que generan la ventaja tecnológica subyacente."
+    ],
+    "funding": [
+      "Financiación y colaboración.",
+      "Ampliar lo que ya existe.",
+      "Más infraestructura.",
+      "Más validación.",
+      "Más productos.",
+      "La financiación puede acelerar la infraestructura, las pruebas, el endurecimiento de los productos, el despliegue y la transición desde la validación tecnológica interna hacia aplicaciones comerciales e institucionales de mayor escala.",
+      "Unfire está interesado en programas de financiación, alianzas estratégicas y futuros proyectos con empresas, instituciones de investigación y organizaciones del sector público.",
+      "Unfire.",
+      "Tecnología. Software. Investigación."
+    ]
+  }
+}
