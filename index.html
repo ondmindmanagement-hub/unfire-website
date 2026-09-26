@@ -3,2551 +3,1487 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="Unfire builds reusable technology systems for software production, AI-assisted workflows and new digital products.">
+<meta name="google" content="notranslate">
+
 <title>Unfire — Technology Company</title>
-<meta name="description" content="Unfire develops software across AI, creative technology, data and digital infrastructure.">
-<meta name="theme-color" content="#050505">
 
 <style>
 :root{
-  --bg:#050505;
-  --panel:#0d0d0f;
-  --line:#242428;
+  --bg:#000;
+  --surface:#0a0a0c;
+  --surface2:#0d0d10;
   --text:#f5f5f7;
-  --muted:#909097;
-  --soft:#c8c8cd;
-  --green:#8ff0ad;
+  --muted:#8e8e93;
+  --muted2:#66666d;
+  --line:#1d1d21;
+  --max:1180px;
 }
 
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+  background:var(--bg);
+}
+
 body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
   -webkit-font-smoothing:antialiased;
 }
-a{color:inherit;text-decoration:none}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+.notranslate{
+  unicode-bidi:isolate;
+}
+
+.wrap{
+  width:min(calc(100% - 48px),var(--max));
+  margin:0 auto;
+}
+
+/* HEADER */
 
 header{
-  position:fixed;
+  position:sticky;
   top:0;
-  left:0;
-  width:100%;
   z-index:100;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 5%;
-  background:rgba(5,5,5,.82);
-  backdrop-filter:blur(20px);
+  background:rgba(0,0,0,.82);
   border-bottom:1px solid rgba(255,255,255,.07);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+}
+
+.nav{
+  min-height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
 .brand{
-  font-size:20px;
+  font-size:18px;
   font-weight:650;
-  letter-spacing:-.04em;
+  letter-spacing:-.01em;
 }
 
-nav{
-  display:flex;
-  gap:28px;
-  color:var(--muted);
-  font-size:14px;
-}
-
-nav a:hover{color:#fff}
-
-.wrap{
-  width:min(1320px,88%);
-  margin:auto;
-}
-
-.hero{
-  min-height:100vh;
+.nav-links{
   display:flex;
   align-items:center;
-  padding:140px 0 90px;
+  gap:30px;
+  color:#8c8c92;
+  font-size:13px;
 }
 
-.hero-inner{
-  max-width:1120px;
+.nav-links a:hover{
+  color:#fff;
+}
+
+/* GENERAL */
+
+section{
+  padding:130px 0;
+  border-bottom:1px solid var(--line);
 }
 
 .eyebrow{
   margin-bottom:24px;
-  color:var(--muted);
-  font-size:12px;
-  font-weight:650;
+  color:#78787f;
+  font-size:11px;
+  font-weight:600;
   letter-spacing:.16em;
   text-transform:uppercase;
 }
 
+h1,h2,h3,p{
+  margin-top:0;
+}
+
 h1{
-  margin:0;
-  font-size:clamp(58px,7.2vw,112px);
-  line-height:1.03;
-  letter-spacing:-.015em;
-  font-weight:620;
-}
-
-.hero p{
-  max-width:720px;
-  margin:38px 0 0;
-  color:var(--soft);
-  font-size:clamp(19px,2vw,26px);
-  line-height:1.5;
-  letter-spacing:-.02em;
-}
-
-.status{
-  margin-top:42px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 15px rgba(143,240,173,.5);
-}
-
-section{
-  padding:120px 0;
-  border-top:1px solid var(--line);
+  max-width:1050px;
+  margin-bottom:38px;
+  font-size:clamp(4rem,8vw,8.3rem);
+  line-height:.97;
+  letter-spacing:-.025em;
+  font-weight:590;
 }
 
 h2{
-  max-width:950px;
-  margin:0;
-  font-size:clamp(44px,5.6vw,78px);
+  max-width:1020px;
+  margin-bottom:32px;
+  font-size:clamp(3rem,6vw,6.2rem);
   line-height:1.02;
-  letter-spacing:-.035em;
-  font-weight:620;
+  letter-spacing:-.02em;
+  font-weight:590;
+}
+
+h3{
+  margin-bottom:14px;
+  font-size:26px;
+  line-height:1.16;
+  letter-spacing:0;
+  font-weight:590;
 }
 
 .lead{
-  max-width:720px;
-  margin:28px 0 0;
+  max-width:790px;
+  margin-bottom:0;
   color:var(--muted);
-  font-size:18px;
-  line-height:1.7;
+  font-size:clamp(18px,2vw,23px);
+  line-height:1.58;
 }
 
-.stats{
-  margin-top:58px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-
-.stat{
-  min-height:180px;
-  padding:26px;
-  border:1px solid var(--line);
-  border-radius:22px;
-  background:var(--panel);
-}
-
-.stat strong{
-  display:block;
-  margin-bottom:22px;
-  font-size:clamp(48px,5vw,72px);
-  line-height:1;
-  letter-spacing:-.06em;
-}
-
-.stat span{
+.small{
   color:var(--muted);
-  line-height:1.45;
-  font-size:14px;
+  font-size:13px;
+  line-height:1.65;
 }
 
-.products{
-  margin-top:58px;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
+/* HERO */
+
+.hero{
+  min-height:calc(100vh - 64px);
+  display:flex;
+  align-items:center;
+  padding:110px 0 130px;
+}
+
+.hero-inner{
+  width:100%;
+}
+
+.hero-kicker{
+  margin-bottom:28px;
+  color:#77777d;
+  font-size:12px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+
+.hero p{
+  max-width:760px;
+  margin:0;
+  color:#9a9aa1;
+  font-size:clamp(19px,2vw,25px);
+  line-height:1.55;
+}
+
+.hero-actions{
+  display:flex;
   gap:14px;
+  margin-top:44px;
 }
 
-.product{
-  min-height:340px;
+.button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:0 20px;
+  border:1px solid #2b2b30;
+  border-radius:999px;
+  color:#fff;
+  background:#111114;
+  font-size:13px;
+  transition:.2s ease;
+}
+
+.button.primary{
+  color:#000;
+  background:#f5f5f7;
+  border-color:#f5f5f7;
+}
+
+.button:hover{
+  transform:translateY(-1px);
+}
+
+/* COMPANY */
+
+.statement{
+  max-width:1020px;
+  font-size:clamp(2.4rem,5vw,5.1rem);
+  line-height:1.08;
+  letter-spacing:-.015em;
+  font-weight:570;
+}
+
+.statement-muted{
+  color:#64646b;
+}
+
+.three{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:78px;
+}
+
+.simple-card{
+  min-height:235px;
   padding:30px;
   border:1px solid var(--line);
   border-radius:24px;
-  background:linear-gradient(145deg,#111114,#09090a);
+  background:var(--surface);
+}
+
+.simple-card span{
+  display:block;
+  margin-bottom:48px;
+  color:#616168;
+  font-size:11px;
+}
+
+.simple-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.65;
+}
+
+/* WORK */
+
+.work-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:68px;
+}
+
+.product{
+  min-height:390px;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
+  padding:36px;
+  border:1px solid var(--line);
+  border-radius:26px;
+  background:linear-gradient(180deg,#0c0c0f,#09090b);
 }
 
 .product-type{
-  color:var(--muted);
-  font-size:11px;
-  letter-spacing:.13em;
+  margin-bottom:38px;
+  color:#6e6e75;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.16em;
   text-transform:uppercase;
 }
 
 .product h3{
-  margin:28px 0 14px;
-  font-size:clamp(40px,4vw,60px);
-  letter-spacing:-.035em;
+  font-size:36px;
 }
 
 .product p{
   max-width:520px;
-  margin:0;
   color:var(--muted);
-  line-height:1.6;
+  font-size:14px;
+  line-height:1.7;
 }
 
 .product footer{
-  margin-top:40px;
-  color:#6f6f75;
-  font-size:12px;
+  margin-top:54px;
+  color:#66666d;
+  font-size:11px;
 }
 
-.split{
+.subproduct{
+  margin-top:28px;
+  padding-top:25px;
+  border-top:1px solid var(--line);
+}
+
+.subproduct-label{
+  color:#68686f;
+  font-size:10px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+
+.subproduct-name{
+  display:block;
+  margin:9px 0 10px;
+  font-size:20px;
+  font-weight:600;
+}
+
+/* AUDIO */
+
+.audio-grid{
   display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:100px;
-  align-items:start;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:68px;
 }
 
-.points{
-  display:grid;
-  gap:1px;
-  border:1px solid var(--line);
-  border-radius:22px;
-  overflow:hidden;
+.audio-item{
+  padding:30px 0;
+  border-top:1px solid var(--line);
 }
 
-.point{
-  padding:24px 26px;
-  background:var(--panel);
+.audio-item span{
+  color:#606067;
+  font-size:11px;
+}
+
+.audio-item strong{
+  display:block;
+  margin-top:18px;
+  font-size:21px;
+  font-weight:590;
+}
+
+.audio-item p{
+  margin:15px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+}
+
+.big-message{
+  max-width:990px;
+  margin-top:95px;
+  font-size:clamp(2.7rem,5vw,5.5rem);
+  line-height:1.07;
+  letter-spacing:-.015em;
+  font-weight:580;
+}
+
+.big-message p{
+  max-width:740px;
+  margin:30px 0 0;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.7;
+  font-weight:400;
+  letter-spacing:0;
+}
+
+/* SYSTEM */
+
+.system-diagram{
+  margin-top:75px;
+  border-top:1px solid var(--line);
   border-bottom:1px solid var(--line);
 }
 
-.point:last-child{border-bottom:0}
-
-.point strong{
-  display:block;
-  margin-bottom:8px;
-  font-size:17px;
-}
-
-.point span{
-  color:var(--muted);
-  line-height:1.55;
-  font-size:14px;
-}
-
-.funding{
-  padding-bottom:145px;
-}
-
-.funding-box{
-  margin-top:50px;
-  padding:38px;
-  border:1px solid var(--line);
-  border-radius:26px;
-  background:linear-gradient(145deg,#111114,#09090a);
-}
-
-.funding-box p{
-  max-width:800px;
-  margin:0;
-  color:var(--muted);
-  font-size:18px;
-  line-height:1.7;
-}
-
-.email{
-  display:inline-block;
-  margin-top:36px;
-  padding-bottom:8px;
-  border-bottom:1px solid #555;
-  font-size:clamp(24px,3vw,38px);
-  letter-spacing:-.04em;
-}
-
-.site-footer{
-  padding:32px 0 48px;
-  border-top:1px solid var(--line);
-  color:#707077;
-  display:flex;
-  justify-content:space-between;
-  font-size:12px;
-}
-
-@media(max-width:900px){
-  nav{display:none}
-  .stats{grid-template-columns:1fr 1fr}
-  .products{grid-template-columns:1fr}
-  .split{grid-template-columns:1fr;gap:50px}
-}
-
-@media(max-width:600px){
-  .wrap{width:90%}
-  .hero{min-height:92vh}
-  .stats{grid-template-columns:1fr}
-  section{padding:85px 0}
-  .site-footer{flex-direction:column;gap:10px}
-}
-</style>
-
-
-
-
-<!-- UNFIRE TYPOGRAPHY SYSTEM START -->
-<style>
-
-/* GLOBAL TYPOGRAPHY RESET */
-h1, h2, h3, h4,
-.hero h1,
-.product h3,
-.stat strong {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-               "Helvetica Neue", Arial, sans-serif !important;
-  font-kerning: normal !important;
-  font-feature-settings: "kern" 1 !important;
-  text-rendering: optimizeLegibility;
-  word-break: normal !important;
-  overflow-wrap: normal !important;
-  hyphens: none !important;
-}
-
-/* HERO */
-.hero h1,
-h1 {
-  font-size: clamp(3.7rem, 6.4vw, 6.7rem) !important;
-  line-height: 1.08 !important;
-  letter-spacing: 0.005em !important;
-  font-weight: 600 !important;
-  max-width: 980px !important;
-  margin-bottom: 0 !important;
-  text-wrap: balance;
-}
-
-/* SECTION HEADINGS */
-section h2,
-h2 {
-  font-size: clamp(2.75rem, 4.35vw, 4.75rem) !important;
-  line-height: 1.12 !important;
-  letter-spacing: 0.004em !important;
-  font-weight: 590 !important;
-  max-width: 1050px !important;
-  margin-bottom: 0 !important;
-  text-wrap: balance;
-}
-
-/* PRODUCT / CARD TITLES */
-.product h3,
-.card h3,
-.info h3,
-.event h3,
-h3 {
-  font-size: clamp(2.15rem, 3vw, 3.35rem) !important;
-  line-height: 1.16 !important;
-  letter-spacing: 0.006em !important;
-  font-weight: 590 !important;
-  text-wrap: balance;
-}
-
-/* NUMBERS */
-.stat strong,
-.metric strong {
-  font-size: clamp(3.25rem, 4.2vw, 4.7rem) !important;
-  line-height: 1.08 !important;
-  letter-spacing: 0 !important;
-  font-weight: 600 !important;
-}
-
-/* BODY COPY */
-.hero p {
-  max-width: 760px !important;
-  font-size: clamp(1.15rem, 1.55vw, 1.45rem) !important;
-  line-height: 1.62 !important;
-  letter-spacing: 0.005em !important;
-  margin-top: 2.6rem !important;
-}
-
-.lead,
-.product p,
-.card p,
-.info p,
-.point span,
-.stat span,
-.funding-box p {
-  line-height: 1.7 !important;
-  letter-spacing: 0.006em !important;
-}
-
-/* LABELS */
-.eyebrow,
-.product-type {
-  letter-spacing: 0.16em !important;
-  line-height: 1.45 !important;
-}
-
-/* SPACE BETWEEN TITLE AND CONTENT */
-section h2 + .lead {
-  margin-top: 2.2rem !important;
-}
-
-.products,
-.stats,
-.points {
-  margin-top: 3.8rem !important;
-}
-
-/* CARDS */
-.product {
-  padding: 2.2rem !important;
-}
-
-.product h3 {
-  margin-top: 2rem !important;
-  margin-bottom: 1.35rem !important;
-}
-
-/* TABLET */
-@media (max-width: 900px) {
-  .hero h1,
-  h1 {
-    font-size: clamp(3.25rem, 8.5vw, 5.4rem) !important;
-    line-height: 1.1 !important;
-    letter-spacing: 0.006em !important;
-  }
-
-  section h2,
-  h2 {
-    font-size: clamp(2.65rem, 6.8vw, 4.1rem) !important;
-    line-height: 1.13 !important;
-    letter-spacing: 0.006em !important;
-  }
-
-  .product h3,
-  h3 {
-    font-size: clamp(2.2rem, 5vw, 3rem) !important;
-    line-height: 1.17 !important;
-    letter-spacing: 0.008em !important;
-  }
-}
-
-/* MOBILE */
-@media (max-width: 600px) {
-  .hero h1,
-  h1 {
-    font-size: clamp(3rem, 12vw, 4.25rem) !important;
-    line-height: 1.1 !important;
-    letter-spacing: 0.008em !important;
-    text-wrap: pretty;
-  }
-
-  section h2,
-  h2 {
-    font-size: clamp(2.35rem, 9.5vw, 3.35rem) !important;
-    line-height: 1.15 !important;
-    letter-spacing: 0.008em !important;
-    text-wrap: pretty;
-  }
-
-  .product h3,
-  h3 {
-    font-size: clamp(2rem, 8vw, 2.65rem) !important;
-    line-height: 1.18 !important;
-    letter-spacing: 0.01em !important;
-  }
-
-  .hero p,
-  .lead {
-    font-size: 1.05rem !important;
-    line-height: 1.7 !important;
-  }
-}
-
-</style>
-<!-- UNFIRE TYPOGRAPHY SYSTEM END -->
-
-
-<style>
-.capacity-grid{
-  margin-top:64px;
+.system-row{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
+  grid-template-columns:180px 1fr;
+  gap:40px;
+  padding:32px 0;
+  border-bottom:1px solid var(--line);
 }
 
-.capacity-card{
-  padding:34px;
-  border:1px solid var(--line);
-  border-radius:24px;
-  background:linear-gradient(145deg,#111114,#09090a);
+.system-row:last-child{
+  border-bottom:0;
 }
 
-.capacity-card.wide{
-  grid-column:1/-1;
-}
-
-.capacity-label{
-  color:var(--muted);
-  font-size:11px;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  margin-bottom:28px;
-}
-
-.capacity-card h3{
-  margin:0 0 14px;
-  font-size:clamp(2rem,3vw,3.25rem) !important;
-  line-height:1.15 !important;
-  letter-spacing:0 !important;
-}
-
-.capacity-card p{
-  color:var(--muted);
-  line-height:1.7;
-  max-width:680px;
-}
-
-.history-chart{
-  margin-top:34px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  align-items:end;
-}
-
-.history-item{
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  min-height:230px;
-}
-
-.history-bar{
-  border:1px solid #34343a;
-  background:#17171a;
-  border-radius:12px 12px 5px 5px;
-  width:100%;
-}
-
-.history-item:nth-child(1) .history-bar{height:38px}
-.history-item:nth-child(2) .history-bar{height:78px}
-.history-item:nth-child(3) .history-bar{height:125px}
-.history-item:nth-child(4) .history-bar{height:205px}
-
-.history-number{
-  margin-top:14px;
-  font-size:32px;
-  font-weight:600;
-  letter-spacing:0;
-}
-
-.history-text{
-  margin-top:5px;
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.45;
-}
-
-.leverage{
-  margin-top:34px;
-  display:grid;
-  gap:18px;
-}
-
-.leverage-row{
-  display:grid;
-  grid-template-columns:150px 1fr;
-  gap:20px;
-  align-items:center;
-}
-
-.leverage-name{
-  color:var(--soft);
-  font-size:13px;
-}
-
-.leverage-track{
-  height:18px;
-  background:#151518;
-  border:1px solid #27272c;
-  border-radius:999px;
-  overflow:hidden;
-}
-
-.leverage-fill{
-  height:100%;
-  border-radius:999px;
-  background:#ececef;
-}
-
-.leverage-fill.base{width:30%}
-.leverage-fill.shared{width:62%}
-.leverage-fill.compound{width:94%}
-
-.model-note{
-  margin-top:24px;
-  color:#6f6f75;
-  font-size:11px;
-  line-height:1.55;
-}
-
-.system-flow{
-  margin-top:38px;
-  display:grid;
-  grid-template-columns:1fr auto 1fr auto 1fr;
-  align-items:center;
-  gap:16px;
-}
-
-.system-node{
-  min-height:140px;
-  border:1px solid var(--line);
-  border-radius:18px;
-  background:#0c0c0e;
-  padding:24px;
-}
-
-.system-node strong{
-  display:block;
-  font-size:18px;
-  margin-bottom:10px;
-}
-
-.system-node span{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.55;
-}
-
-.system-arrow{
-  color:#55555d;
-  font-size:24px;
-}
-
-.capacity-highlight{
-  margin-top:60px;
-  padding:38px;
-  border:1px solid var(--line);
-  border-radius:24px;
-  background:#0c0c0e;
-}
-
-.capacity-highlight strong{
-  display:block;
-  max-width:950px;
-  font-size:clamp(2rem,3.6vw,4rem);
-  line-height:1.15;
-  font-weight:590;
-  letter-spacing:0;
-}
-
-.capacity-highlight p{
-  margin:22px 0 0;
-  max-width:760px;
-  color:var(--muted);
-  line-height:1.7;
-}
-
-@media(max-width:900px){
-  .capacity-grid{grid-template-columns:1fr}
-  .capacity-card.wide{grid-column:auto}
-  .history-chart{grid-template-columns:1fr 1fr}
-  .system-flow{grid-template-columns:1fr}
-  .system-arrow{transform:rotate(90deg);text-align:center}
-}
-
-@media(max-width:600px){
-  .history-chart{grid-template-columns:1fr 1fr}
-  .capacity-card{padding:24px}
-  .leverage-row{grid-template-columns:1fr;gap:8px}
-}
-</style>
-
-
-
-
-
-<style>
-#unfire-voice-v4{
-  position:fixed;
-  right:24px;
-  bottom:24px;
-  z-index:99999;
-  width:min(390px,calc(100vw - 32px));
-  padding:16px;
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:20px;
-  background:rgba(14,14,16,.94);
-  backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
-  box-shadow:0 20px 60px rgba(0,0,0,.4);
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-}
-
-#unfire-voice-v4 .uv-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:14px;
-  margin-bottom:12px;
-}
-
-#unfire-voice-v4 strong{
-  display:block;
-  font-size:13px;
-}
-
-#unfire-voice-v4 .uv-status{
-  margin-top:4px;
-  color:#888890;
-  font-size:11px;
-}
-
-#unfire-voice-v4 select{
-  width:100%;
-  height:38px;
-  margin-bottom:10px;
-  padding:0 10px;
-  color:#f5f5f7;
-  background:#19191c;
-  border:1px solid #303036;
-  border-radius:11px;
-  font-size:12px;
-}
-
-#unfire-voice-v4 .uv-controls{
-  display:flex;
-  gap:8px;
-}
-
-#unfire-voice-v4 button{
-  height:38px;
-  border-radius:999px;
-  border:1px solid #303036;
-  background:#1b1b1f;
-  color:#f5f5f7;
-  padding:0 14px;
-  cursor:pointer;
-}
-
-#unfire-voice-v4 .uv-play{
-  flex:1;
-  background:#f5f5f7;
-  color:#050505;
-  border-color:#f5f5f7;
-  font-weight:600;
-}
-
-#unfire-voice-v4 button:disabled{
-  opacity:.4;
-  cursor:not-allowed;
-}
-
-@media(max-width:600px){
-  #unfire-voice-v4{
-    left:16px;
-    right:16px;
-    bottom:16px;
-    width:auto;
-  }
-}
-</style>
-
-
-<style>
-#unfire-player-v5{
-  position:fixed;
-  right:24px;
-  bottom:24px;
-  z-index:99999;
-  width:min(390px,calc(100vw - 32px));
-  padding:16px 17px 14px;
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:20px;
-  background:rgba(14,14,16,.94);
-  backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
-  box-shadow:0 20px 60px rgba(0,0,0,.42);
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-}
-
-.up5-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-}
-
-.up5-info{
-  min-width:0;
-}
-
-.up5-info strong{
-  display:block;
-  color:#f5f5f7;
-  font-size:13px;
-  font-weight:600;
-}
-
-#up5-status{
-  display:block;
-  margin-top:3px;
-  color:#85858d;
-  font-size:10px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.up5-buttons{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  flex-shrink:0;
-}
-
-.up5-buttons button{
-  height:36px;
-  min-width:36px;
-  padding:0 12px;
-  border:1px solid #303036;
-  border-radius:999px;
-  background:#1c1c20;
-  color:#f5f5f7;
-  cursor:pointer;
-}
-
-#up5-play{
-  padding:0 17px;
-  background:#f5f5f7;
-  color:#050505;
-  border-color:#f5f5f7;
-  font-weight:600;
-}
-
-.up5-timeline{
-  margin-top:15px;
-}
-
-#up5-seek{
-  width:100%;
-  margin:0;
-  accent-color:#f5f5f7;
-  cursor:pointer;
-}
-
-.up5-time{
-  display:flex;
-  justify-content:space-between;
-  margin-top:5px;
-  color:#67676f;
-  font-size:9px;
-}
-
-@media(max-width:600px){
-  #unfire-player-v5{
-    left:16px;
-    right:16px;
-    bottom:16px;
-    width:auto;
-  }
-}
-</style>
-
-
-<style>
-#unfire-player-v6{
-  position:fixed;
-  right:24px;
-  bottom:24px;
-  z-index:99999;
-  width:min(390px,calc(100vw - 32px));
-  padding:16px 17px 14px;
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:20px;
-  background:rgba(14,14,16,.95);
-  backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
-  box-shadow:0 20px 60px rgba(0,0,0,.42);
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-  overflow:hidden;
-}
-
-.up6-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-}
-
-.up6-info{
-  flex:1;
-  min-width:0;
-}
-
-.up6-info strong{
-  display:block;
-  color:#f5f5f7;
-  font-size:13px;
-  font-weight:600;
-}
-
-#up6-status{
-  display:block;
-  margin-top:3px;
-  color:#85858d;
-  font-size:10px;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-}
-
-.up6-controls{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  flex-shrink:0;
-}
-
-.up6-controls button{
-  height:36px;
-  min-width:36px;
-  padding:0 11px;
-  border:1px solid #303036;
-  border-radius:999px;
-  background:#1c1c20;
-  color:#f5f5f7;
-  cursor:pointer;
-  font-size:11px;
-}
-
-#up6-play{
-  padding:0 16px;
-  background:#f5f5f7;
-  border-color:#f5f5f7;
-  color:#050505;
-  font-weight:600;
-}
-
-.up6-progress{
-  margin-top:15px;
-}
-
-#up6-seek{
-  display:block;
-  width:100%;
-  margin:0;
-  cursor:pointer;
-  accent-color:#f5f5f7;
-}
-
-.up6-meta{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-top:6px;
-  color:#72727a;
-  font-size:9px;
-}
-
-#up6-percent{
-  font-variant-numeric:tabular-nums;
-  color:#a4a4ab;
-}
-
-@media(max-width:600px){
-  #unfire-player-v6{
-    left:16px;
-    right:16px;
-    bottom:16px;
-    width:auto;
-  }
-}
-</style>
-
-
-<style>
-.scale-intro{
-  max-width:790px;
-}
-
-.scale-statement{
-  margin-top:58px;
-  padding:38px;
-  border:1px solid var(--line);
-  border-radius:26px;
-  background:linear-gradient(145deg,#111114,#09090a);
-}
-
-.scale-statement strong{
-  display:block;
-  max-width:1000px;
-  font-size:clamp(2.15rem,4vw,4.4rem);
-  line-height:1.14;
-  letter-spacing:0;
-  font-weight:590;
-}
-
-.scale-statement p{
-  max-width:760px;
-  margin:24px 0 0;
-  color:var(--muted);
-  line-height:1.72;
-}
-
-.scale-metrics{
-  margin-top:18px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-
-.scale-metric{
-  min-height:190px;
-  padding:26px;
-  border:1px solid var(--line);
-  border-radius:21px;
-  background:#0d0d0f;
-}
-
-.scale-metric strong{
-  display:block;
-  font-size:clamp(3rem,5vw,4.8rem);
-  line-height:1;
-  font-weight:600;
-  letter-spacing:0;
-}
-
-.scale-metric span{
-  display:block;
-  margin-top:24px;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.55;
-}
-
-.scale-grid{
-  margin-top:18px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-
-.scale-card{
-  padding:32px;
-  border:1px solid var(--line);
-  border-radius:24px;
-  background:linear-gradient(145deg,#101012,#09090a);
-}
-
-.scale-card-label{
-  margin-bottom:25px;
-  color:#75757d;
-  font-size:10px;
-  font-weight:650;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-}
-
-.scale-card h3{
-  margin:0;
-  font-size:clamp(2rem,3vw,3.15rem) !important;
-  line-height:1.16 !important;
-  letter-spacing:0 !important;
-}
-
-.scale-card p{
-  max-width:620px;
-  margin:18px 0 0;
-  color:var(--muted);
-  line-height:1.7;
-}
-
-.pipeline{
-  margin-top:32px;
-}
-
-.pipeline-row{
-  display:grid;
-  grid-template-columns:160px 1fr;
-  gap:18px;
-  align-items:center;
-  margin-top:18px;
-}
-
-.pipeline-name{
-  color:var(--soft);
-  font-size:12px;
-}
-
-.pipeline-track{
-  position:relative;
-  height:22px;
-  overflow:hidden;
-  border:1px solid #29292e;
-  border-radius:999px;
-  background:#141416;
-}
-
-.pipeline-fill{
-  height:100%;
-  border-radius:999px;
-  background:#e9e9ec;
-}
-
-.pipeline-fill.old{width:30%}
-.pipeline-fill.shared{width:66%}
-.pipeline-fill.compound{width:94%}
-
-.pipeline-note{
-  margin-top:22px !important;
-  font-size:11px !important;
-  color:#696970 !important;
-}
-
-.bottleneck{
-  margin-top:30px;
-  display:grid;
-  grid-template-columns:1fr auto 1fr auto 1fr;
-  align-items:stretch;
-  gap:12px;
-}
-
-.bottleneck-node{
-  padding:22px;
-  border:1px solid #29292e;
-  border-radius:18px;
-  background:#0b0b0d;
-}
-
-.bottleneck-node strong{
-  display:block;
+.system-row strong{
   font-size:15px;
-  margin-bottom:9px;
 }
 
-.bottleneck-node span{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.5;
-}
-
-.bottleneck-arrow{
-  align-self:center;
-  color:#55555d;
-  font-size:22px;
-}
-
-.limit-box{
-  margin-top:18px;
-  padding:32px;
-  border:1px solid var(--line);
-  border-radius:24px;
-  background:#0b0b0d;
-}
-
-.limit-box h3{
+.system-row p{
+  max-width:680px;
   margin:0;
-  max-width:930px;
-  font-size:clamp(2rem,3.6vw,3.8rem) !important;
-  line-height:1.17 !important;
-  letter-spacing:0 !important;
-}
-
-.limit-box p{
-  max-width:800px;
-  margin:22px 0 0;
   color:var(--muted);
-  line-height:1.72;
-}
-
-.expansion{
-  margin-top:24px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-}
-
-.expansion-item{
-  padding:18px;
-  border-top:1px solid #303036;
-}
-
-.expansion-item strong{
-  display:block;
   font-size:14px;
+  line-height:1.65;
 }
 
-.expansion-item span{
-  display:block;
-  margin-top:7px;
-  color:#77777f;
-  font-size:11px;
-  line-height:1.5;
-}
+/* SCALE */
 
-@media(max-width:900px){
-  .scale-metrics{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .scale-grid{
-    grid-template-columns:1fr;
-  }
-
-  .bottleneck{
-    grid-template-columns:1fr;
-  }
-
-  .bottleneck-arrow{
-    transform:rotate(90deg);
-    text-align:center;
-  }
-
-  .expansion{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
-@media(max-width:600px){
-  .scale-metrics{
-    grid-template-columns:1fr;
-  }
-
-  .pipeline-row{
-    grid-template-columns:1fr;
-    gap:8px;
-  }
-
-  .expansion{
-    grid-template-columns:1fr;
-  }
-
-  .scale-statement,
-  .scale-card,
-  .limit-box{
-    padding:24px;
-  }
-}
-</style>
-
-
-<style>
-
-/* SIMPLE SCALE — APPLE-LIKE */
-
-.simple-scale{
-  padding-top:130px;
-  padding-bottom:130px;
-}
-
-.scale-hero-card{
-  margin-top:58px;
-  padding:42px;
+.scale-panel{
+  margin-top:65px;
+  padding:44px;
   border:1px solid var(--line);
   border-radius:28px;
-  background:#0b0b0d;
+  background:var(--surface);
 }
 
-.scale-big{
-  max-width:950px;
-  font-size:clamp(2.8rem,5vw,5.6rem);
-  line-height:1.02;
-  letter-spacing:-.01em;
-  font-weight:590;
+.scale-panel-title{
+  max-width:900px;
+  font-size:clamp(2.7rem,5vw,5.2rem);
+  line-height:1.05;
+  letter-spacing:-.015em;
+  font-weight:580;
 }
 
-.scale-hero-card p{
+.scale-panel p{
   max-width:760px;
   margin:28px 0 0;
   color:var(--muted);
+  font-size:15px;
   line-height:1.72;
 }
 
-.simple-metrics{
-  margin-top:16px;
+.metrics{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:12px;
+  margin-top:16px;
 }
 
-.simple-metrics > div{
+.metric{
+  min-height:190px;
   padding:28px;
-  min-height:180px;
   border:1px solid var(--line);
   border-radius:22px;
-  background:#0b0b0d;
+  background:var(--surface);
 }
 
-.simple-metrics strong{
+.metric strong{
   display:block;
-  font-size:clamp(2.6rem,4vw,4.5rem);
-  line-height:1.02;
-  letter-spacing:-.01em;
+  font-size:clamp(2.5rem,4vw,4.2rem);
+  line-height:1;
+  font-weight:590;
 }
 
-.simple-metrics span{
+.metric span{
   display:block;
-  margin-top:24px;
+  margin-top:25px;
   color:var(--muted);
-  font-size:13px;
+  font-size:12px;
   line-height:1.55;
 }
 
-.simple-flow{
-  margin-top:80px;
+.flow{
   display:grid;
   grid-template-columns:1fr auto 1fr auto 1fr;
   align-items:center;
-  gap:22px;
+  gap:26px;
+  margin-top:90px;
 }
 
-.simple-flow > div:not(.flow-arrow){
-  padding:26px 0;
+.flow-step{
+  padding:24px 0;
 }
 
-.simple-flow span{
-  color:#686870;
-  font-size:11px;
+.flow-num{
+  color:#626268;
+  font-size:10px;
 }
 
-.simple-flow strong{
+.flow-step strong{
   display:block;
-  margin-top:12px;
-  font-size:20px;
+  margin-top:14px;
+  font-size:19px;
 }
 
-.simple-flow p{
+.flow-step p{
   margin:8px 0 0;
   color:var(--muted);
   font-size:13px;
   line-height:1.5;
 }
 
-.flow-arrow{
-  color:#505057;
+.arrow{
+  color:#44444a;
   font-size:24px;
 }
 
-.scale-message{
-  margin-top:80px;
-  max-width:960px;
-}
-
-.scale-message h3{
-  margin:0;
-  font-size:clamp(2.5rem,4.5vw,5rem) !important;
-  line-height:1.08 !important;
-  letter-spacing:0 !important;
-}
-
-.scale-message p{
-  max-width:750px;
-  margin:26px 0 0;
-  color:var(--muted);
-  line-height:1.72;
-}
-
-.simple-grid{
-  margin-top:70px;
+.sector-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:14px;
+  gap:18px;
+  margin-top:100px;
 }
 
-.simple-grid > div{
-  padding:30px;
+.sector{
+  padding-top:26px;
   border-top:1px solid var(--line);
 }
 
-.simple-grid h3{
-  margin:15px 0 0;
-  font-size:25px !important;
-  line-height:1.2 !important;
+.sector h3{
+  margin-top:17px;
 }
 
-.simple-grid p{
-  margin:16px 0 0;
+.sector p{
   color:var(--muted);
   font-size:13px;
   line-height:1.65;
 }
 
-.confidential-line{
-  margin-top:90px;
+.proprietary{
+  margin-top:95px;
   padding-top:30px;
   border-top:1px solid var(--line);
 }
 
-.confidential-line strong{
+.proprietary strong{
   display:block;
-  font-size:18px;
+  font-size:19px;
 }
 
-.confidential-line span{
-  display:block;
-  max-width:720px;
-  margin-top:12px;
+.proprietary p{
+  max-width:750px;
+  margin:14px 0 0;
   color:var(--muted);
   font-size:13px;
-  line-height:1.65;
+  line-height:1.7;
 }
 
+/* FUNDING */
 
-/* AUDIO PLAYER — MINIMAL */
-
-#unfire-player-v6{
-  width:270px !important;
-  padding:11px 13px 10px !important;
-  border-radius:16px !important;
+.funding-panel{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:80px;
+  align-items:end;
+  margin-top:70px;
 }
 
-#unfire-player-v6 .up6-info{
-  display:none !important;
+.funding-big{
+  font-size:clamp(2.8rem,5vw,5.8rem);
+  line-height:1.04;
+  letter-spacing:-.018em;
+  font-weight:580;
 }
 
-#unfire-player-v6 .up6-top{
-  justify-content:flex-end !important;
+.funding-copy{
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.75;
 }
 
-#unfire-player-v6 .up6-controls{
-  width:100%;
-  justify-content:flex-end;
+.contact{
+  display:inline-block;
+  margin-top:30px;
+  color:#fff;
+  font-size:15px;
+  border-bottom:1px solid #444;
 }
 
-#unfire-player-v6 #up6-back{
-  display:none !important;
+/* FOOTER */
+
+.site-footer{
+  padding:38px 0 120px;
 }
 
-#unfire-player-v6 #up6-stop{
-  display:none !important;
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  gap:30px;
+  color:#5f5f65;
+  font-size:11px;
 }
 
-#unfire-player-v6 #up6-play{
+/* AUDIO PLAYER */
+
+#reader{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:200;
+  width:260px;
+  padding:10px;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:18px;
+  background:rgba(15,15,17,.88);
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+}
+
+.reader-top{
+  display:flex;
+  gap:7px;
+}
+
+.reader-btn{
+  height:34px;
+  border:0;
+  border-radius:999px;
+  cursor:pointer;
+}
+
+#reader-play{
   flex:1;
-  height:32px !important;
+  color:#000;
+  background:#f5f5f7;
+  font-size:12px;
+  font-weight:600;
 }
 
-#unfire-player-v6 #up6-pause{
-  height:32px !important;
-  min-width:32px !important;
+#reader-pause{
+  width:34px;
+  color:#bbb;
+  background:#1d1d20;
+  font-size:11px;
 }
 
-#unfire-player-v6 .up6-progress{
-  margin-top:8px !important;
-}
-
-#unfire-player-v6 .up6-meta{
-  margin-top:3px !important;
-}
-
-#up6-language{
-  display:none !important;
-}
-
-#up6-percent{
+.reader-range{
   width:100%;
+  height:4px;
+  margin:9px 0 0;
+  accent-color:#f5f5f7;
+  cursor:pointer;
+}
+
+.reader-percent{
+  margin-top:3px;
   text-align:right;
+  color:#63636a;
   font-size:9px;
   font-variant-numeric:tabular-nums;
 }
 
+/* RESPONSIVE */
+
 @media(max-width:900px){
-  .simple-metrics,
-  .simple-grid{
+  .nav-links{
+    gap:16px;
+  }
+
+  section{
+    padding:100px 0;
+  }
+
+  .three,
+  .work-grid,
+  .audio-grid,
+  .metrics,
+  .sector-grid,
+  .funding-panel{
     grid-template-columns:1fr;
   }
 
-  .simple-flow{
+  .flow{
     grid-template-columns:1fr;
-    gap:8px;
+    gap:4px;
   }
 
-  .flow-arrow{
+  .arrow{
     transform:rotate(90deg);
     text-align:center;
   }
+
+  .system-row{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .metric{
+    min-height:150px;
+  }
 }
 
-</style>
+@media(max-width:620px){
+  .wrap{
+    width:min(calc(100% - 32px),var(--max));
+  }
 
+  .nav{
+    min-height:58px;
+  }
+
+  .nav-links a:nth-child(2),
+  .nav-links a:nth-child(3){
+    display:none;
+  }
+
+  .hero{
+    min-height:auto;
+    padding:100px 0;
+  }
+
+  h1{
+    font-size:clamp(3.2rem,15vw,5rem);
+  }
+
+  h2{
+    font-size:clamp(2.7rem,12vw,4rem);
+  }
+
+  .product,
+  .scale-panel{
+    padding:26px;
+  }
+
+  #reader{
+    right:12px;
+    bottom:12px;
+    width:220px;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <header>
-<a class="brand" href="#top">Unfire</a>
-<nav>
-<a href="#company">Company</a>
-<a href="#work">Work</a>
-<a href="#capability">System</a>
-<a href="#capacity">Scale</a>
-<a href="#funding">Funding</a>
-</nav>
+  <div class="wrap nav">
+    <a class="brand notranslate" translate="no" href="#top">Unfire</a>
+
+    <nav class="nav-links">
+      <a href="#company">Company</a>
+      <a href="#work">Work</a>
+      <a href="#system">System</a>
+      <a href="#scale">Scale</a>
+      <a href="#funding">Funding</a>
+    </nav>
+  </div>
 </header>
-
-
-
 
 <main id="top">
 
-<div class="wrap">
 <section class="hero">
-<div class="hero-inner">
+  <div class="wrap hero-inner">
 
-<div class="eyebrow">Technology company · Europe</div>
+    <div class="hero-kicker">
+      Independent technology company
+    </div>
 
-<h1>Technology that compounds.</h1>
+    <h1>
+      Build technology.<br>
+      Reuse the advantage.
+    </h1>
 
-<p>
-Unfire develops software across AI, creative technology, data and digital
-infrastructure — supported by a reusable production system designed to become
-more capable with every project.
-</p>
+    <p>
+      <span class="notranslate" translate="no">Unfire</span> develops reusable software
+      systems designed to turn one technological foundation into multiple products,
+      workflows and future applications.
+    </p>
 
-<div class="status">
-<span class="dot"></span>
-Active development and commercial validation · 2026
-</div>
+    <div class="hero-actions">
+      <a class="button primary" href="#system">Explore the system</a>
+      <a class="button" href="#funding">Funding & collaboration</a>
+    </div>
 
-</div>
+  </div>
 </section>
-</div>
 
 
-<div class="wrap">
 <section id="company">
+  <div class="wrap">
 
-<div class="eyebrow">Unfire</div>
+    <div class="eyebrow">Company</div>
 
-<h2>Products today.<br>Infrastructure for what comes next.</h2>
+    <div class="statement">
+      A software company designed around
+      <span class="statement-muted">compounding technology.</span>
+    </div>
 
-<p class="lead">
-We are building independent software products while developing a shared
-technical foundation that reduces duplicated work and improves the speed,
-repeatability and reliability of future development.
-</p>
+    <p class="lead" style="margin-top:38px">
+      Instead of treating every application as an isolated project,
+      <span class="notranslate" translate="no">Unfire</span> develops technology that can
+      be reused, extended and transferred into future products.
+    </p>
 
-<div class="stats">
+    <div class="three">
 
-<div class="stat">
-<strong>3</strong>
-<span>Flagship product tracks in active validation.</span>
-</div>
+      <div class="simple-card">
+        <span>01</span>
+        <h3>Build once.</h3>
+        <p>
+          Core capabilities can become reusable building blocks rather than
+          disappearing inside a single product.
+        </p>
+      </div>
 
-<div class="stat">
-<strong>8</strong>
-<span>Priority Wave 1 software candidates.</span>
-</div>
+      <div class="simple-card">
+        <span>02</span>
+        <h3>Extend continuously.</h3>
+        <p>
+          New software can inherit existing infrastructure, reducing repeated
+          engineering when the architecture applies.
+        </p>
+      </div>
 
-<div class="stat">
-<strong>53</strong>
-<span>Standalone candidates built and internally audited.</span>
-</div>
+      <div class="simple-card">
+        <span>03</span>
+        <h3>Scale the system.</h3>
+        <p>
+          Additional storage, compute, testing and distribution infrastructure
+          can increase production capacity without recreating the underlying system.
+        </p>
+      </div>
 
-<div class="stat">
-<strong>53/53</strong>
-<span>Successful standalone builds at the September 2026 checkpoint.</span>
-</div>
+    </div>
 
-</div>
-
+  </div>
 </section>
-</div>
 
 
-<div class="wrap">
 <section id="work">
+  <div class="wrap">
 
-<div class="eyebrow">Selected work</div>
+    <div class="eyebrow">Selected work</div>
 
-<h2>Different problems.<br>One evolving technology base.</h2>
+    <h2>
+      Different problems.<br>
+      One evolving technology base.
+    </h2>
 
-<div class="products">
+    <div class="work-grid">
 
-<article class="product">
-<div>
-<div class="product-type">Audio · Creative technology</div>
-<h3>Archer</h3>
-<p>
-A precision clipping tool for music producers and engineers.
-Gain drives the signal, Threshold defines the clipping point,
-and Atmosphere shapes character — giving fast control over peaks,
-transients and intensity without slowing down the creative process.
-</p>
-</div>
-<footer>Flagship product</footer>
-</article>
+      <article class="product">
 
-<article class="product">
-<div>
-<div class="product-type">AI · Automation</div>
-<h3>Bolt</h3>
-<p>
-Apple-first software exploring controlled AI orchestration, local execution
-and lower-friction complex workflows.
-</p>
-</div>
-<footer>Flagship product</footer>
-</article>
+        <div>
+          <div class="product-type">Audio · Creative technology</div>
 
-<article class="product">
-<div>
-<div class="product-type">Data · Utilities</div>
-<h3>Power</h3>
-<p>
-A data-driven product focused on making complex energy information easier to
-access and understand.
-</p>
-</div>
-<footer>Flagship product</footer>
-</article>
+          <h3 class="notranslate" translate="no">Unfire Audio</h3>
 
-<article class="product">
-<div>
-<div class="product-type">Internal infrastructure</div>
-<h3>UnfireSuite</h3>
-<p>
-The internal production environment supporting reusable components, build
-validation and independent software candidates.
-</p>
-</div>
-<footer>Confidential internal platform</footer>
-</article>
+          <p>
+            A creative-technology direction exploring audio processing,
+            AI-assisted systems, procedural transformation and reusable
+            software components for new generations of music tools.
+          </p>
 
-</div>
+          <div class="subproduct">
+            <span class="subproduct-label">First product</span>
+            <strong class="subproduct-name notranslate" translate="no">Archer</strong>
 
+            <p>
+              A precision clipping tool built around Gain, Threshold and Atmosphere.
+              <span class="notranslate" translate="no">Archer</span> is an initial
+              implementation inside a broader audio technology system.
+            </p>
+          </div>
+        </div>
+
+        <footer>
+          One product can validate technology that supports the next.
+        </footer>
+
+      </article>
+
+
+      <article class="product">
+
+        <div>
+          <div class="product-type">AI · Automation</div>
+
+          <h3 class="notranslate" translate="no">Bolt</h3>
+
+          <p>
+            Apple-first software for controlled AI orchestration, local execution
+            and complex computer workflows with greater autonomy, visibility and
+            user control.
+          </p>
+        </div>
+
+        <footer>
+          AI orchestration · Local execution · Controlled autonomy
+        </footer>
+
+      </article>
+
+
+      <article class="product">
+
+        <div>
+          <div class="product-type">Energy · Data</div>
+
+          <h3 class="notranslate" translate="no">Power</h3>
+
+          <p>
+            Energy intelligence software designed to make electricity pricing,
+            market information and regional energy data easier to understand,
+            compare and use.
+          </p>
+        </div>
+
+        <footer>
+          Data interpretation · Energy intelligence
+        </footer>
+
+      </article>
+
+
+      <article class="product">
+
+        <div>
+          <div class="product-type">Internal infrastructure</div>
+
+          <h3 class="notranslate" translate="no">UnfireSuite</h3>
+
+          <p>
+            Shared production technology for developing, testing and managing
+            multiple software products from an evolving common foundation.
+          </p>
+        </div>
+
+        <footer>
+          Reusable systems · Validation · Production infrastructure
+        </footer>
+
+      </article>
+
+    </div>
+
+  </div>
 </section>
-</div>
 
 
-<div class="wrap">
-<section id="capability">
+<section id="audio">
+  <div class="wrap">
 
-<div class="split">
+    <div class="eyebrow">Unfire Audio</div>
 
-<div>
-<div class="eyebrow">Production capability</div>
-<h2>Measured by output, not promises.</h2>
+    <h2>
+      From plugins to new software concepts.
+    </h2>
 
-<p class="lead">
-Unfire is developing proprietary methods to reduce repetitive development work
-and improve production throughput. The underlying implementation remains
-confidential.
-</p>
-</div>
+    <p class="lead">
+      <span class="notranslate" translate="no">Unfire Audio</span> explores how
+      AI-assisted systems, procedural processing and reusable software components
+      can converge into creative tools that extend beyond conventional plugin workflows.
+    </p>
 
-<div class="points">
+    <div class="audio-grid">
 
-<div class="point">
-<strong>Reuse</strong>
-<span>Engineering work is designed to strengthen future projects rather than remain isolated.</span>
-</div>
+      <div class="audio-item">
+        <span>01</span>
+        <strong>AI-assisted systems</strong>
+        <p>
+          AI can become part of the creative software environment rather than
+          existing only as a separate assistant.
+        </p>
+      </div>
 
-<div class="point">
-<strong>Validation</strong>
-<span>Products move through repeatable build and technical checks before commercial prioritisation.</span>
-</div>
+      <div class="audio-item">
+        <span>02</span>
+        <strong>Procedural transformation</strong>
+        <p>
+          Parameters, sound and software behaviour can be transformed dynamically,
+          opening space for new creative interaction models.
+        </p>
+      </div>
 
-<div class="point">
-<strong>Measurement</strong>
-<span>Progress is evaluated through build reliability, intervention, cost and time to deployable software.</span>
-</div>
+      <div class="audio-item">
+        <span>03</span>
+        <strong>Transferable technology</strong>
+        <p>
+          Successful components developed in one product can later be reused,
+          extended or integrated into other projects.
+        </p>
+      </div>
 
-<div class="point">
-<strong>Commercial discipline</strong>
-<span>Internal candidates are not presented as finished products until market readiness is demonstrated.</span>
-</div>
+    </div>
 
-</div>
+    <div class="big-message">
+      Research in one product can strengthen the next.
 
-</div>
+      <p>
+        The objective is not simply to produce isolated audio plugins.
+        It is to create a reusable creative-technology base capable of supporting
+        future tools, broader environments and new product concepts.
+      </p>
+    </div>
 
+  </div>
 </section>
-</div>
 
 
+<section id="system">
+  <div class="wrap">
 
+    <div class="eyebrow">System</div>
 
+    <h2>
+      Software production without starting over.
+    </h2>
 
-<div class="wrap">
-<section id="capacity" class="simple-scale">
+    <p class="lead">
+      The central idea is simple: when a new product can use technology that already
+      exists inside <span class="notranslate" translate="no">Unfire</span>,
+      development should reuse that advantage instead of rebuilding it.
+    </p>
 
-<div class="eyebrow">Production capacity</div>
+    <div class="system-diagram">
 
-<h2>Build more.<br>Start over less.</h2>
+      <div class="system-row">
+        <strong>Shared foundation</strong>
+        <p>
+          Reusable software components, production knowledge and validation systems
+          form a base that can continue evolving.
+        </p>
+      </div>
 
-<p class="lead">
-Unfire has developed a reusable software foundation that allows new products
-to inherit existing technology instead of rebuilding the same foundations
-for every application.
-</p>
+      <div class="system-row">
+        <strong>Product layer</strong>
+        <p>
+          New applications can combine existing capabilities with product-specific
+          technology rather than beginning from an empty architecture.
+        </p>
+      </div>
 
+      <div class="system-row">
+        <strong>Validation</strong>
+        <p>
+          Builds, tests and internal checkpoints provide measurable evidence of
+          whether software candidates are functioning as intended.
+        </p>
+      </div>
 
-<div class="scale-hero-card">
+      <div class="system-row">
+        <strong>Expansion</strong>
+        <p>
+          Infrastructure can grow through additional compute, storage, testing,
+          quality assurance and deployment capacity.
+        </p>
+      </div>
 
-<div class="scale-big">
-The bottleneck is moving.
-</div>
+    </div>
 
-<p>
-When a new product fits the existing Unfire architecture, internal development
-has shown that working software candidates can be created and validated on
-very short cycles — in some cases measured in minutes rather than conventional
-multi-stage rebuilds.
-</p>
-
-<p>
-As production capacity grows, the next constraints become expandable
-infrastructure: storage, compute, testing, quality assurance and distribution.
-Those resources can scale without rebuilding the production system itself.
-</p>
-
-</div>
-
-
-<div class="simple-metrics">
-
-<div>
-<strong>53</strong>
-<span>Standalone software candidates built and internally audited.</span>
-</div>
-
-<div>
-<strong>53/53</strong>
-<span>Successful standalone builds at the September 2026 internal checkpoint.</span>
-</div>
-
-<div>
-<strong>Scalable</strong>
-<span>Production capacity can expand through additional infrastructure without rebuilding the underlying system.</span>
-</div>
-
-</div>
-
-
-<div class="simple-flow">
-
-<div>
-<span>01</span>
-<strong>Shared foundation</strong>
-<p>Reusable technology already exists.</p>
-</div>
-
-<div class="flow-arrow">→</div>
-
-<div>
-<span>02</span>
-<strong>New product</strong>
-<p>Build on top instead of beginning again.</p>
-</div>
-
-<div class="flow-arrow">→</div>
-
-<div>
-<span>03</span>
-<strong>Scale infrastructure</strong>
-<p>Add storage, compute, QA and distribution capacity.</p>
-</div>
-
-</div>
-
-
-<div class="scale-message">
-
-<h3>The production method scales separately from the infrastructure.</h3>
-
-<p>
-Increasing storage, compute and validation capacity can expand the number,
-size and complexity of projects Unfire can support. The underlying production
-capability does not need to be recreated for every additional application.
-</p>
-
-</div>
-
-
-<div class="simple-grid">
-
-<div>
-<div class="eyebrow">Companies</div>
-<h3>Dedicated software.</h3>
-<p>
-The same foundation can support specialised applications and software
-environments developed around an organisation's needs.
-</p>
-</div>
-
-<div>
-<div class="eyebrow">Institutions</div>
-<h3>Controlled environments.</h3>
-<p>
-Projects can remain separated while benefiting from the same underlying
-production infrastructure.
-</p>
-</div>
-
-<div>
-<div class="eyebrow">Public sector</div>
-<h3>Scalable digital tools.</h3>
-<p>
-The architecture is being prepared for future collaboration with institutions
-and public-sector organisations where control, validation and traceability
-matter.
-</p>
-</div>
-
-</div>
-
-
-<div class="confidential-line">
-<strong>The output can be demonstrated. The mechanism remains proprietary.</strong>
-<span>
-Unfire can disclose measurable builds, products and production capacity
-without exposing the internal methods that create that leverage.
-</span>
-</div>
-
+  </div>
 </section>
-</div>
 
 
+<section id="scale">
+  <div class="wrap">
 
+    <div class="eyebrow">Production scale</div>
 
-<div class="wrap">
-<section class="funding" id="funding">
+    <h2>
+      The bottleneck is changing.
+    </h2>
 
-<div class="eyebrow">Investors · Grants · Strategic partners</div>
+    <p class="lead">
+      Where the existing architecture applies, internal development has demonstrated
+      that working software candidates can move through extremely short build cycles —
+      in some cases measured in minutes.
+    </p>
 
-<h2>Turning technical capability into scalable products.</h2>
+    <div class="scale-panel">
 
-<div class="funding-box">
+      <div class="scale-panel-title">
+        From rebuilding software to scaling infrastructure.
+      </div>
 
-<p>
-Funding would accelerate product hardening, independent QA, security,
-accessibility, internationalisation, distribution and commercial validation.
-The objective is not to finance a single application, but to strengthen a
-reusable European software-production capability capable of supporting
-multiple exportable products.
-</p>
+      <p>
+        As reusable technology expands, the limiting factors increasingly become
+        infrastructure resources such as compute, storage, testing, quality assurance
+        and commercial deployment — resources that can themselves be expanded.
+      </p>
 
-<a class="email" href="mailto:hello@unfire.technology">
-hello@unfire.technology
-</a>
+    </div>
 
-</div>
+    <div class="metrics">
 
+      <div class="metric">
+        <strong>3</strong>
+        <span>
+          Flagship product tracks currently used to demonstrate the broader technology direction.
+        </span>
+      </div>
+
+      <div class="metric">
+        <strong>8</strong>
+        <span>
+          Priority Wave 1 software candidates identified for focused development.
+        </span>
+      </div>
+
+      <div class="metric">
+        <strong>53</strong>
+        <span>
+          Standalone software candidates built and internally audited.
+        </span>
+      </div>
+
+      <div class="metric">
+        <strong>53/53</strong>
+        <span>
+          Successful standalone builds at the September 2026 internal checkpoint.
+        </span>
+      </div>
+
+    </div>
+
+    <div class="flow">
+
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <strong>Reuse</strong>
+        <p>Start from existing technology where possible.</p>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <strong>Build</strong>
+        <p>Create the product-specific layer.</p>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <strong>Scale</strong>
+        <p>Expand infrastructure as production grows.</p>
+      </div>
+
+    </div>
+
+    <div class="sector-grid">
+
+      <div class="sector">
+        <div class="eyebrow">Companies</div>
+        <h3>Dedicated software systems.</h3>
+        <p>
+          The same production foundation can support specialised applications
+          and environments designed around organisational requirements.
+        </p>
+      </div>
+
+      <div class="sector">
+        <div class="eyebrow">Institutions</div>
+        <h3>Controlled environments.</h3>
+        <p>
+          Projects can remain isolated while benefiting from reusable underlying
+          technology, validation processes and production infrastructure.
+        </p>
+      </div>
+
+      <div class="sector">
+        <div class="eyebrow">Public sector</div>
+        <h3>Scalable digital tools.</h3>
+        <p>
+          The architecture is being prepared for future collaboration where
+          control, traceability, validation and long-term maintainability matter.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="proprietary">
+      <strong>The capability can be demonstrated. The mechanism remains proprietary.</strong>
+
+      <p>
+        <span class="notranslate" translate="no">Unfire</span> can show products,
+        builds, internal checkpoints and production capacity without exposing the
+        implementation methods that create the underlying leverage.
+      </p>
+    </div>
+
+  </div>
 </section>
-</div>
+
+
+<section id="funding">
+  <div class="wrap">
+
+    <div class="eyebrow">Funding & collaboration</div>
+
+    <h2>
+      Expand what already exists.
+    </h2>
+
+    <div class="funding-panel">
+
+      <div class="funding-big">
+        More infrastructure.<br>
+        More validation.<br>
+        More products.
+      </div>
+
+      <div class="funding-copy">
+        Funding can accelerate infrastructure, testing, product hardening,
+        deployment and the transition from internal technology validation
+        toward larger commercial and institutional applications.
+
+        <br><br>
+
+        <span class="notranslate" translate="no">Unfire</span> is interested in
+        funding programmes, strategic partnerships and future projects with
+        companies, research institutions and public-sector organisations.
+
+        <br>
+
+        <a
+          class="contact notranslate"
+          translate="no"
+          href="mailto:hello@unfire.technology"
+        >hello@unfire.technology</a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
 </main>
 
-<div class="wrap">
+
 <footer class="site-footer">
-<span>© 2026 Unfire</span>
-<span>Technology · Software · Infrastructure</span>
-</footer>
-</div>
+  <div class="wrap footer-inner">
 
-
-
-
-
-<script>
-(() => {
-
-const translations = {
-  es: {
-    "Technology company · Europe":
-      "Empresa tecnológica · Europa",
-
-    "Technology that compounds.":
-      "Tecnología que multiplica su capacidad.",
-
-    "Unfire develops software across AI, creative technology, data and digital infrastructure — supported by a reusable production system designed to become more capable with every project.":
-      "Unfire desarrolla software de inteligencia artificial, tecnología creativa, datos e infraestructura digital, apoyado por un sistema de producción reutilizable diseñado para aumentar su capacidad con cada proyecto.",
-
-    "Active development and commercial validation · 2026":
-      "Desarrollo activo y validación comercial · 2026",
-
-    "Products today. Infrastructure for what comes next.":
-      "Productos hoy. Infraestructura para lo que viene después.",
-
-    "We are building independent software products while developing a shared technical foundation that reduces duplicated work and improves the speed, repeatability and reliability of future development.":
-      "Desarrollamos productos de software independientes mientras construimos una base tecnológica compartida que reduce el trabajo repetido y mejora la velocidad, la consistencia y la fiabilidad del desarrollo futuro.",
-
-    "Flagship product tracks in active validation.":
-      "Líneas de productos principales en validación activa.",
-
-    "Priority Wave 1 software candidates.":
-      "Candidatos de software prioritarios de la primera fase.",
-
-    "Standalone candidates built and internally audited.":
-      "Candidatos independientes construidos y auditados internamente.",
-
-    "Successful standalone builds at the September 2026 checkpoint.":
-      "Compilaciones independientes completadas con éxito en el punto de control de septiembre de 2026.",
-
-    "Selected work":
-      "Proyectos seleccionados",
-
-    "Different problems. One evolving technology base.":
-      "Problemas distintos. Una misma base tecnológica en evolución.",
-
-    "Audio · Creative technology":
-      "Audio · Tecnología creativa",
-
-    "Professional audio software for music producers. Built to control peaks, shape sound and achieve powerful, clean results through a fast and focused workflow.":
-      "Software de audio profesional para productores musicales. Diseñado para controlar picos, moldear el sonido y conseguir resultados potentes y limpios mediante un flujo de trabajo rápido y preciso.",
-
-    "AI · Automation":
-      "IA · Automatización",
-
-    "AI-powered software designed to coordinate complex computer workflows with greater autonomy, control and less repetitive human intervention.":
-      "Software basado en inteligencia artificial diseñado para coordinar flujos de trabajo informáticos complejos con mayor autonomía, control y menor intervención humana repetitiva.",
-
-    "Data · Utilities":
-      "Datos · Utilidades",
-
-    "Energy intelligence software designed to make electricity pricing and market data easier to understand, compare and use.":
-      "Software de inteligencia energética diseñado para facilitar la comprensión, comparación y uso de precios eléctricos y datos de mercado.",
-
-    "Internal infrastructure":
-      "Infraestructura interna",
-
-    "Unfire's internal technology platform for developing, testing and managing multiple software products from a shared foundation.":
-      "La plataforma tecnológica interna de Unfire para desarrollar, probar y gestionar múltiples productos de software desde una base compartida.",
-
-    "Production capability":
-      "Capacidad de producción",
-
-    "Measured by output, not promises.":
-      "Medido por resultados, no por promesas.",
-
-    "Unfire is developing proprietary methods to reduce repetitive development work and improve production throughput. The underlying implementation remains confidential.":
-      "Unfire desarrolla métodos propios para reducir el trabajo repetitivo de desarrollo y aumentar la capacidad de producción. La implementación subyacente permanece confidencial.",
-
-    "Growth & Production Capacity":
-      "Crecimiento y capacidad de producción",
-
-    "Built to increase output with every product.":
-      "Diseñado para aumentar la capacidad con cada producto.",
-
-    "Unfire is developing a shared software foundation designed to support multiple independent products — or combine them into broader applications and suites when that creates a better user experience.":
-      "Unfire desarrolla una base de software compartida capaz de soportar múltiples productos independientes o integrarlos en aplicaciones y suites más amplias cuando ello mejora la experiencia del usuario.",
-
-    "From individual products to a multi-product pipeline.":
-      "De productos individuales a una línea de producción multiproducto.",
-
-    "Less repetition. More leverage.":
-      "Menos repetición. Más capacidad.",
-
-    "Independent apps or one unified system.":
-      "Aplicaciones independientes o un sistema unificado.",
-
-    "The objective is not simply to build more software. It is to increase the amount of useful software Unfire can develop, validate and commercialise per unit of time.":
-      "El objetivo no es simplemente crear más software. Es aumentar la cantidad de software útil que Unfire puede desarrollar, validar y comercializar por unidad de tiempo.",
-
-    "Investors · Grants · Strategic partners":
-      "Inversores · Subvenciones · Socios estratégicos",
-
-    "Turning technical capability into scalable products.":
-      "Convertir capacidad tecnológica en productos escalables."
-  }
-};
-
-const original = new Map();
-
-function translatableNodes() {
-  return Array.from(document.querySelectorAll(
-    "main h1, main h2, main h3, main p, main .eyebrow, main .stat span, main .product-type, main .history-text, main .capacity-label, main .point strong, main .point span"
-  ));
-}
-
-function saveOriginal() {
-  translatableNodes().forEach(el => {
-    if (!original.has(el)) {
-      original.set(el, el.textContent.trim().replace(/\s+/g, " "));
-    }
-  });
-}
-
-function applyLanguage(lang) {
-  saveOriginal();
-
-  translatableNodes().forEach(el => {
-    const source = original.get(el);
-
-    if (lang === "en") {
-      el.textContent = source;
-    } else {
-      el.textContent = translations[lang]?.[source] || source;
-    }
-  });
-
-  document.documentElement.lang = lang;
-
-  const audioLang = document.getElementById("voice-language");
-  if (audioLang) {
-    audioLang.value = lang;
-    audioLang.dispatchEvent(new Event("change"));
-  }
-
-  localStorage.setItem("unfire-language", lang);
-}
-
-const selector = document.getElementById("site-language");
-
-const stored = localStorage.getItem("unfire-language");
-const browser = (navigator.language || "en").toLowerCase();
-
-let initial = stored || (browser.startsWith("es") ? "es" : "en");
-
-selector.value = initial;
-
-setTimeout(() => applyLanguage(initial), 300);
-
-selector.addEventListener("change", () => {
-  speechSynthesis.cancel();
-  applyLanguage(selector.value);
-});
-
-})();
-</script>
-
-
-
-
-
-
-
-<div id="unfire-voice-v4">
-  <div class="uv-head">
     <div>
-      <strong>Listen to Unfire</strong>
-      <div class="uv-status" id="uv-status">Loading voice…</div>
+      © 2026 <span class="notranslate" translate="no">Unfire</span>
     </div>
+
+    <div>
+      Technology · Software · Research
+    </div>
+
+  </div>
+</footer>
+
+
+<div id="reader" translate="no" class="notranslate">
+
+  <div class="reader-top">
+    <button id="reader-play" class="reader-btn">▶ Listen</button>
+    <button id="reader-pause" class="reader-btn">Ⅱ</button>
   </div>
 
-  <select id="uv-voice"></select>
+  <input
+    id="reader-range"
+    class="reader-range"
+    type="range"
+    min="0"
+    max="100000"
+    value="0"
+  >
 
-  <div class="uv-controls">
-    <button class="uv-play" id="uv-play">▶ Play</button>
-    <button id="uv-pause">Ⅱ</button>
-    <button id="uv-stop">■</button>
-  </div>
+  <div id="reader-percent" class="reader-percent">0.00000%</div>
+
 </div>
 
 
-
-
-
-
-
-
-<div id="unfire-player-v6">
-
-  <div class="up6-top">
-
-    <div class="up6-info">
-      <strong>Listen to Unfire</strong>
-      <span id="up6-status">Preparing voice…</span>
-    </div>
-
-    <div class="up6-controls">
-      <button id="up6-back" aria-label="Go back ten percent">−10%</button>
-      <button id="up6-play">▶ Listen</button>
-      <button id="up6-pause" aria-label="Pause">Ⅱ</button>
-      <button id="up6-stop" aria-label="Stop">■</button>
-    </div>
-
-  </div>
-
-  <div class="up6-progress">
-
-    <input
-      id="up6-seek"
-      type="range"
-      min="0"
-      max="100"
-      value="0"
-      step="0.1"
-      aria-label="Narration progress"
-    >
-
-    <div class="up6-meta">
-      <span id="up6-percent">0.0%</span>
-      <span id="up6-language">Auto</span>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- UNFIRE_PLAYER_V6 -->
 <script>
 (() => {
-
   const synth = window.speechSynthesis;
+  const play = document.getElementById("reader-play");
+  const pause = document.getElementById("reader-pause");
+  const range = document.getElementById("reader-range");
+  const percent = document.getElementById("reader-percent");
 
-  const play = document.getElementById("up6-play");
-  const pause = document.getElementById("up6-pause");
-  const stop = document.getElementById("up6-stop");
-  const back = document.getElementById("up6-back");
-
-  const seek = document.getElementById("up6-seek");
-  const percentLabel = document.getElementById("up6-percent");
-  const status = document.getElementById("up6-status");
-  const languageLabel = document.getElementById("up6-language");
-
-  if (!synth || !play) return;
-
-  let fullText = "";
-  let activeText = "";
-
-  let startCharacter = 0;
-  let absoluteCharacter = 0;
-
-  let active = false;
+  let text = "";
+  let utterance = null;
+  let startIndex = 0;
+  let currentIndex = 0;
+  let speaking = false;
   let paused = false;
-  let selectedVoice = null;
-
   let visualProgress = 0;
-  let realProgress = 0;
-  let progressFrame = null;
-  let lastFrameTime = 0;
+  let targetProgress = 0;
+  let animationFrame = null;
 
-  function animateProgress(timestamp){
+  const cleanText = () => {
+    const main = document.querySelector("main");
+    if (!main) return "";
 
-    if(!active || paused){
-      progressFrame = null;
-      return;
-    }
-
-    if(!lastFrameTime){
-      lastFrameTime = timestamp;
-    }
-
-    const delta = Math.min(50, timestamp - lastFrameTime);
-    lastFrameTime = timestamp;
-
-    /*
-      realProgress comes from the browser's real speech boundary.
-      visualProgress moves smoothly toward it and may advance
-      microscopically between boundaries.
-    */
-
-    const gap = realProgress - visualProgress;
-
-    if(gap > 0){
-      visualProgress += Math.max(
-        0.00001,
-        gap * Math.min(1, delta / 110)
-      );
-    } else if(realProgress < 99.99999) {
-      visualProgress += 0.00001 * Math.max(1, delta / 16);
-    }
-
-    visualProgress = Math.min(
-      99.99999,
-      Math.max(0, visualProgress)
-    );
-
-    seek.value = visualProgress;
-    percentLabel.textContent =
-      visualProgress.toFixed(5) + "%";
-
-    progressFrame =
-      requestAnimationFrame(animateProgress);
-  }
-
-  function startProgressAnimation(){
-
-    if(progressFrame){
-      cancelAnimationFrame(progressFrame);
-    }
-
-    lastFrameTime = 0;
-
-    progressFrame =
-      requestAnimationFrame(animateProgress);
-  }
-
-  function stopProgressAnimation(){
-
-    if(progressFrame){
-      cancelAnimationFrame(progressFrame);
-    }
-
-    progressFrame = null;
-    lastFrameTime = 0;
-  }
-
-  const languageNames = {
-    en:"English",
-    es:"Español",
-    ca:"Català",
-    fr:"Français",
-    de:"Deutsch",
-    it:"Italiano",
-    pt:"Português",
-    ja:"日本語",
-    ko:"한국어",
-    zh:"中文"
+    return main.innerText
+      .replace(/\s+/g, " ")
+      .replace(/Company Work System Scale Funding/g, "")
+      .trim();
   };
 
-  function pageText(){
-    return (document.querySelector("main")?.innerText || "")
-      .replace(/\s+/g," ")
-      .trim();
-  }
+  const detectLanguage = (value) => {
+    const lower = value.toLowerCase();
 
-  function detectLanguage(text){
+    const spanishWords = [
+      " el "," la "," los "," las "," una "," para "," tecnología ",
+      " software "," capacidad "," financiación "," empresas "," aplicaciones "
+    ];
 
-    const t = " " + text.toLowerCase() + " ";
+    const frenchWords = [
+      " le "," la "," les "," une "," pour "," technologie "," logiciels "
+    ];
 
-    if (/[\u3040-\u30ff]/.test(t)) return "ja";
-    if (/[\uac00-\ud7af]/.test(t)) return "ko";
-    if (/[\u4e00-\u9fff]/.test(t)) return "zh";
+    const germanWords = [
+      " der "," die "," das "," und "," für "," technologie "," software "
+    ];
 
-    const patterns = {
-      es:[" el "," la "," para "," con "," desarrollo "," tecnología "," capacidad "," productos "],
-      ca:[" els "," les "," amb "," desenvolupament "," tecnologia "," capacitat "," productes "],
-      fr:[" le "," les "," avec "," développement "," technologie "," capacité "," produits "],
-      de:[" der "," die "," das "," und "," entwicklung "," technologie "," produkte "],
-      it:[" il "," gli "," con "," sviluppo "," tecnologia "," capacità "," prodotti "],
-      pt:[" os "," com "," desenvolvimento "," tecnologia "," capacidade "," produtos "],
-      en:[" the "," and "," with "," development "," technology "," capacity "," products "]
+    const portugueseWords = [
+      " uma "," para "," tecnologia "," capacidade "," software "," empresas "
+    ];
+
+    const score = words =>
+      words.reduce((total, word) => total + (lower.includes(word) ? 1 : 0), 0);
+
+    const scores = {
+      es: score(spanishWords),
+      fr: score(frenchWords),
+      de: score(germanWords),
+      pt: score(portugueseWords),
+      en: 1
     };
 
-    let best = "en";
-    let bestScore = -1;
+    return Object.entries(scores).sort((a,b) => b[1] - a[1])[0][0];
+  };
 
-    for (const [lang, words] of Object.entries(patterns)){
-
-      let score = 0;
-
-      words.forEach(word => {
-        if(t.includes(word)) score++;
-      });
-
-      if(score > bestScore){
-        bestScore = score;
-        best = lang;
-      }
-    }
-
-    return best;
-  }
-
-  function findVoice(lang){
-
+  const chooseVoice = (lang) => {
     const voices = synth.getVoices();
+    if (!voices.length) return null;
 
-    const matching = voices.filter(v =>
-      (v.lang || "").toLowerCase().startsWith(lang)
+    const exact = voices.find(v =>
+      v.lang.toLowerCase().startsWith(lang.toLowerCase())
     );
 
-    return (
-      matching.find(v => /premium/i.test(v.name)) ||
-      matching.find(v => /enhanced/i.test(v.name)) ||
-      matching[0] ||
-      null
-    );
-  }
+    return exact || voices.find(v =>
+      v.lang.toLowerCase().startsWith("en")
+    ) || voices[0];
+  };
 
-  function percentage(){
+  const updateVisual = () => {
+    visualProgress += (targetProgress - visualProgress) * 0.08;
 
-    if(!fullText.length) return 0;
-
-    return Math.max(
-      0,
-      Math.min(
-        100,
-        (absoluteCharacter / fullText.length) * 100
-      )
-    );
-  }
-
-  function updateProgress(){
-
-    const value = percentage();
-
-    realProgress = value;
-
-    if(!active){
-      visualProgress = value;
+    if (Math.abs(targetProgress - visualProgress) < 0.00001) {
+      visualProgress = targetProgress;
     }
 
-    seek.value = visualProgress;
-    percentLabel.textContent =
-      visualProgress.toFixed(5) + "%";
-  }
+    const value = Math.max(0, Math.min(100, visualProgress));
 
-  function prepare(){
+    percent.textContent = value.toFixed(5) + "%";
+    range.value = Math.round(value * 1000);
 
-    fullText = pageText();
+    animationFrame = requestAnimationFrame(updateVisual);
+  };
 
-    const lang = detectLanguage(fullText);
-
-    selectedVoice = findVoice(lang);
-
-    languageLabel.textContent =
-      languageNames[lang] || lang.toUpperCase();
-
-    if(selectedVoice){
-
-      status.textContent =
-        selectedVoice.name +
-        " · " +
-        selectedVoice.lang;
-
-      play.disabled = false;
-
-    } else {
-
-      status.textContent =
-        "No " +
-        (languageNames[lang] || lang) +
-        " voice available";
-
-      play.disabled = true;
-    }
-  }
-
-  function speakFrom(character){
-
+  const stopCurrent = () => {
     synth.cancel();
+    speaking = false;
+    paused = false;
+    play.textContent = "▶ Listen";
+    pause.textContent = "Ⅱ";
+  };
 
-    if(!fullText.length) prepare();
-    if(!selectedVoice) return;
+  const speakFrom = index => {
+    stopCurrent();
 
-    startCharacter = Math.max(
-      0,
-      Math.min(fullText.length - 1, character)
-    );
+    text = cleanText();
 
-    absoluteCharacter = startCharacter;
+    if (!text) return;
 
-    activeText = fullText.slice(startCharacter);
+    startIndex = Math.max(0, Math.min(index, text.length - 1));
+    currentIndex = startIndex;
 
-    const utterance =
-      new SpeechSynthesisUtterance(activeText);
+    const remaining = text.slice(startIndex);
 
-    utterance.voice = selectedVoice;
-    utterance.lang = selectedVoice.lang;
+    utterance = new SpeechSynthesisUtterance(remaining);
 
-    utterance.rate = 0.95;
+    const language = detectLanguage(text);
+    utterance.lang = language;
+
+    const voice = chooseVoice(language);
+    if (voice) utterance.voice = voice;
+
+    utterance.rate = 1;
     utterance.pitch = 1;
-    utterance.volume = 1;
 
-    utterance.onstart = () => {
-
-      active = true;
-      paused = false;
-
-      play.textContent = "Playing";
-
-      visualProgress = percentage();
-      realProgress = visualProgress;
-      startProgressAnimation();
-
-      status.textContent =
-        "Playing · " +
-        selectedVoice.name +
-        " · " +
-        selectedVoice.lang;
-
-      updateProgress();
-    };
-
-    /*
-      El navegador informa de la posición del carácter/palabra
-      que está pronunciando. Usamos esa posición para mover
-      el cursor en directo.
-    */
     utterance.onboundary = event => {
+      if (typeof event.charIndex !== "number") return;
 
-      if(typeof event.charIndex === "number"){
-
-        absoluteCharacter =
-          startCharacter + event.charIndex;
-
-        realProgress = percentage();
-
-        if(realProgress > visualProgress){
-          updateProgress();
-        }
-      }
+      currentIndex = startIndex + event.charIndex;
+      targetProgress = (currentIndex / text.length) * 100;
     };
 
     utterance.onend = () => {
-
-      if(!active) return;
-
-      absoluteCharacter = fullText.length;
-
-      realProgress = 100;
-      visualProgress = 100;
-
-      stopProgressAnimation();
-
-      seek.value = 100;
-      percentLabel.textContent = "100.00000%";
-
-      active = false;
+      speaking = false;
       paused = false;
-
+      currentIndex = text.length;
+      targetProgress = 100;
       play.textContent = "▶ Listen";
-      status.textContent = "Finished";
+      pause.textContent = "Ⅱ";
     };
 
-    utterance.onerror = event => {
-
-      if(event.error === "interrupted" ||
-         event.error === "canceled"){
-        return;
-      }
-
-      active = false;
+    utterance.onerror = () => {
+      speaking = false;
       paused = false;
-
       play.textContent = "▶ Listen";
-      status.textContent = "Audio error";
+      pause.textContent = "Ⅱ";
     };
 
     synth.speak(utterance);
-  }
 
-  function seekTo(percent){
-
-    prepare();
-
-    const target =
-      Math.floor(
-        fullText.length *
-        (percent / 100)
-      );
-
-    absoluteCharacter = target;
-
-    realProgress = percent;
-    visualProgress = percent;
-
-    seek.value = percent;
-    percentLabel.textContent =
-      percent.toFixed(5) + "%";
-
-    if(active){
-
-      setTimeout(() => {
-        speakFrom(target);
-      },80);
-
-    } else {
-
-      startCharacter = target;
-    }
-  }
+    speaking = true;
+    paused = false;
+    play.textContent = "■ Stop";
+    pause.textContent = "Ⅱ";
+  };
 
   play.addEventListener("click", () => {
-
-    if(paused){
-
-      synth.resume();
-
-      paused = false;
-      startProgressAnimation();
-
-      play.textContent = "Playing";
-      status.textContent = "Playing";
-
+    if (speaking) {
+      stopCurrent();
       return;
     }
 
-    prepare();
+    text = cleanText();
 
-    if(!selectedVoice) return;
+    if (!text) return;
 
-    if(absoluteCharacter >= fullText.length){
-      absoluteCharacter = 0;
-    }
+    const index = Math.floor((visualProgress / 100) * text.length);
 
-    speakFrom(absoluteCharacter);
+    speakFrom(index);
   });
 
   pause.addEventListener("click", () => {
+    if (!speaking) return;
 
-    if(!active) return;
-
-    if(!paused){
-
+    if (!paused) {
       synth.pause();
-
       paused = true;
-      stopProgressAnimation();
-
-      play.textContent = "▶ Resume";
-      status.textContent = "Paused";
-
+      pause.textContent = "▶";
     } else {
-
       synth.resume();
-
       paused = false;
-      startProgressAnimation();
-
-      play.textContent = "Playing";
-      status.textContent = "Playing";
+      pause.textContent = "Ⅱ";
     }
   });
 
-  stop.addEventListener("click", () => {
+  range.addEventListener("input", () => {
+    const value = Number(range.value) / 1000;
 
+    visualProgress = value;
+    targetProgress = value;
+
+    percent.textContent = value.toFixed(5) + "%";
+  });
+
+  range.addEventListener("change", () => {
+    text = cleanText();
+
+    if (!text) return;
+
+    const value = Number(range.value) / 100000;
+    const index = Math.floor(value * text.length);
+
+    if (speaking) {
+      speakFrom(index);
+    } else {
+      currentIndex = index;
+    }
+  });
+
+  window.addEventListener("beforeunload", () => {
     synth.cancel();
-    stopProgressAnimation();
 
-    active = false;
-    paused = false;
-
-    play.textContent = "▶ Listen";
-    status.textContent = "Stopped";
+    if (animationFrame) {
+      cancelAnimationFrame(animationFrame);
+    }
   });
 
-  back.addEventListener("click", () => {
+  if ("onvoiceschanged" in speechSynthesis) {
+    speechSynthesis.onvoiceschanged = () => synth.getVoices();
+  }
 
-    const target =
-      Math.max(0, percentage() - 10);
-
-    seekTo(target);
-  });
-
-  seek.addEventListener("input", () => {
-
-    percentLabel.textContent =
-      Number(seek.value).toFixed(5) + "%";
-  });
-
-  seek.addEventListener("change", () => {
-
-    seekTo(Number(seek.value));
-  });
-
-  synth.onvoiceschanged = prepare;
-
-  prepare();
-
-  setTimeout(prepare,600);
-
+  updateVisual();
 })();
 </script>
 
