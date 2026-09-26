@@ -1613,6 +1613,77 @@ selector.addEventListener("change", () => {
   let paused = false;
   let selectedVoice = null;
 
+  let visualProgress = 0;
+  let realProgress = 0;
+  let progressFrame = null;
+  let lastFrameTime = 0;
+
+  function animateProgress(timestamp){
+
+    if(!active || paused){
+      progressFrame = null;
+      return;
+    }
+
+    if(!lastFrameTime){
+      lastFrameTime = timestamp;
+    }
+
+    const delta = Math.min(50, timestamp - lastFrameTime);
+    lastFrameTime = timestamp;
+
+    /*
+      realProgress comes from the browser's real speech boundary.
+      visualProgress moves smoothly toward it and may advance
+      microscopically between boundaries.
+    */
+
+    const gap = realProgress - visualProgress;
+
+    if(gap > 0){
+      visualProgress += Math.max(
+        0.00001,
+        gap * Math.min(1, delta / 110)
+      );
+    } else if(realProgress < 99.99999) {
+      visualProgress += 0.00001 * Math.max(1, delta / 16);
+    }
+
+    visualProgress = Math.min(
+      99.99999,
+      Math.max(0, visualProgress)
+    );
+
+    seek.value = visualProgress;
+    percentLabel.textContent =
+      visualProgress.toFixed(5) + "%";
+
+    progressFrame =
+      requestAnimationFrame(animateProgress);
+  }
+
+  function startProgressAnimation(){
+
+    if(progressFrame){
+      cancelAnimationFrame(progressFrame);
+    }
+
+    lastFrameTime = 0;
+
+    progressFrame =
+      requestAnimationFrame(animateProgress);
+  }
+
+  function stopProgressAnimation(){
+
+    if(progressFrame){
+      cancelAnimationFrame(progressFrame);
+    }
+
+    progressFrame = null;
+    lastFrameTime = 0;
+  }
+
   const languageNames = {
     en:"English",
     es:"Español",
@@ -1703,8 +1774,15 @@ selector.addEventListener("change", () => {
 
     const value = percentage();
 
-    seek.value = value.toFixed(1);
-    percentLabel.textContent = value.toFixed(1) + "%";
+    realProgress = value;
+
+    if(!active){
+      visualProgress = value;
+    }
+
+    seek.value = visualProgress;
+    percentLabel.textContent =
+      visualProgress.toFixed(5) + "%";
   }
 
   function prepare(){
@@ -1771,6 +1849,10 @@ selector.addEventListener("change", () => {
 
       play.textContent = "Playing";
 
+      visualProgress = percentage();
+      realProgress = visualProgress;
+      startProgressAnimation();
+
       status.textContent =
         "Playing · " +
         selectedVoice.name +
@@ -1792,7 +1874,11 @@ selector.addEventListener("change", () => {
         absoluteCharacter =
           startCharacter + event.charIndex;
 
-        updateProgress();
+        realProgress = percentage();
+
+        if(realProgress > visualProgress){
+          updateProgress();
+        }
       }
     };
 
@@ -1802,7 +1888,13 @@ selector.addEventListener("change", () => {
 
       absoluteCharacter = fullText.length;
 
-      updateProgress();
+      realProgress = 100;
+      visualProgress = 100;
+
+      stopProgressAnimation();
+
+      seek.value = 100;
+      percentLabel.textContent = "100.00000%";
 
       active = false;
       paused = false;
@@ -1840,7 +1932,12 @@ selector.addEventListener("change", () => {
 
     absoluteCharacter = target;
 
-    updateProgress();
+    realProgress = percent;
+    visualProgress = percent;
+
+    seek.value = percent;
+    percentLabel.textContent =
+      percent.toFixed(5) + "%";
 
     if(active){
 
@@ -1861,6 +1958,7 @@ selector.addEventListener("change", () => {
       synth.resume();
 
       paused = false;
+      startProgressAnimation();
 
       play.textContent = "Playing";
       status.textContent = "Playing";
@@ -1888,6 +1986,7 @@ selector.addEventListener("change", () => {
       synth.pause();
 
       paused = true;
+      stopProgressAnimation();
 
       play.textContent = "▶ Resume";
       status.textContent = "Paused";
@@ -1897,6 +1996,7 @@ selector.addEventListener("change", () => {
       synth.resume();
 
       paused = false;
+      startProgressAnimation();
 
       play.textContent = "Playing";
       status.textContent = "Playing";
@@ -1906,6 +2006,7 @@ selector.addEventListener("change", () => {
   stop.addEventListener("click", () => {
 
     synth.cancel();
+    stopProgressAnimation();
 
     active = false;
     paused = false;
@@ -1925,7 +2026,7 @@ selector.addEventListener("change", () => {
   seek.addEventListener("input", () => {
 
     percentLabel.textContent =
-      Number(seek.value).toFixed(1) + "%";
+      Number(seek.value).toFixed(5) + "%";
   });
 
   seek.addEventListener("change", () => {
