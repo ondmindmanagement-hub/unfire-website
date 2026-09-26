@@ -1650,6 +1650,132 @@ main section.unfire-reading-section{
 }
 </style>
 
+
+<style id="unfire-reader-v11-style">
+
+#reader{
+  position:fixed !important;
+  left:auto !important;
+  right:24px !important;
+  bottom:24px !important;
+  transform:none !important;
+
+  width:270px !important;
+  height:52px !important;
+
+  padding:8px 11px !important;
+
+  display:grid !important;
+  grid-template-columns:36px 1fr !important;
+  align-items:center !important;
+  gap:10px !important;
+
+  background:rgba(22,22,24,.72) !important;
+  border:1px solid rgba(255,255,255,.11) !important;
+  border-radius:18px !important;
+
+  -webkit-backdrop-filter:
+    blur(30px) saturate(170%) !important;
+
+  backdrop-filter:
+    blur(30px) saturate(170%) !important;
+
+  box-shadow:
+    0 18px 55px rgba(0,0,0,.38),
+    inset 0 1px 0 rgba(255,255,255,.07) !important;
+
+  z-index:999999 !important;
+}
+
+#reader .reader-top{
+  display:block !important;
+  width:36px !important;
+  height:36px !important;
+}
+
+#reader-play{
+  width:36px !important;
+  min-width:36px !important;
+  height:36px !important;
+
+  padding:0 !important;
+
+  border:0 !important;
+  border-radius:50% !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  font-size:13px !important;
+  line-height:1 !important;
+
+  background:#f5f5f7 !important;
+  color:#111 !important;
+}
+
+#reader-pause{
+  display:none !important;
+}
+
+#reader-range{
+  grid-column:2 !important;
+
+  width:100% !important;
+  height:12px !important;
+
+  margin:0 !important;
+  padding:0 !important;
+
+  cursor:pointer !important;
+}
+
+#reader-percent,
+#reader-language,
+.reader-section-nav,
+#reader-section-name,
+#reader-prev,
+#reader-next{
+  display:none !important;
+}
+
+::highlight(unfire-speaking-word){
+  color:#fff;
+  background-color:rgba(255,255,255,.16);
+}
+
+.unfire-speaking-block{
+  opacity:1 !important;
+}
+
+@media (max-width:700px){
+
+  #reader{
+    left:50% !important;
+    right:auto !important;
+
+    bottom:
+      max(
+        10px,
+        env(safe-area-inset-bottom)
+      ) !important;
+
+    transform:translateX(-50%) !important;
+
+    width:calc(100vw - 22px) !important;
+    max-width:360px !important;
+
+    height:50px !important;
+
+    padding:7px 10px !important;
+
+    border-radius:17px !important;
+  }
+
+}
+
+</style>
+
 </head>
 
 <body>
@@ -2252,400 +2378,1008 @@ main section.unfire-reading-section{
   preload="metadata"
 ></audio>
 
-<script id="unfire-reader-v10">
+<script id="unfire-reader-v11">
 (() => {
-  const audio = document.getElementById("unfire-narration");
-  const play = document.getElementById("reader-play");
-  const pause = document.getElementById("reader-pause");
-  const slider = document.getElementById("reader-range");
-  const percent = document.getElementById("reader-percent");
-  const prev = document.getElementById("reader-prev");
-  const next = document.getElementById("reader-next");
-  const sectionName = document.getElementById("reader-section-name");
 
-  if (!audio || !play || !pause || !slider) return;
+  const audio =
+    document.getElementById("unfire-narration");
 
-  let sections = [];
-  let dragging = false;
-  let currentSection = 0;
-  let raf = null;
-  let lastScroll = 0;
+  const playBtn =
+    document.getElementById("reader-play");
 
-  const clean = s => (s || "").replace(/\s+/g, " ").trim();
-  let narrationLanguage = "en";
+  const range =
+    document.getElementById("reader-range");
 
-  const narrationFiles = {
-    en: "audio/unfire-master-en.mp3",
-    es: "audio/unfire-master-es.mp3"
-  };
+  if (!audio || !playBtn || !range) {
+    return;
+  }
 
-  const setNarrationLanguage = (lang, preservePosition = true) => {
-    if (!narrationFiles[lang]) return;
 
-    const wasPlaying = !audio.paused;
-    const ratio =
-      preservePosition &&
-      Number.isFinite(audio.duration) &&
-      audio.duration > 0
-        ? audio.currentTime / audio.duration
-        : 0;
-
-    narrationLanguage = lang;
-
-    const wanted = narrationFiles[lang];
-
-    if (audio.getAttribute("src") === wanted) {
-      return;
+  const FILES = {
+    en: {
+      audio:"audio/unfire-master-en.mp3",
+      words:"audio/unfire-master-en.words.json"
+    },
+    es: {
+      audio:"audio/unfire-master-es.mp3",
+      words:"audio/unfire-master-es.words.json"
     }
-
-    audio.pause();
-    audio.src = wanted;
-    audio.load();
-
-    audio.addEventListener("loadedmetadata", () => {
-      if (preservePosition && ratio > 0) {
-        audio.currentTime = Math.min(
-          audio.duration * ratio,
-          Math.max(0, audio.duration - 0.1)
-        );
-      }
-
-      rebuild();
-      updateProgress();
-
-      if (wasPlaying) {
-        audio.play().catch(() => {});
-      }
-    }, { once: true });
   };
 
-  const detectVisibleLanguage = () => {
-    const hero =
-      document.querySelector("h1") ||
-      document.querySelector(".hero h1") ||
-      document.querySelector("main h1");
 
-    const heroText =
+  let language = "en";
+
+  let transcript = [];
+  let visibleWords = [];
+  let wordMap = [];
+
+  let currentWordIndex = -1;
+
+  let dragging = false;
+
+  let scrollCurrent =
+    window.scrollY;
+
+  let scrollTarget =
+    window.scrollY;
+
+  let userScrollUntil = 0;
+
+  let switchingLanguage = false;
+
+  let previousBlock = null;
+
+
+  const normalizeWord = value =>
+    (value || "")
+      .toLocaleLowerCase()
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .replace(/[^\p{L}\p{N}]/gu, "");
+
+
+  const detectLanguage = () => {
+
+    const hero =
+      document.querySelector("main h1") ||
+      document.querySelector("h1");
+
+    const text =
       (hero?.innerText || hero?.textContent || "")
-        .toLowerCase()
+        .toLocaleLowerCase()
         .replace(/\s+/g, " ")
         .trim();
 
     if (
-      heroText.includes("construir tecnología") ||
-      heroText.includes("reutilizar la ventaja")
+      text.includes("construir tecnología") ||
+      text.includes("reutilizar la ventaja")
     ) {
       return "es";
     }
 
     if (
-      heroText.includes("build technology") ||
-      heroText.includes("reuse the advantage")
+      text.includes("build technology") ||
+      text.includes("reuse the advantage")
     ) {
       return "en";
     }
 
-    const bodyText =
-      (document.body.innerText || "")
-        .toLowerCase()
-        .replace(/\s+/g, " ");
+    const body =
+      (document.querySelector("main")?.innerText || "")
+        .toLocaleLowerCase();
 
-    const spanishStrong = [
-      "construir tecnología",
-      "reutilizar la ventaja",
-      "explora el sistema",
-      "financiación y colaboración"
-    ];
+    const spanish =
+      [
+        "financiación",
+        "empresa",
+        "tecnología",
+        "reutilizar",
+        "sistema"
+      ]
+      .filter(x => body.includes(x))
+      .length;
 
-    const englishStrong = [
-      "build technology",
-      "reuse the advantage",
-      "explore the system",
-      "funding and collaboration"
-    ];
+    const english =
+      [
+        "funding",
+        "company",
+        "technology",
+        "reuse",
+        "system"
+      ]
+      .filter(x => body.includes(x))
+      .length;
 
-    const esHits =
-      spanishStrong.filter(x => bodyText.includes(x)).length;
-
-    const enHits =
-      englishStrong.filter(x => bodyText.includes(x)).length;
-
-    if (esHits > enHits) return "es";
-    if (enHits > esHits) return "en";
-
-    return narrationLanguage;
+    return spanish > english ? "es" : "en";
   };
 
 
-  const syncNarrationWithVisiblePage = (preservePosition = true) => {
-    const detected = detectVisibleLanguage();
+  const narrationElements = () => {
 
-    if (detected !== narrationLanguage) {
-      setNarrationLanguage(
-        detected,
-        preservePosition
+    const selector = [
+      "main .hero-kicker",
+      "main .eyebrow",
+      "main h1",
+      "main h2",
+      "main h3",
+      "main p",
+      "main .product-type",
+      "main .subproduct-label",
+      "main .subproduct-name",
+      "main .metric strong",
+      "main .metric span",
+      "main .flow-num",
+      "main .flow-step strong",
+      "main .system-row strong",
+      "main .product footer",
+      "main .contact"
+    ].join(",");
+
+    return Array.from(
+      document.querySelectorAll(selector)
+    );
+  };
+
+
+  const collectVisibleWords = () => {
+
+    const result = [];
+    const seenNodes = new Set();
+
+    for (const element of narrationElements()) {
+
+      if (!element) continue;
+
+      const style =
+        getComputedStyle(element);
+
+      if (
+        style.display === "none" ||
+        style.visibility === "hidden"
+      ) {
+        continue;
+      }
+
+      const walker =
+        document.createTreeWalker(
+          element,
+          NodeFilter.SHOW_TEXT
+        );
+
+      let node;
+
+      while ((node = walker.nextNode())) {
+
+        if (seenNodes.has(node)) {
+          continue;
+        }
+
+        seenNodes.add(node);
+
+        const text = node.nodeValue || "";
+
+        const regex =
+          /[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*/gu;
+
+        let match;
+
+        while ((match = regex.exec(text))) {
+
+          result.push({
+            key: normalizeWord(match[0]),
+            node,
+            start: match.index,
+            end: match.index + match[0].length,
+            element
+          });
+        }
+      }
+    }
+
+    visibleWords = result;
+  };
+
+
+  const alignWords = () => {
+
+    collectVisibleWords();
+
+    wordMap =
+      new Array(transcript.length)
+        .fill(null);
+
+    let visibleIndex = 0;
+
+    for (
+      let transcriptIndex = 0;
+      transcriptIndex < transcript.length;
+      transcriptIndex++
+    ) {
+
+      const wanted =
+        normalizeWord(
+          transcript[transcriptIndex].word
+        );
+
+      if (!wanted) continue;
+
+      let matchIndex = -1;
+
+      const limit =
+        Math.min(
+          visibleWords.length,
+          visibleIndex + 18
+        );
+
+      for (
+        let j = visibleIndex;
+        j < limit;
+        j++
+      ) {
+
+        if (
+          visibleWords[j].key === wanted
+        ) {
+          matchIndex = j;
+          break;
+        }
+      }
+
+      if (matchIndex >= 0) {
+
+        wordMap[transcriptIndex] =
+          visibleWords[matchIndex];
+
+        visibleIndex =
+          matchIndex + 1;
+      }
+    }
+  };
+
+
+  const loadTranscript = async lang => {
+
+    try {
+
+      const response =
+        await fetch(
+          FILES[lang].words,
+          { cache:"force-cache" }
+        );
+
+      if (!response.ok) {
+        throw new Error(
+          "Timestamp file not available"
+        );
+      }
+
+      const data =
+        await response.json();
+
+      transcript =
+        Array.isArray(data.words)
+          ? data.words
+          : [];
+
+      alignWords();
+
+    } catch (error) {
+
+      console.error(
+        "Narration timing error:",
+        error
+      );
+
+      transcript = [];
+      wordMap = [];
+    }
+  };
+
+
+  const findWordIndex = time => {
+
+    let lo = 0;
+    let hi = transcript.length - 1;
+    let result = -1;
+
+    while (lo <= hi) {
+
+      const mid =
+        (lo + hi) >> 1;
+
+      const word =
+        transcript[mid];
+
+      if (time >= word.start) {
+        result = mid;
+        lo = mid + 1;
+      } else {
+        hi = mid - 1;
+      }
+    }
+
+    return result;
+  };
+
+
+  const nearestMappedWord = index => {
+
+    if (
+      index >= 0 &&
+      wordMap[index]
+    ) {
+      return {
+        index,
+        value:wordMap[index]
+      };
+    }
+
+    for (let offset = 1; offset <= 10; offset++) {
+
+      if (
+        index - offset >= 0 &&
+        wordMap[index - offset]
+      ) {
+        return {
+          index:index - offset,
+          value:wordMap[index - offset]
+        };
+      }
+
+      if (
+        index + offset < wordMap.length &&
+        wordMap[index + offset]
+      ) {
+        return {
+          index:index + offset,
+          value:wordMap[index + offset]
+        };
+      }
+    }
+
+    return null;
+  };
+
+
+  const rangeForWord = word => {
+
+    if (!word?.node?.isConnected) {
+      return null;
+    }
+
+    const range =
+      document.createRange();
+
+    try {
+
+      range.setStart(
+        word.node,
+        word.start
+      );
+
+      range.setEnd(
+        word.node,
+        word.end
+      );
+
+      return range;
+
+    } catch (_) {
+
+      return null;
+    }
+  };
+
+
+  const highlightWord = index => {
+
+    if (index === currentWordIndex) {
+      return;
+    }
+
+    currentWordIndex = index;
+
+    const mapped =
+      nearestMappedWord(index);
+
+    if (!mapped) return;
+
+    const wordRange =
+      rangeForWord(mapped.value);
+
+    if (!wordRange) {
+      return;
+    }
+
+
+    if (
+      window.CSS &&
+      CSS.highlights &&
+      window.Highlight
+    ) {
+
+      const highlight =
+        new Highlight(wordRange);
+
+      CSS.highlights.set(
+        "unfire-speaking-word",
+        highlight
       );
     }
 
+
+    if (previousBlock) {
+      previousBlock.classList.remove(
+        "unfire-speaking-block"
+      );
+    }
+
+    previousBlock =
+      mapped.value.element;
+
+    previousBlock?.classList.add(
+      "unfire-speaking-block"
+    );
   };
 
 
-  let languageDetectionTimer = null;
+  const wordPageY = word => {
 
-  const translatedArea =
-    document.querySelector("main") ||
-    document.body;
+    const wordRange =
+      rangeForWord(word);
 
-  const languageObserver =
-    new MutationObserver(() => {
-      clearTimeout(languageDetectionTimer);
+    if (!wordRange) {
+      return null;
+    }
 
-      languageDetectionTimer =
-        setTimeout(() => {
-          syncNarrationWithVisiblePage(true);
-        }, 250);
+    const rect =
+      wordRange.getBoundingClientRect();
+
+    return (
+      window.scrollY +
+      rect.top +
+      rect.height * .5
+    );
+  };
+
+
+  const updateScrollTarget = index => {
+
+    if (
+      performance.now() <
+      userScrollUntil
+    ) {
+      return;
+    }
+
+    const current =
+      nearestMappedWord(index);
+
+    if (!current) return;
+
+    const y1 =
+      wordPageY(current.value);
+
+    if (y1 == null) return;
+
+    let y2 = y1;
+    let nextIndex = current.index + 1;
+
+    while (
+      nextIndex < wordMap.length &&
+      !wordMap[nextIndex] &&
+      nextIndex <
+      current.index + 12
+    ) {
+      nextIndex++;
+    }
+
+    if (wordMap[nextIndex]) {
+
+      const candidate =
+        wordPageY(
+          wordMap[nextIndex]
+        );
+
+      if (candidate != null) {
+        y2 = candidate;
+      }
+    }
+
+
+    const currentTiming =
+      transcript[index];
+
+    const nextTiming =
+      transcript[
+        Math.min(
+          transcript.length - 1,
+          index + 1
+        )
+      ];
+
+    let phase = 0;
+
+    if (
+      currentTiming &&
+      nextTiming &&
+      nextTiming.start >
+      currentTiming.start
+    ) {
+
+      phase =
+        (
+          audio.currentTime -
+          currentTiming.start
+        ) /
+        (
+          nextTiming.start -
+          currentTiming.start
+        );
+
+      phase =
+        Math.max(
+          0,
+          Math.min(1, phase)
+        );
+    }
+
+
+    const pageY =
+      y1 +
+      (y2 - y1) * phase;
+
+
+    const viewport =
+      window.visualViewport
+        ? window.visualViewport.height
+        : window.innerHeight;
+
+
+    scrollTarget =
+      Math.max(
+        0,
+        pageY -
+        viewport * .42
+      );
+  };
+
+
+  const updateProgress = () => {
+
+    if (
+      dragging ||
+      !Number.isFinite(audio.duration) ||
+      audio.duration <= 0
+    ) {
+      return;
+    }
+
+    range.value =
+      Math.round(
+        (
+          audio.currentTime /
+          audio.duration
+        ) * 100000
+      );
+  };
+
+
+  const animationLoop = () => {
+
+    requestAnimationFrame(
+      animationLoop
+    );
+
+
+    updateProgress();
+
+
+    if (
+      !audio.paused &&
+      !audio.ended &&
+      transcript.length
+    ) {
+
+      const index =
+        findWordIndex(
+          audio.currentTime
+        );
+
+      if (index >= 0) {
+
+        highlightWord(index);
+
+        updateScrollTarget(index);
+      }
+    }
+
+
+    if (
+      performance.now() >=
+      userScrollUntil
+    ) {
+
+      scrollCurrent =
+        window.scrollY +
+        (
+          scrollTarget -
+          window.scrollY
+        ) * .085;
+
+
+      if (
+        Math.abs(
+          scrollTarget -
+          window.scrollY
+        ) > .35
+      ) {
+
+        window.scrollTo(
+          0,
+          scrollCurrent
+        );
+      }
+    }
+  };
+
+
+  const setLanguage = async (
+    lang,
+    preservePosition = true
+  ) => {
+
+    if (
+      !FILES[lang] ||
+      switchingLanguage
+    ) {
+      return;
+    }
+
+    if (
+      lang === language &&
+      audio.getAttribute("src") ===
+      FILES[lang].audio
+    ) {
+      return;
+    }
+
+    switchingLanguage = true;
+
+    const wasPlaying =
+      !audio.paused;
+
+    const ratio =
+      preservePosition &&
+      Number.isFinite(audio.duration) &&
+      audio.duration > 0
+        ? audio.currentTime /
+          audio.duration
+        : 0;
+
+
+    language = lang;
+
+    audio.pause();
+
+    audio.src =
+      FILES[lang].audio;
+
+    audio.load();
+
+    await loadTranscript(lang);
+
+
+    await new Promise(resolve => {
+
+      if (
+        Number.isFinite(audio.duration) &&
+        audio.duration > 0
+      ) {
+        resolve();
+        return;
+      }
+
+      audio.addEventListener(
+        "loadedmetadata",
+        resolve,
+        { once:true }
+      );
     });
 
 
-  const visibleLanguagePoll = setInterval(() => {
-    syncNarrationWithVisiblePage(true);
-  }, 500);
+    if (
+      preservePosition &&
+      ratio > 0
+    ) {
+
+      audio.currentTime =
+        Math.min(
+          audio.duration * ratio,
+          Math.max(
+            0,
+            audio.duration - .1
+          )
+        );
+    }
 
 
-  languageObserver.observe(
-    translatedArea,
-    {
-      subtree: true,
-      childList: true,
-      characterData: true
+    currentWordIndex = -1;
+
+    scrollCurrent =
+      window.scrollY;
+
+    scrollTarget =
+      window.scrollY;
+
+
+    if (wasPlaying) {
+      try {
+        await audio.play();
+      } catch (_) {}
+    }
+
+    switchingLanguage = false;
+  };
+
+
+  playBtn.addEventListener(
+    "click",
+    async () => {
+
+      if (audio.paused) {
+
+        try {
+
+          await audio.play();
+
+          playBtn.textContent = "Ⅱ";
+
+        } catch (error) {
+
+          console.error(
+            "Playback failed:",
+            error
+          );
+        }
+
+      } else {
+
+        audio.pause();
+
+        playBtn.textContent = "▶";
+      }
     }
   );
 
 
-  const rebuild = () => {
-    const els = [...document.querySelectorAll("main > section")];
-    let total = 0;
-
-    sections = els.map((el, i) => {
-      const text = clean(el.innerText);
-      const weight = Math.max(1, text.length);
-      const heading = el.querySelector(".eyebrow,h1,h2,h3");
-
-      const item = {
-        el,
-        title: clean(heading?.innerText || el.id || `Section ${i+1}`),
-        weight,
-        startWeight: total,
-        endWeight: total + weight,
-        start: 0,
-        end: 0
-      };
-
-      total += weight;
-      return item;
-    });
-
-    if (Number.isFinite(audio.duration) && audio.duration > 0) {
-      sections.forEach(s => {
-        s.start = audio.duration * s.startWeight / total;
-        s.end = audio.duration * s.endWeight / total;
-      });
+  audio.addEventListener(
+    "play",
+    () => {
+      playBtn.textContent = "Ⅱ";
     }
-  };
+  );
 
-  const sectionForTime = t => {
-    let result = 0;
-    for (let i = 0; i < sections.length; i++) {
-      if (t >= sections[i].start) result = i;
-      else break;
+
+  audio.addEventListener(
+    "pause",
+    () => {
+
+      if (!audio.ended) {
+        playBtn.textContent = "▶";
+      }
     }
-    return result;
-  };
+  );
 
-  const activate = i => {
-    if (!sections.length) return;
 
-    i = Math.max(0, Math.min(i, sections.length - 1));
-    currentSection = i;
+  audio.addEventListener(
+    "ended",
+    () => {
 
-    sections.forEach((s, n) => {
-      s.el.classList.toggle("unfire-reading-section", n === i);
-    });
+      playBtn.textContent = "▶";
 
-    if (sectionName) sectionName.textContent = sections[i].title;
-  };
-
-  const updateProgress = () => {
-    if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
-
-    const value = audio.currentTime / audio.duration * 100;
-
-    if (!dragging) {
-      slider.value = Math.round(value * 1000);
+      if (
+        window.CSS &&
+        CSS.highlights
+      ) {
+        CSS.highlights.delete(
+          "unfire-speaking-word"
+        );
+      }
     }
+  );
 
-    if (percent) {
-      percent.textContent = value.toFixed(5) + "%";
+
+  range.addEventListener(
+    "pointerdown",
+    () => {
+
+      dragging = true;
+
+      userScrollUntil =
+        performance.now() + 800;
     }
-  };
+  );
 
-  const follow = now => {
-    raf = requestAnimationFrame(follow);
 
-    if (audio.paused || audio.ended || dragging || !sections.length) return;
-    if (now - lastScroll < 250) return;
+  range.addEventListener(
+    "input",
+    () => {
 
-    lastScroll = now;
+      if (
+        Number.isFinite(
+          audio.duration
+        )
+      ) {
 
-    const i = sectionForTime(audio.currentTime);
-    activate(i);
+        audio.currentTime =
+          audio.duration *
+          (
+            Number(range.value) /
+            100000
+          );
 
-    const s = sections[i];
-    if (!s) return;
-
-    const duration = Math.max(0.01, s.end - s.start);
-    const local = Math.max(0, Math.min(1, (audio.currentTime - s.start) / duration));
-
-    const rect = s.el.getBoundingClientRect();
-    const top = window.scrollY + rect.top;
-    const height = Math.max(rect.height, s.el.scrollHeight);
-
-    const viewport = window.visualViewport
-      ? window.visualViewport.height
-      : window.innerHeight;
-
-    const target = Math.max(
-      window.scrollY,
-      top + height * local - viewport * 0.40
-    );
-
-    if (target > window.scrollY + 10) {
-      window.scrollTo({
-        top: target,
-        left: 0,
-        behavior: "smooth"
-      });
+        currentWordIndex = -1;
+      }
     }
-  };
+  );
 
-  const jumpSection = i => {
-    if (!sections.length) return;
 
-    i = Math.max(0, Math.min(i, sections.length - 1));
-
-    audio.currentTime = sections[i].start;
-    activate(i);
-
-    sections[i].el.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
-
-    updateProgress();
-  };
-
-  play.addEventListener("click", async () => {
-    if (!audio.paused) {
-      audio.pause();
-      audio.currentTime = 0;
-      play.textContent = "▶ Play";
-      updateProgress();
-      return;
-    }
-
-    try {
-      await audio.play();
-    } catch (e) {
-      console.error(e);
-    }
-  });
-
-  pause.addEventListener("click", async () => {
-    if (audio.paused) {
-      try { await audio.play(); } catch (_) {}
-    } else {
-      audio.pause();
-    }
-  });
-
-  audio.addEventListener("play", () => {
-    play.textContent = "■ Stop";
-    pause.textContent = "Ⅱ";
-  });
-
-  audio.addEventListener("pause", () => {
-    if (!audio.ended) {
-      play.textContent = "▶ Play";
-      pause.textContent = "▶";
-    }
-  });
-
-  audio.addEventListener("ended", () => {
-    play.textContent = "▶ Play";
-    pause.textContent = "Ⅱ";
-    updateProgress();
-  });
-
-  audio.addEventListener("loadedmetadata", () => {
-    rebuild();
-    updateProgress();
-  });
-
-  audio.addEventListener("durationchange", rebuild);
-  audio.addEventListener("timeupdate", updateProgress);
-
-  slider.addEventListener("pointerdown", () => dragging = true);
-
-  slider.addEventListener("input", () => {
-    const value = Number(slider.value) / 1000;
-    if (percent) percent.textContent = value.toFixed(5) + "%";
-  });
-
-  slider.addEventListener("pointerup", () => {
-    if (Number.isFinite(audio.duration)) {
-      audio.currentTime =
-        audio.duration * (Number(slider.value) / 1000) / 100;
-    }
+  const finishSeek = () => {
 
     dragging = false;
-    activate(sectionForTime(audio.currentTime));
-    updateProgress();
-  });
 
-  prev?.addEventListener("click", e => {
-    e.stopPropagation();
-    jumpSection(currentSection - 1);
-  });
+    scrollCurrent =
+      window.scrollY;
 
-  next?.addEventListener("click", e => {
-    e.stopPropagation();
-    jumpSection(currentSection + 1);
-  });
+    scrollTarget =
+      window.scrollY;
+  };
 
-  rebuild();
 
-  syncNarrationWithVisiblePage(false);
+  range.addEventListener(
+    "pointerup",
+    finishSeek
+  );
 
-  sections.forEach((s, i) => {
-    s.el.addEventListener("click", e => {
-      if (e.target.closest("a,button,input,textarea,select,#reader")) return;
+  range.addEventListener(
+    "change",
+    finishSeek
+  );
 
-      const selection = window.getSelection();
-      if (selection && selection.toString().trim()) return;
 
-      jumpSection(i);
-      audio.play().catch(() => {});
-    });
-  });
+  const pauseAutoFollow = () => {
 
-  activate(0);
-  updateProgress();
-  raf = requestAnimationFrame(follow);
+    userScrollUntil =
+      performance.now() + 1600;
 
-  window.addEventListener("beforeunload", () => {
-    if (raf) cancelAnimationFrame(raf);
-    audio.pause();
-  });
+    scrollCurrent =
+      window.scrollY;
+
+    scrollTarget =
+      window.scrollY;
+  };
+
+
+  window.addEventListener(
+    "wheel",
+    pauseAutoFollow,
+    { passive:true }
+  );
+
+  window.addEventListener(
+    "touchstart",
+    pauseAutoFollow,
+    { passive:true }
+  );
+
+
+  let detectedLanguage =
+    detectLanguage();
+
+
+  const watchLanguage = async () => {
+
+    const detected =
+      detectLanguage();
+
+    if (
+      detected !== detectedLanguage
+    ) {
+
+      detectedLanguage =
+        detected;
+
+      /*
+        Give Safari a moment to finish
+        replacing the translated DOM.
+      */
+
+      await new Promise(
+        resolve =>
+          setTimeout(resolve, 650)
+      );
+
+      await setLanguage(
+        detected,
+        true
+      );
+
+      /*
+        Rebuild alignment against the
+        text that is actually visible.
+      */
+
+      setTimeout(
+        alignWords,
+        500
+      );
+    }
+  };
+
+
+  setInterval(
+    watchLanguage,
+    400
+  );
+
+
+  window.addEventListener(
+    "resize",
+    () => {
+
+      scrollCurrent =
+        window.scrollY;
+
+      scrollTarget =
+        window.scrollY;
+
+      alignWords();
+    }
+  );
+
+
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+
+      if (
+        !document.hidden &&
+        transcript.length
+      ) {
+        alignWords();
+      }
+    }
+  );
+
+
+  const start = async () => {
+
+    detectedLanguage =
+      detectLanguage();
+
+    language =
+      detectedLanguage;
+
+    audio.src =
+      FILES[language].audio;
+
+    audio.load();
+
+    await loadTranscript(
+      language
+    );
+
+    playBtn.textContent = "▶";
+
+    requestAnimationFrame(
+      animationLoop
+    );
+  };
+
+
+  start();
+
 })();
 </script>
 
