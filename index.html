@@ -2433,6 +2433,9 @@ main section.unfire-reading-section{
 
   let currentWordIndex = -1;
 
+  let karaokeTimeline = [];
+  let karaokeVisibleIndex = -1;
+
   let dragging = false;
 
   let scrollCurrent =
@@ -2655,6 +2658,418 @@ main section.unfire-reading-section{
   };
 
 
+
+  const buildKaraokeTimeline = () => {
+
+    karaokeTimeline = [];
+
+    if (
+      !visibleWords.length ||
+      !transcript.length
+    ) {
+      return;
+    }
+
+    /*
+      Buscamos anclas fiables entre el texto visible
+      y la transcripción del audio.
+    */
+
+    const anchors = [];
+
+    let transcriptCursor = 0;
+
+    for (
+      let visibleIndex = 0;
+      visibleIndex < visibleWords.length;
+      visibleIndex++
+    ) {
+
+      const wanted =
+        visibleWords[visibleIndex].key;
+
+      if (!wanted) continue;
+
+      let found = -1;
+
+      const limit =
+        Math.min(
+          transcript.length,
+          transcriptCursor + 60
+        );
+
+      for (
+        let transcriptIndex = transcriptCursor;
+        transcriptIndex < limit;
+        transcriptIndex++
+      ) {
+
+        if (
+          normalizeWord(
+            transcript[transcriptIndex].word
+          ) === wanted
+        ) {
+          found = transcriptIndex;
+          break;
+        }
+      }
+
+      if (found >= 0) {
+
+        anchors.push({
+          visible: visibleIndex,
+          transcript: found
+        });
+
+        transcriptCursor =
+          found + 1;
+      }
+    }
+
+
+    /*
+      Línea temporal inicial:
+      todas las palabras visibles existen aquí,
+      incluso las que Whisper haya omitido.
+    */
+
+    karaokeTimeline =
+      visibleWords.map((word, index) => ({
+        word,
+        visibleIndex:index,
+        start:null,
+        end:null,
+        exact:false
+      }));
+
+
+    /*
+      Aplicamos tiempos exactos a las palabras
+      que sí tienen correspondencia directa.
+    */
+
+    for (const anchor of anchors) {
+
+      const timing =
+        transcript[anchor.transcript];
+
+      if (!timing) continue;
+
+      const item =
+        karaokeTimeline[anchor.visible];
+
+      item.start =
+        Number(timing.start);
+
+      item.end =
+        Number(timing.end);
+
+      item.exact = true;
+    }
+
+
+    /*
+      Rellenamos cualquier palabra que Whisper
+      se haya saltado utilizando las dos palabras
+      reconocidas que la rodean.
+    */
+
+    let cursor = 0;
+
+    while (cursor < karaokeTimeline.length) {
+
+      if (
+        karaokeTimeline[cursor].start != null
+      ) {
+        cursor++;
+        continue;
+      }
+
+      const runStart = cursor;
+
+      while (
+        cursor < karaokeTimeline.length &&
+        karaokeTimeline[cursor].start == null
+      ) {
+        cursor++;
+      }
+
+      const runEnd =
+        cursor - 1;
+
+      const count =
+        runEnd - runStart + 1;
+
+      const previous =
+        runStart > 0
+          ? karaokeTimeline[runStart - 1]
+          : null;
+
+      const next =
+        cursor < karaokeTimeline.length
+          ? karaokeTimeline[cursor]
+          : null;
+
+
+      let availableStart =
+        previous?.end != null
+          ? previous.end
+          : 0;
+
+
+      let availableEnd;
+
+      if (next?.start != null) {
+
+        availableEnd =
+          next.start;
+
+      } else if (
+        Number.isFinite(audio.duration)
+      ) {
+
+        availableEnd =
+          audio.duration;
+
+      } else {
+
+        const lastTranscript =
+          transcript[
+            transcript.length - 1
+          ];
+
+        availableEnd =
+          Number(
+            lastTranscript?.end ||
+            availableStart +
+            count * .25
+          );
+      }
+
+
+      let available =
+        Math.max(
+          .04 * count,
+          availableEnd -
+          availableStart
+        );
+
+
+      /*
+        No extendemos palabras durante pausas
+        largas de la narración.
+      */
+
+      const speakingWindow =
+        Math.min(
+          available,
+          count * .30
+        );
+
+
+      const slot =
+        speakingWindow /
+        Math.max(1, count);
+
+
+      for (
+        let i = 0;
+        i < count;
+        i++
+      ) {
+
+        const item =
+          karaokeTimeline[
+            runStart + i
+          ];
+
+        item.start =
+          availableStart +
+          i * slot;
+
+        item.end =
+          Math.min(
+            availableEnd,
+            item.start +
+            Math.max(
+              .055,
+              slot * .92
+            )
+          );
+      }
+    }
+
+
+    /*
+      Seguridad:
+      ningún intervalo puede solaparse hacia atrás.
+    */
+
+    let lastTime = 0;
+
+    for (
+      const item of karaokeTimeline
+    ) {
+
+      item.start =
+        Math.max(
+          lastTime,
+          Number(item.start || 0)
+        );
+
+      item.end =
+        Math.max(
+          item.start + .035,
+          Number(item.end || item.start + .12)
+        );
+
+      lastTime =
+        item.start;
+    }
+
+    karaokeVisibleIndex = -1;
+
+    console.log(
+      "Karaoke timeline:",
+      karaokeTimeline.length,
+      "palabras visibles /",
+      anchors.length,
+      "anclas exactas"
+    );
+  };
+
+
+  const findKaraokeWord = time => {
+
+    let low = 0;
+    let high =
+      karaokeTimeline.length - 1;
+
+    let candidate = -1;
+
+    while (low <= high) {
+
+      const mid =
+        (low + high) >> 1;
+
+      if (
+        karaokeTimeline[mid].start <= time
+      ) {
+
+        candidate = mid;
+        low = mid + 1;
+
+      } else {
+
+        high = mid - 1;
+      }
+    }
+
+    if (candidate < 0) {
+      return -1;
+    }
+
+    const item =
+      karaokeTimeline[candidate];
+
+    /*
+      Fundamental:
+      después de end la palabra deja de estar
+      marcada aunque la siguiente aún no empiece.
+    */
+
+    if (
+      time < item.start ||
+      time > item.end
+    ) {
+      return -1;
+    }
+
+    return candidate;
+  };
+
+
+  const clearKaraoke = () => {
+
+    if (
+      window.CSS &&
+      CSS.highlights
+    ) {
+
+      CSS.highlights.delete(
+        "unfire-speaking-word"
+      );
+    }
+
+    karaokeVisibleIndex = -1;
+  };
+
+
+  const paintKaraoke = time => {
+
+    const index =
+      findKaraokeWord(time);
+
+    if (
+      index === karaokeVisibleIndex
+    ) {
+      return;
+    }
+
+    if (index < 0) {
+
+      clearKaraoke();
+      return;
+    }
+
+    karaokeVisibleIndex =
+      index;
+
+    const visible =
+      karaokeTimeline[index]?.word;
+
+    if (
+      !visible?.node ||
+      !visible.node.isConnected
+    ) {
+      return;
+    }
+
+    const wordRange =
+      document.createRange();
+
+    try {
+
+      wordRange.setStart(
+        visible.node,
+        visible.start
+      );
+
+      wordRange.setEnd(
+        visible.node,
+        visible.end
+      );
+
+    } catch (_) {
+
+      return;
+    }
+
+
+    if (
+      window.CSS &&
+      CSS.highlights &&
+      window.Highlight
+    ) {
+
+      CSS.highlights.set(
+        "unfire-speaking-word",
+        new Highlight(wordRange)
+      );
+    }
+  };
+
+
   const loadTranscript = async lang => {
 
     try {
@@ -2680,6 +3095,7 @@ main section.unfire-reading-section{
           : [];
 
       alignWords();
+      buildKaraokeTimeline();
 
     } catch (error) {
 
@@ -3006,10 +3422,15 @@ main section.unfire-reading-section{
 
       if (index >= 0) {
 
-        highlightWord(index);
+        paintKaraoke(
+          audio.currentTime
+        );
 
         updateScrollTarget(index);
       }
+    } else {
+
+      clearKaraoke();
     }
 
 
@@ -3366,6 +3787,7 @@ main section.unfire-reading-section{
         transcript.length
       ) {
         alignWords();
+        buildKaraokeTimeline();
       }
     }
   );
