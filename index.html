@@ -2384,10 +2384,6 @@ main section.unfire-reading-section{
   const audio =
     document.getElementById("unfire-narration");
 
-  audio.playbackRate = 1.08;
-  audio.defaultPlaybackRate = 1.08;
-  audio.preservesPitch = true;
-
   const playBtn =
     document.getElementById("reader-play");
 
@@ -2426,12 +2422,6 @@ main section.unfire-reading-section{
 
   let scrollTarget =
     window.scrollY;
-
-  let maximumScrollTarget =
-    window.scrollY;
-
-  let lastAnimationTime =
-    performance.now();
 
   let userScrollUntil = 0;
 
@@ -2946,27 +2936,12 @@ main section.unfire-reading-section{
         : window.innerHeight;
 
 
-    const candidateTarget =
+    scrollTarget =
       Math.max(
         0,
         pageY -
         viewport * .42
       );
-
-    /*
-      FORWARD-ONLY CAMERA
-
-      Durante la reproducción automática el objetivo
-      jamás puede retroceder. Una nueva palabra puede
-      mantener la posición o empujar la cámara hacia
-      abajo, pero nunca hacia arriba.
-    */
-
-    if (candidateTarget > maximumScrollTarget) {
-      maximumScrollTarget = candidateTarget;
-    }
-
-    scrollTarget = maximumScrollTarget;
   };
 
 
@@ -3025,73 +3000,25 @@ main section.unfire-reading-section{
       userScrollUntil
     ) {
 
-      const now =
-        performance.now();
+      scrollCurrent =
+        window.scrollY +
+        (
+          scrollTarget -
+          window.scrollY
+        ) * .085;
 
-      const dt =
-        Math.min(
-          32,
-          Math.max(
-            1,
-            now - lastAnimationTime
-          )
-        );
 
-      lastAnimationTime = now;
-
-      /*
-        Nunca utilizamos un destino menor que
-        la posición actual de la página.
-      */
-
-      const currentY =
-        Math.max(
-          window.scrollY,
-          scrollCurrent
-        );
-
-      const destination =
-        Math.max(
-          currentY,
-          scrollTarget
-        );
-
-      const distance =
-        destination - currentY;
-
-      /*
-        Interpolación independiente de FPS.
-        ~0.055 a 60 Hz, pero estable también
-        en ProMotion, iPhone y frames irregulares.
-      */
-
-      const smoothing =
-        1 - Math.pow(
-          1 - 0.055,
-          dt / 16.6667
-        );
-
-      if (distance > 0.25) {
-
-        const nextY =
-          currentY +
-          distance * smoothing;
-
-        scrollCurrent =
-          Math.max(
-            currentY,
-            nextY
-          );
+      if (
+        Math.abs(
+          scrollTarget -
+          window.scrollY
+        ) > .35
+      ) {
 
         window.scrollTo(
           0,
           scrollCurrent
         );
-
-      } else {
-
-        scrollCurrent =
-          currentY;
       }
     }
   };
@@ -3184,12 +3111,6 @@ main section.unfire-reading-section{
 
     scrollTarget =
       window.scrollY;
-
-    maximumScrollTarget =
-      window.scrollY;
-
-    lastAnimationTime =
-      performance.now();
 
 
     if (wasPlaying) {
@@ -3313,12 +3234,6 @@ main section.unfire-reading-section{
 
     scrollTarget =
       window.scrollY;
-
-    maximumScrollTarget =
-      window.scrollY;
-
-    lastAnimationTime =
-      performance.now();
   };
 
 
@@ -3343,12 +3258,6 @@ main section.unfire-reading-section{
 
     scrollTarget =
       window.scrollY;
-
-    maximumScrollTarget =
-      window.scrollY;
-
-    lastAnimationTime =
-      performance.now();
   };
 
 
