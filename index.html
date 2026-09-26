@@ -3058,8 +3058,7 @@ main section.unfire-reading-section{
     if (queueIndex >= 0) {
 
       /*
-        A deliberate section change may move
-        upward or downward once.
+        Only explicit navigation uses a deliberate reposition.
       */
       const firstItem =
         section.items[0];
