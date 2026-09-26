@@ -2102,10 +2102,7 @@ main section.unfire-reading-section{
   let lastScroll = 0;
 
   const clean = s => (s || "").replace(/\s+/g, " ").trim();
-  let narrationLanguage =
-    (navigator.language || "en").toLowerCase().startsWith("es")
-      ? "es"
-      : "en";
+  let narrationLanguage = "en";
 
   const narrationFiles = {
     en: "audio/unfire-master-en.mp3",
@@ -2160,11 +2157,102 @@ main section.unfire-reading-section{
     }, { once: true });
   };
 
-  languageBtn?.addEventListener("click", () => {
-    setNarrationLanguage(
-      narrationLanguage === "es" ? "en" : "es"
-    );
-  });
+  const detectVisibleLanguage = () => {
+    const main = document.querySelector("main");
+    const text = (main?.innerText || "")
+      .toLowerCase()
+      .replace(/\s+/g, " ");
+
+    const htmlLang =
+      (document.documentElement.lang || "")
+        .toLowerCase();
+
+    const spanishMarkers = [
+      "construir tecnología",
+      "reutilizar la ventaja",
+      "explora el sistema",
+      "financiación y colaboración",
+      "una empresa",
+      "tecnología reutilizable",
+      "proyectos seleccionados",
+      "sistemas de software",
+      "sector público"
+    ];
+
+    const englishMarkers = [
+      "build technology",
+      "reuse the advantage",
+      "explore the system",
+      "funding and collaboration",
+      "a company",
+      "reusable technology",
+      "selected work",
+      "software systems",
+      "public sector"
+    ];
+
+    let esScore = 0;
+    let enScore = 0;
+
+    spanishMarkers.forEach(term => {
+      if (text.includes(term)) esScore++;
+    });
+
+    englishMarkers.forEach(term => {
+      if (text.includes(term)) enScore++;
+    });
+
+    if (htmlLang.startsWith("es") && esScore >= enScore) {
+      return "es";
+    }
+
+    if (esScore > enScore) {
+      return "es";
+    }
+
+    return "en";
+  };
+
+
+  const syncNarrationWithVisiblePage = (preservePosition = true) => {
+    const detected = detectVisibleLanguage();
+
+    if (detected !== narrationLanguage) {
+      setNarrationLanguage(
+        detected,
+        preservePosition
+      );
+    } else if (languageBtn) {
+      languageBtn.textContent =
+        detected.toUpperCase();
+    }
+  };
+
+
+  let languageDetectionTimer = null;
+
+  const translatedArea =
+    document.querySelector("main") ||
+    document.body;
+
+  const languageObserver =
+    new MutationObserver(() => {
+      clearTimeout(languageDetectionTimer);
+
+      languageDetectionTimer =
+        setTimeout(() => {
+          syncNarrationWithVisiblePage(true);
+        }, 900);
+    });
+
+  languageObserver.observe(
+    translatedArea,
+    {
+      subtree: true,
+      childList: true,
+      characterData: true
+    }
+  );
 
 
   const rebuild = () => {
@@ -2367,9 +2455,9 @@ main section.unfire-reading-section{
     jumpSection(currentSection + 1);
   });
 
-  setNarrationLanguage(narrationLanguage, false);
-
   rebuild();
+
+  syncNarrationWithVisiblePage(false);
 
   sections.forEach((s, i) => {
     s.el.addEventListener("click", e => {
