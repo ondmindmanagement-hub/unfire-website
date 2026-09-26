@@ -2141,6 +2141,54 @@ body{
     }
   });
 
+  const percentageFromPointer = event => {
+    const rect = range.getBoundingClientRect();
+
+    if (!rect.width) return null;
+
+    const x = Math.max(
+      0,
+      Math.min(
+        rect.width,
+        event.clientX - rect.left
+      )
+    );
+
+    return (x / rect.width) * 100;
+  };
+
+
+  /*
+    TAP / CLICK:
+    Clicking anywhere on the progress bar
+    immediately jumps playback to that position.
+  */
+  range.addEventListener("pointerdown", event => {
+    if (
+      event.pointerType === "mouse" &&
+      event.button !== 0
+    ) {
+      return;
+    }
+
+    const value =
+      percentageFromPointer(event);
+
+    if (value === null) return;
+
+    range.value =
+      Math.round(value * 1000);
+
+    drawProgress(value);
+    seek(value);
+  });
+
+
+  /*
+    DRAG:
+    Native range dragging remains available.
+    While dragging, the number follows the thumb.
+  */
   range.addEventListener("input", event => {
     const value =
       Number(event.target.value) / 1000;
@@ -2148,10 +2196,16 @@ body{
     drawProgress(value);
   });
 
+
+  /*
+    When the user finishes dragging,
+    playback continues from the selected point.
+  */
   range.addEventListener("change", event => {
-    seek(
-      Number(event.target.value) / 1000
-    );
+    const value =
+      Number(event.target.value) / 1000;
+
+    seek(value);
   });
 
   window.addEventListener(
