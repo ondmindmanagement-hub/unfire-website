@@ -2427,6 +2427,12 @@ main section.unfire-reading-section{
   let scrollTarget =
     window.scrollY;
 
+  let maximumScrollTarget =
+    window.scrollY;
+
+  let lastAnimationTime =
+    performance.now();
+
   let userScrollUntil = 0;
 
   let switchingLanguage = false;
@@ -2940,12 +2946,27 @@ main section.unfire-reading-section{
         : window.innerHeight;
 
 
-    scrollTarget =
+    const candidateTarget =
       Math.max(
         0,
         pageY -
         viewport * .42
       );
+
+    /*
+      FORWARD-ONLY CAMERA
+
+      Durante la reproducción automática el objetivo
+      jamás puede retroceder. Una nueva palabra puede
+      mantener la posición o empujar la cámara hacia
+      abajo, pero nunca hacia arriba.
+    */
+
+    if (candidateTarget > maximumScrollTarget) {
+      maximumScrollTarget = candidateTarget;
+    }
+
+    scrollTarget = maximumScrollTarget;
   };
 
 
@@ -3004,26 +3025,73 @@ main section.unfire-reading-section{
       userScrollUntil
     ) {
 
+      const now =
+        performance.now();
+
+      const dt =
+        Math.min(
+          32,
+          Math.max(
+            1,
+            now - lastAnimationTime
+          )
+        );
+
+      lastAnimationTime = now;
+
+      /*
+        Nunca utilizamos un destino menor que
+        la posición actual de la página.
+      */
+
+      const currentY =
+        Math.max(
+          window.scrollY,
+          scrollCurrent
+        );
+
+      const destination =
+        Math.max(
+          currentY,
+          scrollTarget
+        );
+
       const distance =
-        scrollTarget -
-        window.scrollY;
+        destination - currentY;
 
-      const easing =
-        Math.abs(distance) > 600
-          ? .055
-          : .035;
+      /*
+        Interpolación independiente de FPS.
+        ~0.055 a 60 Hz, pero estable también
+        en ProMotion, iPhone y frames irregulares.
+      */
 
-      scrollCurrent =
-        window.scrollY +
-        distance * easing;
+      const smoothing =
+        1 - Math.pow(
+          1 - 0.055,
+          dt / 16.6667
+        );
 
-      if (
-        Math.abs(distance) > 1.2
-      ) {
+      if (distance > 0.25) {
+
+        const nextY =
+          currentY +
+          distance * smoothing;
+
+        scrollCurrent =
+          Math.max(
+            currentY,
+            nextY
+          );
+
         window.scrollTo(
           0,
           scrollCurrent
         );
+
+      } else {
+
+        scrollCurrent =
+          currentY;
       }
     }
   };
@@ -3116,6 +3184,12 @@ main section.unfire-reading-section{
 
     scrollTarget =
       window.scrollY;
+
+    maximumScrollTarget =
+      window.scrollY;
+
+    lastAnimationTime =
+      performance.now();
 
 
     if (wasPlaying) {
@@ -3239,6 +3313,12 @@ main section.unfire-reading-section{
 
     scrollTarget =
       window.scrollY;
+
+    maximumScrollTarget =
+      window.scrollY;
+
+    lastAnimationTime =
+      performance.now();
   };
 
 
@@ -3263,6 +3343,12 @@ main section.unfire-reading-section{
 
     scrollTarget =
       window.scrollY;
+
+    maximumScrollTarget =
+      window.scrollY;
+
+    lastAnimationTime =
+      performance.now();
   };
 
 
