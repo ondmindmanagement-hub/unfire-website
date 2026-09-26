@@ -1778,19 +1778,25 @@ main section.unfire-reading-section{
 </style>
 
 
-<style id="unfire-karaoke-white-v1">
-.unfire-reader-word{
-  transition:
-    color .14s ease,
-    opacity .14s ease,
-    text-shadow .14s ease !important;
+
+
+
+<style id="unfire-karaoke-strict-v3">
+::highlight(unfire-speaking-word){
+  color:#ffffff !important;
+  background:transparent !important;
+  text-shadow:none !important;
+}
+
+.unfire-reader-word,
+.unfire-reader-word.unfire-word-active{
+  transition:none !important;
 }
 
 .unfire-reader-word.unfire-word-active{
   color:#ffffff !important;
   opacity:1 !important;
-  text-shadow:
-    0 0 8px rgba(255,255,255,.18) !important;
+  text-shadow:none !important;
 }
 </style>
 
@@ -3007,54 +3013,104 @@ main section.unfire-reading-section{
 
   const paintKaraoke = time => {
 
-    const index =
-      findKaraokeWord(time);
-
-    if (
-      index === karaokeVisibleIndex
-    ) {
-      return;
-    }
-
-    if (index < 0) {
-
+    if (!karaokeTimeline.length) {
       clearKaraoke();
       return;
     }
 
-    karaokeVisibleIndex =
-      index;
+    let low = 0;
+    let high = karaokeTimeline.length - 1;
+    let index = -1;
 
-    const visible =
-      karaokeTimeline[index]?.word;
+    while (low <= high) {
+
+      const mid = (low + high) >> 1;
+      const item = karaokeTimeline[mid];
+
+      if (time < item.start) {
+
+        high = mid - 1;
+
+      } else if (time >= item.end) {
+
+        low = mid + 1;
+
+      } else {
+
+        index = mid;
+        break;
+      }
+    }
+
+    if (index < 0) {
+
+      if (karaokeVisibleIndex !== -1) {
+        clearKaraoke();
+      }
+
+      return;
+    }
+
+    if (index === karaokeVisibleIndex) {
+      return;
+    }
+
+    clearKaraoke();
+
+    const visible = karaokeTimeline[index]?.word;
+
+    if (!visible) {
+      return;
+    }
+
+    let wordRange = null;
 
     if (
-      !visible?.node ||
-      !visible.node.isConnected
+      visible.node &&
+      visible.node.isConnected
     ) {
-      return;
+
+      try {
+
+        wordRange = document.createRange();
+
+        wordRange.setStart(
+          visible.node,
+          visible.start
+        );
+
+        wordRange.setEnd(
+          visible.node,
+          visible.end
+        );
+
+      } catch (_) {
+
+        wordRange = null;
+      }
+
+    } else if (
+      visible.element &&
+      visible.element.isConnected
+    ) {
+
+      try {
+
+        wordRange = document.createRange();
+
+        wordRange.selectNodeContents(
+          visible.element
+        );
+
+      } catch (_) {
+
+        wordRange = null;
+      }
     }
 
-    const wordRange =
-      document.createRange();
-
-    try {
-
-      wordRange.setStart(
-        visible.node,
-        visible.start
-      );
-
-      wordRange.setEnd(
-        visible.node,
-        visible.end
-      );
-
-    } catch (_) {
-
+    if (!wordRange) {
       return;
     }
-
 
     if (
       window.CSS &&
@@ -3066,6 +3122,8 @@ main section.unfire-reading-section{
         "unfire-speaking-word",
         new Highlight(wordRange)
       );
+
+      karaokeVisibleIndex = index;
     }
   };
 
