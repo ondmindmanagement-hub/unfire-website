@@ -2158,59 +2158,60 @@ main section.unfire-reading-section{
   };
 
   const detectVisibleLanguage = () => {
-    const main = document.querySelector("main");
-    const text = (main?.innerText || "")
-      .toLowerCase()
-      .replace(/\s+/g, " ");
+    const hero =
+      document.querySelector("h1") ||
+      document.querySelector(".hero h1") ||
+      document.querySelector("main h1");
 
-    const htmlLang =
-      (document.documentElement.lang || "")
-        .toLowerCase();
+    const heroText =
+      (hero?.innerText || hero?.textContent || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
 
-    const spanishMarkers = [
+    if (
+      heroText.includes("construir tecnología") ||
+      heroText.includes("reutilizar la ventaja")
+    ) {
+      return "es";
+    }
+
+    if (
+      heroText.includes("build technology") ||
+      heroText.includes("reuse the advantage")
+    ) {
+      return "en";
+    }
+
+    const bodyText =
+      (document.body.innerText || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ");
+
+    const spanishStrong = [
       "construir tecnología",
       "reutilizar la ventaja",
       "explora el sistema",
-      "financiación y colaboración",
-      "una empresa",
-      "tecnología reutilizable",
-      "proyectos seleccionados",
-      "sistemas de software",
-      "sector público"
+      "financiación y colaboración"
     ];
 
-    const englishMarkers = [
+    const englishStrong = [
       "build technology",
       "reuse the advantage",
       "explore the system",
-      "funding and collaboration",
-      "a company",
-      "reusable technology",
-      "selected work",
-      "software systems",
-      "public sector"
+      "funding and collaboration"
     ];
 
-    let esScore = 0;
-    let enScore = 0;
+    const esHits =
+      spanishStrong.filter(x => bodyText.includes(x)).length;
 
-    spanishMarkers.forEach(term => {
-      if (text.includes(term)) esScore++;
-    });
+    const enHits =
+      englishStrong.filter(x => bodyText.includes(x)).length;
 
-    englishMarkers.forEach(term => {
-      if (text.includes(term)) enScore++;
-    });
+    if (esHits > enHits) return "es";
+    if (enHits > esHits) return "en";
 
-    if (htmlLang.startsWith("es") && esScore >= enScore) {
-      return "es";
-    }
-
-    if (esScore > enScore) {
-      return "es";
-    }
-
-    return "en";
+    return narrationLanguage;
   };
 
 
@@ -2222,7 +2223,9 @@ main section.unfire-reading-section{
         detected,
         preservePosition
       );
-    } else if (languageBtn) {
+    }
+
+    if (languageBtn) {
       languageBtn.textContent =
         detected.toUpperCase();
     }
@@ -2242,8 +2245,14 @@ main section.unfire-reading-section{
       languageDetectionTimer =
         setTimeout(() => {
           syncNarrationWithVisiblePage(true);
-        }, 900);
+        }, 250);
     });
+
+
+  const visibleLanguagePoll = setInterval(() => {
+    syncNarrationWithVisiblePage(true);
+  }, 500);
+
 
   languageObserver.observe(
     translatedArea,
