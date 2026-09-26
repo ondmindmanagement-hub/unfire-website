@@ -1140,6 +1140,19 @@ main section[data-reader-section]{
 
 </style>
 
+
+<style id="unfire-reader-follow-style">
+
+main section{
+  scroll-margin-top:90px;
+}
+
+.unfire-reader-follow-target{
+  scroll-margin-top:120px;
+}
+
+</style>
+
 </head>
 
 <body>
@@ -2336,6 +2349,96 @@ main section[data-reader-section]{
 
 
   /* ========================================
+     AUTOMATIC PAGE FOLLOW
+  ======================================== */
+
+  let lastFollowElement = null;
+  let lastFollowTime = 0;
+
+
+  const scrollToSection = index => {
+
+    const section =
+      sections[index];
+
+    if(!section) return;
+
+    section.element.scrollIntoView({
+      behavior:"smooth",
+      block:"start",
+      inline:"nearest"
+    });
+  };
+
+
+  const followWord = word => {
+
+    if(
+      !word ||
+      !word.node ||
+      !word.node.parentElement
+    ){
+      return;
+    }
+
+    const element =
+      word.node.parentElement;
+
+    /*
+      Avoid repeatedly scrolling the same element.
+    */
+    const now =
+      performance.now();
+
+    if(
+      element === lastFollowElement &&
+      now - lastFollowTime < 800
+    ){
+      return;
+    }
+
+    const rect =
+      element.getBoundingClientRect();
+
+    const height =
+      window.innerHeight ||
+      document.documentElement.clientHeight;
+
+    /*
+      Comfortable reading zone:
+      keep spoken text roughly between
+      25% and 72% of the viewport.
+    */
+    const upperZone =
+      height * .25;
+
+    const lowerZone =
+      height * .72;
+
+    if(
+      rect.top < upperZone ||
+      rect.bottom > lowerZone
+    ){
+      lastFollowElement =
+        element;
+
+      lastFollowTime =
+        now;
+
+      element.classList.add(
+        "unfire-reader-follow-target"
+      );
+
+      element.scrollIntoView({
+        behavior:"smooth",
+        block:"center",
+        inline:"nearest"
+      });
+    }
+  };
+
+
+  /* ========================================
      PROGRESS
   ======================================== */
 
@@ -2555,6 +2658,23 @@ main section[data-reader-section]{
         currentSectionIndex
       );
 
+      /*
+        On the first chunk of a new section,
+        move the page directly to it.
+      */
+      const previousChunk =
+        flatChunks[index - 1];
+
+      if(
+        !previousChunk ||
+        previousChunk.sectionIndex
+        !== currentSectionIndex
+      ){
+        scrollToSection(
+          currentSectionIndex
+        );
+      }
+
 
       currentChunkStartPercent =
         percentage(
@@ -2676,6 +2796,10 @@ main section[data-reader-section]{
 
 
           highlightWord(
+            spokenWord
+          );
+
+          followWord(
             spokenWord
           );
 
