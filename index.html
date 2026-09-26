@@ -1043,225 +1043,2198 @@ h2{
     scroll-behavior:auto !important;
   }
 }
-</style><style id="unfire-fixed-film-style">
-#unfire-fixed-film{
-  position:fixed;
-  inset:0;
-
-  width:100vw;
-  height:100vh;
-
-  z-index:1;
-
-  pointer-events:none;
-
-  opacity:.82;
-
-  display:block;
-
-  background:#000;
+</style><style id="unfire-manual-nav-style">
+html{
+  scroll-behavior:auto !important;
 }
 
-header,
-main,
-footer,
-#reader{
-  position:relative;
-  z-index:2;
+#company,
+#work,
+#audio,
+#system,
+#scale,
+#funding{
+  scroll-margin-top:120px;
+}
+</style><style id="unfire-real-hero-fix">
+:root{
+  --unfire-lava:#C84A3A;
+  --unfire-lava-hover:#D65A49;
+  --unfire-lava-soft:rgba(200,74,58,.18);
+  --unfire-lava-border:rgba(200,74,58,.38);
+  --unfire-text:#F5F5F7;
+  --unfire-muted:#A1A1A6;
 }
 
-main,
-main section{
-  background:transparent !important;
+.unfire-real-hero{
+  min-height:0 !important;
+  height:auto !important;
+
+  padding-top:42px !important;
+  padding-bottom:72px !important;
+
+  margin-top:0 !important;
+
+  display:block !important;
+
+  align-items:flex-start !important;
+  justify-content:flex-start !important;
+  place-items:start !important;
 }
 
-body{
-  background:#000 !important;
+.unfire-real-hero > div{
+  min-height:0 !important;
+  height:auto !important;
+
+  margin-top:0 !important;
+  padding-top:0 !important;
+
+  align-items:flex-start !important;
+  justify-content:flex-start !important;
+
+  transform:none !important;
+}
+
+.unfire-real-hero > div > div{
+  min-height:0 !important;
+  height:auto !important;
+
+  margin-top:0 !important;
+
+  align-items:flex-start !important;
+  justify-content:flex-start !important;
+
+  transform:none !important;
+}
+
+.unfire-real-hero h1,
+.unfire-real-hero h2{
+  margin-top:0 !important;
+  margin-bottom:26px !important;
+
+  max-width:1000px !important;
+
+  letter-spacing:-.055em !important;
+  line-height:.96 !important;
+}
+
+.unfire-real-hero p{
+  margin-top:0 !important;
+  margin-bottom:30px !important;
+
+  max-width:700px !important;
+
+  color:var(--unfire-muted) !important;
+  line-height:1.52 !important;
+}
+
+.unfire-lava-primary{
+  background:var(--unfire-lava) !important;
+  color:#fff !important;
+
+  border:1px solid rgba(255,255,255,.10) !important;
+
+  box-shadow:
+    0 8px 28px var(--unfire-lava-soft) !important;
+}
+
+.unfire-lava-primary:hover{
+  background:var(--unfire-lava-hover) !important;
+  color:#fff !important;
+}
+
+.unfire-lava-secondary{
+  border-color:var(--unfire-lava-border) !important;
+}
+
+.unfire-lava-secondary:hover{
+  background:rgba(200,74,58,.07) !important;
+  border-color:rgba(200,74,58,.60) !important;
+  color:#F2B8AF !important;
+}
+
+nav a{
+  transition:color .2s ease;
+}
+
+nav a:hover{
+  color:#E19A90 !important;
+}
+
+nav a.active{
+  color:var(--unfire-text) !important;
+}
+
+input[type="range"]{
+  accent-color:var(--unfire-lava) !important;
+}
+
+::selection{
+  background:rgba(200,74,58,.30);
+  color:#fff;
+}
+
+@media(max-width:900px){
+  .unfire-real-hero{
+    padding-top:30px !important;
+    padding-bottom:56px !important;
+  }
+}
+</style><style id="unfire-apple-first-style">
+#unfire-apple-first-line{
+  margin-top:6px;
+  margin-bottom:28px;
+
+  font-size:13px;
+  line-height:1.4;
+  font-weight:500;
+  letter-spacing:.015em;
+
+  color:#B0B0B5;
+
+  white-space:nowrap;
+}
+
+#unfire-apple-first-line::before{
+  content:"";
+  display:inline-block;
+
+  width:5px;
+  height:5px;
+
+  margin-right:8px;
+
+  border-radius:999px;
+  background:#C64A3A;
+
+  box-shadow:0 0 10px rgba(198,74,58,.22);
+
+  vertical-align:1px;
 }
 
 @media(max-width:700px){
-  #unfire-fixed-film{
-    opacity:.68;
+  #unfire-apple-first-line{
+    white-space:normal;
+  }
+}
+</style><style id="unfire-verticals-style">
+#unfire-verticals-line{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+
+  margin-left:18px;
+
+  max-width:calc(100vw - 520px);
+
+  overflow-x:auto;
+  overflow-y:hidden;
+
+  white-space:nowrap;
+
+  scrollbar-width:none;
+
+  vertical-align:middle;
+}
+
+#unfire-verticals-line::-webkit-scrollbar{
+  display:none;
+}
+
+.unfire-vertical{
+  flex:0 0 auto;
+
+  color:#8E8E93;
+
+  font-size:10px;
+  line-height:1;
+  font-weight:500;
+  letter-spacing:.01em;
+
+  transition:color .2s ease;
+}
+
+.unfire-vertical:hover{
+  color:#F5F5F7;
+}
+
+.unfire-vertical-sep{
+  flex:0 0 auto;
+
+  color:#C64A3A;
+  opacity:.72;
+
+  font-size:9px;
+}
+
+@media(max-width:1100px){
+  #unfire-verticals-line{
+    max-width:calc(100vw - 420px);
+    margin-left:12px;
   }
 }
 
-@media(prefers-reduced-motion:reduce){
-  #unfire-fixed-film{
-    opacity:.55;
+@media(max-width:820px){
+  #unfire-verticals-line{
+    display:none;
   }
 }
-</style><style id="unfire-web2-story-style">
-#unfire-web2-story{
-  position:fixed;
-  right:clamp(18px,3vw,40px);
-  top:50%;
-  transform:translateY(-50%);
-  width:min(42vw,620px);
-  height:min(72vh,760px);
-  z-index:40;
-  pointer-events:none;
+</style><style id="unfire-editor-v4-style">
+[data-unfire-move]{
+  position:relative !important;
+  left:var(--ue-left,0px) !important;
+  top:var(--ue-top,0px) !important;
+}
+
+html.unfire-editing [data-unfire-move]{
+  outline:1px dashed rgba(198,74,58,.7) !important;
+  outline-offset:6px !important;
+  cursor:grab !important;
+  user-select:none !important;
+  -webkit-user-select:none !important;
+}
+
+html.unfire-editing [data-unfire-move]:hover{
+  outline:2px solid #C64A3A !important;
+}
+
+html.unfire-editing [data-unfire-move].ue-selected{
+  outline:2px solid #FF6048 !important;
+  outline-offset:7px !important;
+}
+
+html.unfire-editing [data-unfire-move].ue-dragging{
+  cursor:grabbing !important;
+  outline:2px solid #FF6048 !important;
+}
+
+#unfire-editor-v4-panel{
+  position:fixed !important;
+  left:18px !important;
+  bottom:18px !important;
+  top:auto !important;
+  right:auto !important;
+
+  z-index:2147483647 !important;
+
+  display:flex !important;
+  align-items:center !important;
+  gap:7px !important;
+
+  padding:8px !important;
+
+  border:1px solid rgba(255,255,255,.16) !important;
+  border-radius:14px !important;
+
+  background:rgba(20,20,22,.96) !important;
+  color:#fff !important;
+
+  box-shadow:0 12px 40px rgba(0,0,0,.4) !important;
+
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif !important;
+}
+
+#unfire-editor-v4-panel button{
+  appearance:none !important;
+
+  padding:7px 11px !important;
+
+  border:1px solid rgba(255,255,255,.14) !important;
+  border-radius:9px !important;
+
+  background:rgba(255,255,255,.08) !important;
+  color:#fff !important;
+
+  font-size:11px !important;
+  font-weight:600 !important;
+
+  cursor:pointer !important;
+}
+
+#ue4-edit.active{
+  background:#C64A3A !important;
+  border-color:#C64A3A !important;
+}
+
+#ue4-name{
+  min-width:100px !important;
+  color:#A1A1A6 !important;
+  font-size:10px !important;
+}
+</style><style id="unfire-final-apple-layout">
+:root{
+  --uf-bg:#000;
+  --uf-surface:#0a0a0a;
+  --uf-text:#f5f5f7;
+  --uf-secondary:#a1a1a6;
+  --uf-muted:#86868b;
+  --uf-border:rgba(255,255,255,.09);
+
+  --uf-lava:#d84f3d;
+  --uf-lava-hover:#e35a47;
+
+  --uf-width:980px;
+}
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+html,
+body{
+  margin:0 !important;
+  background:#000 !important;
+  color:var(--uf-text) !important;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Text",
+    "SF Pro Display",
+    Helvetica,
+    Arial,
+    sans-serif !important;
+
+  -webkit-font-smoothing:antialiased !important;
+  text-rendering:optimizeLegibility !important;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+h1,h2,h3,h4,
+p{
+  text-wrap:balance;
+}
+
+/* =========================================================
+   HEADER GENERAL — 2 FILAS COMO APPLE
+   ========================================================= */
+
+header{
+  position:sticky !important;
+  top:0 !important;
+  z-index:10000 !important;
+
+  height:82px !important;
+  min-height:82px !important;
+
+  padding:0 !important;
+
+  background:rgba(0,0,0,.88) !important;
+
+  border-bottom:1px solid var(--uf-border) !important;
+
+  backdrop-filter:saturate(180%) blur(20px) !important;
+  -webkit-backdrop-filter:saturate(180%) blur(20px) !important;
+}
+
+header > *{
+  position:relative !important;
+
+  width:min(1120px,calc(100vw - 44px)) !important;
+  height:82px !important;
+  min-height:82px !important;
+
+  margin:0 auto !important;
+  padding:0 !important;
+}
+
+/* =========================================================
+   FILA 1
+   marca izquierda / verticales centradas
+   ========================================================= */
+
+/* Unfire */
+
+[data-unfire-move="brand"]{
+  position:absolute !important;
+
+  left:0 !important;
+  top:0 !important;
+
+  width:auto !important;
+  height:44px !important;
+
+  display:flex !important;
+  align-items:center !important;
+
+  margin:0 !important;
+  padding:0 !important;
+
+  color:var(--uf-text) !important;
+
+  font-size:14px !important;
+  line-height:1 !important;
+  font-weight:600 !important;
+  letter-spacing:-.015em !important;
+
+  transform:none !important;
+  translate:none !important;
+  scale:1 !important;
+}
+
+/* Energy / Business / etc. */
+
+#unfire-verticals-line{
+  position:absolute !important;
+
+  left:50% !important;
+  top:0 !important;
+
+  transform:translateX(-50%) !important;
+  translate:none !important;
+  scale:1 !important;
+
+  height:44px !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  width:max-content !important;
+  max-width:780px !important;
+
+  margin:0 !important;
+  padding:0 !important;
+
+  white-space:nowrap !important;
+  overflow:visible !important;
+}
+
+.unfire-vertical{
+  display:flex !important;
+  align-items:center !important;
+
+  height:44px !important;
+
+  padding:0 8px !important;
+
+  color:var(--uf-secondary) !important;
+
+  font-size:10.5px !important;
+  line-height:1 !important;
+  font-weight:400 !important;
+  letter-spacing:0 !important;
+
+  transition:color .18s ease !important;
+}
+
+.unfire-vertical:hover{
+  color:var(--uf-text) !important;
+}
+
+.unfire-vertical-sep{
+  display:none !important;
+}
+
+/* =========================================================
+   FILA 2
+   Apple positioning izquierda / navegación derecha
+   ========================================================= */
+
+#unfire-apple-header-line,
+#unfire-apple-line{
+  position:absolute !important;
+
+  left:0 !important;
+  top:44px !important;
+
+  transform:none !important;
+  translate:none !important;
+  scale:1 !important;
+
+  height:38px !important;
+
+  display:flex !important;
+  align-items:center !important;
+
+  margin:0 !important;
+  padding:0 !important;
+
+  color:#737378 !important;
+
+  font-size:9.5px !important;
+  line-height:1 !important;
+  font-weight:400 !important;
+
+  white-space:nowrap !important;
+}
+
+#unfire-apple-header-line::before,
+#unfire-apple-line::before{
+  content:"" !important;
+
+  display:block !important;
+
+  width:4px !important;
+  height:4px !important;
+
+  margin-right:8px !important;
+
+  border-radius:50% !important;
+
+  background:var(--uf-lava) !important;
+
+  box-shadow:none !important;
+}
+
+/* navegación */
+
+header nav,
+[data-unfire-move="navigation"]{
+  position:absolute !important;
+
+  right:0 !important;
+  left:auto !important;
+  top:44px !important;
+
+  transform:none !important;
+  translate:none !important;
+  scale:1 !important;
+
+  width:auto !important;
+  height:38px !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+
+  gap:22px !important;
+
+  margin:0 !important;
+  padding:0 !important;
+
+  background:transparent !important;
+  border:0 !important;
+
+  white-space:nowrap !important;
+}
+
+header nav a,
+[data-unfire-move="navigation"] a{
+  display:flex !important;
+  align-items:center !important;
+
+  height:38px !important;
+
+  padding:0 !important;
+  margin:0 !important;
+
+  color:var(--uf-muted) !important;
+
+  background:transparent !important;
+  border:0 !important;
+
+  font-size:10.5px !important;
+  line-height:1 !important;
+  font-weight:400 !important;
+
+  transition:color .18s ease !important;
+}
+
+header nav a:hover,
+header nav a.active{
+  color:var(--uf-text) !important;
+}
+
+header nav a.active{
+  font-weight:500 !important;
+}
+
+header nav a.active::after{
+  display:none !important;
+}
+
+/* =========================================================
+   HERO — PROPORCIÓN TIPO APPLE
+   ========================================================= */
+
+.unfire-main-hero{
+  min-height:auto !important;
+  height:auto !important;
+
+  padding:
+    72px
+    0
+    86px
+    0 !important;
+
+  margin:0 !important;
+
+  background:#000 !important;
+}
+
+.unfire-main-hero > *{
+  width:min(var(--uf-width),calc(100vw - 44px)) !important;
+
+  margin-left:auto !important;
+  margin-right:auto !important;
+
+  transform:none !important;
+}
+
+/* eyebrow */
+
+[data-unfire-move="hero-eyebrow"]{
+  margin:
+    0
+    0
+    18px
+    0 !important;
+
+  color:var(--uf-muted) !important;
+
+  font-size:11px !important;
+  line-height:1.25 !important;
+
+  font-weight:600 !important;
+
+  letter-spacing:.13em !important;
+}
+
+/* título */
+
+[data-unfire-move="hero-title"],
+.unfire-main-hero h1,
+.unfire-main-hero h2{
+  max-width:820px !important;
+
+  margin:
+    0
+    0
+    24px
+    0 !important;
+
+  color:var(--uf-text) !important;
+
+  font-size:clamp(50px,4.15vw,62px) !important;
+  line-height:1.035 !important;
+
+  font-weight:600 !important;
+
+  letter-spacing:-.047em !important;
+}
+
+/* texto descriptivo */
+
+[data-unfire-move="hero-copy"],
+.unfire-main-hero p{
+  max-width:620px !important;
+
+  margin:
+    0
+    0
+    30px
+    0 !important;
+
+  color:var(--uf-secondary) !important;
+
+  font-size:19px !important;
+  line-height:1.45 !important;
+
+  font-weight:400 !important;
+
+  letter-spacing:-.012em !important;
+}
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+[data-unfire-move="hero-button-1"],
+.unfire-primary-cta{
+  min-height:42px !important;
+
+  padding:0 20px !important;
+
+  border:0 !important;
+  border-radius:999px !important;
+
+  background:var(--uf-lava) !important;
+  color:#fff !important;
+
+  font-size:13px !important;
+  font-weight:500 !important;
+
+  box-shadow:none !important;
+
+  transition:background .18s ease !important;
+}
+
+[data-unfire-move="hero-button-1"]:hover,
+.unfire-primary-cta:hover{
+  background:var(--uf-lava-hover) !important;
+}
+
+[data-unfire-move="hero-button-2"]{
+  min-height:42px !important;
+
+  padding:0 19px !important;
+
+  border:1px solid rgba(255,255,255,.18) !important;
+  border-radius:999px !important;
+
+  background:transparent !important;
+  color:var(--uf-text) !important;
+
+  font-size:13px !important;
+  font-weight:400 !important;
+
+  box-shadow:none !important;
+}
+
+/* =========================================================
+   RESTO DE LA WEB — ESCALA COHERENTE
+   ========================================================= */
+
+section[id]:not(.unfire-main-hero){
+  min-height:auto !important;
+
+  padding:
+    88px
+    0
+    88px
+    0 !important;
+
+  background:#000 !important;
+}
+
+section[id]:not(.unfire-main-hero) > *{
+  width:min(var(--uf-width),calc(100vw - 44px)) !important;
+
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+section[id]:not(.unfire-main-hero) h1,
+section[id]:not(.unfire-main-hero) h2{
+  max-width:760px !important;
+
+  color:var(--uf-text) !important;
+
+  font-size:clamp(40px,3.7vw,52px) !important;
+  line-height:1.06 !important;
+
+  font-weight:600 !important;
+
+  letter-spacing:-.04em !important;
+}
+
+section[id] h3{
+  color:var(--uf-text) !important;
+
+  font-size:27px !important;
+  line-height:1.12 !important;
+
+  font-weight:600 !important;
+
+  letter-spacing:-.025em !important;
+}
+
+section[id] p{
+  max-width:660px;
+
+  color:var(--uf-secondary) !important;
+
+  font-size:16.5px !important;
+  line-height:1.5 !important;
+
+  font-weight:400 !important;
+}
+
+section[id] .eyebrow,
+section[id] [class*="eyebrow"],
+section[id] [class*="kicker"],
+section[id] [class*="label"]{
+  color:var(--uf-muted) !important;
+
+  font-size:10px !important;
+  line-height:1.3 !important;
+
+  font-weight:600 !important;
+
+  letter-spacing:.12em !important;
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.card,
+[class*="card"]{
+  background:#0b0b0d !important;
+
+  border:1px solid var(--uf-border) !important;
+  border-radius:18px !important;
+
+  box-shadow:none !important;
+}
+
+.card h1,
+.card h2,
+.card h3,
+.card h4,
+[class*="card"] h1,
+[class*="card"] h2,
+[class*="card"] h3,
+[class*="card"] h4{
+  color:var(--uf-text) !important;
+}
+
+.card p,
+[class*="card"] p{
+  color:var(--uf-secondary) !important;
+}
+
+/* =========================================================
+   PLAYER
+   ========================================================= */
+
+#unfire-reader-canonical [class*="player"],
+#unfire-reader-canonical [class*="control"]{
+  background:rgba(28,28,30,.92) !important;
+
+  border-color:rgba(255,255,255,.12) !important;
+
+  color:#fff !important;
+
+  backdrop-filter:blur(20px) !important;
+  -webkit-backdrop-filter:blur(20px) !important;
+}
+
+input[type="range"]{
+  accent-color:var(--uf-lava) !important;
+}
+
+/* =========================================================
+   EDITOR
+   solo visible en local
+   ========================================================= */
+
+#unfire-editor-v4-panel{
+  opacity:.94;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:1050px){
+
+  #unfire-verticals-line{
+    max-width:650px !important;
+  }
+
+  .unfire-vertical{
+    padding:0 5px !important;
+    font-size:9.5px !important;
+  }
+}
+
+@media(max-width:850px){
+
+  header{
+    height:48px !important;
+    min-height:48px !important;
+  }
+
+  header > *{
+    height:48px !important;
+    min-height:48px !important;
+  }
+
+  [data-unfire-move="brand"]{
+    height:48px !important;
+  }
+
+  #unfire-verticals-line,
+  #unfire-apple-header-line,
+  #unfire-apple-line{
+    display:none !important;
+  }
+
+  header nav,
+  [data-unfire-move="navigation"]{
+    top:0 !important;
+    height:48px !important;
+    gap:13px !important;
+  }
+
+  header nav a{
+    height:48px !important;
+    font-size:9.5px !important;
+  }
+
+  .unfire-main-hero{
+    padding-top:56px !important;
+    padding-bottom:64px !important;
+  }
+
+  [data-unfire-move="hero-title"],
+  .unfire-main-hero h1,
+  .unfire-main-hero h2{
+    font-size:40px !important;
+  }
+
+  [data-unfire-move="hero-copy"],
+  .unfire-main-hero p{
+    font-size:18px !important;
+  }
+}
+</style><style id="unfire-short-header-full-footer-style">
+/* HEADER: breve y limpio */
+
+#unfire-apple-header-line,
+#unfire-apple-line{
+  color:#737378 !important;
+
+  font-size:9.5px !important;
+  font-weight:400 !important;
+
+  white-space:nowrap !important;
+}
+
+#unfire-apple-header-line::before,
+#unfire-apple-line::before{
+  width:4px !important;
+  height:4px !important;
+
+  background:#C64A3A !important;
+}
+
+/* FOOTER CORPORATIVO */
+
+#unfire-footer-signature{
+  padding:
+    96px
+    28px
+    72px !important;
+
+  background:#000 !important;
+  color:#F5F5F7 !important;
+
+  text-align:center !important;
+
+  border-top:1px solid rgba(255,255,255,.08) !important;
+}
+
+.unfire-footer-brand{
+  display:inline-block;
+
+  margin-bottom:10px;
+
+  color:#F5F5F7 !important;
+
+  font-size:28px;
+  line-height:1;
+  font-weight:600;
+  letter-spacing:-.035em;
+
+  text-decoration:none;
+}
+
+.unfire-footer-tagline{
+  margin-bottom:30px;
+
+  color:#A1A1A6;
+
+  font-size:15px;
+  line-height:1.4;
+  font-weight:400;
+}
+
+.unfire-footer-verticals{
   display:flex;
   align-items:center;
   justify-content:center;
+  flex-wrap:wrap;
+
+  gap:8px;
+
+  max-width:900px;
+
+  margin:
+    0 auto
+    18px;
+
+  color:#A1A1A6;
+
+  font-size:12px;
+  line-height:1.5;
+  font-weight:400;
 }
 
-#unfire-web2-story .uw2-shell{
-  position:relative;
-  width:100%;
-  height:100%;
-  border-radius:34px;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 50% 20%, rgba(255,255,255,.08), rgba(255,255,255,.02) 35%, rgba(0,0,0,.0) 70%),
-    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
-  border:1px solid rgba(255,255,255,.08);
-  box-shadow:
-    0 20px 80px rgba(0,0,0,.35),
-    inset 0 1px 0 rgba(255,255,255,.08);
-  backdrop-filter: blur(10px);
+.unfire-footer-sep{
+  color:#C64A3A;
+  opacity:.8;
 }
 
-#unfire-web2-story .uw2-glow{
-  position:absolute;
-  inset:-12%;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,.07), rgba(255,255,255,0) 60%);
-  filter: blur(30px);
-  opacity:.9;
-}
+.unfire-footer-apple{
+  margin-bottom:30px;
 
-#unfire-web2-story .uw2-layer{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  padding:6%;
-  opacity:0;
-  transform:scale(1.02);
-  transition:
-    opacity .8s ease,
-    transform 1.4s ease;
-  will-change:opacity, transform;
-}
+  color:#86868B;
 
-#unfire-web2-story .uw2-layer.is-active{
-  opacity:1;
-  transform:scale(1);
-}
-
-#unfire-web2-story .uw2-vignette{
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)),
-    radial-gradient(circle at center, rgba(0,0,0,0) 52%, rgba(0,0,0,.16) 100%);
-  pointer-events:none;
-}
-
-#unfire-web2-story .uw2-caption{
-  position:absolute;
-  left:24px;
-  right:24px;
-  bottom:20px;
   font-size:11px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.62);
-  text-align:center;
+  line-height:1.4;
+  font-weight:400;
 }
+
+.unfire-footer-description{
+  max-width:620px !important;
+
+  margin:
+    0 auto !important;
+
+  color:#6E6E73 !important;
+
+  font-size:14px !important;
+  line-height:1.55 !important;
+  font-weight:400 !important;
+}
+
+@media(max-width:700px){
+
+  #unfire-footer-signature{
+    padding:
+      70px
+      20px
+      52px !important;
+  }
+
+  .unfire-footer-brand{
+    font-size:24px;
+  }
+
+  .unfire-footer-verticals{
+    max-width:420px;
+  }
+
+  .unfire-footer-description{
+    max-width:420px !important;
+  }
+}
+</style>
+<style id="unfire-clean-apple-header">
+/* ==========================
+   HEADER PRINCIPAL
+   ========================== */
+
+header{
+  position:sticky !important;
+  top:0 !important;
+  z-index:10000 !important;
+
+  height:44px !important;
+  min-height:44px !important;
+
+  padding:0 !important;
+
+  background:rgba(0,0,0,.88) !important;
+  border-bottom:1px solid rgba(255,255,255,.07) !important;
+
+  backdrop-filter:saturate(180%) blur(20px) !important;
+  -webkit-backdrop-filter:saturate(180%) blur(20px) !important;
+}
+
+header > *{
+  width:min(980px,calc(100vw - 40px)) !important;
+  height:44px !important;
+
+  margin:0 auto !important;
+  padding:0 !important;
+
+  display:flex !important;
+  align-items:center !important;
+}
+
+/* Unfire izquierda */
+
+[data-unfire-move="brand"]{
+  position:static !important;
+
+  margin:0 !important;
+  padding:0 !important;
+
+  color:#f5f5f7 !important;
+
+  font-size:14px !important;
+  line-height:44px !important;
+  font-weight:600 !important;
+
+  transform:none !important;
+  translate:none !important;
+  scale:1 !important;
+}
+
+/* navegación derecha */
+
+header nav,
+[data-unfire-move="navigation"]{
+  position:static !important;
+
+  width:auto !important;
+  height:44px !important;
+
+  margin-left:auto !important;
+  padding:0 !important;
+
+  display:flex !important;
+  align-items:center !important;
+
+  gap:26px !important;
+
+  background:transparent !important;
+  border:0 !important;
+
+  transform:none !important;
+  translate:none !important;
+  scale:1 !important;
+}
+
+header nav a{
+  height:44px !important;
+
+  display:flex !important;
+  align-items:center !important;
+
+  padding:0 !important;
+
+  color:#86868b !important;
+
+  font-size:11px !important;
+  line-height:1 !important;
+  font-weight:400 !important;
+
+  text-decoration:none !important;
+}
+
+header nav a:hover,
+header nav a.active{
+  color:#f5f5f7 !important;
+}
+
+/* ==========================
+   SEGUNDA BARRA
+   ========================== */
+
+#unfire-apple-promo-bar{
+  position:relative !important;
+  z-index:9990 !important;
+
+  width:100% !important;
+  height:42px !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  gap:8px !important;
+
+  margin:0 !important;
+  padding:0 !important;
+
+  background:#000 !important;
+
+  border-bottom:1px solid rgba(255,255,255,.07) !important;
+
+  color:#a1a1a6 !important;
+
+  font-size:11px !important;
+  line-height:1 !important;
+  font-weight:400 !important;
+}
+
+/* luz verde */
+
+.unfire-green-dot{
+  width:6px !important;
+  height:6px !important;
+
+  display:block !important;
+
+  border-radius:50% !important;
+
+  background:#30d158 !important;
+
+  box-shadow:
+    0 0 7px rgba(48,209,88,.48) !important;
+}
+
+/* eliminar verticales de arriba */
+
+#unfire-verticals-line{
+  display:none !important;
+}
+
+/* IMPORTANTE:
+   no tocamos posición del hero */
 
 body{
-  overflow-x:hidden;
+  padding-top:0 !important;
 }
 
-@media (min-width: 1180px){
-  main,
-  footer{
-    padding-right:min(44vw,640px);
+/* móvil */
+
+@media(max-width:800px){
+
+  header > *{
+    width:calc(100vw - 28px) !important;
+  }
+
+  header nav{
+    gap:12px !important;
+  }
+
+  header nav a{
+    font-size:9.5px !important;
+  }
+
+  #unfire-apple-promo-bar{
+    height:38px !important;
+    font-size:10px !important;
   }
 }
+</style><style id="unfire-clean-header-v2-style">
+/* ==========================================================
+   OCULTAR LA CABECERA VIEJA
+   ========================================================== */
 
-@media (max-width: 1179px){
-  #unfire-web2-story{
-    position:relative;
-    inset:auto;
-    transform:none;
-    width:100%;
-    height:min(58vw,420px);
-    max-height:420px;
-    margin:28px 0 36px;
-    right:auto;
-    top:auto;
-    z-index:1;
-    pointer-events:none;
-  }
-
-  #unfire-web2-story .uw2-shell{
-    border-radius:28px;
-  }
-
-  main,
-  footer{
-    padding-right:0 !important;
-  }
+header[data-unfire-old-header="true"]{
+  display:none !important;
 }
 
-@media (max-width: 700px){
-  #unfire-web2-story{
-    height:280px;
-    margin:20px 0 28px;
+/* ==========================================================
+   CABECERA UNFIRE V2
+   ========================================================== */
+
+#unfire-clean-header-v2{
+  position:sticky;
+  top:0;
+  z-index:100000;
+
+  width:100%;
+
+  background:#000;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Text",
+    "SF Pro Display",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  -webkit-font-smoothing:antialiased;
+}
+
+/* --------------------------
+   FILA PRINCIPAL
+   -------------------------- */
+
+.unfire-clean-mainbar{
+  height:44px;
+
+  background:rgba(0,0,0,.88);
+
+  border-bottom:1px solid rgba(255,255,255,.06);
+
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+}
+
+.unfire-clean-inner{
+  width:min(980px, calc(100% - 40px));
+  height:44px;
+
+  margin:0 auto;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+/* Unfire */
+
+.unfire-clean-brand{
+  display:flex;
+  align-items:center;
+
+  height:44px;
+
+  color:#f5f5f7 !important;
+
+  font-size:14px;
+  line-height:1;
+  font-weight:600;
+  letter-spacing:-.015em;
+
+  text-decoration:none !important;
+}
+
+/* navegación */
+
+.unfire-clean-nav{
+  display:flex;
+  align-items:center;
+
+  height:44px;
+
+  gap:28px;
+}
+
+.unfire-clean-nav a{
+  display:flex;
+  align-items:center;
+
+  height:44px;
+
+  padding:0;
+  margin:0;
+
+  color:#86868b !important;
+
+  font-size:11px;
+  line-height:1;
+  font-weight:400;
+
+  text-decoration:none !important;
+
+  transition:color .18s ease;
+}
+
+.unfire-clean-nav a:hover{
+  color:#f5f5f7 !important;
+}
+
+/* --------------------------
+   SEGUNDA FILA
+   -------------------------- */
+
+.unfire-clean-promo{
+  height:38px;
+
+  background:#000;
+
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.unfire-clean-promo-inner{
+  height:38px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:8px;
+
+  color:#a1a1a6;
+
+  font-size:11px;
+  line-height:1;
+  font-weight:400;
+}
+
+/* luz verde */
+
+.unfire-clean-green-dot{
+  display:block;
+
+  width:6px;
+  height:6px;
+
+  flex:0 0 6px;
+
+  border-radius:999px;
+
+  background:#30d158;
+
+  box-shadow:
+    0 0 7px rgba(48,209,88,.46);
+}
+
+/* ==========================================================
+   ANCLAS
+   ========================================================== */
+
+#company,
+#work,
+#system,
+#scale,
+#funding{
+  scroll-margin-top:96px !important;
+}
+
+/* ==========================================================
+   MÓVIL
+   ========================================================== */
+
+@media(max-width:800px){
+
+  .unfire-clean-inner{
+    width:calc(100% - 28px);
   }
 
-  #unfire-web2-story .uw2-caption{
+  .unfire-clean-nav{
+    gap:12px;
+  }
+
+  .unfire-clean-nav a{
+    font-size:9.5px;
+  }
+
+  .unfire-clean-promo,
+  .unfire-clean-promo-inner{
+    height:36px;
+  }
+
+  .unfire-clean-promo-inner{
     font-size:10px;
-    bottom:14px;
-    left:16px;
-    right:16px;
   }
 }
-</style></head>
-<body><canvas aria-hidden="true" id="unfire-fixed-film"></canvas>
-<header>
+</style><style id="unfire-header-editor-unlock">
+/* permitir que el editor mueva la nueva cabecera */
+
+.unfire-clean-brand[data-unfire-move],
+.unfire-clean-nav[data-unfire-move],
+.unfire-clean-promo-inner[data-unfire-move]{
+  position:relative !important;
+
+  left:var(--ue-left,0px) !important;
+  top:var(--ue-top,0px) !important;
+}
+
+html.unfire-editing
+.unfire-clean-brand[data-unfire-move],
+
+html.unfire-editing
+.unfire-clean-nav[data-unfire-move],
+
+html.unfire-editing
+.unfire-clean-promo-inner[data-unfire-move]{
+  pointer-events:auto !important;
+
+  cursor:grab !important;
+
+  outline:
+    1px dashed rgba(198,74,58,.75) !important;
+
+  outline-offset:6px !important;
+
+  z-index:200000 !important;
+}
+
+html.unfire-editing
+.unfire-clean-brand.ue-selected,
+
+html.unfire-editing
+.unfire-clean-nav.ue-selected,
+
+html.unfire-editing
+.unfire-clean-promo-inner.ue-selected{
+  outline:
+    2px solid #C64A3A !important;
+}
+
+html.unfire-editing
+.unfire-clean-brand.ue-dragging,
+
+html.unfire-editing
+.unfire-clean-nav.ue-dragging,
+
+html.unfire-editing
+.unfire-clean-promo-inner.ue-dragging{
+  cursor:grabbing !important;
+}
+</style><style id="unfire-master-centering-style">
+:root{
+  --uf-page:980px;
+  --uf-gutter:40px;
+}
+
+/* ==================================================
+   EVITAR DESPLAZAMIENTOS ANTIGUOS
+   ================================================== */
+
+/* Las posiciones del editor permanecen también fuera del modo edición */
+
+[data-unfire-move]{
+  left:var(--ue-left,0px) !important;
+  top:var(--ue-top,0px) !important;
+}
+
+/* ==================================================
+   ANCHO GENERAL
+   ================================================== */
+
+html,
+body{
+  width:100% !important;
+  max-width:none !important;
+
+  margin:0 !important;
+  padding-left:0 !important;
+  padding-right:0 !important;
+
+  overflow-x:hidden !important;
+
+  background:#000 !important;
+}
+
+/* ==================================================
+   CABECERA NUEVA
+   ================================================== */
+
+#unfire-clean-header-v2{
+  width:100% !important;
+  margin:0 !important;
+}
+
+.unfire-clean-inner{
+  width:min(var(--uf-page),calc(100vw - var(--uf-gutter))) !important;
+
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+.unfire-clean-promo{
+  width:100% !important;
+}
+
+.unfire-clean-promo-inner{
+  width:min(var(--uf-page),calc(100vw - var(--uf-gutter))) !important;
+
+  margin-left:auto !important;
+  margin-right:auto !important;
+
+  justify-content:center !important;
+}
+
+/* ==================================================
+   MAIN
+   ================================================== */
+
+main{
+  width:100% !important;
+
+  margin:0 !important;
+  padding:0 !important;
+}
+
+/* ==================================================
+   HERO
+   ================================================== */
+
+.unfire-main-hero{
+  width:100% !important;
+
+  margin:0 !important;
+
+  padding-left:0 !important;
+  padding-right:0 !important;
+
+  box-sizing:border-box !important;
+}
+
+.unfire-main-hero > *{
+  width:min(var(--uf-page),calc(100vw - var(--uf-gutter))) !important;
+  max-width:var(--uf-page) !important;
+
+  margin-left:auto !important;
+  margin-right:auto !important;
+
+  box-sizing:border-box !important;
+}
+
+/* El bloque del hero parte siempre del mismo eje */
+
+[data-unfire-move="hero-eyebrow"],
+[data-unfire-move="hero-title"],
+[data-unfire-move="hero-copy"]{
+  margin-left:0 !important;
+}
+
+/* ==================================================
+   RESTO DE SECCIONES
+   ================================================== */
+
+main section,
+section[id]{
+  width:100% !important;
+
+  margin-left:0 !important;
+  margin-right:0 !important;
+
+  padding-left:0 !important;
+  padding-right:0 !important;
+
+  box-sizing:border-box !important;
+}
+
+main section > *,
+section[id] > *{
+  max-width:var(--uf-page);
+
+  box-sizing:border-box;
+}
+
+/*
+   Contenedores principales de cada sección.
+   No fuerza el ancho de controles flotantes.
+*/
+
+main section > div:not([id*="player"]):not([class*="player"]),
+section[id] > div:not([id*="player"]):not([class*="player"]){
+  width:min(var(--uf-page),calc(100vw - var(--uf-gutter))) !important;
+
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+/* líneas de separación siempre a todo el ancho */
+
+main section::before,
+main section::after{
+  box-sizing:border-box;
+}
+
+/* ==================================================
+   FOOTER UNFIRE
+   ================================================== */
+
+#unfire-footer-signature{
+  width:100% !important;
+
+  margin-left:0 !important;
+  margin-right:0 !important;
+
+  box-sizing:border-box !important;
+}
+
+#unfire-footer-signature > *{
+  max-width:var(--uf-page) !important;
+
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+/* ==================================================
+   PLAYER Y EDITOR
+   NO FORZARLOS A LA CUADRÍCULA
+   ================================================== */
+
+#unfire-editor-v4-panel,
+#unfire-reader-canonical,
+[id*="player"],
+[class*="player"]{
+  max-width:none;
+}
+
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
+@media(max-width:800px){
+  :root{
+    --uf-gutter:28px;
+  }
+}
+</style><style id="unfire-developer-nav-style">
+/* ================================================
+   UNFIRE HEADER — APPLE DEVELOPER-LIKE STRUCTURE
+   ================================================ */
+
+.unfire-clean-mainbar{
+  height:48px !important;
+  background:#1d1d1f !important;
+  border-bottom:1px solid rgba(255,255,255,.06) !important;
+}
+
+.unfire-clean-inner{
+  width:min(980px,calc(100vw - 40px)) !important;
+  height:48px !important;
+
+  margin:0 auto !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+}
+
+/* UNFIRE */
+
+.unfire-clean-brand{
+  flex:0 0 auto !important;
+
+  height:48px !important;
+
+  display:flex !important;
+  align-items:center !important;
+
+  margin:0 !important;
+
+  color:#f5f5f7 !important;
+
+  font-size:15px !important;
+  line-height:1 !important;
+  font-weight:600 !important;
+  letter-spacing:-.018em !important;
+}
+
+/* MENÚ COMO APPLE DEVELOPER */
+
+.unfire-clean-nav{
+  position:relative !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+
+  height:48px !important;
+
+  margin-left:68px !important;
+  margin-right:0 !important;
+
+  gap:42px !important;
+
+  left:0 !important;
+  top:0 !important;
+
+  transform:none !important;
+  translate:none !important;
+}
+
+.unfire-clean-nav a{
+  display:flex !important;
+  align-items:center !important;
+
+  height:48px !important;
+
+  padding:0 !important;
+  margin:0 !important;
+
+  color:#a1a1a6 !important;
+
+  font-size:12px !important;
+  line-height:1 !important;
+  font-weight:400 !important;
+  letter-spacing:-.005em !important;
+
+  white-space:nowrap !important;
+
+  text-decoration:none !important;
+
+  transition:color .16s ease !important;
+}
+
+.unfire-clean-nav a:hover{
+  color:#f5f5f7 !important;
+}
+
+.unfire-clean-nav a.active{
+  color:#f5f5f7 !important;
+  font-weight:400 !important;
+}
+
+/* Built for Apple queda como información secundaria */
+
+.unfire-clean-promo{
+  height:36px !important;
+
+  background:#000 !important;
+  border-bottom:1px solid rgba(255,255,255,.07) !important;
+}
+
+.unfire-clean-promo-inner{
+  width:min(980px,calc(100vw - 40px)) !important;
+  height:36px !important;
+
+  margin:0 auto !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+
+  gap:8px !important;
+
+  color:#86868b !important;
+
+  font-size:10.5px !important;
+  font-weight:400 !important;
+}
+
+/* luz verde */
+
+.unfire-clean-green-dot{
+  width:6px !important;
+  height:6px !important;
+  min-width:6px !important;
+
+  border-radius:50% !important;
+
+  background:#30d158 !important;
+
+  box-shadow:
+    0 0 7px rgba(48,209,88,.42) !important;
+}
+
+/* móvil */
+
+@media(max-width:800px){
+
+  .unfire-clean-inner,
+  .unfire-clean-promo-inner{
+    width:calc(100vw - 28px) !important;
+  }
+
+  .unfire-clean-nav{
+    margin-left:25px !important;
+    gap:14px !important;
+  }
+
+  .unfire-clean-nav a{
+    font-size:10px !important;
+  }
+
+  .unfire-clean-promo-inner{
+    justify-content:center !important;
+  }
+}
+</style><style id="unfire-header-recenter-style">
+/* =========================================
+   CABECERA CENTRADA TIPO APPLE DEVELOPER
+   ========================================= */
+
+#unfire-clean-header-v2{
+  width:100% !important;
+  margin:0 !important;
+  background:#000 !important;
+}
+
+/* contenedor central común */
+
+.unfire-clean-inner{
+  width:min(980px, calc(100vw - 40px)) !important;
+  height:48px !important;
+
+  margin-left:auto !important;
+  margin-right:auto !important;
+
+  padding:0 !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+
+  position:relative !important;
+}
+
+/* UNFIRE izquierda */
+
+.unfire-clean-brand{
+  position:relative !important;
+
+  left:0 !important;
+  top:0 !important;
+
+  flex:0 0 auto !important;
+
+  height:48px !important;
+
+  display:flex !important;
+  align-items:center !important;
+
+  margin:0 !important;
+
+  color:#f5f5f7 !important;
+
+  font-size:15px !important;
+  font-weight:600 !important;
+}
+
+/* MENÚ después de Unfire, como Apple Developer */
+
+.unfire-clean-nav{
+  position:relative !important;
+
+  left:0 !important;
+  top:0 !important;
+
+  display:flex !important;
+  align-items:center !important;
+
+  margin-left:72px !important;
+  margin-right:0 !important;
+
+  gap:38px !important;
+
+  height:48px !important;
+}
+
+.unfire-clean-nav a{
+  height:48px !important;
+
+  display:flex !important;
+  align-items:center !important;
+
+  color:#a1a1a6 !important;
+
+  font-size:12px !important;
+  font-weight:400 !important;
+
+  white-space:nowrap !important;
+}
+
+.unfire-clean-nav a:hover,
+.unfire-clean-nav a.active{
+  color:#f5f5f7 !important;
+}
+
+/* SEGUNDA LÍNEA */
+
+.unfire-clean-promo{
+  width:100% !important;
+  height:36px !important;
+
+  background:#000 !important;
+
+  border-bottom:1px solid rgba(255,255,255,.07) !important;
+}
+
+.unfire-clean-promo-inner{
+  position:relative !important;
+
+  left:0 !important;
+  top:0 !important;
+
+  width:min(980px, calc(100vw - 40px)) !important;
+  height:36px !important;
+
+  margin-left:auto !important;
+  margin-right:auto !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  gap:8px !important;
+
+  color:#86868b !important;
+
+  font-size:10.5px !important;
+}
+
+/* punto verde */
+
+.unfire-clean-green-dot{
+  width:6px !important;
+  height:6px !important;
+
+  flex:0 0 6px !important;
+
+  background:#30d158 !important;
+
+  border-radius:50% !important;
+
+  box-shadow:
+    0 0 7px rgba(48,209,88,.45) !important;
+}
+
+/* editor: sigue pudiendo moverlos después */
+
+html.unfire-editing .unfire-clean-brand{
+  left:var(--ue-left,0px) !important;
+  top:var(--ue-top,0px) !important;
+}
+
+html.unfire-editing .unfire-clean-nav{
+  left:var(--ue-left,0px) !important;
+  top:var(--ue-top,0px) !important;
+}
+
+html.unfire-editing .unfire-clean-promo-inner{
+  left:var(--ue-left,0px) !important;
+  top:var(--ue-top,0px) !important;
+}
+
+@media(max-width:800px){
+
+  .unfire-clean-inner,
+  .unfire-clean-promo-inner{
+    width:calc(100vw - 28px) !important;
+  }
+
+  .unfire-clean-nav{
+    margin-left:24px !important;
+    gap:13px !important;
+  }
+
+  .unfire-clean-nav a{
+    font-size:9.5px !important;
+  }
+}
+</style><style id="unfire-header-logo-style">
+.unfire-clean-brand{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+
+  height:48px !important;
+
+  padding:0 !important;
+  margin:0 !important;
+
+  text-decoration:none !important;
+}
+
+.unfire-header-logo{
+  display:block !important;
+
+  width:auto !important;
+  height:30px !important;
+
+  max-width:54px !important;
+
+  object-fit:contain !important;
+  object-position:center !important;
+
+  margin:0 !important;
+  padding:0 !important;
+}
+
+/* no añadir fondo ni borde */
+.unfire-header-logo,
+.unfire-clean-brand{
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+
+@media(max-width:800px){
+  .unfire-header-logo{
+    height:26px !important;
+    max-width:46px !important;
+  }
+}
+</style><style id="unfire-header-brand-complete-style">
+.unfire-clean-brand{
+  display:flex !important;
+  align-items:center !important;
+
+  gap:8px !important;
+
+  height:48px !important;
+
+  padding:0 !important;
+  margin:0 !important;
+
+  text-decoration:none !important;
+}
+
+.unfire-header-logo{
+  display:block !important;
+
+  width:auto !important;
+  height:29px !important;
+
+  max-width:50px !important;
+
+  object-fit:contain !important;
+
+  margin:0 !important;
+  padding:0 !important;
+}
+
+.unfire-header-name{
+  color:#F5F5F7 !important;
+
+  font-size:15px !important;
+  line-height:1 !important;
+
+  font-weight:600 !important;
+  letter-spacing:-.018em !important;
+
+  white-space:nowrap !important;
+}
+
+@media(max-width:800px){
+  .unfire-header-logo{
+    height:25px !important;
+    max-width:44px !important;
+  }
+
+  .unfire-header-name{
+    font-size:14px !important;
+  }
+}
+</style>
+<style id="unfire-brand-spacing-fix">
+.header-brand,
+.brand,
+.nav-brand,
+.logo-brand,
+a[class*="brand"] {
+    gap: 0 !important;
+}
+
+.header-brand img,
+.brand img,
+.nav-brand img,
+.logo-brand img {
+    margin-right: 0 !important;
+}
+
+.header-brand span,
+.brand span,
+.nav-brand span,
+.logo-brand span {
+    margin-left: -113px !important;
+}
+</style>
+
+
+
+
+
+
+
+</head>
+<body><div id="unfire-clean-header-v2"><div class="unfire-clean-mainbar"><div class="unfire-clean-inner"><a class="unfire-clean-brand" data-unfire-move="header-brand" href="#top"><img alt="Unfire" class="unfire-header-logo" src="assets/logo/unfire-logo-white.png"/><span class="unfire-header-name">Unfire</span></a><nav aria-label="Main navigation" class="unfire-clean-nav" data-unfire-move="header-navigation"><a href="#company">Company</a><a href="#work">Work</a><a href="#system">System</a><a href="#scale">Scale</a><a href="#funding">Funding</a>
+
+
+</nav></div></div><div class="unfire-clean-promo"><div class="unfire-clean-promo-inner" data-unfire-move="header-apple-message"><span aria-hidden="true" class="unfire-clean-green-dot"></span><span>Built for Apple platforms.</span></div></div></div>
+<header data-unfire-old-header="true">
 <div class="wrap nav">
-<a class="brand notranslate" href="#top" translate="no">Unfire</a>
-<nav class="nav-links">
+<div id="unfire-brand-stack"><a class="brand notranslate" data-unfire-move="brand" href="#top" translate="no">Unfire</a><div data-unfire-move="apple" id="unfire-apple-header-line" style="display:none !important;">Built for Apple platforms.</div></div>
+<nav class="nav-links" data-unfire-move="navigation">
 <a href="#company">Company</a>
 <a href="#work">Work</a>
 <a href="#system">System</a>
 <a href="#scale">Scale</a>
-<a href="#funding">Funding</a>
+<a class="unfire-lava-secondary" href="#funding">Funding</a>
 </nav>
 </div>
 </header>
 <main id="top">
-<div aria-hidden="true" id="unfire-web2-story">
-<div class="uw2-shell">
-<div class="uw2-glow"></div>
-<img alt="" class="uw2-layer is-active" id="uw2-a" src="assets/scenes/web2-01.png"/>
-<img alt="" class="uw2-layer" id="uw2-b" src="assets/scenes/web2-01.png"/>
-<div class="uw2-vignette"></div>
-<div class="uw2-caption" id="uw2-caption">Unfire visual sequence</div>
-</div>
-</div>
-
-<section class="hero">
+<section class="hero unfire-real-hero">
 <div class="wrap hero-inner">
-<div class="hero-kicker">
+<div class="hero-kicker" data-unfire-move="hero-eyebrow">
       Independent technology company
     </div>
-<h1>
+<h1 data-unfire-move="hero-title">
       Build technology.<br/>
       Reuse the advantage.
     </h1>
-<p>
+<p data-unfire-move="hero-copy">
       Unfire develops reusable software
       systems designed to turn one technological foundation into multiple products,
       workflows and future applications.
     </p>
 <div class="hero-actions">
-<a class="button primary" href="#system">Explore the system</a>
-<a class="button" href="#funding">Funding &amp; collaboration</a>
+<a class="button primary unfire-lava-primary" data-unfire-move="hero-button-1" href="#system">Explore the system</a>
+<a class="button unfire-lava-secondary" data-unfire-move="hero-button-2" href="#funding">Funding &amp; collaboration</a>
 </div>
 </div>
 </section>
@@ -2395,1103 +4368,560 @@ body{
   start();
 })();
 </script>
-<script id="unfire-fixed-film-script">
+<!-- UNFIRE PROCEDURAL FILM START -->
+<!-- UNFIRE PROCEDURAL FILM END -->
+<script id="unfire-manual-nav-script">
 (() => {
   "use strict";
 
-  const canvas =
-    document.getElementById(
-      "unfire-fixed-film"
-    );
-
-  if (!canvas) return;
-
-  const ctx =
-    canvas.getContext(
-      "2d",
-      {
-        alpha:false
-      }
-    );
-
-  const audio =
-    document.getElementById(
-      "unfire-narration"
-    );
-
-  let W = 0;
-  let H = 0;
-  let DPR = 1;
-
-  let targetScene = 0;
-  let visualScene = 0;
-
-  const clamp =
-    (v,a,b) =>
-      Math.max(
-        a,
-        Math.min(
-          b,
-          v
-        )
-      );
-
-  const lerp =
-    (a,b,t) =>
-      a +
-      (b-a)*t;
-
-  const resize = () => {
-
-    DPR =
-      Math.min(
-        window.devicePixelRatio || 1,
-        2
-      );
-
-    W =
-      window.innerWidth;
-
-    H =
-      window.innerHeight;
-
-    canvas.width =
-      Math.round(
-        W*DPR
-      );
-
-    canvas.height =
-      Math.round(
-        H*DPR
-      );
-
-    ctx.setTransform(
-      DPR,
-      0,
-      0,
-      DPR,
-      0,
-      0
-    );
-  };
-
-  const line = (
-    x1,y1,
-    x2,y2,
-    alpha=.35,
-    width=1
-  ) => {
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-      x1,y1
-    );
-
-    ctx.lineTo(
-      x2,y2
-    );
-
-    ctx.strokeStyle =
-      `rgba(225,235,255,${alpha})`;
-
-    ctx.lineWidth =
-      width;
-
-    ctx.stroke();
-  };
-
-  const box = (
-    x,y,
-    w,h,
-    alpha=.28
-  ) => {
-
-    ctx.beginPath();
-
-    ctx.roundRect(
-      x-w/2,
-      y-h/2,
-      w,
-      h,
-      Math.min(
-        34,
-        h*.28
-      )
-    );
-
-    ctx.fillStyle =
-      "rgba(130,165,225,.025)";
-
-    ctx.fill();
-
-    ctx.strokeStyle =
-      `rgba(225,235,255,${alpha})`;
-
-    ctx.lineWidth = 1;
-
-    ctx.stroke();
-  };
-
-  const circle = (
-    x,y,
-    r,
-    alpha=.35,
-    fill=.025
-  ) => {
-
-    ctx.beginPath();
-
-    ctx.arc(
-      x,y,r,
-      0,
-      Math.PI*2
-    );
-
-    ctx.fillStyle =
-      `rgba(145,180,235,${fill})`;
-
-    ctx.fill();
-
-    ctx.strokeStyle =
-      `rgba(225,235,255,${alpha})`;
-
-    ctx.lineWidth = 1;
-
-    ctx.stroke();
-  };
-
-  const dot = (
-    x,y,
-    r=4
-  ) => {
-
-    ctx.beginPath();
-
-    ctx.arc(
-      x,y,r,
-      0,
-      Math.PI*2
-    );
-
-    ctx.fillStyle =
-      "rgba(245,248,255,.78)";
-
-    ctx.fill();
-  };
-
-  const sceneNames = [
-    "hero",
+  const SECTION_IDS = new Set([
     "company",
-    "bolt",
-    "power",
-    "suite",
-    "archer",
+    "work",
     "audio",
     "system",
     "scale",
-    "companies",
-    "institutions",
-    "public",
     "funding"
-  ];
+  ]);
 
-  const getWorkScene = () => {
+  const nativeScrollTo =
+    window.scrollTo.bind(window);
 
-    const cards =
-      Array.from(
-        document.querySelectorAll(
-          "#work .product"
-        )
+  const nativeScrollBy =
+    window.scrollBy.bind(window);
+
+  const nativeScrollIntoView =
+    Element.prototype.scrollIntoView;
+
+  let manualNavigationUntil = 0;
+  let animationFrame = null;
+
+  window.unfireManualNavigation = false;
+
+  function manualModeActive(){
+    return performance.now() < manualNavigationUntil;
+  }
+
+  function activateManualMode(ms = 8000){
+    manualNavigationUntil =
+      performance.now() + ms;
+
+    window.unfireManualNavigation = true;
+
+    clearTimeout(
+      window.__unfireManualNavigationTimer
+    );
+
+    window.__unfireManualNavigationTimer =
+      setTimeout(() => {
+        window.unfireManualNavigation = false;
+      }, ms);
+  }
+
+  function getOffset(){
+    let offset = 24;
+
+    const elements =
+      document.querySelectorAll(
+        "header, nav, [class*='header'], [class*='nav']"
       );
 
-    const point =
-      H*.5;
-
-    let best = null;
-    let bestDistance = Infinity;
-
-    for (const card of cards) {
+    elements.forEach(el => {
+      const style =
+        getComputedStyle(el);
 
       const rect =
-        card.getBoundingClientRect();
+        el.getBoundingClientRect();
 
-      const distance =
-        Math.abs(
-          rect.top +
-          rect.height*.5 -
-          point
-        );
-
-      if (
-        distance <
-        bestDistance
-      ) {
-        bestDistance =
-          distance;
-
-        best = card;
-      }
-    }
-
-    const title =
-      best
-      ?.querySelector("h3")
-      ?.textContent
-      ?.trim()
-      ?.toLowerCase() || "";
-
-    if (
-      title.includes("power")
-    ) {
-      return 3;
-    }
-
-    if (
-      title.includes("suite")
-    ) {
-      return 4;
-    }
-
-    if (
-      title.includes("archer")
-    ) {
-      return 5;
-    }
-
-    return 2;
-  };
-
-  const detectScene = () => {
-
-    const point =
-      H*.48;
-
-    const ids = [
-      "company",
-      "work",
-      "audio",
-      "system",
-      "scale",
-      "funding"
-    ];
-
-    let current =
-      "hero";
-
-    for (const id of ids) {
-
-      const section =
-        document.getElementById(id);
-
-      if (!section) continue;
-
-      const rect =
-        section.getBoundingClientRect();
-
-      if (
-        rect.top <= point
-      ) {
-        current = id;
-      }
-    }
-
-    if (
-      current === "company"
-    ) {
-      return 1;
-    }
-
-    if (
-      current === "work"
-    ) {
-      return getWorkScene();
-    }
-
-    if (
-      current === "audio"
-    ) {
-      return 6;
-    }
-
-    if (
-      current === "system"
-    ) {
-      return 7;
-    }
-
-    if (
-      current === "scale"
-    ) {
-      return 8;
-    }
-
-    if (
-      current === "funding"
-    ) {
-      return 12;
-    }
-
-    return 0;
-  };
-
-  const drawFoundation = t => {
-
-    const x =
-      W*.72;
-
-    const y =
-      H*.50;
-
-    circle(
-      x,y,
-      78,
-      .62,
-      .055
-    );
-
-    const targets = [
-      [-230,-170],
-      [230,-170],
-      [-230,170],
-      [230,170]
-    ];
-
-    targets.forEach(
-      ([dx,dy],i) => {
-
-        const pulse =
-          .92 +
-          Math.sin(
-            t*.001 +
-            i
-          )*.025;
-
-        line(
-          x,y,
-          x+dx,
-          y+dy,
-          .32
-        );
-
-        box(
-          x+dx,
-          y+dy,
-          155*pulse,
-          94*pulse,
-          .26
-        );
-      }
-    );
-  };
-
-  const drawCompany = t => {
-
-    const cx =
-      W*.72;
-
-    const cy =
-      H*.50;
-
-    box(
-      cx,
-      cy,
-      420,
-      250,
-      .34
-    );
-
-    const xs = [
-      -120,
-      0,
-      120
-    ];
-
-    xs.forEach(
-      (dx,i) => {
-
-        box(
-          cx+dx,
-          cy-45,
-          90,
-          65,
-          .24
-        );
-
-        box(
-          cx+dx,
-          cy+55,
-          90,
-          65,
-          .24
-        );
-
-        line(
-          cx+dx,
-          cy-12,
-          cx+dx,
-          cy+22,
-          .28
-        );
-      }
-    );
-  };
-
-  const drawBolt = t => {
-
-    const cx =
-      W*.72;
-
-    const top =
-      H*.26;
-
-    circle(
-      cx,
-      top,
-      60,
-      .62,
-      .055
-    );
-
-    const targets = [
-      [
-        W*.55,
-        H*.60
-      ],
-      [
-        W*.72,
-        H*.70
-      ],
-      [
-        W*.89,
-        H*.60
-      ]
-    ];
-
-    targets.forEach(
-      ([x,y],i) => {
-
-        line(
-          cx,
-          top+60,
-          x,
-          y-45,
-          .38
-        );
-
-        box(
-          x,y,
-          150,
-          90,
-          .30
-        );
-
-        const f =
-          (
-            Math.sin(
-              t*.0015 +
-              i*2
-            ) +
-            1
-          )*.5;
-
-        dot(
-          lerp(
-            cx,
-            x,
-            f
-          ),
-          lerp(
-            top+60,
-            y-45,
-            f
-          ),
-          4
-        );
-      }
-    );
-  };
-
-  const drawPower = t => {
-
-    const left =
-      W*.51;
-
-    const right =
-      W*.81;
-
-    for (
-      let i=0;
-      i<4;
-      i++
-    ) {
-      box(
-        left,
-        H*
+      if(
         (
-          .28 +
-          i*.15
-        ),
-        115,
-        66,
-        .22
-      );
-
-      line(
-        left+60,
-        H*
-        (
-          .28 +
-          i*.15
-        ),
-        right-170,
-        H*.48,
-        .25
-      );
-    }
-
-    box(
-      right,
-      H*.48,
-      310,
-      220,
-      .40
-    );
-
-    ctx.beginPath();
-
-    for (
-      let i=0;
-      i<=90;
-      i++
-    ) {
-
-      const p =
-        i/90;
-
-      const x =
-        right-130 +
-        p*260;
-
-      const y =
-        H*.50 +
-        Math.sin(
-          p*8 +
-          t*.001
-        )*32 -
-        p*45;
-
-      if (!i) {
-        ctx.moveTo(
-          x,y
-        );
-      } else {
-        ctx.lineTo(
-          x,y
-        );
+          style.position === "fixed" ||
+          style.position === "sticky"
+        ) &&
+        rect.height > 0 &&
+        rect.top <= 8 &&
+        rect.bottom > 0
+      ){
+        offset =
+          Math.max(
+            offset,
+            rect.bottom + 18
+          );
       }
-    }
-
-    ctx.strokeStyle =
-      "rgba(235,242,255,.58)";
-
-    ctx.lineWidth =
-      1.2;
-
-    ctx.stroke();
-  };
-
-  const drawSuite = t => {
-
-    const cx =
-      W*.72;
-
-    for (
-      let i=0;
-      i<4;
-      i++
-    ) {
-
-      box(
-        cx,
-        H*.73 -
-        i*95,
-        410 -
-        i*65,
-        70,
-        .24 +
-        i*.05
-      );
-    }
-
-    line(
-      cx,
-      H*.73,
-      cx,
-      H*.30,
-      .38
-    );
-  };
-
-  const drawArcher = t => {
-
-    ctx.beginPath();
-
-    for (
-      let i=0;
-      i<=170;
-      i++
-    ) {
-
-      const p =
-        i/170;
-
-      const x =
-        W*.44 +
-        p*W*.52;
-
-      const amp =
-        62 *
-        Math.sin(
-          p*Math.PI
-        );
-
-      const y =
-        H*.5 +
-        Math.sin(
-          p*32 +
-          t*.002
-        )*
-        amp;
-
-      if (!i) {
-        ctx.moveTo(
-          x,y
-        );
-      } else {
-        ctx.lineTo(
-          x,y
-        );
-      }
-    }
-
-    ctx.strokeStyle =
-      "rgba(238,244,255,.65)";
-
-    ctx.lineWidth =
-      1.3;
-
-    ctx.stroke();
-
-    [
-      .58,
-      .72,
-      .86
-    ].forEach(
-      x => {
-
-        circle(
-          W*x,
-          H*.5,
-          32,
-          .45,
-          .035
-        );
-      }
-    );
-  };
-
-  const drawAudio = t => {
-
-    const cx =
-      W*.72;
-
-    const cy =
-      H*.5;
-
-    for (
-      let i=0;
-      i<4;
-      i++
-    ) {
-      circle(
-        cx,
-        cy,
-        75+i*52,
-        .16,
-        0
-      );
-    }
-
-    for (
-      let i=0;
-      i<5;
-      i++
-    ) {
-
-      const a =
-        i*Math.PI*2/5 +
-        t*.00012;
-
-      const x =
-        cx +
-        Math.cos(a)*220;
-
-      const y =
-        cy +
-        Math.sin(a)*165;
-
-      line(
-        cx,
-        cy,
-        x,
-        y,
-        .28
-      );
-
-      box(
-        x,
-        y,
-        110,
-        70,
-        .25
-      );
-    }
-  };
-
-  const drawSystem = t => {
-
-    const cx =
-      W*.72;
-
-    const ys = [
-      .72,
-      .59,
-      .46,
-      .33
-    ];
-
-    ys.forEach(
-      (y,i) => {
-
-        box(
-          cx,
-          H*y,
-          430-i*70,
-          72,
-          .25 +
-          i*.05
-        );
-      }
-    );
-
-    line(
-      cx,
-      H*.72,
-      cx,
-      H*.33,
-      .38
-    );
-  };
-
-  const drawScale = t => {
-
-    const rootX =
-      W*.72;
-
-    const rootY =
-      H*.74;
-
-    circle(
-      rootX,
-      rootY,
-      48,
-      .55,
-      .04
-    );
-
-    const targets = [
-      [W*.52,H*.40],
-      [W*.72,H*.22],
-      [W*.90,H*.40],
-      [W*.56,H*.62],
-      [W*.87,H*.62]
-    ];
-
-    targets.forEach(
-      ([x,y],i) => {
-
-        line(
-          rootX,
-          rootY,
-          x,
-          y,
-          .30
-        );
-
-        box(
-          x,
-          y,
-          120,
-          78,
-          .24
-        );
-      }
-    );
-  };
-
-  const drawFunding = t => {
-
-    const cx =
-      W*.72;
-
-    const cy =
-      H*.5;
-
-    circle(
-      cx,
-      cy,
-      60,
-      .55,
-      .05
-    );
-
-    for (
-      let i=0;
-      i<3;
-      i++
-    ) {
-      circle(
-        cx,
-        cy,
-        130+i*72+
-        Math.sin(
-          t*.001
-        )*8,
-        .15,
-        0
-      );
-    }
-
-    const nodes = [
-      [W*.53,H*.30],
-      [W*.72,H*.20],
-      [W*.91,H*.30],
-      [W*.55,H*.71],
-      [W*.89,H*.71]
-    ];
-
-    nodes.forEach(
-      ([x,y]) => {
-
-        line(
-          cx,
-          cy,
-          x,
-          y,
-          .28
-        );
-
-        box(
-          x,
-          y,
-          118,
-          74,
-          .22
-        );
-      }
-    );
-  };
-
-  const painters = [
-    drawFoundation,
-    drawCompany,
-    drawBolt,
-    drawPower,
-    drawSuite,
-    drawArcher,
-    drawAudio,
-    drawSystem,
-    drawScale,
-    drawScale,
-    drawSystem,
-    drawCompany,
-    drawFunding
-  ];
-
-  const render =
-    time => {
-
-    targetScene =
-      detectScene();
-
-    visualScene +=
-      (
-        targetScene -
-        visualScene
-      )*.045;
-
-    const index =
-      clamp(
-        Math.round(
-          visualScene
-        ),
-        0,
-        painters.length-1
-      );
-
-    ctx.fillStyle =
-      "#000";
-
-    ctx.fillRect(
-      0,0,
-      W,H
-    );
-
-    const glow =
-      ctx.createRadialGradient(
-        W*.72,
-        H*.5,
-        40,
-        W*.72,
-        H*.5,
-        Math.max(
-          W,H
-        )*.55
-      );
-
-    glow.addColorStop(
-      0,
-      "rgba(50,70,110,.13)"
-    );
-
-    glow.addColorStop(
-      1,
-      "rgba(0,0,0,0)"
-    );
-
-    ctx.fillStyle =
-      glow;
-
-    ctx.fillRect(
-      0,0,
-      W,H
-    );
-
-    painters[index](
-      time
-    );
-
-    requestAnimationFrame(
-      render
-    );
-  };
-
-  window.addEventListener(
-    "resize",
-    resize,
-    {
-      passive:true
-    }
-  );
-
-  resize();
-
-  requestAnimationFrame(
-    render
-  );
-
-  console.log(
-    "UNFIRE FIXED FILM READY"
-  );
-})();
-</script><script id="unfire-web2-story-script">
-(() => {
-  const stage = document.getElementById("unfire-web2-story");
-  const layerA = document.getElementById("uw2-a");
-  const layerB = document.getElementById("uw2-b");
-  const caption = document.getElementById("uw2-caption");
-  if (!stage || !layerA || !layerB || !caption) return;
-
-  const scenes = [
-    { key:"top",     label:"Foundation",   src:"assets/scenes/web2-01.png" },
-    { key:"company", label:"Company",      src:"assets/scenes/web2-02.png" },
-    { key:"work",    label:"Work",         src:"assets/scenes/web2-03.png" },
-    { key:"audio",   label:"Unfire Audio", src:"assets/scenes/web2-04.png" },
-    { key:"system",  label:"System",       src:"assets/scenes/web2-05.png" },
-    { key:"scale",   label:"Scale",        src:"assets/scenes/web2-06.png" },
-    { key:"funding", label:"Funding",      src:"assets/scenes/web2-07.png" }
-  ];
-
-  let activeIndex = 0;
-  let showingA = true;
-  let ticking = false;
-
-  const preload = src => {
-    const img = new Image();
-    img.src = src;
-  };
-
-  scenes.forEach(scene => preload(scene.src));
-
-  const getSectionElements = () => {
-    return scenes.map(scene => {
-      let el = null;
-      if (scene.key === "top") {
-        el = document.getElementById("top") || document.querySelector("main");
-      } else {
-        el = document.getElementById(scene.key);
-      }
-      return { ...scene, el };
-    }).filter(x => x.el);
-  };
-
-  const sectionElements = getSectionElements();
-
-  const setScene = index => {
-    if (index === activeIndex || !scenes[index]) return;
-
-    const next = scenes[index];
-    const incoming = showingA ? layerB : layerA;
-    const outgoing = showingA ? layerA : layerB;
-
-    incoming.src = next.src;
-    incoming.classList.add("is-active");
-    outgoing.classList.remove("is-active");
-
-    caption.textContent = next.label;
-
-    showingA = !showingA;
-    activeIndex = index;
-  };
-
-  const detectActiveIndex = () => {
-    const marker = window.innerHeight * 0.42;
-    let best = 0;
-
-    sectionElements.forEach((item, index) => {
-      const rect = item.el.getBoundingClientRect();
-      if (rect.top <= marker) best = index;
     });
 
-    return best;
+    return Math.min(
+      offset,
+      160
+    );
+  }
+
+  function targetY(target){
+    const rect =
+      target.getBoundingClientRect();
+
+    return Math.max(
+      0,
+      window.scrollY +
+      rect.top -
+      getOffset()
+    );
+  }
+
+  function animateTo(target){
+
+    if(animationFrame){
+      cancelAnimationFrame(
+        animationFrame
+      );
+    }
+
+    const startY =
+      window.scrollY;
+
+    const endY =
+      targetY(target);
+
+    const distance =
+      endY - startY;
+
+    const duration = 480;
+
+    const started =
+      performance.now();
+
+    function ease(t){
+      return 1 -
+        Math.pow(1 - t, 3);
+    }
+
+    function frame(now){
+
+      const progress =
+        Math.min(
+          (now - started) / duration,
+          1
+        );
+
+      nativeScrollTo(
+        0,
+        startY +
+        distance *
+        ease(progress)
+      );
+
+      if(progress < 1){
+        animationFrame =
+          requestAnimationFrame(frame);
+      }else{
+        nativeScrollTo(
+          0,
+          targetY(target)
+        );
+      }
+    }
+
+    animationFrame =
+      requestAnimationFrame(frame);
+  }
+
+  window.scrollTo = function(...args){
+
+    if(
+      manualModeActive() &&
+      !window.__unfireMenuScrolling
+    ){
+      return;
+    }
+
+    return nativeScrollTo(...args);
   };
 
-  const update = () => {
-    ticking = false;
-    setScene(detectActiveIndex());
+  window.scrollBy = function(...args){
+
+    if(
+      manualModeActive() &&
+      !window.__unfireMenuScrolling
+    ){
+      return;
+    }
+
+    return nativeScrollBy(...args);
   };
 
-  const requestUpdate = () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(update);
-  };
+  Element.prototype.scrollIntoView =
+    function(...args){
 
-  window.addEventListener("scroll", requestUpdate, { passive:true });
-  window.addEventListener("resize", requestUpdate);
+      if(
+        manualModeActive() &&
+        !window.__unfireMenuScrolling
+      ){
+        return;
+      }
 
-  requestUpdate();
+      return nativeScrollIntoView.apply(
+        this,
+        args
+      );
+    };
+
+  document.addEventListener(
+    "click",
+    event => {
+
+      const link =
+        event.target.closest(
+          'a[href^="#"]'
+        );
+
+      if(!link){
+        return;
+      }
+
+      const href =
+        link.getAttribute("href");
+
+      if(
+        !href ||
+        href === "#"
+      ){
+        return;
+      }
+
+      const id =
+        href.slice(1);
+
+      if(
+        !SECTION_IDS.has(id)
+      ){
+        return;
+      }
+
+      const target =
+        document.getElementById(id);
+
+      if(!target){
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+
+      activateManualMode(8000);
+
+      window.__unfireMenuScrolling = true;
+
+      animateTo(target);
+
+      history.replaceState(
+        null,
+        "",
+        "#" + id
+      );
+
+      setTimeout(() => {
+        window.__unfireMenuScrolling = false;
+      }, 650);
+
+    },
+    true
+  );
+
+  window.addEventListener(
+    "wheel",
+    () => {
+      activateManualMode(5000);
+    },
+    {passive:true}
+  );
+
+  window.addEventListener(
+    "touchmove",
+    () => {
+      activateManualMode(5000);
+    },
+    {passive:true}
+  );
+
 })();
-</script></body>
+</script><script id="unfire-editor-v4-script">
+(() => {
+  "use strict";
+
+  if (
+    location.hostname !== "localhost" &&
+    location.hostname !== "127.0.0.1"
+  ) return;
+
+  const KEY = "unfire-editor-v4";
+
+  let state = {};
+  let drag = null;
+  let selected = null;
+
+  try {
+    state = JSON.parse(localStorage.getItem(KEY) || "{}");
+  } catch (_) {
+    state = {};
+  }
+
+  function save() {
+    localStorage.setItem(KEY, JSON.stringify(state));
+  }
+
+  function keyFor(el) {
+    return el?.dataset?.unfireMove || null;
+  }
+
+  function ensure(el) {
+    const key = keyFor(el);
+
+    if (!key) return null;
+
+    if (!state[key]) {
+      state[key] = {
+        x: 0,
+        y: 0
+      };
+    }
+
+    return state[key];
+  }
+
+  function apply(el) {
+    const p = ensure(el);
+
+    if (!p) return;
+
+    el.style.setProperty("--ue-left", `${p.x || 0}px`);
+    el.style.setProperty("--ue-top", `${p.y || 0}px`);
+  }
+
+  function applyAll() {
+    document.querySelectorAll("[data-unfire-move]")
+      .forEach(apply);
+  }
+
+  function select(el) {
+    document.querySelectorAll(".ue-selected")
+      .forEach(n => n.classList.remove("ue-selected"));
+
+    selected = el;
+
+    if (selected) {
+      selected.classList.add("ue-selected");
+    }
+
+    const name = document.getElementById("ue4-name");
+
+    if (name) {
+      name.textContent = selected
+        ? keyFor(selected)
+        : "Selecciona";
+    }
+  }
+
+  function buildPanel() {
+    const panel = document.createElement("div");
+    panel.id = "unfire-editor-v4-panel";
+
+    const edit = document.createElement("button");
+    edit.id = "ue4-edit";
+    edit.textContent = "Edit layout";
+
+    const reset = document.createElement("button");
+    reset.textContent = "Reset";
+
+    const name = document.createElement("span");
+    name.id = "ue4-name";
+    name.textContent = "Selecciona";
+
+    panel.append(edit, reset, name);
+    document.body.appendChild(panel);
+
+    edit.addEventListener("click", () => {
+      const enabled =
+        document.documentElement.classList.toggle("unfire-editing");
+
+      edit.classList.toggle("active", enabled);
+      edit.textContent = enabled ? "Editing" : "Edit layout";
+
+      if (!enabled) {
+        select(null);
+      }
+    });
+
+    reset.addEventListener("click", () => {
+      state = {};
+      localStorage.removeItem(KEY);
+
+      document.querySelectorAll("[data-unfire-move]")
+        .forEach(el => {
+          el.style.removeProperty("--ue-left");
+          el.style.removeProperty("--ue-top");
+        });
+
+      select(null);
+    });
+  }
+
+  document.addEventListener("pointerdown", event => {
+    if (!document.documentElement.classList.contains("unfire-editing")) {
+      return;
+    }
+
+    if (event.target.closest("#unfire-editor-v4-panel")) {
+      return;
+    }
+
+    const el = event.target.closest("[data-unfire-move]");
+
+    if (!el) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    select(el);
+
+    const p = ensure(el);
+
+    drag = {
+      el,
+      startX: event.clientX,
+      startY: event.clientY,
+      baseX: p.x || 0,
+      baseY: p.y || 0
+    };
+
+    el.classList.add("ue-dragging");
+
+    try {
+      el.setPointerCapture(event.pointerId);
+    } catch (_) {}
+
+  }, true);
+
+  document.addEventListener("pointermove", event => {
+    if (!drag) return;
+
+    event.preventDefault();
+
+    const p = ensure(drag.el);
+
+    p.x =
+      drag.baseX +
+      event.clientX -
+      drag.startX;
+
+    p.y =
+      drag.baseY +
+      event.clientY -
+      drag.startY;
+
+    apply(drag.el);
+
+  }, true);
+
+  function endDrag() {
+    if (!drag) return;
+
+    drag.el.classList.remove("ue-dragging");
+
+    save();
+    drag = null;
+  }
+
+  document.addEventListener("pointerup", endDrag, true);
+  document.addEventListener("pointercancel", endDrag, true);
+
+  applyAll();
+  buildPanel();
+
+  console.log(
+    "UNFIRE EDITOR V4:",
+    document.querySelectorAll("[data-unfire-move]").length,
+    "editable elements"
+  );
+})();
+</script><section id="unfire-footer-signature"><a class="unfire-footer-brand" href="#top">Unfire</a><div class="unfire-footer-tagline">Independent technology company.</div><div class="unfire-footer-verticals"><span>Energy</span><span class="unfire-footer-sep">·</span><span>Business</span><span class="unfire-footer-sep">·</span><span>Real Estate</span><span class="unfire-footer-sep">·</span><span>Finance</span><span class="unfire-footer-sep">·</span><span>Markets</span><span class="unfire-footer-sep">·</span><span>Education</span><span class="unfire-footer-sep">·</span><span>Utilities</span><span class="unfire-footer-sep">·</span><span>Safety</span><span class="unfire-footer-sep">·</span><span>Connectivity</span></div><div class="unfire-footer-apple">Built for Apple platforms. Designed for macOS. Built to expand.</div><p class="unfire-footer-description">Unfire develops reusable technology across multiple industries, building shared software foundations that can support new products, systems and future applications.</p></section><script id="unfire-editor-persistence-restore">
+(() => {
+  if (
+    location.hostname !== "localhost" &&
+    location.hostname !== "127.0.0.1"
+  ) return;
+
+  const KEY = "unfire-editor-v4";
+
+  let state = {};
+
+  try {
+    state = JSON.parse(localStorage.getItem(KEY) || "{}");
+  } catch (_) {
+    state = {};
+  }
+
+  document.querySelectorAll("[data-unfire-move]").forEach(el => {
+    const key = el.dataset.unfireMove;
+    const value = state[key];
+
+    if (!value) return;
+
+    el.style.setProperty(
+      "--ue-left",
+      `${Number(value.x) || 0}px`
+    );
+
+    el.style.setProperty(
+      "--ue-top",
+      `${Number(value.y) || 0}px`
+    );
+  });
+})();
+</script><script id="unfire-header-recenter-once">
+(() => {
+  if (
+    location.hostname !== "localhost" &&
+    location.hostname !== "127.0.0.1"
+  ) return;
+
+  const MIGRATION = "unfire-header-centered-v1";
+
+  if (localStorage.getItem(MIGRATION)) return;
+
+  const KEY = "unfire-editor-v4";
+
+  try {
+    const state = JSON.parse(localStorage.getItem(KEY) || "{}");
+
+    delete state["header-brand"];
+    delete state["header-navigation"];
+    delete state["header-apple-message"];
+
+    localStorage.setItem(KEY, JSON.stringify(state));
+  } catch (_) {}
+
+  document.querySelectorAll(
+    '[data-unfire-move="header-brand"],' +
+    '[data-unfire-move="header-navigation"],' +
+    '[data-unfire-move="header-apple-message"]'
+  ).forEach(el => {
+    el.style.removeProperty("--ue-left");
+    el.style.removeProperty("--ue-top");
+    el.style.removeProperty("left");
+    el.style.removeProperty("top");
+  });
+
+  localStorage.setItem(MIGRATION, "1");
+})();
+</script>
+
+
+
+
+
+
+
+
+</body>
 </html>
