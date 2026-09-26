@@ -1800,6 +1800,35 @@ main section.unfire-reading-section{
 }
 </style>
 
+
+<style id="unfire-letter-karaoke-v1">
+
+.unfire-letter-karaoke-word{
+  position:relative;
+  display:inline;
+  color:inherit;
+}
+
+.unfire-letter-karaoke-word::after{
+  content:attr(data-word);
+  position:absolute;
+  left:0;
+  top:0;
+  width:var(--karaoke-progress, 0%);
+  overflow:hidden;
+  white-space:pre;
+  color:#ffffff;
+  pointer-events:none;
+  clip-path:inset(0 calc(100% - var(--karaoke-progress, 0%)) 0 0);
+}
+
+.unfire-letter-karaoke-word[data-active="0"]::after{
+  width:0%;
+  clip-path:inset(0 100% 0 0);
+}
+
+</style>
+
 </head>
 
 <body>
@@ -2665,6 +2694,265 @@ main section.unfire-reading-section{
 
 
 
+
+  const prepareLetterKaraoke = () => {
+
+    const selectors = [
+      "main .hero-kicker",
+      "main .eyebrow",
+      "main h1",
+      "main h2",
+      "main h3",
+      "main p",
+      "main .product-type",
+      "main .subproduct-label",
+      "main .subproduct-name",
+      "main .metric strong",
+      "main .metric span",
+      "main .flow-num",
+      "main .flow-step strong",
+      "main .system-row strong",
+      "main .product footer",
+      "main .contact"
+    ].join(",");
+
+    const elements =
+      Array.from(
+        document.querySelectorAll(selectors)
+      );
+
+    for (const element of elements) {
+
+      if (
+        element.querySelector(
+          ".unfire-letter-karaoke-word"
+        )
+      ) {
+        continue;
+      }
+
+      const walker =
+        document.createTreeWalker(
+          element,
+          NodeFilter.SHOW_TEXT
+        );
+
+      const nodes = [];
+      let node;
+
+      while ((node = walker.nextNode())) {
+
+        if (
+          node.parentElement?.closest(
+            ".unfire-letter-karaoke-word"
+          )
+        ) {
+          continue;
+        }
+
+        if (
+          node.nodeValue &&
+          node.nodeValue.trim()
+        ) {
+          nodes.push(node);
+        }
+      }
+
+      for (const textNode of nodes) {
+
+        const text =
+          textNode.nodeValue;
+
+        const regex =
+          /[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*/gu;
+
+        const fragment =
+          document.createDocumentFragment();
+
+        let cursor = 0;
+        let match;
+
+        while ((match = regex.exec(text))) {
+
+          if (match.index > cursor) {
+            fragment.appendChild(
+              document.createTextNode(
+                text.slice(
+                  cursor,
+                  match.index
+                )
+              )
+            );
+          }
+
+          const span =
+            document.createElement("span");
+
+          span.className =
+            "unfire-letter-karaoke-word";
+
+          span.dataset.word =
+            match[0];
+
+          span.dataset.active =
+            "0";
+
+          span.textContent =
+            match[0];
+
+          span.style.setProperty(
+            "--karaoke-progress",
+            "0%"
+          );
+
+          fragment.appendChild(span);
+
+          cursor =
+            match.index +
+            match[0].length;
+        }
+
+        if (cursor === 0) {
+          continue;
+        }
+
+        if (cursor < text.length) {
+          fragment.appendChild(
+            document.createTextNode(
+              text.slice(cursor)
+            )
+          );
+        }
+
+        textNode.replaceWith(fragment);
+      }
+    }
+  };
+
+
+  const collectLetterWords = () => {
+
+    return Array.from(
+      document.querySelectorAll(
+        "main .unfire-letter-karaoke-word"
+      )
+    );
+  };
+
+
+  let letterWords = [];
+  let letterActiveIndex = -1;
+
+
+  const resetLetterKaraoke = () => {
+
+    if (
+      letterActiveIndex >= 0 &&
+      letterWords[letterActiveIndex]
+    ) {
+
+      const old =
+        letterWords[letterActiveIndex];
+
+      old.dataset.active = "0";
+
+      old.style.setProperty(
+        "--karaoke-progress",
+        "0%"
+      );
+    }
+
+    letterActiveIndex = -1;
+  };
+
+
+  const paintLetterKaraoke = time => {
+
+    if (!karaokeTimeline.length) {
+      resetLetterKaraoke();
+      return;
+    }
+
+    let low = 0;
+    let high =
+      karaokeTimeline.length - 1;
+
+    let index = -1;
+
+    while (low <= high) {
+
+      const mid =
+        (low + high) >> 1;
+
+      const item =
+        karaokeTimeline[mid];
+
+      if (time < item.start) {
+
+        high = mid - 1;
+
+      } else if (time >= item.end) {
+
+        low = mid + 1;
+
+      } else {
+
+        index = mid;
+        break;
+      }
+    }
+
+    if (index < 0) {
+
+      resetLetterKaraoke();
+      return;
+    }
+
+    const item =
+      karaokeTimeline[index];
+
+    const duration =
+      Math.max(
+        0.001,
+        item.end - item.start
+      );
+
+    const phase =
+      Math.max(
+        0,
+        Math.min(
+          1,
+          (time - item.start) /
+          duration
+        )
+      );
+
+    if (
+      index !== letterActiveIndex
+    ) {
+
+      resetLetterKaraoke();
+
+      letterActiveIndex =
+        index;
+    }
+
+    const el =
+      letterWords[index];
+
+    if (!el) {
+      return;
+    }
+
+    el.dataset.active = "1";
+
+    el.style.setProperty(
+      "--karaoke-progress",
+      `${phase * 100}%`
+    );
+  };
+
+
   const buildKaraokeTimeline = () => {
 
     karaokeTimeline = [];
@@ -3014,6 +3302,7 @@ main section.unfire-reading-section{
   const paintKaraoke = time => {
 
     if (!karaokeTimeline.length) {
+      resetLetterKaraoke();
       clearKaraoke();
       return;
     }
@@ -3045,7 +3334,8 @@ main section.unfire-reading-section{
     if (index < 0) {
 
       if (karaokeVisibleIndex !== -1) {
-        clearKaraoke();
+        resetLetterKaraoke();
+      clearKaraoke();
       }
 
       return;
@@ -3151,6 +3441,11 @@ main section.unfire-reading-section{
         Array.isArray(data.words)
           ? data.words
           : [];
+
+      prepareLetterKaraoke();
+
+      letterWords =
+        collectLetterWords();
 
       alignWords();
       buildKaraokeTimeline();
@@ -3480,7 +3775,7 @@ main section.unfire-reading-section{
 
       if (index >= 0) {
 
-        paintKaraoke(
+        paintLetterKaraoke(
           audio.currentTime
         );
 
@@ -3488,6 +3783,7 @@ main section.unfire-reading-section{
       }
     } else {
 
+      resetLetterKaraoke();
       clearKaraoke();
     }
 
