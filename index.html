@@ -3004,21 +3004,22 @@ main section.unfire-reading-section{
       userScrollUntil
     ) {
 
+      const distance =
+        scrollTarget -
+        window.scrollY;
+
+      const easing =
+        Math.abs(distance) > 600
+          ? .055
+          : .035;
+
       scrollCurrent =
         window.scrollY +
-        (
-          scrollTarget -
-          window.scrollY
-        ) * .085;
-
+        distance * easing;
 
       if (
-        Math.abs(
-          scrollTarget -
-          window.scrollY
-        ) > .35
+        Math.abs(distance) > 1.2
       ) {
-
         window.scrollTo(
           0,
           scrollCurrent
