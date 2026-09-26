@@ -1578,6 +1578,78 @@ main section.unfire-reading-section{
 }
 </style>
 
+
+<style id="unfire-reader-minimal">
+#reader{
+  position:fixed !important;
+  left:50% !important;
+  bottom:16px !important;
+  transform:translateX(-50%) !important;
+
+  width:min(360px, calc(100vw - 24px)) !important;
+  padding:9px 10px 8px !important;
+
+  background:rgba(18,18,20,.74) !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  border-radius:18px !important;
+
+  -webkit-backdrop-filter:blur(26px) saturate(160%) !important;
+  backdrop-filter:blur(26px) saturate(160%) !important;
+
+  box-shadow:
+    0 16px 45px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.05) !important;
+
+  z-index:9999 !important;
+}
+
+#reader .reader-top{
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+}
+
+#reader-play{
+  flex:1 !important;
+  height:36px !important;
+  border-radius:12px !important;
+  font-size:13px !important;
+  font-weight:600 !important;
+}
+
+#reader-pause{
+  width:36px !important;
+  height:36px !important;
+  min-width:36px !important;
+  border-radius:50% !important;
+  padding:0 !important;
+}
+
+#reader-range{
+  display:block !important;
+  width:100% !important;
+  height:10px !important;
+  margin:8px 0 0 !important;
+}
+
+#reader-percent,
+#reader-language,
+.reader-section-nav,
+#reader-section-name,
+#reader-prev,
+#reader-next{
+  display:none !important;
+}
+
+@media (max-width:700px){
+  #reader{
+    bottom:10px !important;
+    width:calc(100vw - 18px) !important;
+    border-radius:16px !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -2167,13 +2239,7 @@ main section.unfire-reading-section{
     value="0"
   >
 
-  <div id="reader-percent" class="reader-percent">0.00000%</div>
-
-  <div class="reader-section-nav">
-    <button id="reader-prev" type="button" aria-label="Previous section">‹</button>
-    <span id="reader-section-name">Page</span>
-    <button id="reader-next" type="button" aria-label="Next section">›</button>
-  </div>
+  
 
 </div>
 
