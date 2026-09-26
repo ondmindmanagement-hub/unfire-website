@@ -3200,6 +3200,84 @@ a[class*="brand"] {
 
 
 
+
+<style id="unfire-cookie-style">
+#unfire-cookie-banner{
+    position:fixed;
+    left:50%;
+    bottom:22px;
+    transform:translateX(-50%);
+    width:min(720px, calc(100% - 32px));
+    background:rgba(28,28,30,.94);
+    color:#f5f5f7;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:18px;
+    padding:16px 18px;
+    z-index:999999;
+    display:none;
+    align-items:center;
+    gap:18px;
+    box-shadow:0 18px 50px rgba(0,0,0,.35);
+    -webkit-backdrop-filter:blur(24px);
+    backdrop-filter:blur(24px);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+}
+
+#unfire-cookie-banner p{
+    margin:0;
+    flex:1;
+    font-size:13px;
+    line-height:1.45;
+    color:#d2d2d7;
+}
+
+#unfire-cookie-banner a{
+    color:#fff;
+    text-decoration:underline;
+    text-underline-offset:2px;
+}
+
+.unfire-cookie-actions{
+    display:flex;
+    gap:8px;
+    flex-shrink:0;
+}
+
+.unfire-cookie-btn{
+    border:0;
+    border-radius:999px;
+    padding:9px 14px;
+    font-size:13px;
+    cursor:pointer;
+    font-family:inherit;
+}
+
+#unfire-cookie-reject{
+    background:rgba(255,255,255,.10);
+    color:#fff;
+}
+
+#unfire-cookie-accept{
+    background:#fff;
+    color:#000;
+}
+
+@media(max-width:650px){
+    #unfire-cookie-banner{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .unfire-cookie-actions{
+        width:100%;
+    }
+
+    .unfire-cookie-btn{
+        flex:1;
+    }
+}
+</style>
+
 </head>
 <body><div id="unfire-clean-header-v2"><div class="unfire-clean-mainbar"><div class="unfire-clean-inner"><a class="unfire-clean-brand" data-unfire-move="header-brand" href="#top"><img alt="Unfire" class="unfire-header-logo" src="assets/logo/unfire-logo-white.png"/><span class="unfire-header-name">Unfire</span></a><nav aria-label="Main navigation" class="unfire-clean-nav" data-unfire-move="header-navigation"><a href="#company">Company</a><a href="#work">Work</a><a href="#system">System</a><a href="#scale">Scale</a><a href="#funding">Funding</a>
 
@@ -4922,6 +5000,71 @@ a[class*="brand"] {
 
 
 
+
+
+<div id="unfire-cookie-banner">
+    <p>
+        Unfire uses essential storage for basic website functionality.
+        Optional analytics will only be enabled with your consent.
+        <a href="/cookies.html">Cookie Policy</a>
+    </p>
+
+    <div class="unfire-cookie-actions">
+        <button class="unfire-cookie-btn" id="unfire-cookie-reject">
+            Reject
+        </button>
+
+        <button class="unfire-cookie-btn" id="unfire-cookie-accept">
+            Accept
+        </button>
+    </div>
+</div>
+
+
+<script id="unfire-cookie-script">
+(function(){
+
+    const banner = document.getElementById("unfire-cookie-banner");
+
+    if(!banner) return;
+
+    const choice = localStorage.getItem("unfire-cookie-consent");
+
+    if(!choice){
+        banner.style.display = "flex";
+    }
+
+    document.getElementById("unfire-cookie-accept").onclick = function(){
+        localStorage.setItem("unfire-cookie-consent","accepted");
+        banner.style.display = "none";
+
+        // Aquí podremos activar Analytics en el futuro.
+    };
+
+    document.getElementById("unfire-cookie-reject").onclick = function(){
+        localStorage.setItem("unfire-cookie-consent","rejected");
+        banner.style.display = "none";
+    };
+
+})();
+</script>
+
+
+<footer id="unfire-legal-footer" style="
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:28px 24px 34px;
+    text-align:center;
+    font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;
+    font-size:13px;
+    color:#6e6e73;
+">
+    <a href="/privacy.html" style="color:#86868b;text-decoration:none;margin:0 8px;">Privacy</a>
+    <span>·</span>
+    <a href="/cookies.html" style="color:#86868b;text-decoration:none;margin:0 8px;">Cookies</a>
+    <span>·</span>
+    <a href="/legal.html" style="color:#86868b;text-decoration:none;margin:0 8px;">Legal</a>
+    <span style="margin-left:14px;">© 2026 Unfire</span>
+</footer>
 
 </body>
 </html>
