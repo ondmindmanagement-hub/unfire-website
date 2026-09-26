@@ -931,6 +931,129 @@ h2{
 
 </style>
 
+
+<!-- UNFIRE_APPLE_DOCK_STYLE_START -->
+<style>
+body.has-apple-audio-dock{
+  padding-bottom: 160px !important;
+}
+
+#unfire-apple-dock{
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  width: min(540px, calc(100vw - 36px));
+  z-index: 9999;
+  padding: 14px 16px;
+  border-radius: 22px;
+  background: rgba(18,18,22,.72);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 12px 40px rgba(0,0,0,.32);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+}
+
+#unfire-apple-dock > *{
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
+#unfire-player-v6{
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#unfire-player-v6 .up6-top{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+}
+
+#unfire-player-v6 .up6-info{
+  display: none !important;
+}
+
+#unfire-player-v6 .up6-controls{
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+#unfire-player-v6 #up6-play,
+#unfire-player-v6 #up6-pause,
+#unfire-player-v6 #up6-stop,
+#unfire-player-v6 #up6-back{
+  height: 36px !important;
+  min-height: 36px !important;
+  border-radius: 999px !important;
+}
+
+#unfire-player-v6 #up6-play{
+  min-width: 132px !important;
+  font-weight: 600 !important;
+}
+
+#unfire-player-v6 .up6-progress{
+  margin-top: 10px !important;
+}
+
+#unfire-player-v6 input[type="range"]{
+  width: 100% !important;
+}
+
+#unfire-player-v6 .up6-meta{
+  margin-top: 6px !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+#unfire-player-v6 #up6-percent{
+  font-size: 11px !important;
+  opacity: .72 !important;
+  font-variant-numeric: tabular-nums;
+}
+
+#unfire-player-v6 #up6-language{
+  display: none !important;
+}
+
+@media (max-width: 700px){
+  body.has-apple-audio-dock{
+    padding-bottom: 150px !important;
+  }
+
+  #unfire-apple-dock{
+    width: calc(100vw - 24px);
+    bottom: 12px;
+    padding: 12px 12px;
+    border-radius: 18px;
+  }
+
+  #unfire-player-v6 #up6-play{
+    min-width: 110px !important;
+  }
+}
+</style>
+<!-- UNFIRE_APPLE_DOCK_STYLE_END -->
+
 </head>
 
 <body>
@@ -1936,6 +2059,54 @@ h2{
   setVisualPercentage(0);
 })();
 </script>
+
+
+<!-- UNFIRE_APPLE_DOCK_SCRIPT_START -->
+<script>
+(function(){
+  function placeAppleDock(){
+    const player =
+      document.getElementById("unfire-player-v6") ||
+      document.getElementById("unfire-audio-reader") ||
+      document.querySelector(".audio-reader");
+
+    if(!player) return;
+
+    let dock = document.getElementById("unfire-apple-dock");
+    if(!dock){
+      dock = document.createElement("div");
+      dock.id = "unfire-apple-dock";
+      document.body.appendChild(dock);
+    }
+
+    if(player.parentElement !== dock){
+      dock.appendChild(player);
+    }
+
+    document.body.classList.add("has-apple-audio-dock");
+
+    player.style.position = "static";
+    player.style.left = "";
+    player.style.right = "";
+    player.style.top = "";
+    player.style.bottom = "";
+    player.style.transform = "";
+    player.style.margin = "0";
+    player.style.width = "100%";
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", placeAppleDock);
+  } else {
+    placeAppleDock();
+  }
+
+  window.addEventListener("load", placeAppleDock);
+  setTimeout(placeAppleDock, 300);
+  setTimeout(placeAppleDock, 900);
+})();
+</script>
+<!-- UNFIRE_APPLE_DOCK_SCRIPT_END -->
 
 </body>
 </html>
