@@ -673,6 +673,128 @@ section h2 + .lead {
 }
 </style>
 
+
+<style>
+.audio-reader{
+  position:fixed;
+  right:26px;
+  bottom:26px;
+  z-index:9999;
+  width:min(360px,calc(100vw - 32px));
+  padding:16px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:20px;
+  background:rgba(15,15,17,.88);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  box-shadow:0 18px 60px rgba(0,0,0,.35);
+}
+
+.audio-reader-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+
+.audio-reader-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+
+.audio-reader-icon{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:#f5f5f7;
+  color:#050505;
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+  font-size:14px;
+}
+
+.audio-reader-copy strong{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  line-height:1.3;
+}
+
+.audio-reader-copy span{
+  display:block;
+  margin-top:3px;
+  color:#8f8f96;
+  font-size:11px;
+}
+
+.audio-reader-controls{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.audio-reader button{
+  appearance:none;
+  border:1px solid #323237;
+  background:#1a1a1d;
+  color:#f5f5f7;
+  height:34px;
+  min-width:34px;
+  padding:0 11px;
+  border-radius:999px;
+  cursor:pointer;
+  font:inherit;
+  font-size:12px;
+}
+
+.audio-reader button:hover{
+  background:#242428;
+}
+
+.audio-reader .listen-main{
+  background:#f5f5f7;
+  color:#050505;
+  border-color:#f5f5f7;
+  padding:0 15px;
+  font-weight:600;
+}
+
+.audio-reader .listen-main:hover{
+  background:#dddde1;
+}
+
+.audio-progress{
+  height:2px;
+  margin-top:13px;
+  background:#29292d;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.audio-progress-fill{
+  width:0%;
+  height:100%;
+  background:#f5f5f7;
+  transition:width .25s ease;
+}
+
+@media(max-width:600px){
+  .audio-reader{
+    left:16px;
+    right:16px;
+    bottom:16px;
+    width:auto;
+  }
+
+  .audio-reader-copy span{
+    display:none;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -1044,6 +1166,232 @@ hello@unfire.technology
 <span>Technology · Software · Infrastructure</span>
 </footer>
 </div>
+
+
+<div class="audio-reader" id="unfire-audio-reader">
+  <div class="audio-reader-top">
+
+    <div class="audio-reader-title">
+      <div class="audio-reader-icon" id="audio-reader-icon">▶</div>
+
+      <div class="audio-reader-copy">
+        <strong id="audio-reader-status">Listen to Unfire</strong>
+        <span>Audio overview of this page</span>
+      </div>
+    </div>
+
+    <div class="audio-reader-controls">
+      <button class="listen-main" id="audio-reader-play">Listen</button>
+      <button id="audio-reader-pause" aria-label="Pause audio">Ⅱ</button>
+      <button id="audio-reader-stop" aria-label="Stop audio">■</button>
+    </div>
+
+  </div>
+
+  <div class="audio-progress">
+    <div class="audio-progress-fill" id="audio-progress-fill"></div>
+  </div>
+</div>
+
+
+<script>
+(() => {
+  const play = document.getElementById("audio-reader-play");
+  const pause = document.getElementById("audio-reader-pause");
+  const stop = document.getElementById("audio-reader-stop");
+  const status = document.getElementById("audio-reader-status");
+  const icon = document.getElementById("audio-reader-icon");
+  const progress = document.getElementById("audio-progress-fill");
+
+  if (!("speechSynthesis" in window)) {
+    status.textContent = "Audio unavailable";
+    play.disabled = true;
+    pause.disabled = true;
+    stop.disabled = true;
+    return;
+  }
+
+  let chunks = [];
+  let current = 0;
+  let active = false;
+  let paused = false;
+
+  function cleanText(text) {
+    return text
+      .replace(/\s+/g, " ")
+      .replace(/·/g, ". ")
+      .trim();
+  }
+
+  function collectContent() {
+    const nodes = document.querySelectorAll(
+      "main h1, main h2, main h3, main p, main .stat span, main .history-text"
+    );
+
+    const texts = [];
+
+    nodes.forEach(node => {
+      if (
+        node.closest("#unfire-audio-reader") ||
+        node.closest("nav") ||
+        node.getAttribute("aria-hidden") === "true"
+      ) return;
+
+      const t = cleanText(node.innerText || node.textContent || "");
+      if (t && !texts.includes(t)) texts.push(t);
+    });
+
+    const full = texts.join(". ");
+
+    const sentences =
+      full.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [];
+
+    chunks = [];
+    let buffer = "";
+
+    sentences.forEach(sentence => {
+      if ((buffer + " " + sentence).length > 900) {
+        if (buffer.trim()) chunks.push(buffer.trim());
+        buffer = sentence;
+      } else {
+        buffer += " " + sentence;
+      }
+    });
+
+    if (buffer.trim()) chunks.push(buffer.trim());
+  }
+
+  function chooseVoice() {
+    const voices = speechSynthesis.getVoices();
+
+    return (
+      voices.find(v =>
+        v.lang.toLowerCase().startsWith("en") &&
+        /samantha|daniel|alex|serena|ava/i.test(v.name)
+      ) ||
+      voices.find(v => v.lang.toLowerCase().startsWith("en-gb")) ||
+      voices.find(v => v.lang.toLowerCase().startsWith("en-us")) ||
+      voices.find(v => v.lang.toLowerCase().startsWith("en")) ||
+      voices[0]
+    );
+  }
+
+  function updateProgress() {
+    const pct = chunks.length
+      ? Math.min(100, (current / chunks.length) * 100)
+      : 0;
+
+    progress.style.width = pct + "%";
+  }
+
+  function speakCurrent() {
+    if (!active || current >= chunks.length) {
+      active = false;
+      paused = false;
+      current = 0;
+
+      status.textContent = "Listen to Unfire";
+      play.textContent = "Listen";
+      icon.textContent = "▶";
+      progress.style.width = "100%";
+
+      setTimeout(() => {
+        if (!active) progress.style.width = "0%";
+      }, 900);
+
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(chunks[current]);
+
+    const voice = chooseVoice();
+    if (voice) utterance.voice = voice;
+
+    utterance.lang = voice?.lang || "en-US";
+    utterance.rate = 0.94;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    utterance.onstart = () => {
+      status.textContent = "Playing Unfire overview";
+      icon.textContent = "●";
+      play.textContent = "Playing";
+      updateProgress();
+    };
+
+    utterance.onend = () => {
+      if (!active) return;
+
+      current += 1;
+      updateProgress();
+      speakCurrent();
+    };
+
+    utterance.onerror = () => {
+      if (active) {
+        current += 1;
+        speakCurrent();
+      }
+    };
+
+    speechSynthesis.speak(utterance);
+  }
+
+  play.addEventListener("click", () => {
+    if (paused) {
+      speechSynthesis.resume();
+      paused = false;
+      status.textContent = "Playing Unfire overview";
+      play.textContent = "Playing";
+      icon.textContent = "●";
+      return;
+    }
+
+    speechSynthesis.cancel();
+
+    collectContent();
+
+    current = 0;
+    active = true;
+    paused = false;
+
+    speakCurrent();
+  });
+
+  pause.addEventListener("click", () => {
+    if (!active) return;
+
+    if (!paused) {
+      speechSynthesis.pause();
+      paused = true;
+      status.textContent = "Audio paused";
+      play.textContent = "Resume";
+      icon.textContent = "Ⅱ";
+    } else {
+      speechSynthesis.resume();
+      paused = false;
+      status.textContent = "Playing Unfire overview";
+      play.textContent = "Playing";
+      icon.textContent = "●";
+    }
+  });
+
+  stop.addEventListener("click", () => {
+    speechSynthesis.cancel();
+
+    active = false;
+    paused = false;
+    current = 0;
+
+    status.textContent = "Listen to Unfire";
+    play.textContent = "Listen";
+    icon.textContent = "▶";
+    progress.style.width = "0%";
+  });
+
+  speechSynthesis.getVoices();
+})();
+</script>
 
 </body>
 </html>
