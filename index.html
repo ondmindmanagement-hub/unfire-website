@@ -763,6 +763,107 @@ section h2 + .lead {
 }
 </style>
 
+
+<style>
+#unfire-player-v5{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  z-index:99999;
+  width:min(390px,calc(100vw - 32px));
+  padding:16px 17px 14px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:20px;
+  background:rgba(14,14,16,.94);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  box-shadow:0 20px 60px rgba(0,0,0,.42);
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+}
+
+.up5-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.up5-info{
+  min-width:0;
+}
+
+.up5-info strong{
+  display:block;
+  color:#f5f5f7;
+  font-size:13px;
+  font-weight:600;
+}
+
+#up5-status{
+  display:block;
+  margin-top:3px;
+  color:#85858d;
+  font-size:10px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.up5-buttons{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-shrink:0;
+}
+
+.up5-buttons button{
+  height:36px;
+  min-width:36px;
+  padding:0 12px;
+  border:1px solid #303036;
+  border-radius:999px;
+  background:#1c1c20;
+  color:#f5f5f7;
+  cursor:pointer;
+}
+
+#up5-play{
+  padding:0 17px;
+  background:#f5f5f7;
+  color:#050505;
+  border-color:#f5f5f7;
+  font-weight:600;
+}
+
+.up5-timeline{
+  margin-top:15px;
+}
+
+#up5-seek{
+  width:100%;
+  margin:0;
+  accent-color:#f5f5f7;
+  cursor:pointer;
+}
+
+.up5-time{
+  display:flex;
+  justify-content:space-between;
+  margin-top:5px;
+  color:#67676f;
+  font-size:9px;
+}
+
+@media(max-width:600px){
+  #unfire-player-v5{
+    left:16px;
+    right:16px;
+    bottom:16px;
+    width:auto;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -779,25 +880,7 @@ section h2 + .lead {
 </header>
 
 
-<div id="unfire-native-language" style="
-position:fixed;
-top:18px;
-right:24px;
-z-index:100000;
-">
-<select id="site-language" style="
-background:#151518;
-color:#f5f5f7;
-border:1px solid #303036;
-border-radius:999px;
-padding:9px 13px;
-font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
-font-size:12px;
-">
-<option value="en">English</option>
-<option value="es">Español</option>
-</select>
-</div>
+
 
 <main id="top">
 
@@ -1346,115 +1429,134 @@ selector.addEventListener("change", () => {
 </div>
 
 
-<!-- UNFIRE_VOICE_V4 -->
+
+
+
+<div id="unfire-player-v5">
+  <div class="up5-top">
+
+    <div class="up5-info">
+      <strong>Listen to Unfire</strong>
+      <span id="up5-status">Ready</span>
+    </div>
+
+    <div class="up5-buttons">
+      <button id="up5-back" aria-label="Go back">−15</button>
+      <button id="up5-play">▶ Listen</button>
+      <button id="up5-pause" aria-label="Pause">Ⅱ</button>
+      <button id="up5-stop" aria-label="Stop">■</button>
+    </div>
+
+  </div>
+
+  <div class="up5-timeline">
+    <input
+      id="up5-seek"
+      type="range"
+      min="0"
+      max="100"
+      value="0"
+      step="0.1"
+      aria-label="Audio position"
+    >
+
+    <div class="up5-time">
+      <span id="up5-current">0%</span>
+      <span id="up5-language">Auto language</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- UNFIRE_PLAYER_V5 -->
 <script>
 (() => {
   const synth = window.speechSynthesis;
-  const play = document.getElementById("uv-play");
-  const pause = document.getElementById("uv-pause");
-  const stop = document.getElementById("uv-stop");
-  const voiceSelect = document.getElementById("uv-voice");
-  const status = document.getElementById("uv-status");
-  const siteLanguage = document.getElementById("site-language");
 
-  if (!synth || !play || !voiceSelect) return;
+  const play = document.getElementById("up5-play");
+  const pause = document.getElementById("up5-pause");
+  const stop = document.getElementById("up5-stop");
+  const back = document.getElementById("up5-back");
+  const seek = document.getElementById("up5-seek");
+  const status = document.getElementById("up5-status");
+  const currentLabel = document.getElementById("up5-current");
+  const languageLabel = document.getElementById("up5-language");
 
-  const languageNames = {
-    en:"English",
-    es:"Español",
-    ca:"Català",
-    fr:"Français",
-    de:"Deutsch",
-    it:"Italiano",
-    pt:"Português",
-    ja:"日本語",
-    ko:"한국어",
-    zh:"中文"
-  };
+  if (!synth || !play) return;
 
   let chunks = [];
-  let chunkIndex = 0;
+  let index = 0;
   let active = false;
   let paused = false;
+  let selectedVoice = null;
 
-  function currentLanguage(){
-    const selected = siteLanguage?.value;
-    if (selected) return selected.toLowerCase().split("-")[0];
+  const languages = {
+    es:["es","Español"],
+    ca:["ca","Català"],
+    fr:["fr","Français"],
+    de:["de","Deutsch"],
+    it:["it","Italiano"],
+    pt:["pt","Português"],
+    ja:["ja","日本語"],
+    ko:["ko","한국어"],
+    zh:["zh","中文"],
+    en:["en","English"]
+  };
 
-    const htmlLang = document.documentElement.lang || "en";
-    return htmlLang.toLowerCase().split("-")[0];
-  }
-
-  function compatibleVoices(){
-    const lang = currentLanguage();
-
-    return synth.getVoices().filter(v => {
-      const voiceLang = (v.lang || "")
-        .toLowerCase()
-        .replace("_","-");
-
-      return voiceLang === lang ||
-             voiceLang.startsWith(lang + "-");
-    });
-  }
-
-  function refreshVoices(){
-    const lang = currentLanguage();
-    const voices = compatibleVoices();
-
-    voiceSelect.innerHTML = "";
-
-    if (!voices.length){
-      const option = document.createElement("option");
-      option.value = "";
-      option.textContent =
-        "No " + (languageNames[lang] || lang.toUpperCase()) + " voice available";
-
-      voiceSelect.appendChild(option);
-
-      status.textContent =
-        "No compatible voice for " +
-        (languageNames[lang] || lang.toUpperCase());
-
-      play.disabled = true;
-      return;
-    }
-
-    voices.forEach((voice, i) => {
-      const option = document.createElement("option");
-      option.value = voice.name;
-      option.textContent = voice.name + " · " + voice.lang;
-
-      if (i === 0) option.selected = true;
-
-      voiceSelect.appendChild(option);
-    });
-
-    play.disabled = false;
-
-    status.textContent =
-      "Auto · " +
-      (languageNames[lang] || lang.toUpperCase()) +
-      " · " +
-      voices[0].name;
-  }
-
-  function selectedVoice(){
-    const voices = compatibleVoices();
-
-    return voices.find(v => v.name === voiceSelect.value) ||
-           voices[0] ||
-           null;
-  }
-
-  function buildChunks(){
-    const main = document.querySelector("main");
-    if (!main) return [];
-
-    const text = main.innerText
+  function visibleText(){
+    return (document.querySelector("main")?.innerText || "")
       .replace(/\s+/g," ")
       .trim();
+  }
 
+  function detectLanguage(text){
+    const t = " " + text.toLowerCase() + " ";
+
+    if (/[\u3040-\u30ff]/.test(t)) return "ja";
+    if (/[\uac00-\ud7af]/.test(t)) return "ko";
+    if (/[\u4e00-\u9fff]/.test(t)) return "zh";
+
+    const tests = {
+      es:[" el "," la "," para "," con "," desarrollo "," tecnología "," productos "," capacidad "],
+      ca:[" els "," les "," amb "," desenvolupament "," tecnologia "," capacitat "," productes "],
+      fr:[" le "," les "," avec "," développement "," technologie "," produits "," capacité "],
+      de:[" der "," die "," und "," mit "," entwicklung "," technologie "," produkte "],
+      it:[" il "," gli "," con "," sviluppo "," tecnologia "," prodotti "," capacità "],
+      pt:[" os "," com "," desenvolvimento "," tecnologia "," produtos "," capacidade "],
+      en:[" the "," and "," with "," development "," technology "," products "," capacity "]
+    };
+
+    let best = "en";
+    let score = -1;
+
+    Object.entries(tests).forEach(([lang, words]) => {
+      let s = 0;
+      words.forEach(w => {
+        if(t.includes(w)) s++;
+      });
+
+      if(s > score){
+        score = s;
+        best = lang;
+      }
+    });
+
+    return best;
+  }
+
+  function findVoice(lang){
+    const voices = synth.getVoices();
+
+    const matches = voices.filter(v =>
+      (v.lang || "").toLowerCase().startsWith(lang)
+    );
+
+    return matches.find(v => /premium|enhanced/i.test(v.name))
+      || matches[0]
+      || null;
+  }
+
+  function createChunks(text){
     const sentences =
       text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
 
@@ -1462,45 +1564,78 @@ selector.addEventListener("change", () => {
     let buffer = "";
 
     sentences.forEach(sentence => {
-      if ((buffer + " " + sentence).length > 700){
-        if (buffer.trim()) result.push(buffer.trim());
+      if((buffer + " " + sentence).length > 350){
+        if(buffer.trim()) result.push(buffer.trim());
         buffer = sentence;
       } else {
         buffer += " " + sentence;
       }
     });
 
-    if (buffer.trim()) result.push(buffer.trim());
+    if(buffer.trim()) result.push(buffer.trim());
 
     return result;
   }
 
-  function speakNext(){
-    if (!active || chunkIndex >= chunks.length){
-      active = false;
-      paused = false;
-      chunkIndex = 0;
-      play.textContent = "▶ Play";
+  function progress(){
+    if(!chunks.length) return 0;
+    return Math.min(100,(index / chunks.length) * 100);
+  }
+
+  function updateProgress(){
+    const p = progress();
+    seek.value = p;
+    currentLabel.textContent = Math.round(p) + "%";
+  }
+
+  function prepare(){
+    const text = visibleText();
+
+    chunks = createChunks(text);
+
+    const lang = detectLanguage(text);
+    selectedVoice = findVoice(lang);
+
+    languageLabel.textContent =
+      languages[lang]?.[1] || lang.toUpperCase();
+
+    if(selectedVoice){
       status.textContent =
         "Ready · " +
-        (languageNames[currentLanguage()] || currentLanguage().toUpperCase());
+        selectedVoice.name +
+        " · " +
+        selectedVoice.lang;
+      play.disabled = false;
+    } else {
+      status.textContent =
+        "No compatible " +
+        (languages[lang]?.[1] || lang) +
+        " voice available";
+      play.disabled = true;
+    }
+  }
+
+  function speak(){
+    if(!active || index >= chunks.length){
+      active = false;
+      paused = false;
+      index = chunks.length;
+      updateProgress();
+      play.textContent = "▶ Listen";
+      status.textContent = "Finished";
       return;
     }
 
-    const voice = selectedVoice();
-
-    if (!voice){
-      active = false;
-      play.textContent = "▶ Play";
-      status.textContent = "No compatible voice available";
-      return;
+    if(!selectedVoice){
+      prepare();
+      if(!selectedVoice) return;
     }
 
     const utterance =
-      new SpeechSynthesisUtterance(chunks[chunkIndex]);
+      new SpeechSynthesisUtterance(chunks[index]);
 
-    utterance.voice = voice;
-    utterance.lang = voice.lang;
+    utterance.voice = selectedVoice;
+    utterance.lang = selectedVoice.lang;
     utterance.rate = 0.95;
     utterance.pitch = 1;
 
@@ -1508,28 +1643,55 @@ selector.addEventListener("change", () => {
       play.textContent = "Playing";
       status.textContent =
         "Playing · " +
-        voice.lang +
+        selectedVoice.name +
         " · " +
-        voice.name;
+        selectedVoice.lang;
+      updateProgress();
     };
 
     utterance.onend = () => {
-      if (!active) return;
-      chunkIndex++;
-      speakNext();
+      if(!active) return;
+      index++;
+      updateProgress();
+      speak();
     };
 
     utterance.onerror = () => {
       active = false;
-      play.textContent = "▶ Play";
+      play.textContent = "▶ Listen";
       status.textContent = "Audio error";
     };
 
     synth.speak(utterance);
   }
 
+  function jumpToPercent(percent){
+    if(!chunks.length) prepare();
+    if(!chunks.length) return;
+
+    const wasActive = active;
+
+    synth.cancel();
+
+    index = Math.min(
+      chunks.length - 1,
+      Math.max(
+        0,
+        Math.floor((percent / 100) * chunks.length)
+      )
+    );
+
+    paused = false;
+    updateProgress();
+
+    if(wasActive){
+      active = true;
+      setTimeout(speak,80);
+    }
+  }
+
   play.addEventListener("click", () => {
-    if (paused){
+    if(paused){
       synth.resume();
       paused = false;
       play.textContent = "Playing";
@@ -1537,23 +1699,21 @@ selector.addEventListener("change", () => {
     }
 
     synth.cancel();
+    prepare();
 
-    refreshVoices();
+    if(!selectedVoice) return;
 
-    if (!compatibleVoices().length) return;
+    if(index >= chunks.length) index = 0;
 
-    chunks = buildChunks();
-    chunkIndex = 0;
     active = true;
     paused = false;
-
-    speakNext();
+    speak();
   });
 
   pause.addEventListener("click", () => {
-    if (!active) return;
+    if(!active) return;
 
-    if (!paused){
+    if(!paused){
       synth.pause();
       paused = true;
       play.textContent = "▶ Resume";
@@ -1569,28 +1729,37 @@ selector.addEventListener("change", () => {
     synth.cancel();
     active = false;
     paused = false;
-    chunkIndex = 0;
-
-    play.textContent = "▶ Play";
+    index = 0;
+    updateProgress();
+    play.textContent = "▶ Listen";
     status.textContent = "Stopped";
   });
 
-  function languageChanged(){
-    synth.cancel();
-    active = false;
-    paused = false;
-    play.textContent = "▶ Play";
+  back.addEventListener("click", () => {
+    if(!chunks.length) prepare();
 
-    setTimeout(refreshVoices,250);
-  }
+    const percent =
+      Math.max(
+        0,
+        ((index - 2) / Math.max(1,chunks.length)) * 100
+      );
 
-  siteLanguage?.addEventListener("change",languageChanged);
+    jumpToPercent(percent);
+  });
 
-  synth.onvoiceschanged = refreshVoices;
+  seek.addEventListener("input", () => {
+    currentLabel.textContent =
+      Math.round(Number(seek.value)) + "%";
+  });
 
-  refreshVoices();
-  setTimeout(refreshVoices,500);
-  setTimeout(refreshVoices,1500);
+  seek.addEventListener("change", () => {
+    jumpToPercent(Number(seek.value));
+  });
+
+  synth.onvoiceschanged = prepare;
+
+  prepare();
+  setTimeout(prepare,600);
 })();
 </script>
 
