@@ -1655,131 +1655,87 @@ body{
 
 
 
-<script id="unfire-reader-v5">
+<script id="unfire-reader-v6">
 (() => {
-
   const synth = window.speechSynthesis;
 
-  const playBtn =
-    document.getElementById("reader-play");
+  const playBtn = document.getElementById("reader-play");
+  const pauseBtn = document.getElementById("reader-pause");
+  const range = document.getElementById("reader-range");
+  const percent = document.getElementById("reader-percent");
 
-  const pauseBtn =
-    document.getElementById("reader-pause");
-
-  const range =
-    document.getElementById("reader-range");
-
-  const percent =
-    document.getElementById("reader-percent");
-
-  if(
-    !synth ||
-    !playBtn ||
-    !pauseBtn ||
-    !range ||
-    !percent
-  ){
-    return;
-  }
+  if (!synth || !playBtn || !pauseBtn || !range || !percent) return;
 
   let chunks = [];
   let offsets = [];
-
   let totalChars = 1;
+
   let chunkIndex = 0;
+  let utterance = null;
 
   let playing = false;
   let paused = false;
-
-  let utterance = null;
   let session = 0;
 
-  let visualPercent = 0;
+  let progressTimer = null;
+
   let chunkStartPercent = 0;
   let chunkEndPercent = 0;
 
-  let animationStart = 0;
-  let estimatedChunkDuration = 1;
+  let visualPercent = 0;
 
-  let raf = null;
-
-
-  /* ------------------------------
-     TEXT
-  ------------------------------ */
+  let chunkElapsed = 0;
+  let chunkDuration = 1;
+  let lastTick = 0;
 
   const getText = () => {
+    const main = document.querySelector("main");
 
-    const main =
-      document.querySelector("main");
-
-    if(!main) return "";
+    if (!main) return "";
 
     return main.innerText
-      .replace(/\s+/g," ")
+      .replace(/\s+/g, " ")
       .trim();
   };
 
-
   const splitText = text => {
-
     const sentences =
-      text.match(/[^.!?]+[.!?]+|[^.!?]+$/g)
-      || [text];
+      text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
 
     const result = [];
     let buffer = "";
 
-    for(const sentence of sentences){
-
+    for (const sentence of sentences) {
       const clean = sentence.trim();
+      if (!clean) continue;
 
-      if(!clean) continue;
+      const candidate = (buffer + " " + clean).trim();
 
-      const candidate =
-        (buffer + " " + clean).trim();
-
-      if(candidate.length <= 220){
-
+      if (candidate.length <= 220) {
         buffer = candidate;
-
         continue;
       }
 
-      if(buffer){
-
+      if (buffer) {
         result.push(buffer);
-
         buffer = "";
       }
 
-      if(clean.length <= 220){
-
+      if (clean.length <= 220) {
         buffer = clean;
-
         continue;
       }
 
-      const words =
-        clean.split(/\s+/);
-
+      const words = clean.split(/\s+/);
       let part = "";
 
-      for(const word of words){
+      for (const word of words) {
+        const next = (part + " " + word).trim();
 
-        const next =
-          (part + " " + word).trim();
-
-        if(next.length <= 200){
-
+        if (next.length <= 200) {
           part = next;
-
-        }else{
-
-          if(part){
-            result.push(part);
-          }
-
+        } else {
+          if (part) result.push(part);
           part = word;
         }
       }
@@ -1787,688 +1743,434 @@ body{
       buffer = part;
     }
 
-    if(buffer){
-      result.push(buffer);
-    }
+    if (buffer) result.push(buffer);
 
     return result;
   };
 
-
   const buildTimeline = () => {
-
-    chunks =
-      splitText(getText());
-
+    chunks = splitText(getText());
     offsets = [];
 
     let cursor = 0;
 
-    for(const chunk of chunks){
-
+    for (const chunk of chunks) {
       offsets.push(cursor);
-
       cursor += chunk.length + 1;
     }
 
-    totalChars =
-      Math.max(cursor,1);
+    totalChars = Math.max(cursor, 1);
 
-    if(chunkIndex >= chunks.length){
-
-      chunkIndex =
-        Math.max(0,chunks.length - 1);
+    if (chunkIndex >= chunks.length) {
+      chunkIndex = Math.max(0, chunks.length - 1);
     }
   };
 
-
-  /* ------------------------------
-     LANGUAGE
-  ------------------------------ */
-
   const detectLanguage = text => {
-
-    const t =
-      " " + text.toLowerCase() + " ";
+    const t = " " + text.toLowerCase() + " ";
 
     const dictionaries = {
-
-      es:[
-        " el "," la "," los "," las ",
-        " para "," tecnología "," empresas ",
-        " capacidad "," aplicaciones ",
-        " financiación "," sistema "
+      es: [
+        " el "," la "," los "," las "," para ",
+        " tecnología "," empresas "," capacidad ",
+        " aplicaciones "," financiación "," sistema "
       ],
-
-      en:[
-        " the "," and "," technology ",
-        " software "," company ",
-        " products "," system "
+      en: [
+        " the "," and "," technology "," software ",
+        " company "," products "," system "
       ],
-
-      fr:[
-        " le "," les "," une ",
-        " pour "," technologie "
+      fr: [
+        " le "," les "," une "," pour "," technologie "
       ],
-
-      de:[
-        " der "," die "," das ",
-        " und "," für "
+      de: [
+        " der "," die "," das "," und "," für "
       ],
-
-      pt:[
-        " uma "," para ",
-        " tecnologia "," capacidade "
+      pt: [
+        " uma "," para "," tecnologia "," capacidade "
       ]
     };
 
     let winner = "en";
-    let winnerScore = -1;
+    let best = -1;
 
-    for(
-      const [language,words]
-      of Object.entries(dictionaries)
-    ){
-
+    for (const [lang, words] of Object.entries(dictionaries)) {
       let score = 0;
 
-      for(const word of words){
-
-        if(t.includes(word)){
-          score++;
-        }
+      for (const word of words) {
+        if (t.includes(word)) score++;
       }
 
-      if(score > winnerScore){
-
-        winner = language;
-        winnerScore = score;
+      if (score > best) {
+        best = score;
+        winner = lang;
       }
     }
 
     return winner;
   };
 
+  const chooseVoice = lang => {
+    const voices = synth.getVoices();
 
-  const chooseVoice = language => {
+    if (!voices.length) return null;
 
-    const voices =
-      synth.getVoices();
-
-    if(!voices.length){
-      return null;
-    }
-
-    const matching =
-      voices.filter(v =>
-        v.lang &&
-        v.lang
-          .toLowerCase()
-          .startsWith(language)
-      );
+    const sameLanguage = voices.filter(v =>
+      v.lang &&
+      v.lang.toLowerCase().startsWith(lang)
+    );
 
     const preferred = {
-
-      es:[
-        "Mónica",
-        "Monica",
-        "Paulina",
-        "Jorge"
-      ],
-
-      en:[
-        "Samantha",
-        "Daniel",
-        "Alex",
-        "Karen"
-      ],
-
-      fr:[
-        "Thomas",
-        "Amélie"
-      ],
-
-      de:[
-        "Anna",
-        "Petra"
-      ],
-
-      pt:[
-        "Luciana",
-        "Joana"
-      ]
+      es: ["Mónica", "Monica", "Paulina", "Jorge"],
+      en: ["Samantha", "Daniel", "Alex", "Karen"],
+      fr: ["Thomas", "Amélie"],
+      de: ["Anna", "Petra"],
+      pt: ["Luciana", "Joana"]
     };
 
-    for(
-      const desired
-      of preferred[language] || []
-    ){
+    for (const wanted of preferred[lang] || []) {
+      const found = sameLanguage.find(v =>
+        v.name.toLowerCase().includes(wanted.toLowerCase())
+      );
 
-      const voice =
-        matching.find(v =>
-          v.name
-            .toLowerCase()
-            .includes(
-              desired.toLowerCase()
-            )
-        );
+      if (found) return found;
+    }
 
-      if(voice){
-        return voice;
+    return sameLanguage[0] || voices[0] || null;
+  };
+
+  const percentageAtChunk = index => {
+    if (!chunks.length) return 0;
+    if (index >= chunks.length) return 100;
+
+    return Math.max(
+      0,
+      Math.min(
+        100,
+        ((offsets[index] || 0) / totalChars) * 100
+      )
+    );
+  };
+
+  const chunkFromPercentage = value => {
+    const target = totalChars * (value / 100);
+
+    let selected = 0;
+
+    for (let i = 0; i < offsets.length; i++) {
+      if (offsets[i] <= target) {
+        selected = i;
+      } else {
+        break;
       }
     }
 
-    return matching[0]
-      || voices[0]
-      || null;
+    return Math.max(
+      0,
+      Math.min(selected, chunks.length - 1)
+    );
   };
-
-
-  /* ------------------------------
-     PROGRESS
-  ------------------------------ */
-
-  const percentageAtChunk =
-    index => {
-
-      if(!chunks.length){
-        return 0;
-      }
-
-      if(index >= chunks.length){
-        return 100;
-      }
-
-      return Math.max(
-        0,
-        Math.min(
-          100,
-          (
-            (offsets[index] || 0)
-            / totalChars
-          ) * 100
-        )
-      );
-    };
-
-
-  const chunkFromPercentage =
-    value => {
-
-      const target =
-        totalChars * (value / 100);
-
-      let selected = 0;
-
-      for(
-        let i = 0;
-        i < offsets.length;
-        i++
-      ){
-
-        if(offsets[i] <= target){
-
-          selected = i;
-
-        }else{
-
-          break;
-        }
-      }
-
-      return Math.max(
-        0,
-        Math.min(
-          selected,
-          chunks.length - 1
-        )
-      );
-    };
-
 
   const drawProgress = value => {
+    visualPercent = Math.max(0, Math.min(100, value));
 
-    visualPercent =
-      Math.max(
-        0,
-        Math.min(100,value)
-      );
-
-    range.value =
-      Math.round(
-        visualPercent * 1000
-      );
-
-    percent.textContent =
-      visualPercent.toFixed(5)
-      + "%";
+    range.value = Math.round(visualPercent * 1000);
+    percent.textContent = visualPercent.toFixed(5) + "%";
   };
 
-
-  const stopAnimation = () => {
-
-    if(raf){
-
-      cancelAnimationFrame(raf);
-
-      raf = null;
+  const stopProgressClock = () => {
+    if (progressTimer) {
+      clearInterval(progressTimer);
+      progressTimer = null;
     }
   };
 
+  const startProgressClock = () => {
+    stopProgressClock();
 
-  const animateChunk = now => {
+    lastTick = performance.now();
 
-    if(
-      !playing ||
-      paused
-    ){
-      raf =
-        requestAnimationFrame(
-          animateChunk
-        );
+    progressTimer = setInterval(() => {
+      if (!playing || paused) {
+        lastTick = performance.now();
+        return;
+      }
 
-      return;
-    }
+      const now = performance.now();
+      const delta = (now - lastTick) / 1000;
+      lastTick = now;
 
-    if(!animationStart){
-      animationStart = now;
-    }
+      chunkElapsed += delta;
 
-    const elapsed =
-      (now - animationStart) / 1000;
-
-    const ratio =
-      Math.min(
-        1,
-        elapsed
-        / estimatedChunkDuration
+      const ratio = Math.min(
+        0.995,
+        chunkElapsed / chunkDuration
       );
 
-    const value =
-      chunkStartPercent
-      +
-      (
-        chunkEndPercent
-        - chunkStartPercent
-      ) * ratio;
+      const value =
+        chunkStartPercent +
+        (chunkEndPercent - chunkStartPercent) * ratio;
 
-    drawProgress(value);
-
-    raf =
-      requestAnimationFrame(
-        animateChunk
-      );
+      drawProgress(value);
+    }, 100);
   };
-
-
-  /* ------------------------------
-     PLAYBACK
-  ------------------------------ */
 
   const resetButtons = () => {
-
-    playBtn.textContent =
-      "▶ Play";
-
-    pauseBtn.textContent =
-      "Ⅱ";
+    playBtn.textContent = "▶ Play";
+    pauseBtn.textContent = "Ⅱ";
   };
 
-
   const stopPlayback = () => {
-
     session++;
-
     synth.cancel();
 
-    stopAnimation();
+    stopProgressClock();
 
     utterance = null;
-
     playing = false;
     paused = false;
 
     resetButtons();
   };
 
-
   const speakChunk = index => {
+    if (!playing) return;
 
-    if(!playing){
-      return;
-    }
-
-    if(index >= chunks.length){
-
-      chunkIndex =
-        chunks.length;
-
+    if (index >= chunks.length) {
       drawProgress(100);
 
-      stopPlayback();
+      playing = false;
+      paused = false;
+
+      stopProgressClock();
+      resetButtons();
 
       return;
     }
 
     chunkIndex = index;
 
-    chunkStartPercent =
-      percentageAtChunk(index);
+    chunkStartPercent = percentageAtChunk(index);
+    chunkEndPercent = percentageAtChunk(index + 1);
 
-    chunkEndPercent =
-      percentageAtChunk(index + 1);
+    drawProgress(chunkStartPercent);
 
-    drawProgress(
-      chunkStartPercent
-    );
-
-    const chunk =
-      chunks[index];
+    const chunk = chunks[index];
 
     const words =
-      Math.max(
-        1,
-        chunk
-          .split(/\s+/)
-          .length
-      );
+      Math.max(1, chunk.split(/\s+/).length);
 
     /*
-       approximate speaking time.
-       Used only for smooth visual progress.
+      Estimación de tiempo.
+      Aproximadamente 155 palabras/minuto con rate 0.96.
     */
+    chunkDuration = Math.max(
+      1.2,
+      words / 2.58
+    );
 
-    estimatedChunkDuration =
-      Math.max(
-        1.4,
-        words / 2.7
-      );
+    chunkElapsed = 0;
 
-    animationStart = 0;
+    const lang = detectLanguage(getText());
+    const voice = chooseVoice(lang);
 
-    stopAnimation();
-
-    raf =
-      requestAnimationFrame(
-        animateChunk
-      );
-
-    const language =
-      detectLanguage(
-        getText()
-      );
-
-    const voice =
-      chooseVoice(language);
-
-    const mySession =
-      session;
+    const mySession = session;
 
     utterance =
-      new SpeechSynthesisUtterance(
-        chunk
-      );
+      new SpeechSynthesisUtterance(chunk);
 
-    if(voice){
-
-      utterance.voice =
-        voice;
-
-      utterance.lang =
-        voice.lang;
-
-    }else{
-
-      utterance.lang =
-        language;
+    if (voice) {
+      utterance.voice = voice;
+      utterance.lang = voice.lang;
+    } else {
+      utterance.lang = lang;
     }
 
-    utterance.rate = .96;
+    utterance.rate = 0.96;
     utterance.pitch = 1;
     utterance.volume = 1;
 
-    utterance.onend = () => {
-
-      if(
+    /*
+      Si Safari proporciona posiciones reales de palabras,
+      aprovechamos también esos datos.
+    */
+    utterance.onboundary = event => {
+      if (
         mySession !== session ||
-        !playing
-      ){
+        typeof event.charIndex !== "number"
+      ) {
         return;
       }
 
-      drawProgress(
-        chunkEndPercent
-      );
+      const ratio =
+        Math.max(
+          0,
+          Math.min(
+            1,
+            event.charIndex / Math.max(chunk.length, 1)
+          )
+        );
 
-      speakChunk(
-        index + 1
-      );
+      const realValue =
+        chunkStartPercent +
+        (chunkEndPercent - chunkStartPercent) * ratio;
+
+      if (realValue > visualPercent) {
+        drawProgress(realValue);
+      }
+    };
+
+    utterance.onend = () => {
+      if (
+        mySession !== session ||
+        !playing
+      ) {
+        return;
+      }
+
+      drawProgress(chunkEndPercent);
+
+      speakChunk(index + 1);
     };
 
     utterance.onerror = event => {
-
-      if(
+      if (
         event.error === "canceled" ||
         event.error === "interrupted"
-      ){
+      ) {
         return;
       }
 
-      if(
-        mySession !== session
-      ){
-        return;
-      }
+      if (mySession !== session) return;
 
       setTimeout(() => {
-
-        if(playing){
-
-          speakChunk(
-            index + 1
-          );
+        if (playing) {
+          speakChunk(index + 1);
         }
-
-      },120);
+      }, 120);
     };
 
-    synth.speak(
-      utterance
-    );
+    synth.speak(utterance);
+
+    startProgressClock();
   };
 
-
   const startPlayback = () => {
-
     buildTimeline();
 
-    if(!chunks.length){
-      return;
-    }
+    if (!chunks.length) return;
 
-    if(
-      chunkIndex >= chunks.length
-    ){
+    if (chunkIndex >= chunks.length) {
       chunkIndex = 0;
     }
 
     session++;
-
     synth.cancel();
 
     playing = true;
     paused = false;
 
-    playBtn.textContent =
-      "■ Stop";
+    playBtn.textContent = "■ Stop";
+    pauseBtn.textContent = "Ⅱ";
 
-    pauseBtn.textContent =
-      "Ⅱ";
-
-    const mySession =
-      session;
+    const mySession = session;
 
     setTimeout(() => {
-
-      if(
+      if (
         playing &&
         mySession === session
-      ){
-
-        speakChunk(
-          chunkIndex
-        );
+      ) {
+        speakChunk(chunkIndex);
       }
-
-    },100);
+    }, 100);
   };
 
-
   const seek = value => {
-
     buildTimeline();
 
-    if(!chunks.length){
-      return;
-    }
+    if (!chunks.length) return;
 
     chunkIndex =
-      chunkFromPercentage(
-        value
-      );
+      chunkFromPercentage(value);
 
     drawProgress(value);
 
-    if(!playing){
-      return;
-    }
+    if (!playing) return;
 
     session++;
-
     synth.cancel();
 
     paused = false;
 
-    pauseBtn.textContent =
-      "Ⅱ";
+    pauseBtn.textContent = "Ⅱ";
 
-    const mySession =
-      session;
+    const mySession = session;
 
     setTimeout(() => {
-
-      if(
+      if (
         playing &&
         mySession === session
-      ){
-
-        speakChunk(
-          chunkIndex
-        );
+      ) {
+        speakChunk(chunkIndex);
       }
-
-    },90);
+    }, 90);
   };
 
-
-  /* ------------------------------
-     CONTROLS
-  ------------------------------ */
-
-  playBtn.addEventListener(
-    "click",
-    () => {
-
-      if(playing){
-
-        stopPlayback();
-
-      }else{
-
-        startPlayback();
-      }
+  playBtn.addEventListener("click", () => {
+    if (playing) {
+      stopPlayback();
+    } else {
+      startPlayback();
     }
-  );
+  });
 
+  pauseBtn.addEventListener("click", () => {
+    if (!playing) return;
 
-  pauseBtn.addEventListener(
-    "click",
-    () => {
+    if (paused) {
+      synth.resume();
 
-      if(!playing){
-        return;
-      }
+      paused = false;
+      pauseBtn.textContent = "Ⅱ";
 
-      if(paused){
+      lastTick = performance.now();
+    } else {
+      synth.pause();
 
-        synth.resume();
-
-        paused = false;
-
-        pauseBtn.textContent =
-          "Ⅱ";
-
-      }else{
-
-        synth.pause();
-
-        paused = true;
-
-        pauseBtn.textContent =
-          "▶";
-      }
+      paused = true;
+      pauseBtn.textContent = "▶";
     }
-  );
+  });
 
+  range.addEventListener("input", event => {
+    const value =
+      Number(event.target.value) / 1000;
 
-  range.addEventListener(
-    "input",
-    event => {
+    drawProgress(value);
+  });
 
-      const value =
-        Number(
-          event.target.value
-        ) / 1000;
-
-      drawProgress(value);
-    }
-  );
-
-
-  range.addEventListener(
-    "change",
-    event => {
-
-      seek(
-        Number(
-          event.target.value
-        ) / 1000
-      );
-    }
-  );
-
+  range.addEventListener("change", event => {
+    seek(
+      Number(event.target.value) / 1000
+    );
+  });
 
   window.addEventListener(
     "beforeunload",
-    () => synth.cancel()
+    () => {
+      synth.cancel();
+      stopProgressClock();
+    }
   );
-
 
   synth.getVoices();
 
-  if(
-    "onvoiceschanged"
-    in synth
-  ){
-
+  if ("onvoiceschanged" in synth) {
     synth.onvoiceschanged =
       () => synth.getVoices();
   }
 
-
   buildTimeline();
   drawProgress(0);
-
 })();
 </script>
 
