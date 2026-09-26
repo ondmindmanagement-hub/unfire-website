@@ -2050,6 +2050,7 @@ main section.unfire-reading-section{
   <div class="reader-top">
     <button id="reader-play" class="reader-btn">▶ Listen</button>
     <button id="reader-pause" class="reader-btn">Ⅱ</button>
+    <button id="reader-language" class="reader-btn" type="button" aria-label="Narration language">EN</button>
   </div>
 
   <input
@@ -2085,6 +2086,7 @@ main section.unfire-reading-section{
   const audio = document.getElementById("unfire-narration");
   const play = document.getElementById("reader-play");
   const pause = document.getElementById("reader-pause");
+  const languageBtn = document.getElementById("reader-language");
   const slider = document.getElementById("reader-range");
   const percent = document.getElementById("reader-percent");
   const prev = document.getElementById("reader-prev");
@@ -2100,6 +2102,70 @@ main section.unfire-reading-section{
   let lastScroll = 0;
 
   const clean = s => (s || "").replace(/\s+/g, " ").trim();
+  let narrationLanguage =
+    (navigator.language || "en").toLowerCase().startsWith("es")
+      ? "es"
+      : "en";
+
+  const narrationFiles = {
+    en: "audio/unfire-master-en.mp3",
+    es: "audio/unfire-master-es.mp3"
+  };
+
+  const setNarrationLanguage = (lang, preservePosition = true) => {
+    if (!narrationFiles[lang]) return;
+
+    const wasPlaying = !audio.paused;
+    const ratio =
+      preservePosition &&
+      Number.isFinite(audio.duration) &&
+      audio.duration > 0
+        ? audio.currentTime / audio.duration
+        : 0;
+
+    narrationLanguage = lang;
+
+    if (languageBtn) {
+      languageBtn.textContent = lang.toUpperCase();
+      languageBtn.title =
+        lang === "es"
+          ? "Narración: Español"
+          : "Narration: English";
+    }
+
+    const wanted = narrationFiles[lang];
+
+    if (audio.getAttribute("src") === wanted) {
+      return;
+    }
+
+    audio.pause();
+    audio.src = wanted;
+    audio.load();
+
+    audio.addEventListener("loadedmetadata", () => {
+      if (preservePosition && ratio > 0) {
+        audio.currentTime = Math.min(
+          audio.duration * ratio,
+          Math.max(0, audio.duration - 0.1)
+        );
+      }
+
+      rebuild();
+      updateProgress();
+
+      if (wasPlaying) {
+        audio.play().catch(() => {});
+      }
+    }, { once: true });
+  };
+
+  languageBtn?.addEventListener("click", () => {
+    setNarrationLanguage(
+      narrationLanguage === "es" ? "en" : "es"
+    );
+  });
+
 
   const rebuild = () => {
     const els = [...document.querySelectorAll("main > section")];
@@ -2300,6 +2366,8 @@ main section.unfire-reading-section{
     e.stopPropagation();
     jumpSection(currentSection + 1);
   });
+
+  setNarrationLanguage(narrationLanguage, false);
 
   rebuild();
 
