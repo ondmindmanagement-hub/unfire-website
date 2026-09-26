@@ -975,6 +975,272 @@ section h2 + .lead {
 }
 </style>
 
+
+<style>
+.scale-intro{
+  max-width:790px;
+}
+
+.scale-statement{
+  margin-top:58px;
+  padding:38px;
+  border:1px solid var(--line);
+  border-radius:26px;
+  background:linear-gradient(145deg,#111114,#09090a);
+}
+
+.scale-statement strong{
+  display:block;
+  max-width:1000px;
+  font-size:clamp(2.15rem,4vw,4.4rem);
+  line-height:1.14;
+  letter-spacing:0;
+  font-weight:590;
+}
+
+.scale-statement p{
+  max-width:760px;
+  margin:24px 0 0;
+  color:var(--muted);
+  line-height:1.72;
+}
+
+.scale-metrics{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.scale-metric{
+  min-height:190px;
+  padding:26px;
+  border:1px solid var(--line);
+  border-radius:21px;
+  background:#0d0d0f;
+}
+
+.scale-metric strong{
+  display:block;
+  font-size:clamp(3rem,5vw,4.8rem);
+  line-height:1;
+  font-weight:600;
+  letter-spacing:0;
+}
+
+.scale-metric span{
+  display:block;
+  margin-top:24px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.55;
+}
+
+.scale-grid{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.scale-card{
+  padding:32px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:linear-gradient(145deg,#101012,#09090a);
+}
+
+.scale-card-label{
+  margin-bottom:25px;
+  color:#75757d;
+  font-size:10px;
+  font-weight:650;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+.scale-card h3{
+  margin:0;
+  font-size:clamp(2rem,3vw,3.15rem) !important;
+  line-height:1.16 !important;
+  letter-spacing:0 !important;
+}
+
+.scale-card p{
+  max-width:620px;
+  margin:18px 0 0;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.pipeline{
+  margin-top:32px;
+}
+
+.pipeline-row{
+  display:grid;
+  grid-template-columns:160px 1fr;
+  gap:18px;
+  align-items:center;
+  margin-top:18px;
+}
+
+.pipeline-name{
+  color:var(--soft);
+  font-size:12px;
+}
+
+.pipeline-track{
+  position:relative;
+  height:22px;
+  overflow:hidden;
+  border:1px solid #29292e;
+  border-radius:999px;
+  background:#141416;
+}
+
+.pipeline-fill{
+  height:100%;
+  border-radius:999px;
+  background:#e9e9ec;
+}
+
+.pipeline-fill.old{width:30%}
+.pipeline-fill.shared{width:66%}
+.pipeline-fill.compound{width:94%}
+
+.pipeline-note{
+  margin-top:22px !important;
+  font-size:11px !important;
+  color:#696970 !important;
+}
+
+.bottleneck{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr auto 1fr;
+  align-items:stretch;
+  gap:12px;
+}
+
+.bottleneck-node{
+  padding:22px;
+  border:1px solid #29292e;
+  border-radius:18px;
+  background:#0b0b0d;
+}
+
+.bottleneck-node strong{
+  display:block;
+  font-size:15px;
+  margin-bottom:9px;
+}
+
+.bottleneck-node span{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+.bottleneck-arrow{
+  align-self:center;
+  color:#55555d;
+  font-size:22px;
+}
+
+.limit-box{
+  margin-top:18px;
+  padding:32px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:#0b0b0d;
+}
+
+.limit-box h3{
+  margin:0;
+  max-width:930px;
+  font-size:clamp(2rem,3.6vw,3.8rem) !important;
+  line-height:1.17 !important;
+  letter-spacing:0 !important;
+}
+
+.limit-box p{
+  max-width:800px;
+  margin:22px 0 0;
+  color:var(--muted);
+  line-height:1.72;
+}
+
+.expansion{
+  margin-top:24px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.expansion-item{
+  padding:18px;
+  border-top:1px solid #303036;
+}
+
+.expansion-item strong{
+  display:block;
+  font-size:14px;
+}
+
+.expansion-item span{
+  display:block;
+  margin-top:7px;
+  color:#77777f;
+  font-size:11px;
+  line-height:1.5;
+}
+
+@media(max-width:900px){
+  .scale-metrics{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .scale-grid{
+    grid-template-columns:1fr;
+  }
+
+  .bottleneck{
+    grid-template-columns:1fr;
+  }
+
+  .bottleneck-arrow{
+    transform:rotate(90deg);
+    text-align:center;
+  }
+
+  .expansion{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:600px){
+  .scale-metrics{
+    grid-template-columns:1fr;
+  }
+
+  .pipeline-row{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+
+  .expansion{
+    grid-template-columns:1fr;
+  }
+
+  .scale-statement,
+  .scale-card,
+  .limit-box{
+    padding:24px;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -984,8 +1250,8 @@ section h2 + .lead {
 <nav>
 <a href="#company">Company</a>
 <a href="#work">Work</a>
-<a href="#capability">Capability</a>
-<a href="#capacity">Capacity</a>
+<a href="#capability">System</a>
+<a href="#capacity">Scale</a>
 <a href="#funding">Funding</a>
 </nav>
 </header>
@@ -1170,149 +1436,247 @@ confidential.
 
 
 
+
 <div class="wrap">
 <section id="capacity">
 
-<div class="eyebrow">Growth & Production Capacity</div>
+<div class="eyebrow">Production Scale</div>
 
-<h2>Built to increase output with every product.</h2>
+<h2>Software production without starting over.</h2>
 
-<p class="lead">
-Unfire is developing a shared software foundation designed to support multiple
-independent products — or combine them into broader applications and suites when
-that creates a better user experience.
+<p class="lead scale-intro">
+Unfire has built a reusable software-production foundation designed to turn
+new product concepts into working applications with substantially less
+repeated engineering.
 </p>
 
-<div class="capacity-grid">
 
-<div class="capacity-card wide">
-<div class="capacity-label">Internal production history · 2026</div>
-<h3>From individual products to a multi-product pipeline.</h3>
+<div class="scale-statement">
 
-<div class="history-chart">
-
-<div class="history-item">
-<div class="history-bar"></div>
-<div class="history-number">1</div>
-<div class="history-text">Initial product foundation</div>
-</div>
-
-<div class="history-item">
-<div class="history-bar"></div>
-<div class="history-number">3</div>
-<div class="history-text">Flagship product tracks</div>
-</div>
-
-<div class="history-item">
-<div class="history-bar"></div>
-<div class="history-number">8</div>
-<div class="history-text">Priority Wave 1 candidates</div>
-</div>
-
-<div class="history-item">
-<div class="history-bar"></div>
-<div class="history-number">53</div>
-<div class="history-text">Standalone candidates built and internally audited</div>
-</div>
-
-</div>
-
-<p class="model-note">
-53/53 standalone builds succeeded at the September 2026 internal checkpoint.
-These figures describe internal technical output, not 53 commercial releases.
-</p>
-</div>
-
-
-<div class="capacity-card">
-<div class="capacity-label">Production model</div>
-<h3>Less repetition. More leverage.</h3>
-
-<p>
-Traditional isolated development repeatedly rebuilds the same underlying work.
-Unfire's model is designed to reuse architecture, validation, deployment and
-product infrastructure across future software.
-</p>
-
-<div class="leverage">
-
-<div class="leverage-row">
-<div class="leverage-name">Isolated build</div>
-<div class="leverage-track"><div class="leverage-fill base"></div></div>
-</div>
-
-<div class="leverage-row">
-<div class="leverage-name">Shared systems</div>
-<div class="leverage-track"><div class="leverage-fill shared"></div></div>
-</div>
-
-<div class="leverage-row">
-<div class="leverage-name">Compounding system</div>
-<div class="leverage-track"><div class="leverage-fill compound"></div></div>
-</div>
-
-</div>
-
-<p class="model-note">
-Illustrative internal operating model. This chart represents expected leverage,
-not an audited comparison against external competitors.
-</p>
-</div>
-
-
-<div class="capacity-card">
-<div class="capacity-label">Scale architecture</div>
-<h3>Independent apps or one unified system.</h3>
-
-<p>
-The same underlying technology can support focused standalone applications,
-shared modules and, where appropriate, larger unified software environments.
-</p>
-
-<div class="system-flow">
-
-<div class="system-node">
-<strong>Shared foundation</strong>
-<span>Reusable technical systems and common infrastructure.</span>
-</div>
-
-<div class="system-arrow">→</div>
-
-<div class="system-node">
-<strong>Multiple products</strong>
-<span>Focused applications across different technology categories.</span>
-</div>
-
-<div class="system-arrow">→</div>
-
-<div class="system-node">
-<strong>Unified suites</strong>
-<span>Products can converge into broader platforms when useful.</span>
-</div>
-
-</div>
-</div>
-
-</div>
-
-
-<div class="capacity-highlight">
 <strong>
-The objective is not simply to build more software. It is to increase the amount
-of useful software Unfire can develop, validate and commercialise per unit of
-time.
+The objective is not to make one application faster.
+It is to build the capacity to produce software repeatedly
+at a fundamentally different scale.
 </strong>
 
 <p>
-As shared infrastructure matures, each completed project can strengthen the
-foundation used by the next. The long-term advantage is therefore cumulative:
-greater reuse, higher throughput and shorter development cycles without
-restarting every product from zero.
+Instead of rebuilding the same technical foundations for every new product,
+Unfire reuses a growing internal technology base across independent apps,
+shared modules and larger software environments.
 </p>
+
+</div>
+
+
+<div class="scale-metrics">
+
+<div class="scale-metric">
+<strong>3</strong>
+<span>Flagship product tracks already used to develop and validate the model.</span>
+</div>
+
+<div class="scale-metric">
+<strong>8</strong>
+<span>Priority Wave 1 software candidates identified for further development.</span>
+</div>
+
+<div class="scale-metric">
+<strong>53</strong>
+<span>Standalone software candidates built and internally audited.</span>
+</div>
+
+<div class="scale-metric">
+<strong>53/53</strong>
+<span>Successful standalone builds at the September 2026 internal checkpoint.</span>
+</div>
+
+</div>
+
+
+<div class="scale-grid">
+
+<div class="scale-card">
+
+<div class="scale-card-label">
+Production leverage
+</div>
+
+<h3>Less reconstruction. More output.</h3>
+
+<p>
+Traditional product development repeatedly recreates architecture,
+infrastructure, validation and deployment work. Unfire is designed to
+reuse those capabilities across future products.
+</p>
+
+<div class="pipeline">
+
+<div class="pipeline-row">
+<div class="pipeline-name">Isolated development</div>
+<div class="pipeline-track">
+<div class="pipeline-fill old"></div>
+</div>
+</div>
+
+<div class="pipeline-row">
+<div class="pipeline-name">Shared foundation</div>
+<div class="pipeline-track">
+<div class="pipeline-fill shared"></div>
+</div>
+</div>
+
+<div class="pipeline-row">
+<div class="pipeline-name">Compounding system</div>
+<div class="pipeline-track">
+<div class="pipeline-fill compound"></div>
+</div>
+</div>
+
+</div>
+
+<p class="pipeline-note">
+Illustrative operating model. The chart represents internal leverage potential,
+not an externally audited competitor benchmark.
+</p>
+
+</div>
+
+
+<div class="scale-card">
+
+<div class="scale-card-label">
+Development cycle
+</div>
+
+<h3>From concept to working software.</h3>
+
+<p>
+When a new concept fits the existing Unfire architecture, internal experiments
+have shown that software candidates can be assembled and technically validated
+on very short development cycles.
+</p>
+
+<div class="bottleneck">
+
+<div class="bottleneck-node">
+<strong>Shared foundation</strong>
+<span>Existing reusable technology and production infrastructure.</span>
+</div>
+
+<div class="bottleneck-arrow">→</div>
+
+<div class="bottleneck-node">
+<strong>New software</strong>
+<span>Independent product, module or specialised application.</span>
+</div>
+
+<div class="bottleneck-arrow">→</div>
+
+<div class="bottleneck-node">
+<strong>Validation</strong>
+<span>Build, test, prioritise and prepare successful candidates.</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="limit-box">
+
+<div class="eyebrow">The bottleneck is changing</div>
+
+<h3>
+From rebuilding software to scaling infrastructure.
+</h3>
+
+<p>
+As Unfire's reusable foundation expands, production capacity increasingly
+depends on expandable resources such as compute, storage, testing capacity,
+quality assurance and commercial deployment rather than recreating the same
+technical foundations for every application.
+</p>
+
+<p>
+This means additional infrastructure can increase the number and complexity
+of products the system can support without requiring the underlying production
+method to be rebuilt from zero.
+</p>
+
+<div class="expansion">
+
+<div class="expansion-item">
+<strong>Storage</strong>
+<span>Expandable capacity for larger product portfolios and development assets.</span>
+</div>
+
+<div class="expansion-item">
+<strong>Compute</strong>
+<span>More simultaneous builds, validation and automated production workloads.</span>
+</div>
+
+<div class="expansion-item">
+<strong>Quality</strong>
+<span>Independent QA, security, accessibility and release hardening.</span>
+</div>
+
+<div class="expansion-item">
+<strong>Distribution</strong>
+<span>Commercial launches, internationalisation and scalable delivery.</span>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="scale-statement">
+
+<div class="eyebrow">Beyond individual products</div>
+
+<strong>
+Independent applications today.
+Larger software environments tomorrow.
+</strong>
+
+<p>
+The same foundation can support focused standalone applications or combine
+multiple capabilities into broader software suites when that creates a better
+product.
+</p>
+
+<p>
+Unfire has also established project pathways for scaling this model through
+future collaboration with companies, institutions and public-sector
+organisations, while keeping individual projects controlled and separated.
+</p>
+
+</div>
+
+
+<div class="scale-statement">
+
+<div class="eyebrow">What remains confidential</div>
+
+<strong>
+The capability is visible.
+The underlying method is not.
+</strong>
+
+<p>
+Unfire publicly describes the output, architecture principles and measurable
+technical checkpoints of its production system. Proprietary implementation,
+internal operating methods and the mechanisms responsible for this leverage
+remain confidential.
+</p>
+
 </div>
 
 </section>
 </div>
+
 
 
 <div class="wrap">
