@@ -935,50 +935,59 @@ h2{
 
 
 
-<style id="reader-apple-dock-v2">
+
+
+
+<style id="unfire-reader-final-style">
 
 body{
-  padding-bottom:150px;
+  padding-bottom:150px !important;
 }
 
+/* Independent centered dock */
 #reader{
   position:fixed !important;
+
   left:50% !important;
   right:auto !important;
-  bottom:22px !important;
+
   top:auto !important;
+  bottom:24px !important;
 
   transform:translateX(-50%) !important;
 
-  width:min(520px,calc(100vw - 32px)) !important;
+  width:420px !important;
+  max-width:calc(100vw - 32px) !important;
 
-  padding:12px 14px !important;
+  padding:12px 14px 10px !important;
 
-  border:1px solid rgba(255,255,255,.10) !important;
-  border-radius:20px !important;
+  border:1px solid rgba(255,255,255,.11) !important;
+  border-radius:22px !important;
 
-  background:rgba(18,18,20,.80) !important;
+  background:rgba(20,20,22,.78) !important;
 
   box-shadow:
-    0 18px 55px rgba(0,0,0,.45),
-    inset 0 1px rgba(255,255,255,.04) !important;
+    0 18px 60px rgba(0,0,0,.46),
+    inset 0 1px 0 rgba(255,255,255,.045) !important;
 
-  backdrop-filter:blur(28px) saturate(150%) !important;
-  -webkit-backdrop-filter:blur(28px) saturate(150%) !important;
+  backdrop-filter:blur(30px) saturate(150%) !important;
+  -webkit-backdrop-filter:blur(30px) saturate(150%) !important;
 
-  z-index:9999 !important;
+  z-index:10000 !important;
 }
 
 #reader .reader-top{
   display:flex !important;
   align-items:center !important;
-  gap:10px !important;
+  gap:9px !important;
 }
 
 #reader-play{
   flex:1 !important;
+
   height:38px !important;
 
+  border:0 !important;
   border-radius:999px !important;
 
   background:#f5f5f7 !important;
@@ -986,53 +995,65 @@ body{
 
   font-size:12px !important;
   font-weight:650 !important;
+
+  cursor:pointer !important;
 }
 
 #reader-pause{
   width:38px !important;
   height:38px !important;
+
   flex:none !important;
 
+  border:0 !important;
   border-radius:50% !important;
 
-  background:#27272a !important;
-  color:#d1d1d6 !important;
+  background:#2a2a2e !important;
+  color:#d8d8dc !important;
+
+  cursor:pointer !important;
 }
 
 #reader-range{
+  display:block !important;
+
   width:100% !important;
   height:5px !important;
 
-  margin-top:11px !important;
+  margin:11px 0 0 !important;
 
-  cursor:pointer !important;
   accent-color:#f5f5f7 !important;
+  cursor:pointer !important;
 }
 
 #reader-percent{
-  margin-top:5px !important;
+  margin-top:6px !important;
 
-  text-align:right !important;
+  text-align:center !important;
 
   color:#8e8e93 !important;
 
   font-size:10px !important;
+  font-weight:500 !important;
+
+  letter-spacing:.025em !important;
   font-variant-numeric:tabular-nums !important;
 }
 
 @media(max-width:620px){
 
   body{
-    padding-bottom:135px;
+    padding-bottom:135px !important;
   }
 
   #reader{
-    bottom:12px !important;
     width:calc(100vw - 24px) !important;
 
-    padding:10px 11px !important;
+    bottom:12px !important;
 
-    border-radius:18px !important;
+    padding:10px 11px 9px !important;
+
+    border-radius:19px !important;
   }
 
 }
@@ -1634,75 +1655,131 @@ body{
 
 
 
-<script id="unfire-reader-v4">
+<script id="unfire-reader-v5">
 (() => {
+
   const synth = window.speechSynthesis;
 
-  const playBtn = document.getElementById("reader-play");
-  const pauseBtn = document.getElementById("reader-pause");
-  const range = document.getElementById("reader-range");
-  const percent = document.getElementById("reader-percent");
+  const playBtn =
+    document.getElementById("reader-play");
 
-  if (!synth || !playBtn || !pauseBtn || !range || !percent) return;
+  const pauseBtn =
+    document.getElementById("reader-pause");
+
+  const range =
+    document.getElementById("reader-range");
+
+  const percent =
+    document.getElementById("reader-percent");
+
+  if(
+    !synth ||
+    !playBtn ||
+    !pauseBtn ||
+    !range ||
+    !percent
+  ){
+    return;
+  }
 
   let chunks = [];
   let offsets = [];
-  let totalCharacters = 0;
 
+  let totalChars = 1;
   let chunkIndex = 0;
+
   let playing = false;
   let paused = false;
-  let session = 0;
+
   let utterance = null;
+  let session = 0;
+
+  let visualPercent = 0;
+  let chunkStartPercent = 0;
+  let chunkEndPercent = 0;
+
+  let animationStart = 0;
+  let estimatedChunkDuration = 1;
+
+  let raf = null;
+
+
+  /* ------------------------------
+     TEXT
+  ------------------------------ */
 
   const getText = () => {
-    const main = document.querySelector("main");
 
-    if (!main) return "";
+    const main =
+      document.querySelector("main");
+
+    if(!main) return "";
 
     return main.innerText
-      .replace(/\s+/g, " ")
+      .replace(/\s+/g," ")
       .trim();
   };
 
+
   const splitText = text => {
+
     const sentences =
-      text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+      text.match(/[^.!?]+[.!?]+|[^.!?]+$/g)
+      || [text];
 
     const result = [];
     let buffer = "";
 
-    for (const sentence of sentences) {
+    for(const sentence of sentences){
+
       const clean = sentence.trim();
-      if (!clean) continue;
 
-      const candidate = (buffer + " " + clean).trim();
+      if(!clean) continue;
 
-      if (candidate.length <= 230) {
+      const candidate =
+        (buffer + " " + clean).trim();
+
+      if(candidate.length <= 220){
+
         buffer = candidate;
+
         continue;
       }
 
-      if (buffer) {
+      if(buffer){
+
         result.push(buffer);
+
         buffer = "";
       }
 
-      if (clean.length <= 230) {
+      if(clean.length <= 220){
+
         buffer = clean;
+
         continue;
       }
 
-      const words = clean.split(/\s+/);
+      const words =
+        clean.split(/\s+/);
+
       let part = "";
 
-      for (const word of words) {
-        const next = (part + " " + word).trim();
+      for(const word of words){
 
-        if (next.length <= 210) {
+        const next =
+          (part + " " + word).trim();
+
+        if(next.length <= 200){
+
           part = next;
-        } else {
-          if (part) result.push(part);
+
+        }else{
+
+          if(part){
+            result.push(part);
+          }
+
           part = word;
         }
       }
@@ -1710,338 +1787,688 @@ body{
       buffer = part;
     }
 
-    if (buffer) result.push(buffer);
+    if(buffer){
+      result.push(buffer);
+    }
 
     return result;
   };
 
-  const buildTimeline = () => {
-    const text = getText();
 
-    chunks = splitText(text);
+  const buildTimeline = () => {
+
+    chunks =
+      splitText(getText());
+
     offsets = [];
 
     let cursor = 0;
 
-    for (const chunk of chunks) {
+    for(const chunk of chunks){
+
       offsets.push(cursor);
+
       cursor += chunk.length + 1;
     }
 
-    totalCharacters = Math.max(cursor, 1);
+    totalChars =
+      Math.max(cursor,1);
 
-    if (chunkIndex >= chunks.length) {
-      chunkIndex = Math.max(0, chunks.length - 1);
+    if(chunkIndex >= chunks.length){
+
+      chunkIndex =
+        Math.max(0,chunks.length - 1);
     }
   };
 
-  const detectLanguage = text => {
-    const t = " " + text.toLowerCase() + " ";
 
-    const sets = {
-      es: [
-        " el "," la "," los "," las "," para ",
-        " tecnología "," capacidad "," empresas ",
-        " aplicaciones "," financiación "
+  /* ------------------------------
+     LANGUAGE
+  ------------------------------ */
+
+  const detectLanguage = text => {
+
+    const t =
+      " " + text.toLowerCase() + " ";
+
+    const dictionaries = {
+
+      es:[
+        " el "," la "," los "," las ",
+        " para "," tecnología "," empresas ",
+        " capacidad "," aplicaciones ",
+        " financiación "," sistema "
       ],
-      en: [
-        " the "," and "," technology "," software ",
-        " company "," products "," build "
+
+      en:[
+        " the "," and "," technology ",
+        " software "," company ",
+        " products "," system "
       ],
-      fr: [
-        " le "," les "," une "," pour ",
-        " technologie "," capacité "
+
+      fr:[
+        " le "," les "," une ",
+        " pour "," technologie "
       ],
-      de: [
-        " der "," die "," das "," und "," für "
+
+      de:[
+        " der "," die "," das ",
+        " und "," für "
       ],
-      pt: [
-        " uma "," para "," tecnologia "," capacidade "
+
+      pt:[
+        " uma "," para ",
+        " tecnologia "," capacidade "
       ]
     };
 
-    let bestLanguage = "en";
-    let bestScore = -1;
+    let winner = "en";
+    let winnerScore = -1;
 
-    for (const [language, words] of Object.entries(sets)) {
+    for(
+      const [language,words]
+      of Object.entries(dictionaries)
+    ){
+
       let score = 0;
 
-      for (const word of words) {
-        if (t.includes(word)) score++;
+      for(const word of words){
+
+        if(t.includes(word)){
+          score++;
+        }
       }
 
-      if (score > bestScore) {
-        bestScore = score;
-        bestLanguage = language;
+      if(score > winnerScore){
+
+        winner = language;
+        winnerScore = score;
       }
     }
 
-    return bestLanguage;
+    return winner;
   };
 
-  const chooseVoice = lang => {
-    const voices = synth.getVoices();
 
-    const matching = voices.filter(v =>
-      v.lang &&
-      v.lang.toLowerCase().startsWith(lang.toLowerCase())
-    );
+  const chooseVoice = language => {
 
-    const preferred = {
-      es: ["Mónica", "Monica", "Paulina", "Jorge"],
-      en: ["Samantha", "Daniel", "Alex", "Karen"],
-      fr: ["Thomas", "Amélie", "Audrey"],
-      de: ["Anna", "Petra", "Markus"],
-      pt: ["Luciana", "Joana", "Felipe"]
-    };
+    const voices =
+      synth.getVoices();
 
-    for (const wanted of preferred[lang] || []) {
-      const match = matching.find(v =>
-        v.name.toLowerCase().includes(wanted.toLowerCase())
+    if(!voices.length){
+      return null;
+    }
+
+    const matching =
+      voices.filter(v =>
+        v.lang &&
+        v.lang
+          .toLowerCase()
+          .startsWith(language)
       );
 
-      if (match) return match;
-    }
+    const preferred = {
 
-    return matching[0] || voices[0] || null;
-  };
+      es:[
+        "Mónica",
+        "Monica",
+        "Paulina",
+        "Jorge"
+      ],
 
-  const percentageForChunk = index => {
-    if (!chunks.length) return 0;
-    if (index >= chunks.length) return 100;
+      en:[
+        "Samantha",
+        "Daniel",
+        "Alex",
+        "Karen"
+      ],
 
-    const character = offsets[index] || 0;
+      fr:[
+        "Thomas",
+        "Amélie"
+      ],
 
-    return Math.max(
-      0,
-      Math.min(100, character / totalCharacters * 100)
-    );
-  };
+      de:[
+        "Anna",
+        "Petra"
+      ],
 
-  const chunkForPercentage = percentage => {
-    if (!chunks.length) return 0;
+      pt:[
+        "Luciana",
+        "Joana"
+      ]
+    };
 
-    const targetCharacter =
-      totalCharacters * (percentage / 100);
+    for(
+      const desired
+      of preferred[language] || []
+    ){
 
-    let selected = 0;
+      const voice =
+        matching.find(v =>
+          v.name
+            .toLowerCase()
+            .includes(
+              desired.toLowerCase()
+            )
+        );
 
-    for (let i = 0; i < offsets.length; i++) {
-      if (offsets[i] <= targetCharacter) {
-        selected = i;
-      } else {
-        break;
+      if(voice){
+        return voice;
       }
     }
 
-    return Math.max(
-      0,
-      Math.min(selected, chunks.length - 1)
-    );
+    return matching[0]
+      || voices[0]
+      || null;
   };
 
-  const setVisualPercentage = value => {
-    const safe = Math.max(0, Math.min(100, value));
 
-    range.value = Math.round(safe * 1000);
-    percent.textContent = safe.toFixed(5) + "%";
+  /* ------------------------------
+     PROGRESS
+  ------------------------------ */
+
+  const percentageAtChunk =
+    index => {
+
+      if(!chunks.length){
+        return 0;
+      }
+
+      if(index >= chunks.length){
+        return 100;
+      }
+
+      return Math.max(
+        0,
+        Math.min(
+          100,
+          (
+            (offsets[index] || 0)
+            / totalChars
+          ) * 100
+        )
+      );
+    };
+
+
+  const chunkFromPercentage =
+    value => {
+
+      const target =
+        totalChars * (value / 100);
+
+      let selected = 0;
+
+      for(
+        let i = 0;
+        i < offsets.length;
+        i++
+      ){
+
+        if(offsets[i] <= target){
+
+          selected = i;
+
+        }else{
+
+          break;
+        }
+      }
+
+      return Math.max(
+        0,
+        Math.min(
+          selected,
+          chunks.length - 1
+        )
+      );
+    };
+
+
+  const drawProgress = value => {
+
+    visualPercent =
+      Math.max(
+        0,
+        Math.min(100,value)
+      );
+
+    range.value =
+      Math.round(
+        visualPercent * 1000
+      );
+
+    percent.textContent =
+      visualPercent.toFixed(5)
+      + "%";
   };
 
-  const updateFromChunk = () => {
-    setVisualPercentage(
-      percentageForChunk(chunkIndex)
-    );
+
+  const stopAnimation = () => {
+
+    if(raf){
+
+      cancelAnimationFrame(raf);
+
+      raf = null;
+    }
   };
+
+
+  const animateChunk = now => {
+
+    if(
+      !playing ||
+      paused
+    ){
+      raf =
+        requestAnimationFrame(
+          animateChunk
+        );
+
+      return;
+    }
+
+    if(!animationStart){
+      animationStart = now;
+    }
+
+    const elapsed =
+      (now - animationStart) / 1000;
+
+    const ratio =
+      Math.min(
+        1,
+        elapsed
+        / estimatedChunkDuration
+      );
+
+    const value =
+      chunkStartPercent
+      +
+      (
+        chunkEndPercent
+        - chunkStartPercent
+      ) * ratio;
+
+    drawProgress(value);
+
+    raf =
+      requestAnimationFrame(
+        animateChunk
+      );
+  };
+
+
+  /* ------------------------------
+     PLAYBACK
+  ------------------------------ */
 
   const resetButtons = () => {
-    playBtn.textContent = "▶ Play";
-    pauseBtn.textContent = "Ⅱ";
+
+    playBtn.textContent =
+      "▶ Play";
+
+    pauseBtn.textContent =
+      "Ⅱ";
   };
 
-  const stopSpeech = () => {
+
+  const stopPlayback = () => {
+
     session++;
+
     synth.cancel();
 
+    stopAnimation();
+
     utterance = null;
+
     playing = false;
     paused = false;
 
     resetButtons();
   };
 
+
   const speakChunk = index => {
-    if (!playing) return;
 
-    if (index >= chunks.length) {
-      chunkIndex = chunks.length;
-      setVisualPercentage(100);
+    if(!playing){
+      return;
+    }
 
-      playing = false;
-      paused = false;
+    if(index >= chunks.length){
 
-      resetButtons();
+      chunkIndex =
+        chunks.length;
+
+      drawProgress(100);
+
+      stopPlayback();
+
       return;
     }
 
     chunkIndex = index;
-    updateFromChunk();
 
-    const mySession = session;
-    const text = getText();
-    const lang = detectLanguage(text);
-    const voice = chooseVoice(lang);
+    chunkStartPercent =
+      percentageAtChunk(index);
+
+    chunkEndPercent =
+      percentageAtChunk(index + 1);
+
+    drawProgress(
+      chunkStartPercent
+    );
+
+    const chunk =
+      chunks[index];
+
+    const words =
+      Math.max(
+        1,
+        chunk
+          .split(/\s+/)
+          .length
+      );
+
+    /*
+       approximate speaking time.
+       Used only for smooth visual progress.
+    */
+
+    estimatedChunkDuration =
+      Math.max(
+        1.4,
+        words / 2.7
+      );
+
+    animationStart = 0;
+
+    stopAnimation();
+
+    raf =
+      requestAnimationFrame(
+        animateChunk
+      );
+
+    const language =
+      detectLanguage(
+        getText()
+      );
+
+    const voice =
+      chooseVoice(language);
+
+    const mySession =
+      session;
 
     utterance =
-      new SpeechSynthesisUtterance(chunks[index]);
+      new SpeechSynthesisUtterance(
+        chunk
+      );
 
-    if (voice) {
-      utterance.voice = voice;
-      utterance.lang = voice.lang;
-    } else {
-      utterance.lang = lang;
+    if(voice){
+
+      utterance.voice =
+        voice;
+
+      utterance.lang =
+        voice.lang;
+
+    }else{
+
+      utterance.lang =
+        language;
     }
 
-    utterance.rate = 0.96;
+    utterance.rate = .96;
     utterance.pitch = 1;
     utterance.volume = 1;
 
     utterance.onend = () => {
-      if (mySession !== session) return;
-      if (!playing) return;
 
-      speakChunk(index + 1);
-    };
-
-    utterance.onerror = event => {
-      if (
-        event.error === "canceled" ||
-        event.error === "interrupted"
-      ) {
+      if(
+        mySession !== session ||
+        !playing
+      ){
         return;
       }
 
-      if (mySession !== session) return;
+      drawProgress(
+        chunkEndPercent
+      );
 
-      setTimeout(() => {
-        if (playing) {
-          speakChunk(index + 1);
-        }
-      }, 120);
+      speakChunk(
+        index + 1
+      );
     };
 
-    synth.speak(utterance);
+    utterance.onerror = event => {
+
+      if(
+        event.error === "canceled" ||
+        event.error === "interrupted"
+      ){
+        return;
+      }
+
+      if(
+        mySession !== session
+      ){
+        return;
+      }
+
+      setTimeout(() => {
+
+        if(playing){
+
+          speakChunk(
+            index + 1
+          );
+        }
+
+      },120);
+    };
+
+    synth.speak(
+      utterance
+    );
   };
 
+
   const startPlayback = () => {
+
     buildTimeline();
 
-    if (!chunks.length) return;
+    if(!chunks.length){
+      return;
+    }
 
-    if (chunkIndex >= chunks.length) {
+    if(
+      chunkIndex >= chunks.length
+    ){
       chunkIndex = 0;
     }
 
     session++;
+
     synth.cancel();
 
     playing = true;
     paused = false;
 
-    playBtn.textContent = "■ Stop";
-    pauseBtn.textContent = "Ⅱ";
+    playBtn.textContent =
+      "■ Stop";
 
-    const mySession = session;
+    pauseBtn.textContent =
+      "Ⅱ";
+
+    const mySession =
+      session;
 
     setTimeout(() => {
-      if (playing && mySession === session) {
-        speakChunk(chunkIndex);
+
+      if(
+        playing &&
+        mySession === session
+      ){
+
+        speakChunk(
+          chunkIndex
+        );
       }
-    }, 120);
+
+    },100);
   };
 
-  const seekToPercentage = percentage => {
+
+  const seek = value => {
+
     buildTimeline();
 
-    if (!chunks.length) return;
-
-    chunkIndex = chunkForPercentage(percentage);
-
-    setVisualPercentage(percentage);
-
-    if (!playing) return;
-
-    session++;
-    synth.cancel();
-
-    paused = false;
-    pauseBtn.textContent = "Ⅱ";
-
-    const mySession = session;
-
-    setTimeout(() => {
-      if (playing && mySession === session) {
-        speakChunk(chunkIndex);
-      }
-    }, 100);
-  };
-
-  playBtn.addEventListener("click", () => {
-    if (playing) {
-      stopSpeech();
+    if(!chunks.length){
       return;
     }
 
-    startPlayback();
-  });
+    chunkIndex =
+      chunkFromPercentage(
+        value
+      );
 
-  pauseBtn.addEventListener("click", () => {
-    if (!playing) return;
+    drawProgress(value);
 
-    if (paused) {
-      synth.resume();
-      paused = false;
-      pauseBtn.textContent = "Ⅱ";
-    } else {
-      synth.pause();
-      paused = true;
-      pauseBtn.textContent = "▶";
+    if(!playing){
+      return;
     }
-  });
 
-  range.addEventListener("input", event => {
-    const percentage =
-      Number(event.target.value) / 1000;
+    session++;
 
-    setVisualPercentage(percentage);
-  });
-
-  range.addEventListener("change", event => {
-    const percentage =
-      Number(event.target.value) / 1000;
-
-    seekToPercentage(percentage);
-  });
-
-  range.addEventListener("pointerup", event => {
-    const percentage =
-      Number(event.target.value) / 1000;
-
-    seekToPercentage(percentage);
-  });
-
-  window.addEventListener("beforeunload", () => {
     synth.cancel();
-  });
+
+    paused = false;
+
+    pauseBtn.textContent =
+      "Ⅱ";
+
+    const mySession =
+      session;
+
+    setTimeout(() => {
+
+      if(
+        playing &&
+        mySession === session
+      ){
+
+        speakChunk(
+          chunkIndex
+        );
+      }
+
+    },90);
+  };
+
+
+  /* ------------------------------
+     CONTROLS
+  ------------------------------ */
+
+  playBtn.addEventListener(
+    "click",
+    () => {
+
+      if(playing){
+
+        stopPlayback();
+
+      }else{
+
+        startPlayback();
+      }
+    }
+  );
+
+
+  pauseBtn.addEventListener(
+    "click",
+    () => {
+
+      if(!playing){
+        return;
+      }
+
+      if(paused){
+
+        synth.resume();
+
+        paused = false;
+
+        pauseBtn.textContent =
+          "Ⅱ";
+
+      }else{
+
+        synth.pause();
+
+        paused = true;
+
+        pauseBtn.textContent =
+          "▶";
+      }
+    }
+  );
+
+
+  range.addEventListener(
+    "input",
+    event => {
+
+      const value =
+        Number(
+          event.target.value
+        ) / 1000;
+
+      drawProgress(value);
+    }
+  );
+
+
+  range.addEventListener(
+    "change",
+    event => {
+
+      seek(
+        Number(
+          event.target.value
+        ) / 1000
+      );
+    }
+  );
+
+
+  window.addEventListener(
+    "beforeunload",
+    () => synth.cancel()
+  );
+
 
   synth.getVoices();
 
-  if ("onvoiceschanged" in synth) {
-    synth.onvoiceschanged = () =>
-      synth.getVoices();
+  if(
+    "onvoiceschanged"
+    in synth
+  ){
+
+    synth.onvoiceschanged =
+      () => synth.getVoices();
   }
 
+
   buildTimeline();
-  setVisualPercentage(0);
+  drawProgress(0);
+
 })();
 </script>
 
