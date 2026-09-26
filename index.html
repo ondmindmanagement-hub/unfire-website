@@ -1568,8 +1568,8 @@ main section.unfire-reading-section{
 }
 
 ::highlight(unfire-speaking-word){
-  color:#fff;
-  background-color:rgba(255,255,255,.16);
+  color:inherit !important;
+  background:transparent !important;
 }
 
 .unfire-speaking-block{
@@ -1682,9 +1682,8 @@ main section.unfire-reading-section{
 }
 
 ::highlight(unfire-speaking-word){
-  color:#ffffff !important;
+  color:inherit !important;
   background:transparent !important;
-  text-shadow:none !important;
 }
 
 @media(max-width:700px){
@@ -1712,6 +1711,28 @@ main section.unfire-reading-section{
   html{
     scroll-behavior:auto !important;
   }
+}
+
+</style>
+
+
+<style id="unfire-line-fill-v1">
+
+.unfire-reading-line{
+  position:relative !important;
+}
+
+.unfire-reading-line-overlay{
+  position:fixed;
+  z-index:20;
+  pointer-events:none;
+  overflow:hidden;
+  white-space:pre;
+  color:#ffffff;
+  background:transparent;
+  width:0;
+  will-change:width,transform;
+  contain:layout paint style;
 }
 
 </style>
@@ -2859,6 +2880,298 @@ main section.unfire-reading-section{
   };
 
 
+
+  let lineOverlay = null;
+  let activeLineElement = null;
+  let activeLineStart = 0;
+  let activeLineEnd = 0;
+
+
+  const createLineOverlay = () => {
+
+    if (lineOverlay) {
+      return;
+    }
+
+    lineOverlay =
+      document.createElement("div");
+
+    lineOverlay.className =
+      "unfire-reading-line-overlay";
+
+    document.body.appendChild(
+      lineOverlay
+    );
+  };
+
+
+  const clearLineFill = () => {
+
+    if (!lineOverlay) {
+      return;
+    }
+
+    lineOverlay.style.width =
+      "0px";
+
+    lineOverlay.style.opacity =
+      "0";
+
+    activeLineElement =
+      null;
+  };
+
+
+  const readingElementForIndex = index => {
+
+    const mapped =
+      nearestMappedWord(index);
+
+    if (!mapped?.value) {
+      return null;
+    }
+
+    return (
+      mapped.value.element ||
+      mapped.value.node?.parentElement ||
+      null
+    );
+  };
+
+
+  const timingWindowForElement = (
+    element,
+    currentIndex
+  ) => {
+
+    if (!element) {
+      return null;
+    }
+
+    let first = currentIndex;
+    let last = currentIndex;
+
+    /*
+      Search backwards while words belong
+      to the same visible reading element.
+    */
+
+    for (
+      let i = currentIndex - 1;
+      i >= 0;
+      i--
+    ) {
+
+      const mapped =
+        nearestMappedWord(i);
+
+      const el =
+        mapped?.value?.element ||
+        mapped?.value?.node?.parentElement;
+
+      if (el !== element) {
+        break;
+      }
+
+      first = i;
+    }
+
+
+    /*
+      Search forwards through the same element.
+    */
+
+    for (
+      let i = currentIndex + 1;
+      i < transcript.length;
+      i++
+    ) {
+
+      const mapped =
+        nearestMappedWord(i);
+
+      const el =
+        mapped?.value?.element ||
+        mapped?.value?.node?.parentElement;
+
+      if (el !== element) {
+        break;
+      }
+
+      last = i;
+    }
+
+
+    const start =
+      transcript[first]?.start;
+
+    const end =
+      transcript[last]?.end;
+
+
+    if (
+      !Number.isFinite(start) ||
+      !Number.isFinite(end) ||
+      end <= start
+    ) {
+      return null;
+    }
+
+    return {
+      start,
+      end
+    };
+  };
+
+
+  const paintLineFill = index => {
+
+    createLineOverlay();
+
+    const element =
+      readingElementForIndex(index);
+
+    if (!element) {
+      clearLineFill();
+      return;
+    }
+
+
+    /*
+      Rebuild geometry only when narration
+      moves into another text element.
+    */
+
+    if (
+      element !== activeLineElement
+    ) {
+
+      activeLineElement =
+        element;
+
+      const timing =
+        timingWindowForElement(
+          element,
+          index
+        );
+
+      if (!timing) {
+        clearLineFill();
+        return;
+      }
+
+      activeLineStart =
+        timing.start;
+
+      activeLineEnd =
+        timing.end;
+
+
+      const rect =
+        element.getBoundingClientRect();
+
+      const style =
+        getComputedStyle(element);
+
+
+      lineOverlay.textContent =
+        element.innerText ||
+        element.textContent ||
+        "";
+
+
+      lineOverlay.style.left =
+        `${rect.left}px`;
+
+      lineOverlay.style.top =
+        `${rect.top}px`;
+
+      lineOverlay.style.height =
+        `${rect.height}px`;
+
+      lineOverlay.style.maxWidth =
+        `${rect.width}px`;
+
+      lineOverlay.style.font =
+        style.font;
+
+      lineOverlay.style.fontFamily =
+        style.fontFamily;
+
+      lineOverlay.style.fontSize =
+        style.fontSize;
+
+      lineOverlay.style.fontWeight =
+        style.fontWeight;
+
+      lineOverlay.style.lineHeight =
+        style.lineHeight;
+
+      lineOverlay.style.letterSpacing =
+        style.letterSpacing;
+
+      lineOverlay.style.textAlign =
+        style.textAlign;
+
+      lineOverlay.style.opacity =
+        "1";
+    }
+
+
+    const duration =
+      Math.max(
+        .001,
+        activeLineEnd -
+        activeLineStart
+      );
+
+
+    const progress =
+      Math.max(
+        0,
+        Math.min(
+          1,
+          (
+            audio.currentTime -
+            activeLineStart
+          ) /
+          duration
+        )
+      );
+
+
+    const rect =
+      activeLineElement
+        .getBoundingClientRect();
+
+
+    /*
+      Overlay stays attached to the text
+      while the page itself moves.
+    */
+
+    lineOverlay.style.left =
+      `${rect.left}px`;
+
+    lineOverlay.style.top =
+      `${rect.top}px`;
+
+    lineOverlay.style.height =
+      `${rect.height}px`;
+
+    lineOverlay.style.maxWidth =
+      `${rect.width}px`;
+
+
+    /*
+      Continuous left-to-right fill.
+    */
+
+    lineOverlay.style.width =
+      `${rect.width * progress}px`;
+  };
+
+
   const updateProgress = () => {
 
     if (
@@ -2903,21 +3216,14 @@ main section.unfire-reading-section{
 
       if (index >= 0) {
 
-        highlightWord(index);
+        paintLineFill(index);
 
         updateScrollTarget(index);
       }
 
     } else {
 
-      if (
-        window.CSS &&
-        CSS.highlights
-      ) {
-        CSS.highlights.delete(
-          "unfire-speaking-word"
-        );
-      }
+      clearLineFill();
     }
 
 
@@ -3146,6 +3452,8 @@ main section.unfire-reading-section{
     "pause",
     () => {
 
+      clearLineFill();
+
       if (!audio.ended) {
         playBtn.textContent = "▶";
       }
@@ -3157,16 +3465,11 @@ main section.unfire-reading-section{
     "ended",
     () => {
 
+      clearLineFill();
+
       playBtn.textContent = "▶";
 
-      if (
-        window.CSS &&
-        CSS.highlights
-      ) {
-        CSS.highlights.delete(
-          "unfire-speaking-word"
-        );
-      }
+      clearLineFill();
     }
   );
 
