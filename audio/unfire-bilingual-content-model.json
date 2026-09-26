@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "languages": {
+    "en": {
+      "audio": "audio/unfire-master-en.mp3",
+      "timeline": "audio/unfire-master-en.canonical.json"
+    },
+    "es": {
+      "audio": "audio/unfire-master-es.mp3",
+      "timeline": "audio/unfire-master-es.canonical.json",
+      "narration_sections": "audio/unfire-master-es.sections.json"
+    }
+  },
+  "sections": [
+    "hero",
+    "company",
+    "work",
+    "bolt",
+    "power",
+    "suite",
+    "archer_intro",
+    "archer",
+    "audio",
+    "system",
+    "scale",
+    "companies",
+    "institutions",
+    "public",
+    "funding"
+  ]
+}
