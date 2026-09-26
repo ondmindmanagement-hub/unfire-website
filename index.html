@@ -810,6 +810,27 @@ section h2 + .lead {
 </nav>
 </header>
 
+
+<div id="unfire-native-language" style="
+position:fixed;
+top:18px;
+right:24px;
+z-index:100000;
+">
+<select id="site-language" style="
+background:#151518;
+color:#f5f5f7;
+border:1px solid #303036;
+border-radius:999px;
+padding:9px 13px;
+font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+font-size:12px;
+">
+<option value="en">English</option>
+<option value="es">Español</option>
+</select>
+</div>
+
 <main id="top">
 
 <div class="wrap">
@@ -1390,6 +1411,169 @@ hello@unfire.technology
   });
 
   speechSynthesis.getVoices();
+})();
+</script>
+
+
+<script>
+(() => {
+
+const translations = {
+  es: {
+    "Technology company · Europe":
+      "Empresa tecnológica · Europa",
+
+    "Technology that compounds.":
+      "Tecnología que multiplica su capacidad.",
+
+    "Unfire develops software across AI, creative technology, data and digital infrastructure — supported by a reusable production system designed to become more capable with every project.":
+      "Unfire desarrolla software de inteligencia artificial, tecnología creativa, datos e infraestructura digital, apoyado por un sistema de producción reutilizable diseñado para aumentar su capacidad con cada proyecto.",
+
+    "Active development and commercial validation · 2026":
+      "Desarrollo activo y validación comercial · 2026",
+
+    "Products today. Infrastructure for what comes next.":
+      "Productos hoy. Infraestructura para lo que viene después.",
+
+    "We are building independent software products while developing a shared technical foundation that reduces duplicated work and improves the speed, repeatability and reliability of future development.":
+      "Desarrollamos productos de software independientes mientras construimos una base tecnológica compartida que reduce el trabajo repetido y mejora la velocidad, la consistencia y la fiabilidad del desarrollo futuro.",
+
+    "Flagship product tracks in active validation.":
+      "Líneas de productos principales en validación activa.",
+
+    "Priority Wave 1 software candidates.":
+      "Candidatos de software prioritarios de la primera fase.",
+
+    "Standalone candidates built and internally audited.":
+      "Candidatos independientes construidos y auditados internamente.",
+
+    "Successful standalone builds at the September 2026 checkpoint.":
+      "Compilaciones independientes completadas con éxito en el punto de control de septiembre de 2026.",
+
+    "Selected work":
+      "Proyectos seleccionados",
+
+    "Different problems. One evolving technology base.":
+      "Problemas distintos. Una misma base tecnológica en evolución.",
+
+    "Audio · Creative technology":
+      "Audio · Tecnología creativa",
+
+    "Professional audio software for music producers. Built to control peaks, shape sound and achieve powerful, clean results through a fast and focused workflow.":
+      "Software de audio profesional para productores musicales. Diseñado para controlar picos, moldear el sonido y conseguir resultados potentes y limpios mediante un flujo de trabajo rápido y preciso.",
+
+    "AI · Automation":
+      "IA · Automatización",
+
+    "AI-powered software designed to coordinate complex computer workflows with greater autonomy, control and less repetitive human intervention.":
+      "Software basado en inteligencia artificial diseñado para coordinar flujos de trabajo informáticos complejos con mayor autonomía, control y menor intervención humana repetitiva.",
+
+    "Data · Utilities":
+      "Datos · Utilidades",
+
+    "Energy intelligence software designed to make electricity pricing and market data easier to understand, compare and use.":
+      "Software de inteligencia energética diseñado para facilitar la comprensión, comparación y uso de precios eléctricos y datos de mercado.",
+
+    "Internal infrastructure":
+      "Infraestructura interna",
+
+    "Unfire's internal technology platform for developing, testing and managing multiple software products from a shared foundation.":
+      "La plataforma tecnológica interna de Unfire para desarrollar, probar y gestionar múltiples productos de software desde una base compartida.",
+
+    "Production capability":
+      "Capacidad de producción",
+
+    "Measured by output, not promises.":
+      "Medido por resultados, no por promesas.",
+
+    "Unfire is developing proprietary methods to reduce repetitive development work and improve production throughput. The underlying implementation remains confidential.":
+      "Unfire desarrolla métodos propios para reducir el trabajo repetitivo de desarrollo y aumentar la capacidad de producción. La implementación subyacente permanece confidencial.",
+
+    "Growth & Production Capacity":
+      "Crecimiento y capacidad de producción",
+
+    "Built to increase output with every product.":
+      "Diseñado para aumentar la capacidad con cada producto.",
+
+    "Unfire is developing a shared software foundation designed to support multiple independent products — or combine them into broader applications and suites when that creates a better user experience.":
+      "Unfire desarrolla una base de software compartida capaz de soportar múltiples productos independientes o integrarlos en aplicaciones y suites más amplias cuando ello mejora la experiencia del usuario.",
+
+    "From individual products to a multi-product pipeline.":
+      "De productos individuales a una línea de producción multiproducto.",
+
+    "Less repetition. More leverage.":
+      "Menos repetición. Más capacidad.",
+
+    "Independent apps or one unified system.":
+      "Aplicaciones independientes o un sistema unificado.",
+
+    "The objective is not simply to build more software. It is to increase the amount of useful software Unfire can develop, validate and commercialise per unit of time.":
+      "El objetivo no es simplemente crear más software. Es aumentar la cantidad de software útil que Unfire puede desarrollar, validar y comercializar por unidad de tiempo.",
+
+    "Investors · Grants · Strategic partners":
+      "Inversores · Subvenciones · Socios estratégicos",
+
+    "Turning technical capability into scalable products.":
+      "Convertir capacidad tecnológica en productos escalables."
+  }
+};
+
+const original = new Map();
+
+function translatableNodes() {
+  return Array.from(document.querySelectorAll(
+    "main h1, main h2, main h3, main p, main .eyebrow, main .stat span, main .product-type, main .history-text, main .capacity-label, main .point strong, main .point span"
+  ));
+}
+
+function saveOriginal() {
+  translatableNodes().forEach(el => {
+    if (!original.has(el)) {
+      original.set(el, el.textContent.trim().replace(/\s+/g, " "));
+    }
+  });
+}
+
+function applyLanguage(lang) {
+  saveOriginal();
+
+  translatableNodes().forEach(el => {
+    const source = original.get(el);
+
+    if (lang === "en") {
+      el.textContent = source;
+    } else {
+      el.textContent = translations[lang]?.[source] || source;
+    }
+  });
+
+  document.documentElement.lang = lang;
+
+  const audioLang = document.getElementById("voice-language");
+  if (audioLang) {
+    audioLang.value = lang;
+    audioLang.dispatchEvent(new Event("change"));
+  }
+
+  localStorage.setItem("unfire-language", lang);
+}
+
+const selector = document.getElementById("site-language");
+
+const stored = localStorage.getItem("unfire-language");
+const browser = (navigator.language || "en").toLowerCase();
+
+let initial = stored || (browser.startsWith("es") ? "es" : "en");
+
+selector.value = initial;
+
+setTimeout(() => applyLanguage(initial), 300);
+
+selector.addEventListener("change", () => {
+  speechSynthesis.cancel();
+  applyLanguage(selector.value);
+});
+
 })();
 </script>
 
