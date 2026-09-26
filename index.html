@@ -1740,8 +1740,9 @@ main section.unfire-reading-section{
 }
 
 ::highlight(unfire-speaking-word){
-  color:#fff;
-  background-color:rgba(255,255,255,.16);
+  color:#ffffff;
+  background-color:transparent;
+  text-shadow:0 0 8px rgba(255,255,255,.18);
 }
 
 .unfire-speaking-block{
@@ -1774,6 +1775,23 @@ main section.unfire-reading-section{
 
 }
 
+</style>
+
+
+<style id="unfire-karaoke-white-v1">
+.unfire-reader-word{
+  transition:
+    color .14s ease,
+    opacity .14s ease,
+    text-shadow .14s ease !important;
+}
+
+.unfire-reader-word.unfire-word-active{
+  color:#ffffff !important;
+  opacity:1 !important;
+  text-shadow:
+    0 0 8px rgba(255,255,255,.18) !important;
+}
 </style>
 
 </head>
