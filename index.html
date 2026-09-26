@@ -2548,16 +2548,27 @@ main section.unfire-reading-section{
   };
 
   /* ========================================
-     FORWARD READING CAMERA
-     Smooth, stable, downward-only reading follow
+     RESPONSIVE READING FOLLOW
+     Native smooth scrolling on iPhone/iPad
+     Continuous camera on desktop
   ======================================== */
 
   let followTarget = null;
   let followRAF = null;
+
   let cameraTargetY = window.scrollY;
   let cameraCurrentY = window.scrollY;
   let cameraActive = false;
   let cameraUserJump = false;
+
+  let lastMobileTargetY = window.scrollY;
+  let lastMobileScrollTime = 0;
+
+
+  const isMobileReader = () =>
+    window.matchMedia(
+      "(max-width: 800px), (pointer: coarse)"
+    ).matches;
 
 
   const getFollowRect = target => {
@@ -2582,7 +2593,15 @@ main section.unfire-reading-section{
           target.end
         );
 
-        return r.getBoundingClientRect();
+        const rect =
+          r.getBoundingClientRect();
+
+        if (
+          rect &&
+          rect.width + rect.height > 0
+        ) {
+          return rect;
+        }
 
       } catch (_) {}
     }
@@ -2597,7 +2616,7 @@ main section.unfire-reading-section{
   };
 
 
-  const computeReadingPosition = target => {
+  const getReadingY = target => {
 
     const rect =
       getFollowRect(target);
@@ -2605,20 +2624,17 @@ main section.unfire-reading-section{
     if (!rect) return null;
 
     const viewport =
-      window.innerHeight ||
-      document.documentElement.clientHeight;
-
-    const mobile =
-      window.matchMedia(
-        "(max-width: 700px)"
-      ).matches;
+      window.visualViewport
+        ? window.visualViewport.height
+        : window.innerHeight;
 
     /*
-      Keep reading slightly above exact center.
-      This leaves breathing room for the player.
+      Mobile: text slightly above center
+      so player never covers it.
     */
-    const desiredViewportY =
-      viewport * (mobile ? .40 : .45);
+    const desired =
+      viewport *
+      (isMobileReader() ? .39 : .45);
 
     const absoluteCenter =
       window.scrollY +
@@ -2627,9 +2643,59 @@ main section.unfire-reading-section{
 
     return Math.max(
       0,
-      absoluteCenter -
-      desiredViewportY
+      absoluteCenter - desired
     );
+  };
+
+
+  const mobileFollow = (
+    target,
+    allowBackward = false
+  ) => {
+
+    const targetY =
+      getReadingY(target);
+
+    if (targetY === null) return;
+
+    const now =
+      performance.now();
+
+    /*
+      Normal narration only moves forward.
+    */
+    if (
+      !allowBackward &&
+      targetY <= window.scrollY + 28
+    ) {
+      return;
+    }
+
+    /*
+      Avoid firing dozens of native smooth scrolls
+      for adjacent words.
+    */
+    if (
+      !allowBackward &&
+      Math.abs(
+        targetY - lastMobileTargetY
+      ) < 42 &&
+      now - lastMobileScrollTime < 650
+    ) {
+      return;
+    }
+
+    lastMobileTargetY =
+      targetY;
+
+    lastMobileScrollTime =
+      now;
+
+    window.scrollTo({
+      top: targetY,
+      left: 0,
+      behavior: "smooth"
+    });
   };
 
 
@@ -2642,23 +2708,39 @@ main section.unfire-reading-section{
 
     followTarget = target;
 
+    /*
+      iPhone / iPad:
+      let WebKit perform the scrolling natively.
+    */
+    if (isMobileReader()) {
+
+      mobileFollow(
+        target,
+        allowBackward
+      );
+
+      return;
+    }
+
+    /*
+      Desktop:
+      continuous custom reading camera.
+    */
     const position =
-      computeReadingPosition(target);
+      getReadingY(target);
 
     if (position === null) return;
 
-    /*
-      During normal reading the camera can only
-      move forward.
-
-      Backward movement is only permitted for an
-      intentional user jump/seek/navigation.
-    */
     if (allowBackward) {
 
-      cameraTargetY = position;
-      cameraCurrentY = window.scrollY;
-      cameraUserJump = true;
+      cameraTargetY =
+        position;
+
+      cameraCurrentY =
+        window.scrollY;
+
+      cameraUserJump =
+        true;
 
     } else {
 
@@ -2681,6 +2763,13 @@ main section.unfire-reading-section{
         readingCamera
       );
 
+    /*
+      Mobile uses native smooth scrolling.
+    */
+    if (isMobileReader()) {
+      return;
+    }
+
     if (
       !cameraActive ||
       !playing ||
@@ -2696,10 +2785,6 @@ main section.unfire-reading-section{
     const actualY =
       window.scrollY;
 
-    /*
-      If the visitor manually scrolls downward,
-      accept that position instead of fighting it.
-    */
     if (
       actualY >
       cameraCurrentY + 18
@@ -2719,48 +2804,37 @@ main section.unfire-reading-section{
       actualY;
 
     if (
-      Math.abs(difference) < 0.6
+      Math.abs(difference) < .6
     ) {
       cameraCurrentY =
         actualY;
 
-      cameraUserJump = false;
+      cameraUserJump =
+        false;
 
       return;
     }
 
-    /*
-      Smooth ease:
-      big distances move confidently,
-      small distances settle softly.
-    */
-    const mobile =
-      window.matchMedia(
-        "(max-width: 700px)"
-      ).matches;
-
     const easing =
       cameraUserJump
         ? .13
-        : (mobile ? .075 : .065);
+        : .07;
 
     let step =
       difference * easing;
 
-    const maxStep =
-      mobile ? 15 : 18;
+    const maxStep = 18;
 
     if (step > 0) {
+
       step =
         Math.min(
           step,
           maxStep
         );
+
     } else {
-      /*
-        Never move upward during normal reading.
-        Only a deliberate user jump may do so.
-      */
+
       if (!cameraUserJump) {
         return;
       }
@@ -2803,7 +2877,7 @@ main section.unfire-reading-section{
 
   readingCamera();
 
-/* end forward reading camera */
+/* end responsive reading follow */
 
   const stopClock = () => {
     if (progressTimer) {
