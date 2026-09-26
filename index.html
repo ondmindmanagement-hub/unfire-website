@@ -1655,7 +1655,7 @@ body{
 
 
 
-<script id="unfire-reader-v6">
+<script id="unfire-reader-v7">
 (() => {
   const synth = window.speechSynthesis;
 
@@ -1666,11 +1666,13 @@ body{
 
   if (!synth || !playBtn || !pauseBtn || !range || !percent) return;
 
-  let chunks = [];
-  let offsets = [];
-  let totalChars = 1;
+  let fullText = "";
+  let queue = [];
 
-  let chunkIndex = 0;
+  let absoluteChar = 0;
+  let currentChunkStart = 0;
+  let currentChunkEnd = 0;
+
   let utterance = null;
 
   let playing = false;
@@ -1679,14 +1681,12 @@ body{
 
   let progressTimer = null;
 
-  let chunkStartPercent = 0;
-  let chunkEndPercent = 0;
-
-  let visualPercent = 0;
-
   let chunkElapsed = 0;
   let chunkDuration = 1;
   let lastTick = 0;
+
+  let visualPercent = 0;
+
 
   const getText = () => {
     const main = document.querySelector("main");
@@ -1698,18 +1698,91 @@ body{
       .trim();
   };
 
-  const splitText = text => {
+
+  const nearestWordBoundary = index => {
+    if (!fullText.length) return 0;
+
+    index = Math.max(
+      0,
+      Math.min(index, fullText.length - 1)
+    );
+
+    if (/\s/.test(fullText[index])) {
+      return index + 1;
+    }
+
+    let left = index;
+    let right = index;
+
+    while (
+      left > 0 ||
+      right < fullText.length
+    ) {
+      if (
+        left > 0 &&
+        /\s/.test(fullText[left])
+      ) {
+        return left + 1;
+      }
+
+      if (
+        right < fullText.length &&
+        /\s/.test(fullText[right])
+      ) {
+        return right + 1;
+      }
+
+      left--;
+      right++;
+    }
+
+    return index;
+  };
+
+
+  const splitFromPosition = startIndex => {
+    const remaining =
+      fullText.slice(startIndex);
+
     const sentences =
-      text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+      remaining.match(/[^.!?]+[.!?]+|[^.!?]+$/g)
+      || [remaining];
 
     const result = [];
+
     let buffer = "";
+    let absoluteCursor = startIndex;
+
+    const pushChunk = text => {
+      const clean = text.trim();
+
+      if (!clean) return;
+
+      const relative =
+        fullText.indexOf(clean, absoluteCursor);
+
+      const start =
+        relative >= 0
+          ? relative
+          : absoluteCursor;
+
+      result.push({
+        text: clean,
+        start,
+        end: start + clean.length
+      });
+
+      absoluteCursor =
+        start + clean.length;
+    };
 
     for (const sentence of sentences) {
       const clean = sentence.trim();
+
       if (!clean) continue;
 
-      const candidate = (buffer + " " + clean).trim();
+      const candidate =
+        (buffer + " " + clean).trim();
 
       if (candidate.length <= 220) {
         buffer = candidate;
@@ -1717,7 +1790,7 @@ body{
       }
 
       if (buffer) {
-        result.push(buffer);
+        pushChunk(buffer);
         buffer = "";
       }
 
@@ -1726,16 +1799,19 @@ body{
         continue;
       }
 
-      const words = clean.split(/\s+/);
+      const words =
+        clean.split(/\s+/);
+
       let part = "";
 
       for (const word of words) {
-        const next = (part + " " + word).trim();
+        const next =
+          (part + " " + word).trim();
 
         if (next.length <= 200) {
           part = next;
         } else {
-          if (part) result.push(part);
+          if (part) pushChunk(part);
           part = word;
         }
       }
@@ -1743,57 +1819,50 @@ body{
       buffer = part;
     }
 
-    if (buffer) result.push(buffer);
+    if (buffer) {
+      pushChunk(buffer);
+    }
 
     return result;
   };
 
-  const buildTimeline = () => {
-    chunks = splitText(getText());
-    offsets = [];
-
-    let cursor = 0;
-
-    for (const chunk of chunks) {
-      offsets.push(cursor);
-      cursor += chunk.length + 1;
-    }
-
-    totalChars = Math.max(cursor, 1);
-
-    if (chunkIndex >= chunks.length) {
-      chunkIndex = Math.max(0, chunks.length - 1);
-    }
-  };
 
   const detectLanguage = text => {
-    const t = " " + text.toLowerCase() + " ";
+    const t =
+      " " + text.toLowerCase() + " ";
 
     const dictionaries = {
       es: [
-        " el "," la "," los "," las "," para ",
-        " tecnología "," empresas "," capacidad ",
-        " aplicaciones "," financiación "," sistema "
+        " el "," la "," los "," las ",
+        " para "," tecnología "," capacidad ",
+        " financiación "," empresas "," sistema "
       ],
       en: [
-        " the "," and "," technology "," software ",
-        " company "," products "," system "
+        " the "," and "," technology ",
+        " software "," company "," system ",
+        " products "
       ],
       fr: [
-        " le "," les "," une "," pour "," technologie "
+        " le "," les "," une ",
+        " pour "," technologie "
       ],
       de: [
-        " der "," die "," das "," und "," für "
+        " der "," die "," das ",
+        " und "," für "
       ],
       pt: [
-        " uma "," para "," tecnologia "," capacidade "
+        " uma "," para ",
+        " tecnologia "," capacidade "
       ]
     };
 
     let winner = "en";
     let best = -1;
 
-    for (const [lang, words] of Object.entries(dictionaries)) {
+    for (
+      const [lang, words]
+      of Object.entries(dictionaries)
+    ) {
       let score = 0;
 
       for (const word of words) {
@@ -1809,121 +1878,154 @@ body{
     return winner;
   };
 
+
   const chooseVoice = lang => {
-    const voices = synth.getVoices();
+    const voices =
+      synth.getVoices();
 
     if (!voices.length) return null;
 
-    const sameLanguage = voices.filter(v =>
-      v.lang &&
-      v.lang.toLowerCase().startsWith(lang)
-    );
-
-    const preferred = {
-      es: ["Mónica", "Monica", "Paulina", "Jorge"],
-      en: ["Samantha", "Daniel", "Alex", "Karen"],
-      fr: ["Thomas", "Amélie"],
-      de: ["Anna", "Petra"],
-      pt: ["Luciana", "Joana"]
-    };
-
-    for (const wanted of preferred[lang] || []) {
-      const found = sameLanguage.find(v =>
-        v.name.toLowerCase().includes(wanted.toLowerCase())
+    const matching =
+      voices.filter(v =>
+        v.lang &&
+        v.lang.toLowerCase().startsWith(lang)
       );
 
-      if (found) return found;
+    const preferred = {
+      es: ["Mónica","Monica","Paulina","Jorge"],
+      en: ["Samantha","Daniel","Alex","Karen"],
+      fr: ["Thomas","Amélie"],
+      de: ["Anna","Petra"],
+      pt: ["Luciana","Joana"]
+    };
+
+    for (
+      const wanted
+      of preferred[lang] || []
+    ) {
+      const voice =
+        matching.find(v =>
+          v.name
+            .toLowerCase()
+            .includes(
+              wanted.toLowerCase()
+            )
+        );
+
+      if (voice) return voice;
     }
 
-    return sameLanguage[0] || voices[0] || null;
+    return matching[0]
+      || voices[0]
+      || null;
   };
 
-  const percentageAtChunk = index => {
-    if (!chunks.length) return 0;
-    if (index >= chunks.length) return 100;
+
+  const percentageFromChar = charIndex => {
+    if (!fullText.length) return 0;
 
     return Math.max(
       0,
       Math.min(
         100,
-        ((offsets[index] || 0) / totalChars) * 100
+        charIndex / fullText.length * 100
       )
     );
   };
 
-  const chunkFromPercentage = value => {
-    const target = totalChars * (value / 100);
 
-    let selected = 0;
+  const charFromPercentage = value => {
+    if (!fullText.length) return 0;
 
-    for (let i = 0; i < offsets.length; i++) {
-      if (offsets[i] <= target) {
-        selected = i;
-      } else {
-        break;
-      }
-    }
-
-    return Math.max(
-      0,
-      Math.min(selected, chunks.length - 1)
+    return Math.round(
+      fullText.length *
+      Math.max(0, Math.min(100, value)) /
+      100
     );
   };
 
-  const drawProgress = value => {
-    visualPercent = Math.max(0, Math.min(100, value));
 
-    range.value = Math.round(visualPercent * 1000);
-    percent.textContent = visualPercent.toFixed(5) + "%";
+  const drawProgress = value => {
+    visualPercent =
+      Math.max(
+        0,
+        Math.min(100, value)
+      );
+
+    range.value =
+      Math.round(
+        visualPercent * 1000
+      );
+
+    percent.textContent =
+      visualPercent.toFixed(5) + "%";
   };
 
-  const stopProgressClock = () => {
+
+  const stopClock = () => {
     if (progressTimer) {
       clearInterval(progressTimer);
       progressTimer = null;
     }
   };
 
-  const startProgressClock = () => {
-    stopProgressClock();
+
+  const startClock = () => {
+    stopClock();
 
     lastTick = performance.now();
 
-    progressTimer = setInterval(() => {
-      if (!playing || paused) {
-        lastTick = performance.now();
-        return;
-      }
+    progressTimer =
+      setInterval(() => {
+        if (!playing || paused) {
+          lastTick = performance.now();
+          return;
+        }
 
-      const now = performance.now();
-      const delta = (now - lastTick) / 1000;
-      lastTick = now;
+        const now =
+          performance.now();
 
-      chunkElapsed += delta;
+        const delta =
+          (now - lastTick) / 1000;
 
-      const ratio = Math.min(
-        0.995,
-        chunkElapsed / chunkDuration
-      );
+        lastTick = now;
 
-      const value =
-        chunkStartPercent +
-        (chunkEndPercent - chunkStartPercent) * ratio;
+        chunkElapsed += delta;
 
-      drawProgress(value);
-    }, 100);
+        const ratio =
+          Math.min(
+            .995,
+            chunkElapsed /
+            Math.max(chunkDuration, .1)
+          );
+
+        const estimatedChar =
+          currentChunkStart +
+          (
+            currentChunkEnd -
+            currentChunkStart
+          ) * ratio;
+
+        drawProgress(
+          percentageFromChar(
+            estimatedChar
+          )
+        );
+      }, 100);
   };
+
 
   const resetButtons = () => {
     playBtn.textContent = "▶ Play";
     pauseBtn.textContent = "Ⅱ";
   };
 
+
   const stopPlayback = () => {
     session++;
-    synth.cancel();
 
-    stopProgressClock();
+    synth.cancel();
+    stopClock();
 
     utterance = null;
     playing = false;
@@ -1932,51 +2034,69 @@ body{
     resetButtons();
   };
 
-  const speakChunk = index => {
+
+  const speakNext = () => {
     if (!playing) return;
 
-    if (index >= chunks.length) {
+    if (!queue.length) {
+      absoluteChar = fullText.length;
+
       drawProgress(100);
 
       playing = false;
       paused = false;
 
-      stopProgressClock();
+      stopClock();
       resetButtons();
 
       return;
     }
 
-    chunkIndex = index;
+    const item =
+      queue.shift();
 
-    chunkStartPercent = percentageAtChunk(index);
-    chunkEndPercent = percentageAtChunk(index + 1);
+    currentChunkStart =
+      item.start;
 
-    drawProgress(chunkStartPercent);
+    currentChunkEnd =
+      item.end;
 
-    const chunk = chunks[index];
+    absoluteChar =
+      item.start;
+
+    drawProgress(
+      percentageFromChar(
+        absoluteChar
+      )
+    );
 
     const words =
-      Math.max(1, chunk.split(/\s+/).length);
+      Math.max(
+        1,
+        item.text.split(/\s+/).length
+      );
 
-    /*
-      Estimación de tiempo.
-      Aproximadamente 155 palabras/minuto con rate 0.96.
-    */
-    chunkDuration = Math.max(
-      1.2,
-      words / 2.58
-    );
+    chunkDuration =
+      Math.max(
+        1.2,
+        words / 2.58
+      );
 
     chunkElapsed = 0;
 
-    const lang = detectLanguage(getText());
-    const voice = chooseVoice(lang);
+    const lang =
+      detectLanguage(fullText);
 
-    const mySession = session;
+    const voice =
+      chooseVoice(lang);
+
+    const mySession =
+      session;
 
     utterance =
-      new SpeechSynthesisUtterance(chunk);
+      new SpeechSynthesisUtterance(
+        item.text
+      );
 
     if (voice) {
       utterance.voice = voice;
@@ -1985,14 +2105,11 @@ body{
       utterance.lang = lang;
     }
 
-    utterance.rate = 0.96;
+    utterance.rate = .96;
     utterance.pitch = 1;
     utterance.volume = 1;
 
-    /*
-      Si Safari proporciona posiciones reales de palabras,
-      aprovechamos también esos datos.
-    */
+
     utterance.onboundary = event => {
       if (
         mySession !== session ||
@@ -2001,23 +2118,19 @@ body{
         return;
       }
 
-      const ratio =
-        Math.max(
-          0,
-          Math.min(
-            1,
-            event.charIndex / Math.max(chunk.length, 1)
-          )
+      absoluteChar =
+        Math.min(
+          fullText.length,
+          item.start + event.charIndex
         );
 
-      const realValue =
-        chunkStartPercent +
-        (chunkEndPercent - chunkStartPercent) * ratio;
-
-      if (realValue > visualPercent) {
-        drawProgress(realValue);
-      }
+      drawProgress(
+        percentageFromChar(
+          absoluteChar
+        )
+      );
     };
+
 
     utterance.onend = () => {
       if (
@@ -2027,10 +2140,18 @@ body{
         return;
       }
 
-      drawProgress(chunkEndPercent);
+      absoluteChar =
+        item.end;
 
-      speakChunk(index + 1);
+      drawProgress(
+        percentageFromChar(
+          absoluteChar
+        )
+      );
+
+      speakNext();
     };
+
 
     utterance.onerror = event => {
       if (
@@ -2040,191 +2161,224 @@ body{
         return;
       }
 
-      if (mySession !== session) return;
+      if (
+        mySession !== session
+      ) {
+        return;
+      }
 
       setTimeout(() => {
         if (playing) {
-          speakChunk(index + 1);
+          speakNext();
         }
-      }, 120);
+      }, 100);
     };
+
 
     synth.speak(utterance);
 
-    startProgressClock();
+    startClock();
   };
 
-  const startPlayback = () => {
-    buildTimeline();
 
-    if (!chunks.length) return;
+  const startFromChar = charIndex => {
+    fullText = getText();
 
-    if (chunkIndex >= chunks.length) {
-      chunkIndex = 0;
-    }
+    if (!fullText) return;
+
+    charIndex =
+      nearestWordBoundary(
+        charIndex
+      );
+
+    absoluteChar =
+      charIndex;
+
+    queue =
+      splitFromPosition(
+        charIndex
+      );
 
     session++;
+
     synth.cancel();
+    stopClock();
 
     playing = true;
     paused = false;
 
-    playBtn.textContent = "■ Stop";
-    pauseBtn.textContent = "Ⅱ";
+    playBtn.textContent =
+      "■ Stop";
 
-    const mySession = session;
+    pauseBtn.textContent =
+      "Ⅱ";
 
-    setTimeout(() => {
-      if (
-        playing &&
-        mySession === session
-      ) {
-        speakChunk(chunkIndex);
-      }
-    }, 100);
-  };
-
-  const seek = value => {
-    buildTimeline();
-
-    if (!chunks.length) return;
-
-    chunkIndex =
-      chunkFromPercentage(value);
-
-    drawProgress(value);
-
-    if (!playing) return;
-
-    session++;
-    synth.cancel();
-
-    paused = false;
-
-    pauseBtn.textContent = "Ⅱ";
-
-    const mySession = session;
+    const mySession =
+      session;
 
     setTimeout(() => {
       if (
         playing &&
         mySession === session
       ) {
-        speakChunk(chunkIndex);
+        speakNext();
       }
     }, 90);
   };
 
-  playBtn.addEventListener("click", () => {
-    if (playing) {
-      stopPlayback();
-    } else {
-      startPlayback();
-    }
-  });
 
-  pauseBtn.addEventListener("click", () => {
-    if (!playing) return;
+  const seekPercentage = value => {
+    fullText = getText();
 
-    if (paused) {
-      synth.resume();
+    if (!fullText) return;
 
-      paused = false;
-      pauseBtn.textContent = "Ⅱ";
+    const exactChar =
+      charFromPercentage(value);
 
-      lastTick = performance.now();
-    } else {
-      synth.pause();
+    const wordChar =
+      nearestWordBoundary(
+        exactChar
+      );
 
-      paused = true;
-      pauseBtn.textContent = "▶";
-    }
-  });
+    absoluteChar =
+      wordChar;
 
-  const percentageFromPointer = event => {
-    const rect = range.getBoundingClientRect();
-
-    if (!rect.width) return null;
-
-    const x = Math.max(
-      0,
-      Math.min(
-        rect.width,
-        event.clientX - rect.left
+    drawProgress(
+      percentageFromChar(
+        wordChar
       )
     );
 
-    return (x / rect.width) * 100;
+    if (playing) {
+      startFromChar(wordChar);
+    }
   };
 
 
-  /*
-    TAP / CLICK:
-    Clicking anywhere on the progress bar
-    immediately jumps playback to that position.
-  */
-  range.addEventListener("pointerdown", event => {
-    if (
-      event.pointerType === "mouse" &&
-      event.button !== 0
-    ) {
-      return;
+  const percentageFromPointer =
+    event => {
+      const rect =
+        range.getBoundingClientRect();
+
+      if (!rect.width) return null;
+
+      const x =
+        Math.max(
+          0,
+          Math.min(
+            rect.width,
+            event.clientX - rect.left
+          )
+        );
+
+      return x / rect.width * 100;
+    };
+
+
+  playBtn.addEventListener(
+    "click",
+    () => {
+      if (playing) {
+        stopPlayback();
+      } else {
+        startFromChar(
+          absoluteChar
+        );
+      }
     }
-
-    const value =
-      percentageFromPointer(event);
-
-    if (value === null) return;
-
-    range.value =
-      Math.round(value * 1000);
-
-    drawProgress(value);
-    seek(value);
-  });
+  );
 
 
-  /*
-    DRAG:
-    Native range dragging remains available.
-    While dragging, the number follows the thumb.
-  */
-  range.addEventListener("input", event => {
-    const value =
-      Number(event.target.value) / 1000;
+  pauseBtn.addEventListener(
+    "click",
+    () => {
+      if (!playing) return;
 
-    drawProgress(value);
-  });
+      if (paused) {
+        synth.resume();
+
+        paused = false;
+        pauseBtn.textContent = "Ⅱ";
+
+        lastTick =
+          performance.now();
+      } else {
+        synth.pause();
+
+        paused = true;
+        pauseBtn.textContent = "▶";
+      }
+    }
+  );
 
 
-  /*
-    When the user finishes dragging,
-    playback continues from the selected point.
-  */
-  range.addEventListener("change", event => {
-    const value =
-      Number(event.target.value) / 1000;
+  range.addEventListener(
+    "pointerdown",
+    event => {
+      if (
+        event.pointerType === "mouse" &&
+        event.button !== 0
+      ) {
+        return;
+      }
 
-    seek(value);
-  });
+      const value =
+        percentageFromPointer(event);
+
+      if (value === null) return;
+
+      seekPercentage(value);
+    }
+  );
+
+
+  range.addEventListener(
+    "input",
+    event => {
+      drawProgress(
+        Number(
+          event.target.value
+        ) / 1000
+      );
+    }
+  );
+
+
+  range.addEventListener(
+    "change",
+    event => {
+      seekPercentage(
+        Number(
+          event.target.value
+        ) / 1000
+      );
+    }
+  );
+
 
   window.addEventListener(
     "beforeunload",
     () => {
       synth.cancel();
-      stopProgressClock();
+      stopClock();
     }
   );
 
+
   synth.getVoices();
 
-  if ("onvoiceschanged" in synth) {
+  if (
+    "onvoiceschanged"
+    in synth
+  ) {
     synth.onvoiceschanged =
       () => synth.getVoices();
   }
 
-  buildTimeline();
+
+  fullText = getText();
   drawProgress(0);
+
 })();
 </script>
 
