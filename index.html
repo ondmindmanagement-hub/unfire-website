@@ -729,6 +729,164 @@ h3{
   }
 }
 </style>
+
+<style id="unfire-layout-fix">
+
+/* -------------------------------------------------------
+   GLOBAL ALIGNMENT FIX
+------------------------------------------------------- */
+
+:root{
+  --max:1180px;
+  --page-pad:32px;
+}
+
+.wrap{
+  width:min(calc(100% - (var(--page-pad) * 2)), var(--max)) !important;
+  max-width:var(--max) !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+/* HERO MUST NOT OVERRIDE .wrap */
+.hero-inner{
+  width:min(calc(100% - (var(--page-pad) * 2)), var(--max)) !important;
+  max-width:var(--max) !important;
+  margin:0 auto !important;
+}
+
+/* Header uses exactly same visual axis */
+.nav{
+  width:100%;
+}
+
+/* cleaner hero */
+.hero{
+  min-height:calc(100vh - 64px);
+  display:flex;
+  align-items:center;
+  padding:80px 0 105px !important;
+}
+
+.hero-inner{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+}
+
+.hero-kicker{
+  margin-bottom:28px !important;
+}
+
+.hero h1{
+  max-width:1050px !important;
+  margin:0 0 34px !important;
+  font-size:clamp(4.2rem,7.3vw,7.4rem) !important;
+  line-height:.98 !important;
+  letter-spacing:-.025em !important;
+}
+
+.hero p{
+  max-width:720px !important;
+  margin:0 !important;
+  font-size:clamp(18px,1.75vw,23px) !important;
+  line-height:1.55 !important;
+}
+
+.hero-actions{
+  margin-top:38px !important;
+}
+
+/* all sections share same rhythm */
+section{
+  padding:120px 0 !important;
+}
+
+section > .wrap{
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+/* stop oversized empty gaps */
+#company,
+#work,
+#audio,
+#system,
+#scale,
+#funding{
+  min-height:auto !important;
+}
+
+/* headings aligned and readable */
+h2{
+  max-width:940px !important;
+  font-size:clamp(3rem,5.4vw,5.7rem) !important;
+  line-height:1.03 !important;
+  letter-spacing:-.018em !important;
+}
+
+.lead{
+  max-width:760px !important;
+}
+
+/* player: smaller and less intrusive */
+#reader{
+  right:20px !important;
+  bottom:20px !important;
+  width:230px !important;
+  padding:9px !important;
+  border-radius:15px !important;
+}
+
+#reader-play{
+  height:31px !important;
+}
+
+#reader-pause{
+  width:31px !important;
+  height:31px !important;
+}
+
+/* desktop optical centering */
+@media(min-width:1200px){
+  :root{
+    --page-pad:48px;
+  }
+}
+
+/* tablet */
+@media(max-width:900px){
+  :root{
+    --page-pad:26px;
+  }
+
+  .hero{
+    padding:80px 0 90px !important;
+  }
+}
+
+/* mobile */
+@media(max-width:620px){
+  :root{
+    --page-pad:18px;
+  }
+
+  .hero{
+    padding:70px 0 80px !important;
+  }
+
+  .hero h1{
+    font-size:clamp(3.2rem,14vw,4.8rem) !important;
+  }
+
+  section{
+    padding:90px 0 !important;
+  }
+}
+
+</style>
+
 </head>
 
 <body>
