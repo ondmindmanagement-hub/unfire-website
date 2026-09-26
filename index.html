@@ -1577,5 +1577,163 @@ selector.addEventListener("change", () => {
 })();
 </script>
 
+<!-- UNFIRE_VOICE_AUTOSYNC_V2 -->
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const languageSelect = document.getElementById("voice-language");
+  const voiceSelect = document.getElementById("voice-select");
+  const siteLanguage = document.getElementById("site-language");
+  const status = document.getElementById("voice-status");
+
+  if (!languageSelect || !voiceSelect) return;
+
+  const supported = {
+    en: ["en-GB", "en-US", "en"],
+    es: ["es-ES", "es-MX", "es"],
+    ca: ["ca-ES", "ca"],
+    fr: ["fr-FR", "fr-CA", "fr"],
+    de: ["de-DE", "de"],
+    it: ["it-IT", "it"],
+    pt: ["pt-PT", "pt-BR", "pt"],
+    ja: ["ja-JP", "ja"],
+    ko: ["ko-KR", "ko"],
+    zh: ["zh-CN", "zh-TW", "zh-HK", "zh"]
+  };
+
+  let allVoices = [];
+
+  function baseLanguage() {
+    if (siteLanguage && siteLanguage.value) {
+      return siteLanguage.value.toLowerCase().split("-")[0];
+    }
+
+    const htmlLang =
+      (document.documentElement.lang || "").toLowerCase().split("-")[0];
+
+    if (supported[htmlLang]) return htmlLang;
+
+    const browserLang =
+      (navigator.language || "en").toLowerCase().split("-")[0];
+
+    return supported[browserLang] ? browserLang : "en";
+  }
+
+  function voicesForLanguage(lang) {
+    const preferences = supported[lang] || [lang];
+
+    return allVoices
+      .filter(v => {
+        const vl = v.lang.toLowerCase();
+        return preferences.some(pref =>
+          vl.startsWith(pref.toLowerCase())
+        );
+      })
+      .sort((a, b) => {
+        const pref = supported[lang]?.[0]?.toLowerCase() || lang;
+        const ae = a.lang.toLowerCase() === pref ? 0 : 1;
+        const be = b.lang.toLowerCase() === pref ? 0 : 1;
+        return ae - be;
+      });
+  }
+
+  function syncVoiceLanguage() {
+    allVoices = speechSynthesis.getVoices();
+
+    const lang = baseLanguage();
+
+    languageSelect.value = lang;
+
+    const matches = voicesForLanguage(lang);
+
+    voiceSelect.innerHTML = "";
+
+    if (matches.length) {
+      matches.forEach((voice, index) => {
+        const option = document.createElement("option");
+        option.value = voice.name;
+        option.textContent = voice.name + " · " + voice.lang;
+
+        if (index === 0) option.selected = true;
+
+        voiceSelect.appendChild(option);
+      });
+
+      if (status) {
+        status.textContent =
+          "Auto · " +
+          lang.toUpperCase() +
+          " · " +
+          matches[0].name;
+      }
+    } else {
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent =
+        "No " + lang.toUpperCase() + " voice installed";
+
+      voiceSelect.appendChild(option);
+
+      if (status) {
+        status.textContent =
+          "No compatible " +
+          lang.toUpperCase() +
+          " voice available";
+      }
+    }
+
+    languageSelect.dispatchEvent(
+      new Event("change", { bubbles: true })
+    );
+  }
+
+  let attempts = 0;
+
+  function waitForVoices() {
+    allVoices = speechSynthesis.getVoices();
+
+    if (allVoices.length || attempts > 20) {
+      syncVoiceLanguage();
+      return;
+    }
+
+    attempts++;
+    setTimeout(waitForVoices, 200);
+  }
+
+  speechSynthesis.addEventListener?.(
+    "voiceschanged",
+    syncVoiceLanguage
+  );
+
+  if ("onvoiceschanged" in speechSynthesis) {
+    speechSynthesis.onvoiceschanged = syncVoiceLanguage;
+  }
+
+  if (siteLanguage) {
+    siteLanguage.addEventListener("change", () => {
+      speechSynthesis.cancel();
+
+      document.documentElement.lang =
+        siteLanguage.value;
+
+      setTimeout(syncVoiceLanguage, 150);
+    });
+  }
+
+  const observer = new MutationObserver(() => {
+    setTimeout(syncVoiceLanguage, 150);
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["lang"]
+  });
+
+  waitForVoices();
+});
+</script>
+
 </body>
 </html>
