@@ -2073,1370 +2073,256 @@ main section.unfire-reading-section{
 
 
 
-<script id="unfire-reader-v9">
+
+<audio
+  id="unfire-narration"
+  src="audio/unfire-master-en.mp3"
+  preload="metadata"
+></audio>
+
+<script id="unfire-reader-v10">
 (() => {
-
-  const synth = window.speechSynthesis;
-
-  const playBtn = document.getElementById("reader-play");
-  const pauseBtn = document.getElementById("reader-pause");
-  const range = document.getElementById("reader-range");
+  const audio = document.getElementById("unfire-narration");
+  const play = document.getElementById("reader-play");
+  const pause = document.getElementById("reader-pause");
+  const slider = document.getElementById("reader-range");
   const percent = document.getElementById("reader-percent");
-  const prevBtn = document.getElementById("reader-prev");
-  const nextBtn = document.getElementById("reader-next");
+  const prev = document.getElementById("reader-prev");
+  const next = document.getElementById("reader-next");
   const sectionName = document.getElementById("reader-section-name");
 
-  if (!synth || !playBtn || !pauseBtn || !range || !percent) return;
+  if (!audio || !play || !pause || !slider) return;
 
   let sections = [];
-  let queue = [];
-  let totalChars = 1;
-
-  let currentIndex = 0;
+  let dragging = false;
   let currentSection = 0;
+  let raf = null;
+  let lastScroll = 0;
 
-  let utterance = null;
-  let playing = false;
-  let paused = false;
-  let session = 0;
-
-  let progressTimer = null;
-  let elapsed = 0;
-  let duration = 1;
-  let lastTick = 0;
-
-  let startPercent = 0;
-  let endPercent = 0;
-  let visualPercent = 0;
-
-  let activeBlock = null;
-  let activeSection = null;
-
-  let sliderDown = false;
-  let pointerStartX = 0;
-  let pointerMoved = false;
-
-  const normalizeText = text => {
-    let value = text
-      .replace(/\s+/g, " ")
-      .replace(/\s*·\s*/g, ", ")
-      .replace(/\s*→\s*/g, ", ")
-      .trim();
-
-    if (/^0+\d+$/.test(value)) {
-      value = String(Number(value));
-    }
-
-    return value;
-  };
-
-  const blockType = element => {
-    if (element.classList.contains("hero-kicker")) return "eyebrow";
-    if (element.classList.contains("eyebrow")) return "eyebrow";
-    if (element.classList.contains("product-type")) return "eyebrow";
-    if (element.classList.contains("subproduct-label")) return "eyebrow";
-
-    if (/^H[1-3]$/.test(element.tagName)) return "heading";
-
-    if (element.classList.contains("subproduct-name")) return "heading";
-    if (element.matches(".metric strong")) return "heading";
-    if (element.matches(".flow-step strong")) return "heading";
-    if (element.matches(".system-row strong")) return "heading";
-
-    if (element.matches(".product footer")) return "footer";
-
-    if (element.tagName === "P") return "paragraph";
-
-    return "text";
-  };
-
-  const pauseFor = (type, isLastInSection) => {
-    if (isLastInSection) return 950;
-
-    switch (type) {
-      case "heading":
-        return 650;
-
-      case "eyebrow":
-        return 320;
-
-      case "paragraph":
-        return 420;
-
-      case "footer":
-        return 720;
-
-      default:
-        return 360;
-    }
-  };
-
-  const collectWords = element => {
-    const walker = document.createTreeWalker(
-      element,
-      NodeFilter.SHOW_TEXT
-    );
-
-    const words = [];
-    let node;
-
-    while ((node = walker.nextNode())) {
-      if (!node.parentElement) continue;
-
-      const style = getComputedStyle(node.parentElement);
-
-      if (
-        style.display === "none" ||
-        style.visibility === "hidden"
-      ) {
-        continue;
-      }
-
-      const text = node.nodeValue || "";
-      const regex = /\S+/g;
-
-      let match;
-
-      while ((match = regex.exec(text))) {
-        words.push({
-          text: match[0],
-          node,
-          start: match.index,
-          end: match.index + match[0].length
-        });
-      }
-    }
-
-    return words;
-  };
-
-  const makeChunks = (element, type) => {
-    const words = collectWords(element);
-
-    if (!words.length) return [];
-
-    const chunks = [];
-    let group = [];
-    let length = 0;
-
-    const push = () => {
-      if (!group.length) return;
-
-      let cursor = 0;
-
-      const mapped = group.map(word => {
-        const spoken = normalizeText(word.text);
-
-        const speechStart = cursor;
-        const speechEnd = speechStart + spoken.length;
-
-        cursor = speechEnd + 1;
-
-        return {
-          ...word,
-          spoken,
-          speechStart,
-          speechEnd
-        };
-      });
-
-      let speechText = mapped
-        .map(word => word.spoken)
-        .join(" ");
-
-      if (
-        type === "heading" ||
-        type === "eyebrow"
-      ) {
-        if (!/[.!?]$/.test(speechText)) {
-          speechText += ".";
-        }
-      }
-
-      chunks.push({
-        element,
-        type,
-        text: speechText,
-        words: mapped
-      });
-
-      group = [];
-      length = 0;
-    };
-
-    for (const word of words) {
-      const spoken = normalizeText(word.text);
-      const addition = spoken.length + (group.length ? 1 : 0);
-
-      if (
-        group.length &&
-        length + addition > 210
-      ) {
-        push();
-      }
-
-      group.push(word);
-      length += addition;
-    }
-
-    push();
-
-    return chunks;
-  };
-
-  const getSectionTitle = section => {
-    const eyebrow = section.querySelector(".eyebrow");
-    const heading = section.querySelector("h1,h2,h3");
-
-    return normalizeText(
-      eyebrow?.innerText ||
-      heading?.innerText ||
-      section.id ||
-      "Section"
-    );
-  };
+  const clean = s => (s || "").replace(/\s+/g, " ").trim();
 
   const rebuild = () => {
-    sections = [];
-    queue = [];
+    const els = [...document.querySelectorAll("main > section")];
+    let total = 0;
 
-    const domSections = Array.from(
-      document.querySelectorAll("main > section")
-    );
+    sections = els.map((el, i) => {
+      const text = clean(el.innerText);
+      const weight = Math.max(1, text.length);
+      const heading = el.querySelector(".eyebrow,h1,h2,h3");
 
-    let global = 0;
+      const item = {
+        el,
+        title: clean(heading?.innerText || el.id || `Section ${i+1}`),
+        weight,
+        startWeight: total,
+        endWeight: total + weight,
+        start: 0,
+        end: 0
+      };
 
-    domSections.forEach((sectionElement, sectionIndex) => {
-
-      const selector = [
-        ".hero-kicker",
-        ".eyebrow",
-        "h1",
-        "h2",
-        "h3",
-        "p",
-        ".product-type",
-        ".subproduct-label",
-        ".subproduct-name",
-        ".metric strong",
-        ".metric span",
-        ".flow-num",
-        ".flow-step strong",
-        ".system-row strong",
-        ".product footer",
-        ".contact"
-      ].join(",");
-
-      const elements = Array.from(
-        sectionElement.querySelectorAll(selector)
-      ).filter(element => {
-        if (element.closest("#reader")) return false;
-
-        const style = getComputedStyle(element);
-
-        return (
-          style.display !== "none" &&
-          style.visibility !== "hidden" &&
-          normalizeText(element.innerText || "").length
-        );
-      });
-
-      const sectionItems = [];
-
-      elements.forEach((element, elementIndex) => {
-        const type = blockType(element);
-        const chunks = makeChunks(element, type);
-
-        chunks.forEach((chunk, chunkIndex) => {
-          const start = global;
-          const end = start + chunk.text.length;
-
-          const isLast =
-            elementIndex === elements.length - 1 &&
-            chunkIndex === chunks.length - 1;
-
-          const item = {
-            ...chunk,
-            sectionIndex,
-            globalStart: start,
-            globalEnd: end,
-            pauseAfter: pauseFor(type, isLast)
-          };
-
-          queue.push(item);
-          sectionItems.push(item);
-
-          global = end + 1;
-        });
-      });
-
-      sectionElement.dataset.readerSection =
-        String(sectionIndex);
-
-      sections.push({
-        element: sectionElement,
-        title: getSectionTitle(sectionElement),
-        items: sectionItems
-      });
+      total += weight;
+      return item;
     });
 
-    totalChars = Math.max(global, 1);
-
-    if (currentIndex >= queue.length) {
-      currentIndex = Math.max(0, queue.length - 1);
+    if (Number.isFinite(audio.duration) && audio.duration > 0) {
+      sections.forEach(s => {
+        s.start = audio.duration * s.startWeight / total;
+        s.end = audio.duration * s.endWeight / total;
+      });
     }
   };
 
-  const pageText = () => {
-    const main = document.querySelector("main");
-
-    return main
-      ? main.innerText.replace(/\s+/g, " ").trim()
-      : "";
+  const sectionForTime = t => {
+    let result = 0;
+    for (let i = 0; i < sections.length; i++) {
+      if (t >= sections[i].start) result = i;
+      else break;
+    }
+    return result;
   };
 
-  const detectLanguage = text => {
-    const t = " " + text.toLowerCase() + " ";
+  const activate = i => {
+    if (!sections.length) return;
 
-    const dictionaries = {
-      es: [
-        " el "," la "," los "," las "," para ",
-        " tecnología "," capacidad "," financiación ",
-        " empresa "," sistema "," aplicaciones "
-      ],
+    i = Math.max(0, Math.min(i, sections.length - 1));
+    currentSection = i;
 
-      en: [
-        " the "," and "," technology "," software ",
-        " company "," system "," products "
-      ],
+    sections.forEach((s, n) => {
+      s.el.classList.toggle("unfire-reading-section", n === i);
+    });
 
-      fr: [
-        " le "," les "," une "," pour "," technologie "
-      ],
+    if (sectionName) sectionName.textContent = sections[i].title;
+  };
 
-      de: [
-        " der "," die "," das "," und "," für "
-      ],
+  const updateProgress = () => {
+    if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
 
-      pt: [
-        " uma "," para "," tecnologia "," capacidade "
-      ]
-    };
+    const value = audio.currentTime / audio.duration * 100;
 
-    let winner = "en";
-    let best = -1;
-
-    for (const [language, words] of Object.entries(dictionaries)) {
-      let score = 0;
-
-      for (const word of words) {
-        if (t.includes(word)) score++;
-      }
-
-      if (score > best) {
-        best = score;
-        winner = language;
-      }
+    if (!dragging) {
+      slider.value = Math.round(value * 1000);
     }
 
-    return winner;
+    if (percent) {
+      percent.textContent = value.toFixed(5) + "%";
+    }
   };
 
-  const chooseVoice = language => {
-    const voices = synth.getVoices();
+  const follow = now => {
+    raf = requestAnimationFrame(follow);
 
-    const matching = voices.filter(voice =>
-      voice.lang &&
-      voice.lang.toLowerCase().startsWith(language)
+    if (audio.paused || audio.ended || dragging || !sections.length) return;
+    if (now - lastScroll < 250) return;
+
+    lastScroll = now;
+
+    const i = sectionForTime(audio.currentTime);
+    activate(i);
+
+    const s = sections[i];
+    if (!s) return;
+
+    const duration = Math.max(0.01, s.end - s.start);
+    const local = Math.max(0, Math.min(1, (audio.currentTime - s.start) / duration));
+
+    const rect = s.el.getBoundingClientRect();
+    const top = window.scrollY + rect.top;
+    const height = Math.max(rect.height, s.el.scrollHeight);
+
+    const viewport = window.visualViewport
+      ? window.visualViewport.height
+      : window.innerHeight;
+
+    const target = Math.max(
+      window.scrollY,
+      top + height * local - viewport * 0.40
     );
 
-    const preferred = {
-      es:["Mónica","Monica","Paulina","Jorge"],
-      en:["Samantha","Daniel","Alex","Karen"],
-      fr:["Thomas","Amélie"],
-      de:["Anna","Petra"],
-      pt:["Luciana","Joana"]
-    };
-
-    for (const desired of preferred[language] || []) {
-      const found = matching.find(voice =>
-        voice.name.toLowerCase().includes(
-          desired.toLowerCase()
-        )
-      );
-
-      if (found) return found;
-    }
-
-    return matching[0] || voices[0] || null;
-  };
-
-  const percentage = character => {
-    return Math.max(
-      0,
-      Math.min(
-        100,
-        character / totalChars * 100
-      )
-    );
-  };
-
-  const drawProgress = value => {
-    visualPercent = Math.max(0, Math.min(100, value));
-
-    if (!sliderDown) {
-      range.value = Math.round(visualPercent * 1000);
-    }
-
-    percent.textContent =
-      visualPercent.toFixed(5) + "%";
-  };
-
-  const clearWord = () => {
-    if (window.CSS && CSS.highlights) {
-      CSS.highlights.delete("unfire-reading-word");
+    if (target > window.scrollY + 10) {
+      window.scrollTo({
+        top: target,
+        left: 0,
+        behavior: "smooth"
+      });
     }
   };
 
-  const highlightWord = word => {
-    if (
-      !word ||
-      !window.CSS ||
-      !CSS.highlights ||
-      typeof Highlight === "undefined"
-    ) {
+  const jumpSection = i => {
+    if (!sections.length) return;
+
+    i = Math.max(0, Math.min(i, sections.length - 1));
+
+    audio.currentTime = sections[i].start;
+    activate(i);
+
+    sections[i].el.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+    updateProgress();
+  };
+
+  play.addEventListener("click", async () => {
+    if (!audio.paused) {
+      audio.pause();
+      audio.currentTime = 0;
+      play.textContent = "▶ Play";
+      updateProgress();
       return;
     }
 
     try {
-      const range = new Range();
-
-      range.setStart(word.node, word.start);
-      range.setEnd(word.node, word.end);
-
-      CSS.highlights.set(
-        "unfire-reading-word",
-        new Highlight(range)
-      );
-    } catch (_) {}
-  };
-
-  const activateBlock = item => {
-    if (activeBlock) {
-      activeBlock.classList.remove("unfire-reading-block");
+      await audio.play();
+    } catch (e) {
+      console.error(e);
     }
+  });
 
-    activeBlock = item.element;
-    activeBlock.classList.add("unfire-reading-block");
-
-    if (activeSection) {
-      activeSection.classList.remove("unfire-reading-section");
-    }
-
-    const section = sections[item.sectionIndex];
-
-    if (section) {
-      activeSection = section.element;
-      activeSection.classList.add("unfire-reading-section");
-
-      currentSection = item.sectionIndex;
-
-      if (sectionName) {
-        sectionName.textContent = section.title;
-      }
-    }
-  };
-
-  /* ========================================
-     RESPONSIVE READING FOLLOW
-     Native smooth scrolling on iPhone/iPad
-     Continuous camera on desktop
-  ======================================== */
-
-  let followTarget = null;
-  let followRAF = null;
-
-  let cameraTargetY = window.scrollY;
-  let cameraCurrentY = window.scrollY;
-  let cameraActive = false;
-  let cameraUserJump = false;
-
-  let lastMobileTargetY = window.scrollY;
-  let lastMobileScrollTime = 0;
-
-
-  const isMobileReader = () =>
-    window.matchMedia(
-      "(max-width: 800px), (pointer: coarse)"
-    ).matches;
-
-
-  const getFollowRect = target => {
-
-    if (!target) return null;
-
-    if (
-      target.node &&
-      typeof target.start === "number" &&
-      typeof target.end === "number"
-    ) {
-      try {
-        const r = new Range();
-
-        r.setStart(
-          target.node,
-          target.start
-        );
-
-        r.setEnd(
-          target.node,
-          target.end
-        );
-
-        const rect =
-          r.getBoundingClientRect();
-
-        if (
-          rect &&
-          rect.width + rect.height > 0
-        ) {
-          return rect;
-        }
-
-      } catch (_) {}
-    }
-
-    if (
-      target.getBoundingClientRect
-    ) {
-      return target.getBoundingClientRect();
-    }
-
-    return null;
-  };
-
-
-  const getReadingY = target => {
-
-    const rect =
-      getFollowRect(target);
-
-    if (!rect) return null;
-
-    const viewport =
-      window.visualViewport
-        ? window.visualViewport.height
-        : window.innerHeight;
-
-    /*
-      Mobile: text slightly above center
-      so player never covers it.
-    */
-    const desired =
-      viewport *
-      (isMobileReader() ? .39 : .45);
-
-    const absoluteCenter =
-      window.scrollY +
-      rect.top +
-      rect.height / 2;
-
-    return Math.max(
-      0,
-      absoluteCenter - desired
-    );
-  };
-
-
-  const mobileFollow = (
-    target,
-    allowBackward = false
-  ) => {
-
-    const targetY =
-      getReadingY(target);
-
-    if (targetY === null) return;
-
-    const now =
-      performance.now();
-
-    /*
-      Normal narration only moves forward.
-    */
-    if (
-      !allowBackward &&
-      targetY <= window.scrollY + 28
-    ) {
-      return;
-    }
-
-    /*
-      Avoid firing dozens of native smooth scrolls
-      for adjacent words.
-    */
-    if (
-      !allowBackward &&
-      Math.abs(
-        targetY - lastMobileTargetY
-      ) < 42 &&
-      now - lastMobileScrollTime < 650
-    ) {
-      return;
-    }
-
-    lastMobileTargetY =
-      targetY;
-
-    lastMobileScrollTime =
-      now;
-
-    window.scrollTo({
-      top: targetY,
-      left: 0,
-      behavior: "smooth"
-    });
-  };
-
-
-  const setFollowTarget = (
-    target,
-    allowBackward = false
-  ) => {
-
-    if (!target) return;
-
-    followTarget = target;
-
-    /*
-      iPhone / iPad:
-      let WebKit perform the scrolling natively.
-    */
-    if (isMobileReader()) {
-
-      mobileFollow(
-        target,
-        allowBackward
-      );
-
-      return;
-    }
-
-    /*
-      Desktop:
-      continuous custom reading camera.
-    */
-    const position =
-      getReadingY(target);
-
-    if (position === null) return;
-
-    if (allowBackward) {
-
-      cameraTargetY =
-        position;
-
-      cameraCurrentY =
-        window.scrollY;
-
-      cameraUserJump =
-        true;
-
+  pause.addEventListener("click", async () => {
+    if (audio.paused) {
+      try { await audio.play(); } catch (_) {}
     } else {
-
-      cameraTargetY =
-        Math.max(
-          cameraTargetY,
-          position,
-          window.scrollY
-        );
+      audio.pause();
     }
+  });
 
-    cameraActive = true;
-  };
+  audio.addEventListener("play", () => {
+    play.textContent = "■ Stop";
+    pause.textContent = "Ⅱ";
+  });
 
-
-  const readingCamera = () => {
-
-    followRAF =
-      requestAnimationFrame(
-        readingCamera
-      );
-
-    /*
-      Mobile uses native smooth scrolling.
-    */
-    if (isMobileReader()) {
-      return;
+  audio.addEventListener("pause", () => {
+    if (!audio.ended) {
+      play.textContent = "▶ Play";
+      pause.textContent = "▶";
     }
-
-    if (
-      !cameraActive ||
-      !playing ||
-      paused ||
-      sliderDown
-    ) {
-      cameraCurrentY =
-        window.scrollY;
-
-      return;
-    }
-
-    const actualY =
-      window.scrollY;
-
-    if (
-      actualY >
-      cameraCurrentY + 18
-    ) {
-      cameraCurrentY =
-        actualY;
-
-      cameraTargetY =
-        Math.max(
-          cameraTargetY,
-          actualY
-        );
-    }
-
-    const difference =
-      cameraTargetY -
-      actualY;
-
-    if (
-      Math.abs(difference) < .6
-    ) {
-      cameraCurrentY =
-        actualY;
-
-      cameraUserJump =
-        false;
-
-      return;
-    }
-
-    const easing =
-      cameraUserJump
-        ? .13
-        : .07;
-
-    let step =
-      difference * easing;
-
-    const maxStep = 18;
-
-    if (step > 0) {
-
-      step =
-        Math.min(
-          step,
-          maxStep
-        );
-
-    } else {
-
-      if (!cameraUserJump) {
-        return;
-      }
-
-      step =
-        Math.max(
-          step,
-          -maxStep
-        );
-    }
-
-    const nextY =
-      actualY + step;
-
-    window.scrollTo(
-      0,
-      nextY
-    );
-
-    cameraCurrentY =
-      nextY;
-  };
-
-
-  const followBlock = item => {
-
-    if (
-      !item ||
-      !item.element
-    ) {
-      return;
-    }
-
-    setFollowTarget(
-      item.element,
-      false
-    );
-  };
-
-
-  readingCamera();
-
-/* end responsive reading follow */
-
-  const stopClock = () => {
-    if (progressTimer) {
-      clearInterval(progressTimer);
-      progressTimer = null;
-    }
-  };
-
-  const startClock = () => {
-    stopClock();
-
-    lastTick = performance.now();
-
-    progressTimer = setInterval(() => {
-      if (!playing || paused || sliderDown) {
-        lastTick = performance.now();
-        return;
-      }
-
-      const now = performance.now();
-      const delta = (now - lastTick) / 1000;
-
-      lastTick = now;
-      elapsed += delta;
-
-      const ratio = Math.min(
-        .995,
-        elapsed / Math.max(duration, .1)
-      );
-
-      const value =
-        startPercent +
-        (endPercent - startPercent) * ratio;
-
-      drawProgress(value);
-    }, 100);
-  };
-
-  const resetButtons = () => {
-    playBtn.textContent = "▶ Play";
-    pauseBtn.textContent = "Ⅱ";
-  };
-
-  const finishPlayback = () => {
-    session++;
-
-    stopClock();
-    clearWord();
-
-    followTarget = null;
-    cameraActive = false;
-    cameraTargetY = window.scrollY;
-    cameraCurrentY = window.scrollY;
-    cameraUserJump = false;
-
-    playing = false;
-    paused = false;
-    utterance = null;
-
-    resetButtons();
-  };
-
-
-  const stop = () => {
-    session++;
-
-    /*
-      synth.cancel() is reserved for an explicit
-      user Stop / seek / navigation action.
-    */
-    if (
-      synth.speaking ||
-      synth.pending
-    ) {
-      synth.cancel();
-    }
-
-    stopClock();
-    clearWord();
-
-    followTarget = null;
-    cameraActive = false;
-    cameraTargetY = window.scrollY;
-    cameraCurrentY = window.scrollY;
-    cameraUserJump = false;
-
-    playing = false;
-    paused = false;
-    utterance = null;
-
-    resetButtons();
-  };
-
-  const speakItem = index => {
-    if (!playing) return;
-
-    if (index >= queue.length) {
-      drawProgress(100);
-
-      /*
-        Natural ending:
-        never cancel the speech engine here.
-      */
-      finishPlayback();
-
-      return;
-    }
-
-    currentIndex = index;
-
-    const item = queue[index];
-
-    activateBlock(item);
-    followBlock(item);
-
-    startPercent = percentage(item.globalStart);
-    endPercent = percentage(item.globalEnd);
-
-    drawProgress(startPercent);
-
-    const words = Math.max(
-      1,
-      item.text.split(/\s+/).length
-    );
-
-    duration = Math.max(
-      1,
-      words / 2.55
-    );
-
-    elapsed = 0;
-
-    const language =
-      detectLanguage(pageText());
-
-    const voice =
-      chooseVoice(language);
-
-    const mySession =
-      session;
-
-    const cleanSpeechText =
-      item.text
-        .replace(/\s+/g, " ")
-        .trim();
-
-    utterance =
-      new SpeechSynthesisUtterance(
-        cleanSpeechText
-      );
-
-    if (voice) {
-      utterance.voice = voice;
-      utterance.lang = voice.lang;
-    } else {
-      utterance.lang = language;
-    }
-
-    utterance.rate = .94;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-
-    utterance.onboundary = event => {
-      if (
-        mySession !== session ||
-        typeof event.charIndex !== "number"
-      ) {
-        return;
-      }
-
-      let currentWord = item.words[0];
-
-      for (const word of item.words) {
-        if (word.speechStart <= event.charIndex) {
-          currentWord = word;
-        } else {
-          break;
-        }
-      }
-
-      highlightWord(currentWord);
-
-      /*
-        Move the reading camera from
-        the block to the exact spoken word.
-      */
-      setFollowTarget(
-        currentWord
-      );
-
-      const realCharacter =
-        item.globalStart +
-        Math.min(event.charIndex, item.text.length);
-
-      drawProgress(
-        percentage(realCharacter)
-      );
-    };
-
-    utterance.onend = () => {
-      if (
-        mySession !== session ||
-        !playing
-      ) {
-        return;
-      }
-
-      drawProgress(endPercent);
-
-      const delay = item.pauseAfter;
-
-      setTimeout(() => {
-        if (
-          playing &&
-          mySession === session
-        ) {
-          speakItem(index + 1);
-        }
-      }, delay);
-    };
-
-    utterance.onerror = event => {
-      if (
-        event.error === "canceled" ||
-        event.error === "interrupted"
-      ) {
-        return;
-      }
-
-      if (mySession !== session) return;
-
-      setTimeout(() => {
-        if (playing) {
-          speakItem(index + 1);
-        }
-      }, 200);
-    };
-
-    synth.speak(utterance);
-
-    startClock();
-  };
-
-  const startAt = index => {
+  });
+
+  audio.addEventListener("ended", () => {
+    play.textContent = "▶ Play";
+    pause.textContent = "Ⅱ";
+    updateProgress();
+  });
+
+  audio.addEventListener("loadedmetadata", () => {
     rebuild();
-
-    if (!queue.length) return;
-
-    index = Math.max(
-      0,
-      Math.min(index, queue.length - 1)
-    );
-
-    session++;
-
-    synth.cancel();
-    stopClock();
-    clearWord();
-
-    playing = true;
-    paused = false;
-
-    playBtn.textContent = "■ Stop";
-    pauseBtn.textContent = "Ⅱ";
-
-    const mySession = session;
-
-    setTimeout(() => {
-      if (
-        playing &&
-        mySession === session
-      ) {
-        speakItem(index);
-      }
-    }, 100);
-  };
-
-  const startSection = index => {
-    rebuild();
-
-    const section = sections[index];
-
-    if (
-      !section ||
-      !section.items.length
-    ) {
-      return;
-    }
-
-    const queueIndex =
-      queue.indexOf(section.items[0]);
-
-    if (queueIndex >= 0) {
-
-      /*
-        Only explicit navigation uses a deliberate reposition.
-      */
-      const firstItem =
-        section.items[0];
-
-      if (
-        firstItem &&
-        firstItem.element
-      ) {
-        setFollowTarget(
-          firstItem.element,
-          true
-        );
-      }
-
-      startAt(queueIndex);
-    }
-  };
-
-  const seek = value => {
-    rebuild();
-
-    if (!queue.length) return;
-
-    const target =
-      totalChars * value / 100;
-
-    let found = 0;
-
-    for (let i = 0; i < queue.length; i++) {
-      if (queue[i].globalStart <= target) {
-        found = i;
-      } else {
-        break;
-      }
-    }
-
-    drawProgress(value);
-
-    const selected =
-      queue[found];
-
-    if (
-      selected &&
-      selected.element
-    ) {
-      setFollowTarget(
-        selected.element,
-        true
-      );
-    }
-
-    if (playing) {
-      startAt(found);
-    } else {
-      currentIndex = found;
-      activateBlock(queue[found]);
-    }
-  };
-
-  playBtn.addEventListener("click", () => {
-    if (playing) {
-      stop();
-    } else {
-      startAt(currentIndex);
-    }
+    updateProgress();
   });
 
-  pauseBtn.addEventListener("click", () => {
-    if (!playing) return;
+  audio.addEventListener("durationchange", rebuild);
+  audio.addEventListener("timeupdate", updateProgress);
 
-    if (paused) {
-      synth.resume();
-      paused = false;
-      pauseBtn.textContent = "Ⅱ";
-      lastTick = performance.now();
-    } else {
-      synth.pause();
-      paused = true;
-      pauseBtn.textContent = "▶";
-    }
+  slider.addEventListener("pointerdown", () => dragging = true);
+
+  slider.addEventListener("input", () => {
+    const value = Number(slider.value) / 1000;
+    if (percent) percent.textContent = value.toFixed(5) + "%";
   });
 
-  range.addEventListener("pointerdown", event => {
-    sliderDown = true;
-    pointerMoved = false;
-    pointerStartX = event.clientX;
-  });
-
-  range.addEventListener("pointermove", event => {
-    if (!sliderDown) return;
-
-    if (
-      Math.abs(event.clientX - pointerStartX) > 4
-    ) {
-      pointerMoved = true;
-    }
-  });
-
-  range.addEventListener("input", event => {
-    const value =
-      Number(event.target.value) / 1000;
-
-    visualPercent = value;
-
-    percent.textContent =
-      value.toFixed(5) + "%";
-  });
-
-  range.addEventListener("pointerup", event => {
-    let value;
-
-    if (!pointerMoved) {
-      const rect =
-        range.getBoundingClientRect();
-
-      const x =
-        Math.max(
-          0,
-          Math.min(
-            rect.width,
-            event.clientX - rect.left
-          )
-        );
-
-      value =
-        x / rect.width * 100;
-
-      range.value =
-        Math.round(value * 1000);
-    } else {
-      value =
-        Number(range.value) / 1000;
+  slider.addEventListener("pointerup", () => {
+    if (Number.isFinite(audio.duration)) {
+      audio.currentTime =
+        audio.duration * (Number(slider.value) / 1000) / 100;
     }
 
-    sliderDown = false;
-
-    seek(value);
+    dragging = false;
+    activate(sectionForTime(audio.currentTime));
+    updateProgress();
   });
 
-  prevBtn?.addEventListener("click", event => {
-    event.stopPropagation();
-
-    startSection(
-      Math.max(0, currentSection - 1)
-    );
+  prev?.addEventListener("click", e => {
+    e.stopPropagation();
+    jumpSection(currentSection - 1);
   });
 
-  nextBtn?.addEventListener("click", event => {
-    event.stopPropagation();
-
-    startSection(
-      Math.min(
-        sections.length - 1,
-        currentSection + 1
-      )
-    );
+  next?.addEventListener("click", e => {
+    e.stopPropagation();
+    jumpSection(currentSection + 1);
   });
-
-  const installSectionClicks = () => {
-    sections.forEach((section, index) => {
-      section.element.addEventListener(
-        "click",
-        event => {
-          if (
-            event.target.closest(
-              "a,button,input,textarea,select,#reader"
-            )
-          ) {
-            return;
-          }
-
-          const selection =
-            window.getSelection();
-
-          if (
-            selection &&
-            selection.toString().trim()
-          ) {
-            return;
-          }
-
-          startSection(index);
-        }
-      );
-    });
-  };
-
-  let lastPageText = pageText();
-  let translationTimer = null;
-
-  const translationObserver =
-    new MutationObserver(() => {
-      clearTimeout(translationTimer);
-
-      translationTimer =
-        setTimeout(() => {
-          const updated =
-            pageText();
-
-          if (
-            !updated ||
-            updated === lastPageText
-          ) {
-            return;
-          }
-
-          lastPageText = updated;
-
-          const oldSection =
-            currentSection;
-
-          rebuild();
-
-          if (playing) {
-            startSection(
-              Math.min(
-                oldSection,
-                sections.length - 1
-              )
-            );
-          }
-        }, 550);
-    });
-
-  const main =
-    document.querySelector("main");
-
-  if (main) {
-    translationObserver.observe(
-      main,
-      {
-        subtree:true,
-        childList:true,
-        characterData:true
-      }
-    );
-  }
-
-  window.addEventListener(
-    "beforeunload",
-    () => {
-      synth.cancel();
-      stopClock();
-      clearWord();
-    }
-  );
-
-  synth.getVoices();
-
-  if ("onvoiceschanged" in synth) {
-    synth.onvoiceschanged =
-      () => synth.getVoices();
-  }
 
   rebuild();
-  installSectionClicks();
-  drawProgress(0);
 
-  if (sections.length && sectionName) {
-    sectionName.textContent =
-      sections[0].title;
-  }
+  sections.forEach((s, i) => {
+    s.el.addEventListener("click", e => {
+      if (e.target.closest("a,button,input,textarea,select,#reader")) return;
 
+      const selection = window.getSelection();
+      if (selection && selection.toString().trim()) return;
+
+      jumpSection(i);
+      audio.play().catch(() => {});
+    });
+  });
+
+  activate(0);
+  updateProgress();
+  raf = requestAnimationFrame(follow);
+
+  window.addEventListener("beforeunload", () => {
+    if (raf) cancelAnimationFrame(raf);
+    audio.pause();
+  });
 })();
 </script>
 
