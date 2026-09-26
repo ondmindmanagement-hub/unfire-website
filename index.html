@@ -1526,7 +1526,7 @@ h2{
 
 
 
-<script id="unfire-reader-v2">
+<script id="unfire-reader-v3">
 (() => {
   const synth = window.speechSynthesis;
 
@@ -1537,212 +1537,290 @@ h2{
 
   if (!synth || !playBtn || !pauseBtn || !range || !percent) return;
 
-  let fullText = "";
+  let chunks = [];
+  let chunkIndex = 0;
   let utterance = null;
-  let currentIndex = 0;
-  let speaking = false;
-  let paused = false;
 
-  const normalize = value =>
-    value
+  let playing = false;
+  let paused = false;
+  let session = 0;
+
+  const getText = () => {
+    const main = document.querySelector("main");
+
+    if (!main) return "";
+
+    return main.innerText
       .replace(/\s+/g, " ")
       .replace(/Company Work System Scale Funding/g, "")
       .trim();
+  };
 
-  const getVisibleText = () => {
-    const main = document.querySelector("main");
-    return main ? normalize(main.innerText) : "";
+  const splitIntoChunks = text => {
+    const sentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+
+    const result = [];
+    let buffer = "";
+
+    for (const sentence of sentences) {
+      const clean = sentence.trim();
+
+      if (!clean) continue;
+
+      if ((buffer + " " + clean).trim().length <= 240) {
+        buffer = (buffer + " " + clean).trim();
+      } else {
+        if (buffer) result.push(buffer);
+
+        if (clean.length <= 240) {
+          buffer = clean;
+        } else {
+          const words = clean.split(" ");
+          let part = "";
+
+          for (const word of words) {
+            if ((part + " " + word).trim().length <= 220) {
+              part = (part + " " + word).trim();
+            } else {
+              if (part) result.push(part);
+              part = word;
+            }
+          }
+
+          buffer = part;
+        }
+      }
+    }
+
+    if (buffer) result.push(buffer);
+
+    return result;
   };
 
   const detectLanguage = text => {
-    const t = ` ${text.toLowerCase()} `;
+    const t = " " + text.toLowerCase() + " ";
 
-    const dictionaries = {
-      es: [" el "," la "," los "," las "," una "," para "," tecnología "," financiación "," empresas "," aplicaciones "," capacidad "],
-      fr: [" le "," la "," les "," des "," pour "," technologie "," capacité "],
-      de: [" der "," die "," das "," und "," für "," technologie "," unternehmen "],
-      pt: [" uma "," para "," tecnologia "," capacidade "," empresas "],
-      en: [" the "," and "," technology "," company "," build "," software "]
+    const sets = {
+      es: [
+        " el "," la "," los "," las "," una "," para ",
+        " tecnología "," financiación "," capacidad ",
+        " empresas "," aplicaciones "," desarrollar "
+      ],
+
+      fr: [
+        " le "," la "," les "," une "," pour ",
+        " technologie "," capacité "," entreprises "
+      ],
+
+      de: [
+        " der "," die "," das "," und "," für ",
+        " technologie "," unternehmen "
+      ],
+
+      pt: [
+        " uma "," para "," tecnologia ",
+        " capacidade "," empresas "
+      ],
+
+      en: [
+        " the "," and "," technology "," software ",
+        " company "," build "," products "
+      ]
     };
 
-    let winner = "en";
-    let best = -1;
+    let language = "en";
+    let highest = -1;
 
-    for (const [lang, words] of Object.entries(dictionaries)) {
+    for (const [lang, words] of Object.entries(sets)) {
       let score = 0;
 
       for (const word of words) {
         if (t.includes(word)) score++;
       }
 
-      if (score > best) {
-        best = score;
-        winner = lang;
+      if (score > highest) {
+        highest = score;
+        language = lang;
       }
     }
 
-    return winner;
+    return language;
   };
 
-  const waitForVoices = () => new Promise(resolve => {
+  const preferredVoices = {
+    es: ["Mónica", "Monica", "Paulina", "Jorge"],
+    en: ["Samantha", "Daniel", "Alex", "Karen"],
+    fr: ["Thomas", "Amélie", "Audrey"],
+    de: ["Anna", "Petra", "Markus"],
+    pt: ["Luciana", "Joana", "Felipe"]
+  };
+
+  const getVoice = lang => {
     const voices = synth.getVoices();
 
-    if (voices.length) {
-      resolve(voices);
+    if (!voices.length) return null;
+
+    const sameLanguage = voices.filter(v =>
+      v.lang &&
+      v.lang.toLowerCase().startsWith(lang.toLowerCase())
+    );
+
+    for (const wanted of preferredVoices[lang] || []) {
+      const found = sameLanguage.find(v =>
+        v.name.toLowerCase().includes(wanted.toLowerCase())
+      );
+
+      if (found) return found;
+    }
+
+    return sameLanguage[0] || voices[0];
+  };
+
+  const rebuildChunks = () => {
+    chunks = splitIntoChunks(getText());
+
+    if (!chunks.length) {
+      chunkIndex = 0;
       return;
     }
 
-    let attempts = 0;
-
-    const timer = setInterval(() => {
-      const updated = synth.getVoices();
-      attempts++;
-
-      if (updated.length || attempts > 20) {
-        clearInterval(timer);
-        resolve(updated);
-      }
-    }, 100);
-  });
-
-  const preferredVoiceNames = {
-    es: ["Mónica", "Monica", "Paulina", "Jorge"],
-    en: ["Samantha", "Daniel", "Karen", "Alex"],
-    fr: ["Thomas", "Amélie", "Audrey"],
-    de: ["Anna", "Petra", "Markus"],
-    pt: ["Luciana", "Felipe", "Joana"]
+    chunkIndex = Math.max(
+      0,
+      Math.min(chunkIndex, chunks.length - 1)
+    );
   };
 
-  const chooseVoice = (voices, lang) => {
-    const languageVoices = voices.filter(v =>
-      v.lang && v.lang.toLowerCase().startsWith(lang)
-    );
+  const progress = () => {
+    if (!chunks.length) return 0;
 
-    const preferred = preferredVoiceNames[lang] || [];
+    if (chunkIndex >= chunks.length) return 100;
 
-    for (const name of preferred) {
-      const match = languageVoices.find(v =>
-        v.name.toLowerCase().includes(name.toLowerCase())
-      );
-
-      if (match) return match;
-    }
-
-    return languageVoices[0] || voices[0] || null;
+    return (chunkIndex / chunks.length) * 100;
   };
 
   const updateUI = () => {
-    const total = Math.max(fullText.length, 1);
+    const value = progress();
 
-    const value = Math.max(
-      0,
-      Math.min(100, (currentIndex / total) * 100)
-    );
-
-    percent.textContent = value.toFixed(5) + "%";
     range.value = Math.round(value * 1000);
+    percent.textContent = value.toFixed(5) + "%";
   };
 
-  const cancelSpeech = () => {
-    synth.cancel();
-
-    utterance = null;
-    speaking = false;
-    paused = false;
-
+  const resetButtons = () => {
     playBtn.textContent = "▶ Play";
     pauseBtn.textContent = "Ⅱ";
   };
 
-  const speakFrom = async index => {
-    cancelSpeech();
+  const stop = resetProgress => {
+    session++;
+    synth.cancel();
 
-    fullText = getVisibleText();
+    utterance = null;
+    playing = false;
+    paused = false;
 
-    if (!fullText) return;
+    if (resetProgress) {
+      chunkIndex = 0;
+      updateUI();
+    }
 
-    currentIndex = Math.max(
-      0,
-      Math.min(index, fullText.length - 1)
-    );
+    resetButtons();
+  };
 
-    const lang = detectLanguage(fullText);
-    const voices = await waitForVoices();
-    const voice = chooseVoice(voices, lang);
+  const speakChunk = index => {
+    if (!playing) return;
 
-    const baseIndex = currentIndex;
-    const remaining = fullText.slice(baseIndex);
+    if (index >= chunks.length) {
+      chunkIndex = chunks.length;
+      updateUI();
+      stop(false);
+      return;
+    }
 
-    utterance = new SpeechSynthesisUtterance(remaining);
+    chunkIndex = index;
+    updateUI();
 
-    utterance.lang = voice?.lang || lang;
+    const currentSession = session;
+    const lang = detectLanguage(getText());
+
+    utterance = new SpeechSynthesisUtterance(chunks[index]);
+
+    const voice = getVoice(lang);
 
     if (voice) {
       utterance.voice = voice;
+      utterance.lang = voice.lang;
+    } else {
+      utterance.lang = lang;
     }
 
     utterance.rate = 0.96;
     utterance.pitch = 1;
     utterance.volume = 1;
 
-    utterance.onboundary = event => {
-      if (typeof event.charIndex !== "number") return;
-
-      currentIndex = Math.min(
-        fullText.length,
-        baseIndex + event.charIndex
-      );
-
-      updateUI();
-    };
-
     utterance.onend = () => {
-      currentIndex = fullText.length;
-      speaking = false;
-      paused = false;
+      if (currentSession !== session) return;
+      if (!playing) return;
 
-      playBtn.textContent = "▶ Play";
-      pauseBtn.textContent = "Ⅱ";
-
-      updateUI();
+      speakChunk(index + 1);
     };
 
     utterance.onerror = event => {
-      console.warn("Speech synthesis error:", event.error);
+      if (event.error === "canceled" || event.error === "interrupted") {
+        return;
+      }
 
-      speaking = false;
-      paused = false;
+      console.warn("Speech error:", event.error);
 
-      playBtn.textContent = "▶ Play";
-      pauseBtn.textContent = "Ⅱ";
+      if (currentSession !== session) return;
+
+      setTimeout(() => {
+        if (playing) {
+          speakChunk(index + 1);
+        }
+      }, 150);
     };
 
+    synth.speak(utterance);
+  };
+
+  const start = () => {
+    rebuildChunks();
+
+    if (!chunks.length) return;
+
+    session++;
+    synth.cancel();
+
+    playing = true;
+    paused = false;
+
+    playBtn.textContent = "■ Stop";
+    pauseBtn.textContent = "Ⅱ";
+
+    const currentSession = session;
+
     setTimeout(() => {
-      synth.speak(utterance);
-
-      speaking = true;
-      paused = false;
-
-      playBtn.textContent = "■ Stop";
-      pauseBtn.textContent = "Ⅱ";
-    }, 100);
+      if (playing && currentSession === session) {
+        speakChunk(chunkIndex);
+      }
+    }, 120);
   };
 
   playBtn.addEventListener("click", () => {
-    if (speaking) {
-      cancelSpeech();
+    if (playing) {
+      stop(false);
       return;
     }
 
-    fullText = getVisibleText();
+    if (chunkIndex >= chunks.length) {
+      chunkIndex = 0;
+    }
 
-    if (!fullText) return;
-
-    speakFrom(currentIndex);
+    start();
   });
 
   pauseBtn.addEventListener("click", () => {
-    if (!speaking) return;
+    if (!playing) return;
 
     if (!paused) {
       synth.pause();
@@ -1756,28 +1834,46 @@ h2{
   });
 
   range.addEventListener("input", () => {
-    fullText = getVisibleText();
+    rebuildChunks();
 
-    if (!fullText) return;
+    if (!chunks.length) return;
 
     const value = Number(range.value) / 100000;
 
-    currentIndex = Math.floor(
-      value * fullText.length
+    chunkIndex = Math.min(
+      chunks.length - 1,
+      Math.floor(value * chunks.length)
     );
 
     updateUI();
   });
 
   range.addEventListener("change", () => {
-    if (!fullText) return;
+    if (!playing) return;
 
-    if (speaking) {
-      speakFrom(currentIndex);
+    session++;
+    synth.cancel();
+
+    const currentSession = session;
+
+    setTimeout(() => {
+      if (playing && currentSession === session) {
+        speakChunk(chunkIndex);
+      }
+    }, 120);
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden && playing) {
+      synth.pause();
+      paused = true;
+      pauseBtn.textContent = "▶";
     }
   });
 
-  window.addEventListener("beforeunload", cancelSpeech);
+  window.addEventListener("beforeunload", () => {
+    synth.cancel();
+  });
 
   synth.getVoices();
 
@@ -1785,7 +1881,7 @@ h2{
     synth.onvoiceschanged = () => synth.getVoices();
   }
 
-  fullText = getVisibleText();
+  rebuildChunks();
   updateUI();
 })();
 </script>
