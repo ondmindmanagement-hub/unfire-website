@@ -3181,6 +3181,138 @@ main section[data-reader-section]{
       sections[0].title;
   }
 
+
+  /* ========================================
+     LIVE LANGUAGE / TRANSLATION CHANGE
+  ======================================== */
+
+  let lastVisibleText =
+    allVisibleText();
+
+  let translationTimer = null;
+
+
+  const restartAfterTranslation = () => {
+
+    const newText =
+      allVisibleText();
+
+    if(
+      !newText ||
+      newText === lastVisibleText
+    ){
+      return;
+    }
+
+    lastVisibleText =
+      newText;
+
+    rebuildTimeline();
+
+    if(!playing){
+      return;
+    }
+
+    const sectionIndex =
+      Math.max(
+        0,
+        Math.min(
+          currentSectionIndex,
+          sections.length - 1
+        )
+      );
+
+    session++;
+
+    synth.cancel();
+
+    stopClock();
+
+    clearWordHighlight();
+
+    paused = false;
+
+    playBtn.textContent =
+      "■ Stop";
+
+    pauseBtn.textContent =
+      "Ⅱ";
+
+    const section =
+      sections[sectionIndex];
+
+    if(
+      !section ||
+      !section.chunks.length
+    ){
+      return;
+    }
+
+    const firstChunk =
+      section.chunks[0];
+
+    const flatIndex =
+      flatChunks.indexOf(
+        firstChunk
+      );
+
+    if(flatIndex < 0){
+      return;
+    }
+
+    const mySession =
+      session;
+
+    setTimeout(
+      () => {
+
+        if(
+          playing &&
+          mySession === session
+        ){
+          speakChunk(
+            flatIndex
+          );
+        }
+
+      },
+      180
+    );
+  };
+
+
+  const translationObserver =
+    new MutationObserver(
+      () => {
+
+        clearTimeout(
+          translationTimer
+        );
+
+        translationTimer =
+          setTimeout(
+            restartAfterTranslation,
+            500
+          );
+      }
+    );
+
+
+  const main =
+    document.querySelector("main");
+
+  if(main){
+
+    translationObserver.observe(
+      main,
+      {
+        subtree:true,
+        childList:true,
+        characterData:true
+      }
+    );
+  }
+
 })();
 </script>
 
