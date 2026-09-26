@@ -2847,10 +2847,40 @@ main section.unfire-reading-section{
     pauseBtn.textContent = "Ⅱ";
   };
 
+  const finishPlayback = () => {
+    session++;
+
+    stopClock();
+    clearWord();
+
+    followTarget = null;
+    cameraActive = false;
+    cameraTargetY = window.scrollY;
+    cameraCurrentY = window.scrollY;
+    cameraUserJump = false;
+
+    playing = false;
+    paused = false;
+    utterance = null;
+
+    resetButtons();
+  };
+
+
   const stop = () => {
     session++;
 
-    synth.cancel();
+    /*
+      synth.cancel() is reserved for an explicit
+      user Stop / seek / navigation action.
+    */
+    if (
+      synth.speaking ||
+      synth.pending
+    ) {
+      synth.cancel();
+    }
+
     stopClock();
     clearWord();
 
@@ -2872,7 +2902,13 @@ main section.unfire-reading-section{
 
     if (index >= queue.length) {
       drawProgress(100);
-      stop();
+
+      /*
+        Natural ending:
+        never cancel the speech engine here.
+      */
+      finishPlayback();
+
       return;
     }
 
@@ -2909,8 +2945,15 @@ main section.unfire-reading-section{
     const mySession =
       session;
 
+    const cleanSpeechText =
+      item.text
+        .replace(/\s+/g, " ")
+        .trim();
+
     utterance =
-      new SpeechSynthesisUtterance(item.text);
+      new SpeechSynthesisUtterance(
+        cleanSpeechText
+      );
 
     if (voice) {
       utterance.voice = voice;
@@ -2967,8 +3010,6 @@ main section.unfire-reading-section{
       ) {
         return;
       }
-
-      clearWord();
 
       drawProgress(endPercent);
 
