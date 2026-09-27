@@ -9,3 +9,16 @@ audio/timeline-backup-*/
 index-before-*.html
 index-black-screen-backup-*.html
 index-unseen-apple-test*.html
+
+# Narration generation temporary/reference parts
+audio/masters/.da-parts/
+audio/masters/.*-reference-parts/
+audio/masters/_parts/
+audio/masters/_parts_da/
+
+# EN/ES duplicates in masters/ are NOT the production masters
+audio/masters/unfire-master-en.mp3
+audio/masters/unfire-master-es.mp3
+
+# Local audio experiments
+audio/tests/
