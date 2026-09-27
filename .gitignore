@@ -1,0 +1,11 @@
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Local narration backups / working files
+audio/*before-*.canonical.json
+audio/timeline-backup-*/
+index-before-*.html
+index-black-screen-backup-*.html
+index-unseen-apple-test*.html
