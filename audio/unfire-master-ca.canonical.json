@@ -1,0 +1,9073 @@
+{
+  "language": "ca",
+  "audio_duration": 692.928,
+  "canonical_blocks": 97,
+  "canonical_words": 1182,
+  "transcript_words": 1251,
+  "exact_matches": 1025,
+  "coverage": 0.8671742808798646,
+  "blocks": [
+    {
+      "index": 0,
+      "text": "Companyia tecnològica independent",
+      "word_start": 0,
+      "word_end": 3,
+      "start": 0.0,
+      "end": 2.648632
+    },
+    {
+      "index": 1,
+      "text": "Desenvolupar tecnologia. Reutilitza l'avantatge.",
+      "word_start": 3,
+      "word_end": 7,
+      "start": 2.648632,
+      "end": 9.099656
+    },
+    {
+      "index": 2,
+      "text": "Unfire desenvolupa sistemes de software reutilitzables dissenyats per convertir una base tecnològica en diversos products, fluxos de treball i aplicacions futurs.",
+      "word_start": 7,
+      "word_end": 28,
+      "start": 9.099656,
+      "end": 21.128859
+    },
+    {
+      "index": 3,
+      "text": "Companyes",
+      "word_start": 28,
+      "word_end": 29,
+      "start": 22.011736,
+      "end": 23.135398
+    },
+    {
+      "index": 4,
+      "text": "In place de tractar cada aplicació com a un projecte isolat, Unfire desenvolupa tecnologia que es pot reutilitzar, ampliar i transferir a productes futurs.",
+      "word_start": 29,
+      "word_end": 53,
+      "start": 23.135398,
+      "end": 35.475615
+    },
+    {
+      "index": 5,
+      "text": "Crea una vegada.",
+      "word_start": 53,
+      "word_end": 56,
+      "start": 36.579212,
+      "end": 37.863397
+    },
+    {
+      "index": 6,
+      "text": "Les capacitats de base poden convertir-se en blocs de construcció reutilitzables en place del desapareixer a un sol producte.",
+      "word_start": 56,
+      "word_end": 75,
+      "start": 37.863397,
+      "end": 47.595113
+    },
+    {
+      "index": 7,
+      "text": "Continua ampliant-te constantment.",
+      "word_start": 75,
+      "word_end": 78,
+      "start": 48.357598,
+      "end": 51.106557
+    },
+    {
+      "index": 8,
+      "text": "El nou software pot heredar l'infraestructura existent, reduint l'enginyeria repetida quan s'aplica l'arquitectura.",
+      "word_start": 78,
+      "word_end": 91,
+      "start": 51.106557,
+      "end": 60.336638
+    },
+    {
+      "index": 9,
+      "text": "Escala el sistema.",
+      "word_start": 91,
+      "word_end": 94,
+      "start": 60.336638,
+      "end": 62.24285
+    },
+    {
+      "index": 10,
+      "text": "Additional estocatge, càlcul, proba i infraestructura de distribució poden augmentar la capacitat de producció sense reconstruir el sistema subjacent.",
+      "word_start": 94,
+      "word_end": 113,
+      "start": 62.24285,
+      "end": 73.760386
+    },
+    {
+      "index": 11,
+      "text": "Treball seleccionat",
+      "word_start": 113,
+      "word_end": 115,
+      "start": 74.362347,
+      "end": 76.388952
+    },
+    {
+      "index": 12,
+      "text": "Diferents productes. Tècnica que s'accumula.",
+      "word_start": 115,
+      "word_end": 120,
+      "start": 76.388952,
+      "end": 81.545758
+    },
+    {
+      "index": 13,
+      "text": "Cada projecte adreça un problema diferent, però l'objectiu subjacent és el mateix: desenvolupar tecnologia, sistemes i coneixements de producció que puguin ser reutilitzats en futurs programari, en comptes de restar isolats dins una sola aplicació.",
+      "word_start": 120,
+      "word_end": 155,
+      "start": 81.545758,
+      "end": 99.805266
+    },
+    {
+      "index": 14,
+      "text": "IA · Automatització · Flows de treball informàtic",
+      "word_start": 155,
+      "word_end": 163,
+      "start": 99.805266,
+      "end": 104.861745
+    },
+    {
+      "index": 15,
+      "text": "Bolt",
+      "word_start": 163,
+      "word_end": 164,
+      "start": 104.861745,
+      "end": 106.386715
+    },
+    {
+      "index": 16,
+      "text": "Bolt explora l'orquestració controlada d'AI per a treballs informàtics complexos. Està dissenyat per coordinar sistemes d'AI, eines locals i processos d'execució mentre preserva la visibilitat, els permisos i el control humà.",
+      "word_start": 164,
+      "word_end": 195,
+      "start": 106.386715,
+      "end": 124.325177
+    },
+    {
+      "index": 17,
+      "text": "El projecte investiga com es pot reduir la interacció repetitiva entre persones, models i software permetent que un pla validat contingui a través de cicles d'execució, proba i correcció amb menys interrupcions innecessàries.",
+      "word_start": 195,
+      "word_end": 228,
+      "start": 124.586027,
+      "end": 140.798864
+    },
+    {
+      "index": 18,
+      "text": "La tecnologia desenvolupada al voltant de Bolt pot contribuir a l'automatització, el desenvolupament i els sistemes de control informàtic en el màs ampli ecosistema Unfire.",
+      "word_start": 228,
+      "word_end": 253,
+      "start": 141.621546,
+      "end": 154.684117
+    },
+    {
+      "index": 19,
+      "text": "Orquestració · Execució local · Autonomia controlada · Automatització reutilitzable",
+      "word_start": 253,
+      "word_end": 263,
+      "start": 154.684117,
+      "end": 161.365893
+    },
+    {
+      "index": 20,
+      "text": "Energia · Dades · Sistemes d'informació",
+      "word_start": 263,
+      "word_end": 269,
+      "start": 162.028051,
+      "end": 166.402306
+    },
+    {
+      "index": 21,
+      "text": "Poder",
+      "word_start": 269,
+      "word_end": 270,
+      "start": 166.402306,
+      "end": 167.184857
+    },
+    {
+      "index": 22,
+      "text": "El poder explora com convertir la informació complexa sobre electricitat i els mercats d'energia en software més fàcil d'entendre, comparar i utilitzar.",
+      "word_start": 270,
+      "word_end": 292,
+      "start": 167.184857,
+      "end": 178.582
+    },
+    {
+      "index": 23,
+      "text": "El projecte combina dades regionals, informació de preu i una interpretació estructurada en una interfície més clara, creant una base per a futurs eines d'intel·ligència energètica.",
+      "word_start": 292,
+      "word_end": 318,
+      "start": 178.582,
+      "end": 192.068572
+    },
+    {
+      "index": 24,
+      "text": "El mateix enfoque pot ser utilitzat més tard per altres productes amb informació pesada, on les dades externs fragmentades haurien de convertir-se en software comprensible i útil.",
+      "word_start": 318,
+      "word_end": 345,
+      "start": 192.888972,
+      "end": 205.234989
+    },
+    {
+      "index": 25,
+      "text": "Intel·ligència d'energia · Interpretació de dades · Arquitectura d'informació",
+      "word_start": 345,
+      "word_end": 354,
+      "start": 206.395554,
+      "end": 212.838694
+    },
+    {
+      "index": 26,
+      "text": "Infraestructura interna · Producció de software",
+      "word_start": 354,
+      "word_end": 360,
+      "start": 212.838694,
+      "end": 216.040255
+    },
+    {
+      "index": 27,
+      "text": "UnireSuite",
+      "word_start": 360,
+      "word_end": 361,
+      "start": 216.040255,
+      "end": 217.971196
+    },
+    {
+      "index": 28,
+      "text": "UnfireSuite representa la capa interna de production que està behind múltiples projects d'Unfire.",
+      "word_start": 361,
+      "word_end": 374,
+      "start": 217.971196,
+      "end": 225.564896
+    },
+    {
+      "index": 29,
+      "text": "La seva finalitat és reduir la enginyeria repetida permetent que els components de software, els processos de validació, els sistemes de producció i el coneixement tècnic acumulat es reutilitzin on sigui adequat.",
+      "word_start": 374,
+      "word_end": 406,
+      "start": 225.564896,
+      "end": 240.712278
+    },
+    {
+      "index": 30,
+      "text": "Això és important perquè el valor d'un projecte no ha de acabar quan es compleix el projecte. Parts de la tecnologia poden convertir-se en infraestructura per al següent producte, permettant que el sistema de producció sameixi a temps.",
+      "word_start": 406,
+      "word_end": 444,
+      "start": 241.292561,
+      "end": 257.520469
+    },
+    {
+      "index": 31,
+      "text": "Infraestructura compartida · Validació · Reutilització · Sistemes de producció",
+      "word_start": 444,
+      "word_end": 454,
+      "start": 258.641015,
+      "end": 264.303775
+    },
+    {
+      "index": 32,
+      "text": "Unfire Audio · Prima implementació",
+      "word_start": 454,
+      "word_end": 459,
+      "start": 264.303775,
+      "end": 268.225686
+    },
+    {
+      "index": 33,
+      "text": "Arquero",
+      "word_start": 459,
+      "word_end": 460,
+      "start": 268.225686,
+      "end": 269.966534
+    },
+    {
+      "index": 34,
+      "text": "Archer és el primer producte desenvolupat en el marc més ampli de la direcció Unfire Audio.",
+      "word_start": 460,
+      "word_end": 476,
+      "start": 269.966534,
+      "end": 276.909918
+    },
+    {
+      "index": 35,
+      "text": "És una ferramenta de recortatge auditiu de precisió basada en el Gain, el Threshold i l'Atmosfera, dissenyada per donar a productors i enginyers control directe sobre el comportament de recortatge, els punts alt, els transients i la caràcter fonètic.",
+      "word_start": 476,
+      "word_end": 515,
+      "start": 277.900401,
+      "end": 294.598538
+    },
+    {
+      "index": 36,
+      "text": "El seu paper estratègic va beyond l'efecte auditiu sol·licitat. Archer ofereix un entorn pràctic per al desenvolupament i validació de tecnologies auditives, sistemes d'interfície i components de producció que posteriorment poden contribuir a productes de software creatiu futurs.",
+      "word_start": 515,
+      "word_end": 553,
+      "start": 294.598538,
+      "end": 315.088524
+    },
+    {
+      "index": 37,
+      "text": "Unfire Audio està també explorant com sistemes assistits per l'AI, el processament procés i la tecnologia de software reutilitzable poden convergir en nous conceptes de plug-in i flux de treball creatiu que s'extenen beyond les eines de processament d'àudio fixes convencionals.",
+      "word_start": 553,
+      "word_end": 594,
+      "start": 315.088524,
+      "end": 333.89769
+    },
+    {
+      "index": 38,
+      "text": "Tecnologia d'àudio · DSP · Processament procés · Software creatiu",
+      "word_start": 594,
+      "word_end": 604,
+      "start": 334.938197,
+      "end": 340.600957
+    },
+    {
+      "index": 39,
+      "text": "Unfire Audio",
+      "word_start": 604,
+      "word_end": 606,
+      "start": 340.600957,
+      "end": 342.742
+    },
+    {
+      "index": 40,
+      "text": "D'extensions a nous conceptes de software.",
+      "word_start": 606,
+      "word_end": 612,
+      "start": 342.742,
+      "end": 346.866142
+    },
+    {
+      "index": 41,
+      "text": "Unfire Audio explora com els sistemes assistits per IA, el processament procés i els components de software reutilitzables poden convergir en eines creatives que exceden els fluxos de treball convencions de plug-ins.",
+      "word_start": 612,
+      "word_end": 644,
+      "start": 346.866142,
+      "end": 362.682026
+    },
+    {
+      "index": 42,
+      "text": "L'AI pot tornar a formar part de l'entorn de software creatiu en comptes d'existir només com a assistent separat.",
+      "word_start": 644,
+      "word_end": 663,
+      "start": 362.682026,
+      "end": 370.509887
+    },
+    {
+      "index": 43,
+      "text": "Els paràmetres, el son i el comportament del software poden transformar-se dinàmicament, obrint espai per a nous models d'interacció creativa.",
+      "word_start": 663,
+      "word_end": 683,
+      "start": 370.509887,
+      "end": 381.140564
+    },
+    {
+      "index": 44,
+      "text": "Els components exitents desenvolupats en un producte poden ser reutilitzats, ampliat o integrat en altres projectes a més a més.",
+      "word_start": 683,
+      "word_end": 703,
+      "start": 381.721147,
+      "end": 391.290758
+    },
+    {
+      "index": 45,
+      "text": "L'objectiu no és simplement produir plugins auditius isolats. És crear una base creativa-tecnològica reutilitzable capaç d'apoyar eines futures, entorns més amplis i nous conceptes de productes.",
+      "word_start": 703,
+      "word_end": 729,
+      "start": 391.290758,
+      "end": 408.167707
+    },
+    {
+      "index": 46,
+      "text": "Sistema",
+      "word_start": 729,
+      "word_end": 730,
+      "start": 408.928471,
+      "end": 409.909456
+    },
+    {
+      "index": 47,
+      "text": "Producció de software sense començar de nou.",
+      "word_start": 730,
+      "word_end": 737,
+      "start": 409.909456,
+      "end": 413.973538
+    },
+    {
+      "index": 48,
+      "text": "La idea central és simple: quan un nou producte pot utilitzar una tecnologia que ja existeix a l'intèrpret Unfire, el desenvolupament hauria de reutilitzar aquest avantatge en placeu de reconstruir-la.",
+      "word_start": 737,
+      "word_end": 767,
+      "start": 413.973538,
+      "end": 429.569201
+    },
+    {
+      "index": 49,
+      "text": "Base compartida",
+      "word_start": 767,
+      "word_end": 769,
+      "start": 429.569201,
+      "end": 430.970608
+    },
+    {
+      "index": 50,
+      "text": "Els components de software reutilitzables, el coneixement de producció i els sistemes de validació formen una base que pot continuar evolucionant.",
+      "word_start": 769,
+      "word_end": 790,
+      "start": 430.970608,
+      "end": 441.681365
+    },
+    {
+      "index": 51,
+      "text": "Capa de producte",
+      "word_start": 790,
+      "word_end": 793,
+      "start": 441.681365,
+      "end": 444.083778
+    },
+    {
+      "index": 52,
+      "text": "Noves aplicacions poden combinar les capacitats existents amb la tecnologia específic del producte, en comptes d'iniciar-se d'una arquitectura buida.",
+      "word_start": 793,
+      "word_end": 812,
+      "start": 444.083778,
+      "end": 455.154896
+    },
+    {
+      "index": 53,
+      "text": "Validació",
+      "word_start": 812,
+      "word_end": 813,
+      "start": 456.135882,
+      "end": 457.096847
+    },
+    {
+      "index": 54,
+      "text": "Sovint, els controls internos i els punts de comprovació proporcionen evidència mesurable sobre si els candidats del software funcionen com s'ha previst.",
+      "word_start": 813,
+      "word_end": 835,
+      "start": 457.096847,
+      "end": 468.067865
+    },
+    {
+      "index": 55,
+      "text": "Expandació",
+      "word_start": 835,
+      "word_end": 836,
+      "start": 469.06887,
+      "end": 470.029835
+    },
+    {
+      "index": 56,
+      "text": "L'infraestructura pot expandir-se amb màs capacitat de càlcul, estocatge, test, asssegurament de qualitat i capacitat de desplegament.",
+      "word_start": 836,
+      "word_end": 853,
+      "start": 470.029835,
+      "end": 480.660512
+    },
+    {
+      "index": 57,
+      "text": "Escala de producció",
+      "word_start": 853,
+      "word_end": 856,
+      "start": 481.461316,
+      "end": 483.163025
+    },
+    {
+      "index": 58,
+      "text": "El bottleneck està canviant.",
+      "word_start": 856,
+      "word_end": 860,
+      "start": 483.163025,
+      "end": 486.186061
+    },
+    {
+      "index": 59,
+      "text": "On aquesta arquitectura existent, el desenvolupament intern ha demostrat que els candidats a software funcionant poden passar per ciclos de construcció extremadament curts — en alguns casos, mesurats en minutes.",
+      "word_start": 860,
+      "word_end": 890,
+      "start": 486.186061,
+      "end": 501.061
+    },
+    {
+      "index": 60,
+      "text": "Amb l'expansió de la tecnologia reutilitzable, els factors limitants es converteixen cada vegada més en recursos d'infraestructura com el càlcul, l'estocatge, l'estudi, la garantia de qualitat i la depòsita comercial — recursos que poden ampliar-se ell mateix.",
+      "word_start": 890,
+      "word_end": 927,
+      "start": 501.061,
+      "end": 520.637233
+    },
+    {
+      "index": 61,
+      "text": "Product estelar segueix mostrant actualment tecnologies en curs d'ús per demostrar la direcció tecnològica més amplia.",
+      "word_start": 927,
+      "word_end": 943,
+      "start": 521.314336,
+      "end": 529.439568
+    },
+    {
+      "index": 62,
+      "text": "Candidats als software prioritaris identitzats per a un desenvolupament focalitzat.",
+      "word_start": 943,
+      "word_end": 953,
+      "start": 529.439568,
+      "end": 536.071191
+    },
+    {
+      "index": 63,
+      "text": "53",
+      "word_start": 953,
+      "word_end": 954,
+      "start": 536.071191,
+      "end": 537.943181
+    },
+    {
+      "index": 64,
+      "text": "Candidats a software independents construïts i auditats internament.",
+      "word_start": 954,
+      "word_end": 962,
+      "start": 537.943181,
+      "end": 544.05702
+    },
+    {
+      "index": 65,
+      "text": "53/53",
+      "word_start": 962,
+      "word_end": 963,
+      "start": 544.05702,
+      "end": 547.163726
+    },
+    {
+      "index": 66,
+      "text": "Els construccions independents exitosos al control intern de setembre de 2026.",
+      "word_start": 963,
+      "word_end": 974,
+      "start": 547.163726,
+      "end": 554.651685
+    },
+    {
+      "index": 67,
+      "text": "REGLES ESTRICTES:",
+      "word_start": 974,
+      "word_end": 976,
+      "start": 554.651685,
+      "end": 557.300351
+    },
+    {
+      "index": 68,
+      "text": "- RETORNAR SOBRETOT el producte.",
+      "word_start": 976,
+      "word_end": 981,
+      "start": 557.300351,
+      "end": 560.626121
+    },
+    {
+      "index": 69,
+      "text": "- No explicar res.",
+      "word_start": 981,
+      "word_end": 985,
+      "start": 560.626121,
+      "end": 563.055724
+    },
+    {
+      "index": 70,
+      "text": "- No afegir comillas.",
+      "word_start": 985,
+      "word_end": 989,
+      "start": 563.055724,
+      "end": 565.236393
+    },
+    {
+      "index": 71,
+      "text": "- Conservar el sentit i el ton corporatiu professional.",
+      "word_start": 989,
+      "word_end": 998,
+      "start": 565.236393,
+      "end": 570.40428
+    },
+    {
+      "index": 72,
+      "text": "- Escriure naturalment, a un nivell de llengua catalana de Catalunya, no una traducció literal de màquina.",
+      "word_start": 998,
+      "word_end": 1015,
+      "start": 570.40428,
+      "end": 578.310449
+    },
+    {
+      "index": 73,
+      "text": "- No traduir ni modificar els noms de productes: Unfire, Bolt, Archer, POWER, AI TOKEN COUNTER.",
+      "word_start": 1015,
+      "word_end": 1031,
+      "start": 578.310449,
+      "end": 587.902737
+    },
+    {
+      "index": 74,
+      "text": "- Conservar els números, la terminologia tècnica i els noms de productes exactes.",
+      "word_start": 1031,
+      "word_end": 1044,
+      "start": 587.902737,
+      "end": 594.42151
+    },
+    {
+      "index": 75,
+      "text": "- Aquest text serà pronunciat per una voix femenina corporativa professional.",
+      "word_start": 1044,
+      "word_end": 1055,
+      "start": 594.42151,
+      "end": 600.296371
+    },
+    {
+      "index": 76,
+      "text": "Reutilització",
+      "word_start": 1055,
+      "word_end": 1056,
+      "start": 601.909469,
+      "end": 602.74589
+    },
+    {
+      "index": 77,
+      "text": "Comença amb la tecnologia existent quan sigui possible.",
+      "word_start": 1056,
+      "word_end": 1064,
+      "start": 602.74589,
+      "end": 608.541092
+    },
+    {
+      "index": 78,
+      "text": "02",
+      "word_start": 1064,
+      "word_end": 1065,
+      "start": 608.541092,
+      "end": 609.317769
+    },
+    {
+      "index": 79,
+      "text": "Crea",
+      "word_start": 1065,
+      "word_end": 1066,
+      "start": 609.317769,
+      "end": 611.010525
+    },
+    {
+      "index": 80,
+      "text": "Crea la capa específica del producte.",
+      "word_start": 1066,
+      "word_end": 1072,
+      "start": 611.548225,
+      "end": 614.754505
+    },
+    {
+      "index": 81,
+      "text": "03",
+      "word_start": 1072,
+      "word_end": 1073,
+      "start": 614.754505,
+      "end": 616.666324
+    },
+    {
+      "index": 82,
+      "text": "Escala",
+      "word_start": 1073,
+      "word_end": 1074,
+      "start": 616.666324,
+      "end": 618.378996
+    },
+    {
+      "index": 83,
+      "text": "Amplifica l'infraestructura en cops de producció.",
+      "word_start": 1074,
+      "word_end": 1080,
+      "start": 618.378996,
+      "end": 622.660674
+    },
+    {
+      "index": 84,
+      "text": "Empreses",
+      "word_start": 1080,
+      "word_end": 1081,
+      "start": 622.660674,
+      "end": 624.632238
+    },
+    {
+      "index": 85,
+      "text": "Sistemes de software dedicats.",
+      "word_start": 1081,
+      "word_end": 1085,
+      "start": 624.632238,
+      "end": 627.758859
+    },
+    {
+      "index": 86,
+      "text": "La mateixa base de producció pot suportar aplicacions i entorns especialitzats dissenyats segons les necessitats de l'organització.",
+      "word_start": 1085,
+      "word_end": 1102,
+      "start": 627.758859,
+      "end": 638.532758
+    },
+    {
+      "index": 87,
+      "text": "Institucions",
+      "word_start": 1102,
+      "word_end": 1103,
+      "start": 638.532758,
+      "end": 639.727645
+    },
+    {
+      "index": 88,
+      "text": "Entorns controlats.",
+      "word_start": 1103,
+      "word_end": 1105,
+      "start": 639.727645,
+      "end": 642.197078
+    },
+    {
+      "index": 89,
+      "text": "Els projets poden permanèixer isolats mentre beneficien de la tecnologia subbàsica reutilitzable, els processos de validació i l'infraestructura de producció.",
+      "word_start": 1105,
+      "word_end": 1125,
+      "start": 642.197078,
+      "end": 653.926886
+    },
+    {
+      "index": 90,
+      "text": "Sector públic",
+      "word_start": 1125,
+      "word_end": 1127,
+      "start": 654.52433,
+      "end": 656.017938
+    },
+    {
+      "index": 91,
+      "text": "Eines digitals escalables.",
+      "word_start": 1127,
+      "word_end": 1130,
+      "start": 656.017938,
+      "end": 659.283963
+    },
+    {
+      "index": 92,
+      "text": "S'està preparant l'arquitectura per a col·laboracions futurs on importen el control, la tracibilitat, la validació i la mantinença a llarg termini.",
+      "word_start": 1130,
+      "word_end": 1151,
+      "start": 659.283963,
+      "end": 670.276924
+    },
+    {
+      "index": 93,
+      "text": "Unfire pot mostrar productes, construccions, punts d'avaluació internos i capacitat de producció sense revelar els mètodes d'implementació que creen la sous-estimació underlying.",
+      "word_start": 1151,
+      "word_end": 1173,
+      "start": 670.276924,
+      "end": 683.938466
+    },
+    {
+      "index": 94,
+      "text": "Financiament i col·laboració",
+      "word_start": 1173,
+      "word_end": 1176,
+      "start": 683.938466,
+      "end": 686.049433
+    },
+    {
+      "index": 95,
+      "text": "Amplia el que ja existeix.",
+      "word_start": 1176,
+      "word_end": 1181,
+      "start": 686.049433,
+      "end": 689.255714
+    },
+    {
+      "index": 96,
+      "text": "hola@unfire.technology",
+      "word_start": 1181,
+      "word_end": 1182,
+      "start": 689.255714,
+      "end": 691.984039
+    }
+  ],
+  "words": [
+    {
+      "word": "Companyia",
+      "start": 0.0,
+      "end": 0.943073,
+      "exact": true,
+      "block": 0
+    },
+    {
+      "word": "tecnològica",
+      "start": 0.943073,
+      "end": 1.906212,
+      "exact": true,
+      "block": 0
+    },
+    {
+      "word": "independent",
+      "start": 1.906212,
+      "end": 2.648632,
+      "exact": true,
+      "block": 0
+    },
+    {
+      "word": "Desenvolupar",
+      "start": 2.648632,
+      "end": 4.895956,
+      "exact": true,
+      "block": 1
+    },
+    {
+      "word": "tecnologia.",
+      "start": 4.895956,
+      "end": 5.658441,
+      "exact": true,
+      "block": 1
+    },
+    {
+      "word": "Reutilitza",
+      "start": 5.658441,
+      "end": 7.8857,
+      "exact": true,
+      "block": 1
+    },
+    {
+      "word": "l'avantatge.",
+      "start": 7.8857,
+      "end": 9.099656,
+      "exact": false,
+      "block": 1
+    },
+    {
+      "word": "Unfire",
+      "start": 9.099656,
+      "end": 10.313612,
+      "exact": false,
+      "block": 2
+    },
+    {
+      "word": "desenvolupa",
+      "start": 10.313612,
+      "end": 11.076097,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "sistemes",
+      "start": 11.076097,
+      "end": 11.798451,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "de",
+      "start": 11.798451,
+      "end": 11.918844,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "software",
+      "start": 11.918844,
+      "end": 12.280021,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "reutilitzables",
+      "start": 12.280021,
+      "end": 13.303356,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "dissenyats",
+      "start": 13.303356,
+      "end": 14.045775,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "per",
+      "start": 14.045775,
+      "end": 14.667802,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "convertir",
+      "start": 14.667802,
+      "end": 15.28983,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "una",
+      "start": 15.28983,
+      "end": 15.610876,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "base",
+      "start": 15.610876,
+      "end": 15.931922,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "tecnològica",
+      "start": 15.931922,
+      "end": 16.8148,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "en",
+      "start": 16.8148,
+      "end": 17.055584,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "diversos",
+      "start": 17.055584,
+      "end": 17.677611,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "products,",
+      "start": 17.677611,
+      "end": 18.179246,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "fluxos",
+      "start": 18.620685,
+      "end": 19.082189,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "de",
+      "start": 19.082189,
+      "end": 19.222647,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "treball",
+      "start": 19.222647,
+      "end": 19.583824,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "i",
+      "start": 19.583824,
+      "end": 19.884805,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "aplicacions",
+      "start": 19.884805,
+      "end": 20.587093,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "futurs.",
+      "start": 20.587093,
+      "end": 21.128859,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "Companyes",
+      "start": 22.011736,
+      "end": 23.135398,
+      "exact": true,
+      "block": 3
+    },
+    {
+      "word": "In",
+      "start": 23.135398,
+      "end": 24.028308,
+      "exact": false,
+      "block": 4
+    },
+    {
+      "word": "place",
+      "start": 24.028308,
+      "end": 24.921218,
+      "exact": false,
+      "block": 4
+    },
+    {
+      "word": "de",
+      "start": 24.921218,
+      "end": 25.101807,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "tractar",
+      "start": 25.101807,
+      "end": 25.503115,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "cada",
+      "start": 25.503115,
+      "end": 25.844227,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "aplicació",
+      "start": 25.844227,
+      "end": 26.546515,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "com",
+      "start": 26.546515,
+      "end": 26.847496,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "a",
+      "start": 26.847496,
+      "end": 26.927758,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "un",
+      "start": 26.927758,
+      "end": 27.088281,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "projecte",
+      "start": 27.088281,
+      "end": 27.670177,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "isolat,",
+      "start": 27.670177,
+      "end": 28.232008,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "Unfire",
+      "start": 28.232008,
+      "end": 29.275409,
+      "exact": false,
+      "block": 4
+    },
+    {
+      "word": "desenvolupa",
+      "start": 29.275409,
+      "end": 30.037894,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "tecnologia",
+      "start": 30.037894,
+      "end": 30.700052,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "que",
+      "start": 30.700052,
+      "end": 31.121425,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "es",
+      "start": 31.121425,
+      "end": 31.281948,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "pot",
+      "start": 31.281948,
+      "end": 31.502667,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "reutilitzar,",
+      "start": 31.502667,
+      "end": 32.385545,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "ampliar",
+      "start": 32.706591,
+      "end": 33.348684,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "i",
+      "start": 33.348684,
+      "end": 33.569403,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "transferir",
+      "start": 33.569403,
+      "end": 34.231561,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "a",
+      "start": 34.231561,
+      "end": 34.392084,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "productes",
+      "start": 34.392084,
+      "end": 34.97398,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "futurs.",
+      "start": 34.97398,
+      "end": 35.475615,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "Crea",
+      "start": 36.579212,
+      "end": 36.98052,
+      "exact": true,
+      "block": 5
+    },
+    {
+      "word": "una",
+      "start": 36.98052,
+      "end": 37.341697,
+      "exact": true,
+      "block": 5
+    },
+    {
+      "word": "vegada.",
+      "start": 37.341697,
+      "end": 37.863397,
+      "exact": true,
+      "block": 5
+    },
+    {
+      "word": "Les",
+      "start": 37.863397,
+      "end": 39.187713,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "capacitats",
+      "start": 39.187713,
+      "end": 39.970263,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "de",
+      "start": 39.970263,
+      "end": 40.110721,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "base",
+      "start": 40.110721,
+      "end": 40.451833,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "poden",
+      "start": 40.451833,
+      "end": 41.033729,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "convertir-se",
+      "start": 41.033729,
+      "end": 41.876476,
+      "exact": false,
+      "block": 6
+    },
+    {
+      "word": "en",
+      "start": 41.876476,
+      "end": 42.11726,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "blocs",
+      "start": 42.11726,
+      "end": 42.458372,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "de",
+      "start": 42.458372,
+      "end": 42.578764,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "construcció",
+      "start": 42.578764,
+      "end": 43.260988,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "reutilitzables",
+      "start": 43.260988,
+      "end": 44.304388,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "en",
+      "start": 44.304388,
+      "end": 44.866219,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "place",
+      "start": 44.866219,
+      "end": 45.247462,
+      "exact": false,
+      "block": 6
+    },
+    {
+      "word": "del",
+      "start": 45.247462,
+      "end": 45.448116,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "desapareixer",
+      "start": 45.448116,
+      "end": 46.230666,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "a",
+      "start": 46.230666,
+      "end": 46.491516,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "un",
+      "start": 46.491516,
+      "end": 46.69217,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "sol",
+      "start": 46.69217,
+      "end": 46.993151,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "producte.",
+      "start": 46.993151,
+      "end": 47.595113,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "Continua",
+      "start": 48.357598,
+      "end": 49.360867,
+      "exact": true,
+      "block": 7
+    },
+    {
+      "word": "ampliant-te",
+      "start": 49.360867,
+      "end": 50.324006,
+      "exact": false,
+      "block": 7
+    },
+    {
+      "word": "constantment.",
+      "start": 50.324006,
+      "end": 51.106557,
+      "exact": true,
+      "block": 7
+    },
+    {
+      "word": "El",
+      "start": 51.106557,
+      "end": 52.330546,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "nou",
+      "start": 52.330546,
+      "end": 52.57133,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "software",
+      "start": 52.57133,
+      "end": 53.072965,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "pot",
+      "start": 53.072965,
+      "end": 53.554535,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "heredar",
+      "start": 53.554535,
+      "end": 53.815385,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "l'infraestructura",
+      "start": 53.815385,
+      "end": 54.798589,
+      "exact": false,
+      "block": 8
+    },
+    {
+      "word": "existent,",
+      "start": 54.798589,
+      "end": 55.500878,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "reduint",
+      "start": 55.500878,
+      "end": 56.584409,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "l'enginyeria",
+      "start": 56.584409,
+      "end": 57.326829,
+      "exact": false,
+      "block": 8
+    },
+    {
+      "word": "repetida",
+      "start": 57.326829,
+      "end": 58.029117,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "quan",
+      "start": 58.029117,
+      "end": 58.350164,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "s'aplica",
+      "start": 58.350164,
+      "end": 59.343401,
+      "exact": false,
+      "block": 8
+    },
+    {
+      "word": "l'arquitectura.",
+      "start": 59.343401,
+      "end": 60.336638,
+      "exact": false,
+      "block": 8
+    },
+    {
+      "word": "Escala",
+      "start": 60.336638,
+      "end": 61.380038,
+      "exact": true,
+      "block": 9
+    },
+    {
+      "word": "el",
+      "start": 61.380038,
+      "end": 61.681019,
+      "exact": true,
+      "block": 9
+    },
+    {
+      "word": "sistema.",
+      "start": 61.681019,
+      "end": 62.24285,
+      "exact": true,
+      "block": 9
+    },
+    {
+      "word": "Additional",
+      "start": 62.24285,
+      "end": 64.008604,
+      "exact": false,
+      "block": 10
+    },
+    {
+      "word": "estocatge,",
+      "start": 64.008604,
+      "end": 64.891482,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "càlcul,",
+      "start": 65.29279,
+      "end": 65.694098,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "proba",
+      "start": 65.694098,
+      "end": 66.33619,
+      "exact": false,
+      "block": 10
+    },
+    {
+      "word": "i",
+      "start": 66.33619,
+      "end": 66.637171,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "infraestructura",
+      "start": 66.637171,
+      "end": 67.520048,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "de",
+      "start": 67.520048,
+      "end": 67.660506,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "distribució",
+      "start": 67.660506,
+      "end": 68.38286,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "poden",
+      "start": 68.38286,
+      "end": 68.924626,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "augmentar",
+      "start": 68.924626,
+      "end": 69.466391,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "la",
+      "start": 69.466391,
+      "end": 69.626915,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "capacitat",
+      "start": 69.626915,
+      "end": 70.188746,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "de",
+      "start": 70.188746,
+      "end": 70.42953,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "producció",
+      "start": 70.42953,
+      "end": 71.011427,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "sense",
+      "start": 71.011427,
+      "end": 71.4328,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "reconstruir",
+      "start": 71.4328,
+      "end": 72.255481,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "el",
+      "start": 72.255481,
+      "end": 72.516331,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "sistema",
+      "start": 72.516331,
+      "end": 73.017966,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "subjacent.",
+      "start": 73.017966,
+      "end": 73.760386,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "Treball",
+      "start": 74.362347,
+      "end": 75.245225,
+      "exact": true,
+      "block": 11
+    },
+    {
+      "word": "seleccionat",
+      "start": 75.245225,
+      "end": 76.388952,
+      "exact": true,
+      "block": 11
+    },
+    {
+      "word": "Diferents",
+      "start": 76.388952,
+      "end": 78.05438,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "productes.",
+      "start": 78.05438,
+      "end": 78.957322,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "Tècnica",
+      "start": 78.957322,
+      "end": 80.542489,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "que",
+      "start": 80.542489,
+      "end": 80.823404,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "s'accumula.",
+      "start": 80.823404,
+      "end": 81.545758,
+      "exact": false,
+      "block": 12
+    },
+    {
+      "word": "Cada",
+      "start": 81.545758,
+      "end": 82.789813,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "projecte",
+      "start": 82.789813,
+      "end": 83.592428,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "adreça",
+      "start": 83.592428,
+      "end": 84.174325,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "un",
+      "start": 84.174325,
+      "end": 84.415109,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "problema",
+      "start": 84.415109,
+      "end": 84.916744,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "diferent,",
+      "start": 84.916744,
+      "end": 85.498641,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "però",
+      "start": 85.779556,
+      "end": 86.200929,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "l'objectiu",
+      "start": 86.200929,
+      "end": 86.843022,
+      "exact": false,
+      "block": 13
+    },
+    {
+      "word": "subjacent",
+      "start": 86.843022,
+      "end": 87.605507,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "és",
+      "start": 87.605507,
+      "end": 87.906488,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "el",
+      "start": 87.906488,
+      "end": 88.067011,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "mateix:",
+      "start": 88.067011,
+      "end": 88.488384,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "desenvolupar",
+      "start": 88.709104,
+      "end": 89.571916,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "tecnologia,",
+      "start": 89.571916,
+      "end": 90.193943,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "sistemes",
+      "start": 90.836035,
+      "end": 91.397866,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "i",
+      "start": 91.397866,
+      "end": 91.518259,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "coneixements",
+      "start": 91.518259,
+      "end": 92.100155,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "de",
+      "start": 92.100155,
+      "end": 92.300809,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "producció",
+      "start": 92.300809,
+      "end": 92.86264,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "que",
+      "start": 92.86264,
+      "end": 93.12349,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "puguin",
+      "start": 93.12349,
+      "end": 93.544863,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "ser",
+      "start": 93.544863,
+      "end": 93.825779,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "reutilitzats",
+      "start": 93.825779,
+      "end": 94.688591,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "en",
+      "start": 94.688591,
+      "end": 94.869179,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "futurs",
+      "start": 94.869179,
+      "end": 95.270487,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "programari,",
+      "start": 95.270487,
+      "end": 95.91258,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "en",
+      "start": 95.91258,
+      "end": 96.675065,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "comptes",
+      "start": 96.675065,
+      "end": 97.156634,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "de",
+      "start": 97.156634,
+      "end": 97.317157,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "restar",
+      "start": 97.317157,
+      "end": 97.638204,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "isolats",
+      "start": 97.638204,
+      "end": 98.2201,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "dins",
+      "start": 98.2201,
+      "end": 98.641473,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "una",
+      "start": 98.641473,
+      "end": 98.842127,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "sola",
+      "start": 98.842127,
+      "end": 99.183239,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "aplicació.",
+      "start": 99.183239,
+      "end": 99.805266,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "IA",
+      "start": 99.805266,
+      "end": 100.387162,
+      "exact": false,
+      "block": 14
+    },
+    {
+      "word": "·",
+      "start": 100.387162,
+      "end": 100.969059,
+      "exact": false,
+      "block": 14
+    },
+    {
+      "word": "Automatització",
+      "start": 100.969059,
+      "end": 102.594356,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "·",
+      "start": 102.594356,
+      "end": 102.634487,
+      "exact": false,
+      "block": 14
+    },
+    {
+      "word": "Flows",
+      "start": 102.594356,
+      "end": 103.417037,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "de",
+      "start": 103.417037,
+      "end": 103.637756,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "treball",
+      "start": 103.637756,
+      "end": 103.998933,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "informàtic",
+      "start": 103.998933,
+      "end": 104.861745,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "Bolt",
+      "start": 104.861745,
+      "end": 106.386715,
+      "exact": false,
+      "block": 15
+    },
+    {
+      "word": "Bolt",
+      "start": 106.386715,
+      "end": 107.911685,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "explora",
+      "start": 107.911685,
+      "end": 108.493581,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "l'orquestració",
+      "start": 108.493581,
+      "end": 109.376459,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "controlada",
+      "start": 109.376459,
+      "end": 110.138944,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "d'AI",
+      "start": 110.138944,
+      "end": 110.45999,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "per",
+      "start": 110.45999,
+      "end": 110.801102,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "a",
+      "start": 110.801102,
+      "end": 110.941559,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "treballs",
+      "start": 110.941559,
+      "end": 111.262606,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "informàtics",
+      "start": 111.262606,
+      "end": 112.185614,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "complexos.",
+      "start": 112.185614,
+      "end": 113.008295,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "Està",
+      "start": 113.931303,
+      "end": 114.392807,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "dissenyat",
+      "start": 114.392807,
+      "end": 115.014834,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "per",
+      "start": 115.014834,
+      "end": 115.215488,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "coordinar",
+      "start": 115.215488,
+      "end": 115.777319,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "sistemes",
+      "start": 115.777319,
+      "end": 116.459542,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "d'AI,",
+      "start": 116.459542,
+      "end": 117.222027,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "eines",
+      "start": 117.222027,
+      "end": 117.422681,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "locals",
+      "start": 117.422681,
+      "end": 117.944382,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "i",
+      "start": 117.944382,
+      "end": 118.285493,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "processos",
+      "start": 118.285493,
+      "end": 118.927586,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "d'execució",
+      "start": 118.927586,
+      "end": 119.64994,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "mentre",
+      "start": 119.64994,
+      "end": 120.031182,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "preserva",
+      "start": 120.031182,
+      "end": 120.69334,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "la",
+      "start": 120.69334,
+      "end": 120.813733,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "visibilitat,",
+      "start": 120.813733,
+      "end": 121.556152,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "els",
+      "start": 121.877199,
+      "end": 122.378833,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "permisos",
+      "start": 122.378833,
+      "end": 123.081122,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "i",
+      "start": 123.081122,
+      "end": 123.301842,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "el",
+      "start": 123.301842,
+      "end": 123.502496,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "control",
+      "start": 123.502496,
+      "end": 123.943934,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "humà.",
+      "start": 123.943934,
+      "end": 124.325177,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "El",
+      "start": 124.586027,
+      "end": 125.509035,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "projecte",
+      "start": 125.509035,
+      "end": 126.070866,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "investiga",
+      "start": 126.070866,
+      "end": 126.813285,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "com",
+      "start": 126.813285,
+      "end": 127.074136,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "es",
+      "start": 127.074136,
+      "end": 127.234659,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "pot",
+      "start": 127.234659,
+      "end": 127.455378,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "reduir",
+      "start": 127.455378,
+      "end": 127.896817,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "la",
+      "start": 127.896817,
+      "end": 128.077405,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "interacció",
+      "start": 128.077405,
+      "end": 128.679367,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "repetitiva",
+      "start": 128.679367,
+      "end": 129.461917,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "entre",
+      "start": 129.461917,
+      "end": 129.84316,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "persones,",
+      "start": 129.84316,
+      "end": 130.465187,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "models",
+      "start": 130.465187,
+      "end": 131.307933,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "i",
+      "start": 131.307933,
+      "end": 131.649045,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "software",
+      "start": 131.649045,
+      "end": 132.070418,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "permetent",
+      "start": 132.070418,
+      "end": 132.732576,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "que",
+      "start": 132.732576,
+      "end": 133.013492,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "un",
+      "start": 133.013492,
+      "end": 133.234211,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "pla",
+      "start": 133.234211,
+      "end": 133.454931,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "validat",
+      "start": 133.454931,
+      "end": 133.976631,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "contingui",
+      "start": 133.976631,
+      "end": 134.698985,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "a",
+      "start": 134.698985,
+      "end": 134.919704,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "través",
+      "start": 134.919704,
+      "end": 135.180554,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "de",
+      "start": 135.180554,
+      "end": 135.401274,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "cicles",
+      "start": 135.401274,
+      "end": 135.802582,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "d'execució,",
+      "start": 135.802582,
+      "end": 136.665393,
+      "exact": false,
+      "block": 17
+    },
+    {
+      "word": "proba",
+      "start": 136.665393,
+      "end": 137.528205,
+      "exact": false,
+      "block": 17
+    },
+    {
+      "word": "i",
+      "start": 137.528205,
+      "end": 137.809121,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "correcció",
+      "start": 137.809121,
+      "end": 138.471279,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "amb",
+      "start": 138.471279,
+      "end": 138.77226,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "menys",
+      "start": 138.77226,
+      "end": 139.093306,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "interrupcions",
+      "start": 139.093306,
+      "end": 139.855791,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "innecessàries.",
+      "start": 139.855791,
+      "end": 140.798864,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "La",
+      "start": 141.621546,
+      "end": 142.022853,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "tecnologia",
+      "start": 142.022853,
+      "end": 142.60475,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "desenvolupada",
+      "start": 142.60475,
+      "end": 143.708347,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "al",
+      "start": 143.708347,
+      "end": 143.989262,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "voltant",
+      "start": 143.989262,
+      "end": 144.430701,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "de",
+      "start": 144.430701,
+      "end": 144.611289,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "Bolt",
+      "start": 144.611289,
+      "end": 145.012597,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "pot",
+      "start": 145.012597,
+      "end": 145.293513,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "contribuir",
+      "start": 145.293513,
+      "end": 146.015867,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "a",
+      "start": 146.015867,
+      "end": 146.196455,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "l'automatització,",
+      "start": 146.196455,
+      "end": 147.500706,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "el",
+      "start": 147.500706,
+      "end": 148.042471,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "desenvolupament",
+      "start": 148.042471,
+      "end": 149.00561,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "i",
+      "start": 149.00561,
+      "end": 149.286526,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "els",
+      "start": 149.286526,
+      "end": 149.467114,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "sistemes",
+      "start": 149.467114,
+      "end": 150.00888,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "de",
+      "start": 150.00888,
+      "end": 150.129272,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "control",
+      "start": 150.129272,
+      "end": 150.550646,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "informàtic",
+      "start": 150.550646,
+      "end": 151.413458,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "en",
+      "start": 151.413458,
+      "end": 151.714438,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "el",
+      "start": 151.714438,
+      "end": 151.854896,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "màs",
+      "start": 151.854896,
+      "end": 152.075616,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "ampli",
+      "start": 152.075616,
+      "end": 152.496989,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "ecosistema",
+      "start": 152.496989,
+      "end": 153.239408,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "Unfire.",
+      "start": 153.239408,
+      "end": 154.684117,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "Orquestració",
+      "start": 154.684117,
+      "end": 155.667321,
+      "exact": true,
+      "block": 19
+    },
+    {
+      "word": "·",
+      "start": 155.667321,
+      "end": 155.928171,
+      "exact": false,
+      "block": 19
+    },
+    {
+      "word": "Execució",
+      "start": 155.928171,
+      "end": 156.63046,
+      "exact": true,
+      "block": 19
+    },
+    {
+      "word": "local",
+      "start": 156.63046,
+      "end": 157.132095,
+      "exact": true,
+      "block": 19
+    },
+    {
+      "word": "·",
+      "start": 157.132095,
+      "end": 157.493272,
+      "exact": false,
+      "block": 19
+    },
+    {
+      "word": "Autonomia",
+      "start": 157.493272,
+      "end": 158.115299,
+      "exact": true,
+      "block": 19
+    },
+    {
+      "word": "controlada",
+      "start": 158.115299,
+      "end": 158.978111,
+      "exact": true,
+      "block": 19
+    },
+    {
+      "word": "·",
+      "start": 158.978111,
+      "end": 159.319222,
+      "exact": false,
+      "block": 19
+    },
+    {
+      "word": "Automatització",
+      "start": 159.319222,
+      "end": 160.342558,
+      "exact": true,
+      "block": 19
+    },
+    {
+      "word": "reutilitzable",
+      "start": 160.342558,
+      "end": 161.365893,
+      "exact": true,
+      "block": 19
+    },
+    {
+      "word": "Energia",
+      "start": 162.028051,
+      "end": 163.011255,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "·",
+      "start": 163.011255,
+      "end": 163.231974,
+      "exact": false,
+      "block": 20
+    },
+    {
+      "word": "Dades",
+      "start": 163.231974,
+      "end": 163.874067,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "·",
+      "start": 163.874067,
+      "end": 164.134917,
+      "exact": false,
+      "block": 20
+    },
+    {
+      "word": "Sistemes",
+      "start": 164.134917,
+      "end": 164.81714,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "d'informació",
+      "start": 164.81714,
+      "end": 166.402306,
+      "exact": false,
+      "block": 20
+    },
+    {
+      "word": "Poder",
+      "start": 166.402306,
+      "end": 167.184857,
+      "exact": true,
+      "block": 21
+    },
+    {
+      "word": "El",
+      "start": 167.184857,
+      "end": 168.348649,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "poder",
+      "start": 168.348649,
+      "end": 168.669696,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "explora",
+      "start": 168.669696,
+      "end": 169.371984,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "com",
+      "start": 169.371984,
+      "end": 169.733162,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "convertir",
+      "start": 169.733162,
+      "end": 170.315058,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "la",
+      "start": 170.315058,
+      "end": 170.475581,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "informació",
+      "start": 170.475581,
+      "end": 171.097608,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "complexa",
+      "start": 171.097608,
+      "end": 171.880159,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "sobre",
+      "start": 171.880159,
+      "end": 172.18114,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "electricitat",
+      "start": 172.18114,
+      "end": 173.003821,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "i",
+      "start": 173.003821,
+      "end": 173.284736,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "els",
+      "start": 173.284736,
+      "end": 173.505456,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "mercats",
+      "start": 173.505456,
+      "end": 173.987025,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "d'energia",
+      "start": 173.987025,
+      "end": 174.588987,
+      "exact": false,
+      "block": 22
+    },
+    {
+      "word": "en",
+      "start": 174.588987,
+      "end": 174.990295,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "software",
+      "start": 174.990295,
+      "end": 175.331406,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "més",
+      "start": 175.331406,
+      "end": 175.732714,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "fàcil",
+      "start": 175.732714,
+      "end": 176.134022,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "d'entendre,",
+      "start": 176.134022,
+      "end": 177.137292,
+      "exact": false,
+      "block": 22
+    },
+    {
+      "word": "comparar",
+      "start": 177.137292,
+      "end": 177.679057,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "i",
+      "start": 177.679057,
+      "end": 177.899777,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "utilitzar.",
+      "start": 177.899777,
+      "end": 178.582,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "El",
+      "start": 178.582,
+      "end": 179.842614,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "projecte",
+      "start": 179.842614,
+      "end": 180.462917,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "combina",
+      "start": 180.462917,
+      "end": 181.02319,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "dades",
+      "start": 181.02319,
+      "end": 181.443394,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "regionals,",
+      "start": 181.443394,
+      "end": 182.163745,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "informació",
+      "start": 182.523921,
+      "end": 183.144223,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "de",
+      "start": 183.144223,
+      "end": 183.324311,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "preu",
+      "start": 183.324311,
+      "end": 183.624457,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "i",
+      "start": 183.624457,
+      "end": 183.864574,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "una",
+      "start": 183.864574,
+      "end": 184.084682,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "interpretació",
+      "start": 184.084682,
+      "end": 184.925091,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "estructurada",
+      "start": 184.925091,
+      "end": 185.745491,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "en",
+      "start": 185.745491,
+      "end": 186.045637,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "una",
+      "start": 186.045637,
+      "end": 186.205715,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "interfície",
+      "start": 186.205715,
+      "end": 186.906057,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "més",
+      "start": 186.906057,
+      "end": 187.186193,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "clara,",
+      "start": 187.186193,
+      "end": 187.606398,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "creant",
+      "start": 188.2267,
+      "end": 188.626895,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "una",
+      "start": 188.626895,
+      "end": 188.806983,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "base",
+      "start": 188.806983,
+      "end": 189.147149,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "per",
+      "start": 189.147149,
+      "end": 189.487314,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "a",
+      "start": 189.487314,
+      "end": 189.607373,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "futurs",
+      "start": 189.607373,
+      "end": 189.927529,
+      "exact": false,
+      "block": 23
+    },
+    {
+      "word": "eines",
+      "start": 189.927529,
+      "end": 190.327724,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "d'intel·ligència",
+      "start": 190.327724,
+      "end": 191.328212,
+      "exact": false,
+      "block": 23
+    },
+    {
+      "word": "energètica.",
+      "start": 191.328212,
+      "end": 192.068572,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "El",
+      "start": 192.888972,
+      "end": 193.289167,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "mateix",
+      "start": 193.289167,
+      "end": 193.689362,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "enfoque",
+      "start": 193.689362,
+      "end": 194.289655,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "pot",
+      "start": 194.289655,
+      "end": 194.68985,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "ser",
+      "start": 194.68985,
+      "end": 194.909957,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "utilitzat",
+      "start": 194.909957,
+      "end": 195.650318,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "més",
+      "start": 195.650318,
+      "end": 195.910445,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "tard",
+      "start": 195.910445,
+      "end": 196.230601,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "per",
+      "start": 196.230601,
+      "end": 196.470718,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "altres",
+      "start": 196.470718,
+      "end": 196.870913,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "productes",
+      "start": 196.870913,
+      "end": 197.451196,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "amb",
+      "start": 197.451196,
+      "end": 197.631283,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "informació",
+      "start": 197.631283,
+      "end": 198.291605,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "pesada,",
+      "start": 198.291605,
+      "end": 198.871888,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "on",
+      "start": 199.011956,
+      "end": 199.572229,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "les",
+      "start": 199.572229,
+      "end": 199.772327,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "dades",
+      "start": 199.772327,
+      "end": 200.092483,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "externs",
+      "start": 200.092483,
+      "end": 200.652756,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "fragmentades",
+      "start": 200.652756,
+      "end": 201.453146,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "haurien",
+      "start": 201.453146,
+      "end": 202.073448,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "de",
+      "start": 202.073448,
+      "end": 202.213516,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "convertir-se",
+      "start": 202.213516,
+      "end": 202.973887,
+      "exact": false,
+      "block": 24
+    },
+    {
+      "word": "en",
+      "start": 202.973887,
+      "end": 203.254023,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "software",
+      "start": 203.254023,
+      "end": 203.674228,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "comprensible",
+      "start": 203.674228,
+      "end": 204.594677,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "i",
+      "start": 204.594677,
+      "end": 204.914833,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "útil.",
+      "start": 204.914833,
+      "end": 205.234989,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "Intel·ligència",
+      "start": 206.395554,
+      "end": 207.275983,
+      "exact": true,
+      "block": 25
+    },
+    {
+      "word": "d'energia",
+      "start": 207.275983,
+      "end": 207.776227,
+      "exact": false,
+      "block": 25
+    },
+    {
+      "word": "·",
+      "start": 207.776227,
+      "end": 208.276471,
+      "exact": false,
+      "block": 25
+    },
+    {
+      "word": "Interpretació",
+      "start": 208.276471,
+      "end": 209.17691,
+      "exact": true,
+      "block": 25
+    },
+    {
+      "word": "de",
+      "start": 209.17691,
+      "end": 209.397017,
+      "exact": true,
+      "block": 25
+    },
+    {
+      "word": "dades",
+      "start": 209.397017,
+      "end": 209.817222,
+      "exact": true,
+      "block": 25
+    },
+    {
+      "word": "·",
+      "start": 209.817222,
+      "end": 210.117368,
+      "exact": false,
+      "block": 25
+    },
+    {
+      "word": "Arquitectura",
+      "start": 210.117368,
+      "end": 210.857729,
+      "exact": true,
+      "block": 25
+    },
+    {
+      "word": "d'informació",
+      "start": 210.857729,
+      "end": 212.838694,
+      "exact": false,
+      "block": 25
+    },
+    {
+      "word": "Infraestructura",
+      "start": 212.838694,
+      "end": 213.719123,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "interna",
+      "start": 213.719123,
+      "end": 214.539523,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "·",
+      "start": 214.539523,
+      "end": 214.75963,
+      "exact": false,
+      "block": 26
+    },
+    {
+      "word": "Producció",
+      "start": 214.75963,
+      "end": 215.419952,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "de",
+      "start": 215.419952,
+      "end": 215.60004,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "software",
+      "start": 215.60004,
+      "end": 216.040255,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "UnireSuite",
+      "start": 216.040255,
+      "end": 217.971196,
+      "exact": false,
+      "block": 27
+    },
+    {
+      "word": "UnfireSuite",
+      "start": 217.971196,
+      "end": 219.902137,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "representa",
+      "start": 219.902137,
+      "end": 220.682517,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "la",
+      "start": 220.682517,
+      "end": 221.042692,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "capa",
+      "start": 221.042692,
+      "end": 221.442887,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "interna",
+      "start": 221.442887,
+      "end": 221.923121,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "de",
+      "start": 221.923121,
+      "end": 222.06319,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "production",
+      "start": 222.06319,
+      "end": 222.503404,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "que",
+      "start": 222.503404,
+      "end": 222.963628,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "està",
+      "start": 222.963628,
+      "end": 223.263775,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "behind",
+      "start": 223.263775,
+      "end": 223.703989,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "múltiples",
+      "start": 223.703989,
+      "end": 224.404331,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "projects",
+      "start": 224.404331,
+      "end": 224.984613,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "d'Unfire.",
+      "start": 224.984613,
+      "end": 225.564896,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "La",
+      "start": 225.564896,
+      "end": 226.805501,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "seva",
+      "start": 226.805501,
+      "end": 227.085637,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "finalitat",
+      "start": 227.085637,
+      "end": 227.745959,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "és",
+      "start": 227.745959,
+      "end": 228.206183,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "reduir",
+      "start": 228.206183,
+      "end": 228.626388,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "la",
+      "start": 228.626388,
+      "end": 228.826486,
+      "exact": false,
+      "block": 29
+    },
+    {
+      "word": "enginyeria",
+      "start": 228.826486,
+      "end": 229.446788,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "repetida",
+      "start": 229.446788,
+      "end": 230.0871,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "permetent",
+      "start": 230.0871,
+      "end": 230.727412,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "que",
+      "start": 230.727412,
+      "end": 230.9075,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "els",
+      "start": 230.9075,
+      "end": 231.067578,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "components",
+      "start": 231.067578,
+      "end": 231.567822,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "de",
+      "start": 231.567822,
+      "end": 231.827948,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "software,",
+      "start": 231.827948,
+      "end": 232.268163,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "els",
+      "start": 232.588319,
+      "end": 232.868455,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "processos",
+      "start": 232.868455,
+      "end": 233.488758,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "de",
+      "start": 233.488758,
+      "end": 233.588806,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "validació,",
+      "start": 233.588806,
+      "end": 234.189099,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "els",
+      "start": 234.629314,
+      "end": 234.92946,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "sistemes",
+      "start": 234.92946,
+      "end": 235.449713,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "de",
+      "start": 235.449713,
+      "end": 235.569772,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "producció",
+      "start": 235.569772,
+      "end": 236.190074,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "i",
+      "start": 236.190074,
+      "end": 236.470211,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "el",
+      "start": 236.470211,
+      "end": 236.630289,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "coneixement",
+      "start": 236.630289,
+      "end": 237.230581,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "tècnic",
+      "start": 237.230581,
+      "end": 237.730825,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "acumulat",
+      "start": 237.730825,
+      "end": 238.451176,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "es",
+      "start": 238.451176,
+      "end": 238.631264,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "reutilitzin",
+      "start": 238.631264,
+      "end": 239.431654,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "on",
+      "start": 239.431654,
+      "end": 239.71179,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "sigui",
+      "start": 239.71179,
+      "end": 240.111985,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "adequat.",
+      "start": 240.111985,
+      "end": 240.712278,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "Això",
+      "start": 241.292561,
+      "end": 242.032922,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "és",
+      "start": 242.032922,
+      "end": 242.393097,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "important",
+      "start": 242.393097,
+      "end": 242.99339,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "perquè",
+      "start": 242.99339,
+      "end": 243.433604,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "el",
+      "start": 243.433604,
+      "end": 243.673721,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "valor",
+      "start": 243.673721,
+      "end": 243.953858,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "d'un",
+      "start": 243.953858,
+      "end": 244.193975,
+      "exact": false,
+      "block": 30
+    },
+    {
+      "word": "projecte",
+      "start": 244.193975,
+      "end": 244.874306,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "no",
+      "start": 244.874306,
+      "end": 245.214472,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "ha",
+      "start": 245.214472,
+      "end": 245.37455,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "de",
+      "start": 245.37455,
+      "end": 245.474599,
+      "exact": false,
+      "block": 30
+    },
+    {
+      "word": "acabar",
+      "start": 245.474599,
+      "end": 245.874794,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "quan",
+      "start": 245.874794,
+      "end": 246.15493,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "es",
+      "start": 246.15493,
+      "end": 246.355028,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "compleix",
+      "start": 246.355028,
+      "end": 246.855272,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "el",
+      "start": 246.855272,
+      "end": 246.99534,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "projecte.",
+      "start": 246.99534,
+      "end": 247.595632,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "Parts",
+      "start": 247.595632,
+      "end": 248.856247,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "de",
+      "start": 248.856247,
+      "end": 248.956295,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "la",
+      "start": 248.956295,
+      "end": 249.076354,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "tecnologia",
+      "start": 249.076354,
+      "end": 249.656637,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "poden",
+      "start": 249.656637,
+      "end": 250.457027,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "convertir-se",
+      "start": 250.457027,
+      "end": 251.217397,
+      "exact": false,
+      "block": 30
+    },
+    {
+      "word": "en",
+      "start": 251.217397,
+      "end": 251.417495,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "infraestructura",
+      "start": 251.417495,
+      "end": 252.277914,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "per",
+      "start": 252.277914,
+      "end": 252.518031,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "al",
+      "start": 252.518031,
+      "end": 252.63809,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "següent",
+      "start": 252.63809,
+      "end": 253.058294,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "producte,",
+      "start": 253.058294,
+      "end": 253.718616,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "permettant",
+      "start": 253.718616,
+      "end": 254.859172,
+      "exact": false,
+      "block": 30
+    },
+    {
+      "word": "que",
+      "start": 254.859172,
+      "end": 255.01925,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "el",
+      "start": 255.01925,
+      "end": 255.139309,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "sistema",
+      "start": 255.139309,
+      "end": 255.579523,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "de",
+      "start": 255.579523,
+      "end": 255.779621,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "producció",
+      "start": 255.779621,
+      "end": 256.359903,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "sameixi",
+      "start": 256.359903,
+      "end": 257.100264,
+      "exact": false,
+      "block": 30
+    },
+    {
+      "word": "a",
+      "start": 257.100264,
+      "end": 257.220323,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "temps.",
+      "start": 257.220323,
+      "end": 257.520469,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "Infraestructura",
+      "start": 258.641015,
+      "end": 259.521444,
+      "exact": true,
+      "block": 31
+    },
+    {
+      "word": "compartida",
+      "start": 259.521444,
+      "end": 260.361854,
+      "exact": true,
+      "block": 31
+    },
+    {
+      "word": "·",
+      "start": 260.361854,
+      "end": 260.762049,
+      "exact": false,
+      "block": 31
+    },
+    {
+      "word": "Validació",
+      "start": 260.762049,
+      "end": 261.362341,
+      "exact": true,
+      "block": 31
+    },
+    {
+      "word": "·",
+      "start": 261.362341,
+      "end": 261.682497,
+      "exact": false,
+      "block": 31
+    },
+    {
+      "word": "Reutilització",
+      "start": 261.682497,
+      "end": 262.642965,
+      "exact": true,
+      "block": 31
+    },
+    {
+      "word": "·",
+      "start": 262.642965,
+      "end": 262.923102,
+      "exact": false,
+      "block": 31
+    },
+    {
+      "word": "Sistemes",
+      "start": 262.923102,
+      "end": 263.583424,
+      "exact": true,
+      "block": 31
+    },
+    {
+      "word": "de",
+      "start": 263.583424,
+      "end": 263.723492,
+      "exact": true,
+      "block": 31
+    },
+    {
+      "word": "producció",
+      "start": 263.723492,
+      "end": 264.303775,
+      "exact": true,
+      "block": 31
+    },
+    {
+      "word": "Unfire",
+      "start": 264.303775,
+      "end": 265.804506,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "Audio",
+      "start": 265.804506,
+      "end": 266.244721,
+      "exact": true,
+      "block": 32
+    },
+    {
+      "word": "·",
+      "start": 266.244721,
+      "end": 266.544867,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "Prima",
+      "start": 266.544867,
+      "end": 267.045111,
+      "exact": true,
+      "block": 32
+    },
+    {
+      "word": "implementació",
+      "start": 267.305237,
+      "end": 268.225686,
+      "exact": true,
+      "block": 32
+    },
+    {
+      "word": "Arquero",
+      "start": 268.225686,
+      "end": 269.966534,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "Archer",
+      "start": 269.966534,
+      "end": 271.707383,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "és",
+      "start": 271.707383,
+      "end": 271.707383,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "el",
+      "start": 271.707383,
+      "end": 271.847451,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "primer",
+      "start": 271.847451,
+      "end": 272.167607,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "producte",
+      "start": 272.167607,
+      "end": 272.7679,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "desenvolupat",
+      "start": 272.7679,
+      "end": 273.688348,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "en",
+      "start": 273.688348,
+      "end": 273.948475,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "el",
+      "start": 273.948475,
+      "end": 274.088543,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "marc",
+      "start": 274.088543,
+      "end": 274.32866,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "més",
+      "start": 274.32866,
+      "end": 274.688836,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "ampli",
+      "start": 274.688836,
+      "end": 275.069021,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "de",
+      "start": 275.069021,
+      "end": 275.16907,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "la",
+      "start": 275.16907,
+      "end": 275.289128,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "direcció",
+      "start": 275.289128,
+      "end": 275.869411,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "Unfire",
+      "start": 275.869411,
+      "end": 276.549743,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "Audio.",
+      "start": 276.549743,
+      "end": 276.909918,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "És",
+      "start": 277.900401,
+      "end": 278.250571,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "una",
+      "start": 278.250571,
+      "end": 278.430659,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "ferramenta",
+      "start": 278.430659,
+      "end": 279.070971,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "de",
+      "start": 279.070971,
+      "end": 279.231049,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "recortatge",
+      "start": 279.231049,
+      "end": 279.931391,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "auditiu",
+      "start": 279.931391,
+      "end": 280.431634,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "de",
+      "start": 280.431634,
+      "end": 280.591712,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "precisió",
+      "start": 280.591712,
+      "end": 281.171995,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "basada",
+      "start": 281.171995,
+      "end": 281.692249,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "en",
+      "start": 281.692249,
+      "end": 281.932366,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "el",
+      "start": 281.932366,
+      "end": 282.132463,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "Gain,",
+      "start": 282.132463,
+      "end": 282.35257,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "el",
+      "start": 282.572678,
+      "end": 282.992882,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "Threshold",
+      "start": 282.992882,
+      "end": 283.453107,
+      "exact": false,
+      "block": 35
+    },
+    {
+      "word": "i",
+      "start": 283.453107,
+      "end": 283.653204,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "l'Atmosfera,",
+      "start": 283.653204,
+      "end": 284.913819,
+      "exact": false,
+      "block": 35
+    },
+    {
+      "word": "dissenyada",
+      "start": 284.913819,
+      "end": 285.414062,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "per",
+      "start": 285.414062,
+      "end": 285.654179,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "donar",
+      "start": 285.654179,
+      "end": 285.994345,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "a",
+      "start": 285.994345,
+      "end": 286.194443,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "productors",
+      "start": 286.194443,
+      "end": 286.734706,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "i",
+      "start": 286.734706,
+      "end": 287.014843,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "enginyers",
+      "start": 287.014843,
+      "end": 287.575116,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "control",
+      "start": 287.575116,
+      "end": 288.03534,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "directe",
+      "start": 288.03534,
+      "end": 288.695662,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "sobre",
+      "start": 288.695662,
+      "end": 289.015818,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "el",
+      "start": 289.015818,
+      "end": 289.155886,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "comportament",
+      "start": 289.155886,
+      "end": 289.816208,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "de",
+      "start": 289.816208,
+      "end": 289.996295,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "recortatge,",
+      "start": 289.996295,
+      "end": 290.716647,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "els",
+      "start": 290.916744,
+      "end": 291.336949,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "punts",
+      "start": 291.336949,
+      "end": 291.697124,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "alt,",
+      "start": 291.697124,
+      "end": 291.897222,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "els",
+      "start": 292.257397,
+      "end": 292.537534,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "transients",
+      "start": 292.537534,
+      "end": 293.077797,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "i",
+      "start": 293.077797,
+      "end": 293.377943,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "la",
+      "start": 293.377943,
+      "end": 293.518012,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "caràcter",
+      "start": 293.518012,
+      "end": 294.018255,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "fonètic.",
+      "start": 294.018255,
+      "end": 294.598538,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "El",
+      "start": 294.598538,
+      "end": 295.759104,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "seu",
+      "start": 295.759104,
+      "end": 296.03924,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "paper",
+      "start": 296.03924,
+      "end": 296.419426,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "estratègic",
+      "start": 296.419426,
+      "end": 297.299855,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "va",
+      "start": 297.299855,
+      "end": 297.900147,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "beyond",
+      "start": 297.900147,
+      "end": 298.420401,
+      "exact": false,
+      "block": 36
+    },
+    {
+      "word": "l'efecte",
+      "start": 298.420401,
+      "end": 298.940654,
+      "exact": false,
+      "block": 36
+    },
+    {
+      "word": "auditiu",
+      "start": 298.940654,
+      "end": 299.560957,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "sol·licitat.",
+      "start": 299.560957,
+      "end": 300.321327,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "Archer",
+      "start": 300.321327,
+      "end": 301.702,
+      "exact": false,
+      "block": 36
+    },
+    {
+      "word": "ofereix",
+      "start": 301.702,
+      "end": 302.302293,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "un",
+      "start": 302.302293,
+      "end": 302.48238,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "entorn",
+      "start": 302.48238,
+      "end": 302.862566,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "pràctic",
+      "start": 302.862566,
+      "end": 303.382819,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "per",
+      "start": 303.382819,
+      "end": 303.642946,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "al",
+      "start": 303.642946,
+      "end": 303.783014,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "desenvolupament",
+      "start": 303.783014,
+      "end": 304.623424,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "i",
+      "start": 304.623424,
+      "end": 304.843531,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "validació",
+      "start": 304.843531,
+      "end": 305.423814,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "de",
+      "start": 305.423814,
+      "end": 305.603902,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "tecnologies",
+      "start": 305.603902,
+      "end": 306.284233,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "auditives,",
+      "start": 306.284233,
+      "end": 307.024594,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "sistemes",
+      "start": 307.484818,
+      "end": 307.965052,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "d'interfície",
+      "start": 307.965052,
+      "end": 308.805462,
+      "exact": false,
+      "block": 36
+    },
+    {
+      "word": "i",
+      "start": 308.805462,
+      "end": 309.045579,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "components",
+      "start": 309.045579,
+      "end": 309.565832,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "de",
+      "start": 309.565832,
+      "end": 309.825959,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "producció",
+      "start": 309.825959,
+      "end": 310.386232,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "que",
+      "start": 310.386232,
+      "end": 310.626349,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "posteriorment",
+      "start": 310.626349,
+      "end": 311.486768,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "poden",
+      "start": 311.486768,
+      "end": 312.007022,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "contribuir",
+      "start": 312.007022,
+      "end": 312.687353,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "a",
+      "start": 312.687353,
+      "end": 312.887451,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "productes",
+      "start": 312.887451,
+      "end": 313.487744,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "de",
+      "start": 313.487744,
+      "end": 313.607802,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "software",
+      "start": 313.607802,
+      "end": 313.947968,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "creatiu",
+      "start": 313.947968,
+      "end": 314.56827,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "futurs.",
+      "start": 314.56827,
+      "end": 315.088524,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "Unfire",
+      "start": 315.088524,
+      "end": 316.589255,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "Audio",
+      "start": 316.589255,
+      "end": 316.889401,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "està",
+      "start": 316.889401,
+      "end": 317.449674,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "també",
+      "start": 317.449674,
+      "end": 317.76983,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "explorant",
+      "start": 317.76983,
+      "end": 318.410142,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "com",
+      "start": 318.410142,
+      "end": 318.61024,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "sistemes",
+      "start": 318.61024,
+      "end": 319.230542,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "assistits",
+      "start": 319.230542,
+      "end": 319.770805,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "per",
+      "start": 319.770805,
+      "end": 319.990913,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "l'AI,",
+      "start": 319.990913,
+      "end": 320.251039,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "el",
+      "start": 320.251039,
+      "end": 320.751283,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "processament",
+      "start": 320.751283,
+      "end": 321.351576,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "procés",
+      "start": 321.351576,
+      "end": 321.931859,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "i",
+      "start": 321.931859,
+      "end": 322.171976,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "la",
+      "start": 322.171976,
+      "end": 322.292034,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "tecnologia",
+      "start": 322.292034,
+      "end": 322.832297,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "de",
+      "start": 322.832297,
+      "end": 323.132444,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "software",
+      "start": 323.132444,
+      "end": 323.552648,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "reutilitzable",
+      "start": 323.552648,
+      "end": 324.553136,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "poden",
+      "start": 324.553136,
+      "end": 325.113409,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "convergir",
+      "start": 325.113409,
+      "end": 325.753721,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "en",
+      "start": 325.753721,
+      "end": 325.913799,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "nous",
+      "start": 325.913799,
+      "end": 326.133906,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "conceptes",
+      "start": 326.133906,
+      "end": 326.834248,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "de",
+      "start": 326.834248,
+      "end": 326.954306,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "plug-in",
+      "start": 326.954306,
+      "end": 327.614628,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "i",
+      "start": 327.614628,
+      "end": 327.874755,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "flux",
+      "start": 327.874755,
+      "end": 328.154891,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "de",
+      "start": 328.154891,
+      "end": 328.374999,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "treball",
+      "start": 328.374999,
+      "end": 328.695155,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "creatiu",
+      "start": 328.695155,
+      "end": 329.335467,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "que",
+      "start": 329.335467,
+      "end": 329.595593,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "s'extenen",
+      "start": 329.595593,
+      "end": 330.145862,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "beyond",
+      "start": 330.145862,
+      "end": 330.69613,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "les",
+      "start": 330.69613,
+      "end": 330.936247,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "eines",
+      "start": 330.936247,
+      "end": 331.196373,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "de",
+      "start": 331.196373,
+      "end": 331.4565,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "processament",
+      "start": 331.4565,
+      "end": 332.056793,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "d'àudio",
+      "start": 332.056793,
+      "end": 332.557037,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "fixes",
+      "start": 332.557037,
+      "end": 332.897202,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "convencionals.",
+      "start": 332.897202,
+      "end": 333.89769,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "Tecnologia",
+      "start": 334.938197,
+      "end": 335.698568,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "d'àudio",
+      "start": 335.698568,
+      "end": 336.078753,
+      "exact": false,
+      "block": 38
+    },
+    {
+      "word": "·",
+      "start": 336.078753,
+      "end": 336.458938,
+      "exact": false,
+      "block": 38
+    },
+    {
+      "word": "DSP",
+      "start": 336.458938,
+      "end": 337.479435,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "·",
+      "start": 337.479435,
+      "end": 337.519455,
+      "exact": false,
+      "block": 38
+    },
+    {
+      "word": "Processament",
+      "start": 337.479435,
+      "end": 338.660011,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "procés",
+      "start": 338.860108,
+      "end": 339.340342,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "·",
+      "start": 339.340342,
+      "end": 339.600469,
+      "exact": false,
+      "block": 38
+    },
+    {
+      "word": "Software",
+      "start": 339.600469,
+      "end": 340.000664,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "creatiu",
+      "start": 340.000664,
+      "end": 340.600957,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "Unfire",
+      "start": 340.600957,
+      "end": 342.181727,
+      "exact": false,
+      "block": 39
+    },
+    {
+      "word": "Audio",
+      "start": 342.181727,
+      "end": 342.742,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "D'extensions",
+      "start": 342.742,
+      "end": 344.844111,
+      "exact": false,
+      "block": 40
+    },
+    {
+      "word": "a",
+      "start": 344.844111,
+      "end": 345.224493,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "nous",
+      "start": 345.224493,
+      "end": 345.464734,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "conceptes",
+      "start": 345.464734,
+      "end": 346.325599,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "de",
+      "start": 346.325599,
+      "end": 346.46574,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "software.",
+      "start": 346.46574,
+      "end": 346.866142,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "Unfire",
+      "start": 346.866142,
+      "end": 348.44773,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "Audio",
+      "start": 348.44773,
+      "end": 348.768052,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "explora",
+      "start": 348.768052,
+      "end": 349.568856,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "com",
+      "start": 349.568856,
+      "end": 349.829118,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "els",
+      "start": 349.829118,
+      "end": 350.009299,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "sistemes",
+      "start": 350.009299,
+      "end": 350.549841,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "assistits",
+      "start": 350.549841,
+      "end": 351.130425,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "per",
+      "start": 351.130425,
+      "end": 351.410706,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "IA,",
+      "start": 351.410706,
+      "end": 351.650947,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "el",
+      "start": 351.791088,
+      "end": 352.23153,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "processament",
+      "start": 352.23153,
+      "end": 352.852154,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "procés",
+      "start": 352.852154,
+      "end": 353.452757,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "i",
+      "start": 353.452757,
+      "end": 353.692998,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "els",
+      "start": 353.692998,
+      "end": 353.873179,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "components",
+      "start": 353.873179,
+      "end": 354.353662,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "de",
+      "start": 354.353662,
+      "end": 354.593903,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "software",
+      "start": 354.593903,
+      "end": 354.994305,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "reutilitzables",
+      "start": 354.994305,
+      "end": 356.01533,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "poden",
+      "start": 356.01533,
+      "end": 357.016336,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "convergir",
+      "start": 357.016336,
+      "end": 357.656979,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "en",
+      "start": 357.656979,
+      "end": 357.83716,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "eines",
+      "start": 357.83716,
+      "end": 358.117442,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "creatives",
+      "start": 358.117442,
+      "end": 358.818145,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "que",
+      "start": 358.818145,
+      "end": 359.138467,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "exceden",
+      "start": 359.138467,
+      "end": 359.488819,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "els",
+      "start": 359.488819,
+      "end": 359.839171,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "fluxos",
+      "start": 359.839171,
+      "end": 360.359693,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "de",
+      "start": 360.359693,
+      "end": 360.479814,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "treball",
+      "start": 360.479814,
+      "end": 360.800136,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "convencions",
+      "start": 360.800136,
+      "end": 361.54088,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "de",
+      "start": 361.54088,
+      "end": 361.741081,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "plug-ins.",
+      "start": 361.741081,
+      "end": 362.682026,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "L'AI",
+      "start": 362.682026,
+      "end": 363.622971,
+      "exact": false,
+      "block": 42
+    },
+    {
+      "word": "pot",
+      "start": 363.622971,
+      "end": 363.903252,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "tornar",
+      "start": 363.903252,
+      "end": 364.303654,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "a",
+      "start": 364.303654,
+      "end": 364.503855,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "formar",
+      "start": 364.503855,
+      "end": 364.924278,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "part",
+      "start": 364.924278,
+      "end": 365.264619,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "de",
+      "start": 365.264619,
+      "end": 365.38474,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "l'entorn",
+      "start": 365.38474,
+      "end": 365.865223,
+      "exact": false,
+      "block": 42
+    },
+    {
+      "word": "de",
+      "start": 365.865223,
+      "end": 366.045404,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "software",
+      "start": 366.045404,
+      "end": 366.465826,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "creatiu",
+      "start": 366.465826,
+      "end": 367.146509,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "en",
+      "start": 367.146509,
+      "end": 367.486851,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "comptes",
+      "start": 367.486851,
+      "end": 367.947314,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "d'existir",
+      "start": 367.947314,
+      "end": 368.567937,
+      "exact": false,
+      "block": 42
+    },
+    {
+      "word": "només",
+      "start": 368.567937,
+      "end": 368.968339,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "com",
+      "start": 368.968339,
+      "end": 369.308681,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "a",
+      "start": 369.308681,
+      "end": 369.428802,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "assistent",
+      "start": 369.428802,
+      "end": 369.869244,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "separat.",
+      "start": 369.869244,
+      "end": 370.509887,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "Els",
+      "start": 370.509887,
+      "end": 371.711094,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "paràmetres,",
+      "start": 371.711094,
+      "end": 372.451838,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "el",
+      "start": 372.712099,
+      "end": 372.992381,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "son",
+      "start": 372.992381,
+      "end": 373.332722,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "i",
+      "start": 373.332722,
+      "end": 373.552943,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "el",
+      "start": 373.552943,
+      "end": 373.693084,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "comportament",
+      "start": 373.693084,
+      "end": 374.393788,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "del",
+      "start": 374.393788,
+      "end": 374.614009,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "software",
+      "start": 374.614009,
+      "end": 375.074472,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "poden",
+      "start": 375.074472,
+      "end": 375.655055,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "transformar-se",
+      "start": 375.655055,
+      "end": 376.495899,
+      "exact": false,
+      "block": 43
+    },
+    {
+      "word": "dinàmicament,",
+      "start": 376.495899,
+      "end": 377.376784,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "obrint",
+      "start": 377.536945,
+      "end": 378.257668,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "espai",
+      "start": 378.257668,
+      "end": 378.698111,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "per",
+      "start": 378.698111,
+      "end": 378.938352,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "a",
+      "start": 378.938352,
+      "end": 379.078493,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "nous",
+      "start": 379.078493,
+      "end": 379.258674,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "models",
+      "start": 379.258674,
+      "end": 379.699116,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "d'interacció",
+      "start": 379.699116,
+      "end": 380.51994,
+      "exact": false,
+      "block": 43
+    },
+    {
+      "word": "creativa.",
+      "start": 380.51994,
+      "end": 381.140564,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "Els",
+      "start": 381.721147,
+      "end": 382.421851,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "components",
+      "start": 382.421851,
+      "end": 382.962393,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "exitents",
+      "start": 382.962393,
+      "end": 383.663097,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "desenvolupats",
+      "start": 383.663097,
+      "end": 384.604042,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "en",
+      "start": 384.604042,
+      "end": 384.804243,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "un",
+      "start": 384.804243,
+      "end": 384.964404,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "producte",
+      "start": 384.964404,
+      "end": 385.544987,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "poden",
+      "start": 385.544987,
+      "end": 386.08553,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "ser",
+      "start": 386.08553,
+      "end": 386.345791,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "reutilitzats,",
+      "start": 386.345791,
+      "end": 387.326777,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "ampliat",
+      "start": 387.607058,
+      "end": 388.307762,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "o",
+      "start": 388.307762,
+      "end": 388.588043,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "integrat",
+      "start": 388.588043,
+      "end": 389.228687,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "en",
+      "start": 389.228687,
+      "end": 389.448908,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "altres",
+      "start": 389.448908,
+      "end": 389.78925,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "projectes",
+      "start": 389.78925,
+      "end": 390.529994,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "a",
+      "start": 390.529994,
+      "end": 390.670134,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "més",
+      "start": 390.670134,
+      "end": 390.910376,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "a",
+      "start": 390.910376,
+      "end": 391.030496,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "més.",
+      "start": 391.030496,
+      "end": 391.290758,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "L'objectiu",
+      "start": 391.290758,
+      "end": 393.172648,
+      "exact": false,
+      "block": 45
+    },
+    {
+      "word": "no",
+      "start": 393.172648,
+      "end": 393.512989,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "és",
+      "start": 393.512989,
+      "end": 393.69317,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "simplement",
+      "start": 393.69317,
+      "end": 394.193673,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "produir",
+      "start": 394.193673,
+      "end": 394.894377,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "plugins",
+      "start": 394.894377,
+      "end": 395.57506,
+      "exact": false,
+      "block": 45
+    },
+    {
+      "word": "auditius",
+      "start": 395.57506,
+      "end": 396.395885,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "isolats.",
+      "start": 396.395885,
+      "end": 397.076568,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "És",
+      "start": 397.076568,
+      "end": 398.357855,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "crear",
+      "start": 398.357855,
+      "end": 398.738237,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "una",
+      "start": 398.738237,
+      "end": 399.058559,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "base",
+      "start": 399.058559,
+      "end": 399.438941,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "creativa-tecnològica",
+      "start": 399.438941,
+      "end": 400.940449,
+      "exact": false,
+      "block": 45
+    },
+    {
+      "word": "reutilitzable",
+      "start": 400.940449,
+      "end": 401.941454,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "capaç",
+      "start": 401.941454,
+      "end": 402.502017,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "d'apoyar",
+      "start": 402.502017,
+      "end": 403.14266,
+      "exact": false,
+      "block": 45
+    },
+    {
+      "word": "eines",
+      "start": 403.14266,
+      "end": 403.503022,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "futures,",
+      "start": 403.503022,
+      "end": 404.063585,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "entorns",
+      "start": 404.544068,
+      "end": 405.264792,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "més",
+      "start": 405.264792,
+      "end": 405.605134,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "amplis",
+      "start": 405.605134,
+      "end": 406.165697,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "i",
+      "start": 406.165697,
+      "end": 406.385918,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "nous",
+      "start": 406.385918,
+      "end": 406.646179,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "conceptes",
+      "start": 406.646179,
+      "end": 407.406943,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "de",
+      "start": 407.406943,
+      "end": 407.567104,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "productes.",
+      "start": 407.567104,
+      "end": 408.167707,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "Sistema",
+      "start": 408.928471,
+      "end": 409.909456,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "Producció",
+      "start": 409.909456,
+      "end": 411.631186,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "de",
+      "start": 411.631186,
+      "end": 411.771326,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "software",
+      "start": 411.771326,
+      "end": 412.271829,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "sense",
+      "start": 412.271829,
+      "end": 412.852412,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "començar",
+      "start": 412.852412,
+      "end": 413.573136,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "de",
+      "start": 413.573136,
+      "end": 413.753317,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "nou.",
+      "start": 413.753317,
+      "end": 413.973538,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "La",
+      "start": 413.973538,
+      "end": 415.234805,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "idea",
+      "start": 415.234805,
+      "end": 415.515086,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "central",
+      "start": 415.515086,
+      "end": 416.115689,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "és",
+      "start": 416.115689,
+      "end": 416.476051,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "simple:",
+      "start": 416.476051,
+      "end": 416.896473,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "quan",
+      "start": 417.156735,
+      "end": 417.396976,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "un",
+      "start": 417.396976,
+      "end": 417.557137,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "nou",
+      "start": 417.557137,
+      "end": 417.737318,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "producte",
+      "start": 417.737318,
+      "end": 418.337921,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "pot",
+      "start": 418.337921,
+      "end": 418.638223,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "utilitzar",
+      "start": 418.638223,
+      "end": 419.278866,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "una",
+      "start": 419.278866,
+      "end": 419.559148,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "tecnologia",
+      "start": 419.559148,
+      "end": 420.179771,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "que",
+      "start": 420.179771,
+      "end": 420.540133,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "ja",
+      "start": 420.540133,
+      "end": 420.760354,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "existeix",
+      "start": 420.760354,
+      "end": 421.441038,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "a",
+      "start": 421.441038,
+      "end": 421.541138,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "l'intèrpret",
+      "start": 421.541138,
+      "end": 422.221822,
+      "exact": false,
+      "block": 48
+    },
+    {
+      "word": "Unfire,",
+      "start": 422.221822,
+      "end": 422.902505,
+      "exact": false,
+      "block": 48
+    },
+    {
+      "word": "el",
+      "start": 422.902505,
+      "end": 423.443048,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "desenvolupament",
+      "start": 423.443048,
+      "end": 424.303913,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "hauria",
+      "start": 424.303913,
+      "end": 424.744355,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "de",
+      "start": 424.744355,
+      "end": 424.944556,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "reutilitzar",
+      "start": 424.944556,
+      "end": 425.70532,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "aquest",
+      "start": 425.70532,
+      "end": 426.165783,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "avantatge",
+      "start": 426.165783,
+      "end": 426.846466,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "en",
+      "start": 426.846466,
+      "end": 427.206828,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "placeu",
+      "start": 427.206828,
+      "end": 427.667291,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "de",
+      "start": 427.667291,
+      "end": 427.767391,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "reconstruir-la.",
+      "start": 427.767391,
+      "end": 429.569201,
+      "exact": false,
+      "block": 48
+    },
+    {
+      "word": "Base",
+      "start": 429.569201,
+      "end": 429.989623,
+      "exact": true,
+      "block": 49
+    },
+    {
+      "word": "compartida",
+      "start": 429.989623,
+      "end": 430.970608,
+      "exact": true,
+      "block": 49
+    },
+    {
+      "word": "Els",
+      "start": 430.970608,
+      "end": 432.231875,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "components",
+      "start": 432.231875,
+      "end": 432.792438,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "de",
+      "start": 432.792438,
+      "end": 433.012659,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "software",
+      "start": 433.012659,
+      "end": 433.413061,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "reutilitzables,",
+      "start": 433.413061,
+      "end": 433.833483,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "el",
+      "start": 434.794448,
+      "end": 435.214871,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "coneixement",
+      "start": 435.214871,
+      "end": 435.815474,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "de",
+      "start": 435.815474,
+      "end": 435.975635,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "producció",
+      "start": 435.975635,
+      "end": 436.556218,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "i",
+      "start": 436.556218,
+      "end": 436.876539,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "els",
+      "start": 436.876539,
+      "end": 437.05672,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "sistemes",
+      "start": 437.05672,
+      "end": 437.617283,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "de",
+      "start": 437.617283,
+      "end": 437.737404,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "validació",
+      "start": 437.737404,
+      "end": 438.297967,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "formen",
+      "start": 438.297967,
+      "end": 438.978651,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "una",
+      "start": 438.978651,
+      "end": 439.298972,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "base",
+      "start": 439.298972,
+      "end": 439.619294,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "que",
+      "start": 439.619294,
+      "end": 439.879555,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "pot",
+      "start": 439.879555,
+      "end": 440.159837,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "continuar",
+      "start": 440.159837,
+      "end": 440.76044,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "evolucionant.",
+      "start": 440.76044,
+      "end": 441.681365,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "Capa",
+      "start": 441.681365,
+      "end": 443.082772,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "de",
+      "start": 443.082772,
+      "end": 443.343034,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "producte",
+      "start": 443.343034,
+      "end": 444.083778,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "Noves",
+      "start": 444.083778,
+      "end": 445.425125,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "aplicacions",
+      "start": 445.425125,
+      "end": 446.125829,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "poden",
+      "start": 446.125829,
+      "end": 446.746452,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "combinar",
+      "start": 446.746452,
+      "end": 447.226934,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "les",
+      "start": 447.226934,
+      "end": 447.467176,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "capacitats",
+      "start": 447.467176,
+      "end": 448.20792,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "existents",
+      "start": 448.20792,
+      "end": 448.868583,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "amb",
+      "start": 448.868583,
+      "end": 449.088804,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "la",
+      "start": 449.088804,
+      "end": 449.228945,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "tecnologia",
+      "start": 449.228945,
+      "end": 449.789508,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "específic",
+      "start": 449.789508,
+      "end": 450.370091,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "del",
+      "start": 450.370091,
+      "end": 450.830553,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "producte,",
+      "start": 450.830553,
+      "end": 451.491217,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "en",
+      "start": 451.791519,
+      "end": 452.272001,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "comptes",
+      "start": 452.272001,
+      "end": 452.752484,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "d'iniciar-se",
+      "start": 452.752484,
+      "end": 453.373107,
+      "exact": false,
+      "block": 52
+    },
+    {
+      "word": "d'una",
+      "start": 453.373107,
+      "end": 453.99373,
+      "exact": false,
+      "block": 52
+    },
+    {
+      "word": "arquitectura",
+      "start": 453.99373,
+      "end": 454.734474,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "buida.",
+      "start": 454.734474,
+      "end": 455.154896,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "Validació",
+      "start": 456.135882,
+      "end": 457.096847,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "Sovint,",
+      "start": 457.096847,
+      "end": 458.718475,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "els",
+      "start": 458.918676,
+      "end": 459.218978,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "controls",
+      "start": 459.218978,
+      "end": 459.61938,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "internos",
+      "start": 459.61938,
+      "end": 460.460225,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "i",
+      "start": 460.460225,
+      "end": 460.680446,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "els",
+      "start": 460.680446,
+      "end": 460.920687,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "punts",
+      "start": 460.920687,
+      "end": 461.140908,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "de",
+      "start": 461.140908,
+      "end": 461.261029,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "comprovació",
+      "start": 461.261029,
+      "end": 461.921692,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "proporcionen",
+      "start": 461.921692,
+      "end": 462.842617,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "evidència",
+      "start": 462.842617,
+      "end": 463.463241,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "mesurable",
+      "start": 463.463241,
+      "end": 464.023803,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "sobre",
+      "start": 464.023803,
+      "end": 464.564346,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "si",
+      "start": 464.564346,
+      "end": 464.784568,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "els",
+      "start": 464.784568,
+      "end": 464.984769,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "candidats",
+      "start": 464.984769,
+      "end": 465.585372,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "del",
+      "start": 465.585372,
+      "end": 465.785573,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "software",
+      "start": 465.785573,
+      "end": 466.185975,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "funcionen",
+      "start": 466.185975,
+      "end": 466.966759,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "com",
+      "start": 466.966759,
+      "end": 467.22702,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "s'ha",
+      "start": 467.22702,
+      "end": 467.527322,
+      "exact": false,
+      "block": 54
+    },
+    {
+      "word": "previst.",
+      "start": 467.527322,
+      "end": 468.067865,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "Expandació",
+      "start": 469.06887,
+      "end": 470.029835,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "L'infraestructura",
+      "start": 470.029835,
+      "end": 472.151967,
+      "exact": false,
+      "block": 56
+    },
+    {
+      "word": "pot",
+      "start": 472.151967,
+      "end": 472.512329,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "expandir-se",
+      "start": 472.512329,
+      "end": 473.353173,
+      "exact": false,
+      "block": 56
+    },
+    {
+      "word": "amb",
+      "start": 473.353173,
+      "end": 473.593414,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "màs",
+      "start": 473.593414,
+      "end": 473.813635,
+      "exact": false,
+      "block": 56
+    },
+    {
+      "word": "capacitat",
+      "start": 473.813635,
+      "end": 474.454279,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "de",
+      "start": 474.454279,
+      "end": 474.6745,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "càlcul,",
+      "start": 474.6745,
+      "end": 475.175003,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "estocatge,",
+      "start": 475.615445,
+      "end": 476.256088,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "test,",
+      "start": 476.55639,
+      "end": 476.956792,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "asssegurament",
+      "start": 476.956792,
+      "end": 478.057898,
+      "exact": false,
+      "block": 56
+    },
+    {
+      "word": "de",
+      "start": 478.057898,
+      "end": 478.238079,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "qualitat",
+      "start": 478.238079,
+      "end": 478.718561,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "i",
+      "start": 478.718561,
+      "end": 479.038883,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "capacitat",
+      "start": 479.038883,
+      "end": 479.759607,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "de",
+      "start": 479.759607,
+      "end": 479.959808,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "desplegament.",
+      "start": 479.959808,
+      "end": 480.660512,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "Escala",
+      "start": 481.461316,
+      "end": 482.30216,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "de",
+      "start": 482.30216,
+      "end": 482.522382,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "producció",
+      "start": 482.522382,
+      "end": 483.163025,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "El",
+      "start": 483.163025,
+      "end": 484.364231,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "bottleneck",
+      "start": 484.364231,
+      "end": 485.345217,
+      "exact": false,
+      "block": 58
+    },
+    {
+      "word": "està",
+      "start": 485.345217,
+      "end": 485.585458,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "canviant.",
+      "start": 485.585458,
+      "end": 486.186061,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "On",
+      "start": 486.186061,
+      "end": 487.407288,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "aquesta",
+      "start": 487.407288,
+      "end": 487.80769,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "arquitectura",
+      "start": 487.80769,
+      "end": 488.548434,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "existent,",
+      "start": 488.548434,
+      "end": 489.249137,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "el",
+      "start": 489.449338,
+      "end": 489.949841,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "desenvolupament",
+      "start": 489.949841,
+      "end": 490.810706,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "intern",
+      "start": 490.810706,
+      "end": 491.231128,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "ha",
+      "start": 491.231128,
+      "end": 491.57147,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "demostrat",
+      "start": 491.57147,
+      "end": 492.232133,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "que",
+      "start": 492.232133,
+      "end": 492.412314,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "els",
+      "start": 492.412314,
+      "end": 492.572475,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "candidats",
+      "start": 492.572475,
+      "end": 493.173078,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "a",
+      "start": 493.173078,
+      "end": 493.313219,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "software",
+      "start": 493.313219,
+      "end": 493.713621,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "funcionant",
+      "start": 493.713621,
+      "end": 494.454365,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "poden",
+      "start": 494.454365,
+      "end": 494.974888,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "passar",
+      "start": 494.974888,
+      "end": 495.35527,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "per",
+      "start": 495.35527,
+      "end": 495.615531,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "ciclos",
+      "start": 495.615531,
+      "end": 496.116034,
+      "exact": false,
+      "block": 59
+    },
+    {
+      "word": "de",
+      "start": 496.116034,
+      "end": 496.236154,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "construcció",
+      "start": 496.236154,
+      "end": 496.956878,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "extremadament",
+      "start": 496.956878,
+      "end": 497.897823,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "curts",
+      "start": 497.897823,
+      "end": 498.418346,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "—",
+      "start": 498.418346,
+      "end": 498.638567,
+      "exact": false,
+      "block": 59
+    },
+    {
+      "word": "en",
+      "start": 498.638567,
+      "end": 498.778708,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "alguns",
+      "start": 498.778708,
+      "end": 499.079009,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "casos,",
+      "start": 499.079009,
+      "end": 499.579512,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "mesurats",
+      "start": 499.759693,
+      "end": 500.500437,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "en",
+      "start": 500.500437,
+      "end": 500.720658,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "minutes.",
+      "start": 500.720658,
+      "end": 501.061,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "Amb",
+      "start": 501.061,
+      "end": 502.554609,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "l'expansió",
+      "start": 502.554609,
+      "end": 503.271541,
+      "exact": false,
+      "block": 60
+    },
+    {
+      "word": "de",
+      "start": 503.271541,
+      "end": 503.39103,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "la",
+      "start": 503.39103,
+      "end": 503.510518,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "tecnologia",
+      "start": 503.510518,
+      "end": 504.068132,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "reutilitzable,",
+      "start": 504.068132,
+      "end": 505.22319,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "els",
+      "start": 505.501997,
+      "end": 506.019781,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "factors",
+      "start": 506.019781,
+      "end": 506.378247,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "limitants",
+      "start": 506.378247,
+      "end": 506.995606,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "es",
+      "start": 506.995606,
+      "end": 507.214668,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "converteixen",
+      "start": 507.214668,
+      "end": 508.01126,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "cada",
+      "start": 508.01126,
+      "end": 508.329896,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "vegada",
+      "start": 508.329896,
+      "end": 508.787936,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "més",
+      "start": 508.787936,
+      "end": 509.086658,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "en",
+      "start": 509.086658,
+      "end": 509.265891,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "recursos",
+      "start": 509.265891,
+      "end": 509.723931,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "d'infraestructura",
+      "start": 509.723931,
+      "end": 510.71967,
+      "exact": false,
+      "block": 60
+    },
+    {
+      "word": "com",
+      "start": 510.71967,
+      "end": 510.998477,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "el",
+      "start": 510.998477,
+      "end": 511.197625,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "càlcul,",
+      "start": 511.197625,
+      "end": 511.615836,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "l'estocatge,",
+      "start": 511.615836,
+      "end": 513.009871,
+      "exact": false,
+      "block": 60
+    },
+    {
+      "word": "l'estudi,",
+      "start": 513.009871,
+      "end": 514.403906,
+      "exact": false,
+      "block": 60
+    },
+    {
+      "word": "la",
+      "start": 514.403906,
+      "end": 514.622968,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "garantia",
+      "start": 514.622968,
+      "end": 515.100923,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "de",
+      "start": 515.100923,
+      "end": 515.240327,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "qualitat",
+      "start": 515.240327,
+      "end": 515.698367,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "i",
+      "start": 515.698367,
+      "end": 516.056833,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "la",
+      "start": 516.056833,
+      "end": 516.196236,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "depòsita",
+      "start": 516.196236,
+      "end": 516.75385,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "comercial",
+      "start": 516.75385,
+      "end": 517.331379,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "—",
+      "start": 517.331379,
+      "end": 517.66993,
+      "exact": false,
+      "block": 60
+    },
+    {
+      "word": "recursos",
+      "start": 517.66993,
+      "end": 518.287289,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "que",
+      "start": 518.287289,
+      "end": 518.66567,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "poden",
+      "start": 518.66567,
+      "end": 519.063965,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "ampliar-se",
+      "start": 519.063965,
+      "end": 519.760983,
+      "exact": false,
+      "block": 60
+    },
+    {
+      "word": "ell",
+      "start": 519.760983,
+      "end": 520.119449,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "mateix.",
+      "start": 520.119449,
+      "end": 520.637233,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "Product",
+      "start": 521.314336,
+      "end": 522.110927,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "estelar",
+      "start": 522.110927,
+      "end": 522.7482,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "segueix",
+      "start": 522.7482,
+      "end": 523.226155,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "mostrant",
+      "start": 523.226155,
+      "end": 523.74394,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "actualment",
+      "start": 523.74394,
+      "end": 524.440957,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "tecnologies",
+      "start": 524.440957,
+      "end": 525.197719,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "en",
+      "start": 525.197719,
+      "end": 525.5761,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "curs",
+      "start": 525.5761,
+      "end": 525.874822,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "d'ús",
+      "start": 525.874822,
+      "end": 526.193458,
+      "exact": false,
+      "block": 61
+    },
+    {
+      "word": "per",
+      "start": 526.193458,
+      "end": 526.512095,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "demostrar",
+      "start": 526.512095,
+      "end": 527.049794,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "la",
+      "start": 527.049794,
+      "end": 527.209112,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "direcció",
+      "start": 527.209112,
+      "end": 527.706982,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "tecnològica",
+      "start": 527.706982,
+      "end": 528.563317,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "més",
+      "start": 528.563317,
+      "end": 528.941698,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "amplia.",
+      "start": 528.941698,
+      "end": 529.439568,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "Candidats",
+      "start": 529.439568,
+      "end": 531.172154,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "als",
+      "start": 531.172154,
+      "end": 531.371302,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "software",
+      "start": 531.371302,
+      "end": 531.749683,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "prioritaris",
+      "start": 531.749683,
+      "end": 532.606019,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "identitzats",
+      "start": 532.606019,
+      "end": 533.601758,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "per",
+      "start": 533.601758,
+      "end": 533.90048,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "a",
+      "start": 533.90048,
+      "end": 534.019968,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "un",
+      "start": 534.019968,
+      "end": 534.159372,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "desenvolupament",
+      "start": 534.159372,
+      "end": 535.115282,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "focalitzat.",
+      "start": 535.115282,
+      "end": 536.071191,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "53",
+      "start": 536.071191,
+      "end": 537.943181,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "Candidats",
+      "start": 537.943181,
+      "end": 540.093978,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "a",
+      "start": 540.093978,
+      "end": 540.31304,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "software",
+      "start": 540.31304,
+      "end": 540.731251,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "independents",
+      "start": 540.731251,
+      "end": 541.527842,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "construïts",
+      "start": 541.527842,
+      "end": 542.324434,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "i",
+      "start": 542.324434,
+      "end": 542.64307,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "auditats",
+      "start": 542.64307,
+      "end": 543.280343,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "internament.",
+      "start": 543.280343,
+      "end": 544.05702,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "53/53",
+      "start": 544.05702,
+      "end": 547.163726,
+      "exact": false,
+      "block": 65
+    },
+    {
+      "word": "Els",
+      "start": 547.163726,
+      "end": 548.63742,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "construccions",
+      "start": 548.63742,
+      "end": 549.453926,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "independents",
+      "start": 549.453926,
+      "end": 550.330177,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "exitosos",
+      "start": 550.330177,
+      "end": 551.246257,
+      "exact": false,
+      "block": 66
+    },
+    {
+      "word": "al",
+      "start": 551.246257,
+      "end": 551.505149,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "control",
+      "start": 551.505149,
+      "end": 551.943274,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "intern",
+      "start": 551.943274,
+      "end": 552.3814,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "de",
+      "start": 552.3814,
+      "end": 552.719951,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "setembre",
+      "start": 552.719951,
+      "end": 553.317395,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "de",
+      "start": 553.317395,
+      "end": 553.636031,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "2026.",
+      "start": 553.636031,
+      "end": 554.651685,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "REGLES",
+      "start": 554.651685,
+      "end": 556.444016,
+      "exact": true,
+      "block": 67
+    },
+    {
+      "word": "ESTRICTES:",
+      "start": 556.444016,
+      "end": 557.300351,
+      "exact": true,
+      "block": 67
+    },
+    {
+      "word": "-",
+      "start": 557.300351,
+      "end": 557.340181,
+      "exact": false,
+      "block": 68
+    },
+    {
+      "word": "RETORNAR",
+      "start": 557.300351,
+      "end": 559.032938,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "SOBRETOT",
+      "start": 559.032938,
+      "end": 559.729955,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "el",
+      "start": 559.729955,
+      "end": 559.968933,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "producte.",
+      "start": 559.968933,
+      "end": 560.626121,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "-",
+      "start": 560.626121,
+      "end": 560.66595,
+      "exact": false,
+      "block": 69
+    },
+    {
+      "word": "No",
+      "start": 560.626121,
+      "end": 561.821008,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "explicar",
+      "start": 561.821008,
+      "end": 562.478195,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "res.",
+      "start": 562.478195,
+      "end": 563.055724,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "-",
+      "start": 563.055724,
+      "end": 563.095554,
+      "exact": false,
+      "block": 70
+    },
+    {
+      "word": "No",
+      "start": 563.055724,
+      "end": 564.350185,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "afegir",
+      "start": 564.350185,
+      "end": 564.947629,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "comillas.",
+      "start": 564.947629,
+      "end": 565.236393,
+      "exact": false,
+      "block": 70
+    },
+    {
+      "word": "-",
+      "start": 565.236393,
+      "end": 565.525157,
+      "exact": false,
+      "block": 71
+    },
+    {
+      "word": "Conservar",
+      "start": 565.525157,
+      "end": 567.377232,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "el",
+      "start": 567.377232,
+      "end": 567.61621,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "sentit",
+      "start": 567.61621,
+      "end": 568.233568,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "i",
+      "start": 568.233568,
+      "end": 568.512375,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "el",
+      "start": 568.512375,
+      "end": 568.751353,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "ton",
+      "start": 568.751353,
+      "end": 568.930586,
+      "exact": false,
+      "block": 71
+    },
+    {
+      "word": "corporatiu",
+      "start": 568.930586,
+      "end": 569.687347,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "professional.",
+      "start": 569.687347,
+      "end": 570.40428,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "-",
+      "start": 570.40428,
+      "end": 570.444109,
+      "exact": false,
+      "block": 72
+    },
+    {
+      "word": "Escriure",
+      "start": 570.40428,
+      "end": 572.097036,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "naturalment,",
+      "start": 572.097036,
+      "end": 572.993202,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "a",
+      "start": 573.15252,
+      "end": 573.391497,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "un",
+      "start": 573.391497,
+      "end": 573.57073,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "nivell",
+      "start": 573.57073,
+      "end": 573.969026,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "de",
+      "start": 573.969026,
+      "end": 574.088515,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "llengua",
+      "start": 574.088515,
+      "end": 574.52664,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "catalana",
+      "start": 574.52664,
+      "end": 575.104169,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "de",
+      "start": 575.104169,
+      "end": 575.263487,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "Catalunya,",
+      "start": 575.263487,
+      "end": 575.761357,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "no",
+      "start": 576.020249,
+      "end": 576.378715,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "una",
+      "start": 576.378715,
+      "end": 576.597778,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "traducció",
+      "start": 576.597778,
+      "end": 577.215136,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "literal",
+      "start": 577.215136,
+      "end": 577.613432,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "de",
+      "start": 577.613432,
+      "end": 577.892239,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "màquina.",
+      "start": 577.892239,
+      "end": 578.310449,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "-",
+      "start": 578.310449,
+      "end": 578.350279,
+      "exact": false,
+      "block": 73
+    },
+    {
+      "word": "No",
+      "start": 578.310449,
+      "end": 579.565081,
+      "exact": true,
+      "block": 73
+    },
+    {
+      "word": "traduir",
+      "start": 579.565081,
+      "end": 580.06295,
+      "exact": true,
+      "block": 73
+    },
+    {
+      "word": "ni",
+      "start": 580.06295,
+      "end": 580.242183,
+      "exact": true,
+      "block": 73
+    },
+    {
+      "word": "modificar",
+      "start": 580.242183,
+      "end": 580.799797,
+      "exact": true,
+      "block": 73
+    },
+    {
+      "word": "els",
+      "start": 580.799797,
+      "end": 581.078604,
+      "exact": true,
+      "block": 73
+    },
+    {
+      "word": "noms",
+      "start": 581.078604,
+      "end": 581.357411,
+      "exact": true,
+      "block": 73
+    },
+    {
+      "word": "de",
+      "start": 581.357411,
+      "end": 581.516729,
+      "exact": true,
+      "block": 73
+    },
+    {
+      "word": "productes:",
+      "start": 581.516729,
+      "end": 582.193832,
+      "exact": true,
+      "block": 73
+    },
+    {
+      "word": "Unfire,",
+      "start": 582.193832,
+      "end": 583.294124,
+      "exact": false,
+      "block": 73
+    },
+    {
+      "word": "Bolt,",
+      "start": 583.294124,
+      "end": 584.394416,
+      "exact": false,
+      "block": 73
+    },
+    {
+      "word": "Archer,",
+      "start": 584.394416,
+      "end": 585.494708,
+      "exact": false,
+      "block": 73
+    },
+    {
+      "word": "POWER,",
+      "start": 585.494708,
+      "end": 586.595,
+      "exact": false,
+      "block": 73
+    },
+    {
+      "word": "AI",
+      "start": 586.595,
+      "end": 586.734403,
+      "exact": true,
+      "block": 73
+    },
+    {
+      "word": "TOKEN",
+      "start": 586.734403,
+      "end": 587.31857,
+      "exact": false,
+      "block": 73
+    },
+    {
+      "word": "COUNTER.",
+      "start": 587.31857,
+      "end": 587.902737,
+      "exact": false,
+      "block": 73
+    },
+    {
+      "word": "-",
+      "start": 587.902737,
+      "end": 588.486904,
+      "exact": false,
+      "block": 74
+    },
+    {
+      "word": "Conservar",
+      "start": 588.486904,
+      "end": 589.323325,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "els",
+      "start": 589.323325,
+      "end": 589.582217,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "números,",
+      "start": 589.582217,
+      "end": 590.000428,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "la",
+      "start": 590.438553,
+      "end": 590.637701,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "terminologia",
+      "start": 590.637701,
+      "end": 591.454207,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "tècnica",
+      "start": 591.454207,
+      "end": 592.111395,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "i",
+      "start": 592.111395,
+      "end": 592.449946,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "els",
+      "start": 592.449946,
+      "end": 592.688924,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "noms",
+      "start": 592.688924,
+      "end": 592.987645,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "de",
+      "start": 592.987645,
+      "end": 593.166878,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "productes",
+      "start": 593.166878,
+      "end": 593.744407,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "exactes.",
+      "start": 593.744407,
+      "end": 594.42151,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "-",
+      "start": 594.42151,
+      "end": 594.461339,
+      "exact": false,
+      "block": 75
+    },
+    {
+      "word": "Aquest",
+      "start": 594.42151,
+      "end": 595.7558,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "text",
+      "start": 595.7558,
+      "end": 596.154096,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "serà",
+      "start": 596.154096,
+      "end": 596.592221,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "pronunciat",
+      "start": 596.592221,
+      "end": 597.388813,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "per",
+      "start": 597.388813,
+      "end": 597.607875,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "una",
+      "start": 597.607875,
+      "end": 597.866768,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "voix",
+      "start": 597.866768,
+      "end": 598.165489,
+      "exact": false,
+      "block": 75
+    },
+    {
+      "word": "femenina",
+      "start": 598.165489,
+      "end": 598.762933,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "corporativa",
+      "start": 598.762933,
+      "end": 599.579439,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "professional.",
+      "start": 599.579439,
+      "end": 600.296371,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "Reutilització",
+      "start": 601.909469,
+      "end": 602.74589,
+      "exact": true,
+      "block": 76
+    },
+    {
+      "word": "Comença",
+      "start": 602.74589,
+      "end": 604.358987,
+      "exact": true,
+      "block": 77
+    },
+    {
+      "word": "amb",
+      "start": 604.358987,
+      "end": 604.677624,
+      "exact": true,
+      "block": 77
+    },
+    {
+      "word": "la",
+      "start": 604.677624,
+      "end": 604.817027,
+      "exact": true,
+      "block": 77
+    },
+    {
+      "word": "tecnologia",
+      "start": 604.817027,
+      "end": 605.414471,
+      "exact": true,
+      "block": 77
+    },
+    {
+      "word": "existent",
+      "start": 605.414471,
+      "end": 606.211062,
+      "exact": true,
+      "block": 77
+    },
+    {
+      "word": "quan",
+      "start": 606.211062,
+      "end": 606.987739,
+      "exact": false,
+      "block": 77
+    },
+    {
+      "word": "sigui",
+      "start": 606.987739,
+      "end": 607.764415,
+      "exact": false,
+      "block": 77
+    },
+    {
+      "word": "possible.",
+      "start": 607.764415,
+      "end": 608.541092,
+      "exact": false,
+      "block": 77
+    },
+    {
+      "word": "02",
+      "start": 608.541092,
+      "end": 609.317769,
+      "exact": false,
+      "block": 78
+    },
+    {
+      "word": "Crea",
+      "start": 609.317769,
+      "end": 611.010525,
+      "exact": true,
+      "block": 79
+    },
+    {
+      "word": "Crea",
+      "start": 611.548225,
+      "end": 612.44439,
+      "exact": true,
+      "block": 80
+    },
+    {
+      "word": "la",
+      "start": 612.44439,
+      "end": 612.583793,
+      "exact": true,
+      "block": 80
+    },
+    {
+      "word": "capa",
+      "start": 612.583793,
+      "end": 613.002004,
+      "exact": true,
+      "block": 80
+    },
+    {
+      "word": "específica",
+      "start": 613.002004,
+      "end": 613.918084,
+      "exact": true,
+      "block": 80
+    },
+    {
+      "word": "del",
+      "start": 613.918084,
+      "end": 614.117232,
+      "exact": true,
+      "block": 80
+    },
+    {
+      "word": "producte.",
+      "start": 614.117232,
+      "end": 614.754505,
+      "exact": true,
+      "block": 80
+    },
+    {
+      "word": "03",
+      "start": 614.754505,
+      "end": 616.666324,
+      "exact": false,
+      "block": 81
+    },
+    {
+      "word": "Escala",
+      "start": 616.666324,
+      "end": 618.378996,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "Amplifica",
+      "start": 618.378996,
+      "end": 620.111582,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "l'infraestructura",
+      "start": 620.111582,
+      "end": 621.22681,
+      "exact": false,
+      "block": 83
+    },
+    {
+      "word": "en",
+      "start": 621.22681,
+      "end": 621.605191,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "cops",
+      "start": 621.605191,
+      "end": 621.883998,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "de",
+      "start": 621.883998,
+      "end": 622.063231,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "producció.",
+      "start": 622.063231,
+      "end": 622.660674,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "Empreses",
+      "start": 622.660674,
+      "end": 624.632238,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "Sistemes",
+      "start": 624.632238,
+      "end": 626.324995,
+      "exact": true,
+      "block": 85
+    },
+    {
+      "word": "de",
+      "start": 626.324995,
+      "end": 626.484313,
+      "exact": true,
+      "block": 85
+    },
+    {
+      "word": "software",
+      "start": 626.484313,
+      "end": 626.982183,
+      "exact": true,
+      "block": 85
+    },
+    {
+      "word": "dedicats.",
+      "start": 626.982183,
+      "end": 627.758859,
+      "exact": true,
+      "block": 85
+    },
+    {
+      "word": "La",
+      "start": 627.758859,
+      "end": 628.973661,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "mateixa",
+      "start": 628.973661,
+      "end": 629.471531,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "base",
+      "start": 629.471531,
+      "end": 629.829997,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "de",
+      "start": 629.829997,
+      "end": 630.049059,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "producció",
+      "start": 630.049059,
+      "end": 630.666418,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "pot",
+      "start": 630.666418,
+      "end": 631.044799,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "suportar",
+      "start": 631.044799,
+      "end": 631.642242,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "aplicacions",
+      "start": 631.642242,
+      "end": 632.438833,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "i",
+      "start": 632.438833,
+      "end": 632.817214,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "entorns",
+      "start": 632.817214,
+      "end": 633.295169,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "especialitzats",
+      "start": 633.295169,
+      "end": 634.290908,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "dissenyats",
+      "start": 634.290908,
+      "end": 635.007841,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "segons",
+      "start": 635.007841,
+      "end": 635.54554,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "les",
+      "start": 635.54554,
+      "end": 635.804432,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "necessitats",
+      "start": 635.804432,
+      "end": 636.581109,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "de",
+      "start": 636.581109,
+      "end": 636.720512,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "l'organització.",
+      "start": 636.720512,
+      "end": 638.532758,
+      "exact": false,
+      "block": 86
+    },
+    {
+      "word": "Institucions",
+      "start": 638.532758,
+      "end": 639.727645,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "Entorns",
+      "start": 639.727645,
+      "end": 641.300913,
+      "exact": true,
+      "block": 88
+    },
+    {
+      "word": "controlats.",
+      "start": 641.300913,
+      "end": 642.197078,
+      "exact": true,
+      "block": 88
+    },
+    {
+      "word": "Els",
+      "start": 642.197078,
+      "end": 643.451709,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "projets",
+      "start": 643.451709,
+      "end": 643.909749,
+      "exact": false,
+      "block": 89
+    },
+    {
+      "word": "poden",
+      "start": 643.909749,
+      "end": 644.487278,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "permanèixer",
+      "start": 644.487278,
+      "end": 645.184296,
+      "exact": false,
+      "block": 89
+    },
+    {
+      "word": "isolats",
+      "start": 645.184296,
+      "end": 645.781739,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "mentre",
+      "start": 645.781739,
+      "end": 646.19995,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "beneficien",
+      "start": 646.19995,
+      "end": 646.956711,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "de",
+      "start": 646.956711,
+      "end": 647.11603,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "la",
+      "start": 647.11603,
+      "end": 647.235518,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "tecnologia",
+      "start": 647.235518,
+      "end": 647.852877,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "subbàsica",
+      "start": 647.852877,
+      "end": 648.709212,
+      "exact": false,
+      "block": 89
+    },
+    {
+      "word": "reutilitzable,",
+      "start": 648.709212,
+      "end": 649.764696,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "els",
+      "start": 650.003673,
+      "end": 650.621032,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "processos",
+      "start": 650.621032,
+      "end": 651.258305,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "de",
+      "start": 651.258305,
+      "end": 651.377794,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "validació",
+      "start": 651.377794,
+      "end": 651.955322,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "i",
+      "start": 651.955322,
+      "end": 652.273959,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "l'infraestructura",
+      "start": 652.273959,
+      "end": 653.209954,
+      "exact": false,
+      "block": 89
+    },
+    {
+      "word": "de",
+      "start": 653.209954,
+      "end": 653.369272,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "producció.",
+      "start": 653.369272,
+      "end": 653.926886,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "Sector",
+      "start": 654.52433,
+      "end": 655.44041,
+      "exact": true,
+      "block": 90
+    },
+    {
+      "word": "públic",
+      "start": 655.44041,
+      "end": 656.017938,
+      "exact": true,
+      "block": 90
+    },
+    {
+      "word": "Eines",
+      "start": 656.017938,
+      "end": 657.611121,
+      "exact": true,
+      "block": 91
+    },
+    {
+      "word": "digitals",
+      "start": 657.611121,
+      "end": 658.328053,
+      "exact": true,
+      "block": 91
+    },
+    {
+      "word": "escalables.",
+      "start": 658.328053,
+      "end": 659.283963,
+      "exact": true,
+      "block": 91
+    },
+    {
+      "word": "S'està",
+      "start": 659.283963,
+      "end": 660.857231,
+      "exact": false,
+      "block": 92
+    },
+    {
+      "word": "preparant",
+      "start": 660.857231,
+      "end": 661.375015,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "l'arquitectura",
+      "start": 661.375015,
+      "end": 662.271181,
+      "exact": false,
+      "block": 92
+    },
+    {
+      "word": "per",
+      "start": 662.271181,
+      "end": 662.569902,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "a",
+      "start": 662.569902,
+      "end": 662.689391,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "col·laboracions",
+      "start": 662.689391,
+      "end": 663.426238,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "futurs",
+      "start": 663.426238,
+      "end": 663.983852,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "on",
+      "start": 663.983852,
+      "end": 664.262659,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "importen",
+      "start": 664.262659,
+      "end": 664.860103,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "el",
+      "start": 664.860103,
+      "end": 664.979591,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "control,",
+      "start": 664.979591,
+      "end": 665.457546,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "la",
+      "start": 665.756268,
+      "end": 665.975331,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "tracibilitat,",
+      "start": 665.975331,
+      "end": 667.050729,
+      "exact": false,
+      "block": 92
+    },
+    {
+      "word": "la",
+      "start": 667.050729,
+      "end": 667.38928,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "validació",
+      "start": 667.38928,
+      "end": 668.006639,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "i",
+      "start": 668.006639,
+      "end": 668.325275,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "la",
+      "start": 668.325275,
+      "end": 668.464679,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "mantinença",
+      "start": 668.464679,
+      "end": 669.181611,
+      "exact": false,
+      "block": 92
+    },
+    {
+      "word": "a",
+      "start": 669.181611,
+      "end": 669.460418,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "llarg",
+      "start": 669.460418,
+      "end": 669.71931,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "termini.",
+      "start": 669.71931,
+      "end": 670.276924,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "Unfire",
+      "start": 670.276924,
+      "end": 671.790448,
+      "exact": false,
+      "block": 93
+    },
+    {
+      "word": "pot",
+      "start": 671.790448,
+      "end": 672.109084,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "mostrar",
+      "start": 672.109084,
+      "end": 672.567124,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "productes,",
+      "start": 672.567124,
+      "end": 673.343801,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "construccions,",
+      "start": 673.562864,
+      "end": 674.419199,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "punts",
+      "start": 674.757751,
+      "end": 674.976813,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "d'avaluació",
+      "start": 674.976813,
+      "end": 675.634001,
+      "exact": false,
+      "block": 93
+    },
+    {
+      "word": "internos",
+      "start": 675.634001,
+      "end": 676.370848,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "i",
+      "start": 676.370848,
+      "end": 676.550081,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "capacitat",
+      "start": 676.550081,
+      "end": 677.187354,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "de",
+      "start": 677.187354,
+      "end": 677.386502,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "producció",
+      "start": 677.386502,
+      "end": 678.00386,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "sense",
+      "start": 678.00386,
+      "end": 678.481815,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "revelar",
+      "start": 678.481815,
+      "end": 678.9996,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "els",
+      "start": 678.9996,
+      "end": 679.238577,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "mètodes",
+      "start": 679.238577,
+      "end": 679.716532,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "d'implementació",
+      "start": 679.716532,
+      "end": 680.572868,
+      "exact": false,
+      "block": 93
+    },
+    {
+      "word": "que",
+      "start": 680.572868,
+      "end": 680.851675,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "creen",
+      "start": 680.851675,
+      "end": 681.230056,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "la",
+      "start": 681.230056,
+      "end": 681.389374,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "sous-estimació",
+      "start": 681.389374,
+      "end": 682.66392,
+      "exact": false,
+      "block": 93
+    },
+    {
+      "word": "underlying.",
+      "start": 682.66392,
+      "end": 683.938466,
+      "exact": false,
+      "block": 93
+    },
+    {
+      "word": "Financiament",
+      "start": 683.938466,
+      "end": 684.934205,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "i",
+      "start": 684.934205,
+      "end": 685.193098,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "col·laboració",
+      "start": 685.193098,
+      "end": 686.049433,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "Amplia",
+      "start": 686.049433,
+      "end": 687.662531,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "el",
+      "start": 687.662531,
+      "end": 687.981168,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "que",
+      "start": 687.981168,
+      "end": 688.140486,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "ja",
+      "start": 688.140486,
+      "end": 688.379463,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "existeix.",
+      "start": 688.379463,
+      "end": 689.255714,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "hola@unfire.technology",
+      "start": 689.255714,
+      "end": 691.984039,
+      "exact": false,
+      "block": 96
+    }
+  ],
+  "timeline_source": "whisper-plus-master-silence-chunk-anchors",
+  "timeline_method": "piecewise-linear-acoustic-timing-correction-using-4-original-text-chunks-and-3-master-silence-boundaries",
+  "tts_chunks": 4,
+  "chunk_boundaries": [
+    178.582,
+    342.742,
+    501.061
+  ],
+  "chunk_boundary_method": "master-silence-centres",
+  "whisper_coverage_reference": 0.8671742808798646
+}

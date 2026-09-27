@@ -1,0 +1,8487 @@
+{
+  "language": "da",
+  "audio_duration": 589.08,
+  "canonical_blocks": 116,
+  "canonical_words": 1078,
+  "transcript_words": 1031,
+  "exact_matches": 802,
+  "coverage": 0.7439703153988868,
+  "blocks": [
+    {
+      "index": 0,
+      "text": "Uafhængig teknologifirma",
+      "word_start": 0,
+      "word_end": 2,
+      "start": 0.0,
+      "end": 2.1
+    },
+    {
+      "index": 1,
+      "text": "Byg teknologi. Genbrug fordelaven.",
+      "word_start": 2,
+      "word_end": 6,
+      "start": 2.1,
+      "end": 6.52
+    },
+    {
+      "index": 2,
+      "text": "Unfire udvikler genanvendelige software-systemer, designet til at omvende én teknologisk basis til flere produkter, workflow'er og fremtidige applikationer.",
+      "word_start": 6,
+      "word_end": 24,
+      "start": 6.52,
+      "end": 15.28
+    },
+    {
+      "index": 3,
+      "text": "Kompany",
+      "word_start": 24,
+      "word_end": 25,
+      "start": 15.28,
+      "end": 16.83
+    },
+    {
+      "index": 4,
+      "text": "Istedet for at behandle hvert applikation som et isoleret projekt, udvikler Unfire teknologi, der kan genbruges, udvides og overføres til fremtidige produkter.",
+      "word_start": 25,
+      "word_end": 47,
+      "start": 16.83,
+      "end": 26.24
+    },
+    {
+      "index": 5,
+      "text": "Byg én gang.",
+      "word_start": 47,
+      "word_end": 50,
+      "start": 27.14,
+      "end": 28.02
+    },
+    {
+      "index": 6,
+      "text": "Kernefærdigheder kan blive genværdige byggeblokke i stedet for at forsvinde indeni et enkelt produkt.",
+      "word_start": 50,
+      "word_end": 64,
+      "start": 29.220000000000002,
+      "end": 33.62
+    },
+    {
+      "index": 7,
+      "text": "Udvid uafbrudt.",
+      "word_start": 64,
+      "word_end": 66,
+      "start": 34.38,
+      "end": 35.88
+    },
+    {
+      "index": 8,
+      "text": "Ny software kan erobre eksisterende infrastruktur, hvilket gør det muligt at reducere genbrugt genopbygning, når arkitekturen passer.",
+      "word_start": 66,
+      "word_end": 83,
+      "start": 35.88,
+      "end": 43.58
+    },
+    {
+      "index": 9,
+      "text": "Skalér systemet.",
+      "word_start": 83,
+      "word_end": 85,
+      "start": 43.58,
+      "end": 45.8
+    },
+    {
+      "index": 10,
+      "text": "Yderligere lagrings- og beregningsinfrastruktur, test- og distributionsfaciliteter kan øge produktionskapaciteten uden at genoprette den underliggende system.",
+      "word_start": 85,
+      "word_end": 101,
+      "start": 46.58,
+      "end": 55.42
+    },
+    {
+      "index": 11,
+      "text": "Valgt arbejde",
+      "word_start": 101,
+      "word_end": 103,
+      "start": 56.38,
+      "end": 57.42
+    },
+    {
+      "index": 12,
+      "text": "forskellige produkter. Teknologi, der udvikler sig.",
+      "word_start": 103,
+      "word_end": 109,
+      "start": 58.4,
+      "end": 62.4
+    },
+    {
+      "index": 13,
+      "text": "Hver projekt adresserer et andet problem, men den underliggende målstolde er den samme: udvikle teknologi, systemer og produktionsviden, der kan genanvendes i fremtidige software'er i stedet for at blive isoleret indeni en enkelt applikation.",
+      "word_start": 109,
+      "word_end": 143,
+      "start": 63.16,
+      "end": 75.16
+    },
+    {
+      "index": 14,
+      "text": "AI · Automatisering · Computer-workflows",
+      "word_start": 143,
+      "word_end": 148,
+      "start": 75.16,
+      "end": 79.78999999999999
+    },
+    {
+      "index": 15,
+      "text": "Bolt",
+      "word_start": 148,
+      "word_end": 149,
+      "start": 79.78999999999999,
+      "end": 80.815
+    },
+    {
+      "index": 16,
+      "text": "Bolt undersøger kontrolerede AI-orchestration for komplicerede computer-arbejde. Den er designet til at koordinere AI-systemer, lokale værktøjer og udføringsprocesser, samtidig med at bevare synlighed, tilladelser og mennesklig kontrol.",
+      "word_start": 149,
+      "word_end": 176,
+      "start": 80.815,
+      "end": 95.68
+    },
+    {
+      "index": 17,
+      "text": "Projektet undersøger, hvordan genrepeatede interaktioner mellem mennesker, modeller og software kan reduceres ved at tillade en godkendt plan at fortsætte gennem eksekution, test- og reparationscicler med færre uoverskuelige størsler.",
+      "word_start": 176,
+      "word_end": 205,
+      "start": 95.68,
+      "end": 107.38
+    },
+    {
+      "index": 18,
+      "text": "Teknologi udviklet omkring Bolt kan bidrage til fremtidige automatisering, udvikling og datorkontrollerede systemer i den bredere Unfire-ekosystem.",
+      "word_start": 205,
+      "word_end": 222,
+      "start": 107.38,
+      "end": 109.24000000000001
+    },
+    {
+      "index": 19,
+      "text": "Orchestration · Lokal udførelse · Kontrolleret autonomi · Genbrugbare automatization",
+      "word_start": 222,
+      "word_end": 232,
+      "start": 109.24000000000001,
+      "end": 112.4
+    },
+    {
+      "index": 20,
+      "text": "Energi · Data · Informationsystemer",
+      "word_start": 232,
+      "word_end": 237,
+      "start": 112.4,
+      "end": 115.0
+    },
+    {
+      "index": 21,
+      "text": "Kraft",
+      "word_start": 237,
+      "word_end": 238,
+      "start": 115.0,
+      "end": 115.36
+    },
+    {
+      "index": 22,
+      "text": "Kraft udforsker, hvordan komplicerede elektricitets- og energimarkedsinformation kan konverteres til software, der er lettere at forstå, sammenligne og bruge.",
+      "word_start": 238,
+      "word_end": 257,
+      "start": 115.36,
+      "end": 134.24
+    },
+    {
+      "index": 23,
+      "text": "Projektet kombinerer regionalt data, prisspecifikationer og struktureret forståelse til en tydeligere brugergrænseflade, skabende en basis for fremtidige energiintelligente værktøjer.",
+      "word_start": 257,
+      "word_end": 276,
+      "start": 135.5,
+      "end": 144.96
+    },
+    {
+      "index": 24,
+      "text": "Samme tilgang kan senere understøtte andre informasjonsgældende produkter, hvor fragmenteret ekstern data skal blive forståelig og handteret som virksomhedsvigtig software.",
+      "word_start": 276,
+      "word_end": 296,
+      "start": 145.84,
+      "end": 154.06
+    },
+    {
+      "index": 25,
+      "text": "Energiintelligentitet · Dataanalyse · Informationsarkitektur",
+      "word_start": 296,
+      "word_end": 301,
+      "start": 155.86,
+      "end": 159.02
+    },
+    {
+      "index": 26,
+      "text": "Intern infrastruktur · Softwareproduktion",
+      "word_start": 301,
+      "word_end": 305,
+      "start": 160.18,
+      "end": 162.32
+    },
+    {
+      "index": 27,
+      "text": "UnfireSuite",
+      "word_start": 305,
+      "word_end": 306,
+      "start": 162.32,
+      "end": 164.23
+    },
+    {
+      "index": 28,
+      "text": "UnfireSuite repræsenterer den interne produktionsskattebag, der ligger bag flere Unfire-projekter.",
+      "word_start": 306,
+      "word_end": 316,
+      "start": 164.23,
+      "end": 171.6
+    },
+    {
+      "index": 29,
+      "text": "Dit formål er at reducere genforetaget teknisk arbejde ved at tillade at softwarekomponenter, valideringsteknologier, produktionssystemer og opkumede teknisk viden genanvendes hvor det er relevant.",
+      "word_start": 316,
+      "word_end": 340,
+      "start": 171.6,
+      "end": 181.48
+    },
+    {
+      "index": 30,
+      "text": "Dette er vigtigt, fordi værdien af én projekt ikke skal ende, når projektet er afsluttet. Deler af teknologien kan blive infrastruktur for det næste produkt, hvilket tillader, at produktionssystemet selv kan forbedres over tid.",
+      "word_start": 340,
+      "word_end": 374,
+      "start": 182.3,
+      "end": 194.94
+    },
+    {
+      "index": 31,
+      "text": "Delte infrastruktur · Validering · Genbrug · Produktionssystemer",
+      "word_start": 374,
+      "word_end": 382,
+      "start": 196.22,
+      "end": 199.54
+    },
+    {
+      "index": 32,
+      "text": "Unfire Audio · Første implementering",
+      "word_start": 382,
+      "word_end": 387,
+      "start": 199.54,
+      "end": 202.5
+    },
+    {
+      "index": 33,
+      "text": "Archer",
+      "word_start": 387,
+      "word_end": 388,
+      "start": 202.5,
+      "end": 204.09
+    },
+    {
+      "index": 34,
+      "text": "Archer er det første produkt udviklet inden for den bredere Unfire Audio-retning.",
+      "word_start": 388,
+      "word_end": 400,
+      "start": 204.09,
+      "end": 209.98
+    },
+    {
+      "index": 35,
+      "text": "Det er en præcisionsoptik til lydclipping, bygget omkring Gain, Threshold og Atmosfære, og designet til at give producenter og ingeniører direkte kontrol over clipping-betragtninger, toppværdier, transiente og lydkarakter.",
+      "word_start": 400,
+      "word_end": 428,
+      "start": 209.98,
+      "end": 221.76
+    },
+    {
+      "index": 36,
+      "text": "Dit strategiske rolle er bredere end en enkelt lyd effekt. Archer tilbudser en praktisk miljø for at udvikle og validere lydteknologi, brugervenlige systemer og produktkomponenter, der senere kan bidrage til fremtidige kreative-softwareprodukt.",
+      "word_start": 428,
+      "word_end": 460,
+      "start": 221.76,
+      "end": 236.81333333333333
+    },
+    {
+      "index": 37,
+      "text": "Unfire Audio undersøger også, hvordan AI-assisterede systemer, proceduralt behandling og genbrugte software-tekno-logier kan konvergerer til nye plugin-koncepter og kreative workflow'er uden for konventionelle faste ly-processeværktøjer.",
+      "word_start": 460,
+      "word_end": 485,
+      "start": 236.81333333333333,
+      "end": 250.60000000000002
+    },
+    {
+      "index": 38,
+      "text": "Lydteknologi · DSP · Procedurelt bearbejdning · Kreativ software",
+      "word_start": 485,
+      "word_end": 494,
+      "start": 250.60000000000002,
+      "end": 254.3
+    },
+    {
+      "index": 39,
+      "text": "Unfire Lyd",
+      "word_start": 494,
+      "word_end": 496,
+      "start": 254.3,
+      "end": 256.62
+    },
+    {
+      "index": 40,
+      "text": "Fra plugins til nye softwarekoncepter.",
+      "word_start": 496,
+      "word_end": 501,
+      "start": 256.62,
+      "end": 259.68
+    },
+    {
+      "index": 41,
+      "text": "Unfire Audio undersøger, hvordan AI-assisterede systemer, proceduralt procesning og genbrugbare softwarekomponenter kan konvergerer til kreative værktøjer, der udvides over konventionelle plugin-workflows.",
+      "word_start": 501,
+      "word_end": 522,
+      "start": 259.68,
+      "end": 271.77
+    },
+    {
+      "index": 42,
+      "text": "AI kan blive en del af den creative softwaremiljø på sin egen hede, i stedet for at eksistere kun som en separat assistent.",
+      "word_start": 522,
+      "word_end": 545,
+      "start": 271.77,
+      "end": 278.54
+    },
+    {
+      "index": 43,
+      "text": "Parametre, lyd og softwarebegrænsning kan transformeres dynamisk, hvilket åbner rum for nye kreative interaktionsmodeller.",
+      "word_start": 545,
+      "word_end": 559,
+      "start": 279.44,
+      "end": 286.14
+    },
+    {
+      "index": 44,
+      "text": "Suksessfulde komponenter udviklet i et produkt kan senere genbruges, udvides eller integreres i andre projekter.",
+      "word_start": 559,
+      "word_end": 574,
+      "start": 286.14,
+      "end": 293.2
+    },
+    {
+      "index": 45,
+      "text": "Målet er ikke blot at producere isolerede lydplug-ins. Det er at oprette en genbrugsbaseret kreativ-tekniske grundlag, der kan understøtte fremtidige værktøjer, bredere miljøer og nye produktkoncepter.",
+      "word_start": 574,
+      "word_end": 600,
+      "start": 293.98,
+      "end": 305.24
+    },
+    {
+      "index": 46,
+      "text": "System",
+      "word_start": 600,
+      "word_end": 601,
+      "start": 306.12,
+      "end": 306.8
+    },
+    {
+      "index": 47,
+      "text": "Strengt regelbeskyttelse:",
+      "word_start": 601,
+      "word_end": 603,
+      "start": 306.8,
+      "end": 309.28
+    },
+    {
+      "index": 48,
+      "text": "- Returnér KUN den oversættelse.",
+      "word_start": 603,
+      "word_end": 608,
+      "start": 309.28,
+      "end": 312.06
+    },
+    {
+      "index": 49,
+      "text": "- Explikationer er udelukket.",
+      "word_start": 608,
+      "word_end": 612,
+      "start": 312.06,
+      "end": 314.72
+    },
+    {
+      "index": 50,
+      "text": "- Tilføj ikke anførselstegn.",
+      "word_start": 612,
+      "word_end": 616,
+      "start": 314.72,
+      "end": 317.09999999999997
+    },
+    {
+      "index": 51,
+      "text": "- Bevar mening og professionel korporativ tone.",
+      "word_start": 616,
+      "word_end": 623,
+      "start": 317.09999999999997,
+      "end": 320.96
+    },
+    {
+      "index": 52,
+      "text": "- Skriv naturligt som en dansk sprognat.",
+      "word_start": 623,
+      "word_end": 630,
+      "start": 320.96,
+      "end": 323.9
+    },
+    {
+      "index": 53,
+      "text": "- Nedsæt ingen produktnavne: Unfire, Bolt, Archer, POWER, AI TOKEN COUNTER.",
+      "word_start": 630,
+      "word_end": 641,
+      "start": 323.9,
+      "end": 330.6
+    },
+    {
+      "index": 54,
+      "text": "- Behold tal, teknisk terminologi og produktnavne præcise.",
+      "word_start": 641,
+      "word_end": 649,
+      "start": 330.6,
+      "end": 335.16
+    },
+    {
+      "index": 55,
+      "text": "- Dette tekst vil blive talede af en professionel korporativ kvinde stemme.",
+      "word_start": 649,
+      "word_end": 661,
+      "start": 335.16,
+      "end": 340.9
+    },
+    {
+      "index": 56,
+      "text": "Softwareproduktion uden at starte over.",
+      "word_start": 661,
+      "word_end": 666,
+      "start": 340.9,
+      "end": 342.58
+    },
+    {
+      "index": 57,
+      "text": "Centrale idé er simpel: når en ny produkt kan bruge teknologi, der allerede findes indeni Unfire, bør udvikling genbruge denne fordel i stedet for at bygge den på nytt.",
+      "word_start": 666,
+      "word_end": 695,
+      "start": 343.68,
+      "end": 353.52
+    },
+    {
+      "index": 58,
+      "text": "Delte grundlæggende regler:",
+      "word_start": 695,
+      "word_end": 698,
+      "start": 353.52,
+      "end": 354.96
+    },
+    {
+      "index": 59,
+      "text": "Genbrugbare softwarekomponenter, produktionsviden og validéringsystemer former en basis, der kan fortsette at udkæmpe.",
+      "word_start": 698,
+      "word_end": 711,
+      "start": 354.96,
+      "end": 362.54
+    },
+    {
+      "index": 60,
+      "text": "Produktlager",
+      "word_start": 711,
+      "word_end": 712,
+      "start": 363.76,
+      "end": 364.36
+    },
+    {
+      "index": 61,
+      "text": "Ny software kan kombinerer eksisterende funktioner med produkt-specifikt teknologi i stedet for at starte fra en tom arkitektur.",
+      "word_start": 712,
+      "word_end": 730,
+      "start": 364.36,
+      "end": 371.66
+    },
+    {
+      "index": 62,
+      "text": "Validering",
+      "word_start": 730,
+      "word_end": 731,
+      "start": 372.88,
+      "end": 373.54
+    },
+    {
+      "index": 63,
+      "text": "Bygninger, tester og interne kontrolpoints givner målbar bevægelse af, om software-kandidater fungerer som de er intentionelt designed til.",
+      "word_start": 731,
+      "word_end": 749,
+      "start": 373.54,
+      "end": 381.82
+    },
+    {
+      "index": 64,
+      "text": "Udvidelse",
+      "word_start": 749,
+      "word_end": 750,
+      "start": 382.86,
+      "end": 383.66
+    },
+    {
+      "index": 65,
+      "text": "infrastruktur kan udvikles gennem yderligere beregningsmæssig kapacitet, lagringsmæssig kapacitet, testkapacitet, kvalitets kontrol og deploymenstkapacitet.",
+      "word_start": 750,
+      "word_end": 764,
+      "start": 384.62,
+      "end": 394.65999999999997
+    },
+    {
+      "index": 66,
+      "text": "Produktionsstørrelse",
+      "word_start": 764,
+      "word_end": 765,
+      "start": 394.65999999999997,
+      "end": 395.4
+    },
+    {
+      "index": 67,
+      "text": "Bottlenecket er i ændring.",
+      "word_start": 765,
+      "word_end": 769,
+      "start": 395.4,
+      "end": 397.74
+    },
+    {
+      "index": 68,
+      "text": "Hvor den eksisterende arkitektur gælder, har intern udvikling vist, at software-kandidater kan gennemgå meget korte byggefælleskaber — i nogle tilfælde målede i minutter.",
+      "word_start": 769,
+      "word_end": 792,
+      "start": 398.64,
+      "end": 407.68
+    },
+    {
+      "index": 69,
+      "text": "Som genbrugsbare teknologi udvides, bliver begrænsende faktorer allermest infrastruktureresourcer som beregning, lagring, testning, kvalitetskontrol og kommersielle implementering – ressourcer, der selv kan udvides.",
+      "word_start": 792,
+      "word_end": 815,
+      "start": 408.38,
+      "end": 420.04
+    },
+    {
+      "index": 70,
+      "text": "Flagshipproduktet følger nuancerede teknologiriktlinjer, der i øjeblikket bruges til visning.",
+      "word_start": 815,
+      "word_end": 825,
+      "start": 420.04,
+      "end": 425.88
+    },
+    {
+      "index": 71,
+      "text": "Prioritetshvile 1-softwarekandidater identificeret for fokuseret udvikling.",
+      "word_start": 825,
+      "word_end": 831,
+      "start": 427.0,
+      "end": 430.96
+    },
+    {
+      "index": 72,
+      "text": "53",
+      "word_start": 831,
+      "word_end": 832,
+      "start": 432.04,
+      "end": 432.56
+    },
+    {
+      "index": 73,
+      "text": "Standalone-software-kandidater opbyggede og internt kontrolerede.",
+      "word_start": 832,
+      "word_end": 837,
+      "start": 432.56,
+      "end": 438.78
+    },
+    {
+      "index": 74,
+      "text": "53/53",
+      "word_start": 837,
+      "word_end": 838,
+      "start": 438.78,
+      "end": 440.72
+    },
+    {
+      "index": 75,
+      "text": "Suksessfulde selvstændige bygninger ved den interne kontrolpunkt i september 2026.",
+      "word_start": 838,
+      "word_end": 848,
+      "start": 440.72,
+      "end": 446.78
+    },
+    {
+      "index": 76,
+      "text": "01",
+      "word_start": 848,
+      "word_end": 849,
+      "start": 446.78,
+      "end": 447.44
+    },
+    {
+      "index": 77,
+      "text": "Streng regler:",
+      "word_start": 849,
+      "word_end": 851,
+      "start": 447.44,
+      "end": 449.38
+    },
+    {
+      "index": 78,
+      "text": "- Returnér KUN den oversættelse.",
+      "word_start": 851,
+      "word_end": 856,
+      "start": 449.38,
+      "end": 452.16
+    },
+    {
+      "index": 79,
+      "text": "- Explikationer er udelukket.",
+      "word_start": 856,
+      "word_end": 860,
+      "start": 452.16,
+      "end": 454.82
+    },
+    {
+      "index": 80,
+      "text": "- Tilføj ikke anførselstegn.",
+      "word_start": 860,
+      "word_end": 864,
+      "start": 454.82,
+      "end": 457.6
+    },
+    {
+      "index": 81,
+      "text": "- Bevar mening og professionel korporativ tone.",
+      "word_start": 864,
+      "word_end": 871,
+      "start": 457.6,
+      "end": 460.94
+    },
+    {
+      "index": 82,
+      "text": "- Skriv naturligt, som en dansk sprogbør.",
+      "word_start": 871,
+      "word_end": 878,
+      "start": 460.94,
+      "end": 464.44
+    },
+    {
+      "index": 83,
+      "text": "- Translational eller ændring af produktnavne: Unfire, Bolt, Archer, POWER, AI TOKEN COUNTER.",
+      "word_start": 878,
+      "word_end": 891,
+      "start": 464.44,
+      "end": 472.28999999999996
+    },
+    {
+      "index": 84,
+      "text": "- Behold tal, teknisk terminologi og produktnavne præcise.",
+      "word_start": 891,
+      "word_end": 899,
+      "start": 472.28999999999996,
+      "end": 476.76
+    },
+    {
+      "index": 85,
+      "text": "- Dette tekst vil blive talet af en professionel korporativ kvinde stemme.",
+      "word_start": 899,
+      "word_end": 911,
+      "start": 476.76,
+      "end": 481.0
+    },
+    {
+      "index": 86,
+      "text": "Genbrug",
+      "word_start": 911,
+      "word_end": 912,
+      "start": 481.0,
+      "end": 482.74
+    },
+    {
+      "index": 87,
+      "text": "Start fra eksisterende teknologi, hvor det er muligt.",
+      "word_start": 912,
+      "word_end": 920,
+      "start": 482.74,
+      "end": 486.66
+    },
+    {
+      "index": 88,
+      "text": "02",
+      "word_start": 920,
+      "word_end": 921,
+      "start": 486.66,
+      "end": 488.12
+    },
+    {
+      "index": 89,
+      "text": "Strengt regelbeskyttelse:",
+      "word_start": 921,
+      "word_end": 923,
+      "start": 488.12,
+      "end": 490.78
+    },
+    {
+      "index": 90,
+      "text": "- Returnér KUN den oversættelse.",
+      "word_start": 923,
+      "word_end": 928,
+      "start": 490.78,
+      "end": 493.56
+    },
+    {
+      "index": 91,
+      "text": "- Explikationer er udlukkende uhyre.",
+      "word_start": 928,
+      "word_end": 933,
+      "start": 493.56,
+      "end": 496.58
+    },
+    {
+      "index": 92,
+      "text": "- Tilføj ikke citatmærker.",
+      "word_start": 933,
+      "word_end": 937,
+      "start": 496.58,
+      "end": 499.16
+    },
+    {
+      "index": 93,
+      "text": "- Bevar mening og professionel korporativ tone.",
+      "word_start": 937,
+      "word_end": 944,
+      "start": 499.16,
+      "end": 502.5
+    },
+    {
+      "index": 94,
+      "text": "- Skriv naturligt, som en dansk sprognat.",
+      "word_start": 944,
+      "word_end": 951,
+      "start": 502.5,
+      "end": 505.82
+    },
+    {
+      "index": 95,
+      "text": "- Translater eller ændre aldrig disse produktnavne: Unfire, Bolt, Archer, POWER, AI TOKEN COUNTER.",
+      "word_start": 951,
+      "word_end": 965,
+      "start": 505.82,
+      "end": 513.88
+    },
+    {
+      "index": 96,
+      "text": "- Bevar tal, teknisk terminologi og produktnavne præcise.",
+      "word_start": 965,
+      "word_end": 973,
+      "start": 513.88,
+      "end": 518.58
+    },
+    {
+      "index": 97,
+      "text": "- Denne tekst vil blive talet af en professionel korporativ kvinde stemme.",
+      "word_start": 973,
+      "word_end": 985,
+      "start": 518.58,
+      "end": 522.84
+    },
+    {
+      "index": 98,
+      "text": "Byg",
+      "word_start": 985,
+      "word_end": 986,
+      "start": 522.84,
+      "end": 524.24
+    },
+    {
+      "index": 99,
+      "text": "Opret den produktspesifikke lag.",
+      "word_start": 986,
+      "word_end": 990,
+      "start": 524.24,
+      "end": 527.0
+    },
+    {
+      "index": 100,
+      "text": "03",
+      "word_start": 990,
+      "word_end": 991,
+      "start": 527.0,
+      "end": 528.74
+    },
+    {
+      "index": 101,
+      "text": "Skala",
+      "word_start": 991,
+      "word_end": 992,
+      "start": 528.74,
+      "end": 530.7
+    },
+    {
+      "index": 102,
+      "text": "Udvid infrastruktur med produktionen.",
+      "word_start": 992,
+      "word_end": 996,
+      "start": 530.7,
+      "end": 534.1
+    },
+    {
+      "index": 103,
+      "text": "Firmer",
+      "word_start": 996,
+      "word_end": 997,
+      "start": 534.1,
+      "end": 535.24
+    },
+    {
+      "index": 104,
+      "text": "Dedicated software-systemer.",
+      "word_start": 997,
+      "word_end": 999,
+      "start": 535.24,
+      "end": 538.1
+    },
+    {
+      "index": 105,
+      "text": "Samme produktbasis kan understøtte specialiserede applikationer og milvøje, der er opbyggede efter organisatoriske krav.",
+      "word_start": 999,
+      "word_end": 1013,
+      "start": 538.1,
+      "end": 545.4
+    },
+    {
+      "index": 106,
+      "text": "Institutioner",
+      "word_start": 1013,
+      "word_end": 1014,
+      "start": 545.4,
+      "end": 546.6
+    },
+    {
+      "index": 107,
+      "text": "Kontrollerede milvne.",
+      "word_start": 1014,
+      "word_end": 1016,
+      "start": 546.6,
+      "end": 549.32
+    },
+    {
+      "index": 108,
+      "text": "Projekter kan være isolerede samtidig med at de fordele sig af genanvendbare grundlæggende teknologi, godkendelsesprocesser og produktionsinfrastruktur.",
+      "word_start": 1016,
+      "word_end": 1033,
+      "start": 549.32,
+      "end": 557.68
+    },
+    {
+      "index": 109,
+      "text": "Offentlig sektor",
+      "word_start": 1033,
+      "word_end": 1035,
+      "start": 557.68,
+      "end": 558.8659459459459
+    },
+    {
+      "index": 110,
+      "text": "Skalbare digitale værktøjer.",
+      "word_start": 1035,
+      "word_end": 1038,
+      "start": 558.8659459459459,
+      "end": 560.6448648648649
+    },
+    {
+      "index": 111,
+      "text": "Arkitekturen forberedes til fremtidig samarbejde, hvor kontrol, tracering, validering og langsignet vedligeholdelighed er vigtige.",
+      "word_start": 1038,
+      "word_end": 1052,
+      "start": 560.6448648648649,
+      "end": 568.9464864864865
+    },
+    {
+      "index": 112,
+      "text": "Unfire kan vise produkter, bygninger, interne kontrolpoints og produktionsmængder uden at udpege de implementeringsmetoder, der skaber den underliggende leverancering.",
+      "word_start": 1052,
+      "word_end": 1071,
+      "start": 568.9464864864865,
+      "end": 580.28
+    },
+    {
+      "index": 113,
+      "text": "Finansiering & samarbejde",
+      "word_start": 1071,
+      "word_end": 1074,
+      "start": 580.28,
+      "end": 582.94
+    },
+    {
+      "index": 114,
+      "text": "Udvid det eksisterende.",
+      "word_start": 1074,
+      "word_end": 1077,
+      "start": 582.94,
+      "end": 585.1
+    },
+    {
+      "index": 115,
+      "text": "hej@unfire.technology",
+      "word_start": 1077,
+      "word_end": 1078,
+      "start": 585.1,
+      "end": 587.86
+    }
+  ],
+  "words": [
+    {
+      "word": "Uafhængig",
+      "start": 0.0,
+      "end": 1.05,
+      "exact": false,
+      "block": 0
+    },
+    {
+      "word": "teknologifirma",
+      "start": 1.05,
+      "end": 2.1,
+      "exact": false,
+      "block": 0
+    },
+    {
+      "word": "Byg",
+      "start": 2.1,
+      "end": 3.06,
+      "exact": true,
+      "block": 1
+    },
+    {
+      "word": "teknologi.",
+      "start": 3.06,
+      "end": 4.02,
+      "exact": true,
+      "block": 1
+    },
+    {
+      "word": "Genbrug",
+      "start": 4.02,
+      "end": 5.44,
+      "exact": true,
+      "block": 1
+    },
+    {
+      "word": "fordelaven.",
+      "start": 5.44,
+      "end": 6.52,
+      "exact": false,
+      "block": 1
+    },
+    {
+      "word": "Unfire",
+      "start": 6.52,
+      "end": 7.6,
+      "exact": false,
+      "block": 2
+    },
+    {
+      "word": "udvikler",
+      "start": 7.6,
+      "end": 8.1,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "genanvendelige",
+      "start": 8.1,
+      "end": 8.7,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "software-systemer,",
+      "start": 8.7,
+      "end": 9.72,
+      "exact": false,
+      "block": 2
+    },
+    {
+      "word": "designet",
+      "start": 9.72,
+      "end": 10.42,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "til",
+      "start": 10.42,
+      "end": 10.56,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "at",
+      "start": 10.56,
+      "end": 10.64,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "omvende",
+      "start": 10.64,
+      "end": 11.02,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "én",
+      "start": 11.02,
+      "end": 11.22,
+      "exact": false,
+      "block": 2
+    },
+    {
+      "word": "teknologisk",
+      "start": 11.22,
+      "end": 11.78,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "basis",
+      "start": 11.78,
+      "end": 12.1,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "til",
+      "start": 12.1,
+      "end": 12.3,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "flere",
+      "start": 12.3,
+      "end": 12.54,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "produkter,",
+      "start": 12.54,
+      "end": 13.02,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "workflow'er",
+      "start": 13.4,
+      "end": 13.96,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "og",
+      "start": 13.96,
+      "end": 14.1,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "fremtidige",
+      "start": 14.1,
+      "end": 14.64,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "applikationer.",
+      "start": 14.64,
+      "end": 15.28,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "Kompany",
+      "start": 15.28,
+      "end": 16.83,
+      "exact": false,
+      "block": 3
+    },
+    {
+      "word": "Istedet",
+      "start": 16.83,
+      "end": 18.38,
+      "exact": false,
+      "block": 4
+    },
+    {
+      "word": "for",
+      "start": 18.38,
+      "end": 18.52,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "at",
+      "start": 18.52,
+      "end": 18.6,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "behandle",
+      "start": 18.6,
+      "end": 18.92,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "hvert",
+      "start": 18.92,
+      "end": 19.08,
+      "exact": false,
+      "block": 4
+    },
+    {
+      "word": "applikation",
+      "start": 19.08,
+      "end": 19.64,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "som",
+      "start": 19.64,
+      "end": 19.8,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "et",
+      "start": 19.8,
+      "end": 19.92,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "isoleret",
+      "start": 19.92,
+      "end": 20.36,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "projekt,",
+      "start": 20.36,
+      "end": 20.74,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "udvikler",
+      "start": 21.0,
+      "end": 21.68,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "Unfire",
+      "start": 21.68,
+      "end": 22.08,
+      "exact": false,
+      "block": 4
+    },
+    {
+      "word": "teknologi,",
+      "start": 22.08,
+      "end": 22.66,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "der",
+      "start": 22.8,
+      "end": 23.1,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "kan",
+      "start": 23.1,
+      "end": 23.22,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "genbruges,",
+      "start": 23.22,
+      "end": 23.76,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "udvides",
+      "start": 24.06,
+      "end": 24.48,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "og",
+      "start": 24.48,
+      "end": 24.7,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "overføres",
+      "start": 24.7,
+      "end": 25.14,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "til",
+      "start": 25.14,
+      "end": 25.26,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "fremtidige",
+      "start": 25.26,
+      "end": 25.78,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "produkter.",
+      "start": 25.78,
+      "end": 26.24,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "Byg",
+      "start": 27.14,
+      "end": 27.54,
+      "exact": true,
+      "block": 5
+    },
+    {
+      "word": "én",
+      "start": 27.54,
+      "end": 27.78,
+      "exact": false,
+      "block": 5
+    },
+    {
+      "word": "gang.",
+      "start": 27.78,
+      "end": 28.02,
+      "exact": true,
+      "block": 5
+    },
+    {
+      "word": "Kernefærdigheder",
+      "start": 29.220000000000002,
+      "end": 29.96,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "kan",
+      "start": 29.96,
+      "end": 30.1,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "blive",
+      "start": 30.1,
+      "end": 30.22,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "genværdige",
+      "start": 30.22,
+      "end": 30.72,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "byggeblokke",
+      "start": 30.72,
+      "end": 31.36,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "i",
+      "start": 31.36,
+      "end": 31.5,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "stedet",
+      "start": 31.5,
+      "end": 31.82,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "for",
+      "start": 31.82,
+      "end": 31.96,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "at",
+      "start": 31.96,
+      "end": 32.04,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "forsvinde",
+      "start": 32.04,
+      "end": 32.38,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "indeni",
+      "start": 32.38,
+      "end": 32.82,
+      "exact": false,
+      "block": 6
+    },
+    {
+      "word": "et",
+      "start": 32.82,
+      "end": 32.98,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "enkelt",
+      "start": 32.98,
+      "end": 33.22,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "produkt.",
+      "start": 33.22,
+      "end": 33.62,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "Udvid",
+      "start": 34.38,
+      "end": 35.06,
+      "exact": true,
+      "block": 7
+    },
+    {
+      "word": "uafbrudt.",
+      "start": 35.06,
+      "end": 35.88,
+      "exact": true,
+      "block": 7
+    },
+    {
+      "word": "Ny",
+      "start": 35.88,
+      "end": 36.96,
+      "exact": false,
+      "block": 8
+    },
+    {
+      "word": "software",
+      "start": 36.96,
+      "end": 37.36,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "kan",
+      "start": 37.36,
+      "end": 37.56,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "erobre",
+      "start": 37.56,
+      "end": 37.92,
+      "exact": false,
+      "block": 8
+    },
+    {
+      "word": "eksisterende",
+      "start": 37.92,
+      "end": 38.58,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "infrastruktur,",
+      "start": 38.58,
+      "end": 39.3,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "hvilket",
+      "start": 39.6,
+      "end": 40.14,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "gør",
+      "start": 40.14,
+      "end": 40.28,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "det",
+      "start": 40.28,
+      "end": 40.36,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "muligt",
+      "start": 40.36,
+      "end": 40.64,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "at",
+      "start": 40.64,
+      "end": 40.74,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "reducere",
+      "start": 40.74,
+      "end": 41.1,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "genbrugt",
+      "start": 41.1,
+      "end": 41.52,
+      "exact": false,
+      "block": 8
+    },
+    {
+      "word": "genopbygning,",
+      "start": 41.52,
+      "end": 42.14,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "når",
+      "start": 42.46,
+      "end": 42.64,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "arkitekturen",
+      "start": 42.64,
+      "end": 43.28,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "passer.",
+      "start": 43.28,
+      "end": 43.58,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "Skalér",
+      "start": 43.58,
+      "end": 45.16,
+      "exact": false,
+      "block": 9
+    },
+    {
+      "word": "systemet.",
+      "start": 45.16,
+      "end": 45.8,
+      "exact": true,
+      "block": 9
+    },
+    {
+      "word": "Yderligere",
+      "start": 46.58,
+      "end": 47.32,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "lagrings-",
+      "start": 47.32,
+      "end": 47.8,
+      "exact": false,
+      "block": 10
+    },
+    {
+      "word": "og",
+      "start": 47.8,
+      "end": 48.3,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "beregningsinfrastruktur,",
+      "start": 48.3,
+      "end": 49.5,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "test-",
+      "start": 49.88,
+      "end": 50.14,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "og",
+      "start": 50.34,
+      "end": 50.72,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "distributionsfaciliteter",
+      "start": 50.72,
+      "end": 52.02,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "kan",
+      "start": 52.02,
+      "end": 52.32,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "øge",
+      "start": 52.32,
+      "end": 52.52,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "produktionskapaciteten",
+      "start": 52.52,
+      "end": 53.66,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "uden",
+      "start": 53.66,
+      "end": 53.92,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "at",
+      "start": 53.92,
+      "end": 54.06,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "genoprette",
+      "start": 54.06,
+      "end": 54.52,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "den",
+      "start": 54.52,
+      "end": 54.64,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "underliggende",
+      "start": 54.64,
+      "end": 55.06,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "system.",
+      "start": 55.06,
+      "end": 55.42,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "Valgt",
+      "start": 56.38,
+      "end": 56.9,
+      "exact": true,
+      "block": 11
+    },
+    {
+      "word": "arbejde",
+      "start": 56.9,
+      "end": 57.42,
+      "exact": true,
+      "block": 11
+    },
+    {
+      "word": "forskellige",
+      "start": 58.4,
+      "end": 59.04,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "produkter.",
+      "start": 59.04,
+      "end": 59.58,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "Teknologi,",
+      "start": 60.74,
+      "end": 61.38,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "der",
+      "start": 61.4,
+      "end": 61.76,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "udvikler",
+      "start": 61.76,
+      "end": 62.18,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "sig.",
+      "start": 62.18,
+      "end": 62.4,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "Hver",
+      "start": 63.16,
+      "end": 63.8,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "projekt",
+      "start": 63.8,
+      "end": 64.22,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "adresserer",
+      "start": 64.22,
+      "end": 64.7,
+      "exact": false,
+      "block": 13
+    },
+    {
+      "word": "et",
+      "start": 64.7,
+      "end": 64.84,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "andet",
+      "start": 64.84,
+      "end": 65.02,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "problem,",
+      "start": 65.02,
+      "end": 65.36,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "men",
+      "start": 65.36,
+      "end": 65.88,
+      "exact": false,
+      "block": 13
+    },
+    {
+      "word": "den",
+      "start": 65.88,
+      "end": 66.02,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "underliggende",
+      "start": 66.02,
+      "end": 66.46,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "målstolde",
+      "start": 66.46,
+      "end": 66.88,
+      "exact": false,
+      "block": 13
+    },
+    {
+      "word": "er",
+      "start": 66.88,
+      "end": 66.98,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "den",
+      "start": 66.98,
+      "end": 67.1,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "samme:",
+      "start": 67.1,
+      "end": 67.46,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "udvikle",
+      "start": 67.8,
+      "end": 68.12,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "teknologi,",
+      "start": 68.12,
+      "end": 68.78,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "systemer",
+      "start": 69.14,
+      "end": 69.6,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "og",
+      "start": 69.6,
+      "end": 69.68,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "produktionsviden,",
+      "start": 69.68,
+      "end": 70.42,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "der",
+      "start": 70.7,
+      "end": 70.94,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "kan",
+      "start": 70.94,
+      "end": 71.04,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "genanvendes",
+      "start": 71.04,
+      "end": 71.56,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "i",
+      "start": 71.56,
+      "end": 71.68,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "fremtidige",
+      "start": 71.68,
+      "end": 72.22,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "software'er",
+      "start": 72.22,
+      "end": 72.58,
+      "exact": false,
+      "block": 13
+    },
+    {
+      "word": "i",
+      "start": 72.58,
+      "end": 72.76,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "stedet",
+      "start": 72.76,
+      "end": 73.06,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "for",
+      "start": 73.06,
+      "end": 73.2,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "at",
+      "start": 73.2,
+      "end": 73.28,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "blive",
+      "start": 73.28,
+      "end": 73.4,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "isoleret",
+      "start": 73.4,
+      "end": 73.88,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "indeni",
+      "start": 73.88,
+      "end": 74.24,
+      "exact": false,
+      "block": 13
+    },
+    {
+      "word": "en",
+      "start": 74.24,
+      "end": 74.4,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "enkelt",
+      "start": 74.4,
+      "end": 74.66,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "applikation.",
+      "start": 74.66,
+      "end": 75.16,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "AI",
+      "start": 75.16,
+      "end": 75.96000000000001,
+      "exact": false,
+      "block": 14
+    },
+    {
+      "word": "·",
+      "start": 75.96000000000001,
+      "end": 76.76,
+      "exact": false,
+      "block": 14
+    },
+    {
+      "word": "Automatisering",
+      "start": 76.76,
+      "end": 77.74,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "·",
+      "start": 77.74,
+      "end": 78.765,
+      "exact": false,
+      "block": 14
+    },
+    {
+      "word": "Computer-workflows",
+      "start": 78.765,
+      "end": 79.78999999999999,
+      "exact": false,
+      "block": 14
+    },
+    {
+      "word": "Bolt",
+      "start": 79.78999999999999,
+      "end": 80.815,
+      "exact": false,
+      "block": 15
+    },
+    {
+      "word": "Bolt",
+      "start": 80.815,
+      "end": 81.84,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "undersøger",
+      "start": 81.84,
+      "end": 82.3,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "kontrolerede",
+      "start": 82.3,
+      "end": 82.97999999999999,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "AI-orchestration",
+      "start": 82.97999999999999,
+      "end": 83.66,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "for",
+      "start": 83.66,
+      "end": 83.98,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "komplicerede",
+      "start": 83.98,
+      "end": 84.56,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "computer-arbejde.",
+      "start": 84.56,
+      "end": 85.42,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "Den",
+      "start": 86.26,
+      "end": 86.68,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "er",
+      "start": 86.68,
+      "end": 86.78,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "designet",
+      "start": 86.78,
+      "end": 87.22,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "til",
+      "start": 87.22,
+      "end": 87.36,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "at",
+      "start": 87.36,
+      "end": 87.42,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "koordinere",
+      "start": 87.42,
+      "end": 87.92,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "AI-systemer,",
+      "start": 87.92,
+      "end": 88.9,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "lokale",
+      "start": 88.9,
+      "end": 89.38,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "værktøjer",
+      "start": 89.38,
+      "end": 89.84,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "og",
+      "start": 89.84,
+      "end": 89.98,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "udføringsprocesser,",
+      "start": 89.98,
+      "end": 90.98,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "samtidig",
+      "start": 91.16,
+      "end": 91.84,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "med",
+      "start": 91.84,
+      "end": 91.96,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "at",
+      "start": 91.96,
+      "end": 92.02,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "bevare",
+      "start": 92.02,
+      "end": 92.3,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "synlighed,",
+      "start": 92.3,
+      "end": 92.84,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "tilladelser",
+      "start": 93.22,
+      "end": 93.72,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "og",
+      "start": 93.72,
+      "end": 93.9,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "mennesklig",
+      "start": 93.9,
+      "end": 94.79,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "kontrol.",
+      "start": 94.79,
+      "end": 95.68,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "Projektet",
+      "start": 95.68,
+      "end": 96.4,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "undersøger,",
+      "start": 96.4,
+      "end": 96.92,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "hvordan",
+      "start": 97.2,
+      "end": 97.48,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "genrepeatede",
+      "start": 97.48,
+      "end": 98.14,
+      "exact": false,
+      "block": 17
+    },
+    {
+      "word": "interaktioner",
+      "start": 98.14,
+      "end": 98.7,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "mellem",
+      "start": 98.7,
+      "end": 98.9,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "mennesker,",
+      "start": 98.9,
+      "end": 99.32,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "modeller",
+      "start": 99.32,
+      "end": 100.12,
+      "exact": false,
+      "block": 17
+    },
+    {
+      "word": "og",
+      "start": 100.12,
+      "end": 100.22,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "software",
+      "start": 100.22,
+      "end": 100.58,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "kan",
+      "start": 100.58,
+      "end": 100.74,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "reduceres",
+      "start": 100.74,
+      "end": 101.3,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "ved",
+      "start": 101.3,
+      "end": 101.4,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "at",
+      "start": 101.4,
+      "end": 101.52,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "tillade",
+      "start": 101.52,
+      "end": 101.8,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "en",
+      "start": 101.8,
+      "end": 101.9,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "godkendt",
+      "start": 101.9,
+      "end": 102.34,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "plan",
+      "start": 102.34,
+      "end": 102.48,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "at",
+      "start": 102.48,
+      "end": 102.62,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "fortsætte",
+      "start": 102.62,
+      "end": 103.08,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "gennem",
+      "start": 103.08,
+      "end": 103.32,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "eksekution,",
+      "start": 103.32,
+      "end": 103.84,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "test-",
+      "start": 104.14,
+      "end": 104.44,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "og",
+      "start": 104.44,
+      "end": 105.0,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "reparationscicler",
+      "start": 105.0,
+      "end": 105.82,
+      "exact": false,
+      "block": 17
+    },
+    {
+      "word": "med",
+      "start": 105.82,
+      "end": 106.02,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "færre",
+      "start": 106.02,
+      "end": 106.3,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "uoverskuelige",
+      "start": 106.3,
+      "end": 106.96,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "størsler.",
+      "start": 106.96,
+      "end": 107.38,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "Teknologi",
+      "start": 107.38,
+      "end": 107.476,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "udviklet",
+      "start": 107.476,
+      "end": 107.572,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "omkring",
+      "start": 107.572,
+      "end": 107.66799999999999,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "Bolt",
+      "start": 107.66799999999999,
+      "end": 107.764,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "kan",
+      "start": 107.764,
+      "end": 107.86,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "bidrage",
+      "start": 107.86,
+      "end": 107.956,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "til",
+      "start": 107.956,
+      "end": 108.052,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "fremtidige",
+      "start": 108.052,
+      "end": 108.148,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "automatisering,",
+      "start": 108.148,
+      "end": 108.244,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "udvikling",
+      "start": 108.244,
+      "end": 108.34,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "og",
+      "start": 108.34,
+      "end": 108.7,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "datorkontrollerede",
+      "start": 108.7,
+      "end": 108.79,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "systemer",
+      "start": 108.79,
+      "end": 108.88,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "i",
+      "start": 108.88,
+      "end": 108.97,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "den",
+      "start": 108.97,
+      "end": 109.06,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "bredere",
+      "start": 109.06,
+      "end": 109.15,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "Unfire-ekosystem.",
+      "start": 109.15,
+      "end": 109.24000000000001,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "Orchestration",
+      "start": 109.24000000000001,
+      "end": 109.33,
+      "exact": false,
+      "block": 19
+    },
+    {
+      "word": "·",
+      "start": 109.33,
+      "end": 109.42,
+      "exact": false,
+      "block": 19
+    },
+    {
+      "word": "Lokal",
+      "start": 109.42,
+      "end": 109.72,
+      "exact": true,
+      "block": 19
+    },
+    {
+      "word": "udførelse",
+      "start": 109.72,
+      "end": 110.28,
+      "exact": true,
+      "block": 19
+    },
+    {
+      "word": "·",
+      "start": 110.28,
+      "end": 110.4,
+      "exact": false,
+      "block": 19
+    },
+    {
+      "word": "Kontrolleret",
+      "start": 110.4,
+      "end": 110.88,
+      "exact": true,
+      "block": 19
+    },
+    {
+      "word": "autonomi",
+      "start": 110.88,
+      "end": 111.44,
+      "exact": true,
+      "block": 19
+    },
+    {
+      "word": "·",
+      "start": 111.44,
+      "end": 111.58,
+      "exact": false,
+      "block": 19
+    },
+    {
+      "word": "Genbrugbare",
+      "start": 111.58,
+      "end": 112.04,
+      "exact": true,
+      "block": 19
+    },
+    {
+      "word": "automatization",
+      "start": 112.04,
+      "end": 112.4,
+      "exact": false,
+      "block": 19
+    },
+    {
+      "word": "Energi",
+      "start": 112.4,
+      "end": 113.32,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "·",
+      "start": 113.32,
+      "end": 113.5,
+      "exact": false,
+      "block": 20
+    },
+    {
+      "word": "Data",
+      "start": 113.5,
+      "end": 113.86,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "·",
+      "start": 113.86,
+      "end": 114.43,
+      "exact": false,
+      "block": 20
+    },
+    {
+      "word": "Informationsystemer",
+      "start": 114.43,
+      "end": 115.0,
+      "exact": false,
+      "block": 20
+    },
+    {
+      "word": "Kraft",
+      "start": 115.0,
+      "end": 115.36,
+      "exact": true,
+      "block": 21
+    },
+    {
+      "word": "Kraft",
+      "start": 115.36,
+      "end": 115.58,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "udforsker,",
+      "start": 115.58,
+      "end": 116.24,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "hvordan",
+      "start": 116.44,
+      "end": 116.88,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "komplicerede",
+      "start": 116.88,
+      "end": 117.53,
+      "exact": false,
+      "block": 22
+    },
+    {
+      "word": "elektricitets-",
+      "start": 117.53,
+      "end": 118.18,
+      "exact": false,
+      "block": 22
+    },
+    {
+      "word": "og",
+      "start": 118.18,
+      "end": 118.86,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "energimarkedsinformation",
+      "start": 118.86,
+      "end": 119.92,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "kan",
+      "start": 119.92,
+      "end": 120.24,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "konverteres",
+      "start": 120.24,
+      "end": 120.78,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "til",
+      "start": 120.78,
+      "end": 120.86,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "software,",
+      "start": 120.86,
+      "end": 121.3,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "der",
+      "start": 121.64,
+      "end": 121.9,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "er",
+      "start": 121.9,
+      "end": 122.04,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "lettere",
+      "start": 122.04,
+      "end": 122.24,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "at",
+      "start": 122.24,
+      "end": 122.38,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "forstå,",
+      "start": 122.38,
+      "end": 122.76,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "sammenligne",
+      "start": 123.1,
+      "end": 123.56,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "og",
+      "start": 123.56,
+      "end": 123.76,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "bruge.",
+      "start": 133.48000000000002,
+      "end": 134.24,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "Projektet",
+      "start": 135.5,
+      "end": 136.26,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "kombinerer",
+      "start": 136.26,
+      "end": 136.76,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "regionalt",
+      "start": 136.76,
+      "end": 137.02,
+      "exact": false,
+      "block": 23
+    },
+    {
+      "word": "data,",
+      "start": 137.02,
+      "end": 137.52,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "prisspecifikationer",
+      "start": 137.92,
+      "end": 138.92,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "og",
+      "start": 138.92,
+      "end": 139.06,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "struktureret",
+      "start": 139.06,
+      "end": 139.58,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "forståelse",
+      "start": 139.58,
+      "end": 140.08,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "til",
+      "start": 140.08,
+      "end": 140.28,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "en",
+      "start": 140.28,
+      "end": 140.4,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "tydeligere",
+      "start": 140.4,
+      "end": 140.76,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "brugergrænseflade,",
+      "start": 140.76,
+      "end": 141.6,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "skabende",
+      "start": 141.6,
+      "end": 142.52,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "en",
+      "start": 142.52,
+      "end": 142.64,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "basis",
+      "start": 142.64,
+      "end": 142.96,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "for",
+      "start": 142.96,
+      "end": 143.16,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "fremtidige",
+      "start": 143.16,
+      "end": 143.7,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "energiintelligente",
+      "start": 143.7,
+      "end": 144.5,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "værktøjer.",
+      "start": 144.5,
+      "end": 144.96,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "Samme",
+      "start": 145.84,
+      "end": 146.56,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "tilgang",
+      "start": 146.56,
+      "end": 146.94,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "kan",
+      "start": 146.94,
+      "end": 147.14,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "senere",
+      "start": 147.14,
+      "end": 147.48,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "understøtte",
+      "start": 147.48,
+      "end": 147.96,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "andre",
+      "start": 147.96,
+      "end": 148.3,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "informasjonsgældende",
+      "start": 148.3,
+      "end": 149.16,
+      "exact": false,
+      "block": 24
+    },
+    {
+      "word": "produkter,",
+      "start": 149.16,
+      "end": 149.6,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "hvor",
+      "start": 149.84,
+      "end": 150.16,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "fragmenteret",
+      "start": 150.16,
+      "end": 150.84,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "ekstern",
+      "start": 150.84,
+      "end": 151.26,
+      "exact": false,
+      "block": 24
+    },
+    {
+      "word": "data",
+      "start": 151.26,
+      "end": 151.54,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "skal",
+      "start": 151.54,
+      "end": 151.74,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "blive",
+      "start": 151.74,
+      "end": 151.88,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "forståelig",
+      "start": 151.88,
+      "end": 152.36,
+      "exact": false,
+      "block": 24
+    },
+    {
+      "word": "og",
+      "start": 152.36,
+      "end": 152.48,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "handteret",
+      "start": 152.48,
+      "end": 152.78,
+      "exact": false,
+      "block": 24
+    },
+    {
+      "word": "som",
+      "start": 152.78,
+      "end": 152.92,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "virksomhedsvigtig",
+      "start": 152.92,
+      "end": 153.7,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "software.",
+      "start": 153.7,
+      "end": 154.06,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "Energiintelligentitet",
+      "start": 155.86,
+      "end": 156.58,
+      "exact": true,
+      "block": 25
+    },
+    {
+      "word": "·",
+      "start": 156.58,
+      "end": 156.76,
+      "exact": false,
+      "block": 25
+    },
+    {
+      "word": "Dataanalyse",
+      "start": 156.76,
+      "end": 157.54,
+      "exact": true,
+      "block": 25
+    },
+    {
+      "word": "·",
+      "start": 157.54,
+      "end": 157.8,
+      "exact": false,
+      "block": 25
+    },
+    {
+      "word": "Informationsarkitektur",
+      "start": 157.8,
+      "end": 159.02,
+      "exact": true,
+      "block": 25
+    },
+    {
+      "word": "Intern",
+      "start": 160.18,
+      "end": 160.48,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "infrastruktur",
+      "start": 160.48,
+      "end": 161.28,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "·",
+      "start": 161.28,
+      "end": 161.48,
+      "exact": false,
+      "block": 26
+    },
+    {
+      "word": "Softwareproduktion",
+      "start": 161.48,
+      "end": 162.32,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "UnfireSuite",
+      "start": 162.32,
+      "end": 164.23,
+      "exact": false,
+      "block": 27
+    },
+    {
+      "word": "UnfireSuite",
+      "start": 164.23,
+      "end": 166.14,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "repræsenterer",
+      "start": 166.14,
+      "end": 166.94,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "den",
+      "start": 166.94,
+      "end": 167.1,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "interne",
+      "start": 167.1,
+      "end": 167.54,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "produktionsskattebag,",
+      "start": 167.54,
+      "end": 168.64,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "der",
+      "start": 168.64,
+      "end": 169.04,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "ligger",
+      "start": 169.04,
+      "end": 169.24,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "bag",
+      "start": 169.24,
+      "end": 169.44,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "flere",
+      "start": 169.44,
+      "end": 169.78,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "Unfire-projekter.",
+      "start": 169.78,
+      "end": 171.6,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "Dit",
+      "start": 171.6,
+      "end": 171.98,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "formål",
+      "start": 171.98,
+      "end": 172.44,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "er",
+      "start": 172.44,
+      "end": 172.54,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "at",
+      "start": 172.54,
+      "end": 172.68,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "reducere",
+      "start": 172.68,
+      "end": 172.98,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "genforetaget",
+      "start": 172.98,
+      "end": 173.68,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "teknisk",
+      "start": 173.68,
+      "end": 174.08,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "arbejde",
+      "start": 174.08,
+      "end": 174.54,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "ved",
+      "start": 174.54,
+      "end": 174.7,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "at",
+      "start": 174.7,
+      "end": 174.82,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "tillade",
+      "start": 174.82,
+      "end": 175.14,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "at",
+      "start": 175.24,
+      "end": 175.3,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "softwarekomponenter,",
+      "start": 175.3,
+      "end": 176.16,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "valideringsteknologier,",
+      "start": 176.46,
+      "end": 177.6,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "produktionssystemer",
+      "start": 178.34,
+      "end": 178.94,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "og",
+      "start": 178.94,
+      "end": 179.2,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "opkumede",
+      "start": 179.2,
+      "end": 179.56,
+      "exact": false,
+      "block": 29
+    },
+    {
+      "word": "teknisk",
+      "start": 179.56,
+      "end": 179.98,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "viden",
+      "start": 179.98,
+      "end": 180.18,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "genanvendes",
+      "start": 180.18,
+      "end": 180.76,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "hvor",
+      "start": 180.9,
+      "end": 181.0,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "det",
+      "start": 181.0,
+      "end": 181.08,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "er",
+      "start": 181.08,
+      "end": 181.18,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "relevant.",
+      "start": 181.18,
+      "end": 181.48,
+      "exact": true,
+      "block": 29
+    },
+    {
+      "word": "Dette",
+      "start": 182.3,
+      "end": 182.9,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "er",
+      "start": 182.9,
+      "end": 183.04,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "vigtigt,",
+      "start": 183.04,
+      "end": 183.5,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "fordi",
+      "start": 183.68,
+      "end": 183.94,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "værdien",
+      "start": 183.94,
+      "end": 184.38,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "af",
+      "start": 184.38,
+      "end": 184.48,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "én",
+      "start": 184.48,
+      "end": 184.62,
+      "exact": false,
+      "block": 30
+    },
+    {
+      "word": "projekt",
+      "start": 184.62,
+      "end": 185.0,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "ikke",
+      "start": 185.0,
+      "end": 185.26,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "skal",
+      "start": 185.26,
+      "end": 185.42,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "ende,",
+      "start": 185.42,
+      "end": 185.7,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "når",
+      "start": 186.08,
+      "end": 186.2,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "projektet",
+      "start": 186.2,
+      "end": 186.72,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "er",
+      "start": 186.72,
+      "end": 186.84,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "afsluttet.",
+      "start": 186.84,
+      "end": 187.32,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "Deler",
+      "start": 187.32,
+      "end": 188.68,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "af",
+      "start": 188.68,
+      "end": 188.78,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "teknologien",
+      "start": 188.78,
+      "end": 189.34,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "kan",
+      "start": 189.34,
+      "end": 189.46,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "blive",
+      "start": 189.46,
+      "end": 189.6,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "infrastruktur",
+      "start": 189.6,
+      "end": 190.26,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "for",
+      "start": 190.26,
+      "end": 190.44,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "det",
+      "start": 190.44,
+      "end": 190.54,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "næste",
+      "start": 190.54,
+      "end": 190.82,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "produkt,",
+      "start": 190.82,
+      "end": 191.18,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "hvilket",
+      "start": 191.4,
+      "end": 191.88,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "tillader,",
+      "start": 191.88,
+      "end": 192.32,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "at",
+      "start": 192.48,
+      "end": 192.8,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "produktionssystemet",
+      "start": 192.8,
+      "end": 193.7,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "selv",
+      "start": 193.7,
+      "end": 193.92,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "kan",
+      "start": 193.92,
+      "end": 194.08,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "forbedres",
+      "start": 194.08,
+      "end": 194.5,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "over",
+      "start": 194.5,
+      "end": 194.68,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "tid.",
+      "start": 194.68,
+      "end": 194.94,
+      "exact": true,
+      "block": 30
+    },
+    {
+      "word": "Delte",
+      "start": 196.22,
+      "end": 196.52,
+      "exact": true,
+      "block": 31
+    },
+    {
+      "word": "infrastruktur",
+      "start": 196.52,
+      "end": 197.26,
+      "exact": true,
+      "block": 31
+    },
+    {
+      "word": "·",
+      "start": 197.26,
+      "end": 197.48,
+      "exact": false,
+      "block": 31
+    },
+    {
+      "word": "Validering",
+      "start": 197.48,
+      "end": 197.92,
+      "exact": true,
+      "block": 31
+    },
+    {
+      "word": "·",
+      "start": 197.92,
+      "end": 198.04,
+      "exact": false,
+      "block": 31
+    },
+    {
+      "word": "Genbrug",
+      "start": 198.04,
+      "end": 198.44,
+      "exact": true,
+      "block": 31
+    },
+    {
+      "word": "·",
+      "start": 198.44,
+      "end": 198.58,
+      "exact": false,
+      "block": 31
+    },
+    {
+      "word": "Produktionssystemer",
+      "start": 198.58,
+      "end": 199.54,
+      "exact": true,
+      "block": 31
+    },
+    {
+      "word": "Unfire",
+      "start": 199.54,
+      "end": 200.94,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "Audio",
+      "start": 200.94,
+      "end": 201.38,
+      "exact": true,
+      "block": 32
+    },
+    {
+      "word": "·",
+      "start": 201.38,
+      "end": 201.42,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "Første",
+      "start": 201.38,
+      "end": 201.84,
+      "exact": true,
+      "block": 32
+    },
+    {
+      "word": "implementering",
+      "start": 201.84,
+      "end": 202.5,
+      "exact": true,
+      "block": 32
+    },
+    {
+      "word": "Archer",
+      "start": 202.5,
+      "end": 204.09,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "Archer",
+      "start": 204.09,
+      "end": 205.68,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "er",
+      "start": 205.68,
+      "end": 205.82,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "det",
+      "start": 205.82,
+      "end": 205.92,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "første",
+      "start": 205.92,
+      "end": 206.26,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "produkt",
+      "start": 206.26,
+      "end": 206.62,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "udviklet",
+      "start": 206.62,
+      "end": 207.1,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "inden",
+      "start": 207.1,
+      "end": 207.4,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "for",
+      "start": 207.4,
+      "end": 207.46,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "den",
+      "start": 207.46,
+      "end": 207.56,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "bredere",
+      "start": 207.56,
+      "end": 207.9,
+      "exact": true,
+      "block": 34
+    },
+    {
+      "word": "Unfire",
+      "start": 207.9,
+      "end": 208.94,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "Audio-retning.",
+      "start": 208.94,
+      "end": 209.98,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "Det",
+      "start": 209.98,
+      "end": 210.32,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "er",
+      "start": 210.32,
+      "end": 210.38,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "en",
+      "start": 210.38,
+      "end": 210.5,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "præcisionsoptik",
+      "start": 210.5,
+      "end": 211.26,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "til",
+      "start": 211.26,
+      "end": 211.4,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "lydclipping,",
+      "start": 211.4,
+      "end": 212.12,
+      "exact": false,
+      "block": 35
+    },
+    {
+      "word": "bygget",
+      "start": 212.12,
+      "end": 212.48,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "omkring",
+      "start": 212.48,
+      "end": 212.8,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "Gain,",
+      "start": 212.8,
+      "end": 213.08,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "Threshold",
+      "start": 213.08,
+      "end": 214.1,
+      "exact": false,
+      "block": 35
+    },
+    {
+      "word": "og",
+      "start": 214.1,
+      "end": 214.22,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "Atmosfære,",
+      "start": 214.22,
+      "end": 214.82,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "og",
+      "start": 215.04,
+      "end": 215.6,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "designet",
+      "start": 215.6,
+      "end": 216.12,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "til",
+      "start": 216.12,
+      "end": 216.26,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "at",
+      "start": 216.26,
+      "end": 216.3,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "give",
+      "start": 216.3,
+      "end": 216.36,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "producenter",
+      "start": 216.36,
+      "end": 216.86,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "og",
+      "start": 216.86,
+      "end": 217.06,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "ingeniører",
+      "start": 217.06,
+      "end": 217.56,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "direkte",
+      "start": 217.56,
+      "end": 217.98,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "kontrol",
+      "start": 217.98,
+      "end": 218.4,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "over",
+      "start": 218.4,
+      "end": 218.58,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "clipping-betragtninger,",
+      "start": 218.58,
+      "end": 219.57,
+      "exact": false,
+      "block": 35
+    },
+    {
+      "word": "toppværdier,",
+      "start": 219.57,
+      "end": 220.56,
+      "exact": false,
+      "block": 35
+    },
+    {
+      "word": "transiente",
+      "start": 220.56,
+      "end": 221.04,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "og",
+      "start": 221.04,
+      "end": 221.26,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "lydkarakter.",
+      "start": 221.26,
+      "end": 221.76,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "Dit",
+      "start": 221.76,
+      "end": 223.22,
+      "exact": false,
+      "block": 36
+    },
+    {
+      "word": "strategiske",
+      "start": 223.22,
+      "end": 223.88,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "rolle",
+      "start": 223.88,
+      "end": 224.18,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "er",
+      "start": 224.18,
+      "end": 224.38,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "bredere",
+      "start": 224.38,
+      "end": 224.74,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "end",
+      "start": 224.74,
+      "end": 224.86,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "en",
+      "start": 224.86,
+      "end": 224.98,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "enkelt",
+      "start": 224.98,
+      "end": 225.28,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "lyd",
+      "start": 225.28,
+      "end": 225.93333333333334,
+      "exact": false,
+      "block": 36
+    },
+    {
+      "word": "effekt.",
+      "start": 225.93333333333334,
+      "end": 226.58666666666667,
+      "exact": false,
+      "block": 36
+    },
+    {
+      "word": "Archer",
+      "start": 226.58666666666667,
+      "end": 227.24,
+      "exact": false,
+      "block": 36
+    },
+    {
+      "word": "tilbudser",
+      "start": 227.24,
+      "end": 227.72,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "en",
+      "start": 227.72,
+      "end": 227.82,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "praktisk",
+      "start": 227.82,
+      "end": 228.22,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "miljø",
+      "start": 228.22,
+      "end": 228.54,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "for",
+      "start": 228.54,
+      "end": 228.74,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "at",
+      "start": 228.74,
+      "end": 228.9,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "udvikle",
+      "start": 228.9,
+      "end": 229.28,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "og",
+      "start": 229.28,
+      "end": 229.4,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "validere",
+      "start": 229.4,
+      "end": 229.8,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "lydteknologi,",
+      "start": 229.8,
+      "end": 230.58,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "brugervenlige",
+      "start": 230.88,
+      "end": 231.5,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "systemer",
+      "start": 231.5,
+      "end": 232.04,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "og",
+      "start": 232.04,
+      "end": 232.14,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "produktkomponenter,",
+      "start": 232.14,
+      "end": 232.96,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "der",
+      "start": 233.32,
+      "end": 233.6,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "senere",
+      "start": 233.6,
+      "end": 233.94,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "kan",
+      "start": 233.94,
+      "end": 234.06,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "bidrage",
+      "start": 234.06,
+      "end": 234.44,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "til",
+      "start": 234.44,
+      "end": 234.6,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "fremtidige",
+      "start": 234.6,
+      "end": 235.70666666666665,
+      "exact": false,
+      "block": 36
+    },
+    {
+      "word": "kreative-softwareprodukt.",
+      "start": 235.70666666666665,
+      "end": 236.81333333333333,
+      "exact": false,
+      "block": 36
+    },
+    {
+      "word": "Unfire",
+      "start": 236.81333333333333,
+      "end": 237.92,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "Audio",
+      "start": 237.92,
+      "end": 238.3,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "undersøger",
+      "start": 238.3,
+      "end": 238.82,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "også,",
+      "start": 238.82,
+      "end": 239.12,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "hvordan",
+      "start": 239.4,
+      "end": 239.76,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "AI-assisterede",
+      "start": 239.76,
+      "end": 240.46,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "systemer,",
+      "start": 240.46,
+      "end": 241.0,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "proceduralt",
+      "start": 241.0,
+      "end": 241.62,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "behandling",
+      "start": 241.62,
+      "end": 242.18,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "og",
+      "start": 242.18,
+      "end": 242.3,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "genbrugte",
+      "start": 242.3,
+      "end": 242.76,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "software-tekno-logier",
+      "start": 242.76,
+      "end": 243.78,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "kan",
+      "start": 243.78,
+      "end": 244.18,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "konvergerer",
+      "start": 244.18,
+      "end": 244.66,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "til",
+      "start": 244.66,
+      "end": 244.82,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "nye",
+      "start": 244.82,
+      "end": 245.04,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "plugin-koncepter",
+      "start": 245.04,
+      "end": 245.88,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "og",
+      "start": 245.88,
+      "end": 246.0,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "kreative",
+      "start": 246.0,
+      "end": 246.46,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "workflow'er",
+      "start": 246.46,
+      "end": 247.06,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "uden",
+      "start": 247.06,
+      "end": 247.36,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "for",
+      "start": 247.36,
+      "end": 247.5,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "konventionelle",
+      "start": 247.5,
+      "end": 248.08,
+      "exact": true,
+      "block": 37
+    },
+    {
+      "word": "faste",
+      "start": 248.08,
+      "end": 249.34000000000003,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "ly-processeværktøjer.",
+      "start": 249.34000000000003,
+      "end": 250.60000000000002,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "Lydteknologi",
+      "start": 250.60000000000002,
+      "end": 251.36,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "·",
+      "start": 251.36,
+      "end": 251.4,
+      "exact": false,
+      "block": 38
+    },
+    {
+      "word": "DSP",
+      "start": 251.36,
+      "end": 252.08,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "·",
+      "start": 252.08,
+      "end": 252.375,
+      "exact": false,
+      "block": 38
+    },
+    {
+      "word": "Procedurelt",
+      "start": 252.375,
+      "end": 252.67000000000002,
+      "exact": false,
+      "block": 38
+    },
+    {
+      "word": "bearbejdning",
+      "start": 252.67000000000002,
+      "end": 252.965,
+      "exact": false,
+      "block": 38
+    },
+    {
+      "word": "·",
+      "start": 252.965,
+      "end": 253.26,
+      "exact": false,
+      "block": 38
+    },
+    {
+      "word": "Kreativ",
+      "start": 253.26,
+      "end": 253.84,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "software",
+      "start": 253.84,
+      "end": 254.3,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "Unfire",
+      "start": 254.3,
+      "end": 255.92,
+      "exact": false,
+      "block": 39
+    },
+    {
+      "word": "Lyd",
+      "start": 255.92,
+      "end": 256.62,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "Fra",
+      "start": 256.62,
+      "end": 257.92,
+      "exact": false,
+      "block": 40
+    },
+    {
+      "word": "plugins",
+      "start": 257.92,
+      "end": 258.3,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "til",
+      "start": 258.3,
+      "end": 258.6,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "nye",
+      "start": 258.6,
+      "end": 258.84,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "softwarekoncepter.",
+      "start": 258.84,
+      "end": 259.68,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "Unfire",
+      "start": 259.68,
+      "end": 261.32,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "Audio",
+      "start": 261.32,
+      "end": 261.64,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "undersøger,",
+      "start": 261.64,
+      "end": 262.26,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "hvordan",
+      "start": 262.5,
+      "end": 262.86,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "AI-assisterede",
+      "start": 262.86,
+      "end": 263.6,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "systemer,",
+      "start": 263.6,
+      "end": 264.14,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "proceduralt",
+      "start": 264.14,
+      "end": 264.81,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "procesning",
+      "start": 264.81,
+      "end": 265.48,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "og",
+      "start": 265.48,
+      "end": 265.6,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "genbrugbare",
+      "start": 265.6,
+      "end": 266.1,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "softwarekomponenter",
+      "start": 266.1,
+      "end": 267.04,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "kan",
+      "start": 267.04,
+      "end": 267.3,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "konvergerer",
+      "start": 267.3,
+      "end": 267.78,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "til",
+      "start": 267.78,
+      "end": 267.92,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "kreative",
+      "start": 267.92,
+      "end": 268.42,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "værktøjer,",
+      "start": 268.42,
+      "end": 268.9,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "der",
+      "start": 269.06,
+      "end": 269.46,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "udvides",
+      "start": 269.46,
+      "end": 269.92,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "over",
+      "start": 269.92,
+      "end": 270.12,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "konventionelle",
+      "start": 270.12,
+      "end": 270.74,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "plugin-workflows.",
+      "start": 270.74,
+      "end": 271.77,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "AI",
+      "start": 271.77,
+      "end": 272.8,
+      "exact": false,
+      "block": 42
+    },
+    {
+      "word": "kan",
+      "start": 272.8,
+      "end": 272.92,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "blive",
+      "start": 272.92,
+      "end": 273.08,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "en",
+      "start": 273.08,
+      "end": 273.24,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "del",
+      "start": 273.24,
+      "end": 273.4,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "af",
+      "start": 273.4,
+      "end": 273.52,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "den",
+      "start": 273.52,
+      "end": 273.62,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "creative",
+      "start": 273.62,
+      "end": 274.04,
+      "exact": false,
+      "block": 42
+    },
+    {
+      "word": "softwaremiljø",
+      "start": 274.04,
+      "end": 274.66,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "på",
+      "start": 274.66,
+      "end": 274.8,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "sin",
+      "start": 274.8,
+      "end": 274.96,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "egen",
+      "start": 274.96,
+      "end": 275.2,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "hede,",
+      "start": 275.2,
+      "end": 275.46,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "i",
+      "start": 275.88,
+      "end": 276.26,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "stedet",
+      "start": 276.26,
+      "end": 276.52,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "for",
+      "start": 276.52,
+      "end": 276.64,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "at",
+      "start": 276.64,
+      "end": 276.74,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "eksistere",
+      "start": 276.74,
+      "end": 277.14,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "kun",
+      "start": 277.14,
+      "end": 277.36,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "som",
+      "start": 277.36,
+      "end": 277.54,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "en",
+      "start": 277.54,
+      "end": 277.66,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "separat",
+      "start": 277.66,
+      "end": 278.08,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "assistent.",
+      "start": 278.08,
+      "end": 278.54,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "Parametre,",
+      "start": 279.44,
+      "end": 280.12,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "lyd",
+      "start": 280.46,
+      "end": 280.66,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "og",
+      "start": 280.66,
+      "end": 280.84,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "softwarebegrænsning",
+      "start": 280.84,
+      "end": 281.74,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "kan",
+      "start": 281.74,
+      "end": 281.92,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "transformeres",
+      "start": 281.92,
+      "end": 282.46,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "dynamisk,",
+      "start": 282.46,
+      "end": 283.06,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "hvilket",
+      "start": 283.24,
+      "end": 283.84,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "åbner",
+      "start": 283.84,
+      "end": 284.2,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "rum",
+      "start": 284.2,
+      "end": 284.36,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "for",
+      "start": 284.36,
+      "end": 284.54,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "nye",
+      "start": 284.54,
+      "end": 284.76,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "kreative",
+      "start": 284.76,
+      "end": 285.26,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "interaktionsmodeller.",
+      "start": 285.26,
+      "end": 286.14,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "Suksessfulde",
+      "start": 286.14,
+      "end": 288.08,
+      "exact": false,
+      "block": 44
+    },
+    {
+      "word": "komponenter",
+      "start": 288.08,
+      "end": 288.48,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "udviklet",
+      "start": 288.48,
+      "end": 289.0,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "i",
+      "start": 289.0,
+      "end": 289.14,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "et",
+      "start": 289.14,
+      "end": 289.3,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "produkt",
+      "start": 289.3,
+      "end": 289.6,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "kan",
+      "start": 289.6,
+      "end": 289.84,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "senere",
+      "start": 289.84,
+      "end": 290.14,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "genbruges,",
+      "start": 290.14,
+      "end": 290.68,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "udvides",
+      "start": 291.12,
+      "end": 291.58,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "eller",
+      "start": 291.58,
+      "end": 291.8,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "integreres",
+      "start": 291.8,
+      "end": 292.34,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "i",
+      "start": 292.34,
+      "end": 292.5,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "andre",
+      "start": 292.5,
+      "end": 292.76,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "projekter.",
+      "start": 292.76,
+      "end": 293.2,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "Målet",
+      "start": 293.98,
+      "end": 294.66,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "er",
+      "start": 294.66,
+      "end": 294.76,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "ikke",
+      "start": 294.76,
+      "end": 294.94,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "blot",
+      "start": 294.94,
+      "end": 295.18,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "at",
+      "start": 295.18,
+      "end": 295.28,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "producere",
+      "start": 295.28,
+      "end": 295.76,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "isolerede",
+      "start": 295.76,
+      "end": 296.34,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "lydplug-ins.",
+      "start": 296.34,
+      "end": 297.8,
+      "exact": false,
+      "block": 45
+    },
+    {
+      "word": "Det",
+      "start": 297.8,
+      "end": 298.14,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "er",
+      "start": 298.14,
+      "end": 298.26,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "at",
+      "start": 298.26,
+      "end": 298.4,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "oprette",
+      "start": 298.4,
+      "end": 298.74,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "en",
+      "start": 298.74,
+      "end": 298.82,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "genbrugsbaseret",
+      "start": 298.82,
+      "end": 299.64,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "kreativ-tekniske",
+      "start": 299.64,
+      "end": 300.5,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "grundlag,",
+      "start": 300.5,
+      "end": 300.92,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "der",
+      "start": 301.1,
+      "end": 301.44,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "kan",
+      "start": 301.44,
+      "end": 301.56,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "understøtte",
+      "start": 301.56,
+      "end": 302.02,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "fremtidige",
+      "start": 302.02,
+      "end": 302.54,
+      "exact": false,
+      "block": 45
+    },
+    {
+      "word": "værktøjer,",
+      "start": 302.54,
+      "end": 303.02,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "bredere",
+      "start": 303.34,
+      "end": 303.66,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "miljøer",
+      "start": 303.66,
+      "end": 304.14,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "og",
+      "start": 304.14,
+      "end": 304.26,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "nye",
+      "start": 304.26,
+      "end": 304.48,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "produktkoncepter.",
+      "start": 304.48,
+      "end": 305.24,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "System",
+      "start": 306.12,
+      "end": 306.8,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "Strengt",
+      "start": 306.8,
+      "end": 308.44,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "regelbeskyttelse:",
+      "start": 308.44,
+      "end": 309.28,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "-",
+      "start": 309.28,
+      "end": 309.32,
+      "exact": false,
+      "block": 48
+    },
+    {
+      "word": "Returnér",
+      "start": 309.28,
+      "end": 310.92,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "KUN",
+      "start": 310.92,
+      "end": 311.16,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "den",
+      "start": 311.16,
+      "end": 311.42,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "oversættelse.",
+      "start": 311.42,
+      "end": 312.06,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "-",
+      "start": 312.06,
+      "end": 313.02,
+      "exact": false,
+      "block": 49
+    },
+    {
+      "word": "Explikationer",
+      "start": 313.02,
+      "end": 313.98,
+      "exact": false,
+      "block": 49
+    },
+    {
+      "word": "er",
+      "start": 313.98,
+      "end": 314.16,
+      "exact": true,
+      "block": 49
+    },
+    {
+      "word": "udelukket.",
+      "start": 314.16,
+      "end": 314.72,
+      "exact": true,
+      "block": 49
+    },
+    {
+      "word": "-",
+      "start": 314.72,
+      "end": 314.76000000000005,
+      "exact": false,
+      "block": 50
+    },
+    {
+      "word": "Tilføj",
+      "start": 314.72,
+      "end": 316.26,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "ikke",
+      "start": 316.26,
+      "end": 316.58,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "anførselstegn.",
+      "start": 316.58,
+      "end": 317.09999999999997,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "-",
+      "start": 317.09999999999997,
+      "end": 317.97999999999996,
+      "exact": false,
+      "block": 51
+    },
+    {
+      "word": "Bevar",
+      "start": 317.97999999999996,
+      "end": 319.02,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "mening",
+      "start": 319.02,
+      "end": 319.34,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "og",
+      "start": 319.34,
+      "end": 319.54,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "professionel",
+      "start": 319.54,
+      "end": 320.07000000000005,
+      "exact": false,
+      "block": 51
+    },
+    {
+      "word": "korporativ",
+      "start": 320.07000000000005,
+      "end": 320.6,
+      "exact": false,
+      "block": 51
+    },
+    {
+      "word": "tone.",
+      "start": 320.6,
+      "end": 320.96,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "-",
+      "start": 320.96,
+      "end": 321.0,
+      "exact": false,
+      "block": 52
+    },
+    {
+      "word": "Skriv",
+      "start": 320.96,
+      "end": 322.42,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "naturligt",
+      "start": 322.42,
+      "end": 322.94,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "som",
+      "start": 322.94,
+      "end": 323.08,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "en",
+      "start": 323.08,
+      "end": 323.24,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "dansk",
+      "start": 323.24,
+      "end": 323.48,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "sprognat.",
+      "start": 323.48,
+      "end": 323.9,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "-",
+      "start": 323.9,
+      "end": 324.76,
+      "exact": false,
+      "block": 53
+    },
+    {
+      "word": "Nedsæt",
+      "start": 324.76,
+      "end": 325.44,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "ingen",
+      "start": 325.44,
+      "end": 325.64,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "produktnavne:",
+      "start": 325.64,
+      "end": 326.34,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "Unfire,",
+      "start": 326.34,
+      "end": 327.11333333333334,
+      "exact": false,
+      "block": 53
+    },
+    {
+      "word": "Bolt,",
+      "start": 327.11333333333334,
+      "end": 327.88666666666666,
+      "exact": false,
+      "block": 53
+    },
+    {
+      "word": "Archer,",
+      "start": 327.88666666666666,
+      "end": 328.66,
+      "exact": false,
+      "block": 53
+    },
+    {
+      "word": "POWER,",
+      "start": 328.66,
+      "end": 329.24,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "AI",
+      "start": 329.24,
+      "end": 330.0,
+      "exact": false,
+      "block": 53
+    },
+    {
+      "word": "TOKEN",
+      "start": 330.0,
+      "end": 330.22,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "COUNTER.",
+      "start": 330.22,
+      "end": 330.6,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "-",
+      "start": 330.6,
+      "end": 331.42,
+      "exact": false,
+      "block": 54
+    },
+    {
+      "word": "Behold",
+      "start": 331.42,
+      "end": 332.1,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "tal,",
+      "start": 332.1,
+      "end": 332.38,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "teknisk",
+      "start": 332.38,
+      "end": 333.1,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "terminologi",
+      "start": 333.1,
+      "end": 333.8,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "og",
+      "start": 333.8,
+      "end": 334.06,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "produktnavne",
+      "start": 334.06,
+      "end": 334.66,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "præcise.",
+      "start": 334.66,
+      "end": 335.16,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "-",
+      "start": 335.16,
+      "end": 335.92,
+      "exact": false,
+      "block": 55
+    },
+    {
+      "word": "Dette",
+      "start": 335.92,
+      "end": 336.6,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "tekst",
+      "start": 336.6,
+      "end": 336.83500000000004,
+      "exact": false,
+      "block": 55
+    },
+    {
+      "word": "vil",
+      "start": 336.83500000000004,
+      "end": 337.07000000000005,
+      "exact": false,
+      "block": 55
+    },
+    {
+      "word": "blive",
+      "start": 337.07000000000005,
+      "end": 337.305,
+      "exact": false,
+      "block": 55
+    },
+    {
+      "word": "talede",
+      "start": 337.305,
+      "end": 337.54,
+      "exact": false,
+      "block": 55
+    },
+    {
+      "word": "af",
+      "start": 337.54,
+      "end": 337.62,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "en",
+      "start": 337.62,
+      "end": 337.72,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "professionel",
+      "start": 337.72,
+      "end": 338.515,
+      "exact": false,
+      "block": 55
+    },
+    {
+      "word": "korporativ",
+      "start": 338.515,
+      "end": 339.31,
+      "exact": false,
+      "block": 55
+    },
+    {
+      "word": "kvinde",
+      "start": 339.31,
+      "end": 340.105,
+      "exact": false,
+      "block": 55
+    },
+    {
+      "word": "stemme.",
+      "start": 340.105,
+      "end": 340.9,
+      "exact": false,
+      "block": 55
+    },
+    {
+      "word": "Softwareproduktion",
+      "start": 340.9,
+      "end": 341.58,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "uden",
+      "start": 341.58,
+      "end": 341.92,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "at",
+      "start": 341.92,
+      "end": 342.06,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "starte",
+      "start": 342.06,
+      "end": 342.32,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "over.",
+      "start": 342.32,
+      "end": 342.58,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "Centrale",
+      "start": 343.68,
+      "end": 344.36,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "idé",
+      "start": 344.36,
+      "end": 344.54,
+      "exact": false,
+      "block": 57
+    },
+    {
+      "word": "er",
+      "start": 344.54,
+      "end": 344.72,
+      "exact": false,
+      "block": 57
+    },
+    {
+      "word": "simpel:",
+      "start": 344.72,
+      "end": 345.06,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "når",
+      "start": 345.26,
+      "end": 345.6,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "en",
+      "start": 345.6,
+      "end": 345.7,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "ny",
+      "start": 345.7,
+      "end": 345.8,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "produkt",
+      "start": 345.8,
+      "end": 346.14,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "kan",
+      "start": 346.14,
+      "end": 346.3,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "bruge",
+      "start": 346.3,
+      "end": 346.52,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "teknologi,",
+      "start": 346.52,
+      "end": 347.14,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "der",
+      "start": 347.26,
+      "end": 347.6,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "allerede",
+      "start": 347.6,
+      "end": 347.94,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "findes",
+      "start": 347.94,
+      "end": 348.22,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "indeni",
+      "start": 348.22,
+      "end": 348.62,
+      "exact": false,
+      "block": 57
+    },
+    {
+      "word": "Unfire,",
+      "start": 348.62,
+      "end": 349.02,
+      "exact": false,
+      "block": 57
+    },
+    {
+      "word": "bør",
+      "start": 349.02,
+      "end": 349.44,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "udvikling",
+      "start": 349.44,
+      "end": 349.86,
+      "exact": false,
+      "block": 57
+    },
+    {
+      "word": "genbruge",
+      "start": 349.86,
+      "end": 350.24,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "denne",
+      "start": 350.24,
+      "end": 350.34,
+      "exact": false,
+      "block": 57
+    },
+    {
+      "word": "fordel",
+      "start": 350.34,
+      "end": 350.82,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "i",
+      "start": 350.82,
+      "end": 350.98,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "stedet",
+      "start": 350.98,
+      "end": 351.24,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "for",
+      "start": 351.24,
+      "end": 351.36,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "at",
+      "start": 351.36,
+      "end": 351.46,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "bygge",
+      "start": 351.46,
+      "end": 351.66,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "den",
+      "start": 351.66,
+      "end": 351.78,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "på",
+      "start": 351.78,
+      "end": 351.98,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "nytt.",
+      "start": 351.98,
+      "end": 353.52,
+      "exact": false,
+      "block": 57
+    },
+    {
+      "word": "Delte",
+      "start": 353.52,
+      "end": 354.12,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "grundlæggende",
+      "start": 354.12,
+      "end": 354.66,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "regler:",
+      "start": 354.66,
+      "end": 354.96,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "Genbrugbare",
+      "start": 354.96,
+      "end": 357.0,
+      "exact": false,
+      "block": 59
+    },
+    {
+      "word": "softwarekomponenter,",
+      "start": 357.0,
+      "end": 357.6,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "produktionsviden",
+      "start": 358.08,
+      "end": 358.8,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "og",
+      "start": 358.8,
+      "end": 358.94,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "validéringsystemer",
+      "start": 358.94,
+      "end": 359.40666666666664,
+      "exact": false,
+      "block": 59
+    },
+    {
+      "word": "former",
+      "start": 359.40666666666664,
+      "end": 359.87333333333333,
+      "exact": false,
+      "block": 59
+    },
+    {
+      "word": "en",
+      "start": 359.87333333333333,
+      "end": 360.34,
+      "exact": false,
+      "block": 59
+    },
+    {
+      "word": "basis,",
+      "start": 360.34,
+      "end": 360.76,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "der",
+      "start": 361.0,
+      "end": 361.28,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "kan",
+      "start": 361.28,
+      "end": 361.36,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "fortsette",
+      "start": 361.36,
+      "end": 361.84,
+      "exact": false,
+      "block": 59
+    },
+    {
+      "word": "at",
+      "start": 361.84,
+      "end": 362.02,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "udkæmpe.",
+      "start": 362.02,
+      "end": 362.54,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "Produktlager",
+      "start": 363.76,
+      "end": 364.36,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "Ny",
+      "start": 364.36,
+      "end": 365.62,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "software",
+      "start": 365.62,
+      "end": 365.96,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "kan",
+      "start": 365.96,
+      "end": 366.24,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "kombinerer",
+      "start": 366.24,
+      "end": 366.72,
+      "exact": false,
+      "block": 61
+    },
+    {
+      "word": "eksisterende",
+      "start": 366.72,
+      "end": 367.32,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "funktioner",
+      "start": 367.32,
+      "end": 367.82,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "med",
+      "start": 367.82,
+      "end": 367.94,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "produkt-specifikt",
+      "start": 367.94,
+      "end": 368.72,
+      "exact": false,
+      "block": 61
+    },
+    {
+      "word": "teknologi",
+      "start": 368.72,
+      "end": 369.38,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "i",
+      "start": 369.48,
+      "end": 369.72,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "stedet",
+      "start": 369.72,
+      "end": 370.04,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "for",
+      "start": 370.04,
+      "end": 370.18,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "at",
+      "start": 370.18,
+      "end": 370.3,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "starte",
+      "start": 370.3,
+      "end": 370.6,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "fra",
+      "start": 370.6,
+      "end": 370.74,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "en",
+      "start": 370.74,
+      "end": 370.86,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "tom",
+      "start": 370.86,
+      "end": 370.98,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "arkitektur.",
+      "start": 370.98,
+      "end": 371.66,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "Validering",
+      "start": 372.88,
+      "end": 373.54,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "Bygninger,",
+      "start": 373.54,
+      "end": 375.0,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "tester",
+      "start": 375.24,
+      "end": 375.58,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "og",
+      "start": 375.58,
+      "end": 375.8,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "interne",
+      "start": 375.8,
+      "end": 376.24,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "kontrolpoints",
+      "start": 376.24,
+      "end": 376.74,
+      "exact": false,
+      "block": 63
+    },
+    {
+      "word": "givner",
+      "start": 376.74,
+      "end": 377.24,
+      "exact": false,
+      "block": 63
+    },
+    {
+      "word": "målbar",
+      "start": 377.24,
+      "end": 377.64,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "bevægelse",
+      "start": 377.64,
+      "end": 378.1,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "af,",
+      "start": 378.1,
+      "end": 378.32,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "om",
+      "start": 378.48,
+      "end": 379.04,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "software-kandidater",
+      "start": 379.04,
+      "end": 379.94,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "fungerer",
+      "start": 379.94,
+      "end": 380.38,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "som",
+      "start": 380.38,
+      "end": 380.5,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "de",
+      "start": 380.5,
+      "end": 380.62,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "er",
+      "start": 380.62,
+      "end": 380.76,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "intentionelt",
+      "start": 380.76,
+      "end": 381.24,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "designed",
+      "start": 381.24,
+      "end": 381.56,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "til.",
+      "start": 381.56,
+      "end": 381.82,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "Udvidelse",
+      "start": 382.86,
+      "end": 383.66,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "infrastruktur",
+      "start": 384.62,
+      "end": 385.42,
+      "exact": true,
+      "block": 65
+    },
+    {
+      "word": "kan",
+      "start": 385.42,
+      "end": 385.6,
+      "exact": true,
+      "block": 65
+    },
+    {
+      "word": "udvikles",
+      "start": 385.6,
+      "end": 386.04,
+      "exact": true,
+      "block": 65
+    },
+    {
+      "word": "gennem",
+      "start": 386.04,
+      "end": 386.28,
+      "exact": true,
+      "block": 65
+    },
+    {
+      "word": "yderligere",
+      "start": 386.28,
+      "end": 386.72,
+      "exact": true,
+      "block": 65
+    },
+    {
+      "word": "beregningsmæssig",
+      "start": 386.72,
+      "end": 387.42,
+      "exact": true,
+      "block": 65
+    },
+    {
+      "word": "kapacitet,",
+      "start": 387.42,
+      "end": 388.02,
+      "exact": true,
+      "block": 65
+    },
+    {
+      "word": "lagringsmæssig",
+      "start": 388.02,
+      "end": 389.06,
+      "exact": false,
+      "block": 65
+    },
+    {
+      "word": "kapacitet,",
+      "start": 389.06,
+      "end": 389.66,
+      "exact": true,
+      "block": 65
+    },
+    {
+      "word": "testkapacitet,",
+      "start": 389.96,
+      "end": 390.78,
+      "exact": true,
+      "block": 65
+    },
+    {
+      "word": "kvalitets",
+      "start": 390.78,
+      "end": 391.46,
+      "exact": false,
+      "block": 65
+    },
+    {
+      "word": "kontrol",
+      "start": 391.46,
+      "end": 392.14,
+      "exact": false,
+      "block": 65
+    },
+    {
+      "word": "og",
+      "start": 392.14,
+      "end": 392.28,
+      "exact": true,
+      "block": 65
+    },
+    {
+      "word": "deploymenstkapacitet.",
+      "start": 392.28,
+      "end": 394.65999999999997,
+      "exact": false,
+      "block": 65
+    },
+    {
+      "word": "Produktionsstørrelse",
+      "start": 394.65999999999997,
+      "end": 395.4,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "Bottlenecket",
+      "start": 395.4,
+      "end": 397.04,
+      "exact": false,
+      "block": 67
+    },
+    {
+      "word": "er",
+      "start": 397.04,
+      "end": 397.24,
+      "exact": true,
+      "block": 67
+    },
+    {
+      "word": "i",
+      "start": 397.24,
+      "end": 397.36,
+      "exact": true,
+      "block": 67
+    },
+    {
+      "word": "ændring.",
+      "start": 397.36,
+      "end": 397.74,
+      "exact": true,
+      "block": 67
+    },
+    {
+      "word": "Hvor",
+      "start": 398.64,
+      "end": 399.14,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "den",
+      "start": 399.14,
+      "end": 399.28,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "eksisterende",
+      "start": 399.28,
+      "end": 399.9,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "arkitektur",
+      "start": 399.9,
+      "end": 400.5,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "gælder,",
+      "start": 400.5,
+      "end": 400.82,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "har",
+      "start": 400.98,
+      "end": 401.34,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "intern",
+      "start": 401.34,
+      "end": 401.66,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "udvikling",
+      "start": 401.66,
+      "end": 402.14,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "vist,",
+      "start": 402.14,
+      "end": 402.46,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "at",
+      "start": 402.66,
+      "end": 402.94,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "software-kandidater",
+      "start": 402.94,
+      "end": 403.78,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "kan",
+      "start": 403.78,
+      "end": 403.9,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "gennemgå",
+      "start": 403.9,
+      "end": 404.3,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "meget",
+      "start": 404.3,
+      "end": 404.56,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "korte",
+      "start": 404.56,
+      "end": 404.9,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "byggefælleskaber",
+      "start": 404.9,
+      "end": 405.4,
+      "exact": false,
+      "block": 68
+    },
+    {
+      "word": "—",
+      "start": 405.4,
+      "end": 405.9,
+      "exact": false,
+      "block": 68
+    },
+    {
+      "word": "i",
+      "start": 405.9,
+      "end": 406.26,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "nogle",
+      "start": 406.26,
+      "end": 406.46,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "tilfælde",
+      "start": 406.46,
+      "end": 406.94,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "målede",
+      "start": 406.94,
+      "end": 407.26,
+      "exact": false,
+      "block": 68
+    },
+    {
+      "word": "i",
+      "start": 407.26,
+      "end": 407.36,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "minutter.",
+      "start": 407.36,
+      "end": 407.68,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "Som",
+      "start": 408.38,
+      "end": 409.12,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "genbrugsbare",
+      "start": 409.12,
+      "end": 409.7,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "teknologi",
+      "start": 409.7,
+      "end": 410.24,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "udvides,",
+      "start": 410.24,
+      "end": 410.76,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "bliver",
+      "start": 411.04,
+      "end": 411.14,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "begrænsende",
+      "start": 411.14,
+      "end": 411.66,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "faktorer",
+      "start": 411.66,
+      "end": 412.1,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "allermest",
+      "start": 412.1,
+      "end": 412.62,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "infrastruktureresourcer",
+      "start": 412.62,
+      "end": 413.64,
+      "exact": false,
+      "block": 69
+    },
+    {
+      "word": "som",
+      "start": 413.64,
+      "end": 413.78,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "beregning,",
+      "start": 413.78,
+      "end": 414.2,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "lagring,",
+      "start": 414.2,
+      "end": 415.22,
+      "exact": false,
+      "block": 69
+    },
+    {
+      "word": "testning,",
+      "start": 415.22,
+      "end": 415.64,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "kvalitetskontrol",
+      "start": 416.0,
+      "end": 416.88,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "og",
+      "start": 416.88,
+      "end": 417.04,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "kommersielle",
+      "start": 417.04,
+      "end": 417.48,
+      "exact": false,
+      "block": 69
+    },
+    {
+      "word": "implementering",
+      "start": 417.48,
+      "end": 418.1,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "–",
+      "start": 418.1,
+      "end": 418.14000000000004,
+      "exact": false,
+      "block": 69
+    },
+    {
+      "word": "ressourcer,",
+      "start": 418.1,
+      "end": 418.7,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "der",
+      "start": 419.04,
+      "end": 419.22,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "selv",
+      "start": 419.22,
+      "end": 419.44,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "kan",
+      "start": 419.44,
+      "end": 419.56,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "udvides.",
+      "start": 419.56,
+      "end": 420.04,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "Flagshipproduktet",
+      "start": 420.04,
+      "end": 422.1,
+      "exact": false,
+      "block": 70
+    },
+    {
+      "word": "følger",
+      "start": 422.1,
+      "end": 422.42,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "nuancerede",
+      "start": 422.42,
+      "end": 422.98,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "teknologiriktlinjer,",
+      "start": 422.98,
+      "end": 424.12,
+      "exact": false,
+      "block": 70
+    },
+    {
+      "word": "der",
+      "start": 424.12,
+      "end": 424.56,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "i",
+      "start": 424.56,
+      "end": 424.66,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "øjeblikket",
+      "start": 424.66,
+      "end": 425.1,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "bruges",
+      "start": 425.1,
+      "end": 425.42,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "til",
+      "start": 425.42,
+      "end": 425.52,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "visning.",
+      "start": 425.52,
+      "end": 425.88,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "Prioritetshvile",
+      "start": 427.0,
+      "end": 427.82,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "1-softwarekandidater",
+      "start": 427.82,
+      "end": 429.12,
+      "exact": false,
+      "block": 71
+    },
+    {
+      "word": "identificeret",
+      "start": 429.12,
+      "end": 429.78,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "for",
+      "start": 429.78,
+      "end": 429.92,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "fokuseret",
+      "start": 429.92,
+      "end": 430.46,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "udvikling.",
+      "start": 430.46,
+      "end": 430.96,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "53",
+      "start": 432.04,
+      "end": 432.56,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "Standalone-software-kandidater",
+      "start": 432.56,
+      "end": 434.38,
+      "exact": false,
+      "block": 73
+    },
+    {
+      "word": "opbyggede",
+      "start": 434.38,
+      "end": 436.2,
+      "exact": false,
+      "block": 73
+    },
+    {
+      "word": "og",
+      "start": 436.2,
+      "end": 436.38,
+      "exact": true,
+      "block": 73
+    },
+    {
+      "word": "internt",
+      "start": 436.38,
+      "end": 436.84,
+      "exact": true,
+      "block": 73
+    },
+    {
+      "word": "kontrolerede.",
+      "start": 436.84,
+      "end": 438.78,
+      "exact": false,
+      "block": 73
+    },
+    {
+      "word": "53/53",
+      "start": 438.78,
+      "end": 440.72,
+      "exact": false,
+      "block": 74
+    },
+    {
+      "word": "Suksessfulde",
+      "start": 440.72,
+      "end": 442.66,
+      "exact": false,
+      "block": 75
+    },
+    {
+      "word": "selvstændige",
+      "start": 442.66,
+      "end": 443.14,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "bygninger",
+      "start": 443.14,
+      "end": 443.6,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "ved",
+      "start": 443.6,
+      "end": 443.82,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "den",
+      "start": 443.82,
+      "end": 443.96,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "interne",
+      "start": 443.96,
+      "end": 444.38,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "kontrolpunkt",
+      "start": 444.38,
+      "end": 444.98,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "i",
+      "start": 444.98,
+      "end": 445.16,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "september",
+      "start": 445.16,
+      "end": 445.62,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "2026.",
+      "start": 445.62,
+      "end": 446.78,
+      "exact": true,
+      "block": 75
+    },
+    {
+      "word": "01",
+      "start": 446.78,
+      "end": 447.44,
+      "exact": true,
+      "block": 76
+    },
+    {
+      "word": "Streng",
+      "start": 447.44,
+      "end": 449.02,
+      "exact": true,
+      "block": 77
+    },
+    {
+      "word": "regler:",
+      "start": 449.02,
+      "end": 449.38,
+      "exact": true,
+      "block": 77
+    },
+    {
+      "word": "-",
+      "start": 449.38,
+      "end": 450.2,
+      "exact": false,
+      "block": 78
+    },
+    {
+      "word": "Returnér",
+      "start": 450.2,
+      "end": 451.0,
+      "exact": true,
+      "block": 78
+    },
+    {
+      "word": "KUN",
+      "start": 451.0,
+      "end": 451.24,
+      "exact": true,
+      "block": 78
+    },
+    {
+      "word": "den",
+      "start": 451.24,
+      "end": 451.5,
+      "exact": true,
+      "block": 78
+    },
+    {
+      "word": "oversættelse.",
+      "start": 451.5,
+      "end": 452.16,
+      "exact": true,
+      "block": 78
+    },
+    {
+      "word": "-",
+      "start": 452.16,
+      "end": 453.11,
+      "exact": false,
+      "block": 79
+    },
+    {
+      "word": "Explikationer",
+      "start": 453.11,
+      "end": 454.06,
+      "exact": false,
+      "block": 79
+    },
+    {
+      "word": "er",
+      "start": 454.06,
+      "end": 454.26,
+      "exact": true,
+      "block": 79
+    },
+    {
+      "word": "udelukket.",
+      "start": 454.26,
+      "end": 454.82,
+      "exact": true,
+      "block": 79
+    },
+    {
+      "word": "-",
+      "start": 454.82,
+      "end": 454.86,
+      "exact": false,
+      "block": 80
+    },
+    {
+      "word": "Tilføj",
+      "start": 454.82,
+      "end": 456.34,
+      "exact": true,
+      "block": 80
+    },
+    {
+      "word": "ikke",
+      "start": 456.34,
+      "end": 456.66,
+      "exact": true,
+      "block": 80
+    },
+    {
+      "word": "anførselstegn.",
+      "start": 456.66,
+      "end": 457.6,
+      "exact": true,
+      "block": 80
+    },
+    {
+      "word": "-",
+      "start": 457.6,
+      "end": 457.64000000000004,
+      "exact": false,
+      "block": 81
+    },
+    {
+      "word": "Bevar",
+      "start": 457.6,
+      "end": 459.0,
+      "exact": true,
+      "block": 81
+    },
+    {
+      "word": "mening",
+      "start": 459.0,
+      "end": 459.32,
+      "exact": true,
+      "block": 81
+    },
+    {
+      "word": "og",
+      "start": 459.32,
+      "end": 459.52,
+      "exact": true,
+      "block": 81
+    },
+    {
+      "word": "professionel",
+      "start": 459.52,
+      "end": 460.04999999999995,
+      "exact": false,
+      "block": 81
+    },
+    {
+      "word": "korporativ",
+      "start": 460.04999999999995,
+      "end": 460.58,
+      "exact": false,
+      "block": 81
+    },
+    {
+      "word": "tone.",
+      "start": 460.58,
+      "end": 460.94,
+      "exact": true,
+      "block": 81
+    },
+    {
+      "word": "-",
+      "start": 460.94,
+      "end": 461.74,
+      "exact": false,
+      "block": 82
+    },
+    {
+      "word": "Skriv",
+      "start": 461.74,
+      "end": 462.54,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "naturligt,",
+      "start": 462.54,
+      "end": 463.12,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "som",
+      "start": 463.12,
+      "end": 463.56,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "en",
+      "start": 463.56,
+      "end": 463.72,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "dansk",
+      "start": 463.72,
+      "end": 463.98,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "sprogbør.",
+      "start": 463.98,
+      "end": 464.44,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "-",
+      "start": 464.44,
+      "end": 465.42,
+      "exact": false,
+      "block": 83
+    },
+    {
+      "word": "Translational",
+      "start": 465.42,
+      "end": 466.22,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "eller",
+      "start": 466.22,
+      "end": 466.54,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "ændring",
+      "start": 466.54,
+      "end": 466.92,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "af",
+      "start": 466.92,
+      "end": 467.04,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "produktnavne:",
+      "start": 467.04,
+      "end": 467.74,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "Unfire,",
+      "start": 467.74,
+      "end": 468.64,
+      "exact": false,
+      "block": 83
+    },
+    {
+      "word": "Bolt,",
+      "start": 468.64,
+      "end": 469.54,
+      "exact": false,
+      "block": 83
+    },
+    {
+      "word": "Archer,",
+      "start": 469.54,
+      "end": 470.44,
+      "exact": false,
+      "block": 83
+    },
+    {
+      "word": "POWER,",
+      "start": 470.44,
+      "end": 470.82,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "AI",
+      "start": 470.82,
+      "end": 471.52,
+      "exact": false,
+      "block": 83
+    },
+    {
+      "word": "TOKEN",
+      "start": 471.52,
+      "end": 471.78,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "COUNTER.",
+      "start": 471.78,
+      "end": 472.28999999999996,
+      "exact": false,
+      "block": 83
+    },
+    {
+      "word": "-",
+      "start": 472.28999999999996,
+      "end": 472.8,
+      "exact": false,
+      "block": 84
+    },
+    {
+      "word": "Behold",
+      "start": 472.8,
+      "end": 473.66,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "tal,",
+      "start": 473.66,
+      "end": 473.96,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "teknisk",
+      "start": 474.34,
+      "end": 474.7,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "terminologi",
+      "start": 474.7,
+      "end": 475.36,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "og",
+      "start": 475.36,
+      "end": 475.64,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "produktnavne",
+      "start": 475.64,
+      "end": 476.24,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "præcise.",
+      "start": 476.24,
+      "end": 476.76,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "-",
+      "start": 476.76,
+      "end": 476.8,
+      "exact": false,
+      "block": 85
+    },
+    {
+      "word": "Dette",
+      "start": 476.76,
+      "end": 478.08,
+      "exact": true,
+      "block": 85
+    },
+    {
+      "word": "tekst",
+      "start": 478.08,
+      "end": 478.24666666666667,
+      "exact": false,
+      "block": 85
+    },
+    {
+      "word": "vil",
+      "start": 478.24666666666667,
+      "end": 478.4133333333333,
+      "exact": false,
+      "block": 85
+    },
+    {
+      "word": "blive",
+      "start": 478.4133333333333,
+      "end": 478.58,
+      "exact": false,
+      "block": 85
+    },
+    {
+      "word": "talet",
+      "start": 478.58,
+      "end": 479.0,
+      "exact": true,
+      "block": 85
+    },
+    {
+      "word": "af",
+      "start": 479.0,
+      "end": 479.1,
+      "exact": true,
+      "block": 85
+    },
+    {
+      "word": "en",
+      "start": 479.1,
+      "end": 479.2,
+      "exact": true,
+      "block": 85
+    },
+    {
+      "word": "professionel",
+      "start": 479.2,
+      "end": 479.65,
+      "exact": false,
+      "block": 85
+    },
+    {
+      "word": "korporativ",
+      "start": 479.65,
+      "end": 480.1,
+      "exact": false,
+      "block": 85
+    },
+    {
+      "word": "kvinde",
+      "start": 480.1,
+      "end": 480.55,
+      "exact": false,
+      "block": 85
+    },
+    {
+      "word": "stemme.",
+      "start": 480.55,
+      "end": 481.0,
+      "exact": false,
+      "block": 85
+    },
+    {
+      "word": "Genbrug",
+      "start": 481.0,
+      "end": 482.74,
+      "exact": true,
+      "block": 86
+    },
+    {
+      "word": "Start",
+      "start": 482.74,
+      "end": 484.08,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "fra",
+      "start": 484.08,
+      "end": 484.3,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "eksisterende",
+      "start": 484.3,
+      "end": 484.92,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "teknologi,",
+      "start": 484.92,
+      "end": 485.56,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "hvor",
+      "start": 485.68,
+      "end": 486.08,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "det",
+      "start": 486.08,
+      "end": 486.18,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "er",
+      "start": 486.18,
+      "end": 486.26,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "muligt.",
+      "start": 486.26,
+      "end": 486.66,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "02",
+      "start": 486.66,
+      "end": 488.12,
+      "exact": true,
+      "block": 88
+    },
+    {
+      "word": "Strengt",
+      "start": 488.12,
+      "end": 489.92,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "regelbeskyttelse:",
+      "start": 489.92,
+      "end": 490.78,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "-",
+      "start": 490.78,
+      "end": 490.82,
+      "exact": false,
+      "block": 90
+    },
+    {
+      "word": "Returnér",
+      "start": 490.78,
+      "end": 492.4,
+      "exact": true,
+      "block": 90
+    },
+    {
+      "word": "KUN",
+      "start": 492.4,
+      "end": 492.64,
+      "exact": true,
+      "block": 90
+    },
+    {
+      "word": "den",
+      "start": 492.64,
+      "end": 492.9,
+      "exact": true,
+      "block": 90
+    },
+    {
+      "word": "oversættelse.",
+      "start": 492.9,
+      "end": 493.56,
+      "exact": true,
+      "block": 90
+    },
+    {
+      "word": "-",
+      "start": 493.56,
+      "end": 494.5,
+      "exact": false,
+      "block": 91
+    },
+    {
+      "word": "Explikationer",
+      "start": 494.5,
+      "end": 495.44,
+      "exact": false,
+      "block": 91
+    },
+    {
+      "word": "er",
+      "start": 495.44,
+      "end": 495.62,
+      "exact": true,
+      "block": 91
+    },
+    {
+      "word": "udlukkende",
+      "start": 495.62,
+      "end": 496.12,
+      "exact": false,
+      "block": 91
+    },
+    {
+      "word": "uhyre.",
+      "start": 496.12,
+      "end": 496.58,
+      "exact": true,
+      "block": 91
+    },
+    {
+      "word": "-",
+      "start": 496.58,
+      "end": 496.62,
+      "exact": false,
+      "block": 92
+    },
+    {
+      "word": "Tilføj",
+      "start": 496.58,
+      "end": 498.12,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "ikke",
+      "start": 498.12,
+      "end": 498.42,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "citatmærker.",
+      "start": 498.42,
+      "end": 499.16,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "-",
+      "start": 499.16,
+      "end": 499.20000000000005,
+      "exact": false,
+      "block": 93
+    },
+    {
+      "word": "Bevar",
+      "start": 499.16,
+      "end": 500.56,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "mening",
+      "start": 500.56,
+      "end": 500.9,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "og",
+      "start": 500.9,
+      "end": 501.08,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "professionel",
+      "start": 501.08,
+      "end": 501.62,
+      "exact": false,
+      "block": 93
+    },
+    {
+      "word": "korporativ",
+      "start": 501.62,
+      "end": 502.16,
+      "exact": false,
+      "block": 93
+    },
+    {
+      "word": "tone.",
+      "start": 502.16,
+      "end": 502.5,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "-",
+      "start": 502.5,
+      "end": 502.54,
+      "exact": false,
+      "block": 94
+    },
+    {
+      "word": "Skriv",
+      "start": 502.5,
+      "end": 504.0,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "naturligt,",
+      "start": 504.0,
+      "end": 504.56,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "som",
+      "start": 504.56,
+      "end": 505.0,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "en",
+      "start": 505.0,
+      "end": 505.14,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "dansk",
+      "start": 505.14,
+      "end": 505.44,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "sprognat.",
+      "start": 505.44,
+      "end": 505.82,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "-",
+      "start": 505.82,
+      "end": 506.77,
+      "exact": false,
+      "block": 95
+    },
+    {
+      "word": "Translater",
+      "start": 506.77,
+      "end": 507.72,
+      "exact": false,
+      "block": 95
+    },
+    {
+      "word": "eller",
+      "start": 507.72,
+      "end": 507.98,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "ændre",
+      "start": 507.98,
+      "end": 508.32,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "aldrig",
+      "start": 508.32,
+      "end": 508.64,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "disse",
+      "start": 508.64,
+      "end": 508.88,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "produktnavne:",
+      "start": 508.88,
+      "end": 509.6,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "Unfire,",
+      "start": 509.6,
+      "end": 510.5,
+      "exact": false,
+      "block": 95
+    },
+    {
+      "word": "Bolt,",
+      "start": 510.5,
+      "end": 511.4,
+      "exact": false,
+      "block": 95
+    },
+    {
+      "word": "Archer,",
+      "start": 511.4,
+      "end": 512.3,
+      "exact": false,
+      "block": 95
+    },
+    {
+      "word": "POWER,",
+      "start": 512.3,
+      "end": 512.64,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "AI",
+      "start": 512.64,
+      "end": 513.34,
+      "exact": false,
+      "block": 95
+    },
+    {
+      "word": "TOKEN",
+      "start": 513.34,
+      "end": 513.6,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "COUNTER.",
+      "start": 513.6,
+      "end": 513.88,
+      "exact": false,
+      "block": 95
+    },
+    {
+      "word": "-",
+      "start": 513.88,
+      "end": 514.16,
+      "exact": false,
+      "block": 96
+    },
+    {
+      "word": "Bevar",
+      "start": 514.16,
+      "end": 515.46,
+      "exact": true,
+      "block": 96
+    },
+    {
+      "word": "tal,",
+      "start": 515.46,
+      "end": 515.74,
+      "exact": true,
+      "block": 96
+    },
+    {
+      "word": "teknisk",
+      "start": 516.08,
+      "end": 516.52,
+      "exact": true,
+      "block": 96
+    },
+    {
+      "word": "terminologi",
+      "start": 516.52,
+      "end": 517.16,
+      "exact": true,
+      "block": 96
+    },
+    {
+      "word": "og",
+      "start": 517.16,
+      "end": 517.48,
+      "exact": true,
+      "block": 96
+    },
+    {
+      "word": "produktnavne",
+      "start": 517.48,
+      "end": 518.08,
+      "exact": true,
+      "block": 96
+    },
+    {
+      "word": "præcise.",
+      "start": 518.08,
+      "end": 518.58,
+      "exact": true,
+      "block": 96
+    },
+    {
+      "word": "-",
+      "start": 518.58,
+      "end": 518.62,
+      "exact": false,
+      "block": 97
+    },
+    {
+      "word": "Denne",
+      "start": 518.58,
+      "end": 519.94,
+      "exact": true,
+      "block": 97
+    },
+    {
+      "word": "tekst",
+      "start": 519.94,
+      "end": 520.1066666666667,
+      "exact": false,
+      "block": 97
+    },
+    {
+      "word": "vil",
+      "start": 520.1066666666667,
+      "end": 520.2733333333334,
+      "exact": false,
+      "block": 97
+    },
+    {
+      "word": "blive",
+      "start": 520.2733333333334,
+      "end": 520.44,
+      "exact": false,
+      "block": 97
+    },
+    {
+      "word": "talet",
+      "start": 520.44,
+      "end": 520.84,
+      "exact": true,
+      "block": 97
+    },
+    {
+      "word": "af",
+      "start": 520.84,
+      "end": 520.92,
+      "exact": true,
+      "block": 97
+    },
+    {
+      "word": "en",
+      "start": 520.92,
+      "end": 521.02,
+      "exact": true,
+      "block": 97
+    },
+    {
+      "word": "professionel",
+      "start": 521.02,
+      "end": 521.475,
+      "exact": false,
+      "block": 97
+    },
+    {
+      "word": "korporativ",
+      "start": 521.475,
+      "end": 521.9300000000001,
+      "exact": false,
+      "block": 97
+    },
+    {
+      "word": "kvinde",
+      "start": 521.9300000000001,
+      "end": 522.385,
+      "exact": false,
+      "block": 97
+    },
+    {
+      "word": "stemme.",
+      "start": 522.385,
+      "end": 522.84,
+      "exact": false,
+      "block": 97
+    },
+    {
+      "word": "Byg",
+      "start": 522.84,
+      "end": 524.24,
+      "exact": true,
+      "block": 98
+    },
+    {
+      "word": "Opret",
+      "start": 524.24,
+      "end": 525.68,
+      "exact": true,
+      "block": 99
+    },
+    {
+      "word": "den",
+      "start": 525.68,
+      "end": 525.88,
+      "exact": true,
+      "block": 99
+    },
+    {
+      "word": "produktspesifikke",
+      "start": 525.88,
+      "end": 526.8,
+      "exact": false,
+      "block": 99
+    },
+    {
+      "word": "lag.",
+      "start": 526.8,
+      "end": 527.0,
+      "exact": true,
+      "block": 99
+    },
+    {
+      "word": "03",
+      "start": 527.0,
+      "end": 528.74,
+      "exact": true,
+      "block": 100
+    },
+    {
+      "word": "Skala",
+      "start": 528.74,
+      "end": 530.7,
+      "exact": true,
+      "block": 101
+    },
+    {
+      "word": "Udvid",
+      "start": 530.7,
+      "end": 532.06,
+      "exact": true,
+      "block": 102
+    },
+    {
+      "word": "infrastruktur",
+      "start": 532.06,
+      "end": 532.84,
+      "exact": true,
+      "block": 102
+    },
+    {
+      "word": "med",
+      "start": 532.84,
+      "end": 533.04,
+      "exact": true,
+      "block": 102
+    },
+    {
+      "word": "produktionen.",
+      "start": 533.04,
+      "end": 534.1,
+      "exact": true,
+      "block": 102
+    },
+    {
+      "word": "Firmer",
+      "start": 534.1,
+      "end": 535.24,
+      "exact": false,
+      "block": 103
+    },
+    {
+      "word": "Dedicated",
+      "start": 535.24,
+      "end": 536.96,
+      "exact": true,
+      "block": 104
+    },
+    {
+      "word": "software-systemer.",
+      "start": 536.96,
+      "end": 538.1,
+      "exact": false,
+      "block": 104
+    },
+    {
+      "word": "Samme",
+      "start": 538.1,
+      "end": 539.6,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "produktbasis",
+      "start": 539.6,
+      "end": 540.34,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "kan",
+      "start": 540.34,
+      "end": 540.48,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "understøtte",
+      "start": 540.48,
+      "end": 540.92,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "specialiserede",
+      "start": 540.92,
+      "end": 541.62,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "applikationer",
+      "start": 541.62,
+      "end": 542.26,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "og",
+      "start": 542.26,
+      "end": 542.36,
+      "exact": false,
+      "block": 105
+    },
+    {
+      "word": "milvøje,",
+      "start": 542.36,
+      "end": 542.86,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "der",
+      "start": 542.86,
+      "end": 543.48,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "er",
+      "start": 543.48,
+      "end": 543.62,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "opbyggede",
+      "start": 543.62,
+      "end": 544.02,
+      "exact": false,
+      "block": 105
+    },
+    {
+      "word": "efter",
+      "start": 544.02,
+      "end": 544.26,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "organisatoriske",
+      "start": 544.26,
+      "end": 545.1,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "krav.",
+      "start": 545.1,
+      "end": 545.4,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "Institutioner",
+      "start": 545.4,
+      "end": 546.6,
+      "exact": true,
+      "block": 106
+    },
+    {
+      "word": "Kontrollerede",
+      "start": 546.6,
+      "end": 548.92,
+      "exact": false,
+      "block": 107
+    },
+    {
+      "word": "milvne.",
+      "start": 548.92,
+      "end": 549.32,
+      "exact": true,
+      "block": 107
+    },
+    {
+      "word": "Projekter",
+      "start": 549.32,
+      "end": 551.02,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "kan",
+      "start": 551.02,
+      "end": 551.12,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "være",
+      "start": 551.12,
+      "end": 551.26,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "isolerede",
+      "start": 551.26,
+      "end": 551.78,
+      "exact": false,
+      "block": 108
+    },
+    {
+      "word": "samtidig",
+      "start": 551.78,
+      "end": 552.28,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "med",
+      "start": 552.28,
+      "end": 552.44,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "at",
+      "start": 552.44,
+      "end": 552.56,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "de",
+      "start": 552.56,
+      "end": 552.6,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "fordele",
+      "start": 552.6,
+      "end": 552.78,
+      "exact": false,
+      "block": 108
+    },
+    {
+      "word": "sig",
+      "start": 552.78,
+      "end": 552.96,
+      "exact": false,
+      "block": 108
+    },
+    {
+      "word": "af",
+      "start": 552.96,
+      "end": 553.12,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "genanvendbare",
+      "start": 553.12,
+      "end": 553.74,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "grundlæggende",
+      "start": 553.74,
+      "end": 554.22,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "teknologi,",
+      "start": 554.22,
+      "end": 554.82,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "godkendelsesprocesser",
+      "start": 555.36,
+      "end": 556.42,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "og",
+      "start": 556.42,
+      "end": 556.56,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "produktionsinfrastruktur.",
+      "start": 556.56,
+      "end": 557.68,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "Offentlig",
+      "start": 557.68,
+      "end": 558.272972972973,
+      "exact": false,
+      "block": 109
+    },
+    {
+      "word": "sektor",
+      "start": 558.272972972973,
+      "end": 558.8659459459459,
+      "exact": false,
+      "block": 109
+    },
+    {
+      "word": "Skalbare",
+      "start": 558.8659459459459,
+      "end": 559.4589189189189,
+      "exact": false,
+      "block": 110
+    },
+    {
+      "word": "digitale",
+      "start": 559.4589189189189,
+      "end": 560.0518918918918,
+      "exact": false,
+      "block": 110
+    },
+    {
+      "word": "værktøjer.",
+      "start": 560.0518918918918,
+      "end": 560.6448648648649,
+      "exact": false,
+      "block": 110
+    },
+    {
+      "word": "Arkitekturen",
+      "start": 560.6448648648649,
+      "end": 561.2378378378378,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "forberedes",
+      "start": 561.2378378378378,
+      "end": 561.8308108108108,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "til",
+      "start": 561.8308108108108,
+      "end": 562.4237837837837,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "fremtidig",
+      "start": 562.4237837837837,
+      "end": 563.0167567567568,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "samarbejde,",
+      "start": 563.0167567567568,
+      "end": 563.6097297297297,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "hvor",
+      "start": 563.6097297297297,
+      "end": 564.2027027027027,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "kontrol,",
+      "start": 564.2027027027027,
+      "end": 564.7956756756756,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "tracering,",
+      "start": 564.7956756756756,
+      "end": 565.3886486486487,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "validering",
+      "start": 565.3886486486487,
+      "end": 565.9816216216216,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "og",
+      "start": 565.9816216216216,
+      "end": 566.5745945945946,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "langsignet",
+      "start": 566.5745945945946,
+      "end": 567.1675675675675,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "vedligeholdelighed",
+      "start": 567.1675675675675,
+      "end": 567.7605405405405,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "er",
+      "start": 567.7605405405405,
+      "end": 568.3535135135135,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "vigtige.",
+      "start": 568.3535135135135,
+      "end": 568.9464864864865,
+      "exact": false,
+      "block": 111
+    },
+    {
+      "word": "Unfire",
+      "start": 568.9464864864865,
+      "end": 569.5394594594594,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "kan",
+      "start": 569.5394594594594,
+      "end": 570.1324324324324,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "vise",
+      "start": 570.1324324324324,
+      "end": 570.7254054054054,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "produkter,",
+      "start": 570.7254054054054,
+      "end": 571.3183783783784,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "bygninger,",
+      "start": 571.3183783783784,
+      "end": 571.9113513513513,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "interne",
+      "start": 571.9113513513513,
+      "end": 572.5043243243243,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "kontrolpoints",
+      "start": 572.5043243243243,
+      "end": 573.0972972972972,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "og",
+      "start": 573.0972972972972,
+      "end": 573.6902702702703,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "produktionsmængder",
+      "start": 573.6902702702703,
+      "end": 574.2832432432432,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "uden",
+      "start": 574.2832432432432,
+      "end": 574.8762162162162,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "at",
+      "start": 574.8762162162162,
+      "end": 575.4691891891891,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "udpege",
+      "start": 575.4691891891891,
+      "end": 576.0621621621622,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "de",
+      "start": 576.0621621621622,
+      "end": 576.6551351351351,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "implementeringsmetoder,",
+      "start": 576.6551351351351,
+      "end": 577.2481081081081,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "der",
+      "start": 577.2481081081081,
+      "end": 577.841081081081,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "skaber",
+      "start": 577.841081081081,
+      "end": 578.4340540540541,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "den",
+      "start": 578.4340540540541,
+      "end": 579.0270270270271,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "underliggende",
+      "start": 579.0270270270271,
+      "end": 579.62,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "leverancering.",
+      "start": 579.62,
+      "end": 580.28,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "Finansiering",
+      "start": 580.28,
+      "end": 582.16,
+      "exact": true,
+      "block": 113
+    },
+    {
+      "word": "&",
+      "start": 582.16,
+      "end": 582.32,
+      "exact": false,
+      "block": 113
+    },
+    {
+      "word": "samarbejde",
+      "start": 582.32,
+      "end": 582.94,
+      "exact": true,
+      "block": 113
+    },
+    {
+      "word": "Udvid",
+      "start": 582.94,
+      "end": 584.24,
+      "exact": true,
+      "block": 114
+    },
+    {
+      "word": "det",
+      "start": 584.24,
+      "end": 584.4,
+      "exact": true,
+      "block": 114
+    },
+    {
+      "word": "eksisterende.",
+      "start": 584.4,
+      "end": 585.1,
+      "exact": true,
+      "block": 114
+    },
+    {
+      "word": "hej@unfire.technology",
+      "start": 585.1,
+      "end": 587.86,
+      "exact": false,
+      "block": 115
+    }
+  ]
+}

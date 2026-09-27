@@ -4012,33 +4012,42 @@ body.uf-global-editor-on #ue4-edit{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 <style id="unfire-apple-status-style">
 
-.uf-topbar-apple-host{
+.uf-apple-status-host{
     position:relative !important;
-    overflow:visible !important;
 }
 
 #unfire-apple-status{
     position:absolute !important;
+
     right:24px !important;
     top:50% !important;
     transform:translateY(-50%) !important;
 
     display:flex !important;
     align-items:center !important;
-    gap:8px !important;
+    gap:7px !important;
 
     margin:0 !important;
     padding:0 !important;
 
-    border:0 !important;
-    background:transparent !important;
-    box-shadow:none !important;
-
     white-space:nowrap !important;
 
-    color:rgba(255,255,255,.62) !important;
+    color:rgba(255,255,255,.60) !important;
 
     font-family:
         -apple-system,
@@ -4048,39 +4057,49 @@ body.uf-global-editor-on #ue4-edit{
         Arial,
         sans-serif !important;
 
-    font-size:12px !important;
+    font-size:11px !important;
     font-weight:500 !important;
     line-height:1 !important;
-    letter-spacing:-0.01em !important;
 
-    z-index:60 !important;
+    z-index:100 !important;
+
     pointer-events:none !important;
     user-select:none !important;
 }
 
 #unfire-apple-status .uf-apple-dot{
-    width:7px !important;
-    height:7px !important;
-    min-width:7px !important;
-    min-height:7px !important;
-    border-radius:999px !important;
+    width:6px !important;
+    height:6px !important;
+    flex:0 0 6px !important;
+
+    border-radius:50% !important;
 
     background:#30d158 !important;
 
     box-shadow:
         0 0 0 1px rgba(48,209,88,.12),
-        0 0 8px rgba(48,209,88,.22) !important;
+        0 0 7px rgba(48,209,88,.22) !important;
 }
 
-#unfire-apple-status .uf-apple-text{
-    opacity:.92 !important;
-}
-
-/* ocultarlo si no hay sitio */
-@media(max-width:1080px){
+@media(max-width:900px){
     #unfire-apple-status{
         display:none !important;
     }
+}
+
+</style>
+
+
+
+
+
+
+
+
+<style id="unfire-player-higher-style">
+
+#unfire-real-player{
+    top:54px !important;
 }
 
 </style>
@@ -4566,19 +4585,63 @@ body.uf-global-editor-on #ue4-edit{
   }
 
   const FILES = {
-    en: {
-      audio:
-        "audio/unfire-master-en.mp3",
-      timeline:
-        "audio/unfire-master-en.canonical.json"
-    },
-    es: {
-      audio:
-        "audio/unfire-master-es.mp3",
-      timeline:
-        "audio/unfire-master-es.canonical.json"
-    }
-  };
+  en: {
+    audio: "audio/unfire-master-en.mp3",
+    timeline: "audio/unfire-master-en.canonical.json"
+  },
+  es: {
+    audio: "audio/unfire-master-es.mp3",
+    timeline: "audio/unfire-master-es.canonical.json"
+  },
+  ca: {
+    audio: "audio/masters/unfire-master-ca.mp3",
+    timeline: "audio/unfire-master-ca.canonical.json"
+  },
+  is: {
+    audio: "audio/masters/unfire-master-is.mp3",
+    timeline: "audio/unfire-master-is.canonical.json"
+  },
+  fr: {
+    audio: "audio/masters/unfire-master-fr.mp3",
+    timeline: "audio/unfire-master-fr.canonical.json"
+  },
+  de: {
+    audio: "audio/masters/unfire-master-de.mp3",
+    timeline: "audio/unfire-master-de.canonical.json"
+  },
+  it: {
+    audio: "audio/masters/unfire-master-it.mp3",
+    timeline: "audio/unfire-master-it.canonical.json"
+  },
+  pt: {
+    audio: "audio/masters/unfire-master-pt.mp3",
+    timeline: "audio/unfire-master-pt.canonical.json"
+  },
+  nl: {
+    audio: "audio/masters/unfire-master-nl.mp3",
+    timeline: "audio/unfire-master-nl.canonical.json"
+  },
+  sv: {
+    audio: "audio/masters/unfire-master-sv.mp3",
+    timeline: "audio/unfire-master-sv.canonical.json"
+  },
+  no: {
+    audio: "audio/masters/unfire-master-no.mp3",
+    timeline: "audio/unfire-master-no.canonical.json"
+  },
+  da: {
+    audio: "audio/masters/unfire-master-da.mp3",
+    timeline: "audio/unfire-master-da.canonical.json"
+  },
+  fi: {
+    audio: "audio/masters/unfire-master-fi.mp3",
+    timeline: "audio/unfire-master-fi.canonical.json"
+  },
+  pl: {
+    audio: "audio/masters/unfire-master-pl.mp3",
+    timeline: "audio/unfire-master-pl.canonical.json"
+  }
+};
 
   const RANGE_MAX = 100000;
 
@@ -7440,103 +7503,165 @@ console.log(
 
 
 
+
+
+
+
+
+
+
+
+
 <script id="unfire-apple-status-script">
 (function(){
 
 "use strict";
 
-function buildStatus(){
-    const el = document.createElement("div");
-    el.id = "unfire-apple-status";
-    el.className = "notranslate";
-    el.setAttribute("translate","no");
-    el.innerHTML =
-        '<span class="uf-apple-dot"></span>' +
-        '<span class="uf-apple-text">Built for Apple platforms.</span>';
-    return el;
-}
+function commonAncestor(a,b){
 
-function pickTopBar(){
+    const parents = new Set();
 
-    const selectors = [
-        "header nav",
-        "header .unfire-clean-nav",
-        ".unfire-clean-nav",
-        "header",
-        "nav"
-    ];
+    let x = a;
 
-    let candidates = [];
-
-    selectors.forEach(selector => {
-        document.querySelectorAll(selector).forEach(el => {
-            const r = el.getBoundingClientRect();
-
-            if(
-                r.width > 500 &&
-                r.height >= 36 &&
-                r.height <= 110 &&
-                r.top >= -5 &&
-                r.top <= 140
-            ){
-                candidates.push({el, r, selector});
-            }
-        });
-    });
-
-    if(!candidates.length){
-        return null;
+    while(x){
+        parents.add(x);
+        x = x.parentElement;
     }
 
-    candidates.sort((a, b) => {
-        if(a.r.top !== b.r.top){
-            return a.r.top - b.r.top;
-        }
-        return b.r.width - a.r.width;
-    });
+    x = b;
 
-    return candidates[0].el;
+    while(x){
+
+        if(parents.has(x)){
+            return x;
+        }
+
+        x = x.parentElement;
+    }
+
+    return null;
 }
+
 
 function install(){
 
-    const old = document.getElementById("unfire-apple-status");
-    if(old) old.remove();
+    const old =
+        document.getElementById(
+            "unfire-apple-status"
+        );
 
-    document
-        .querySelectorAll(".uf-topbar-apple-host")
-        .forEach(el => el.classList.remove("uf-topbar-apple-host"));
+    if(old){
+        old.remove();
+    }
 
-    const host = pickTopBar();
+    const links =
+        Array.from(
+            document.querySelectorAll("a")
+        );
 
-    if(!host){
-        console.warn("[Unfire] No encontré top bar");
+    const company =
+        links.find(a =>
+            a.textContent.trim() === "Company"
+        );
+
+    const funding =
+        links.find(a =>
+            a.textContent.trim() === "Funding"
+        );
+
+    if(!company || !funding){
+        console.warn(
+            "[Unfire] No encuentro Company/Funding"
+        );
         return;
     }
 
-    host.classList.add("uf-topbar-apple-host");
-    host.appendChild(buildStatus());
+    let host =
+        commonAncestor(
+            company,
+            funding
+        );
 
-    console.log("[Unfire] Apple status en top bar:", host);
+    /*
+      Subir hasta encontrar la barra horizontal
+      completa, pero sin irnos al body.
+    */
+    while(
+        host &&
+        host.parentElement &&
+        host.parentElement !== document.body
+    ){
+
+        const r =
+            host.getBoundingClientRect();
+
+        if(
+            r.width > window.innerWidth * .65 &&
+            r.height >= 40 &&
+            r.height <= 120
+        ){
+            break;
+        }
+
+        host =
+            host.parentElement;
+    }
+
+    if(!host){
+        return;
+    }
+
+    host.classList.add(
+        "uf-apple-status-host"
+    );
+
+    const status =
+        document.createElement("div");
+
+    status.id =
+        "unfire-apple-status";
+
+    status.className =
+        "notranslate";
+
+    status.setAttribute(
+        "translate",
+        "no"
+    );
+
+    status.innerHTML =
+        '<span class="uf-apple-dot"></span>' +
+        '<span>Built for Apple platforms.</span>';
+
+    host.appendChild(status);
+
+    console.log(
+        "[Unfire] Apple status instalado dentro del header real"
+    );
 }
+
 
 if(document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", install, {once:true});
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        install,
+        {once:true}
+    );
+
 }else{
+
     install();
 }
-
-window.addEventListener("resize", () => {
-    const el = document.getElementById("unfire-apple-status");
-    if(el) el.remove();
-    document
-        .querySelectorAll(".uf-topbar-apple-host")
-        .forEach(x => x.classList.remove("uf-topbar-apple-host"));
-    install();
-}, {passive:true});
 
 })();
 </script>
+
+
+
+
+
+
 
 </body>
 </html>

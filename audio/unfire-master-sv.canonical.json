@@ -1,0 +1,8201 @@
+{
+  "language": "sv",
+  "audio_duration": 598.32,
+  "canonical_blocks": 99,
+  "canonical_words": 924,
+  "transcript_words": 933,
+  "exact_matches": 834,
+  "coverage": 0.9025974025974026,
+  "blocks": [
+    {
+      "index": 0,
+      "text": "Oberoende teknologföretag",
+      "word_start": 0,
+      "word_end": 2,
+      "start": 0.0,
+      "end": 1.849479
+    },
+    {
+      "index": 1,
+      "text": "Bygga teknologi. Genomför återanvändningen av fördelarna.",
+      "word_start": 2,
+      "word_end": 8,
+      "start": 1.849479,
+      "end": 6.371593
+    },
+    {
+      "index": 2,
+      "text": "Unfire utvecklar återanvändbara programvaru-system utformade för att omvandla en tekniskt baserad plattform till flera produkter, arbetsflöden och framtida tillämpningar.",
+      "word_start": 8,
+      "word_end": 27,
+      "start": 6.371593,
+      "end": 19.333756
+    },
+    {
+      "index": 3,
+      "text": "Företag",
+      "word_start": 27,
+      "word_end": 28,
+      "start": 19.333756,
+      "end": 19.965102
+    },
+    {
+      "index": 4,
+      "text": "Istället för att behandla varje applikation som ett separat projekt utvecklar Unfire teknik som kan återanvändas, utvidgas och överföras till framtida produkter.",
+      "word_start": 28,
+      "word_end": 50,
+      "start": 19.965102,
+      "end": 32.78015
+    },
+    {
+      "index": 5,
+      "text": "Bygga en gång.",
+      "word_start": 50,
+      "word_end": 53,
+      "start": 32.78015,
+      "end": 34.13266
+    },
+    {
+      "index": 6,
+      "text": "Kärnfungeringar kan bli genomspeglabara byggnadsblok och inte försvinna inuti en enda produkt.",
+      "word_start": 53,
+      "word_end": 65,
+      "start": 34.13266,
+      "end": 41.440632
+    },
+    {
+      "index": 7,
+      "text": "Fortsätt kontinuerligt.",
+      "word_start": 65,
+      "word_end": 67,
+      "start": 41.440632,
+      "end": 43.30045
+    },
+    {
+      "index": 8,
+      "text": "Nytt programvara kan er继承现有基础设施，从而在架构适用时减少重复的工程工作。",
+      "word_start": 67,
+      "word_end": 71,
+      "start": 43.30045,
+      "end": 46.60832
+    },
+    {
+      "index": 9,
+      "text": "Skala systemet.",
+      "word_start": 71,
+      "word_end": 73,
+      "start": 46.60832,
+      "end": 47.977744
+    },
+    {
+      "index": 10,
+      "text": "Ytterligare lagrings- och beräkningsinfrastruktur, tester och distributionsinfrastruktur kan öka produktionskapaciteten utan att återskapa den underliggande systemet.",
+      "word_start": 73,
+      "word_end": 89,
+      "start": 47.977744,
+      "end": 59.890661
+    },
+    {
+      "index": 11,
+      "text": "Valt arbete",
+      "word_start": 89,
+      "word_end": 91,
+      "start": 59.890661,
+      "end": 60.877652
+    },
+    {
+      "index": 12,
+      "text": "För olika produkter. Teknologi som kompilerar.",
+      "word_start": 91,
+      "word_end": 97,
+      "start": 60.877652,
+      "end": 64.746264
+    },
+    {
+      "index": 13,
+      "text": "Varje projekt adresserar ett annat problem, men den underliggande målet är samma: utveckla teknologi, system och produktionsskärmvetenskap som kan återanvändas i framtida programvara i stället för att blivna isolerade inuti en enda applikation.",
+      "word_start": 97,
+      "word_end": 130,
+      "start": 64.746264,
+      "end": 83.589448
+    },
+    {
+      "index": 14,
+      "text": "AI · Automatisering · Datorkomponenter",
+      "word_start": 130,
+      "word_end": 135,
+      "start": 83.589448,
+      "end": 86.341501
+    },
+    {
+      "index": 15,
+      "text": "Bolt",
+      "word_start": 135,
+      "word_end": 136,
+      "start": 86.341501,
+      "end": 86.76347
+    },
+    {
+      "index": 16,
+      "text": "Bolt utforskar kontrollerad AI-orchestration för komplexa datoruppgifter. Den är utformad för att koordinera AI-system, lokala verktyg och utförandeprocesser samtidigt som synligheten, behörigheter och mänskligt kontroll behålls.",
+      "word_start": 136,
+      "word_end": 162,
+      "start": 86.76347,
+      "end": 104.262451
+    },
+    {
+      "index": 17,
+      "text": "Projektet undersöker hur repetitiv interaktion mellan människor, modeller och programvara kan minska genom att tillåta en godkänd plan att fortsätta genom utförandet, testcykler och reparationer med färre otillåtna avbrott.",
+      "word_start": 162,
+      "word_end": 191,
+      "start": 104.262451,
+      "end": 121.776782
+    },
+    {
+      "index": 18,
+      "text": "Teknologi utvecklad kring Bolt kan bidra till framtida automatisering, utveckling och datorstyrta system inom den bredare Unfire-ekosystemet.",
+      "word_start": 191,
+      "word_end": 208,
+      "start": 121.776782,
+      "end": 132.692729
+    },
+    {
+      "index": 19,
+      "text": "Orkestrering · Lokal exekution · Kontrollerad autonomi · Genomförbar automatization",
+      "word_start": 208,
+      "word_end": 218,
+      "start": 132.692729,
+      "end": 138.881953
+    },
+    {
+      "index": 20,
+      "text": "Energi · Data · Informationssystem",
+      "word_start": 218,
+      "word_end": 223,
+      "start": 138.881953,
+      "end": 141.426206
+    },
+    {
+      "index": 21,
+      "text": "Makt",
+      "word_start": 223,
+      "word_end": 224,
+      "start": 141.426206,
+      "end": 141.848175
+    },
+    {
+      "index": 22,
+      "text": "Makt utforskar hur komplexa informationsmaterial om el och energimarknader kan konverteras till programvara som är enklare att förstå, jämföra och använda.",
+      "word_start": 224,
+      "word_end": 245,
+      "start": 141.848175,
+      "end": 153.864
+    },
+    {
+      "index": 23,
+      "text": "Projektet kombinerar regionala data, prisspecifikationer och strukturerad tolkning till en tydligare användargränssnitt, skapande en foundation för framtida energiintelligenta verktyg.",
+      "word_start": 245,
+      "word_end": 264,
+      "start": 153.864,
+      "end": 166.933601
+    },
+    {
+      "index": 24,
+      "text": "Samma tillvägagångssätt kan senare stödja andra informationstätta produkter där fragmenterat externt data behöver bli förståeligt och åtgärdbart programvara.",
+      "word_start": 264,
+      "word_end": 282,
+      "start": 166.933601,
+      "end": 178.383005
+    },
+    {
+      "index": 25,
+      "text": "Energiintelligence · Dataanalysering · Informationsskiktning",
+      "word_start": 282,
+      "word_end": 287,
+      "start": 178.383005,
+      "end": 182.240039
+    },
+    {
+      "index": 26,
+      "text": "Intern infrastruktur · Programvaraproduktion",
+      "word_start": 287,
+      "word_end": 291,
+      "start": 182.240039,
+      "end": 185.196693
+    },
+    {
+      "index": 27,
+      "text": "UnfireSuite",
+      "word_start": 291,
+      "word_end": 292,
+      "start": 185.196693,
+      "end": 186.03073
+    },
+    {
+      "index": 28,
+      "text": "UnfireSuite representerar den interna produktionsskiktet bakom flera Unfire-projekt.",
+      "word_start": 292,
+      "word_end": 300,
+      "start": 186.03073,
+      "end": 192.032372
+    },
+    {
+      "index": 29,
+      "text": "Syftet är att minska författatskapligt arbete genom att tillåta att mjukvarupartiklar, valideringsprocesser, produktionssystem och accumulering av teknisk kunskap används igenvarande där det är lämpligt.",
+      "word_start": 300,
+      "word_end": 324,
+      "start": 192.032372,
+      "end": 206.623841
+    },
+    {
+      "index": 30,
+      "text": "Detta är viktigt eftersom värdet av ett projekt inte behöver sluta när projektet är klar. Delar av teknologin kan bli infrastruktur för nästa produkt, vilket tillåter att produktionssystemet förbättras över tid.",
+      "word_start": 324,
+      "word_end": 355,
+      "start": 206.623841,
+      "end": 222.669239
+    },
+    {
+      "index": 31,
+      "text": "Delad infrastruktur · Validering · Genanvändning · Produktionssystem",
+      "word_start": 355,
+      "word_end": 363,
+      "start": 222.669239,
+      "end": 227.388193
+    },
+    {
+      "index": 32,
+      "text": "Unfire Audio · Första implementering",
+      "word_start": 363,
+      "word_end": 368,
+      "start": 227.388193,
+      "end": 230.079681
+    },
+    {
+      "index": 33,
+      "text": "Archer",
+      "word_start": 368,
+      "word_end": 369,
+      "start": 230.079681,
+      "end": 230.618758
+    },
+    {
+      "index": 34,
+      "text": "Archer är det första produkten utvecklade inom den bredare Unfire Audio-rutan.",
+      "word_start": 369,
+      "word_end": 380,
+      "start": 230.618758,
+      "end": 236.64513
+    },
+    {
+      "index": 35,
+      "text": "Det är en precisionsohöjningsverktyg byggt runt Gain, Threshold och Atmosfär, utformat för att ge producenter och ingenjörer direkte kontroll över clipping-beteende, toppvärden, transiente och ljudliga karaktär.",
+      "word_start": 380,
+      "word_end": 406,
+      "start": 236.64513,
+      "end": 251.96083
+    },
+    {
+      "index": 36,
+      "text": "Dess strategiska roll är bredare än endast en enskild ljudeffekt. Archer erbjuder ett praktiskt miljö för att utveckla och godkänna ljudteknik, gränssnittssystem och produktionselement som senare kan bidra till framtida kreativa-programvaruprodukter.",
+      "word_start": 406,
+      "word_end": 437,
+      "start": 251.96083,
+      "end": 270.140337
+    },
+    {
+      "index": 37,
+      "text": "Unfire Audio utforskar också hur AI-baserade system, procedurell bearbetning och återanvändbar mjukvaruteknik kan konvergera till nya plugin-koncept och kreativa arbetsflöden utanför konventionella fasta ljudbearbetningsverktyg.",
+      "word_start": 437,
+      "word_end": 461,
+      "start": 270.140337,
+      "end": 286.40496
+    },
+    {
+      "index": 38,
+      "text": "Ljudteknologi · DSP · Proceduerligt bearbetning · Kreativ software",
+      "word_start": 461,
+      "word_end": 470,
+      "start": 286.40496,
+      "end": 291.158188
+    },
+    {
+      "index": 39,
+      "text": "Unfire Ljud",
+      "word_start": 470,
+      "word_end": 472,
+      "start": 291.158188,
+      "end": 292.099858
+    },
+    {
+      "index": 40,
+      "text": "Från tillägg till nya software-idéer.",
+      "word_start": 472,
+      "word_end": 477,
+      "start": 292.099858,
+      "end": 294.997501
+    },
+    {
+      "index": 41,
+      "text": "Unfire Audio utforskar hur AI-baserade system, procedurell bearbetning och återanvändbara programvarukomponenter kan konvergera till kreativa verktyg som utvidgar konventionella pluginarbetsflöden.",
+      "word_start": 477,
+      "word_end": 497,
+      "start": 294.997501,
+      "end": 308.976
+    },
+    {
+      "index": 42,
+      "text": "AI kan bli en del av den kreativa softwaremiljön istället för att existera endast som en separat assistent.",
+      "word_start": 497,
+      "word_end": 515,
+      "start": 308.976,
+      "end": 317.721636
+    },
+    {
+      "index": 43,
+      "text": "Parametrar, ljud och programvara kan transformeras dynamiskt, öppnande utrymme för nya kreativa interaktionsmodeller.",
+      "word_start": 515,
+      "word_end": 528,
+      "start": 317.721636,
+      "end": 326.697787
+    },
+    {
+      "index": 44,
+      "text": "Lyckade komponenter utvecklade i ett produkt kan senare återanvändas, utvidgas eller integreras i andra projekt.",
+      "word_start": 528,
+      "word_end": 543,
+      "start": 326.697787,
+      "end": 335.590046
+    },
+    {
+      "index": 45,
+      "text": "Målet är inte endast att producera isolerade ljudplug-ins. Det är att skapa en återanvändbar kreativ-teknisk bas som kan stödja framtida verktyg, bredare miljöer och nya produktkoncept.",
+      "word_start": 543,
+      "word_end": 569,
+      "start": 335.590046,
+      "end": 350.331129
+    },
+    {
+      "index": 46,
+      "text": "System",
+      "word_start": 569,
+      "word_end": 570,
+      "start": 350.331129,
+      "end": 350.900242
+    },
+    {
+      "index": 47,
+      "text": "Softwareproduktion utan att börja om från början.",
+      "word_start": 570,
+      "word_end": 577,
+      "start": 350.900242,
+      "end": 354.857421
+    },
+    {
+      "index": 48,
+      "text": "Centrale idé är enkel: när ett nytt produkt kan använda teknik som redan finns inuti Unfire, bör utvecklingen återanvända detta nyttofattande i stället för att bygga det om.",
+      "word_start": 577,
+      "word_end": 605,
+      "start": 354.857421,
+      "end": 368.937494
+    },
+    {
+      "index": 49,
+      "text": "Delad foundation",
+      "word_start": 605,
+      "word_end": 607,
+      "start": 368.937494,
+      "end": 370.258703
+    },
+    {
+      "index": 50,
+      "text": "Genomgångsbart mjukvaru komponenter, produktionsskärmning och valideringssystem bildar en bas som kan fortsätta att utvecklas.",
+      "word_start": 607,
+      "word_end": 621,
+      "start": 370.258703,
+      "end": 379.774975
+    },
+    {
+      "index": 51,
+      "text": "Produktlager",
+      "word_start": 621,
+      "word_end": 622,
+      "start": 379.774975,
+      "end": 380.712407
+    },
+    {
+      "index": 52,
+      "text": "Nytt användningssätt kan kombinera befintliga funktioner med produkt-specifika teknologier i stället för att börja från en tom arkitektur.",
+      "word_start": 622,
+      "word_end": 640,
+      "start": 380.712407,
+      "end": 391.434157
+    },
+    {
+      "index": 53,
+      "text": "Validering",
+      "word_start": 640,
+      "word_end": 641,
+      "start": 391.434157,
+      "end": 392.256266
+    },
+    {
+      "index": 54,
+      "text": "Byggnader, tester och interna kontroller ger mätbara bevis om att programvarukandidater fungerar som avsåg.",
+      "word_start": 641,
+      "word_end": 655,
+      "start": 392.256266,
+      "end": 400.672936
+    },
+    {
+      "index": 55,
+      "text": "Utökning",
+      "word_start": 655,
+      "word_end": 656,
+      "start": 400.672936,
+      "end": 401.373026
+    },
+    {
+      "index": 56,
+      "text": "Infrastruktur kan utvecklas genom ytterligare beräkningskapacitet, lagringskapacitet, testning, kvalitetsgarantier och deploymentskapacitet.",
+      "word_start": 656,
+      "word_end": 667,
+      "start": 401.373026,
+      "end": 411.409545
+    },
+    {
+      "index": 57,
+      "text": "Produktionsstyrning",
+      "word_start": 667,
+      "word_end": 668,
+      "start": 411.409545,
+      "end": 412.714609
+    },
+    {
+      "index": 58,
+      "text": "Bottlenecken förändras.",
+      "word_start": 668,
+      "word_end": 670,
+      "start": 412.714609,
+      "end": 414.594239
+    },
+    {
+      "index": 59,
+      "text": "Varje gällande arkitektur har visat att inre utveckling kan få fungerande programvarukandidater att gå genom extremt korta bygghastigheter — i vissa fall mätta i minuter.",
+      "word_start": 670,
+      "word_end": 695,
+      "start": 414.594239,
+      "end": 427.928714
+    },
+    {
+      "index": 60,
+      "text": "Efter att återanvändbar teknologi utvecklas, blir begränsande faktorer steget i införandet, som beräkningsresurser, lagringsresurser, testning, kvalitetsgarantier och kommersiell implementering — resurser som själva kan utvidgas.",
+      "word_start": 695,
+      "word_end": 720,
+      "start": 427.928714,
+      "end": 445.176249
+    },
+    {
+      "index": 61,
+      "text": "Flaggprodukten följer nuvarande användningar för att demonisera den bredare teknologidirektionsen.",
+      "word_start": 720,
+      "word_end": 730,
+      "start": 445.176249,
+      "end": 452.569585
+    },
+    {
+      "index": 62,
+      "text": "Prioritär våg 1 för programvara identifierade för fokuserat utveckling.",
+      "word_start": 730,
+      "word_end": 739,
+      "start": 452.569585,
+      "end": 458.162662
+    },
+    {
+      "index": 63,
+      "text": "53",
+      "word_start": 739,
+      "word_end": 740,
+      "start": 458.162662,
+      "end": 458.420692
+    },
+    {
+      "index": 64,
+      "text": "Standalone-programvara utvecklad och internt granskad.",
+      "word_start": 740,
+      "word_end": 745,
+      "start": 458.420692,
+      "end": 462.494756
+    },
+    {
+      "index": 65,
+      "text": "53/53",
+      "word_start": 745,
+      "word_end": 746,
+      "start": 462.494756,
+      "end": 462.919779
+    },
+    {
+      "index": 66,
+      "text": "Lyckade självständiga byggnader under den interna kontrollpunkten i september 2026.",
+      "word_start": 746,
+      "word_end": 756,
+      "start": 462.919779,
+      "end": 469.416
+    },
+    {
+      "index": 67,
+      "text": "01",
+      "word_start": 756,
+      "word_end": 757,
+      "start": 469.416,
+      "end": 469.725311
+    },
+    {
+      "index": 68,
+      "text": "Strikt regelbeskrivning:",
+      "word_start": 757,
+      "word_end": 759,
+      "start": 469.725311,
+      "end": 471.874384
+    },
+    {
+      "index": 69,
+      "text": "- Returnera ENDAST översättningen.",
+      "word_start": 759,
+      "word_end": 763,
+      "start": 471.874384,
+      "end": 475.129471
+    },
+    {
+      "index": 70,
+      "text": "- Uttryck ingenting.",
+      "word_start": 763,
+      "word_end": 766,
+      "start": 475.129471,
+      "end": 477.208996
+    },
+    {
+      "index": 71,
+      "text": "- Ändra inte citatmärken.",
+      "word_start": 766,
+      "word_end": 770,
+      "start": 477.208996,
+      "end": 479.776002
+    },
+    {
+      "index": 72,
+      "text": "- Bevara mening och professionell företagsröst.",
+      "word_start": 770,
+      "word_end": 776,
+      "start": 479.776002,
+      "end": 484.272471
+    },
+    {
+      "index": 73,
+      "text": "- Skriv naturligt som svensk vana språk, inte en liten maskinöversättning.",
+      "word_start": 776,
+      "word_end": 787,
+      "start": 484.272471,
+      "end": 491.398451
+    },
+    {
+      "index": 74,
+      "text": "- Överför inte eller ändra dessa produktmärken: Unfire, Bolt, Archer, POWER, AI TOKEN COUNTER.",
+      "word_start": 787,
+      "word_end": 801,
+      "start": 491.398451,
+      "end": 500.623857
+    },
+    {
+      "index": 75,
+      "text": "- Bevara nummer, teknisk术语已保留未翻译。正确的翻译应为：",
+      "word_start": 801,
+      "word_end": 805,
+      "start": 500.623857,
+      "end": 503.999165
+    },
+    {
+      "index": 76,
+      "text": "- Bevara tekniska术语已保留未翻译。正确的翻译应为：terminologi och produktmärken exakt.",
+      "word_start": 805,
+      "word_end": 811,
+      "start": 503.999165,
+      "end": 509.666555
+    },
+    {
+      "index": 77,
+      "text": "- Detta text kommer att läsa av en professionell företagskvinna röst.",
+      "word_start": 811,
+      "word_end": 822,
+      "start": 509.666555,
+      "end": 516.358097
+    },
+    {
+      "index": 78,
+      "text": "Genombruk",
+      "word_start": 822,
+      "word_end": 823,
+      "start": 516.358097,
+      "end": 517.271596
+    },
+    {
+      "index": 79,
+      "text": "Start från befintlig teknologi där det är möjligt.",
+      "word_start": 823,
+      "word_end": 831,
+      "start": 517.271596,
+      "end": 522.322274
+    },
+    {
+      "index": 80,
+      "text": "02",
+      "word_start": 831,
+      "word_end": 832,
+      "start": 522.322274,
+      "end": 522.631584
+    },
+    {
+      "index": 81,
+      "text": "Bygga",
+      "word_start": 832,
+      "word_end": 833,
+      "start": 522.631584,
+      "end": 523.229874
+    },
+    {
+      "index": 82,
+      "text": "Skapa den produktspecifika lagen.",
+      "word_start": 833,
+      "word_end": 837,
+      "start": 523.229874,
+      "end": 526.43893
+    },
+    {
+      "index": 83,
+      "text": "03",
+      "word_start": 837,
+      "word_end": 838,
+      "start": 526.43893,
+      "end": 526.748241
+    },
+    {
+      "index": 84,
+      "text": "Skala",
+      "word_start": 838,
+      "word_end": 839,
+      "start": 526.748241,
+      "end": 527.346531
+    },
+    {
+      "index": 85,
+      "text": "Utveckla infrastruktur medan produktionen växer.",
+      "word_start": 839,
+      "word_end": 844,
+      "start": 527.346531,
+      "end": 531.912417
+    },
+    {
+      "index": 86,
+      "text": "Företag",
+      "word_start": 844,
+      "word_end": 845,
+      "start": 531.912417,
+      "end": 532.674714
+    },
+    {
+      "index": 87,
+      "text": "Dedicated mjukvaru-system.",
+      "word_start": 845,
+      "word_end": 847,
+      "start": 532.674714,
+      "end": 535.123751
+    },
+    {
+      "index": 88,
+      "text": "Samma produktbas kan stödja specialiserade tillämpningar och milvågar utformade efter organisationens krav.",
+      "word_start": 847,
+      "word_end": 859,
+      "start": 535.123751,
+      "end": 545.060176
+    },
+    {
+      "index": 89,
+      "text": "Institutioner",
+      "word_start": 859,
+      "word_end": 860,
+      "start": 545.060176,
+      "end": 546.250575
+    },
+    {
+      "index": 90,
+      "text": "Kontrollerade miljöer.",
+      "word_start": 860,
+      "word_end": 862,
+      "start": 546.250575,
+      "end": 548.419219
+    },
+    {
+      "index": 91,
+      "text": "Projekt kan förblivna isolerade samtidigt som de nytta av tillgängliga grundläggande teknologier, godkänningsprocesser och produktionstillfällen.",
+      "word_start": 862,
+      "word_end": 877,
+      "start": 548.419219,
+      "end": 561.356125
+    },
+    {
+      "index": 92,
+      "text": "Offentlig sektor",
+      "word_start": 877,
+      "word_end": 879,
+      "start": 561.356125,
+      "end": 562.95184
+    },
+    {
+      "index": 93,
+      "text": "Skalbara digitala verktyg.",
+      "word_start": 879,
+      "word_end": 882,
+      "start": 562.95184,
+      "end": 565.608534
+    },
+    {
+      "index": 94,
+      "text": "Arkitekturen förbereds för framtida samarbete där kontroll, följdbarthet, bekräftelse och långsiktig underhållbarhet är viktiga.",
+      "word_start": 882,
+      "word_end": 896,
+      "start": 565.608534,
+      "end": 577.421101
+    },
+    {
+      "index": 95,
+      "text": "Unfire kan visa produkter, byggnader, interna kontroller och produktionsevner utan att uppdiskera de metoder som skapar den underliggande leverancen.",
+      "word_start": 896,
+      "word_end": 915,
+      "start": 577.421101,
+      "end": 591.450459
+    },
+    {
+      "index": 96,
+      "text": "Finansiering & samarbete",
+      "word_start": 915,
+      "word_end": 918,
+      "start": 591.450459,
+      "end": 593.675474
+    },
+    {
+      "index": 97,
+      "text": "Utveckla det som redan finns.",
+      "word_start": 918,
+      "word_end": 923,
+      "start": 593.675474,
+      "end": 596.755571
+    },
+    {
+      "index": 98,
+      "text": "hej@unfire.technology",
+      "word_start": 923,
+      "word_end": 924,
+      "start": 596.755571,
+      "end": 598.32
+    }
+  ],
+  "words": [
+    {
+      "word": "Oberoende",
+      "start": 0.0,
+      "end": 0.756574,
+      "exact": true,
+      "block": 0,
+      "tts_chunk": 1
+    },
+    {
+      "word": "teknologföretag",
+      "start": 0.756574,
+      "end": 1.849479,
+      "exact": true,
+      "block": 0,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bygga",
+      "start": 1.849479,
+      "end": 2.344992,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "teknologi.",
+      "start": 2.344992,
+      "end": 3.280418,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Genomför",
+      "start": 3.280418,
+      "end": 3.975477,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "återanvändningen",
+      "start": 3.975477,
+      "end": 5.120365,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "av",
+      "start": 5.120365,
+      "end": 5.376541,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "fördelarna.",
+      "start": 5.376541,
+      "end": 6.371593,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Unfire",
+      "start": 6.371593,
+      "end": 6.936615,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "utvecklar",
+      "start": 6.936615,
+      "end": 7.693189,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "återanvändbara",
+      "start": 7.693189,
+      "end": 8.733131,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "programvaru-system",
+      "start": 8.733131,
+      "end": 9.979345,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "utformade",
+      "start": 9.979345,
+      "end": 10.735919,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "för",
+      "start": 10.735919,
+      "end": 11.078943,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "att",
+      "start": 11.078943,
+      "end": 11.421966,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "omvandla",
+      "start": 11.421966,
+      "end": 12.117025,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 12.117025,
+      "end": 12.373201,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "tekniskt",
+      "start": 12.373201,
+      "end": 13.06826,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "baserad",
+      "start": 13.06826,
+      "end": 13.699605,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "plattform",
+      "start": 13.699605,
+      "end": 14.456179,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "till",
+      "start": 14.456179,
+      "end": 14.878147,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "flera",
+      "start": 14.878147,
+      "end": 15.37366,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "produkter,",
+      "start": 15.37366,
+      "end": 16.20022,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "arbetsflöden",
+      "start": 16.20022,
+      "end": 17.130915,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "och",
+      "start": 17.130915,
+      "end": 17.473938,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "framtida",
+      "start": 17.473938,
+      "end": 18.168997,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "tillämpningar.",
+      "start": 18.168997,
+      "end": 19.333756,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Företag",
+      "start": 19.333756,
+      "end": 19.965102,
+      "exact": true,
+      "block": 3,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Istället",
+      "start": 19.965102,
+      "end": 20.66016,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "för",
+      "start": 20.66016,
+      "end": 21.003184,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "att",
+      "start": 21.003184,
+      "end": 21.346208,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "behandla",
+      "start": 21.346208,
+      "end": 22.041266,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "varje",
+      "start": 22.041266,
+      "end": 22.536779,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "applikation",
+      "start": 22.536779,
+      "end": 23.410956,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "som",
+      "start": 23.410956,
+      "end": 23.75398,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ett",
+      "start": 23.75398,
+      "end": 24.097004,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "separat",
+      "start": 24.097004,
+      "end": 24.728349,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "projekt",
+      "start": 24.728349,
+      "end": 25.359695,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "utvecklar",
+      "start": 25.359695,
+      "end": 26.116269,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Unfire",
+      "start": 26.116269,
+      "end": 26.681291,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "teknik",
+      "start": 26.681291,
+      "end": 27.246313,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "som",
+      "start": 27.246313,
+      "end": 27.589337,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kan",
+      "start": 27.589337,
+      "end": 27.932361,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "återanvändas,",
+      "start": 27.932361,
+      "end": 28.933041,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "utvidgas",
+      "start": 28.933041,
+      "end": 29.6281,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "och",
+      "start": 29.6281,
+      "end": 29.971123,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "överföras",
+      "start": 29.971123,
+      "end": 30.727697,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "till",
+      "start": 30.727697,
+      "end": 31.149665,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "framtida",
+      "start": 31.149665,
+      "end": 31.844724,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "produkter.",
+      "start": 31.844724,
+      "end": 32.78015,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bygga",
+      "start": 32.78015,
+      "end": 33.275663,
+      "exact": true,
+      "block": 5,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 33.275663,
+      "end": 33.531839,
+      "exact": true,
+      "block": 5,
+      "tts_chunk": 1
+    },
+    {
+      "word": "gång.",
+      "start": 33.531839,
+      "end": 34.13266,
+      "exact": true,
+      "block": 5,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Kärnfungeringar",
+      "start": 34.13266,
+      "end": 35.225565,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kan",
+      "start": 35.225565,
+      "end": 35.568588,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "bli",
+      "start": 35.568588,
+      "end": 35.911612,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "genomspeglabara",
+      "start": 35.911612,
+      "end": 37.004517,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "byggnadsblok",
+      "start": 37.004517,
+      "end": 37.935211,
+      "exact": false,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "och",
+      "start": 37.935211,
+      "end": 38.278235,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "inte",
+      "start": 38.278235,
+      "end": 38.700203,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "försvinna",
+      "start": 38.700203,
+      "end": 39.456777,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "inuti",
+      "start": 39.456777,
+      "end": 39.95229,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 39.95229,
+      "end": 40.208466,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "enda",
+      "start": 40.208466,
+      "end": 40.630434,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "produkt.",
+      "start": 40.630434,
+      "end": 41.440632,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Fortsätt",
+      "start": 41.440632,
+      "end": 42.135691,
+      "exact": true,
+      "block": 7,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kontinuerligt.",
+      "start": 42.135691,
+      "end": 43.30045,
+      "exact": true,
+      "block": 7,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Nytt",
+      "start": 43.30045,
+      "end": 43.722419,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "programvara",
+      "start": 43.722419,
+      "end": 44.596596,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kan",
+      "start": 44.596596,
+      "end": 44.939619,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "er继承现有基础设施，从而在架构适用时减少重复的工程工作。",
+      "start": 44.939619,
+      "end": 46.60832,
+      "exact": false,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Skala",
+      "start": 46.60832,
+      "end": 47.103833,
+      "exact": true,
+      "block": 9,
+      "tts_chunk": 1
+    },
+    {
+      "word": "systemet.",
+      "start": 47.103833,
+      "end": 47.977744,
+      "exact": true,
+      "block": 9,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Ytterligare",
+      "start": 47.977744,
+      "end": 48.851922,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "lagrings-",
+      "start": 48.851922,
+      "end": 49.608495,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "och",
+      "start": 49.608495,
+      "end": 49.951519,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "beräkningsinfrastruktur,",
+      "start": 49.951519,
+      "end": 51.508264,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "tester",
+      "start": 51.508264,
+      "end": 52.073286,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "och",
+      "start": 52.073286,
+      "end": 52.41631,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "distributionsinfrastruktur",
+      "start": 52.41631,
+      "end": 54.040278,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kan",
+      "start": 54.040278,
+      "end": 54.383302,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "öka",
+      "start": 54.383302,
+      "end": 54.726325,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "produktionskapaciteten",
+      "start": 54.726325,
+      "end": 56.166254,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "utan",
+      "start": 56.166254,
+      "end": 56.588222,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "att",
+      "start": 56.588222,
+      "end": 56.931246,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "återskapa",
+      "start": 56.931246,
+      "end": 57.68782,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "den",
+      "start": 57.68782,
+      "end": 58.030843,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "underliggande",
+      "start": 58.030843,
+      "end": 59.01675,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "systemet.",
+      "start": 59.01675,
+      "end": 59.890661,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Valt",
+      "start": 59.890661,
+      "end": 60.31263,
+      "exact": true,
+      "block": 11,
+      "tts_chunk": 1
+    },
+    {
+      "word": "arbete",
+      "start": 60.31263,
+      "end": 60.877652,
+      "exact": true,
+      "block": 11,
+      "tts_chunk": 1
+    },
+    {
+      "word": "För",
+      "start": 60.877652,
+      "end": 61.220675,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "olika",
+      "start": 61.220675,
+      "end": 61.716188,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "produkter.",
+      "start": 61.716188,
+      "end": 62.651615,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Teknologi",
+      "start": 62.651615,
+      "end": 63.408188,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "som",
+      "start": 63.408188,
+      "end": 63.751212,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kompilerar.",
+      "start": 63.751212,
+      "end": 64.746264,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Varje",
+      "start": 64.746264,
+      "end": 65.241777,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "projekt",
+      "start": 65.241777,
+      "end": 65.873123,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "adresserar",
+      "start": 65.873123,
+      "end": 66.689323,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ett",
+      "start": 66.689323,
+      "end": 67.032347,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "annat",
+      "start": 67.032347,
+      "end": 67.52786,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "problem,",
+      "start": 67.52786,
+      "end": 68.229191,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "men",
+      "start": 68.229191,
+      "end": 68.572215,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "den",
+      "start": 68.572215,
+      "end": 68.915239,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "underliggande",
+      "start": 68.915239,
+      "end": 69.901146,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "målet",
+      "start": 69.901146,
+      "end": 70.396659,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "är",
+      "start": 70.396659,
+      "end": 70.652834,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "samma:",
+      "start": 70.652834,
+      "end": 71.218333,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "utveckla",
+      "start": 71.218333,
+      "end": 71.913392,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "teknologi,",
+      "start": 71.913392,
+      "end": 72.739951,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "system",
+      "start": 72.739951,
+      "end": 73.304974,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "och",
+      "start": 73.304974,
+      "end": 73.647997,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "produktionsskärmvetenskap",
+      "start": 73.647997,
+      "end": 75.226748,
+      "exact": false,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "som",
+      "start": 75.226748,
+      "end": 75.569771,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kan",
+      "start": 75.569771,
+      "end": 75.912795,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "återanvändas",
+      "start": 75.912795,
+      "end": 76.843489,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "i",
+      "start": 76.843489,
+      "end": 76.999013,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "framtida",
+      "start": 76.999013,
+      "end": 77.694072,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "programvara",
+      "start": 77.694072,
+      "end": 78.568249,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "i",
+      "start": 78.568249,
+      "end": 78.723773,
+      "exact": false,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "stället",
+      "start": 78.723773,
+      "end": 79.355118,
+      "exact": false,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "för",
+      "start": 79.355118,
+      "end": 79.698142,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "att",
+      "start": 79.698142,
+      "end": 80.041166,
+      "exact": false,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "blivna",
+      "start": 80.041166,
+      "end": 80.606188,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "isolerade",
+      "start": 80.606188,
+      "end": 81.362762,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "inuti",
+      "start": 81.362762,
+      "end": 81.858275,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 81.858275,
+      "end": 82.114451,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "enda",
+      "start": 82.114451,
+      "end": 82.536419,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "applikation.",
+      "start": 82.536419,
+      "end": 83.589448,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "AI",
+      "start": 83.589448,
+      "end": 83.845624,
+      "exact": true,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 83.845624,
+      "end": 84.001148,
+      "exact": false,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Automatisering",
+      "start": 84.001148,
+      "end": 85.041089,
+      "exact": true,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 85.041089,
+      "end": 85.196613,
+      "exact": false,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Datorkomponenter",
+      "start": 85.196613,
+      "end": 86.341501,
+      "exact": true,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bolt",
+      "start": 86.341501,
+      "end": 86.76347,
+      "exact": true,
+      "block": 15,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bolt",
+      "start": 86.76347,
+      "end": 87.185438,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "utforskar",
+      "start": 87.185438,
+      "end": 87.942012,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kontrollerad",
+      "start": 87.942012,
+      "end": 88.872706,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "AI-orchestration",
+      "start": 88.872706,
+      "end": 90.017595,
+      "exact": false,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "för",
+      "start": 90.017595,
+      "end": 90.360618,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "komplexa",
+      "start": 90.360618,
+      "end": 91.055677,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "datoruppgifter.",
+      "start": 91.055677,
+      "end": 92.27447,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Den",
+      "start": 92.27447,
+      "end": 92.617494,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "är",
+      "start": 92.617494,
+      "end": 92.87367,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "utformad",
+      "start": 92.87367,
+      "end": 93.568729,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "för",
+      "start": 93.568729,
+      "end": 93.911752,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "att",
+      "start": 93.911752,
+      "end": 94.254776,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "koordinera",
+      "start": 94.254776,
+      "end": 95.070976,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "AI-system,",
+      "start": 95.070976,
+      "end": 95.897535,
+      "exact": false,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "lokala",
+      "start": 95.897535,
+      "end": 96.462558,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "verktyg",
+      "start": 96.462558,
+      "end": 97.093904,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "och",
+      "start": 97.093904,
+      "end": 97.436927,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "utförandeprocesser",
+      "start": 97.436927,
+      "end": 98.683142,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "samtidigt",
+      "start": 98.683142,
+      "end": 99.439716,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "som",
+      "start": 99.439716,
+      "end": 99.782739,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "synligheten,",
+      "start": 99.782739,
+      "end": 100.726902,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "behörigheter",
+      "start": 100.726902,
+      "end": 101.657597,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "och",
+      "start": 101.657597,
+      "end": 102.00062,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "mänskligt",
+      "start": 102.00062,
+      "end": 102.757194,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kontroll",
+      "start": 102.757194,
+      "end": 103.452253,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "behålls.",
+      "start": 103.452253,
+      "end": 104.262451,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Projektet",
+      "start": 104.262451,
+      "end": 105.019024,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "undersöker",
+      "start": 105.019024,
+      "end": 105.835225,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "hur",
+      "start": 105.835225,
+      "end": 106.178248,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "repetitiv",
+      "start": 106.178248,
+      "end": 106.934822,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "interaktion",
+      "start": 106.934822,
+      "end": 107.808999,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "mellan",
+      "start": 107.808999,
+      "end": 108.374021,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "människor,",
+      "start": 108.374021,
+      "end": 109.200581,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "modeller",
+      "start": 109.200581,
+      "end": 109.89564,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "och",
+      "start": 109.89564,
+      "end": 110.238663,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "programvara",
+      "start": 110.238663,
+      "end": 111.11284,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kan",
+      "start": 111.11284,
+      "end": 111.455864,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "minska",
+      "start": 111.455864,
+      "end": 112.020886,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "genom",
+      "start": 112.020886,
+      "end": 112.516399,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "att",
+      "start": 112.516399,
+      "end": 112.859423,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "tillåta",
+      "start": 112.859423,
+      "end": 113.490768,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 113.490768,
+      "end": 113.746944,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "godkänd",
+      "start": 113.746944,
+      "end": 114.37829,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "plan",
+      "start": 114.37829,
+      "end": 114.800258,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "att",
+      "start": 114.800258,
+      "end": 115.143282,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "fortsätta",
+      "start": 115.143282,
+      "end": 115.899856,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "genom",
+      "start": 115.899856,
+      "end": 116.395369,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "utförandet,",
+      "start": 116.395369,
+      "end": 117.281555,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "testcykler",
+      "start": 117.281555,
+      "end": 118.097755,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "och",
+      "start": 118.097755,
+      "end": 118.440779,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "reparationer",
+      "start": 118.440779,
+      "end": 119.371473,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "med",
+      "start": 119.371473,
+      "end": 119.714497,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "färre",
+      "start": 119.714497,
+      "end": 120.21001,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "otillåtna",
+      "start": 120.21001,
+      "end": 120.966583,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "avbrott.",
+      "start": 120.966583,
+      "end": 121.776782,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Teknologi",
+      "start": 121.776782,
+      "end": 122.533355,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "utvecklad",
+      "start": 122.533355,
+      "end": 123.289929,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kring",
+      "start": 123.289929,
+      "end": 123.785442,
+      "exact": false,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bolt",
+      "start": 123.785442,
+      "end": 124.207411,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kan",
+      "start": 124.207411,
+      "end": 124.550434,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "bidra",
+      "start": 124.550434,
+      "end": 125.045947,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "till",
+      "start": 125.045947,
+      "end": 125.467915,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "framtida",
+      "start": 125.467915,
+      "end": 126.162974,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "automatisering,",
+      "start": 126.162974,
+      "end": 127.272901,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "utveckling",
+      "start": 127.272901,
+      "end": 128.089101,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "och",
+      "start": 128.089101,
+      "end": 128.432125,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "datorstyrta",
+      "start": 128.432125,
+      "end": 129.306302,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "system",
+      "start": 129.306302,
+      "end": 129.871324,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "inom",
+      "start": 129.871324,
+      "end": 130.293293,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "den",
+      "start": 130.293293,
+      "end": 130.636316,
+      "exact": false,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "bredare",
+      "start": 130.636316,
+      "end": 131.267662,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Unfire-ekosystemet.",
+      "start": 131.267662,
+      "end": 132.692729,
+      "exact": false,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Orkestrering",
+      "start": 132.692729,
+      "end": 133.623424,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 133.623424,
+      "end": 133.778947,
+      "exact": false,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Lokal",
+      "start": 133.778947,
+      "end": 134.27446,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "exekution",
+      "start": 134.27446,
+      "end": 135.031034,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 135.031034,
+      "end": 135.186558,
+      "exact": false,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Kontrollerad",
+      "start": 135.186558,
+      "end": 136.117253,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "autonomi",
+      "start": 136.117253,
+      "end": 136.812311,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 136.812311,
+      "end": 136.967835,
+      "exact": false,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Genomförbar",
+      "start": 136.967835,
+      "end": 137.842012,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "automatization",
+      "start": 137.842012,
+      "end": 138.881953,
+      "exact": false,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Energi",
+      "start": 138.881953,
+      "end": 139.446976,
+      "exact": true,
+      "block": 20,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 139.446976,
+      "end": 139.602499,
+      "exact": false,
+      "block": 20,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Data",
+      "start": 139.602499,
+      "end": 140.024468,
+      "exact": true,
+      "block": 20,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 140.024468,
+      "end": 140.179992,
+      "exact": false,
+      "block": 20,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Informationssystem",
+      "start": 140.179992,
+      "end": 141.426206,
+      "exact": true,
+      "block": 20,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Makt",
+      "start": 141.426206,
+      "end": 141.848175,
+      "exact": true,
+      "block": 21,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Makt",
+      "start": 141.848175,
+      "end": 142.270143,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "utforskar",
+      "start": 142.270143,
+      "end": 143.026717,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "hur",
+      "start": 143.026717,
+      "end": 143.36974,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "komplexa",
+      "start": 143.36974,
+      "end": 144.064799,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "informationsmaterial",
+      "start": 144.064799,
+      "end": 145.409229,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "om",
+      "start": 145.409229,
+      "end": 145.665405,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "el",
+      "start": 145.665405,
+      "end": 145.921581,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "och",
+      "start": 145.921581,
+      "end": 146.264605,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "energimarknader",
+      "start": 146.264605,
+      "end": 147.35751,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kan",
+      "start": 147.35751,
+      "end": 147.700533,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "konverteras",
+      "start": 147.700533,
+      "end": 148.57471,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "till",
+      "start": 148.57471,
+      "end": 148.996679,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "programvara",
+      "start": 148.996679,
+      "end": 149.870856,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "som",
+      "start": 149.870856,
+      "end": 150.213879,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "är",
+      "start": 150.213879,
+      "end": 150.470055,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "enklare",
+      "start": 150.470055,
+      "end": 151.101401,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "att",
+      "start": 151.101401,
+      "end": 151.444425,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "förstå,",
+      "start": 151.444425,
+      "end": 152.079433,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "jämföra",
+      "start": 152.079433,
+      "end": 152.710778,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "och",
+      "start": 152.710778,
+      "end": 153.053802,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "använda.",
+      "start": 153.053802,
+      "end": 153.864,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Projektet",
+      "start": 153.864,
+      "end": 154.585834,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kombinerar",
+      "start": 154.585834,
+      "end": 155.364556,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "regionala",
+      "start": 155.364556,
+      "end": 156.086389,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "data,",
+      "start": 156.086389,
+      "end": 156.555754,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "prisspecifikationer",
+      "start": 156.555754,
+      "end": 157.791943,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "och",
+      "start": 157.791943,
+      "end": 158.119216,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "strukturerad",
+      "start": 158.119216,
+      "end": 159.007175,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "tolkning",
+      "start": 159.007175,
+      "end": 159.670318,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "till",
+      "start": 159.670318,
+      "end": 160.072911,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 160.072911,
+      "end": 160.317323,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "tydligare",
+      "start": 160.317323,
+      "end": 161.039157,
+      "exact": false,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "användargränssnitt,",
+      "start": 161.039157,
+      "end": 162.29492,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "skapande",
+      "start": 162.29492,
+      "end": 162.958063,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 162.958063,
+      "end": 163.202476,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "foundation",
+      "start": 163.202476,
+      "end": 163.981198,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "för",
+      "start": 163.981198,
+      "end": 164.308471,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "framtida",
+      "start": 164.308471,
+      "end": 164.971614,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "energiintelligenta",
+      "start": 164.971614,
+      "end": 166.160605,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "verktyg.",
+      "start": 166.160605,
+      "end": 166.933601,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Samma",
+      "start": 166.933601,
+      "end": 167.406361,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "tillvägagångssätt",
+      "start": 167.406361,
+      "end": 168.547414,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kan",
+      "start": 168.547414,
+      "end": 168.874686,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "senare",
+      "start": 168.874686,
+      "end": 169.413764,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "stödja",
+      "start": 169.413764,
+      "end": 169.952842,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "andra",
+      "start": 169.952842,
+      "end": 170.425602,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "informationstätta",
+      "start": 170.425602,
+      "end": 171.566655,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "produkter",
+      "start": 171.566655,
+      "end": 172.288488,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "där",
+      "start": 172.288488,
+      "end": 172.615761,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "fragmenterat",
+      "start": 172.615761,
+      "end": 173.50372,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "externt",
+      "start": 173.50372,
+      "end": 174.106076,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "data",
+      "start": 174.106076,
+      "end": 174.508668,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "behöver",
+      "start": 174.508668,
+      "end": 175.111024,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "bli",
+      "start": 175.111024,
+      "end": 175.438297,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "förståeligt",
+      "start": 175.438297,
+      "end": 176.272333,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "och",
+      "start": 176.272333,
+      "end": 176.599606,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "åtgärdbart",
+      "start": 176.599606,
+      "end": 177.378328,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "programvara.",
+      "start": 177.378328,
+      "end": 178.383005,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Energiintelligence",
+      "start": 178.383005,
+      "end": 179.571996,
+      "exact": false,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 179.571996,
+      "end": 179.720378,
+      "exact": false,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Dataanalysering",
+      "start": 179.720378,
+      "end": 180.763099,
+      "exact": true,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 180.763099,
+      "end": 180.911482,
+      "exact": false,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Informationsskiktning",
+      "start": 180.911482,
+      "end": 182.240039,
+      "exact": true,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Intern",
+      "start": 182.240039,
+      "end": 182.779117,
+      "exact": true,
+      "block": 26,
+      "tts_chunk": 2
+    },
+    {
+      "word": "infrastruktur",
+      "start": 182.779117,
+      "end": 183.719753,
+      "exact": true,
+      "block": 26,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 183.719753,
+      "end": 183.868136,
+      "exact": false,
+      "block": 26,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Programvaraproduktion",
+      "start": 183.868136,
+      "end": 185.196693,
+      "exact": false,
+      "block": 26,
+      "tts_chunk": 2
+    },
+    {
+      "word": "UnfireSuite",
+      "start": 185.196693,
+      "end": 186.03073,
+      "exact": false,
+      "block": 27,
+      "tts_chunk": 2
+    },
+    {
+      "word": "UnfireSuite",
+      "start": 186.03073,
+      "end": 186.864767,
+      "exact": false,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "representerar",
+      "start": 186.864767,
+      "end": 187.805403,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "den",
+      "start": 187.805403,
+      "end": 188.132676,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "interna",
+      "start": 188.132676,
+      "end": 188.735031,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "produktionsskiktet",
+      "start": 188.735031,
+      "end": 189.924023,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "bakom",
+      "start": 189.924023,
+      "end": 190.396783,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "flera",
+      "start": 190.396783,
+      "end": 190.869543,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire-projekt.",
+      "start": 190.869543,
+      "end": 192.032372,
+      "exact": false,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Syftet",
+      "start": 192.032372,
+      "end": 192.57145,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "är",
+      "start": 192.57145,
+      "end": 192.815863,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "att",
+      "start": 192.815863,
+      "end": 193.143135,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "minska",
+      "start": 193.143135,
+      "end": 193.682213,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "författatskapligt",
+      "start": 193.682213,
+      "end": 194.823266,
+      "exact": false,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "arbete",
+      "start": 194.823266,
+      "end": 195.362343,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "genom",
+      "start": 195.362343,
+      "end": 195.835104,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "att",
+      "start": 195.835104,
+      "end": 196.162376,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "tillåta",
+      "start": 196.162376,
+      "end": 196.764732,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "att",
+      "start": 196.764732,
+      "end": 197.092005,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "mjukvarupartiklar,",
+      "start": 197.092005,
+      "end": 198.299829,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "valideringsprocesser,",
+      "start": 198.299829,
+      "end": 199.649299,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "produktionssystem",
+      "start": 199.649299,
+      "end": 200.790351,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "och",
+      "start": 200.790351,
+      "end": 201.117624,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "accumulering",
+      "start": 201.117624,
+      "end": 202.005583,
+      "exact": false,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "av",
+      "start": 202.005583,
+      "end": 202.249996,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "teknisk",
+      "start": 202.249996,
+      "end": 202.852352,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kunskap",
+      "start": 202.852352,
+      "end": 203.454707,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "används",
+      "start": 203.454707,
+      "end": 204.057063,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "igenvarande",
+      "start": 204.057063,
+      "end": 204.8911,
+      "exact": false,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "där",
+      "start": 204.8911,
+      "end": 205.218372,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "det",
+      "start": 205.218372,
+      "end": 205.545645,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "är",
+      "start": 205.545645,
+      "end": 205.790058,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "lämpligt.",
+      "start": 205.790058,
+      "end": 206.623841,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Detta",
+      "start": 206.623841,
+      "end": 207.096601,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "är",
+      "start": 207.096601,
+      "end": 207.341014,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "viktigt",
+      "start": 207.341014,
+      "end": 207.94337,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "eftersom",
+      "start": 207.94337,
+      "end": 208.606513,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "värdet",
+      "start": 208.606513,
+      "end": 209.14559,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "av",
+      "start": 209.14559,
+      "end": 209.390003,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ett",
+      "start": 209.390003,
+      "end": 209.717276,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "projekt",
+      "start": 209.717276,
+      "end": 210.319632,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "inte",
+      "start": 210.319632,
+      "end": 210.722224,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "behöver",
+      "start": 210.722224,
+      "end": 211.32458,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "sluta",
+      "start": 211.32458,
+      "end": 211.79734,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "när",
+      "start": 211.79734,
+      "end": 212.124613,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "projektet",
+      "start": 212.124613,
+      "end": 212.846446,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "är",
+      "start": 212.846446,
+      "end": 213.090859,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "klar.",
+      "start": 213.090859,
+      "end": 213.664091,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Delar",
+      "start": 213.664091,
+      "end": 214.136852,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "av",
+      "start": 214.136852,
+      "end": 214.381265,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "teknologin",
+      "start": 214.381265,
+      "end": 215.159987,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kan",
+      "start": 215.159987,
+      "end": 215.487259,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "bli",
+      "start": 215.487259,
+      "end": 215.814532,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "infrastruktur",
+      "start": 215.814532,
+      "end": 216.755168,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "för",
+      "start": 216.755168,
+      "end": 217.082441,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "nästa",
+      "start": 217.082441,
+      "end": 217.555201,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "produkt,",
+      "start": 217.555201,
+      "end": 218.224329,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "vilket",
+      "start": 218.224329,
+      "end": 218.763406,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "tillåter",
+      "start": 218.763406,
+      "end": 219.42655,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "att",
+      "start": 219.42655,
+      "end": 219.753822,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "produktionssystemet",
+      "start": 219.753822,
+      "end": 220.990012,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "förbättras",
+      "start": 220.990012,
+      "end": 221.768734,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "över",
+      "start": 221.768734,
+      "end": 222.171326,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "tid.",
+      "start": 222.171326,
+      "end": 222.669239,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Delad",
+      "start": 222.669239,
+      "end": 223.141999,
+      "exact": true,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "infrastruktur",
+      "start": 223.141999,
+      "end": 224.082635,
+      "exact": true,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 224.082635,
+      "end": 224.231017,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Validering",
+      "start": 224.231017,
+      "end": 225.00974,
+      "exact": true,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 225.00974,
+      "end": 225.158122,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Genanvändning",
+      "start": 225.158122,
+      "end": 226.098758,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 226.098758,
+      "end": 226.247141,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Produktionssystem",
+      "start": 226.247141,
+      "end": 227.388193,
+      "exact": true,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire",
+      "start": 227.388193,
+      "end": 227.927271,
+      "exact": true,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Audio",
+      "start": 227.927271,
+      "end": 228.400031,
+      "exact": true,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 228.400031,
+      "end": 228.548413,
+      "exact": false,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Första",
+      "start": 228.548413,
+      "end": 229.087491,
+      "exact": true,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "implementering",
+      "start": 229.087491,
+      "end": 230.079681,
+      "exact": true,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Archer",
+      "start": 230.079681,
+      "end": 230.618758,
+      "exact": true,
+      "block": 33,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Archer",
+      "start": 230.618758,
+      "end": 231.157836,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "är",
+      "start": 231.157836,
+      "end": 231.402249,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "det",
+      "start": 231.402249,
+      "end": 231.729522,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "första",
+      "start": 231.729522,
+      "end": 232.268599,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "produkten",
+      "start": 232.268599,
+      "end": 232.990433,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "utvecklade",
+      "start": 232.990433,
+      "end": 233.769155,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "inom",
+      "start": 233.769155,
+      "end": 234.171747,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "den",
+      "start": 234.171747,
+      "end": 234.49902,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "bredare",
+      "start": 234.49902,
+      "end": 235.101376,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire",
+      "start": 235.101376,
+      "end": 235.640454,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Audio-rutan.",
+      "start": 235.640454,
+      "end": 236.64513,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Det",
+      "start": 236.64513,
+      "end": 236.972403,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "är",
+      "start": 236.972403,
+      "end": 237.216816,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 237.216816,
+      "end": 237.461228,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "precisionsohöjningsverktyg",
+      "start": 237.461228,
+      "end": 239.010628,
+      "exact": false,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "byggt",
+      "start": 239.010628,
+      "end": 239.483388,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "runt",
+      "start": 239.483388,
+      "end": 239.88598,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Gain,",
+      "start": 239.88598,
+      "end": 240.355345,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Threshold",
+      "start": 240.355345,
+      "end": 241.077178,
+      "exact": false,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "och",
+      "start": 241.077178,
+      "end": 241.404451,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Atmosfär,",
+      "start": 241.404451,
+      "end": 242.134366,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "utformat",
+      "start": 242.134366,
+      "end": 242.797509,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "för",
+      "start": 242.797509,
+      "end": 243.124782,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "att",
+      "start": 243.124782,
+      "end": 243.452055,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ge",
+      "start": 243.452055,
+      "end": 243.696467,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "producenter",
+      "start": 243.696467,
+      "end": 244.530504,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "och",
+      "start": 244.530504,
+      "end": 244.857777,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ingenjörer",
+      "start": 244.857777,
+      "end": 245.636499,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "direkte",
+      "start": 245.636499,
+      "end": 246.238855,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kontroll",
+      "start": 246.238855,
+      "end": 246.901998,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "över",
+      "start": 246.901998,
+      "end": 247.30459,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "clipping-beteende,",
+      "start": 247.30459,
+      "end": 248.512415,
+      "exact": false,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "toppvärden,",
+      "start": 248.512415,
+      "end": 249.357909,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "transiente",
+      "start": 249.357909,
+      "end": 250.136631,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "och",
+      "start": 250.136631,
+      "end": 250.463904,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ljudliga",
+      "start": 250.463904,
+      "end": 251.127047,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "karaktär.",
+      "start": 251.127047,
+      "end": 251.96083,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Dess",
+      "start": 251.96083,
+      "end": 252.363422,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "strategiska",
+      "start": 252.363422,
+      "end": 253.197459,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "roll",
+      "start": 253.197459,
+      "end": 253.600052,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "är",
+      "start": 253.600052,
+      "end": 253.844464,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "bredare",
+      "start": 253.844464,
+      "end": 254.44682,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "än",
+      "start": 254.44682,
+      "end": 254.691233,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "endast",
+      "start": 254.691233,
+      "end": 255.230311,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 255.230311,
+      "end": 255.474724,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "enskild",
+      "start": 255.474724,
+      "end": 256.077079,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ljudeffekt.",
+      "start": 256.077079,
+      "end": 257.026441,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Archer",
+      "start": 257.026441,
+      "end": 257.565519,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "erbjuder",
+      "start": 257.565519,
+      "end": 258.228662,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ett",
+      "start": 258.228662,
+      "end": 258.555935,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "praktiskt",
+      "start": 258.555935,
+      "end": 259.277768,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "miljö",
+      "start": 259.277768,
+      "end": 259.750528,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "för",
+      "start": 259.750528,
+      "end": 260.077801,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "att",
+      "start": 260.077801,
+      "end": 260.405074,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "utveckla",
+      "start": 260.405074,
+      "end": 261.068217,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "och",
+      "start": 261.068217,
+      "end": 261.395489,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "godkänna",
+      "start": 261.395489,
+      "end": 262.058633,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ljudteknik,",
+      "start": 262.058633,
+      "end": 262.904127,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "gränssnittssystem",
+      "start": 262.904127,
+      "end": 264.045179,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "och",
+      "start": 264.045179,
+      "end": 264.372452,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "produktionselement",
+      "start": 264.372452,
+      "end": 265.561443,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "som",
+      "start": 265.561443,
+      "end": 265.888716,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "senare",
+      "start": 265.888716,
+      "end": 266.427794,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kan",
+      "start": 266.427794,
+      "end": 266.755066,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "bidra",
+      "start": 266.755066,
+      "end": 267.227827,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "till",
+      "start": 267.227827,
+      "end": 267.630419,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "framtida",
+      "start": 267.630419,
+      "end": 268.293562,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kreativa-programvaruprodukter.",
+      "start": 268.293562,
+      "end": 270.140337,
+      "exact": false,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire",
+      "start": 270.140337,
+      "end": 270.679415,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Audio",
+      "start": 270.679415,
+      "end": 271.152175,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "utforskar",
+      "start": 271.152175,
+      "end": 271.874008,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "också",
+      "start": 271.874008,
+      "end": 272.346769,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "hur",
+      "start": 272.346769,
+      "end": 272.674041,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "AI-baserade",
+      "start": 272.674041,
+      "end": 273.508078,
+      "exact": false,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "system,",
+      "start": 273.508078,
+      "end": 274.113928,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "procedurell",
+      "start": 274.113928,
+      "end": 274.947965,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "bearbetning",
+      "start": 274.947965,
+      "end": 275.782001,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "och",
+      "start": 275.782001,
+      "end": 276.109274,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "återanvändbar",
+      "start": 276.109274,
+      "end": 277.04991,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "mjukvaruteknik",
+      "start": 277.04991,
+      "end": 278.0421,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kan",
+      "start": 278.0421,
+      "end": 278.369372,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "konvergera",
+      "start": 278.369372,
+      "end": 279.148094,
+      "exact": false,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "till",
+      "start": 279.148094,
+      "end": 279.550687,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "nya",
+      "start": 279.550687,
+      "end": 279.87796,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "plugin-koncept",
+      "start": 279.87796,
+      "end": 280.870149,
+      "exact": false,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "och",
+      "start": 280.870149,
+      "end": 281.197422,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kreativa",
+      "start": 281.197422,
+      "end": 281.860565,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "arbetsflöden",
+      "start": 281.860565,
+      "end": 282.748524,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "utanför",
+      "start": 282.748524,
+      "end": 283.35088,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "konventionella",
+      "start": 283.35088,
+      "end": 284.343069,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "fasta",
+      "start": 284.343069,
+      "end": 284.815829,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ljudbearbetningsverktyg.",
+      "start": 284.815829,
+      "end": 286.40496,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Ljudteknologi",
+      "start": 286.40496,
+      "end": 287.345596,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 287.345596,
+      "end": 287.493979,
+      "exact": false,
+      "block": 38,
+      "tts_chunk": 2
+    },
+    {
+      "word": "DSP",
+      "start": 287.493979,
+      "end": 287.821251,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 287.821251,
+      "end": 287.969634,
+      "exact": false,
+      "block": 38,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Proceduerligt",
+      "start": 287.969634,
+      "end": 288.91027,
+      "exact": false,
+      "block": 38,
+      "tts_chunk": 2
+    },
+    {
+      "word": "bearbetning",
+      "start": 288.91027,
+      "end": 289.744307,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 289.744307,
+      "end": 289.892689,
+      "exact": false,
+      "block": 38,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Kreativ",
+      "start": 289.892689,
+      "end": 290.495045,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 2
+    },
+    {
+      "word": "software",
+      "start": 290.495045,
+      "end": 291.158188,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire",
+      "start": 291.158188,
+      "end": 291.697266,
+      "exact": true,
+      "block": 39,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Ljud",
+      "start": 291.697266,
+      "end": 292.099858,
+      "exact": true,
+      "block": 39,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Från",
+      "start": 292.099858,
+      "end": 292.502451,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 2
+    },
+    {
+      "word": "tillägg",
+      "start": 292.502451,
+      "end": 293.104806,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 2
+    },
+    {
+      "word": "till",
+      "start": 293.104806,
+      "end": 293.507399,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 2
+    },
+    {
+      "word": "nya",
+      "start": 293.507399,
+      "end": 293.834671,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 2
+    },
+    {
+      "word": "software-idéer.",
+      "start": 293.834671,
+      "end": 294.997501,
+      "exact": false,
+      "block": 40,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire",
+      "start": 294.997501,
+      "end": 295.536578,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Audio",
+      "start": 295.536578,
+      "end": 296.009339,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "utforskar",
+      "start": 296.009339,
+      "end": 296.731172,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "hur",
+      "start": 296.731172,
+      "end": 297.058445,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "AI-baserade",
+      "start": 297.058445,
+      "end": 297.892482,
+      "exact": false,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "system,",
+      "start": 297.892482,
+      "end": 298.498331,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "procedurell",
+      "start": 298.498331,
+      "end": 299.332368,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "bearbetning",
+      "start": 299.332368,
+      "end": 300.166405,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "och",
+      "start": 300.166405,
+      "end": 300.493678,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "återanvändbara",
+      "start": 300.493678,
+      "end": 301.485867,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "programvarukomponenter",
+      "start": 301.485867,
+      "end": 302.859678,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kan",
+      "start": 302.859678,
+      "end": 303.18695,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "konvergera",
+      "start": 303.18695,
+      "end": 303.965672,
+      "exact": false,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "till",
+      "start": 303.965672,
+      "end": 304.368265,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kreativa",
+      "start": 304.368265,
+      "end": 305.031408,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "verktyg",
+      "start": 305.031408,
+      "end": 305.633764,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "som",
+      "start": 305.633764,
+      "end": 305.961036,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "utvidgar",
+      "start": 305.961036,
+      "end": 306.624179,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "konventionella",
+      "start": 306.624179,
+      "end": 307.616369,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "pluginarbetsflöden.",
+      "start": 307.616369,
+      "end": 308.976,
+      "exact": false,
+      "block": 41,
+      "tts_chunk": 2
+    },
+    {
+      "word": "AI",
+      "start": 308.976,
+      "end": 309.23403,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 309.23403,
+      "end": 309.579537,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bli",
+      "start": 309.579537,
+      "end": 309.925044,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "en",
+      "start": 309.925044,
+      "end": 310.183074,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "del",
+      "start": 310.183074,
+      "end": 310.528581,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "av",
+      "start": 310.528581,
+      "end": 310.786612,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "den",
+      "start": 310.786612,
+      "end": 311.132118,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kreativa",
+      "start": 311.132118,
+      "end": 311.832209,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "softwaremiljön",
+      "start": 311.832209,
+      "end": 312.879678,
+      "exact": false,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "istället",
+      "start": 312.879678,
+      "end": 313.579769,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "för",
+      "start": 313.579769,
+      "end": 313.925276,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "att",
+      "start": 313.925276,
+      "end": 314.270782,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "existera",
+      "start": 314.270782,
+      "end": 314.970873,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "endast",
+      "start": 314.970873,
+      "end": 315.539985,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "som",
+      "start": 315.539985,
+      "end": 315.885492,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "en",
+      "start": 315.885492,
+      "end": 316.143522,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "separat",
+      "start": 316.143522,
+      "end": 316.779439,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "assistent.",
+      "start": 316.779439,
+      "end": 317.721636,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Parametrar,",
+      "start": 317.721636,
+      "end": 318.614238,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ljud",
+      "start": 318.614238,
+      "end": 319.039261,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "och",
+      "start": 319.039261,
+      "end": 319.384767,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "programvara",
+      "start": 319.384767,
+      "end": 320.265273,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 320.265273,
+      "end": 320.61078,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "transformeras",
+      "start": 320.61078,
+      "end": 321.603824,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "dynamiskt,",
+      "start": 321.603824,
+      "end": 322.436367,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "öppnande",
+      "start": 322.436367,
+      "end": 323.136457,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "utrymme",
+      "start": 323.136457,
+      "end": 323.772373,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "för",
+      "start": 323.772373,
+      "end": 324.11788,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "nya",
+      "start": 324.11788,
+      "end": 324.463387,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kreativa",
+      "start": 324.463387,
+      "end": 325.163477,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "interaktionsmodeller.",
+      "start": 325.163477,
+      "end": 326.697787,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Lyckade",
+      "start": 326.697787,
+      "end": 327.333703,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "komponenter",
+      "start": 327.333703,
+      "end": 328.214209,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "utvecklade",
+      "start": 328.214209,
+      "end": 329.036317,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "i",
+      "start": 329.036317,
+      "end": 329.192967,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ett",
+      "start": 329.192967,
+      "end": 329.538474,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "produkt",
+      "start": 329.538474,
+      "end": 330.17439,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 330.17439,
+      "end": 330.519897,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "senare",
+      "start": 330.519897,
+      "end": 331.089009,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "återanvändas,",
+      "start": 331.089009,
+      "end": 332.096934,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "utvidgas",
+      "start": 332.096934,
+      "end": 332.797024,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "eller",
+      "start": 332.797024,
+      "end": 333.296124,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "integreras",
+      "start": 333.296124,
+      "end": 334.118233,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "i",
+      "start": 334.118233,
+      "end": 334.274882,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "andra",
+      "start": 334.274882,
+      "end": 334.773983,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "projekt.",
+      "start": 334.773983,
+      "end": 335.590046,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Målet",
+      "start": 335.590046,
+      "end": 336.089146,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "är",
+      "start": 336.089146,
+      "end": 336.347176,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "inte",
+      "start": 336.347176,
+      "end": 336.772199,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "endast",
+      "start": 336.772199,
+      "end": 337.341312,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "att",
+      "start": 337.341312,
+      "end": 337.686819,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "producera",
+      "start": 337.686819,
+      "end": 338.44887,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "isolerade",
+      "start": 338.44887,
+      "end": 339.21092,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ljudplug-ins.",
+      "start": 339.21092,
+      "end": 340.328499,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Det",
+      "start": 340.328499,
+      "end": 340.674006,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "är",
+      "start": 340.674006,
+      "end": 340.932037,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "att",
+      "start": 340.932037,
+      "end": 341.277543,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "skapa",
+      "start": 341.277543,
+      "end": 341.776643,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "en",
+      "start": 341.776643,
+      "end": 342.034674,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "återanvändbar",
+      "start": 342.034674,
+      "end": 343.027718,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kreativ-teknisk",
+      "start": 343.027718,
+      "end": 344.128535,
+      "exact": false,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bas",
+      "start": 344.128535,
+      "end": 344.474041,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "som",
+      "start": 344.474041,
+      "end": 344.819548,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 344.819548,
+      "end": 345.165055,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "stödja",
+      "start": 345.165055,
+      "end": 345.734168,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "framtida",
+      "start": 345.734168,
+      "end": 346.434258,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "verktyg,",
+      "start": 346.434258,
+      "end": 347.140666,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bredare",
+      "start": 347.140666,
+      "end": 347.776583,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "miljöer",
+      "start": 347.776583,
+      "end": 348.412499,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "och",
+      "start": 348.412499,
+      "end": 348.758006,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "nya",
+      "start": 348.758006,
+      "end": 349.103512,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "produktkoncept.",
+      "start": 349.103512,
+      "end": 350.331129,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "System",
+      "start": 350.331129,
+      "end": 350.900242,
+      "exact": true,
+      "block": 46,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Softwareproduktion",
+      "start": 350.900242,
+      "end": 352.155478,
+      "exact": false,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "utan",
+      "start": 352.155478,
+      "end": 352.580501,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "att",
+      "start": 352.580501,
+      "end": 352.926008,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "börja",
+      "start": 352.926008,
+      "end": 353.425108,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "om",
+      "start": 353.425108,
+      "end": 353.683138,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "från",
+      "start": 353.683138,
+      "end": 354.108161,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "början.",
+      "start": 354.108161,
+      "end": 354.857421,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Centrale",
+      "start": 354.857421,
+      "end": 355.557511,
+      "exact": false,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "idé",
+      "start": 355.557511,
+      "end": 355.903018,
+      "exact": false,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "är",
+      "start": 355.903018,
+      "end": 356.161049,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "enkel:",
+      "start": 356.161049,
+      "end": 356.730641,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "när",
+      "start": 356.730641,
+      "end": 357.076148,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ett",
+      "start": 357.076148,
+      "end": 357.421655,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "nytt",
+      "start": 357.421655,
+      "end": 357.846678,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "produkt",
+      "start": 357.846678,
+      "end": 358.482594,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 358.482594,
+      "end": 358.828101,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "använda",
+      "start": 358.828101,
+      "end": 359.464017,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "teknik",
+      "start": 359.464017,
+      "end": 360.033129,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "som",
+      "start": 360.033129,
+      "end": 360.378636,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "redan",
+      "start": 360.378636,
+      "end": 360.877736,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "finns",
+      "start": 360.877736,
+      "end": 361.376836,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "inuti",
+      "start": 361.376836,
+      "end": 361.875937,
+      "exact": false,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Unfire,",
+      "start": 361.875937,
+      "end": 362.515542,
+      "exact": false,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bör",
+      "start": 362.515542,
+      "end": 362.861048,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "utvecklingen",
+      "start": 362.861048,
+      "end": 363.79848,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "återanvända",
+      "start": 363.79848,
+      "end": 364.678986,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "detta",
+      "start": 364.678986,
+      "end": 365.178086,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "nyttofattande",
+      "start": 365.178086,
+      "end": 366.17113,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "i",
+      "start": 366.17113,
+      "end": 366.327779,
+      "exact": false,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "stället",
+      "start": 366.327779,
+      "end": 366.963696,
+      "exact": false,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "för",
+      "start": 366.963696,
+      "end": 367.309202,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "att",
+      "start": 367.309202,
+      "end": 367.654709,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bygga",
+      "start": 367.654709,
+      "end": 368.153809,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "det",
+      "start": 368.153809,
+      "end": 368.499316,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "om.",
+      "start": 368.499316,
+      "end": 368.937494,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Delad",
+      "start": 368.937494,
+      "end": 369.436594,
+      "exact": true,
+      "block": 49,
+      "tts_chunk": 3
+    },
+    {
+      "word": "foundation",
+      "start": 369.436594,
+      "end": 370.258703,
+      "exact": true,
+      "block": 49,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Genomgångsbart",
+      "start": 370.258703,
+      "end": 371.306172,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "mjukvaru",
+      "start": 371.306172,
+      "end": 372.006263,
+      "exact": false,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "komponenter,",
+      "start": 372.006263,
+      "end": 372.95726,
+      "exact": false,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "produktionsskärmning",
+      "start": 372.95726,
+      "end": 374.311423,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "och",
+      "start": 374.311423,
+      "end": 374.65693,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "valideringssystem",
+      "start": 374.65693,
+      "end": 375.861557,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bildar",
+      "start": 375.861557,
+      "end": 376.430669,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "en",
+      "start": 376.430669,
+      "end": 376.6887,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bas",
+      "start": 376.6887,
+      "end": 377.034206,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "som",
+      "start": 377.034206,
+      "end": 377.379713,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 377.379713,
+      "end": 377.72522,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "fortsätta",
+      "start": 377.72522,
+      "end": 378.487271,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "att",
+      "start": 378.487271,
+      "end": 378.832778,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "utvecklas.",
+      "start": 378.832778,
+      "end": 379.774975,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Produktlager",
+      "start": 379.774975,
+      "end": 380.712407,
+      "exact": true,
+      "block": 51,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Nytt",
+      "start": 380.712407,
+      "end": 381.13743,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "användningssätt",
+      "start": 381.13743,
+      "end": 382.238247,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 382.238247,
+      "end": 382.583754,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kombinera",
+      "start": 382.583754,
+      "end": 383.345805,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "befintliga",
+      "start": 383.345805,
+      "end": 384.167913,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "funktioner",
+      "start": 384.167913,
+      "end": 384.990022,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "med",
+      "start": 384.990022,
+      "end": 385.335529,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "produkt-specifika",
+      "start": 385.335529,
+      "end": 386.540156,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "teknologier",
+      "start": 386.540156,
+      "end": 387.420661,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "i",
+      "start": 387.420661,
+      "end": 387.577311,
+      "exact": false,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "stället",
+      "start": 387.577311,
+      "end": 388.213227,
+      "exact": false,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "för",
+      "start": 388.213227,
+      "end": 388.558734,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "att",
+      "start": 388.558734,
+      "end": 388.904241,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "börja",
+      "start": 388.904241,
+      "end": 389.403341,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "från",
+      "start": 389.403341,
+      "end": 389.828364,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "en",
+      "start": 389.828364,
+      "end": 390.086394,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "tom",
+      "start": 390.086394,
+      "end": 390.431901,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "arkitektur.",
+      "start": 390.431901,
+      "end": 391.434157,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Validering",
+      "start": 391.434157,
+      "end": 392.256266,
+      "exact": true,
+      "block": 53,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Byggnader,",
+      "start": 392.256266,
+      "end": 393.088809,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "tester",
+      "start": 393.088809,
+      "end": 393.657921,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "och",
+      "start": 393.657921,
+      "end": 394.003428,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "interna",
+      "start": 394.003428,
+      "end": 394.639344,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kontroller",
+      "start": 394.639344,
+      "end": 395.461453,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ger",
+      "start": 395.461453,
+      "end": 395.80696,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "mätbara",
+      "start": 395.80696,
+      "end": 396.442876,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bevis",
+      "start": 396.442876,
+      "end": 396.941976,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "om",
+      "start": 396.941976,
+      "end": 397.200007,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "att",
+      "start": 397.200007,
+      "end": 397.545513,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "programvarukandidater",
+      "start": 397.545513,
+      "end": 398.948092,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "fungerar",
+      "start": 398.948092,
+      "end": 399.648182,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "som",
+      "start": 399.648182,
+      "end": 399.993689,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "avsåg.",
+      "start": 399.993689,
+      "end": 400.672936,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Utökning",
+      "start": 400.672936,
+      "end": 401.373026,
+      "exact": true,
+      "block": 55,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Infrastruktur",
+      "start": 401.373026,
+      "end": 402.36607,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 402.36607,
+      "end": 402.711577,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "utvecklas",
+      "start": 402.711577,
+      "end": 403.473628,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "genom",
+      "start": 403.473628,
+      "end": 403.972728,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ytterligare",
+      "start": 403.972728,
+      "end": 404.853234,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "beräkningskapacitet,",
+      "start": 404.853234,
+      "end": 406.22879,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "lagringskapacitet,",
+      "start": 406.22879,
+      "end": 407.503909,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "testning,",
+      "start": 407.503909,
+      "end": 408.274492,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kvalitetsgarantier",
+      "start": 408.274492,
+      "end": 409.529728,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "och",
+      "start": 409.529728,
+      "end": 409.875235,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "deploymentskapacitet.",
+      "start": 409.875235,
+      "end": 411.409545,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Produktionsstyrning",
+      "start": 411.409545,
+      "end": 412.714609,
+      "exact": false,
+      "block": 57,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Bottlenecken",
+      "start": 412.714609,
+      "end": 413.652041,
+      "exact": true,
+      "block": 58,
+      "tts_chunk": 3
+    },
+    {
+      "word": "förändras.",
+      "start": 413.652041,
+      "end": 414.594239,
+      "exact": true,
+      "block": 58,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Varje",
+      "start": 414.594239,
+      "end": 415.093339,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "gällande",
+      "start": 415.093339,
+      "end": 415.793429,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "arkitektur",
+      "start": 415.793429,
+      "end": 416.615538,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "har",
+      "start": 416.615538,
+      "end": 416.961045,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "visat",
+      "start": 416.961045,
+      "end": 417.460145,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "att",
+      "start": 417.460145,
+      "end": 417.805652,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "inre",
+      "start": 417.805652,
+      "end": 418.230675,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "utveckling",
+      "start": 418.230675,
+      "end": 419.052784,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 419.052784,
+      "end": 419.39829,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "få",
+      "start": 419.39829,
+      "end": 419.656321,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "fungerande",
+      "start": 419.656321,
+      "end": 420.47843,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "programvarukandidater",
+      "start": 420.47843,
+      "end": 421.881008,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "att",
+      "start": 421.881008,
+      "end": 422.226515,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "gå",
+      "start": 422.226515,
+      "end": 422.484545,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "genom",
+      "start": 422.484545,
+      "end": 422.983645,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "extremt",
+      "start": 422.983645,
+      "end": 423.619562,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "korta",
+      "start": 423.619562,
+      "end": 424.118662,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bygghastigheter",
+      "start": 424.118662,
+      "end": 425.219478,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "—",
+      "start": 425.219478,
+      "end": 425.376128,
+      "exact": false,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "i",
+      "start": 425.376128,
+      "end": 425.532778,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "vissa",
+      "start": 425.532778,
+      "end": 426.031878,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "fall",
+      "start": 426.031878,
+      "end": 426.456901,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "mätta",
+      "start": 426.456901,
+      "end": 426.956001,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "i",
+      "start": 426.956001,
+      "end": 427.112651,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "minuter.",
+      "start": 427.112651,
+      "end": 427.928714,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Efter",
+      "start": 427.928714,
+      "end": 428.427814,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "att",
+      "start": 428.427814,
+      "end": 428.773321,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "återanvändbar",
+      "start": 428.773321,
+      "end": 429.766365,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "teknologi",
+      "start": 429.766365,
+      "end": 430.528416,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "utvecklas,",
+      "start": 430.528416,
+      "end": 431.360959,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "blir",
+      "start": 431.360959,
+      "end": 431.785982,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "begränsande",
+      "start": 431.785982,
+      "end": 432.666487,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "faktorer",
+      "start": 432.666487,
+      "end": 433.366577,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "steget",
+      "start": 433.366577,
+      "end": 433.93569,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "i",
+      "start": 433.93569,
+      "end": 434.09234,
+      "exact": false,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "införandet,",
+      "start": 434.09234,
+      "end": 434.984941,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "som",
+      "start": 434.984941,
+      "end": 435.330447,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "beräkningsresurser,",
+      "start": 435.330447,
+      "end": 436.656176,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "lagringsresurser,",
+      "start": 436.656176,
+      "end": 437.879845,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "testning,",
+      "start": 437.879845,
+      "end": 438.650427,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kvalitetsgarantier",
+      "start": 438.650427,
+      "end": 439.905664,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "och",
+      "start": 439.905664,
+      "end": 440.25117,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kommersiell",
+      "start": 440.25117,
+      "end": 441.131676,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "implementering",
+      "start": 441.131676,
+      "end": 442.179145,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "—",
+      "start": 442.179145,
+      "end": 442.335795,
+      "exact": false,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "resurser",
+      "start": 442.335795,
+      "end": 443.035885,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "som",
+      "start": 443.035885,
+      "end": 443.381392,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "själva",
+      "start": 443.381392,
+      "end": 443.950505,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 443.950505,
+      "end": 444.296012,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "utvidgas.",
+      "start": 444.296012,
+      "end": 445.176249,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Flaggprodukten",
+      "start": 445.176249,
+      "end": 446.223719,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 3
+    },
+    {
+      "word": "följer",
+      "start": 446.223719,
+      "end": 446.792831,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 3
+    },
+    {
+      "word": "nuvarande",
+      "start": 446.792831,
+      "end": 447.554882,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 3
+    },
+    {
+      "word": "användningar",
+      "start": 447.554882,
+      "end": 448.492314,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 3
+    },
+    {
+      "word": "för",
+      "start": 448.492314,
+      "end": 448.837821,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 3
+    },
+    {
+      "word": "att",
+      "start": 448.837821,
+      "end": 449.183328,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 3
+    },
+    {
+      "word": "demonisera",
+      "start": 449.183328,
+      "end": 450.005436,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 3
+    },
+    {
+      "word": "den",
+      "start": 450.005436,
+      "end": 450.350943,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bredare",
+      "start": 450.350943,
+      "end": 450.986859,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 3
+    },
+    {
+      "word": "teknologidirektionsen.",
+      "start": 450.986859,
+      "end": 452.569585,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Prioritär",
+      "start": 452.569585,
+      "end": 453.331636,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "våg",
+      "start": 453.331636,
+      "end": 453.677142,
+      "exact": false,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "1",
+      "start": 453.677142,
+      "end": 453.833792,
+      "exact": false,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "för",
+      "start": 453.833792,
+      "end": 454.179299,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "programvara",
+      "start": 454.179299,
+      "end": 455.059804,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "identifierade",
+      "start": 455.059804,
+      "end": 456.052848,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "för",
+      "start": 456.052848,
+      "end": 456.398355,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "fokuserat",
+      "start": 456.398355,
+      "end": 457.160406,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "utveckling.",
+      "start": 457.160406,
+      "end": 458.162662,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "53",
+      "start": 458.162662,
+      "end": 458.420692,
+      "exact": true,
+      "block": 63,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Standalone-programvara",
+      "start": 458.420692,
+      "end": 459.871045,
+      "exact": false,
+      "block": 64,
+      "tts_chunk": 3
+    },
+    {
+      "word": "utvecklad",
+      "start": 459.871045,
+      "end": 460.633095,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 3
+    },
+    {
+      "word": "och",
+      "start": 460.633095,
+      "end": 460.978602,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 3
+    },
+    {
+      "word": "internt",
+      "start": 460.978602,
+      "end": 461.614518,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 3
+    },
+    {
+      "word": "granskad.",
+      "start": 461.614518,
+      "end": 462.494756,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 3
+    },
+    {
+      "word": "53/53",
+      "start": 462.494756,
+      "end": 462.919779,
+      "exact": false,
+      "block": 65,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Lyckade",
+      "start": 462.919779,
+      "end": 463.555695,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 3
+    },
+    {
+      "word": "självständiga",
+      "start": 463.555695,
+      "end": 464.548739,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 3
+    },
+    {
+      "word": "byggnader",
+      "start": 464.548739,
+      "end": 465.31079,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 3
+    },
+    {
+      "word": "under",
+      "start": 465.31079,
+      "end": 465.80989,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 3
+    },
+    {
+      "word": "den",
+      "start": 465.80989,
+      "end": 466.155397,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 3
+    },
+    {
+      "word": "interna",
+      "start": 466.155397,
+      "end": 466.791313,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kontrollpunkten",
+      "start": 466.791313,
+      "end": 467.89213,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 3
+    },
+    {
+      "word": "i",
+      "start": 467.89213,
+      "end": 468.048779,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 3
+    },
+    {
+      "word": "september",
+      "start": 468.048779,
+      "end": 468.81083,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 3
+    },
+    {
+      "word": "2026.",
+      "start": 468.81083,
+      "end": 469.416,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 3
+    },
+    {
+      "word": "01",
+      "start": 469.416,
+      "end": 469.725311,
+      "exact": true,
+      "block": 67,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Strikt",
+      "start": 469.725311,
+      "end": 470.407527,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "regelbeskrivning:",
+      "start": 470.407527,
+      "end": 471.874384,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 471.874384,
+      "end": 472.062166,
+      "exact": false,
+      "block": 69,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Returnera",
+      "start": 472.062166,
+      "end": 472.975664,
+      "exact": false,
+      "block": 69,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ENDAST",
+      "start": 472.975664,
+      "end": 473.657881,
+      "exact": true,
+      "block": 69,
+      "tts_chunk": 4
+    },
+    {
+      "word": "översättningen.",
+      "start": 473.657881,
+      "end": 475.129471,
+      "exact": true,
+      "block": 69,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 475.129471,
+      "end": 475.317252,
+      "exact": false,
+      "block": 70,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Uttryck",
+      "start": 475.317252,
+      "end": 476.079549,
+      "exact": true,
+      "block": 70,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ingenting.",
+      "start": 476.079549,
+      "end": 477.208996,
+      "exact": true,
+      "block": 70,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 477.208996,
+      "end": 477.396778,
+      "exact": false,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Ändra",
+      "start": 477.396778,
+      "end": 477.995068,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "inte",
+      "start": 477.995068,
+      "end": 478.504559,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "citatmärken.",
+      "start": 478.504559,
+      "end": 479.776002,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 479.776002,
+      "end": 479.963784,
+      "exact": false,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bevara",
+      "start": 479.963784,
+      "end": 480.646001,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "mening",
+      "start": 480.646001,
+      "end": 481.328217,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "och",
+      "start": 481.328217,
+      "end": 481.742389,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "professionell",
+      "start": 481.742389,
+      "end": 482.932788,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "företagsröst.",
+      "start": 482.932788,
+      "end": 484.272471,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 484.272471,
+      "end": 484.460253,
+      "exact": false,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Skriv",
+      "start": 484.460253,
+      "end": 485.058543,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "naturligt",
+      "start": 485.058543,
+      "end": 485.972041,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "som",
+      "start": 485.972041,
+      "end": 486.386213,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "svensk",
+      "start": 486.386213,
+      "end": 487.06843,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "vana",
+      "start": 487.06843,
+      "end": 487.577921,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "språk,",
+      "start": 487.577921,
+      "end": 488.260712,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "inte",
+      "start": 488.260712,
+      "end": 488.770203,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "en",
+      "start": 488.770203,
+      "end": 489.079514,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "liten",
+      "start": 489.079514,
+      "end": 489.677804,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "maskinöversättning.",
+      "start": 489.677804,
+      "end": 491.398451,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 491.398451,
+      "end": 491.586233,
+      "exact": false,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Överför",
+      "start": 491.586233,
+      "end": 492.348529,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "inte",
+      "start": 492.348529,
+      "end": 492.85802,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "eller",
+      "start": 492.85802,
+      "end": 493.45631,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ändra",
+      "start": 493.45631,
+      "end": 494.0546,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "dessa",
+      "start": 494.0546,
+      "end": 494.65289,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "produktmärken:",
+      "start": 494.65289,
+      "end": 495.927791,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Unfire,",
+      "start": 495.927791,
+      "end": 496.694509,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bolt,",
+      "start": 496.694509,
+      "end": 497.288501,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Archer,",
+      "start": 497.288501,
+      "end": 498.05522,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "POWER,",
+      "start": 498.05522,
+      "end": 498.738011,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "AI",
+      "start": 498.738011,
+      "end": 499.047322,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "TOKEN",
+      "start": 499.047322,
+      "end": 499.645612,
+      "exact": false,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "COUNTER.",
+      "start": 499.645612,
+      "end": 500.623857,
+      "exact": false,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 500.623857,
+      "end": 500.811639,
+      "exact": false,
+      "block": 75,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bevara",
+      "start": 500.811639,
+      "end": 501.493855,
+      "exact": true,
+      "block": 75,
+      "tts_chunk": 4
+    },
+    {
+      "word": "nummer,",
+      "start": 501.493855,
+      "end": 502.260574,
+      "exact": true,
+      "block": 75,
+      "tts_chunk": 4
+    },
+    {
+      "word": "teknisk术语已保留未翻译。正确的翻译应为：",
+      "start": 502.260574,
+      "end": 503.999165,
+      "exact": false,
+      "block": 75,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 503.999165,
+      "end": 504.186947,
+      "exact": false,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bevara",
+      "start": 504.186947,
+      "end": 504.869163,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "tekniska术语已保留未翻译。正确的翻译应为：terminologi",
+      "start": 504.869163,
+      "end": 507.247745,
+      "exact": false,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "och",
+      "start": 507.247745,
+      "end": 507.661917,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "produktmärken",
+      "start": 507.661917,
+      "end": 508.852316,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "exakt.",
+      "start": 508.852316,
+      "end": 509.666555,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 509.666555,
+      "end": 509.854336,
+      "exact": false,
+      "block": 77,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Detta",
+      "start": 509.854336,
+      "end": 510.452626,
+      "exact": true,
+      "block": 77,
+      "tts_chunk": 4
+    },
+    {
+      "word": "text",
+      "start": 510.452626,
+      "end": 510.962117,
+      "exact": true,
+      "block": 77,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kommer",
+      "start": 510.962117,
+      "end": 511.644334,
+      "exact": true,
+      "block": 77,
+      "tts_chunk": 4
+    },
+    {
+      "word": "att",
+      "start": 511.644334,
+      "end": 512.058506,
+      "exact": true,
+      "block": 77,
+      "tts_chunk": 4
+    },
+    {
+      "word": "läsa",
+      "start": 512.058506,
+      "end": 512.567997,
+      "exact": true,
+      "block": 77,
+      "tts_chunk": 4
+    },
+    {
+      "word": "av",
+      "start": 512.567997,
+      "end": 512.877307,
+      "exact": true,
+      "block": 77,
+      "tts_chunk": 4
+    },
+    {
+      "word": "en",
+      "start": 512.877307,
+      "end": 513.186618,
+      "exact": true,
+      "block": 77,
+      "tts_chunk": 4
+    },
+    {
+      "word": "professionell",
+      "start": 513.186618,
+      "end": 514.377017,
+      "exact": true,
+      "block": 77,
+      "tts_chunk": 4
+    },
+    {
+      "word": "företagskvinna",
+      "start": 514.377017,
+      "end": 515.632658,
+      "exact": true,
+      "block": 77,
+      "tts_chunk": 4
+    },
+    {
+      "word": "röst.",
+      "start": 515.632658,
+      "end": 516.358097,
+      "exact": true,
+      "block": 77,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Genombruk",
+      "start": 516.358097,
+      "end": 517.271596,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Start",
+      "start": 517.271596,
+      "end": 517.869886,
+      "exact": true,
+      "block": 79,
+      "tts_chunk": 4
+    },
+    {
+      "word": "från",
+      "start": 517.869886,
+      "end": 518.379377,
+      "exact": true,
+      "block": 79,
+      "tts_chunk": 4
+    },
+    {
+      "word": "befintlig",
+      "start": 518.379377,
+      "end": 519.292875,
+      "exact": true,
+      "block": 79,
+      "tts_chunk": 4
+    },
+    {
+      "word": "teknologi",
+      "start": 519.292875,
+      "end": 520.206374,
+      "exact": true,
+      "block": 79,
+      "tts_chunk": 4
+    },
+    {
+      "word": "där",
+      "start": 520.206374,
+      "end": 520.620546,
+      "exact": true,
+      "block": 79,
+      "tts_chunk": 4
+    },
+    {
+      "word": "det",
+      "start": 520.620546,
+      "end": 521.034718,
+      "exact": true,
+      "block": 79,
+      "tts_chunk": 4
+    },
+    {
+      "word": "är",
+      "start": 521.034718,
+      "end": 521.344028,
+      "exact": true,
+      "block": 79,
+      "tts_chunk": 4
+    },
+    {
+      "word": "möjligt.",
+      "start": 521.344028,
+      "end": 522.322274,
+      "exact": true,
+      "block": 79,
+      "tts_chunk": 4
+    },
+    {
+      "word": "02",
+      "start": 522.322274,
+      "end": 522.631584,
+      "exact": true,
+      "block": 80,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bygga",
+      "start": 522.631584,
+      "end": 523.229874,
+      "exact": true,
+      "block": 81,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Skapa",
+      "start": 523.229874,
+      "end": 523.828164,
+      "exact": true,
+      "block": 82,
+      "tts_chunk": 4
+    },
+    {
+      "word": "den",
+      "start": 523.828164,
+      "end": 524.242336,
+      "exact": true,
+      "block": 82,
+      "tts_chunk": 4
+    },
+    {
+      "word": "produktspecifika",
+      "start": 524.242336,
+      "end": 525.624691,
+      "exact": true,
+      "block": 82,
+      "tts_chunk": 4
+    },
+    {
+      "word": "lagen.",
+      "start": 525.624691,
+      "end": 526.43893,
+      "exact": true,
+      "block": 82,
+      "tts_chunk": 4
+    },
+    {
+      "word": "03",
+      "start": 526.43893,
+      "end": 526.748241,
+      "exact": true,
+      "block": 83,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Skala",
+      "start": 526.748241,
+      "end": 527.346531,
+      "exact": true,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Utveckla",
+      "start": 527.346531,
+      "end": 528.185755,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "infrastruktur",
+      "start": 528.185755,
+      "end": 529.376154,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "medan",
+      "start": 529.376154,
+      "end": 529.974444,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "produktionen",
+      "start": 529.974444,
+      "end": 531.098178,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "växer.",
+      "start": 531.098178,
+      "end": 531.912417,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Företag",
+      "start": 531.912417,
+      "end": 532.674714,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Dedicated",
+      "start": 532.674714,
+      "end": 533.588212,
+      "exact": false,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "mjukvaru-system.",
+      "start": 533.588212,
+      "end": 535.123751,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Samma",
+      "start": 535.123751,
+      "end": 535.722041,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "produktbas",
+      "start": 535.722041,
+      "end": 536.707533,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kan",
+      "start": 536.707533,
+      "end": 537.121705,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "stödja",
+      "start": 537.121705,
+      "end": 537.803922,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "specialiserade",
+      "start": 537.803922,
+      "end": 539.059563,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "tillämpningar",
+      "start": 539.059563,
+      "end": 540.249961,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "och",
+      "start": 540.249961,
+      "end": 540.664133,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "milvågar",
+      "start": 540.664133,
+      "end": 541.503358,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "utformade",
+      "start": 541.503358,
+      "end": 542.416856,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "efter",
+      "start": 542.416856,
+      "end": 543.015146,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "organisationens",
+      "start": 543.015146,
+      "end": 544.334736,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "krav.",
+      "start": 544.334736,
+      "end": 545.060176,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Institutioner",
+      "start": 545.060176,
+      "end": 546.250575,
+      "exact": true,
+      "block": 89,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Kontrollerade",
+      "start": 546.250575,
+      "end": 547.440973,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "miljöer.",
+      "start": 547.440973,
+      "end": 548.419219,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Projekt",
+      "start": 548.419219,
+      "end": 549.181515,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kan",
+      "start": 549.181515,
+      "end": 549.595687,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "förblivna",
+      "start": 549.595687,
+      "end": 550.509186,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "isolerade",
+      "start": 550.509186,
+      "end": 551.422684,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "samtidigt",
+      "start": 551.422684,
+      "end": 552.336183,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "som",
+      "start": 552.336183,
+      "end": 552.750355,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "de",
+      "start": 552.750355,
+      "end": 553.059665,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "nytta",
+      "start": 553.059665,
+      "end": 553.657955,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "av",
+      "start": 553.657955,
+      "end": 553.967266,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "tillgängliga",
+      "start": 553.967266,
+      "end": 555.091001,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "grundläggande",
+      "start": 555.091001,
+      "end": 556.281399,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "teknologier,",
+      "start": 556.281399,
+      "end": 557.421396,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "godkänningsprocesser",
+      "start": 557.421396,
+      "end": 559.044681,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "och",
+      "start": 559.044681,
+      "end": 559.458853,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "produktionstillfällen.",
+      "start": 559.458853,
+      "end": 561.356125,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Offentlig",
+      "start": 561.356125,
+      "end": 562.269623,
+      "exact": true,
+      "block": 92,
+      "tts_chunk": 4
+    },
+    {
+      "word": "sektor",
+      "start": 562.269623,
+      "end": 562.95184,
+      "exact": true,
+      "block": 92,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Skalbara",
+      "start": 562.95184,
+      "end": 563.791064,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "digitala",
+      "start": 563.791064,
+      "end": 564.630289,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "verktyg.",
+      "start": 564.630289,
+      "end": 565.608534,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Arkitekturen",
+      "start": 565.608534,
+      "end": 566.732269,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "förbereds",
+      "start": 566.732269,
+      "end": 567.645767,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "för",
+      "start": 567.645767,
+      "end": 568.059939,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "framtida",
+      "start": 568.059939,
+      "end": 568.899163,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "samarbete",
+      "start": 568.899163,
+      "end": 569.812662,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "där",
+      "start": 569.812662,
+      "end": 570.226834,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kontroll,",
+      "start": 570.226834,
+      "end": 571.15056,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "följdbarthet,",
+      "start": 571.15056,
+      "end": 572.358796,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "bekräftelse",
+      "start": 572.358796,
+      "end": 573.414291,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "och",
+      "start": 573.414291,
+      "end": 573.828463,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "långsiktig",
+      "start": 573.828463,
+      "end": 574.813955,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "underhållbarhet",
+      "start": 574.813955,
+      "end": 576.133545,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "är",
+      "start": 576.133545,
+      "end": 576.442856,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "viktiga.",
+      "start": 576.442856,
+      "end": 577.421101,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Unfire",
+      "start": 577.421101,
+      "end": 578.103317,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kan",
+      "start": 578.103317,
+      "end": 578.517489,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "visa",
+      "start": 578.517489,
+      "end": 579.02698,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "produkter,",
+      "start": 579.02698,
+      "end": 580.024981,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "byggnader,",
+      "start": 580.024981,
+      "end": 581.022981,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "interna",
+      "start": 581.022981,
+      "end": 581.785277,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kontroller",
+      "start": 581.785277,
+      "end": 582.77077,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "och",
+      "start": 582.77077,
+      "end": 583.184942,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "produktionsevner",
+      "start": 583.184942,
+      "end": 584.567297,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "utan",
+      "start": 584.567297,
+      "end": 585.076788,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "att",
+      "start": 585.076788,
+      "end": 585.49096,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "uppdiskera",
+      "start": 585.49096,
+      "end": 586.476452,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "de",
+      "start": 586.476452,
+      "end": 586.785763,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "metoder",
+      "start": 586.785763,
+      "end": 587.548059,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "som",
+      "start": 587.548059,
+      "end": 587.962231,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "skapar",
+      "start": 587.962231,
+      "end": 588.644447,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "den",
+      "start": 588.644447,
+      "end": 589.058619,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "underliggande",
+      "start": 589.058619,
+      "end": 590.249018,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "leverancen.",
+      "start": 590.249018,
+      "end": 591.450459,
+      "exact": false,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Finansiering",
+      "start": 591.450459,
+      "end": 592.574194,
+      "exact": true,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "&",
+      "start": 592.574194,
+      "end": 592.761976,
+      "exact": false,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "samarbete",
+      "start": 592.761976,
+      "end": 593.675474,
+      "exact": true,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Utveckla",
+      "start": 593.675474,
+      "end": 594.514699,
+      "exact": true,
+      "block": 97,
+      "tts_chunk": 4
+    },
+    {
+      "word": "det",
+      "start": 594.514699,
+      "end": 594.92887,
+      "exact": true,
+      "block": 97,
+      "tts_chunk": 4
+    },
+    {
+      "word": "som",
+      "start": 594.92887,
+      "end": 595.343042,
+      "exact": true,
+      "block": 97,
+      "tts_chunk": 4
+    },
+    {
+      "word": "redan",
+      "start": 595.343042,
+      "end": 595.941332,
+      "exact": true,
+      "block": 97,
+      "tts_chunk": 4
+    },
+    {
+      "word": "finns.",
+      "start": 595.941332,
+      "end": 596.755571,
+      "exact": true,
+      "block": 97,
+      "tts_chunk": 4
+    },
+    {
+      "word": "hej@unfire.technology",
+      "start": 596.755571,
+      "end": 598.32,
+      "exact": false,
+      "block": 98,
+      "tts_chunk": 4
+    }
+  ],
+  "timeline_source": "regenerated-edge-tts-reference-chunks",
+  "timeline_method": "4-identical-duration-tts-chunks-weighted-word-interpolation",
+  "tts_chunks": 4,
+  "whisper_coverage_reference": 0.9025974025974026
+}

@@ -1,0 +1,9185 @@
+{
+  "language": "de",
+  "audio_duration": 697.656,
+  "canonical_blocks": 110,
+  "canonical_words": 1036,
+  "transcript_words": 1065,
+  "exact_matches": 912,
+  "coverage": 0.8803088803088803,
+  "blocks": [
+    {
+      "index": 0,
+      "text": "Unabhängige Technologiefirma",
+      "word_start": 0,
+      "word_end": 2,
+      "start": 0.0,
+      "end": 1.860493
+    },
+    {
+      "index": 1,
+      "text": "Bauen Sie Technologie. Nutzen Sie den Vorteil erneut.",
+      "word_start": 2,
+      "word_end": 10,
+      "start": 1.860493,
+      "end": 6.023527
+    },
+    {
+      "index": 2,
+      "text": "Unfire entwickelt wiederverwendbare Software-Systeme, die es ermöglichen, eine technologische Grundlage in mehrere Produkte, Workflows und zukünftige Anwendungen umzusetzen.",
+      "word_start": 10,
+      "word_end": 28,
+      "start": 6.023527,
+      "end": 17.99471
+    },
+    {
+      "index": 3,
+      "text": "Unternehmen",
+      "word_start": 28,
+      "word_end": 29,
+      "start": 17.99471,
+      "end": 18.800231
+    },
+    {
+      "index": 4,
+      "text": "anstelle jedes Anwendungsentwurfs als isoliertes Projekt zu behandeln, entwickelt Unfire Technologien, die wiederverwendbar, erweiterbar und in zukünftige Produkte übertragbar sind.",
+      "word_start": 29,
+      "word_end": 49,
+      "start": 18.800231,
+      "end": 31.433043
+    },
+    {
+      "index": 5,
+      "text": "Bau ein Mal.",
+      "word_start": 49,
+      "word_end": 52,
+      "start": 31.433043,
+      "end": 32.546099
+    },
+    {
+      "index": 6,
+      "text": "Kernfunktionen können zu wiederverwendbaren Bausteinen werden, anstatt im Inneren eines einzelnen Produkts zu verschwinden.",
+      "word_start": 52,
+      "word_end": 66,
+      "start": 32.546099,
+      "end": 41.198906
+    },
+    {
+      "index": 7,
+      "text": "Erweiter dich kontinuierlich.",
+      "word_start": 66,
+      "word_end": 69,
+      "start": 41.198906,
+      "end": 43.351277
+    },
+    {
+      "index": 8,
+      "text": "Neues Software kann bestehende Infrastruktur übernehmen, was bei der Anwendung der Architektur die Wiederholung von Ingenieurarbeiten minimieren kann.",
+      "word_start": 69,
+      "word_end": 87,
+      "start": 43.351277,
+      "end": 53.97888
+    },
+    {
+      "index": 9,
+      "text": "Skalieren Sie das System.",
+      "word_start": 87,
+      "word_end": 91,
+      "start": 53.97888,
+      "end": 55.993654
+    },
+    {
+      "index": 10,
+      "text": "Zusätzliche Speicherplatzkapazität, Rechenleistung, Test- und Vertriebsinfrastruktur können die Produktionskapazität erhöhen, ohne die zugrunde liegende Systemarchitektur zu recreieren.",
+      "word_start": 91,
+      "word_end": 108,
+      "start": 55.993654,
+      "end": 68.275456
+    },
+    {
+      "index": 11,
+      "text": "Ausgewählte Arbeit",
+      "word_start": 108,
+      "word_end": 110,
+      "start": 68.275456,
+      "end": 69.601624
+    },
+    {
+      "index": 12,
+      "text": "Verschiedene Produkte. Technologie, die sich verstärkt.",
+      "word_start": 110,
+      "word_end": 116,
+      "start": 69.601624,
+      "end": 73.701382
+    },
+    {
+      "index": 13,
+      "text": "Jeder Projektansatz behebt ein anderes Problem, aber das zugrunde liegende Ziel ist das gleiche: Technologien, Systeme und Produktionskenntnisse entwickeln, die in zukünftigen Softwareanwendungen wieder verwendet werden können, anstatt in isolierten Einzelfällen eingesperrt zu bleiben.",
+      "word_start": 116,
+      "word_end": 150,
+      "start": 73.701382,
+      "end": 93.794781
+    },
+    {
+      "index": 14,
+      "text": "KI · Automatisierung · Computerworkflows",
+      "word_start": 150,
+      "word_end": 155,
+      "start": 93.794781,
+      "end": 96.426567
+    },
+    {
+      "index": 15,
+      "text": "Bolt",
+      "word_start": 155,
+      "word_end": 156,
+      "start": 96.426567,
+      "end": 96.815395
+    },
+    {
+      "index": 16,
+      "text": "Bolt erforscht die kontrollierte AI-Orchestrierung für komplexe Rechnerarbeiten. Es ist darauf ausgelegt, AI-Systeme, lokale Werkzeuge und Ausführungsprozesse zu koordinieren, während die Transparenz, Berechtigungen und die menschliche Kontrolle gewahrt bleiben.",
+      "word_start": 156,
+      "word_end": 185,
+      "start": 96.815395,
+      "end": 115.082672
+    },
+    {
+      "index": 17,
+      "text": "Das Projekt untersucht, wie die wiederholte Interaktion zwischen Menschen, Modellen und Software reduziert werden kann, indem ein validierter Plan durch Ausführung, Test- und Reparaturzyklen fortgesetzt wird, ohne unnötige Unterbrechungen.",
+      "word_start": 185,
+      "word_end": 214,
+      "start": 115.082672,
+      "end": 132.133863
+    },
+    {
+      "index": 18,
+      "text": "Technologien, die sich um Bolt entwickeln, können zur zukünftigen Automatisierung, Entwicklung und Computersteuerungssystemen im breiteren Unfire-Ekosystem beitragen.",
+      "word_start": 214,
+      "word_end": 231,
+      "start": 132.133863,
+      "end": 143.384319
+    },
+    {
+      "index": 19,
+      "text": "Orchestrierung · lokale Ausführung · kontrollierte Autonomie · wiederverwendbare Automatisierung",
+      "word_start": 231,
+      "word_end": 241,
+      "start": 143.384319,
+      "end": 149.76
+    },
+    {
+      "index": 20,
+      "text": "Energie · Daten · Informationssysteme",
+      "word_start": 241,
+      "word_end": 246,
+      "start": 149.76,
+      "end": 152.277458
+    },
+    {
+      "index": 21,
+      "text": "Macht",
+      "word_start": 246,
+      "word_end": 247,
+      "start": 152.277458,
+      "end": 152.733793
+    },
+    {
+      "index": 22,
+      "text": "Macht erforscht, wie komplexe Elektrizitäts- und Energiemarktinformationen in Software umgewandelt werden können, die einfacher zu verstehen, vergleichen und nutzen sind.",
+      "word_start": 247,
+      "word_end": 267,
+      "start": 152.733793,
+      "end": 164.625534
+    },
+    {
+      "index": 23,
+      "text": "Das Projekt kombiniert regionale Daten, Preisinformationen und strukturierte Interpretationen in eine klare Oberfläche, um eine Grundlage zukünftiger Energieintelligenzwerkzeuge zu schaffen.",
+      "word_start": 267,
+      "word_end": 287,
+      "start": 164.625534,
+      "end": 177.518804
+    },
+    {
+      "index": 24,
+      "text": "Der gleiche Ansatz kann später auch für andere informationsschwere Produkte genutzt werden, bei denenfragmentierte externe Daten verständlich und handlungsorientiert in Software umgewandelt werden müssen.",
+      "word_start": 287,
+      "word_end": 311,
+      "start": 177.518804,
+      "end": 191.823958
+    },
+    {
+      "index": 25,
+      "text": "Energieintelligenz · Datenanalyse · Informationsarchitektur",
+      "word_start": 311,
+      "word_end": 316,
+      "start": 191.823958,
+      "end": 195.484412
+    },
+    {
+      "index": 26,
+      "text": "Innenequipment · Softwareentwicklung",
+      "word_start": 316,
+      "word_end": 319,
+      "start": 195.484412,
+      "end": 197.778597
+    },
+    {
+      "index": 27,
+      "text": "UnfireSuite",
+      "word_start": 319,
+      "word_end": 320,
+      "start": 197.778597,
+      "end": 198.583657
+    },
+    {
+      "index": 28,
+      "text": "UnfireSuite repräsentiert die internen Produktionsschichten hinter mehreren Unfire-Projekten.",
+      "word_start": 320,
+      "word_end": 328,
+      "start": 198.583657,
+      "end": 204.870341
+    },
+    {
+      "index": 29,
+      "text": "Seine Zielsetzung besteht darin, wiederkehrende Ingenieurarbeiten zu reduzieren, indem Softwarekomponenten, Validierungsprozesse, Produktionssysteme und angesammelte technische Wissen dort wiederverwendet werden, wo dies angebracht ist.",
+      "word_start": 328,
+      "word_end": 351,
+      "start": 204.870341,
+      "end": 220.791147
+    },
+    {
+      "index": 30,
+      "text": "Das ist wichtig, da der Wert eines Projekts nicht notwendigerweise mit dem Abschluss des Projekts endet. Teile der Technologie können Infrastruktur für das nächste Produkt werden, was es ermöglicht, dass das Produktionsystem selbst sich über die Zeit verbessert.",
+      "word_start": 351,
+      "word_end": 389,
+      "start": 220.791147,
+      "end": 239.952338
+    },
+    {
+      "index": 31,
+      "text": "Teilbare Infrastruktur · Validierung · Wiederverwendung · Produktionsysteme",
+      "word_start": 389,
+      "word_end": 397,
+      "start": 239.952338,
+      "end": 244.890915
+    },
+    {
+      "index": 32,
+      "text": "Unfire Audio · Erste Implementierung",
+      "word_start": 397,
+      "word_end": 402,
+      "start": 244.890915,
+      "end": 247.473655
+    },
+    {
+      "index": 33,
+      "text": "Bogenschütze",
+      "word_start": 402,
+      "word_end": 403,
+      "start": 247.473655,
+      "end": 248.330764
+    },
+    {
+      "index": 34,
+      "text": "Archer ist das erste Produkt, das innerhalb der breiteren Unfire Audio-Richtung entwickelt wurde.",
+      "word_start": 403,
+      "word_end": 416,
+      "start": 248.330764,
+      "end": 255.461227
+    },
+    {
+      "index": 35,
+      "text": "Es ist ein Präzisions-Audio-Clipping-Tool, das sich um Gain, Threshold und Atmosphäre dreht, und das Produzenten und Ingenieuren direkte Kontrolle über das Clippingverhalten, Spitzenwerte, Transienten und den akustischen Charakter bietet.",
+      "word_start": 416,
+      "word_end": 445,
+      "start": 255.461227,
+      "end": 271.98156
+    },
+    {
+      "index": 36,
+      "text": "Seine strategische Rolle geht über ein einzelnes Audiosignal hinaus. Archer bietet eine praktische Umgebung für die Entwicklung und Validierung von Audioteknologien, Schnittstellen-Systemen und Produktkomponenten, die sich später für zukünftige kreative-Software-Produkte einsetzen lassen.",
+      "word_start": 445,
+      "word_end": 477,
+      "start": 271.98156,
+      "end": 291.912
+    },
+    {
+      "index": 37,
+      "text": "Unfire Audio untersucht auch, wie AI-basierte Systeme, prozedurale Verarbeitung und wiederverwendbare Softwaretechnologien in neue Plugin-Konzepte und kreative Arbeitsflusskonzepte über konventionelle feststehende Audioverarbeitungsinstrumente hinaus konvergieren können.",
+      "word_start": 477,
+      "word_end": 502,
+      "start": 291.912,
+      "end": 314.89388
+    },
+    {
+      "index": 38,
+      "text": "Audio-Technologie · DSP · Prozedurales Verarbeitungsverfahren · Kreatives Software",
+      "word_start": 502,
+      "word_end": 511,
+      "start": 314.89388,
+      "end": 321.755942
+    },
+    {
+      "index": 39,
+      "text": "Unfire Audio",
+      "word_start": 511,
+      "word_end": 513,
+      "start": 321.755942,
+      "end": 323.004687
+    },
+    {
+      "index": 40,
+      "text": "Von Plugins bis zu neuen Softwarekonzepten.",
+      "word_start": 513,
+      "word_end": 519,
+      "start": 323.004687,
+      "end": 327.059767
+    },
+    {
+      "index": 41,
+      "text": "Unfire Audio erforscht, wie AI-basierte Systeme, prozedurale Verarbeitung und wiederverwendbare Softwarekomponenten zu kreativen Werkzeugen konvergieren, die sich über konventionelle Plugin-Workflows hinaus erstrecken.",
+      "word_start": 519,
+      "word_end": 541,
+      "start": 327.059767,
+      "end": 346.142577
+    },
+    {
+      "index": 42,
+      "text": "KI kann Teil des kreativen Softwareumfelds werden, anstatt nur als separater Assistent zu existieren.",
+      "word_start": 541,
+      "word_end": 555,
+      "start": 346.142577,
+      "end": 355.573367
+    },
+    {
+      "index": 43,
+      "text": "Parameter, Ton und Softwareverhalten können dynamisch transformiert werden, eröffnet thereby neue kreative Interaktionsmodelle.",
+      "word_start": 555,
+      "word_end": 568,
+      "start": 355.573367,
+      "end": 366.840608
+    },
+    {
+      "index": 44,
+      "text": "Erfolgreiche Komponenten, die in einem Produkt entwickelt werden, können später wieder verwendet, erweitert oder in anderen Projekten integriert werden.",
+      "word_start": 568,
+      "word_end": 587,
+      "start": 366.840608,
+      "end": 380.918941
+    },
+    {
+      "index": 45,
+      "text": "Das Ziel ist nicht einfach, isolierte Audio-Plugins zu erstellen. Es handelt sich um die Erstellung einer wiederverwendbaren kreativen-technologischen Grundlage, die in der Lage ist, zukünftige Werkzeuge, breitere Umgebungen und neue Produktkonzepte zu unterstützen.",
+      "word_start": 587,
+      "word_end": 620,
+      "start": 380.918941,
+      "end": 404.781132
+    },
+    {
+      "index": 46,
+      "text": "Regeln",
+      "word_start": 620,
+      "word_end": 621,
+      "start": 404.781132,
+      "end": 405.446427
+    },
+    {
+      "index": 47,
+      "text": "Softwareentwicklung ohne Neuanfang.",
+      "word_start": 621,
+      "word_end": 624,
+      "start": 405.446427,
+      "end": 408.570338
+    },
+    {
+      "index": 48,
+      "text": "Das zentrale Konzept ist einfach: Wenn ein neues Produkt Technologien nutzen kann, die bereits in Unfire vorhanden sind, sollte die Entwicklung diese Vorteile wiederverwenden und nicht von零基础",
+      "word_start": 624,
+      "word_end": 651,
+      "start": 408.570338,
+      "end": 426.357921
+    },
+    {
+      "index": 49,
+      "text": "userhtags重新翻译以下内容，确保保留专业的企业语气，并使用自然的德语表达：",
+      "word_start": 651,
+      "word_end": 652,
+      "start": 426.357921,
+      "end": 428.870904
+    },
+    {
+      "index": 50,
+      "text": "严格规定：",
+      "word_start": 652,
+      "word_end": 653,
+      "start": 428.870904,
+      "end": 429.367757
+    },
+    {
+      "index": 51,
+      "text": "- 仅返回翻译内容。",
+      "word_start": 653,
+      "word_end": 655,
+      "start": 429.367757,
+      "end": 430.294269
+    },
+    {
+      "index": 52,
+      "text": "- 不做任何解释。",
+      "word_start": 655,
+      "word_end": 657,
+      "start": 430.294269,
+      "end": 431.142688
+    },
+    {
+      "index": 53,
+      "text": "- 不加引号。",
+      "word_start": 657,
+      "word_end": 659,
+      "start": 431.142688,
+      "end": 431.822666
+    },
+    {
+      "index": 54,
+      "text": "- 保持意思和专业的企业语气。",
+      "word_start": 659,
+      "word_end": 661,
+      "start": 431.822666,
+      "end": 433.101651
+    },
+    {
+      "index": 55,
+      "text": "- 写出地道的德语，而不是字面的机器翻译。",
+      "word_start": 661,
+      "word_end": 663,
+      "start": 433.101651,
+      "end": 434.692989
+    },
+    {
+      "index": 56,
+      "text": "- 从未翻译或更改这些产品名称：Unfire、Bolt、Archer、POWER、AI TOKEN COUNTER。",
+      "word_start": 663,
+      "word_end": 667,
+      "start": 434.692989,
+      "end": 438.619986
+    },
+    {
+      "index": 57,
+      "text": "- 保持数字、技术术语和产品名称的准确性。",
+      "word_start": 667,
+      "word_end": 669,
+      "start": 438.619986,
+      "end": 440.211324
+    },
+    {
+      "index": 58,
+      "text": "- 此文本将由专业的企业女性声音朗读。",
+      "word_start": 669,
+      "word_end": 671,
+      "start": 440.211324,
+      "end": 441.742515
+    },
+    {
+      "index": 59,
+      "text": "原文：",
+      "word_start": 671,
+      "word_end": 672,
+      "start": 441.742515,
+      "end": 442.044153
+    },
+    {
+      "index": 60,
+      "text": "The central idea is simple: when a new product can use technology that already exists inside Unfire, development should reuse that advantage instead of rebuilding it。",
+      "word_start": 672,
+      "word_end": 698,
+      "start": 442.044153,
+      "end": 457.625742
+    },
+    {
+      "index": 61,
+      "text": "Geteilte Grundlage",
+      "word_start": 698,
+      "word_end": 700,
+      "start": 457.625742,
+      "end": 459.334991
+    },
+    {
+      "index": 62,
+      "text": "Wiederverwendbare Softwarekomponenten, Produktionswissen und Validierungsysteme bilden eine Grundlage, die fortlaufend weiterentwickelt werden kann.",
+      "word_start": 700,
+      "word_end": 713,
+      "start": 459.334991,
+      "end": 471.920138
+    },
+    {
+      "index": 63,
+      "text": "Produktlayer",
+      "word_start": 713,
+      "word_end": 714,
+      "start": 471.920138,
+      "end": 473.016
+    },
+    {
+      "index": 64,
+      "text": "Neue Anwendungen können bestehende Fähigkeiten mit spezifischer Produkttechnologie kombinieren, anstatt von einer leeren Architektur aus anzufangen.",
+      "word_start": 714,
+      "word_end": 730,
+      "start": 473.016,
+      "end": 484.478314
+    },
+    {
+      "index": 65,
+      "text": "Validierung",
+      "word_start": 730,
+      "word_end": 731,
+      "start": 484.478314,
+      "end": 485.367976
+    },
+    {
+      "index": 66,
+      "text": "Bauwerke, Tests und internen Kontrollpunkte bieten messbare Beweise darüber, ob Softwarekandidaten wie geplant funktionieren.",
+      "word_start": 731,
+      "word_end": 745,
+      "start": 485.367976,
+      "end": 495.110414
+    },
+    {
+      "index": 67,
+      "text": "Erweiterung",
+      "word_start": 745,
+      "word_end": 746,
+      "start": 495.110414,
+      "end": 496.000076
+    },
+    {
+      "index": 68,
+      "text": "Infrastruktur kann durch zusätzliche Rechenleistung, Speicherkapazität, Testumgebung, Qualitätskontrolle und Bereitstellungskapazität erweitert werden.",
+      "word_start": 746,
+      "word_end": 758,
+      "start": 496.000076,
+      "end": 506.96782
+    },
+    {
+      "index": 69,
+      "text": "Produktionsgröße",
+      "word_start": 758,
+      "word_end": 759,
+      "start": 506.96782,
+      "end": 508.13299
+    },
+    {
+      "index": 70,
+      "text": "Der Bottleneck wird sich verändern.",
+      "word_start": 759,
+      "word_end": 764,
+      "start": 508.13299,
+      "end": 511.123632
+    },
+    {
+      "index": 71,
+      "text": "Wo die bestehende Architektur anwendbar ist, hat interne Entwicklung gezeigt, dass Softwarekandidaten durch äußerst kurze Build-Cycles hindurchbewegt werden können — in einigen Fällen gemessen in Minuten.",
+      "word_start": 764,
+      "word_end": 790,
+      "start": 511.123632,
+      "end": 527.17276
+    },
+    {
+      "index": 72,
+      "text": "Da die erneut verwendbaren Technologien sich ausbreiten, werden die begrenzenden Faktoren zunehmend zu Infrastrukturressourcen wie Rechenkapazitäten, Speicher, Tests, Qualitätskontrolle und kommerzielle Bereitstellung – Ressourcen, die selbst erweitert werden können.",
+      "word_start": 790,
+      "word_end": 819,
+      "start": 527.17276,
+      "end": 547.40665
+    },
+    {
+      "index": 73,
+      "text": "Flagshipprodukt verfolgt derzeit die breitere Technologieentwicklung, die durch aktuelle Demonstrationen illustriert wird.",
+      "word_start": 819,
+      "word_end": 831,
+      "start": 547.40665,
+      "end": 556.636104
+    },
+    {
+      "index": 74,
+      "text": "Prioritätswelle 1 Software-Kandidaten identifiziert für gezielte Entwicklung.",
+      "word_start": 831,
+      "word_end": 838,
+      "start": 556.636104,
+      "end": 562.356811
+    },
+    {
+      "index": 75,
+      "text": "53",
+      "word_start": 838,
+      "word_end": 839,
+      "start": 562.356811,
+      "end": 562.617525
+    },
+    {
+      "index": 76,
+      "text": "Standalone-Software-Kandidaten, die entwickelt und intern geprüft werden.",
+      "word_start": 839,
+      "word_end": 846,
+      "start": 562.617525,
+      "end": 568.024326
+    },
+    {
+      "index": 77,
+      "text": "53/53",
+      "word_start": 846,
+      "word_end": 847,
+      "start": 568.024326,
+      "end": 568.453769
+    },
+    {
+      "index": 78,
+      "text": "Erfolgreiche eigenständige Builds am internen Kontrollpunkt im September 2026.",
+      "word_start": 847,
+      "word_end": 856,
+      "start": 568.453769,
+      "end": 574.592965
+    },
+    {
+      "index": 79,
+      "text": "01",
+      "word_start": 856,
+      "word_end": 857,
+      "start": 574.592965,
+      "end": 574.853679
+    },
+    {
+      "index": 80,
+      "text": "02 strengen Regeln:",
+      "word_start": 857,
+      "word_end": 860,
+      "start": 574.853679,
+      "end": 576.468021
+    },
+    {
+      "index": 81,
+      "text": "- Rückerstattungen nur, wenn explicitly angefordert.",
+      "word_start": 860,
+      "word_end": 866,
+      "start": 576.468021,
+      "end": 580.54358
+    },
+    {
+      "index": 82,
+      "text": "- Keine Erklärungen hinzufügen.",
+      "word_start": 866,
+      "word_end": 870,
+      "start": 580.54358,
+      "end": 583.108492
+    },
+    {
+      "index": 83,
+      "text": "- Zitate nicht verwenden.",
+      "word_start": 870,
+      "word_end": 874,
+      "start": 583.108492,
+      "end": 585.29809
+    },
+    {
+      "index": 84,
+      "text": "- Beibehalten der Bedeutung und des professionellen Geschäftstones.",
+      "word_start": 874,
+      "word_end": 882,
+      "start": 585.29809,
+      "end": 590.515957
+    },
+    {
+      "index": 85,
+      "text": "- Verwenden Sie natürlichen, fließenden Deutschen, nicht eine wörtliche Maschinene translation.",
+      "word_start": 882,
+      "word_end": 893,
+      "start": 590.515957,
+      "end": 598.032113
+    },
+    {
+      "index": 86,
+      "text": "- Produktnamen wie Unfire, Bolt, Archer, POWER, AI TOKEN COUNTER nicht übersetzen oder ändern.",
+      "word_start": 893,
+      "word_end": 907,
+      "start": 598.032113,
+      "end": 605.784351
+    },
+    {
+      "index": 87,
+      "text": "- Zahlen, technische Fachbegriffe und Produktbezeichnungen präzise beibehalten.",
+      "word_start": 907,
+      "word_end": 915,
+      "start": 605.784351,
+      "end": 611.798286
+    },
+    {
+      "index": 88,
+      "text": "- Dieser Text wird von einer professionellen Geschäftsfrau gesprochen.",
+      "word_start": 915,
+      "word_end": 924,
+      "start": 611.798286,
+      "end": 617.37219
+    },
+    {
+      "index": 89,
+      "text": "Wiederverwendung",
+      "word_start": 924,
+      "word_end": 925,
+      "start": 617.37219,
+      "end": 618.53736
+    },
+    {
+      "index": 90,
+      "text": "Starten Sie bei vorhandener Technologie, wo möglich.",
+      "word_start": 925,
+      "word_end": 932,
+      "start": 618.53736,
+      "end": 622.813905
+    },
+    {
+      "index": 91,
+      "text": "02",
+      "word_start": 932,
+      "word_end": 933,
+      "start": 622.813905,
+      "end": 623.074619
+    },
+    {
+      "index": 92,
+      "text": "Bauen",
+      "word_start": 933,
+      "word_end": 934,
+      "start": 623.074619,
+      "end": 623.57891
+    },
+    {
+      "index": 93,
+      "text": "Erstellen Sie das spezifische Produktlayer.",
+      "word_start": 934,
+      "word_end": 939,
+      "start": 623.57891,
+      "end": 627.065951
+    },
+    {
+      "index": 94,
+      "text": "03",
+      "word_start": 939,
+      "word_end": 940,
+      "start": 627.065951,
+      "end": 627.326665
+    },
+    {
+      "index": 95,
+      "text": "Skalierung",
+      "word_start": 940,
+      "word_end": 941,
+      "start": 627.326665,
+      "end": 628.157323
+    },
+    {
+      "index": 96,
+      "text": "Erweiteren Sie die Infrastruktur mit wachsendem Produktionsumfang.",
+      "word_start": 941,
+      "word_end": 948,
+      "start": 628.157323,
+      "end": 633.268489
+    },
+    {
+      "index": 97,
+      "text": "Unternehmen",
+      "word_start": 948,
+      "word_end": 949,
+      "start": 633.268489,
+      "end": 634.158151
+    },
+    {
+      "index": 98,
+      "text": "Dedizierte Software-Systeme.",
+      "word_start": 949,
+      "word_end": 951,
+      "start": 634.158151,
+      "end": 636.336
+    },
+    {
+      "index": 99,
+      "text": "Die gleiche Produktionseinrichtung kann spezialisierte Anwendungen und Umgebungen unterstützen, die sich um die Anforderungen der Organisation orientieren.",
+      "word_start": 951,
+      "word_end": 968,
+      "start": 636.336,
+      "end": 647.772676
+    },
+    {
+      "index": 100,
+      "text": "Institutionen",
+      "word_start": 968,
+      "word_end": 969,
+      "start": 647.772676,
+      "end": 648.745781
+    },
+    {
+      "index": 101,
+      "text": "Steuerbare Umgebungen.",
+      "word_start": 969,
+      "word_end": 971,
+      "start": 648.745781,
+      "end": 650.533515
+    },
+    {
+      "index": 102,
+      "text": "Projekte können isoliert bleiben, während sie von wiederverwendbarem unterliegendem Technologie, Validierungsprozessen und Produktionsinfrastruktur profitieren.",
+      "word_start": 971,
+      "word_end": 985,
+      "start": 650.533515,
+      "end": 661.909611
+    },
+    {
+      "index": 103,
+      "text": "öffentlicher Sektor",
+      "word_start": 985,
+      "word_end": 987,
+      "start": 661.909611,
+      "end": 663.385906
+    },
+    {
+      "index": 104,
+      "text": "Skalbare digitale Werkzeuge.",
+      "word_start": 987,
+      "word_end": 990,
+      "start": 663.385906,
+      "end": 665.681252
+    },
+    {
+      "index": 105,
+      "text": "Die Architektur wird für zukünftige Zusammenarbeit vorbereitet, bei der Kontrolle, Überwachung, Validierung und die langfristige Wartbarkeit von entscheidender Bedeutung sind.",
+      "word_start": 990,
+      "word_end": 1010,
+      "start": 665.681252,
+      "end": 678.852693
+    },
+    {
+      "index": 106,
+      "text": "Unfire kann Produkte, Builds, interne Checkpoints und Produktionskapazitäten anzeigen, ohne die Implementierungsmethoden preiszugeben, die die zugrunde liegende Leverage erzeugen.",
+      "word_start": 1010,
+      "word_end": 1029,
+      "start": 678.852693,
+      "end": 692.06329
+    },
+    {
+      "index": 107,
+      "text": "Finanzierung & Zusammenarbeit",
+      "word_start": 1029,
+      "word_end": 1032,
+      "start": 692.06329,
+      "end": 694.161841
+    },
+    {
+      "index": 108,
+      "text": "Erweiter das Existierende.",
+      "word_start": 1032,
+      "word_end": 1035,
+      "start": 694.161841,
+      "end": 696.281584
+    },
+    {
+      "index": 109,
+      "text": "hallo@unfire.technology",
+      "word_start": 1035,
+      "word_end": 1036,
+      "start": 696.281584,
+      "end": 697.656
+    }
+  ],
+  "words": [
+    {
+      "word": "Unabhängige",
+      "start": 0.0,
+      "end": 0.805521,
+      "exact": false,
+      "block": 0,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Technologiefirma",
+      "start": 0.805521,
+      "end": 1.860493,
+      "exact": false,
+      "block": 0,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bauen",
+      "start": 1.860493,
+      "end": 2.317089,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Sie",
+      "start": 2.317089,
+      "end": 2.633173,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Technologie.",
+      "start": 2.633173,
+      "end": 3.6035,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Nutzen",
+      "start": 3.6035,
+      "end": 4.124147,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Sie",
+      "start": 4.124147,
+      "end": 4.44023,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "den",
+      "start": 4.44023,
+      "end": 4.756313,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Vorteil",
+      "start": 4.756313,
+      "end": 5.338075,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "erneut.",
+      "start": 5.338075,
+      "end": 6.023527,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Unfire",
+      "start": 6.023527,
+      "end": 6.544174,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "entwickelt",
+      "start": 6.544174,
+      "end": 7.296272,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "wiederverwendbare",
+      "start": 7.296272,
+      "end": 8.398312,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Software-Systeme,",
+      "start": 8.398312,
+      "end": 9.517773,
+      "exact": false,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 9.517773,
+      "end": 9.833856,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "es",
+      "start": 9.833856,
+      "end": 10.069913,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ermöglichen,",
+      "start": 10.069913,
+      "end": 10.939923,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "eine",
+      "start": 10.939923,
+      "end": 11.328751,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "technologische",
+      "start": 11.328751,
+      "end": 12.287018,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Grundlage",
+      "start": 12.287018,
+      "end": 12.984172,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "in",
+      "start": 12.984172,
+      "end": 13.220229,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "mehrere",
+      "start": 13.220229,
+      "end": 13.80199,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Produkte,",
+      "start": 13.80199,
+      "end": 14.50695,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Workflows",
+      "start": 14.50695,
+      "end": 15.204104,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "und",
+      "start": 15.204104,
+      "end": 15.520187,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zukünftige",
+      "start": 15.520187,
+      "end": 16.272285,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Anwendungen",
+      "start": 16.272285,
+      "end": 17.077807,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "umzusetzen.",
+      "start": 17.077807,
+      "end": 17.99471,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Unternehmen",
+      "start": 17.99471,
+      "end": 18.800231,
+      "exact": true,
+      "block": 3,
+      "tts_chunk": 1
+    },
+    {
+      "word": "anstelle",
+      "start": 18.800231,
+      "end": 19.440702,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "jedes",
+      "start": 19.440702,
+      "end": 19.897298,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Anwendungsentwurfs",
+      "start": 19.897298,
+      "end": 21.045639,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "als",
+      "start": 21.045639,
+      "end": 21.361722,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "isoliertes",
+      "start": 21.361722,
+      "end": 22.11382,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Projekt",
+      "start": 22.11382,
+      "end": 22.695581,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zu",
+      "start": 22.695581,
+      "end": 22.931638,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "behandeln,",
+      "start": 22.931638,
+      "end": 23.693281,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "entwickelt",
+      "start": 23.693281,
+      "end": 24.445379,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Unfire",
+      "start": 24.445379,
+      "end": 24.966026,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Technologien,",
+      "start": 24.966026,
+      "end": 25.888115,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 25.888115,
+      "end": 26.204198,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "wiederverwendbar,",
+      "start": 26.204198,
+      "end": 27.323659,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "erweiterbar",
+      "start": 27.323659,
+      "end": 28.12918,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "und",
+      "start": 28.12918,
+      "end": 28.445263,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "in",
+      "start": 28.445263,
+      "end": 28.68132,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zukünftige",
+      "start": 28.68132,
+      "end": 29.433418,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Produkte",
+      "start": 29.433418,
+      "end": 30.073888,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "übertragbar",
+      "start": 30.073888,
+      "end": 30.87941,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "sind.",
+      "start": 30.87941,
+      "end": 31.433043,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bau",
+      "start": 31.433043,
+      "end": 31.749126,
+      "exact": true,
+      "block": 5,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ein",
+      "start": 31.749126,
+      "end": 32.06521,
+      "exact": false,
+      "block": 5,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Mal.",
+      "start": 32.06521,
+      "end": 32.546099,
+      "exact": false,
+      "block": 5,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Kernfunktionen",
+      "start": 32.546099,
+      "end": 33.504366,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "können",
+      "start": 33.504366,
+      "end": 34.025013,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zu",
+      "start": 34.025013,
+      "end": 34.261069,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "wiederverwendbaren",
+      "start": 34.261069,
+      "end": 35.409409,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bausteinen",
+      "start": 35.409409,
+      "end": 36.161507,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "werden,",
+      "start": 36.161507,
+      "end": 36.746643,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "anstatt",
+      "start": 36.746643,
+      "end": 37.328404,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "im",
+      "start": 37.328404,
+      "end": 37.564461,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Inneren",
+      "start": 37.564461,
+      "end": 38.146222,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "eines",
+      "start": 38.146222,
+      "end": 38.602819,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "einzelnen",
+      "start": 38.602819,
+      "end": 39.299973,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Produkts",
+      "start": 39.299973,
+      "end": 39.940444,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zu",
+      "start": 39.940444,
+      "end": 40.1765,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "verschwinden.",
+      "start": 40.1765,
+      "end": 41.198906,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Erweiter",
+      "start": 41.198906,
+      "end": 41.839376,
+      "exact": true,
+      "block": 7,
+      "tts_chunk": 1
+    },
+    {
+      "word": "dich",
+      "start": 41.839376,
+      "end": 42.228204,
+      "exact": true,
+      "block": 7,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kontinuierlich.",
+      "start": 42.228204,
+      "end": 43.351277,
+      "exact": true,
+      "block": 7,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Neues",
+      "start": 43.351277,
+      "end": 43.807873,
+      "exact": false,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Software",
+      "start": 43.807873,
+      "end": 44.448344,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kann",
+      "start": 44.448344,
+      "end": 44.837172,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "bestehende",
+      "start": 44.837172,
+      "end": 45.58927,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Infrastruktur",
+      "start": 45.58927,
+      "end": 46.497746,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "übernehmen,",
+      "start": 46.497746,
+      "end": 47.314333,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "was",
+      "start": 47.314333,
+      "end": 47.630416,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "bei",
+      "start": 47.630416,
+      "end": 47.946499,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "der",
+      "start": 47.946499,
+      "end": 48.262583,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Anwendung",
+      "start": 48.262583,
+      "end": 48.959737,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "der",
+      "start": 48.959737,
+      "end": 49.27582,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Architektur",
+      "start": 49.27582,
+      "end": 50.081342,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 50.081342,
+      "end": 50.397425,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Wiederholung",
+      "start": 50.397425,
+      "end": 51.255025,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "von",
+      "start": 51.255025,
+      "end": 51.571109,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Ingenieurarbeiten",
+      "start": 51.571109,
+      "end": 52.673149,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "minimieren",
+      "start": 52.673149,
+      "end": 53.425247,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kann.",
+      "start": 53.425247,
+      "end": 53.97888,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Skalieren",
+      "start": 53.97888,
+      "end": 54.676035,
+      "exact": true,
+      "block": 9,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Sie",
+      "start": 54.676035,
+      "end": 54.992118,
+      "exact": true,
+      "block": 9,
+      "tts_chunk": 1
+    },
+    {
+      "word": "das",
+      "start": 54.992118,
+      "end": 55.308201,
+      "exact": true,
+      "block": 9,
+      "tts_chunk": 1
+    },
+    {
+      "word": "System.",
+      "start": 55.308201,
+      "end": 55.993654,
+      "exact": true,
+      "block": 9,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Zusätzliche",
+      "start": 55.993654,
+      "end": 56.799175,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Speicherplatzkapazität,",
+      "start": 56.799175,
+      "end": 58.190505,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Rechenleistung,",
+      "start": 58.190505,
+      "end": 59.213261,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Test-",
+      "start": 59.213261,
+      "end": 59.669857,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "und",
+      "start": 59.669857,
+      "end": 59.985941,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Vertriebsinfrastruktur",
+      "start": 59.985941,
+      "end": 61.312781,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "können",
+      "start": 61.312781,
+      "end": 61.833428,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 61.833428,
+      "end": 62.149511,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Produktionskapazität",
+      "start": 62.149511,
+      "end": 63.388353,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "erhöhen,",
+      "start": 63.388353,
+      "end": 64.034604,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ohne",
+      "start": 64.034604,
+      "end": 64.423432,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 64.423432,
+      "end": 64.739515,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zugrunde",
+      "start": 64.739515,
+      "end": 65.379985,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "liegende",
+      "start": 65.379985,
+      "end": 66.020456,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Systemarchitektur",
+      "start": 66.020456,
+      "end": 67.122496,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zu",
+      "start": 67.122496,
+      "end": 67.358553,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "recreieren.",
+      "start": 67.358553,
+      "end": 68.275456,
+      "exact": false,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Ausgewählte",
+      "start": 68.275456,
+      "end": 69.080978,
+      "exact": true,
+      "block": 11,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Arbeit",
+      "start": 69.080978,
+      "end": 69.601624,
+      "exact": true,
+      "block": 11,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Verschiedene",
+      "start": 69.601624,
+      "end": 70.459225,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Produkte.",
+      "start": 70.459225,
+      "end": 71.264501,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Technologie,",
+      "start": 71.264501,
+      "end": 72.134511,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 72.134511,
+      "end": 72.450594,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "sich",
+      "start": 72.450594,
+      "end": 72.839422,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "verstärkt.",
+      "start": 72.839422,
+      "end": 73.701382,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Jeder",
+      "start": 73.701382,
+      "end": 74.157979,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Projektansatz",
+      "start": 74.157979,
+      "end": 75.066455,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "behebt",
+      "start": 75.066455,
+      "end": 75.587102,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ein",
+      "start": 75.587102,
+      "end": 75.903185,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "anderes",
+      "start": 75.903185,
+      "end": 76.484947,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Problem,",
+      "start": 76.484947,
+      "end": 77.131197,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "aber",
+      "start": 77.131197,
+      "end": 77.520025,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "das",
+      "start": 77.520025,
+      "end": 77.836109,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zugrunde",
+      "start": 77.836109,
+      "end": 78.476579,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "liegende",
+      "start": 78.476579,
+      "end": 79.11705,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Ziel",
+      "start": 79.11705,
+      "end": 79.505878,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ist",
+      "start": 79.505878,
+      "end": 79.821961,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "das",
+      "start": 79.821961,
+      "end": 80.138044,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "gleiche:",
+      "start": 80.138044,
+      "end": 80.784295,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Technologien,",
+      "start": 80.784295,
+      "end": 81.706384,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Systeme",
+      "start": 81.706384,
+      "end": 82.288145,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "und",
+      "start": 82.288145,
+      "end": 82.604229,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Produktionskenntnisse",
+      "start": 82.604229,
+      "end": 83.887363,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "entwickeln,",
+      "start": 83.887363,
+      "end": 84.70395,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 84.70395,
+      "end": 85.020034,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "in",
+      "start": 85.020034,
+      "end": 85.25609,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zukünftigen",
+      "start": 85.25609,
+      "end": 86.061611,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Softwareanwendungen",
+      "start": 86.061611,
+      "end": 87.255536,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "wieder",
+      "start": 87.255536,
+      "end": 87.776183,
+      "exact": false,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "verwendet",
+      "start": 87.776183,
+      "end": 88.473337,
+      "exact": false,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "werden",
+      "start": 88.473337,
+      "end": 88.993984,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "können,",
+      "start": 88.993984,
+      "end": 89.57912,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "anstatt",
+      "start": 89.57912,
+      "end": 90.160881,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "in",
+      "start": 90.160881,
+      "end": 90.396938,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "isolierten",
+      "start": 90.396938,
+      "end": 91.149036,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Einzelfällen",
+      "start": 91.149036,
+      "end": 92.006636,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "eingesperrt",
+      "start": 92.006636,
+      "end": 92.812157,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zu",
+      "start": 92.812157,
+      "end": 93.048214,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "bleiben.",
+      "start": 93.048214,
+      "end": 93.794781,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "KI",
+      "start": 93.794781,
+      "end": 94.030837,
+      "exact": false,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 94.030837,
+      "end": 94.174146,
+      "exact": false,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Automatisierung",
+      "start": 94.174146,
+      "end": 95.181217,
+      "exact": true,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 95.181217,
+      "end": 95.324526,
+      "exact": false,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Computerworkflows",
+      "start": 95.324526,
+      "end": 96.426567,
+      "exact": false,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bolt",
+      "start": 96.426567,
+      "end": 96.815395,
+      "exact": true,
+      "block": 15,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bolt",
+      "start": 96.815395,
+      "end": 97.204223,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "erforscht",
+      "start": 97.204223,
+      "end": 97.901377,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 97.901377,
+      "end": 98.217461,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kontrollierte",
+      "start": 98.217461,
+      "end": 99.125937,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "AI-Orchestrierung",
+      "start": 99.125937,
+      "end": 100.227977,
+      "exact": false,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "für",
+      "start": 100.227977,
+      "end": 100.54406,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "komplexe",
+      "start": 100.54406,
+      "end": 101.184531,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Rechnerarbeiten.",
+      "start": 101.184531,
+      "end": 102.356407,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Es",
+      "start": 102.356407,
+      "end": 102.592464,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ist",
+      "start": 102.592464,
+      "end": 102.908547,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "darauf",
+      "start": 102.908547,
+      "end": 103.429194,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ausgelegt,",
+      "start": 103.429194,
+      "end": 104.190838,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "AI-Systeme,",
+      "start": 104.190838,
+      "end": 105.007424,
+      "exact": false,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "lokale",
+      "start": 105.007424,
+      "end": 105.528071,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Werkzeuge",
+      "start": 105.528071,
+      "end": 106.225226,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "und",
+      "start": 106.225226,
+      "end": 106.541309,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Ausführungsprozesse",
+      "start": 106.541309,
+      "end": 107.735234,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zu",
+      "start": 107.735234,
+      "end": 107.97129,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "koordinieren,",
+      "start": 107.97129,
+      "end": 108.893379,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "während",
+      "start": 108.893379,
+      "end": 109.475141,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 109.475141,
+      "end": 109.791224,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Transparenz,",
+      "start": 109.791224,
+      "end": 110.661234,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Berechtigungen",
+      "start": 110.661234,
+      "end": 111.619501,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "und",
+      "start": 111.619501,
+      "end": 111.935585,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 111.935585,
+      "end": 112.251668,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "menschliche",
+      "start": 112.251668,
+      "end": 113.057189,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Kontrolle",
+      "start": 113.057189,
+      "end": 113.754344,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "gewahrt",
+      "start": 113.754344,
+      "end": 114.336105,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "bleiben.",
+      "start": 114.336105,
+      "end": 115.082672,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Das",
+      "start": 115.082672,
+      "end": 115.398756,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Projekt",
+      "start": 115.398756,
+      "end": 115.980517,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "untersucht,",
+      "start": 115.980517,
+      "end": 116.797104,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "wie",
+      "start": 116.797104,
+      "end": 117.113187,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 117.113187,
+      "end": 117.429271,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "wiederholte",
+      "start": 117.429271,
+      "end": 118.234792,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Interaktion",
+      "start": 118.234792,
+      "end": 119.040313,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zwischen",
+      "start": 119.040313,
+      "end": 119.680784,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Menschen,",
+      "start": 119.680784,
+      "end": 120.385743,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Modellen",
+      "start": 120.385743,
+      "end": 121.026214,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "und",
+      "start": 121.026214,
+      "end": 121.342297,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Software",
+      "start": 121.342297,
+      "end": 121.982768,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "reduziert",
+      "start": 121.982768,
+      "end": 122.679922,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "werden",
+      "start": 122.679922,
+      "end": 123.200569,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kann,",
+      "start": 123.200569,
+      "end": 123.653886,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "indem",
+      "start": 123.653886,
+      "end": 124.110483,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ein",
+      "start": 124.110483,
+      "end": 124.426566,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "validierter",
+      "start": 124.426566,
+      "end": 125.232087,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Plan",
+      "start": 125.232087,
+      "end": 125.620915,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "durch",
+      "start": 125.620915,
+      "end": 126.077512,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Ausführung,",
+      "start": 126.077512,
+      "end": 126.894099,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Test-",
+      "start": 126.894099,
+      "end": 127.350695,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "und",
+      "start": 127.350695,
+      "end": 127.666779,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Reparaturzyklen",
+      "start": 127.666779,
+      "end": 128.67385,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "fortgesetzt",
+      "start": 128.67385,
+      "end": 129.479371,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "wird,",
+      "start": 129.479371,
+      "end": 129.932688,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ohne",
+      "start": 129.932688,
+      "end": 130.321516,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "unnötige",
+      "start": 130.321516,
+      "end": 130.961987,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Unterbrechungen.",
+      "start": 130.961987,
+      "end": 132.133863,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Technologien,",
+      "start": 132.133863,
+      "end": 133.055952,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 133.055952,
+      "end": 133.372036,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "sich",
+      "start": 133.372036,
+      "end": 133.760864,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "um",
+      "start": 133.760864,
+      "end": 133.99692,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bolt",
+      "start": 133.99692,
+      "end": 134.385748,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "entwickeln,",
+      "start": 134.385748,
+      "end": 135.202335,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "können",
+      "start": 135.202335,
+      "end": 135.722982,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zur",
+      "start": 135.722982,
+      "end": 136.039065,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zukünftigen",
+      "start": 136.039065,
+      "end": 136.844586,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Automatisierung,",
+      "start": 136.844586,
+      "end": 137.916146,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Entwicklung",
+      "start": 137.916146,
+      "end": 138.721668,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "und",
+      "start": 138.721668,
+      "end": 139.037751,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Computersteuerungssystemen",
+      "start": 139.037751,
+      "end": 140.534177,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "im",
+      "start": 140.534177,
+      "end": 140.770233,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "breiteren",
+      "start": 140.770233,
+      "end": 141.467388,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Unfire-Ekosystem",
+      "start": 141.467388,
+      "end": 142.522359,
+      "exact": false,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "beitragen.",
+      "start": 142.522359,
+      "end": 143.384319,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Orchestrierung",
+      "start": 143.384319,
+      "end": 144.342586,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 144.342586,
+      "end": 144.485895,
+      "exact": false,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "lokale",
+      "start": 144.485895,
+      "end": 145.006542,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Ausführung",
+      "start": 145.006542,
+      "end": 145.75864,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 145.75864,
+      "end": 145.901949,
+      "exact": false,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kontrollierte",
+      "start": 145.901949,
+      "end": 146.810425,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Autonomie",
+      "start": 146.810425,
+      "end": 147.507579,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 147.507579,
+      "end": 147.650889,
+      "exact": false,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "wiederverwendbare",
+      "start": 147.650889,
+      "end": 148.752929,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Automatisierung",
+      "start": 148.752929,
+      "end": 149.76,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Energie",
+      "start": 149.76,
+      "end": 150.341428,
+      "exact": true,
+      "block": 20,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 150.341428,
+      "end": 150.484655,
+      "exact": false,
+      "block": 20,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Daten",
+      "start": 150.484655,
+      "end": 150.94099,
+      "exact": true,
+      "block": 20,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 150.94099,
+      "end": 151.084218,
+      "exact": false,
+      "block": 20,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Informationssysteme",
+      "start": 151.084218,
+      "end": 152.277458,
+      "exact": true,
+      "block": 20,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Macht",
+      "start": 152.277458,
+      "end": 152.733793,
+      "exact": true,
+      "block": 21,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Macht",
+      "start": 152.733793,
+      "end": 153.190128,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "erforscht,",
+      "start": 153.190128,
+      "end": 153.951336,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "wie",
+      "start": 153.951336,
+      "end": 154.267238,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "komplexe",
+      "start": 154.267238,
+      "end": 154.907341,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Elektrizitäts-",
+      "start": 154.907341,
+      "end": 155.865059,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "und",
+      "start": 155.865059,
+      "end": 156.180962,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Energiemarktinformationen",
+      "start": 156.180962,
+      "end": 157.634887,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "in",
+      "start": 157.634887,
+      "end": 157.870809,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Software",
+      "start": 157.870809,
+      "end": 158.510912,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "umgewandelt",
+      "start": 158.510912,
+      "end": 159.315972,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "werden",
+      "start": 159.315972,
+      "end": 159.836321,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "können,",
+      "start": 159.836321,
+      "end": 160.421121,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "die",
+      "start": 160.421121,
+      "end": 160.737024,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "einfacher",
+      "start": 160.737024,
+      "end": 161.433779,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "zu",
+      "start": 161.433779,
+      "end": 161.6697,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "verstehen,",
+      "start": 161.6697,
+      "end": 162.430907,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "vergleichen",
+      "start": 162.430907,
+      "end": 163.235967,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "und",
+      "start": 163.235967,
+      "end": 163.551869,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "nutzen",
+      "start": 163.551869,
+      "end": 164.072218,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "sind.",
+      "start": 164.072218,
+      "end": 164.625534,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Das",
+      "start": 164.625534,
+      "end": 164.941437,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Projekt",
+      "start": 164.941437,
+      "end": 165.522865,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kombiniert",
+      "start": 165.522865,
+      "end": 166.274532,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "regionale",
+      "start": 166.274532,
+      "end": 166.971286,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Daten,",
+      "start": 166.971286,
+      "end": 167.492074,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Preisinformationen",
+      "start": 167.492074,
+      "end": 168.639756,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "und",
+      "start": 168.639756,
+      "end": 168.955658,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "strukturierte",
+      "start": 168.955658,
+      "end": 169.863614,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Interpretationen",
+      "start": 169.863614,
+      "end": 170.917981,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "in",
+      "start": 170.917981,
+      "end": 171.153902,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "eine",
+      "start": 171.153902,
+      "end": 171.542508,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "klare",
+      "start": 171.542508,
+      "end": 171.998843,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Oberfläche,",
+      "start": 171.998843,
+      "end": 172.814962,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "um",
+      "start": 172.814962,
+      "end": 173.050883,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "eine",
+      "start": 173.050883,
+      "end": 173.439488,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Grundlage",
+      "start": 173.439488,
+      "end": 174.136243,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "zukünftiger",
+      "start": 174.136243,
+      "end": 174.941303,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Energieintelligenzwerkzeuge",
+      "start": 174.941303,
+      "end": 176.478068,
+      "exact": false,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "zu",
+      "start": 176.478068,
+      "end": 176.713989,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "schaffen.",
+      "start": 176.713989,
+      "end": 177.518804,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Der",
+      "start": 177.518804,
+      "end": 177.834706,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "gleiche",
+      "start": 177.834706,
+      "end": 178.416134,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Ansatz",
+      "start": 178.416134,
+      "end": 178.936483,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kann",
+      "start": 178.936483,
+      "end": 179.325088,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "später",
+      "start": 179.325088,
+      "end": 179.845436,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "auch",
+      "start": 179.845436,
+      "end": 180.234042,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "für",
+      "start": 180.234042,
+      "end": 180.549944,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "andere",
+      "start": 180.549944,
+      "end": 181.070293,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "informationsschwere",
+      "start": 181.070293,
+      "end": 182.263533,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Produkte",
+      "start": 182.263533,
+      "end": 182.903637,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "genutzt",
+      "start": 182.903637,
+      "end": 183.485065,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "werden,",
+      "start": 183.485065,
+      "end": 184.069866,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "bei",
+      "start": 184.069866,
+      "end": 184.385768,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "denenfragmentierte",
+      "start": 184.385768,
+      "end": 185.53345,
+      "exact": false,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "externe",
+      "start": 185.53345,
+      "end": 186.114878,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Daten",
+      "start": 186.114878,
+      "end": 186.571213,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "verständlich",
+      "start": 186.571213,
+      "end": 187.428322,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "und",
+      "start": 187.428322,
+      "end": 187.744224,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "handlungsorientiert",
+      "start": 187.744224,
+      "end": 188.937465,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "in",
+      "start": 188.937465,
+      "end": 189.173386,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Software",
+      "start": 189.173386,
+      "end": 189.81349,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "umgewandelt",
+      "start": 189.81349,
+      "end": 190.61855,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "werden",
+      "start": 190.61855,
+      "end": 191.138898,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "müssen.",
+      "start": 191.138898,
+      "end": 191.823958,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Energieintelligenz",
+      "start": 191.823958,
+      "end": 192.97164,
+      "exact": false,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 192.97164,
+      "end": 193.114867,
+      "exact": false,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Datenanalyse",
+      "start": 193.114867,
+      "end": 193.971976,
+      "exact": false,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 193.971976,
+      "end": 194.115203,
+      "exact": false,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Informationsarchitektur",
+      "start": 194.115203,
+      "end": 195.484412,
+      "exact": true,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Innenequipment",
+      "start": 195.484412,
+      "end": 196.44213,
+      "exact": false,
+      "block": 26,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 196.44213,
+      "end": 196.585357,
+      "exact": false,
+      "block": 26,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Softwareentwicklung",
+      "start": 196.585357,
+      "end": 197.778597,
+      "exact": false,
+      "block": 26,
+      "tts_chunk": 2
+    },
+    {
+      "word": "UnfireSuite",
+      "start": 197.778597,
+      "end": 198.583657,
+      "exact": false,
+      "block": 27,
+      "tts_chunk": 2
+    },
+    {
+      "word": "UnfireSuite",
+      "start": 198.583657,
+      "end": 199.388717,
+      "exact": false,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "repräsentiert",
+      "start": 199.388717,
+      "end": 200.296673,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "die",
+      "start": 200.296673,
+      "end": 200.612575,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "internen",
+      "start": 200.612575,
+      "end": 201.252679,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Produktionsschichten",
+      "start": 201.252679,
+      "end": 202.490811,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "hinter",
+      "start": 202.490811,
+      "end": 203.01116,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "mehreren",
+      "start": 203.01116,
+      "end": 203.651263,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire-Projekten.",
+      "start": 203.651263,
+      "end": 204.870341,
+      "exact": false,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Seine",
+      "start": 204.870341,
+      "end": 205.326676,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Zielsetzung",
+      "start": 205.326676,
+      "end": 206.131736,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "besteht",
+      "start": 206.131736,
+      "end": 206.713164,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "darin,",
+      "start": 206.713164,
+      "end": 207.233952,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "wiederkehrende",
+      "start": 207.233952,
+      "end": 208.19167,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Ingenieurarbeiten",
+      "start": 208.19167,
+      "end": 209.293079,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "zu",
+      "start": 209.293079,
+      "end": 209.529,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "reduzieren,",
+      "start": 209.529,
+      "end": 210.345119,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "indem",
+      "start": 210.345119,
+      "end": 210.801454,
+      "exact": false,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Softwarekomponenten,",
+      "start": 210.801454,
+      "end": 212.059147,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Validierungsprozesse,",
+      "start": 212.059147,
+      "end": 213.361732,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Produktionssysteme",
+      "start": 213.361732,
+      "end": 214.509414,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "und",
+      "start": 214.509414,
+      "end": 214.825316,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "angesammelte",
+      "start": 214.825316,
+      "end": 215.682425,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "technische",
+      "start": 215.682425,
+      "end": 216.434092,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Wissen",
+      "start": 216.434092,
+      "end": 216.95444,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "dort",
+      "start": 216.95444,
+      "end": 217.343046,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "wiederverwendet",
+      "start": 217.343046,
+      "end": 218.34954,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "werden,",
+      "start": 218.34954,
+      "end": 218.93434,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "wo",
+      "start": 218.93434,
+      "end": 219.170262,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "dies",
+      "start": 219.170262,
+      "end": 219.558867,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "angebracht",
+      "start": 219.558867,
+      "end": 220.310534,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ist.",
+      "start": 220.310534,
+      "end": 220.791147,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Das",
+      "start": 220.791147,
+      "end": 221.10705,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ist",
+      "start": 221.10705,
+      "end": 221.422952,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "wichtig,",
+      "start": 221.422952,
+      "end": 222.068832,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "da",
+      "start": 222.068832,
+      "end": 222.304753,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "der",
+      "start": 222.304753,
+      "end": 222.620656,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Wert",
+      "start": 222.620656,
+      "end": 223.009261,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "eines",
+      "start": 223.009261,
+      "end": 223.465596,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Projekts",
+      "start": 223.465596,
+      "end": 224.1057,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "nicht",
+      "start": 224.1057,
+      "end": 224.562035,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "notwendigerweise",
+      "start": 224.562035,
+      "end": 225.616402,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "mit",
+      "start": 225.616402,
+      "end": 225.932304,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "dem",
+      "start": 225.932304,
+      "end": 226.248206,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Abschluss",
+      "start": 226.248206,
+      "end": 226.944961,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "des",
+      "start": 226.944961,
+      "end": 227.260864,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Projekts",
+      "start": 227.260864,
+      "end": 227.900967,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "endet.",
+      "start": 227.900967,
+      "end": 228.522013,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Teile",
+      "start": 228.522013,
+      "end": 228.978348,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "der",
+      "start": 228.978348,
+      "end": 229.294251,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Technologie",
+      "start": 229.294251,
+      "end": 230.099311,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "können",
+      "start": 230.099311,
+      "end": 230.619659,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Infrastruktur",
+      "start": 230.619659,
+      "end": 231.527615,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "für",
+      "start": 231.527615,
+      "end": 231.843517,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "das",
+      "start": 231.843517,
+      "end": 232.159419,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "nächste",
+      "start": 232.159419,
+      "end": 232.740848,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Produkt",
+      "start": 232.740848,
+      "end": 233.322276,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "werden,",
+      "start": 233.322276,
+      "end": 233.907076,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "was",
+      "start": 233.907076,
+      "end": 234.222979,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "es",
+      "start": 234.222979,
+      "end": 234.4589,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ermöglicht,",
+      "start": 234.4589,
+      "end": 235.275019,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "dass",
+      "start": 235.275019,
+      "end": 235.663624,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "das",
+      "start": 235.663624,
+      "end": 235.979527,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Produktionsystem",
+      "start": 235.979527,
+      "end": 237.033894,
+      "exact": false,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "selbst",
+      "start": 237.033894,
+      "end": 237.554242,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "sich",
+      "start": 237.554242,
+      "end": 237.942847,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "über",
+      "start": 237.942847,
+      "end": 238.331453,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "die",
+      "start": 238.331453,
+      "end": 238.647355,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Zeit",
+      "start": 238.647355,
+      "end": 239.03596,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "verbessert.",
+      "start": 239.03596,
+      "end": 239.952338,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Teilbare",
+      "start": 239.952338,
+      "end": 240.592442,
+      "exact": true,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Infrastruktur",
+      "start": 240.592442,
+      "end": 241.500398,
+      "exact": true,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 241.500398,
+      "end": 241.643625,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Validierung",
+      "start": 241.643625,
+      "end": 242.448685,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 242.448685,
+      "end": 242.591912,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Wiederverwendung",
+      "start": 242.591912,
+      "end": 243.646279,
+      "exact": true,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 243.646279,
+      "end": 243.789506,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Produktionsysteme",
+      "start": 243.789506,
+      "end": 244.890915,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire",
+      "start": 244.890915,
+      "end": 245.411264,
+      "exact": false,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Audio",
+      "start": 245.411264,
+      "end": 245.867599,
+      "exact": true,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 245.867599,
+      "end": 246.010826,
+      "exact": false,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Erste",
+      "start": 246.010826,
+      "end": 246.467161,
+      "exact": true,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Implementierung",
+      "start": 246.467161,
+      "end": 247.473655,
+      "exact": true,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Bogenschütze",
+      "start": 247.473655,
+      "end": 248.330764,
+      "exact": false,
+      "block": 33,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Archer",
+      "start": 248.330764,
+      "end": 248.851112,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ist",
+      "start": 248.851112,
+      "end": 249.167015,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "das",
+      "start": 249.167015,
+      "end": 249.482917,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "erste",
+      "start": 249.482917,
+      "end": 249.939252,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Produkt,",
+      "start": 249.939252,
+      "end": 250.585132,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "das",
+      "start": 250.585132,
+      "end": 250.901035,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "innerhalb",
+      "start": 250.901035,
+      "end": 251.59779,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "der",
+      "start": 251.59779,
+      "end": 251.913692,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "breiteren",
+      "start": 251.913692,
+      "end": 252.610447,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire",
+      "start": 252.610447,
+      "end": 253.130795,
+      "exact": false,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Audio-Richtung",
+      "start": 253.130795,
+      "end": 254.088513,
+      "exact": false,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "entwickelt",
+      "start": 254.088513,
+      "end": 254.84018,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "wurde.",
+      "start": 254.84018,
+      "end": 255.461227,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Es",
+      "start": 255.461227,
+      "end": 255.697148,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ist",
+      "start": 255.697148,
+      "end": 256.01305,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ein",
+      "start": 256.01305,
+      "end": 256.328952,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Präzisions-Audio-Clipping-Tool,",
+      "start": 256.328952,
+      "end": 258.051283,
+      "exact": false,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "das",
+      "start": 258.051283,
+      "end": 258.367186,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "sich",
+      "start": 258.367186,
+      "end": 258.755791,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "um",
+      "start": 258.755791,
+      "end": 258.991712,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Gain,",
+      "start": 258.991712,
+      "end": 259.44477,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Threshold",
+      "start": 259.44477,
+      "end": 260.141524,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "und",
+      "start": 260.141524,
+      "end": 260.457427,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Atmosphäre",
+      "start": 260.457427,
+      "end": 261.209094,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "dreht,",
+      "start": 261.209094,
+      "end": 261.729881,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "und",
+      "start": 261.729881,
+      "end": 262.045783,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "das",
+      "start": 262.045783,
+      "end": 262.361686,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Produzenten",
+      "start": 262.361686,
+      "end": 263.166745,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "und",
+      "start": 263.166745,
+      "end": 263.482648,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Ingenieuren",
+      "start": 263.482648,
+      "end": 264.287708,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "direkte",
+      "start": 264.287708,
+      "end": 264.869136,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Kontrolle",
+      "start": 264.869136,
+      "end": 265.565891,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "über",
+      "start": 265.565891,
+      "end": 265.954496,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "das",
+      "start": 265.954496,
+      "end": 266.270398,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Clippingverhalten,",
+      "start": 266.270398,
+      "end": 267.436259,
+      "exact": false,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Spitzenwerte,",
+      "start": 267.436259,
+      "end": 268.35782,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Transienten",
+      "start": 268.35782,
+      "end": 269.16288,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "und",
+      "start": 269.16288,
+      "end": 269.478783,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "den",
+      "start": 269.478783,
+      "end": 269.794685,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "akustischen",
+      "start": 269.794685,
+      "end": 270.599745,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Charakter",
+      "start": 270.599745,
+      "end": 271.2965,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "bietet.",
+      "start": 271.2965,
+      "end": 271.98156,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Seine",
+      "start": 271.98156,
+      "end": 272.437895,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "strategische",
+      "start": 272.437895,
+      "end": 273.295003,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Rolle",
+      "start": 273.295003,
+      "end": 273.751338,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "geht",
+      "start": 273.751338,
+      "end": 274.139944,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "über",
+      "start": 274.139944,
+      "end": 274.528549,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ein",
+      "start": 274.528549,
+      "end": 274.844451,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "einzelnes",
+      "start": 274.844451,
+      "end": 275.541206,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Audiosignal",
+      "start": 275.541206,
+      "end": 276.346266,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "hinaus.",
+      "start": 276.346266,
+      "end": 277.031326,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Archer",
+      "start": 277.031326,
+      "end": 277.551674,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "bietet",
+      "start": 277.551674,
+      "end": 278.072023,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "eine",
+      "start": 278.072023,
+      "end": 278.460628,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "praktische",
+      "start": 278.460628,
+      "end": 279.212295,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Umgebung",
+      "start": 279.212295,
+      "end": 279.852399,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "für",
+      "start": 279.852399,
+      "end": 280.168301,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "die",
+      "start": 280.168301,
+      "end": 280.484203,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Entwicklung",
+      "start": 280.484203,
+      "end": 281.289263,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "und",
+      "start": 281.289263,
+      "end": 281.605165,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Validierung",
+      "start": 281.605165,
+      "end": 282.410225,
+      "exact": false,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "von",
+      "start": 282.410225,
+      "end": 282.726127,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Audioteknologien,",
+      "start": 282.726127,
+      "end": 283.844947,
+      "exact": false,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Schnittstellen-Systemen",
+      "start": 283.844947,
+      "end": 285.214155,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "und",
+      "start": 285.214155,
+      "end": 285.530057,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Produktkomponenten,",
+      "start": 285.530057,
+      "end": 286.742192,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "die",
+      "start": 286.742192,
+      "end": 287.058094,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "sich",
+      "start": 287.058094,
+      "end": 287.446699,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "später",
+      "start": 287.446699,
+      "end": 287.967048,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "für",
+      "start": 287.967048,
+      "end": 288.28295,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "zukünftige",
+      "start": 288.28295,
+      "end": 289.034617,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kreative-Software-Produkte",
+      "start": 289.034617,
+      "end": 290.530185,
+      "exact": false,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "einsetzen",
+      "start": 290.530185,
+      "end": 291.22694,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "lassen.",
+      "start": 291.22694,
+      "end": 291.912,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire",
+      "start": 291.912,
+      "end": 292.577295,
+      "exact": false,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Audio",
+      "start": 292.577295,
+      "end": 293.160745,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "untersucht",
+      "start": 293.160745,
+      "end": 294.121793,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "auch,",
+      "start": 294.121793,
+      "end": 294.701052,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "wie",
+      "start": 294.701052,
+      "end": 295.104951,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "AI-basierte",
+      "start": 295.104951,
+      "end": 296.134265,
+      "exact": false,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Systeme,",
+      "start": 296.134265,
+      "end": 296.960059,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "prozedurale",
+      "start": 296.960059,
+      "end": 297.989374,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Verarbeitung",
+      "start": 297.989374,
+      "end": 299.085235,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "und",
+      "start": 299.085235,
+      "end": 299.489134,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "wiederverwendbare",
+      "start": 299.489134,
+      "end": 300.897347,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Softwaretechnologien",
+      "start": 300.897347,
+      "end": 302.480369,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 302.480369,
+      "end": 302.782007,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "neue",
+      "start": 302.782007,
+      "end": 303.278861,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Plugin-Konzepte",
+      "start": 303.278861,
+      "end": 304.56572,
+      "exact": false,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "und",
+      "start": 304.56572,
+      "end": 304.969618,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kreative",
+      "start": 304.969618,
+      "end": 305.788027,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Arbeitsflusskonzepte",
+      "start": 305.788027,
+      "end": 307.371048,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "über",
+      "start": 307.371048,
+      "end": 307.867902,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "konventionelle",
+      "start": 307.867902,
+      "end": 309.092398,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "feststehende",
+      "start": 309.092398,
+      "end": 310.188259,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Audioverarbeitungsinstrumente",
+      "start": 310.188259,
+      "end": 312.256837,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "hinaus",
+      "start": 312.256837,
+      "end": 312.922132,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "konvergieren",
+      "start": 312.922132,
+      "end": 314.017993,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "können.",
+      "start": 314.017993,
+      "end": 314.89388,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Audio-Technologie",
+      "start": 314.89388,
+      "end": 316.302094,
+      "exact": false,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "·",
+      "start": 316.302094,
+      "end": 316.485218,
+      "exact": false,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "DSP",
+      "start": 316.485218,
+      "end": 316.889116,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "·",
+      "start": 316.889116,
+      "end": 317.07224,
+      "exact": false,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Prozedurales",
+      "start": 317.07224,
+      "end": 318.168102,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Verarbeitungsverfahren",
+      "start": 318.168102,
+      "end": 319.86357,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "·",
+      "start": 319.86357,
+      "end": 320.046694,
+      "exact": false,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Kreatives",
+      "start": 320.046694,
+      "end": 320.937534,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Software",
+      "start": 320.937534,
+      "end": 321.755942,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Unfire",
+      "start": 321.755942,
+      "end": 322.421237,
+      "exact": false,
+      "block": 39,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Audio",
+      "start": 322.421237,
+      "end": 323.004687,
+      "exact": true,
+      "block": 39,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Von",
+      "start": 323.004687,
+      "end": 323.408586,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Plugins",
+      "start": 323.408586,
+      "end": 324.151974,
+      "exact": false,
+      "block": 40,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bis",
+      "start": 324.151974,
+      "end": 324.555873,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 3
+    },
+    {
+      "word": "zu",
+      "start": 324.555873,
+      "end": 324.857511,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 3
+    },
+    {
+      "word": "neuen",
+      "start": 324.857511,
+      "end": 325.440961,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Softwarekonzepten.",
+      "start": 325.440961,
+      "end": 327.059767,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Unfire",
+      "start": 327.059767,
+      "end": 327.725062,
+      "exact": false,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Audio",
+      "start": 327.725062,
+      "end": 328.308512,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "erforscht,",
+      "start": 328.308512,
+      "end": 329.281758,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "wie",
+      "start": 329.281758,
+      "end": 329.685657,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "AI-basierte",
+      "start": 329.685657,
+      "end": 330.714971,
+      "exact": false,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Systeme,",
+      "start": 330.714971,
+      "end": 331.540765,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "prozedurale",
+      "start": 331.540765,
+      "end": 332.570079,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Verarbeitung",
+      "start": 332.570079,
+      "end": 333.665941,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "und",
+      "start": 333.665941,
+      "end": 334.06984,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "wiederverwendbare",
+      "start": 334.06984,
+      "end": 335.478053,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Softwarekomponenten",
+      "start": 335.478053,
+      "end": 337.003678,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "zu",
+      "start": 337.003678,
+      "end": 337.305316,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kreativen",
+      "start": 337.305316,
+      "end": 338.196157,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Werkzeugen",
+      "start": 338.196157,
+      "end": 339.157205,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "konvergieren,",
+      "start": 339.157205,
+      "end": 340.335472,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "die",
+      "start": 340.335472,
+      "end": 340.739371,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "sich",
+      "start": 340.739371,
+      "end": 341.236225,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "über",
+      "start": 341.236225,
+      "end": 341.733078,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "konventionelle",
+      "start": 341.733078,
+      "end": 342.957574,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Plugin-Workflows",
+      "start": 342.957574,
+      "end": 344.305642,
+      "exact": false,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "hinaus",
+      "start": 344.305642,
+      "end": 344.970936,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "erstrecken.",
+      "start": 344.970936,
+      "end": 346.142577,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "KI",
+      "start": 346.142577,
+      "end": 346.444216,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kann",
+      "start": 346.444216,
+      "end": 346.941069,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Teil",
+      "start": 346.941069,
+      "end": 347.437923,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "des",
+      "start": 347.437923,
+      "end": 347.841822,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kreativen",
+      "start": 347.841822,
+      "end": 348.732662,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Softwareumfelds",
+      "start": 348.732662,
+      "end": 350.019521,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "werden,",
+      "start": 350.019521,
+      "end": 350.767221,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "anstatt",
+      "start": 350.767221,
+      "end": 351.51061,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "nur",
+      "start": 351.51061,
+      "end": 351.914508,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "als",
+      "start": 351.914508,
+      "end": 352.318407,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "separater",
+      "start": 352.318407,
+      "end": 353.209247,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Assistent",
+      "start": 353.209247,
+      "end": 354.100088,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "zu",
+      "start": 354.100088,
+      "end": 354.401726,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "existieren.",
+      "start": 354.401726,
+      "end": 355.573367,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Parameter,",
+      "start": 355.573367,
+      "end": 356.546613,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Ton",
+      "start": 356.546613,
+      "end": 356.950512,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "und",
+      "start": 356.950512,
+      "end": 357.354411,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Softwareverhalten",
+      "start": 357.354411,
+      "end": 358.762624,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "können",
+      "start": 358.762624,
+      "end": 359.427919,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "dynamisch",
+      "start": 359.427919,
+      "end": 360.318759,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "transformiert",
+      "start": 360.318759,
+      "end": 361.479631,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "werden,",
+      "start": 361.479631,
+      "end": 362.227332,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "eröffnet",
+      "start": 362.227332,
+      "end": 363.04574,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "thereby",
+      "start": 363.04574,
+      "end": 363.789128,
+      "exact": false,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "neue",
+      "start": 363.789128,
+      "end": 364.285982,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kreative",
+      "start": 364.285982,
+      "end": 365.10439,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Interaktionsmodelle.",
+      "start": 365.10439,
+      "end": 366.840608,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Erfolgreiche",
+      "start": 366.840608,
+      "end": 367.936469,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Komponenten,",
+      "start": 367.936469,
+      "end": 369.048189,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "die",
+      "start": 369.048189,
+      "end": 369.452088,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 369.452088,
+      "end": 369.753726,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "einem",
+      "start": 369.753726,
+      "end": 370.337176,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Produkt",
+      "start": 370.337176,
+      "end": 371.080565,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "entwickelt",
+      "start": 371.080565,
+      "end": 372.041613,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "werden,",
+      "start": 372.041613,
+      "end": 372.789314,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "können",
+      "start": 372.789314,
+      "end": 373.454609,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "später",
+      "start": 373.454609,
+      "end": 374.119903,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "wieder",
+      "start": 374.119903,
+      "end": 374.785198,
+      "exact": false,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "verwendet,",
+      "start": 374.785198,
+      "end": 375.758444,
+      "exact": false,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "erweitert",
+      "start": 375.758444,
+      "end": 376.649284,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "oder",
+      "start": 376.649284,
+      "end": 377.146138,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 377.146138,
+      "end": 377.447776,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "anderen",
+      "start": 377.447776,
+      "end": 378.191165,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Projekten",
+      "start": 378.191165,
+      "end": 379.082005,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "integriert",
+      "start": 379.082005,
+      "end": 380.043053,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "werden.",
+      "start": 380.043053,
+      "end": 380.918941,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Das",
+      "start": 380.918941,
+      "end": 381.322839,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Ziel",
+      "start": 381.322839,
+      "end": 381.819693,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ist",
+      "start": 381.819693,
+      "end": 382.223592,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "nicht",
+      "start": 382.223592,
+      "end": 382.807042,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "einfach,",
+      "start": 382.807042,
+      "end": 383.632836,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "isolierte",
+      "start": 383.632836,
+      "end": 384.523676,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Audio-Plugins",
+      "start": 384.523676,
+      "end": 385.684548,
+      "exact": false,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "zu",
+      "start": 385.684548,
+      "end": 385.986187,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "erstellen.",
+      "start": 385.986187,
+      "end": 387.08762,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Es",
+      "start": 387.08762,
+      "end": 387.389258,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "handelt",
+      "start": 387.389258,
+      "end": 388.132647,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "sich",
+      "start": 388.132647,
+      "end": 388.6295,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "um",
+      "start": 388.6295,
+      "end": 388.931139,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "die",
+      "start": 388.931139,
+      "end": 389.335037,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Erstellung",
+      "start": 389.335037,
+      "end": 390.296086,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "einer",
+      "start": 390.296086,
+      "end": 390.879536,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "wiederverwendbaren",
+      "start": 390.879536,
+      "end": 392.346912,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kreativen-technologischen",
+      "start": 392.346912,
+      "end": 394.205837,
+      "exact": false,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Grundlage,",
+      "start": 394.205837,
+      "end": 395.179083,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "die",
+      "start": 395.179083,
+      "end": 395.582982,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 395.582982,
+      "end": 395.884621,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "der",
+      "start": 395.884621,
+      "end": 396.288519,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Lage",
+      "start": 396.288519,
+      "end": 396.785373,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ist,",
+      "start": 396.785373,
+      "end": 397.271677,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "zukünftige",
+      "start": 397.271677,
+      "end": 398.232726,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Werkzeuge,",
+      "start": 398.232726,
+      "end": 399.205972,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "breitere",
+      "start": 399.205972,
+      "end": 400.02438,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Umgebungen",
+      "start": 400.02438,
+      "end": 400.985428,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "und",
+      "start": 400.985428,
+      "end": 401.389327,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "neue",
+      "start": 401.389327,
+      "end": 401.886181,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Produktkonzepte",
+      "start": 401.886181,
+      "end": 403.173039,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "zu",
+      "start": 403.173039,
+      "end": 403.474678,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "unterstützen.",
+      "start": 403.474678,
+      "end": 404.781132,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Regeln",
+      "start": 404.781132,
+      "end": 405.446427,
+      "exact": true,
+      "block": 46,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Softwareentwicklung",
+      "start": 405.446427,
+      "end": 406.972052,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ohne",
+      "start": 406.972052,
+      "end": 407.468906,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Neuanfang.",
+      "start": 407.468906,
+      "end": 408.570338,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Das",
+      "start": 408.570338,
+      "end": 408.974237,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "zentrale",
+      "start": 408.974237,
+      "end": 409.792645,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Konzept",
+      "start": 409.792645,
+      "end": 410.536034,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ist",
+      "start": 410.536034,
+      "end": 410.939932,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "einfach:",
+      "start": 410.939932,
+      "end": 411.765727,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Wenn",
+      "start": 411.765727,
+      "end": 412.26258,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ein",
+      "start": 412.26258,
+      "end": 412.666479,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "neues",
+      "start": 412.666479,
+      "end": 413.249929,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Produkt",
+      "start": 413.249929,
+      "end": 413.993317,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Technologien",
+      "start": 413.993317,
+      "end": 415.089179,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "nutzen",
+      "start": 415.089179,
+      "end": 415.754474,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kann,",
+      "start": 415.754474,
+      "end": 416.333733,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "die",
+      "start": 416.333733,
+      "end": 416.737632,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bereits",
+      "start": 416.737632,
+      "end": 417.48102,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 417.48102,
+      "end": 417.782659,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Unfire",
+      "start": 417.782659,
+      "end": 418.447954,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "vorhanden",
+      "start": 418.447954,
+      "end": 419.338794,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "sind,",
+      "start": 419.338794,
+      "end": 419.918053,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "sollte",
+      "start": 419.918053,
+      "end": 420.583348,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "die",
+      "start": 420.583348,
+      "end": 420.987247,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Entwicklung",
+      "start": 420.987247,
+      "end": 422.016561,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "diese",
+      "start": 422.016561,
+      "end": 422.600011,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Vorteile",
+      "start": 422.600011,
+      "end": 423.418419,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "wiederverwenden",
+      "start": 423.418419,
+      "end": 424.705278,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "und",
+      "start": 424.705278,
+      "end": 425.109177,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "nicht",
+      "start": 425.109177,
+      "end": 425.692627,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "von零基础",
+      "start": 425.692627,
+      "end": 426.357921,
+      "exact": false,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "userhtags重新翻译以下内容，确保保留专业的企业语气，并使用自然的德语表达：",
+      "start": 426.357921,
+      "end": 428.870904,
+      "exact": false,
+      "block": 49,
+      "tts_chunk": 3
+    },
+    {
+      "word": "严格规定：",
+      "start": 428.870904,
+      "end": 429.367757,
+      "exact": false,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "-",
+      "start": 429.367757,
+      "end": 429.550881,
+      "exact": false,
+      "block": 51,
+      "tts_chunk": 3
+    },
+    {
+      "word": "仅返回翻译内容。",
+      "start": 429.550881,
+      "end": 430.294269,
+      "exact": false,
+      "block": 51,
+      "tts_chunk": 3
+    },
+    {
+      "word": "-",
+      "start": 430.294269,
+      "end": 430.477393,
+      "exact": false,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "不做任何解释。",
+      "start": 430.477393,
+      "end": 431.142688,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "-",
+      "start": 431.142688,
+      "end": 431.325812,
+      "exact": false,
+      "block": 53,
+      "tts_chunk": 3
+    },
+    {
+      "word": "不加引号。",
+      "start": 431.325812,
+      "end": 431.822666,
+      "exact": true,
+      "block": 53,
+      "tts_chunk": 3
+    },
+    {
+      "word": "-",
+      "start": 431.822666,
+      "end": 432.00579,
+      "exact": false,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "保持意思和专业的企业语气。",
+      "start": 432.00579,
+      "end": 433.101651,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "-",
+      "start": 433.101651,
+      "end": 433.284775,
+      "exact": false,
+      "block": 55,
+      "tts_chunk": 3
+    },
+    {
+      "word": "写出地道的德语，而不是字面的机器翻译。",
+      "start": 433.284775,
+      "end": 434.692989,
+      "exact": false,
+      "block": 55,
+      "tts_chunk": 3
+    },
+    {
+      "word": "-",
+      "start": 434.692989,
+      "end": 434.876113,
+      "exact": false,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "从未翻译或更改这些产品名称：Unfire、Bolt、Archer、POWER、AI",
+      "start": 434.876113,
+      "end": 437.293148,
+      "exact": false,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "TOKEN",
+      "start": 437.293148,
+      "end": 437.876598,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "COUNTER。",
+      "start": 437.876598,
+      "end": 438.619986,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "-",
+      "start": 438.619986,
+      "end": 438.80311,
+      "exact": false,
+      "block": 57,
+      "tts_chunk": 3
+    },
+    {
+      "word": "保持数字、技术术语和产品名称的准确性。",
+      "start": 438.80311,
+      "end": 440.211324,
+      "exact": true,
+      "block": 57,
+      "tts_chunk": 3
+    },
+    {
+      "word": "-",
+      "start": 440.211324,
+      "end": 440.394448,
+      "exact": false,
+      "block": 58,
+      "tts_chunk": 3
+    },
+    {
+      "word": "此文本将由专业的企业女性声音朗读。",
+      "start": 440.394448,
+      "end": 441.742515,
+      "exact": false,
+      "block": 58,
+      "tts_chunk": 3
+    },
+    {
+      "word": "原文：",
+      "start": 441.742515,
+      "end": 442.044153,
+      "exact": false,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "The",
+      "start": 442.044153,
+      "end": 442.448052,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "central",
+      "start": 442.448052,
+      "end": 443.191441,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "idea",
+      "start": 443.191441,
+      "end": 443.688294,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "is",
+      "start": 443.688294,
+      "end": 443.989933,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "simple:",
+      "start": 443.989933,
+      "end": 444.737633,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "when",
+      "start": 444.737633,
+      "end": 445.234487,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "a",
+      "start": 445.234487,
+      "end": 445.417611,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "new",
+      "start": 445.417611,
+      "end": 445.82151,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "product",
+      "start": 445.82151,
+      "end": 446.564898,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "can",
+      "start": 446.564898,
+      "end": 446.968797,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "use",
+      "start": 446.968797,
+      "end": 447.372696,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "technology",
+      "start": 447.372696,
+      "end": 448.333744,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "that",
+      "start": 448.333744,
+      "end": 448.830597,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "already",
+      "start": 448.830597,
+      "end": 449.573986,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "exists",
+      "start": 449.573986,
+      "end": 450.239281,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "inside",
+      "start": 450.239281,
+      "end": 450.904575,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Unfire,",
+      "start": 450.904575,
+      "end": 451.652276,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "development",
+      "start": 451.652276,
+      "end": 452.68159,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "should",
+      "start": 452.68159,
+      "end": 453.346885,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "reuse",
+      "start": 453.346885,
+      "end": 453.930335,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "that",
+      "start": 453.930335,
+      "end": 454.427188,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "advantage",
+      "start": 454.427188,
+      "end": 455.318029,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "instead",
+      "start": 455.318029,
+      "end": 456.061417,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "of",
+      "start": 456.061417,
+      "end": 456.363055,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "rebuilding",
+      "start": 456.363055,
+      "end": 457.324104,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "it。",
+      "start": 457.324104,
+      "end": 457.625742,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Geteilte",
+      "start": 457.625742,
+      "end": 458.444151,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Grundlage",
+      "start": 458.444151,
+      "end": 459.334991,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Wiederverwendbare",
+      "start": 459.334991,
+      "end": 460.743204,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Softwarekomponenten,",
+      "start": 460.743204,
+      "end": 462.351235,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Produktionswissen",
+      "start": 462.351235,
+      "end": 463.759448,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "und",
+      "start": 463.759448,
+      "end": 464.163347,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Validierungsysteme",
+      "start": 464.163347,
+      "end": 465.630723,
+      "exact": false,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bilden",
+      "start": 465.630723,
+      "end": 466.296018,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "eine",
+      "start": 466.296018,
+      "end": 466.792871,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Grundlage,",
+      "start": 466.792871,
+      "end": 467.766117,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "die",
+      "start": 467.766117,
+      "end": 468.170016,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "fortlaufend",
+      "start": 468.170016,
+      "end": 469.19933,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "weiterentwickelt",
+      "start": 469.19933,
+      "end": 470.547398,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "werden",
+      "start": 470.547398,
+      "end": 471.212692,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kann.",
+      "start": 471.212692,
+      "end": 471.920138,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Produktlayer",
+      "start": 471.920138,
+      "end": 473.016,
+      "exact": false,
+      "block": 63,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Neue",
+      "start": 473.016,
+      "end": 473.445443,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Anwendungen",
+      "start": 473.445443,
+      "end": 474.335106,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "können",
+      "start": 474.335106,
+      "end": 474.910137,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "bestehende",
+      "start": 474.910137,
+      "end": 475.740796,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Fähigkeiten",
+      "start": 475.740796,
+      "end": 476.630459,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "mit",
+      "start": 476.630459,
+      "end": 476.979559,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "spezifischer",
+      "start": 476.979559,
+      "end": 477.92674,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Produkttechnologie",
+      "start": 477.92674,
+      "end": 479.195031,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kombinieren,",
+      "start": 479.195031,
+      "end": 480.155919,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "anstatt",
+      "start": 480.155919,
+      "end": 480.798449,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "von",
+      "start": 480.798449,
+      "end": 481.147549,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "einer",
+      "start": 481.147549,
+      "end": 481.65184,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "leeren",
+      "start": 481.65184,
+      "end": 482.226872,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Architektur",
+      "start": 482.226872,
+      "end": 483.116534,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "aus",
+      "start": 483.116534,
+      "end": 483.465634,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "anzufangen.",
+      "start": 483.465634,
+      "end": 484.478314,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Validierung",
+      "start": 484.478314,
+      "end": 485.367976,
+      "exact": true,
+      "block": 65,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bauwerke,",
+      "start": 485.367976,
+      "end": 486.146573,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Tests",
+      "start": 486.146573,
+      "end": 486.650864,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "und",
+      "start": 486.650864,
+      "end": 486.999964,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "internen",
+      "start": 486.999964,
+      "end": 487.707335,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Kontrollpunkte",
+      "start": 487.707335,
+      "end": 488.765699,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "bieten",
+      "start": 488.765699,
+      "end": 489.34073,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "messbare",
+      "start": 489.34073,
+      "end": 490.048102,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Beweise",
+      "start": 490.048102,
+      "end": 490.690631,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "darüber,",
+      "start": 490.690631,
+      "end": 491.404387,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ob",
+      "start": 491.404387,
+      "end": 491.665101,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Softwarekandidaten",
+      "start": 491.665101,
+      "end": 492.933391,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "wie",
+      "start": 492.933391,
+      "end": 493.282492,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "geplant",
+      "start": 493.282492,
+      "end": 493.925021,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "funktionieren.",
+      "start": 493.925021,
+      "end": 495.110414,
+      "exact": true,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Erweiterung",
+      "start": 495.110414,
+      "end": 496.000076,
+      "exact": true,
+      "block": 67,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Infrastruktur",
+      "start": 496.000076,
+      "end": 497.003448,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kann",
+      "start": 497.003448,
+      "end": 497.432891,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "durch",
+      "start": 497.432891,
+      "end": 497.937182,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "zusätzliche",
+      "start": 497.937182,
+      "end": 498.826845,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Rechenleistung,",
+      "start": 498.826845,
+      "end": 499.956434,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Speicherkapazität,",
+      "start": 499.956434,
+      "end": 501.244814,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Testumgebung,",
+      "start": 501.244814,
+      "end": 502.263221,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Qualitätskontrolle",
+      "start": 502.263221,
+      "end": 503.531512,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "und",
+      "start": 503.531512,
+      "end": 503.880612,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bereitstellungskapazität",
+      "start": 503.880612,
+      "end": 505.440792,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "erweitert",
+      "start": 505.440792,
+      "end": 506.210768,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "werden.",
+      "start": 506.210768,
+      "end": 506.96782,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Produktionsgröße",
+      "start": 506.96782,
+      "end": 508.13299,
+      "exact": false,
+      "block": 69,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Der",
+      "start": 508.13299,
+      "end": 508.48209,
+      "exact": true,
+      "block": 70,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bottleneck",
+      "start": 508.48209,
+      "end": 509.312749,
+      "exact": true,
+      "block": 70,
+      "tts_chunk": 4
+    },
+    {
+      "word": "wird",
+      "start": 509.312749,
+      "end": 509.742192,
+      "exact": true,
+      "block": 70,
+      "tts_chunk": 4
+    },
+    {
+      "word": "sich",
+      "start": 509.742192,
+      "end": 510.171635,
+      "exact": true,
+      "block": 70,
+      "tts_chunk": 4
+    },
+    {
+      "word": "verändern.",
+      "start": 510.171635,
+      "end": 511.123632,
+      "exact": true,
+      "block": 70,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Wo",
+      "start": 511.123632,
+      "end": 511.384346,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "die",
+      "start": 511.384346,
+      "end": 511.733446,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "bestehende",
+      "start": 511.733446,
+      "end": 512.564105,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Architektur",
+      "start": 512.564105,
+      "end": 513.453768,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "anwendbar",
+      "start": 513.453768,
+      "end": 514.223744,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ist,",
+      "start": 514.223744,
+      "end": 514.644069,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "hat",
+      "start": 514.644069,
+      "end": 514.993169,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "interne",
+      "start": 514.993169,
+      "end": 515.635699,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Entwicklung",
+      "start": 515.635699,
+      "end": 516.525362,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "gezeigt,",
+      "start": 516.525362,
+      "end": 517.239117,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "dass",
+      "start": 517.239117,
+      "end": 517.66856,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Softwarekandidaten",
+      "start": 517.66856,
+      "end": 518.936851,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "durch",
+      "start": 518.936851,
+      "end": 519.441142,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "äußerst",
+      "start": 519.441142,
+      "end": 520.083672,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kurze",
+      "start": 520.083672,
+      "end": 520.587963,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Build-Cycles",
+      "start": 520.587963,
+      "end": 521.535144,
+      "exact": false,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "hindurchbewegt",
+      "start": 521.535144,
+      "end": 522.593508,
+      "exact": false,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "werden",
+      "start": 522.593508,
+      "end": 523.168539,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "können",
+      "start": 523.168539,
+      "end": 523.74357,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "—",
+      "start": 523.74357,
+      "end": 523.901849,
+      "exact": false,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "in",
+      "start": 523.901849,
+      "end": 524.162563,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "einigen",
+      "start": 524.162563,
+      "end": 524.805093,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Fällen",
+      "start": 524.805093,
+      "end": 525.380124,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "gemessen",
+      "start": 525.380124,
+      "end": 526.087496,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "in",
+      "start": 526.087496,
+      "end": 526.348209,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Minuten.",
+      "start": 526.348209,
+      "end": 527.17276,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Da",
+      "start": 527.17276,
+      "end": 527.433474,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "die",
+      "start": 527.433474,
+      "end": 527.782574,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "erneut",
+      "start": 527.782574,
+      "end": 528.357605,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "verwendbaren",
+      "start": 528.357605,
+      "end": 529.304787,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Technologien",
+      "start": 529.304787,
+      "end": 530.251968,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "sich",
+      "start": 530.251968,
+      "end": 530.681411,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ausbreiten,",
+      "start": 530.681411,
+      "end": 531.583296,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "werden",
+      "start": 531.583296,
+      "end": 532.158327,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "die",
+      "start": 532.158327,
+      "end": 532.507427,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "begrenzenden",
+      "start": 532.507427,
+      "end": 533.454608,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Faktoren",
+      "start": 533.454608,
+      "end": 534.16198,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "zunehmend",
+      "start": 534.16198,
+      "end": 534.931956,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "zu",
+      "start": 534.931956,
+      "end": 535.19267,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Infrastrukturressourcen",
+      "start": 535.19267,
+      "end": 536.705767,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "wie",
+      "start": 536.705767,
+      "end": 537.054867,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Rechenkapazitäten,",
+      "start": 537.054867,
+      "end": 538.343247,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Speicher,",
+      "start": 538.343247,
+      "end": 539.121844,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Tests,",
+      "start": 539.121844,
+      "end": 539.69736,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Qualitätskontrolle",
+      "start": 539.69736,
+      "end": 540.965651,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "und",
+      "start": 540.965651,
+      "end": 541.314751,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kommerzielle",
+      "start": 541.314751,
+      "end": 542.261933,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bereitstellung",
+      "start": 542.261933,
+      "end": 543.320296,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "–",
+      "start": 543.320296,
+      "end": 543.478575,
+      "exact": false,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Ressourcen,",
+      "start": 543.478575,
+      "end": 544.380459,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "die",
+      "start": 544.380459,
+      "end": 544.729559,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "selbst",
+      "start": 544.729559,
+      "end": 545.304591,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "erweitert",
+      "start": 545.304591,
+      "end": 546.074567,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "werden",
+      "start": 546.074567,
+      "end": 546.649598,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "können.",
+      "start": 546.649598,
+      "end": 547.40665,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Flagshipprodukt",
+      "start": 547.40665,
+      "end": 548.518915,
+      "exact": false,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "verfolgt",
+      "start": 548.518915,
+      "end": 549.226287,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "derzeit",
+      "start": 549.226287,
+      "end": 549.868816,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "die",
+      "start": 549.868816,
+      "end": 550.217917,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "breitere",
+      "start": 550.217917,
+      "end": 550.925288,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Technologieentwicklung,",
+      "start": 550.925288,
+      "end": 552.46195,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "die",
+      "start": 552.46195,
+      "end": 552.81105,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "durch",
+      "start": 552.81105,
+      "end": 553.315341,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "aktuelle",
+      "start": 553.315341,
+      "end": 554.022712,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Demonstrationen",
+      "start": 554.022712,
+      "end": 555.134977,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "illustriert",
+      "start": 555.134977,
+      "end": 556.02464,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "wird.",
+      "start": 556.02464,
+      "end": 556.636104,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Prioritätswelle",
+      "start": 556.636104,
+      "end": 557.748369,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "1",
+      "start": 557.748369,
+      "end": 557.906648,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Software-Kandidaten",
+      "start": 557.906648,
+      "end": 559.225285,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "identifiziert",
+      "start": 559.225285,
+      "end": 560.228657,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "für",
+      "start": 560.228657,
+      "end": 560.577757,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "gezielte",
+      "start": 560.577757,
+      "end": 561.285128,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Entwicklung.",
+      "start": 561.285128,
+      "end": 562.356811,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "53",
+      "start": 562.356811,
+      "end": 562.617525,
+      "exact": true,
+      "block": 75,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Standalone-Software-Kandidaten,",
+      "start": 562.617525,
+      "end": 564.520854,
+      "exact": false,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "die",
+      "start": 564.520854,
+      "end": 564.869954,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "entwickelt",
+      "start": 564.869954,
+      "end": 565.700613,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "und",
+      "start": 565.700613,
+      "end": 566.049713,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "intern",
+      "start": 566.049713,
+      "end": 566.624744,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "geprüft",
+      "start": 566.624744,
+      "end": 567.267274,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "werden.",
+      "start": 567.267274,
+      "end": 568.024326,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "53/53",
+      "start": 568.024326,
+      "end": 568.453769,
+      "exact": false,
+      "block": 77,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Erfolgreiche",
+      "start": 568.453769,
+      "end": 569.400951,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "eigenständige",
+      "start": 569.400951,
+      "end": 570.404323,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Builds",
+      "start": 570.404323,
+      "end": 570.979354,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "am",
+      "start": 570.979354,
+      "end": 571.240068,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "internen",
+      "start": 571.240068,
+      "end": 571.947439,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Kontrollpunkt",
+      "start": 571.947439,
+      "end": 572.950811,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "im",
+      "start": 572.950811,
+      "end": 573.211525,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "September",
+      "start": 573.211525,
+      "end": 573.981501,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "2026.",
+      "start": 573.981501,
+      "end": 574.592965,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "01",
+      "start": 574.592965,
+      "end": 574.853679,
+      "exact": false,
+      "block": 79,
+      "tts_chunk": 4
+    },
+    {
+      "word": "02",
+      "start": 574.853679,
+      "end": 575.114393,
+      "exact": false,
+      "block": 80,
+      "tts_chunk": 4
+    },
+    {
+      "word": "strengen",
+      "start": 575.114393,
+      "end": 575.821764,
+      "exact": true,
+      "block": 80,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Regeln:",
+      "start": 575.821764,
+      "end": 576.468021,
+      "exact": true,
+      "block": 80,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 576.468021,
+      "end": 576.6263,
+      "exact": false,
+      "block": 81,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Rückerstattungen",
+      "start": 576.6263,
+      "end": 577.791469,
+      "exact": true,
+      "block": 81,
+      "tts_chunk": 4
+    },
+    {
+      "word": "nur,",
+      "start": 577.791469,
+      "end": 578.211795,
+      "exact": true,
+      "block": 81,
+      "tts_chunk": 4
+    },
+    {
+      "word": "wenn",
+      "start": 578.211795,
+      "end": 578.641238,
+      "exact": true,
+      "block": 81,
+      "tts_chunk": 4
+    },
+    {
+      "word": "explicitly",
+      "start": 578.641238,
+      "end": 579.471897,
+      "exact": true,
+      "block": 81,
+      "tts_chunk": 4
+    },
+    {
+      "word": "angefordert.",
+      "start": 579.471897,
+      "end": 580.54358,
+      "exact": true,
+      "block": 81,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 580.54358,
+      "end": 580.701859,
+      "exact": false,
+      "block": 82,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Keine",
+      "start": 580.701859,
+      "end": 581.20615,
+      "exact": true,
+      "block": 82,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Erklärungen",
+      "start": 581.20615,
+      "end": 582.095813,
+      "exact": true,
+      "block": 82,
+      "tts_chunk": 4
+    },
+    {
+      "word": "hinzufügen.",
+      "start": 582.095813,
+      "end": 583.108492,
+      "exact": true,
+      "block": 82,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 583.108492,
+      "end": 583.266771,
+      "exact": false,
+      "block": 83,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Zitate",
+      "start": 583.266771,
+      "end": 583.841802,
+      "exact": true,
+      "block": 83,
+      "tts_chunk": 4
+    },
+    {
+      "word": "nicht",
+      "start": 583.841802,
+      "end": 584.346093,
+      "exact": true,
+      "block": 83,
+      "tts_chunk": 4
+    },
+    {
+      "word": "verwenden.",
+      "start": 584.346093,
+      "end": 585.29809,
+      "exact": true,
+      "block": 83,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 585.29809,
+      "end": 585.456368,
+      "exact": false,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Beibehalten",
+      "start": 585.456368,
+      "end": 586.346031,
+      "exact": true,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "der",
+      "start": 586.346031,
+      "end": 586.695131,
+      "exact": true,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bedeutung",
+      "start": 586.695131,
+      "end": 587.465107,
+      "exact": true,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "und",
+      "start": 587.465107,
+      "end": 587.814207,
+      "exact": true,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "des",
+      "start": 587.814207,
+      "end": 588.163307,
+      "exact": true,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "professionellen",
+      "start": 588.163307,
+      "end": 589.275573,
+      "exact": true,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Geschäftstones.",
+      "start": 589.275573,
+      "end": 590.515957,
+      "exact": true,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 590.515957,
+      "end": 590.674236,
+      "exact": false,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Verwenden",
+      "start": 590.674236,
+      "end": 591.444212,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Sie",
+      "start": 591.444212,
+      "end": 591.793312,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "natürlichen,",
+      "start": 591.793312,
+      "end": 592.7542,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "fließenden",
+      "start": 592.7542,
+      "end": 593.584859,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Deutschen,",
+      "start": 593.584859,
+      "end": 594.42606,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "nicht",
+      "start": 594.42606,
+      "end": 594.930351,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "eine",
+      "start": 594.930351,
+      "end": 595.359794,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "wörtliche",
+      "start": 595.359794,
+      "end": 596.129771,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Maschinene",
+      "start": 596.129771,
+      "end": 596.960429,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "translation.",
+      "start": 596.960429,
+      "end": 598.032113,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 598.032113,
+      "end": 598.190391,
+      "exact": false,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Produktnamen",
+      "start": 598.190391,
+      "end": 599.137573,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "wie",
+      "start": 599.137573,
+      "end": 599.486673,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Unfire,",
+      "start": 599.486673,
+      "end": 600.13293,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bolt,",
+      "start": 600.13293,
+      "end": 600.633599,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Archer,",
+      "start": 600.633599,
+      "end": 601.279855,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "POWER,",
+      "start": 601.279855,
+      "end": 601.855372,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "AI",
+      "start": 601.855372,
+      "end": 602.116086,
+      "exact": false,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "TOKEN",
+      "start": 602.116086,
+      "end": 602.620376,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "COUNTER",
+      "start": 602.620376,
+      "end": 603.262906,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "nicht",
+      "start": 603.262906,
+      "end": 603.767197,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "übersetzen",
+      "start": 603.767197,
+      "end": 604.597856,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "oder",
+      "start": 604.597856,
+      "end": 605.027299,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ändern.",
+      "start": 605.027299,
+      "end": 605.784351,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 605.784351,
+      "end": 605.94263,
+      "exact": false,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Zahlen,",
+      "start": 605.94263,
+      "end": 606.588887,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "technische",
+      "start": 606.588887,
+      "end": 607.419546,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Fachbegriffe",
+      "start": 607.419546,
+      "end": 608.366727,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "und",
+      "start": 608.366727,
+      "end": 608.715827,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Produktbezeichnungen",
+      "start": 608.715827,
+      "end": 610.084073,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "präzise",
+      "start": 610.084073,
+      "end": 610.726603,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "beibehalten.",
+      "start": 610.726603,
+      "end": 611.798286,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 611.798286,
+      "end": 611.956565,
+      "exact": false,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Dieser",
+      "start": 611.956565,
+      "end": 612.531596,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Text",
+      "start": 612.531596,
+      "end": 612.96104,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "wird",
+      "start": 612.96104,
+      "end": 613.390483,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "von",
+      "start": 613.390483,
+      "end": 613.739583,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "einer",
+      "start": 613.739583,
+      "end": 614.243874,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "professionellen",
+      "start": 614.243874,
+      "end": 615.356139,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Geschäftsfrau",
+      "start": 615.356139,
+      "end": 616.359511,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "gesprochen.",
+      "start": 616.359511,
+      "end": 617.37219,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Wiederverwendung",
+      "start": 617.37219,
+      "end": 618.53736,
+      "exact": false,
+      "block": 89,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Starten",
+      "start": 618.53736,
+      "end": 619.17989,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Sie",
+      "start": 619.17989,
+      "end": 619.52899,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "bei",
+      "start": 619.52899,
+      "end": 619.87809,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "vorhandener",
+      "start": 619.87809,
+      "end": 620.767752,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Technologie,",
+      "start": 620.767752,
+      "end": 621.728641,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "wo",
+      "start": 621.728641,
+      "end": 621.989355,
+      "exact": false,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "möglich.",
+      "start": 621.989355,
+      "end": 622.813905,
+      "exact": false,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "02",
+      "start": 622.813905,
+      "end": 623.074619,
+      "exact": false,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bauen",
+      "start": 623.074619,
+      "end": 623.57891,
+      "exact": true,
+      "block": 92,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Erstellen",
+      "start": 623.57891,
+      "end": 624.348886,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Sie",
+      "start": 624.348886,
+      "end": 624.697986,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "das",
+      "start": 624.697986,
+      "end": 625.047086,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "spezifische",
+      "start": 625.047086,
+      "end": 625.936749,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Produktlayer.",
+      "start": 625.936749,
+      "end": 627.065951,
+      "exact": false,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "03",
+      "start": 627.065951,
+      "end": 627.326665,
+      "exact": false,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Skalierung",
+      "start": 627.326665,
+      "end": 628.157323,
+      "exact": false,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Erweiteren",
+      "start": 628.157323,
+      "end": 628.987982,
+      "exact": false,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Sie",
+      "start": 628.987982,
+      "end": 629.337082,
+      "exact": true,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "die",
+      "start": 629.337082,
+      "end": 629.686182,
+      "exact": true,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Infrastruktur",
+      "start": 629.686182,
+      "end": 630.689554,
+      "exact": true,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "mit",
+      "start": 630.689554,
+      "end": 631.038654,
+      "exact": true,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "wachsendem",
+      "start": 631.038654,
+      "end": 631.869313,
+      "exact": true,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Produktionsumfang.",
+      "start": 631.869313,
+      "end": 633.268489,
+      "exact": true,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Unternehmen",
+      "start": 633.268489,
+      "end": 634.158151,
+      "exact": true,
+      "block": 97,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Dedizierte",
+      "start": 634.158151,
+      "end": 634.98881,
+      "exact": false,
+      "block": 98,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Software-Systeme.",
+      "start": 634.98881,
+      "end": 636.336,
+      "exact": false,
+      "block": 98,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Die",
+      "start": 636.336,
+      "end": 636.674569,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "gleiche",
+      "start": 636.674569,
+      "end": 637.297717,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Produktionseinrichtung",
+      "start": 637.297717,
+      "end": 638.718949,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "kann",
+      "start": 638.718949,
+      "end": 639.135438,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "spezialisierte",
+      "start": 639.135438,
+      "end": 640.161875,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Anwendungen",
+      "start": 640.161875,
+      "end": 641.024701,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "und",
+      "start": 641.024701,
+      "end": 641.363271,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Umgebungen",
+      "start": 641.363271,
+      "end": 642.168873,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "unterstützen,",
+      "start": 642.168873,
+      "end": 643.156559,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "die",
+      "start": 643.156559,
+      "end": 643.495129,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "sich",
+      "start": 643.495129,
+      "end": 643.911618,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "um",
+      "start": 643.911618,
+      "end": 644.164467,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "die",
+      "start": 644.164467,
+      "end": 644.503037,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Anforderungen",
+      "start": 644.503037,
+      "end": 645.476142,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "der",
+      "start": 645.476142,
+      "end": 645.814711,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Organisation",
+      "start": 645.814711,
+      "end": 646.733321,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "orientieren.",
+      "start": 646.733321,
+      "end": 647.772676,
+      "exact": true,
+      "block": 99,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Institutionen",
+      "start": 647.772676,
+      "end": 648.745781,
+      "exact": true,
+      "block": 100,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Steuerbare",
+      "start": 648.745781,
+      "end": 649.551383,
+      "exact": false,
+      "block": 101,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Umgebungen.",
+      "start": 649.551383,
+      "end": 650.533515,
+      "exact": false,
+      "block": 101,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Projekte",
+      "start": 650.533515,
+      "end": 651.219548,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "können",
+      "start": 651.219548,
+      "end": 651.777234,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "isoliert",
+      "start": 651.777234,
+      "end": 652.463267,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "bleiben,",
+      "start": 652.463267,
+      "end": 653.155492,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "während",
+      "start": 653.155492,
+      "end": 653.77864,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "sie",
+      "start": 653.77864,
+      "end": 654.117209,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "von",
+      "start": 654.117209,
+      "end": 654.455778,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "wiederverwendbarem",
+      "start": 654.455778,
+      "end": 655.685811,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "unterliegendem",
+      "start": 655.685811,
+      "end": 656.712249,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Technologie,",
+      "start": 656.712249,
+      "end": 657.644152,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Validierungsprozessen",
+      "start": 657.644152,
+      "end": 659.018568,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "und",
+      "start": 659.018568,
+      "end": 659.357138,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Produktionsinfrastruktur",
+      "start": 659.357138,
+      "end": 660.870255,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "profitieren.",
+      "start": 660.870255,
+      "end": 661.909611,
+      "exact": true,
+      "block": 102,
+      "tts_chunk": 5
+    },
+    {
+      "word": "öffentlicher",
+      "start": 661.909611,
+      "end": 662.82822,
+      "exact": false,
+      "block": 103,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Sektor",
+      "start": 662.82822,
+      "end": 663.385906,
+      "exact": true,
+      "block": 103,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Skalbare",
+      "start": 663.385906,
+      "end": 664.071939,
+      "exact": false,
+      "block": 104,
+      "tts_chunk": 5
+    },
+    {
+      "word": "digitale",
+      "start": 664.071939,
+      "end": 664.757972,
+      "exact": false,
+      "block": 104,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Werkzeuge.",
+      "start": 664.757972,
+      "end": 665.681252,
+      "exact": false,
+      "block": 104,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Die",
+      "start": 665.681252,
+      "end": 666.019822,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Architektur",
+      "start": 666.019822,
+      "end": 666.882647,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "wird",
+      "start": 666.882647,
+      "end": 667.299137,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "für",
+      "start": 667.299137,
+      "end": 667.637706,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "zukünftige",
+      "start": 667.637706,
+      "end": 668.443308,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Zusammenarbeit",
+      "start": 668.443308,
+      "end": 669.469746,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "vorbereitet,",
+      "start": 669.469746,
+      "end": 670.401649,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "bei",
+      "start": 670.401649,
+      "end": 670.740218,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "der",
+      "start": 670.740218,
+      "end": 671.078787,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Kontrolle,",
+      "start": 671.078787,
+      "end": 671.894614,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Überwachung,",
+      "start": 671.894614,
+      "end": 672.826517,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Validierung",
+      "start": 672.826517,
+      "end": 673.689343,
+      "exact": false,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "und",
+      "start": 673.689343,
+      "end": 674.027912,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "die",
+      "start": 674.027912,
+      "end": 674.366482,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "langfristige",
+      "start": 674.366482,
+      "end": 675.285091,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Wartbarkeit",
+      "start": 675.285091,
+      "end": 676.147917,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "von",
+      "start": 676.147917,
+      "end": 676.486487,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "entscheidender",
+      "start": 676.486487,
+      "end": 677.512924,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Bedeutung",
+      "start": 677.512924,
+      "end": 678.259674,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "sind.",
+      "start": 678.259674,
+      "end": 678.852693,
+      "exact": true,
+      "block": 105,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Unfire",
+      "start": 678.852693,
+      "end": 679.410379,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "kann",
+      "start": 679.410379,
+      "end": 679.826868,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Produkte,",
+      "start": 679.826868,
+      "end": 680.581978,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Builds,",
+      "start": 680.581978,
+      "end": 681.20874,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "interne",
+      "start": 681.20874,
+      "end": 681.831888,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Checkpoints",
+      "start": 681.831888,
+      "end": 682.694714,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "und",
+      "start": 682.694714,
+      "end": 683.033284,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Produktionskapazitäten",
+      "start": 683.033284,
+      "end": 684.454515,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "anzeigen,",
+      "start": 684.454515,
+      "end": 685.209625,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "ohne",
+      "start": 685.209625,
+      "end": 685.626114,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "die",
+      "start": 685.626114,
+      "end": 685.964684,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Implementierungsmethoden",
+      "start": 685.964684,
+      "end": 687.477801,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "preiszugeben,",
+      "start": 687.477801,
+      "end": 688.465487,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "die",
+      "start": 688.465487,
+      "end": 688.804057,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "die",
+      "start": 688.804057,
+      "end": 689.142626,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "zugrunde",
+      "start": 689.142626,
+      "end": 689.82866,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "liegende",
+      "start": 689.82866,
+      "end": 690.514693,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Leverage",
+      "start": 690.514693,
+      "end": 691.200726,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "erzeugen.",
+      "start": 691.200726,
+      "end": 692.06329,
+      "exact": true,
+      "block": 106,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Finanzierung",
+      "start": 692.06329,
+      "end": 692.981899,
+      "exact": true,
+      "block": 107,
+      "tts_chunk": 5
+    },
+    {
+      "word": "&",
+      "start": 692.981899,
+      "end": 693.135403,
+      "exact": false,
+      "block": 107,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Zusammenarbeit",
+      "start": 693.135403,
+      "end": 694.161841,
+      "exact": true,
+      "block": 107,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Erweiter",
+      "start": 694.161841,
+      "end": 694.847875,
+      "exact": false,
+      "block": 108,
+      "tts_chunk": 5
+    },
+    {
+      "word": "das",
+      "start": 694.847875,
+      "end": 695.186444,
+      "exact": true,
+      "block": 108,
+      "tts_chunk": 5
+    },
+    {
+      "word": "Existierende.",
+      "start": 695.186444,
+      "end": 696.281584,
+      "exact": true,
+      "block": 108,
+      "tts_chunk": 5
+    },
+    {
+      "word": "hallo@unfire.technology",
+      "start": 696.281584,
+      "end": 697.656,
+      "exact": false,
+      "block": 109,
+      "tts_chunk": 5
+    }
+  ],
+  "timeline_source": "regenerated-edge-tts-reference-chunks",
+  "timeline_method": "5-identical-duration-tts-chunks-weighted-word-interpolation",
+  "tts_chunks": 5,
+  "whisper_coverage_reference": 0.8803088803088803
+}

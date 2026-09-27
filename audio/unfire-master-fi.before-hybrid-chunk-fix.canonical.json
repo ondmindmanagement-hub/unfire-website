@@ -1,0 +1,8151 @@
+{
+  "language": "fi",
+  "audio_duration": 744.024,
+  "canonical_blocks": 123,
+  "canonical_words": 1022,
+  "transcript_words": 1394,
+  "exact_matches": 827,
+  "coverage": 0.8091976516634051,
+  "blocks": [
+    {
+      "index": 0,
+      "text": "Rajoittuneet säännöt:",
+      "word_start": 0,
+      "word_end": 2,
+      "start": 0.0,
+      "end": 1.36
+    },
+    {
+      "index": 1,
+      "text": "- Palauta käännös ainoastaan.",
+      "word_start": 2,
+      "word_end": 6,
+      "start": 1.36,
+      "end": 4.38
+    },
+    {
+      "index": 2,
+      "text": "- Etsi mitään.",
+      "word_start": 6,
+      "word_end": 9,
+      "start": 4.38,
+      "end": 6.08
+    },
+    {
+      "index": 3,
+      "text": "- Lisää lainaukset.",
+      "word_start": 9,
+      "word_end": 12,
+      "start": 6.08,
+      "end": 8.26
+    },
+    {
+      "index": 4,
+      "text": "- Täsmennä merkit ja ammattitieteellisen yrityston.",
+      "word_start": 12,
+      "word_end": 18,
+      "start": 8.26,
+      "end": 12.06
+    },
+    {
+      "index": 5,
+      "text": "- Kirjoita luonnollista käännösummaa.",
+      "word_start": 18,
+      "word_end": 22,
+      "start": 12.06,
+      "end": 15.08
+    },
+    {
+      "index": 6,
+      "text": "- Älä käännä tai muuta tuotteenimia: Unfire, Bolt, Archer, POWER, AI TOKEN COUNTER.",
+      "word_start": 22,
+      "word_end": 35,
+      "start": 15.08,
+      "end": 21.58
+    },
+    {
+      "index": 7,
+      "text": "- Ylläpidä numeroita, teknisiä termiä ja tuotteenimiä tarkkana.",
+      "word_start": 35,
+      "word_end": 43,
+      "start": 21.58,
+      "end": 26.76
+    },
+    {
+      "index": 8,
+      "text": "- Tämä teksti puhutaan ammattitieteellisesti korpraalisesta naiskielestä.",
+      "word_start": 43,
+      "word_end": 50,
+      "start": 26.76,
+      "end": 31.9
+    },
+    {
+      "index": 9,
+      "text": "Teksti:",
+      "word_start": 50,
+      "word_end": 51,
+      "start": 32.839999999999996,
+      "end": 33.48
+    },
+    {
+      "index": 10,
+      "text": "Rajoittuneet teknologian yhtiöt",
+      "word_start": 51,
+      "word_end": 54,
+      "start": 34.52,
+      "end": 36.76
+    },
+    {
+      "index": 11,
+      "text": "rakenna teknologiaa. Hyödynnä edun uudelleen.",
+      "word_start": 54,
+      "word_end": 59,
+      "start": 37.56,
+      "end": 41.74
+    },
+    {
+      "index": 12,
+      "text": "Unfire kehittää uudelleenkäytettävien ohjelmistojärjestelmien, jotka muuntavat yhden teknisen perustavanlaisen moniin tuotteisiin, työtoimintatapoihin ja tuleviin sovelluksiin.",
+      "word_start": 59,
+      "word_end": 74,
+      "start": 42.36,
+      "end": 53.48
+    },
+    {
+      "index": 13,
+      "text": "Yritys",
+      "word_start": 74,
+      "word_end": 75,
+      "start": 54.32,
+      "end": 54.96
+    },
+    {
+      "index": 14,
+      "text": "Sovellusten ei käsitellä yksittäisillä projekteilla, vaan Unfire kehittää teknologiaa, joka voidaan uudelleenkäyttää, laajentaa ja siirrettyä tuleville tuotteisiin.",
+      "word_start": 75,
+      "word_end": 92,
+      "start": 54.96,
+      "end": 66.44
+    },
+    {
+      "index": 15,
+      "text": "Muodosta yksi kerto.",
+      "word_start": 92,
+      "word_end": 95,
+      "start": 67.32,
+      "end": 68.8
+    },
+    {
+      "index": 16,
+      "text": "Kerros kyvyt voidaan muuntaa uusiksi hyödyllisiksi rakennettarvikkeiksi, ei jättää heitä yksittäisellä tuotteella.",
+      "word_start": 95,
+      "word_end": 107,
+      "start": 68.8,
+      "end": 76.8
+    },
+    {
+      "index": 17,
+      "text": "Jatka kontinuumisesti.",
+      "word_start": 107,
+      "word_end": 109,
+      "start": 77.62,
+      "end": 78.98
+    },
+    {
+      "index": 18,
+      "text": "Uusi sovellusohjelmisto voi perimässä olevan olemassa olevan infrastruktuurin, mikä vähentää uusiutuvaa insinöörimunkkia, kun arkkitehtuuri soveltuu.",
+      "word_start": 109,
+      "word_end": 124,
+      "start": 79.9,
+      "end": 89.7
+    },
+    {
+      "index": 19,
+      "text": "Näytä järjestelmä.",
+      "word_start": 124,
+      "word_end": 126,
+      "start": 89.7,
+      "end": 92.58
+    },
+    {
+      "index": 20,
+      "text": "Lisätilavuus, laskentavarmennus, testaus ja levittämiskäsitykset voidaan lisätä julkaisemisvoimavaroilta ilman, että jälkimmäisten perusjärjestelmän uudistamista varten olisi tarpeen.",
+      "word_start": 126,
+      "word_end": 142,
+      "start": 92.58,
+      "end": 103.8
+    },
+    {
+      "index": 21,
+      "text": "Valittu työ",
+      "word_start": 142,
+      "word_end": 144,
+      "start": 104.78,
+      "end": 105.48
+    },
+    {
+      "index": 22,
+      "text": "Erilaisia tuotteita. Teknologia, joka kasvaa.",
+      "word_start": 144,
+      "word_end": 149,
+      "start": 106.62,
+      "end": 110.76
+    },
+    {
+      "index": 23,
+      "text": "Jokaisella projektille on erilainen ongelma, mutta periyhteinen tavoite on sama: kehittää teknologiaa, järjestelmiä ja tuotantotietoisuutta, jota voidaan uudelleenkäyttää tulevaisuuden ohjelmistojen suhteen, ei oleisikaan jäävä eristyneenä yhden sovelluksen sisäiseen käytölle.",
+      "word_start": 149,
+      "word_end": 178,
+      "start": 111.36,
+      "end": 128.66
+    },
+    {
+      "index": 24,
+      "text": "AI · Automatisointi · Tietokoneprosessit",
+      "word_start": 178,
+      "word_end": 183,
+      "start": 129.11999999999998,
+      "end": 132.96
+    },
+    {
+      "index": 25,
+      "text": "Pysäköintiin välittele ainoastaan.",
+      "word_start": 183,
+      "word_end": 186,
+      "start": 133.54,
+      "end": 136.18
+    },
+    {
+      "index": 26,
+      "text": "Bolt tutkii valvontaisia AI-orchestraation mahdollisuuksia monipuolisen tietokoneen työn suorittamiseen. Sen suunnitelma on koordinoida AI-järjestelmät, paikalliset työkalut ja suoritusprosessit, samalla säilyttäen valvontaa, käyttöoikeuksia ja ihmisen valvontaa.",
+      "word_start": 186,
+      "word_end": 211,
+      "start": 136.82,
+      "end": 154.46
+    },
+    {
+      "index": 27,
+      "text": "Projekti tutkii, miten johdonmukaisen toiminnan uudelleenkäytössä ihmisten, mallien ja ohjelmistojen välillä voitaisiin vähentää toistuvaa vuoropuhelua sallien sen jatkumisen suorituksen, testauksen ja korjausten kiertojen kautta vähemmällä epätarpeellisella rangaistuksellisuudella.",
+      "word_start": 211,
+      "word_end": 238,
+      "start": 155.48999999999998,
+      "end": 171.82
+    },
+    {
+      "index": 28,
+      "text": "Tekniikan kehittäminen Bolt:n ympärille voi sisältyä tulevaisuuden automaation, kehityksen ja tietokonetyyppisten valvontajärjestelmien edistämisessä laajempassa Unfire-ecosysteemissa.",
+      "word_start": 238,
+      "word_end": 253,
+      "start": 172.2,
+      "end": 184.16
+    },
+    {
+      "index": 29,
+      "text": "Orkestraattiot · Paikallinen suoritus · Tarkasteltu autonomia · Uudelleenkäytettävää automaation",
+      "word_start": 253,
+      "word_end": 263,
+      "start": 184.16,
+      "end": 191.96
+    },
+    {
+      "index": 30,
+      "text": "Energia · Data · Tietojärjestelmät",
+      "word_start": 263,
+      "word_end": 268,
+      "start": 191.96,
+      "end": 195.86
+    },
+    {
+      "index": 31,
+      "text": "Vahvuus",
+      "word_start": 268,
+      "word_end": 269,
+      "start": 195.86,
+      "end": 196.64
+    },
+    {
+      "index": 32,
+      "text": "Vahvuus tutkii, miten monimutkaiset sähkö- ja energiamarkkinatiedot voidaan muuntaa ohjelmistoon, joka on helpompaa ymmärtää, vertailla ja käyttää.",
+      "word_start": 269,
+      "word_end": 286,
+      "start": 196.64,
+      "end": 208.76358974358973
+    },
+    {
+      "index": 33,
+      "text": "Projekti yhdistää alueellisen dataa, hintatietoja ja strukturoidua tulkintaa yhteen selkeämmäksi käyttöliittymäksi, luodakseen perusta tuleville energiatehokkuustyökaluille.",
+      "word_start": 286,
+      "word_end": 301,
+      "start": 208.76358974358973,
+      "end": 219.39435897435897
+    },
+    {
+      "index": 34,
+      "text": "Sama lähestymistapa voidaan myöhemmin tukea myös muista tietoylpeistä tuotteista, joissa osaamattomia ulkoisia tietoja on muodostettava ymmärrettävä ja toimintakykyinen software.",
+      "word_start": 301,
+      "word_end": 320,
+      "start": 219.39435897435897,
+      "end": 232.86
+    },
+    {
+      "index": 35,
+      "text": "Energiantunnuisuus · Datatulkinta · Tietojen rakennus",
+      "word_start": 320,
+      "word_end": 326,
+      "start": 232.86,
+      "end": 236.84
+    },
+    {
+      "index": 36,
+      "text": "Sisäinen infrastrukturi · Ohjelmistoproducing",
+      "word_start": 326,
+      "word_end": 330,
+      "start": 237.70000000000002,
+      "end": 240.88
+    },
+    {
+      "index": 37,
+      "text": "UnfireSuitteja",
+      "word_start": 330,
+      "word_end": 331,
+      "start": 240.88,
+      "end": 242.70999999999998
+    },
+    {
+      "index": 38,
+      "text": "UnfireSuite edustaa sisäisen tuotantolainaa monen Unfire-projektin taustalla.",
+      "word_start": 331,
+      "word_end": 338,
+      "start": 242.70999999999998,
+      "end": 248.52
+    },
+    {
+      "index": 39,
+      "text": "Sen tarkoitus on vähentää uudelleenkäytettävän ingeniumin tarpeen sallien ohjelmistocomponenttien, vahvistusprosessien, tuotantosysteemien ja saamisen teknisen tiedon uudelleenkäytön paikkoissa.",
+      "word_start": 338,
+      "word_end": 355,
+      "start": 248.76,
+      "end": 261.36
+    },
+    {
+      "index": 40,
+      "text": "Tämä on tärkeää, koska yhtä projektin arvoa ei tarvitse päästää loppuun, kun se on saatu päätökseen. Teknologian osat voidaan muuttaa infrastruktuureiksi seuraavalle tuotteelle, mikä mahdollistaa järjestelmän omaksuksen uusien parannusten ajan.",
+      "word_start": 355,
+      "word_end": 385,
+      "start": 261.36,
+      "end": 278.58
+    },
+    {
+      "index": 41,
+      "text": "J与共 infrastrukтуuri · Vahvistus · Uudelleenkäytössä · Tuotannosjärjestelmät",
+      "word_start": 385,
+      "word_end": 393,
+      "start": 278.58,
+      "end": 285.12
+    },
+    {
+      "index": 42,
+      "text": "Unfire Audio · Ensimmäinen toteutus",
+      "word_start": 393,
+      "word_end": 398,
+      "start": 286.03,
+      "end": 289.08
+    },
+    {
+      "index": 43,
+      "text": "Archer",
+      "word_start": 398,
+      "word_end": 399,
+      "start": 289.46,
+      "end": 290.4
+    },
+    {
+      "index": 44,
+      "text": "Archer on ensimmäinen tuotteenkehitys laajemman Unfire Audio-ohjelmiston ympäri.",
+      "word_start": 399,
+      "word_end": 407,
+      "start": 291.36,
+      "end": 296.6
+    },
+    {
+      "index": 45,
+      "text": "Se on tarkka ääniklikkausväline, jonka keskipiste on Gain, Threshold ja Atmosfēra, ja joka antaa tuottajille ja insinööreille suoraa valtaa klippingon käyttäytymisestä, huippeista, transienneista ja äänen sävystä.",
+      "word_start": 407,
+      "word_end": 433,
+      "start": 297.23,
+      "end": 311.94
+    },
+    {
+      "index": 46,
+      "text": "Strateginen rooliansa on kuitenkin laajempi kuin yksinkertainen äänineuvontatehono. Archer tarjoaa käytännöllisen ympäristön kehittämään ja vahvistamaan ääniteknologiaa, käyttöliittymäjärjestelmiä ja tuotantokomponenteja, jotka myöhemmin voivat contribuoida tuleviin luovia-sovelluslaitteisiin.",
+      "word_start": 433,
+      "word_end": 458,
+      "start": 311.94,
+      "end": 331.94
+    },
+    {
+      "index": 47,
+      "text": "Unfire Audio tutkii myös, miten älykkäiden järjestelmien, prosessointimenetelmien ja uudelleenkäytettävän ohjelmistoteknologian voidaan yhdistää uusiin plugin-konseptiin ja luovuusprosessointiin ulottuvien perinteisten audio-prosessointitooleiden ulkopuolelle.",
+      "word_start": 458,
+      "word_end": 479,
+      "start": 331.94,
+      "end": 348.0
+    },
+    {
+      "index": 48,
+      "text": "Audioteknologia · DSP · Järjestelmävalvonta · Kreaatiivinen sovellus",
+      "word_start": 479,
+      "word_end": 487,
+      "start": 348.0,
+      "end": 354.8
+    },
+    {
+      "index": 49,
+      "text": "Unfire Audio",
+      "word_start": 487,
+      "word_end": 489,
+      "start": 355.54,
+      "end": 356.56
+    },
+    {
+      "index": 50,
+      "text": "Pluginsista uusiin ohjelmistokonseptiin.",
+      "word_start": 489,
+      "word_end": 492,
+      "start": 357.68,
+      "end": 360.3
+    },
+    {
+      "index": 51,
+      "text": "Unfire Audio tutkii, miten älykäytetyt järjestelmät, prosessioellinen käsittelemys ja uinnissa käytettävissä olevat ohjelmistokomponentit saavat yhteen kreaatiivisiin työkaluihin, jotka ulottuvat yli perinteisten plugin-toteutusten rajoille.",
+      "word_start": 492,
+      "word_end": 515,
+      "start": 361.12,
+      "end": 375.64
+    },
+    {
+      "index": 52,
+      "text": "AI voi osallistua kreatiivisen sovellustilaan sen sijaan, että olisi vain erillisellä apulaisena.",
+      "word_start": 515,
+      "word_end": 527,
+      "start": 375.84,
+      "end": 382.94
+    },
+    {
+      "index": 53,
+      "text": "Parametrit, äänet ja ohjelmistoon liittyvää käyttötapaa voidaan muuttaa dynaamisesti, avoimella uusien kreaattisten interaktiivisten mallien välillä.",
+      "word_start": 527,
+      "word_end": 542,
+      "start": 382.94,
+      "end": 392.34
+    },
+    {
+      "index": 54,
+      "text": "Onnistuneet komponentit, jotka kehitetään yhden tuotteen osana, voidaan myöhemmin uudelleenkäyttää, laajentaa tai integroida muihin projekteihin.",
+      "word_start": 542,
+      "word_end": 557,
+      "start": 392.86,
+      "end": 402.2
+    },
+    {
+      "index": 55,
+      "text": "Tavoitteena ei ole yksinkertaisesti tuottaa eristyneet äänepalvelupiineja. On luotava uudelleenkäyttökohtaisen kreaatiivisen-tekniikan perustan, joka voi tukea tulevia työkaluja, laajempia ympäristöjä ja uusia tuotteen käsitteitä.",
+      "word_start": 557,
+      "word_end": 580,
+      "start": 403.28000000000003,
+      "end": 418.78
+    },
+    {
+      "index": 56,
+      "text": "Järjestelmä",
+      "word_start": 580,
+      "word_end": 581,
+      "start": 419.68,
+      "end": 420.62
+    },
+    {
+      "index": 57,
+      "text": "Ohjelmistotuotanto ilman uuden alkamista.",
+      "word_start": 581,
+      "word_end": 585,
+      "start": 421.58,
+      "end": 424.26
+    },
+    {
+      "index": 58,
+      "text": "Keskeistä ajatusta on yksinkertaista: kun uusi tuote voi käyttää olemassa olevaa teknologiaa Unfire:ssa, kehitys tulisi hyödyntää sitä etukäteen sijoittamista sijaan.",
+      "word_start": 585,
+      "word_end": 605,
+      "start": 425.16999999999996,
+      "end": 436.12
+    },
+    {
+      "index": 59,
+      "text": "Jasenneltu perusta",
+      "word_start": 605,
+      "word_end": 607,
+      "start": 436.68,
+      "end": 438.16
+    },
+    {
+      "index": 60,
+      "text": "Käytettävissä olevat ohjelmistosarakkeet, tuotantokäsitykset ja vahvistusjärjestelmät muodostavat perusta, joka voi jatkossakin kehittyä.",
+      "word_start": 607,
+      "word_end": 619,
+      "start": 438.88,
+      "end": 447.38
+    },
+    {
+      "index": 61,
+      "text": "Tuoteryhmä",
+      "word_start": 619,
+      "word_end": 620,
+      "start": 448.12,
+      "end": 449.16
+    },
+    {
+      "index": 62,
+      "text": "Uudet sovellukset voivat yhdistää olemassa olevat kykyt tuotetta koskevalla teknologialla sen sijaan, että alkaisivat tyhjästä arkkitehtuurista.",
+      "word_start": 620,
+      "word_end": 636,
+      "start": 449.82,
+      "end": 458.54
+    },
+    {
+      "index": 63,
+      "text": "Vahvistus",
+      "word_start": 636,
+      "word_end": 637,
+      "start": 459.36,
+      "end": 460.4
+    },
+    {
+      "index": 64,
+      "text": "Kehitysyksiköt, testit ja sisäiset tarkistukset tarjoavat mittayhteydet siitä, että ohjelmistovaatimukset toimivat odotetulla tavalla.",
+      "word_start": 637,
+      "word_end": 650,
+      "start": 461.4,
+      "end": 469.42
+    },
+    {
+      "index": 65,
+      "text": "Lisätoimintamahdollisuudet",
+      "word_start": 650,
+      "word_end": 651,
+      "start": 469.42,
+      "end": 473.32
+    },
+    {
+      "index": 66,
+      "text": "Infrastruktuuri voi kasvaa lisäkaapaus-, säilö- ja testausmahdollisuuksien, laadunvarmistuksen sekä rakenneasioiden käyttöönoton lisääntymisen kautta.",
+      "word_start": 651,
+      "word_end": 664,
+      "start": 473.32,
+      "end": 482.72
+    },
+    {
+      "index": 67,
+      "text": "Tuotantotaso",
+      "word_start": 664,
+      "word_end": 665,
+      "start": 483.56,
+      "end": 484.68
+    },
+    {
+      "index": 68,
+      "text": "Lankamaa muuttuu.",
+      "word_start": 665,
+      "word_end": 667,
+      "start": 485.58,
+      "end": 486.84
+    },
+    {
+      "index": 69,
+      "text": "Olemalla vanhan arkkitehtuurin sovellettavissa, sisäinen kehitys on osoittanut, että toimiva ohjelmistokandikaatiorakenteet voivat kulkea erittäin lyhyissä rakentamisvaiheissa — jopa joissakin tapauksissa mittaamatta minuutteja.",
+      "word_start": 667,
+      "word_end": 689,
+      "start": 487.62,
+      "end": 501.36
+    },
+    {
+      "index": 70,
+      "text": "Koska uusimpien teknologijoiden käyttöonnoilla rajoittavat tekijät on osoittautunut olevan infrastruktuurin resursseja, kuten laskentaa, tallennustilaa, testauksesta, laadun varmistuksesta ja kaupallisesta käyttöönotoksesta — resursseja, jotka voivat itse asiassa lisätä.",
+      "word_start": 689,
+      "word_end": 716,
+      "start": 501.36,
+      "end": 519.3
+    },
+    {
+      "index": 71,
+      "text": "Pääasiakaspalvelu seuraa tällä hetkellä käytettyjä esimerkkejä, jotka demoi välttämättömän teknologian suuntaa.",
+      "word_start": 716,
+      "word_end": 727,
+      "start": 519.3,
+      "end": 526.84
+    },
+    {
+      "index": 72,
+      "text": "Prioriteetti-veвиä 1-software-kandidaatit tunnistettu ja keskityttömäksi kehitykseksi valmistelut.",
+      "word_start": 727,
+      "word_end": 734,
+      "start": 526.84,
+      "end": 533.98
+    },
+    {
+      "index": 73,
+      "text": "53",
+      "word_start": 734,
+      "word_end": 735,
+      "start": 534.6800000000001,
+      "end": 535.36
+    },
+    {
+      "index": 74,
+      "text": "Yksityiskohtaisesti suunnitellut ja sisäisesti tarkistetut solosovellukset.",
+      "word_start": 735,
+      "word_end": 741,
+      "start": 536.84,
+      "end": 541.58
+    },
+    {
+      "index": 75,
+      "text": "53/53",
+      "word_start": 741,
+      "word_end": 742,
+      "start": 541.58,
+      "end": 545.94
+    },
+    {
+      "index": 76,
+      "text": "Jäsenvaltaindeksin kesäkuu 2026 onnistuneet itsenäiset rakentamiset.",
+      "word_start": 742,
+      "word_end": 748,
+      "start": 545.94,
+      "end": 551.9
+    },
+    {
+      "index": 77,
+      "text": "NÄYTYNÄT Säännöt:",
+      "word_start": 748,
+      "word_end": 750,
+      "start": 552.7600000000001,
+      "end": 553.96
+    },
+    {
+      "index": 78,
+      "text": "- Palauta TRANSLAATTO vain.",
+      "word_start": 750,
+      "word_end": 754,
+      "start": 553.96,
+      "end": 557.02
+    },
+    {
+      "index": 79,
+      "text": "- Etsi ehdotuksia ei sallita.",
+      "word_start": 754,
+      "word_end": 759,
+      "start": 557.02,
+      "end": 560.06
+    },
+    {
+      "index": 80,
+      "text": "- Lisää lainauksia ei sallita.",
+      "word_start": 759,
+      "word_end": 764,
+      "start": 560.06,
+      "end": 562.92
+    },
+    {
+      "index": 81,
+      "text": "- Tarkista tarkka yritys- ja ammattitaidon sävy.",
+      "word_start": 764,
+      "word_end": 771,
+      "start": 562.92,
+      "end": 566.62
+    },
+    {
+      "index": 82,
+      "text": "- Kirjoita luonnollinen käännös suomen kielellä, ei suoraa käännöksentekoa.",
+      "word_start": 771,
+      "word_end": 780,
+      "start": 566.62,
+      "end": 572.02
+    },
+    {
+      "index": 83,
+      "text": "- Älä käännä tai muuta tuotteen nimia: Unfire, Bolt, Archer, POWER, AI TOKEN COUNTER.",
+      "word_start": 780,
+      "word_end": 794,
+      "start": 572.02,
+      "end": 578.6
+    },
+    {
+      "index": 84,
+      "text": "- Tarkista numeroitujen, teknisen terminologian ja tuotteen nimen tarkkuuden.",
+      "word_start": 794,
+      "word_end": 803,
+      "start": 578.6,
+      "end": 584.34
+    },
+    {
+      "index": 85,
+      "text": "- Tämä teksti puhutaan ammattitaitoinen nainen.",
+      "word_start": 803,
+      "word_end": 809,
+      "start": 584.34,
+      "end": 587.98
+    },
+    {
+      "index": 86,
+      "text": "Uudelleenkäyttö",
+      "word_start": 809,
+      "word_end": 810,
+      "start": 587.98,
+      "end": 590.12
+    },
+    {
+      "index": 87,
+      "text": "Altaan mahdollista, kun kyseessä on olemassa oleva teknologia.",
+      "word_start": 810,
+      "word_end": 818,
+      "start": 590.12,
+      "end": 594.78
+    },
+    {
+      "index": 88,
+      "text": "02",
+      "word_start": 818,
+      "word_end": 819,
+      "start": 594.78,
+      "end": 596.47
+    },
+    {
+      "index": 89,
+      "text": "KRIITISET Säännöt:",
+      "word_start": 819,
+      "word_end": 821,
+      "start": 596.47,
+      "end": 598.78
+    },
+    {
+      "index": 90,
+      "text": "- Palauta VASTAANOTETTU käännös.",
+      "word_start": 821,
+      "word_end": 825,
+      "start": 598.78,
+      "end": 601.62
+    },
+    {
+      "index": 91,
+      "text": "- Etsi ehdotuksia EMPIRIAA.",
+      "word_start": 825,
+      "word_end": 829,
+      "start": 601.62,
+      "end": 604.5
+    },
+    {
+      "index": 92,
+      "text": "- Tässä on suomenkielinen käännös, joka säilyttää merkityksen ja ammattitieteellisen yrityston:",
+      "word_start": 829,
+      "word_end": 840,
+      "start": 604.5,
+      "end": 610.94
+    },
+    {
+      "index": 93,
+      "text": "- Unfire, Bolt, Archer, POWER, AI TOKEN COUNTER. Nimiä ei käännöksessä muuteta.",
+      "word_start": 840,
+      "word_end": 852,
+      "start": 610.94,
+      "end": 618.4
+    },
+    {
+      "index": 94,
+      "text": "- Numerot, tekniset termiologiat ja tuotteiden nimet säilytetään tarkoituksissa.",
+      "word_start": 852,
+      "word_end": 861,
+      "start": 618.4,
+      "end": 624.22
+    },
+    {
+      "index": 95,
+      "text": "- Tämä teksti puhutaan ammattitieteellisesti korkean tason suomen kielellä.",
+      "word_start": 861,
+      "word_end": 870,
+      "start": 624.22,
+      "end": 629.72
+    },
+    {
+      "index": 96,
+      "text": "rakenna",
+      "word_start": 870,
+      "word_end": 871,
+      "start": 630.68,
+      "end": 631.26
+    },
+    {
+      "index": 97,
+      "text": "Luo tuotetarjontayhdistys.",
+      "word_start": 871,
+      "word_end": 873,
+      "start": 631.36,
+      "end": 634.2
+    },
+    {
+      "index": 98,
+      "text": "03",
+      "word_start": 873,
+      "word_end": 874,
+      "start": 634.2,
+      "end": 636.74
+    },
+    {
+      "index": 99,
+      "text": "Kunnianhimoiset säännöt:",
+      "word_start": 874,
+      "word_end": 876,
+      "start": 636.74,
+      "end": 638.48
+    },
+    {
+      "index": 100,
+      "text": "- Palauta TRANSLATION AINTELIsti.",
+      "word_start": 876,
+      "word_end": 880,
+      "start": 638.48,
+      "end": 642.24
+    },
+    {
+      "index": 101,
+      "text": "- Etsi mitään.",
+      "word_start": 880,
+      "word_end": 883,
+      "start": 642.24,
+      "end": 644.32
+    },
+    {
+      "index": 102,
+      "text": "- Lisää lainaukset.",
+      "word_start": 883,
+      "word_end": 886,
+      "start": 644.32,
+      "end": 646.5
+    },
+    {
+      "index": 103,
+      "text": "- Täsmennä merkityksen ja ammattitieteellisen yrityston.",
+      "word_start": 886,
+      "word_end": 892,
+      "start": 646.5,
+      "end": 650.02
+    },
+    {
+      "index": 104,
+      "text": "- Kirjoita luonnollinen kääntäjän tason suomi, ei suorakaiteen käännös.",
+      "word_start": 892,
+      "word_end": 901,
+      "start": 650.02,
+      "end": 655.86
+    },
+    {
+      "index": 105,
+      "text": "- Älä käännä tai muuta tuotteen nimia: Unfire, Bolt, Archer, POWER, AI TOKEN COUNTER.",
+      "word_start": 901,
+      "word_end": 915,
+      "start": 655.86,
+      "end": 662.5
+    },
+    {
+      "index": 106,
+      "text": "- Varataan numeroita, teknisiä termiä ja tuotteen nimia tarkkana.",
+      "word_start": 915,
+      "word_end": 924,
+      "start": 662.5,
+      "end": 667.72
+    },
+    {
+      "index": 107,
+      "text": "- Tämä teksti puhutaan ammattilaisen yritystason naisvoikan äänellä.",
+      "word_start": 924,
+      "word_end": 932,
+      "start": 667.72,
+      "end": 672.76
+    },
+    {
+      "index": 108,
+      "text": "Näyttelijä",
+      "word_start": 932,
+      "word_end": 933,
+      "start": 673.4,
+      "end": 674.4
+    },
+    {
+      "index": 109,
+      "text": "Päivitä infrastruktuuri, kun tuotanto kasvaa.",
+      "word_start": 933,
+      "word_end": 938,
+      "start": 675.14,
+      "end": 678.42
+    },
+    {
+      "index": 110,
+      "text": "Yritykset",
+      "word_start": 938,
+      "word_end": 939,
+      "start": 679.02,
+      "end": 679.52
+    },
+    {
+      "index": 111,
+      "text": "Maiden ohjelmistojärjestelmät.",
+      "word_start": 939,
+      "word_end": 941,
+      "start": 680.12,
+      "end": 682.92
+    },
+    {
+      "index": 112,
+      "text": "Sama tuotantoonaineisto voi tukea erityisiä sovelluksia ja ympäristöjä, jotka on suunniteltu hallinnon vaatimusten kohdalleen.",
+      "word_start": 941,
+      "word_end": 955,
+      "start": 683.5,
+      "end": 691.7
+    },
+    {
+      "index": 113,
+      "text": "Yhteisöjen riittävät säännöt:",
+      "word_start": 955,
+      "word_end": 958,
+      "start": 692.66,
+      "end": 694.42
+    },
+    {
+      "index": 114,
+      "text": "Kontrolloituja ympäristöjä.",
+      "word_start": 958,
+      "word_end": 960,
+      "start": 695.12,
+      "end": 697.1
+    },
+    {
+      "index": 115,
+      "text": "Projektit voivat pysyä eristyneinä, samalla kun ne hyötyvät uudistamattomasta alustavaltistosta, vahvistusprosessista ja tuotannon infrastruktuurista.",
+      "word_start": 960,
+      "word_end": 974,
+      "start": 698.0799999999999,
+      "end": 707.34
+    },
+    {
+      "index": 116,
+      "text": "Julkinen sektori",
+      "word_start": 974,
+      "word_end": 976,
+      "start": 708.3,
+      "end": 709.46
+    },
+    {
+      "index": 117,
+      "text": "Mallejärkevi digitaalit työkalut.",
+      "word_start": 976,
+      "word_end": 979,
+      "start": 710.12,
+      "end": 712.68
+    },
+    {
+      "index": 118,
+      "text": "Arkkitehturi on valmis tulevaisuuden yhteistyölle, jossa tärkeä ovat valvonta, seurattavuus, vahvistaminen ja pitkäajoin kehittävyyden.",
+      "word_start": 979,
+      "word_end": 993,
+      "start": 713.2,
+      "end": 722.08
+    },
+    {
+      "index": 119,
+      "text": "Unfire voi osoittaa tuotteet, rakentamiset, sisäiset tarkistukset ja tuotantokapasiteetin ilman, ettei luonnetta luoda aiheuttaa metodit, joiden takana on kyseinen hyödyntäminen.",
+      "word_start": 993,
+      "word_end": 1013,
+      "start": 722.89,
+      "end": 734.02
+    },
+    {
+      "index": 120,
+      "text": "Rahoitus ja yhteistyö",
+      "word_start": 1013,
+      "word_end": 1016,
+      "start": 734.66,
+      "end": 736.8
+    },
+    {
+      "index": 121,
+      "text": "Päivitä mitä jo on olemassa.",
+      "word_start": 1016,
+      "word_end": 1021,
+      "start": 737.5500000000001,
+      "end": 739.54
+    },
+    {
+      "index": 122,
+      "text": "tervetuloa@unfire.technology",
+      "word_start": 1021,
+      "word_end": 1022,
+      "start": 739.54,
+      "end": 743.98
+    }
+  ],
+  "words": [
+    {
+      "word": "Rajoittuneet",
+      "start": 0.0,
+      "end": 0.9,
+      "exact": true,
+      "block": 0
+    },
+    {
+      "word": "säännöt:",
+      "start": 0.9,
+      "end": 1.36,
+      "exact": true,
+      "block": 0
+    },
+    {
+      "word": "-",
+      "start": 1.36,
+      "end": 2.06,
+      "exact": false,
+      "block": 1
+    },
+    {
+      "word": "Palauta",
+      "start": 2.06,
+      "end": 2.76,
+      "exact": false,
+      "block": 1
+    },
+    {
+      "word": "käännös",
+      "start": 2.76,
+      "end": 3.46,
+      "exact": false,
+      "block": 1
+    },
+    {
+      "word": "ainoastaan.",
+      "start": 3.46,
+      "end": 4.38,
+      "exact": true,
+      "block": 1
+    },
+    {
+      "word": "-",
+      "start": 4.38,
+      "end": 5.16,
+      "exact": false,
+      "block": 2
+    },
+    {
+      "word": "Etsi",
+      "start": 5.16,
+      "end": 5.62,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "mitään.",
+      "start": 5.62,
+      "end": 6.08,
+      "exact": true,
+      "block": 2
+    },
+    {
+      "word": "-",
+      "start": 6.08,
+      "end": 6.94,
+      "exact": false,
+      "block": 3
+    },
+    {
+      "word": "Lisää",
+      "start": 6.94,
+      "end": 7.4,
+      "exact": true,
+      "block": 3
+    },
+    {
+      "word": "lainaukset.",
+      "start": 7.4,
+      "end": 8.26,
+      "exact": true,
+      "block": 3
+    },
+    {
+      "word": "-",
+      "start": 8.26,
+      "end": 9.2,
+      "exact": false,
+      "block": 4
+    },
+    {
+      "word": "Täsmennä",
+      "start": 9.2,
+      "end": 9.66,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "merkit",
+      "start": 9.66,
+      "end": 10.06,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "ja",
+      "start": 10.06,
+      "end": 10.24,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "ammattitieteellisen",
+      "start": 10.24,
+      "end": 11.4,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "yrityston.",
+      "start": 11.4,
+      "end": 12.06,
+      "exact": true,
+      "block": 4
+    },
+    {
+      "word": "-",
+      "start": 12.06,
+      "end": 13.04,
+      "exact": false,
+      "block": 5
+    },
+    {
+      "word": "Kirjoita",
+      "start": 13.04,
+      "end": 13.5,
+      "exact": true,
+      "block": 5
+    },
+    {
+      "word": "luonnollista",
+      "start": 13.5,
+      "end": 14.18,
+      "exact": true,
+      "block": 5
+    },
+    {
+      "word": "käännösummaa.",
+      "start": 14.18,
+      "end": 15.08,
+      "exact": true,
+      "block": 5
+    },
+    {
+      "word": "-",
+      "start": 15.08,
+      "end": 15.8,
+      "exact": false,
+      "block": 6
+    },
+    {
+      "word": "Älä",
+      "start": 15.8,
+      "end": 16.26,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "käännä",
+      "start": 16.26,
+      "end": 16.62,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "tai",
+      "start": 16.62,
+      "end": 16.76,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "muuta",
+      "start": 16.76,
+      "end": 17.12,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "tuotteenimia:",
+      "start": 17.12,
+      "end": 17.98,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "Unfire,",
+      "start": 18.0,
+      "end": 18.56,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "Bolt,",
+      "start": 18.74,
+      "end": 19.08,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "Archer,",
+      "start": 19.38,
+      "end": 19.86,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "POWER,",
+      "start": 20.02,
+      "end": 20.32,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "AI",
+      "start": 20.32,
+      "end": 20.78,
+      "exact": false,
+      "block": 6
+    },
+    {
+      "word": "TOKEN",
+      "start": 20.78,
+      "end": 21.24,
+      "exact": false,
+      "block": 6
+    },
+    {
+      "word": "COUNTER.",
+      "start": 21.24,
+      "end": 21.58,
+      "exact": true,
+      "block": 6
+    },
+    {
+      "word": "-",
+      "start": 21.58,
+      "end": 22.4,
+      "exact": false,
+      "block": 7
+    },
+    {
+      "word": "Ylläpidä",
+      "start": 22.4,
+      "end": 23.32,
+      "exact": true,
+      "block": 7
+    },
+    {
+      "word": "numeroita,",
+      "start": 23.32,
+      "end": 23.96,
+      "exact": true,
+      "block": 7
+    },
+    {
+      "word": "teknisiä",
+      "start": 24.02,
+      "end": 24.6,
+      "exact": true,
+      "block": 7
+    },
+    {
+      "word": "termiä",
+      "start": 24.6,
+      "end": 25.12,
+      "exact": true,
+      "block": 7
+    },
+    {
+      "word": "ja",
+      "start": 25.12,
+      "end": 25.3,
+      "exact": true,
+      "block": 7
+    },
+    {
+      "word": "tuotteenimiä",
+      "start": 25.3,
+      "end": 26.2,
+      "exact": true,
+      "block": 7
+    },
+    {
+      "word": "tarkkana.",
+      "start": 26.2,
+      "end": 26.76,
+      "exact": true,
+      "block": 7
+    },
+    {
+      "word": "-",
+      "start": 26.76,
+      "end": 26.8,
+      "exact": false,
+      "block": 8
+    },
+    {
+      "word": "Tämä",
+      "start": 26.76,
+      "end": 27.92,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "teksti",
+      "start": 27.92,
+      "end": 28.4,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "puhutaan",
+      "start": 28.4,
+      "end": 28.96,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "ammattitieteellisesti",
+      "start": 28.96,
+      "end": 30.14,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "korpraalisesta",
+      "start": 30.14,
+      "end": 31.02,
+      "exact": false,
+      "block": 8
+    },
+    {
+      "word": "naiskielestä.",
+      "start": 31.02,
+      "end": 31.9,
+      "exact": true,
+      "block": 8
+    },
+    {
+      "word": "Teksti:",
+      "start": 32.839999999999996,
+      "end": 33.48,
+      "exact": true,
+      "block": 9
+    },
+    {
+      "word": "Rajoittuneet",
+      "start": 34.52,
+      "end": 35.28,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "teknologian",
+      "start": 35.28,
+      "end": 36.04,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "yhtiöt",
+      "start": 36.04,
+      "end": 36.76,
+      "exact": true,
+      "block": 10
+    },
+    {
+      "word": "rakenna",
+      "start": 37.56,
+      "end": 38.2,
+      "exact": true,
+      "block": 11
+    },
+    {
+      "word": "teknologiaa.",
+      "start": 38.2,
+      "end": 39.18,
+      "exact": true,
+      "block": 11
+    },
+    {
+      "word": "Hyödynnä",
+      "start": 39.96,
+      "end": 40.6,
+      "exact": true,
+      "block": 11
+    },
+    {
+      "word": "edun",
+      "start": 40.6,
+      "end": 40.94,
+      "exact": true,
+      "block": 11
+    },
+    {
+      "word": "uudelleen.",
+      "start": 40.94,
+      "end": 41.74,
+      "exact": true,
+      "block": 11
+    },
+    {
+      "word": "Unfire",
+      "start": 42.36,
+      "end": 43.0,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "kehittää",
+      "start": 43.0,
+      "end": 43.62,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "uudelleenkäytettävien",
+      "start": 43.62,
+      "end": 44.84,
+      "exact": false,
+      "block": 12
+    },
+    {
+      "word": "ohjelmistojärjestelmien,",
+      "start": 44.84,
+      "end": 46.24,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "jotka",
+      "start": 46.38,
+      "end": 46.84,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "muuntavat",
+      "start": 46.84,
+      "end": 47.36,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "yhden",
+      "start": 47.36,
+      "end": 47.86,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "teknisen",
+      "start": 47.86,
+      "end": 48.34,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "perustavanlaisen",
+      "start": 48.34,
+      "end": 49.24,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "moniin",
+      "start": 49.24,
+      "end": 49.66,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "tuotteisiin,",
+      "start": 49.66,
+      "end": 50.52,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "työtoimintatapoihin",
+      "start": 50.54,
+      "end": 51.74,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "ja",
+      "start": 51.74,
+      "end": 52.04,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "tuleviin",
+      "start": 52.04,
+      "end": 52.54,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "sovelluksiin.",
+      "start": 52.54,
+      "end": 53.48,
+      "exact": true,
+      "block": 12
+    },
+    {
+      "word": "Yritys",
+      "start": 54.32,
+      "end": 54.96,
+      "exact": true,
+      "block": 13
+    },
+    {
+      "word": "Sovellusten",
+      "start": 54.96,
+      "end": 56.5,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "ei",
+      "start": 56.5,
+      "end": 56.68,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "käsitellä",
+      "start": 56.68,
+      "end": 57.2,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "yksittäisillä",
+      "start": 57.2,
+      "end": 57.96,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "projekteilla,",
+      "start": 57.96,
+      "end": 58.72,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "vaan",
+      "start": 58.82,
+      "end": 59.2,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "Unfire",
+      "start": 59.2,
+      "end": 59.7,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "kehittää",
+      "start": 59.7,
+      "end": 60.26,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "teknologiaa,",
+      "start": 60.26,
+      "end": 61.12,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "joka",
+      "start": 61.18,
+      "end": 61.58,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "voidaan",
+      "start": 61.58,
+      "end": 62.1,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "uudelleenkäyttää,",
+      "start": 62.1,
+      "end": 63.3,
+      "exact": false,
+      "block": 14
+    },
+    {
+      "word": "laajentaa",
+      "start": 63.3,
+      "end": 63.98,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "ja",
+      "start": 63.98,
+      "end": 64.28,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "siirrettyä",
+      "start": 64.28,
+      "end": 64.98,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "tuleville",
+      "start": 64.98,
+      "end": 65.46,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "tuotteisiin.",
+      "start": 65.46,
+      "end": 66.44,
+      "exact": true,
+      "block": 14
+    },
+    {
+      "word": "Muodosta",
+      "start": 67.32,
+      "end": 67.82,
+      "exact": true,
+      "block": 15
+    },
+    {
+      "word": "yksi",
+      "start": 67.82,
+      "end": 68.24,
+      "exact": true,
+      "block": 15
+    },
+    {
+      "word": "kerto.",
+      "start": 68.24,
+      "end": 68.8,
+      "exact": true,
+      "block": 15
+    },
+    {
+      "word": "Kerros",
+      "start": 68.8,
+      "end": 69.66,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "kyvyt",
+      "start": 69.66,
+      "end": 70.52,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "voidaan",
+      "start": 70.52,
+      "end": 71.02,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "muuntaa",
+      "start": 71.02,
+      "end": 71.42,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "uusiksi",
+      "start": 71.42,
+      "end": 71.92,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "hyödyllisiksi",
+      "start": 71.92,
+      "end": 72.7,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "rakennettarvikkeiksi,",
+      "start": 72.7,
+      "end": 74.14,
+      "exact": false,
+      "block": 16
+    },
+    {
+      "word": "ei",
+      "start": 74.14,
+      "end": 74.54,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "jättää",
+      "start": 74.54,
+      "end": 74.98,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "heitä",
+      "start": 74.98,
+      "end": 75.32,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "yksittäisellä",
+      "start": 75.32,
+      "end": 76.12,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "tuotteella.",
+      "start": 76.12,
+      "end": 76.8,
+      "exact": true,
+      "block": 16
+    },
+    {
+      "word": "Jatka",
+      "start": 77.62,
+      "end": 78.12,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "kontinuumisesti.",
+      "start": 78.12,
+      "end": 78.98,
+      "exact": true,
+      "block": 17
+    },
+    {
+      "word": "Uusi",
+      "start": 79.9,
+      "end": 80.4,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "sovellusohjelmisto",
+      "start": 80.4,
+      "end": 81.52,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "voi",
+      "start": 81.52,
+      "end": 81.74,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "perimässä",
+      "start": 81.74,
+      "end": 82.22,
+      "exact": false,
+      "block": 18
+    },
+    {
+      "word": "olevan",
+      "start": 82.22,
+      "end": 82.72,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "olemassa",
+      "start": 82.72,
+      "end": 83.18,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "olevan",
+      "start": 83.18,
+      "end": 83.62,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "infrastruktuurin,",
+      "start": 83.62,
+      "end": 84.12,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "mikä",
+      "start": 84.96,
+      "end": 85.28,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "vähentää",
+      "start": 85.28,
+      "end": 85.72,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "uusiutuvaa",
+      "start": 85.72,
+      "end": 86.56,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "insinöörimunkkia,",
+      "start": 86.56,
+      "end": 87.56,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "kun",
+      "start": 87.64,
+      "end": 88.06,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "arkkitehtuuri",
+      "start": 88.06,
+      "end": 88.9,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "soveltuu.",
+      "start": 88.9,
+      "end": 89.7,
+      "exact": true,
+      "block": 18
+    },
+    {
+      "word": "Näytä",
+      "start": 89.7,
+      "end": 91.14,
+      "exact": false,
+      "block": 19
+    },
+    {
+      "word": "järjestelmä.",
+      "start": 91.14,
+      "end": 92.58,
+      "exact": false,
+      "block": 19
+    },
+    {
+      "word": "Lisätilavuus,",
+      "start": 92.58,
+      "end": 93.58,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "laskentavarmennus,",
+      "start": 93.58,
+      "end": 94.7,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "testaus",
+      "start": 94.72,
+      "end": 95.28,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "ja",
+      "start": 95.28,
+      "end": 95.56,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "levittämiskäsitykset",
+      "start": 95.56,
+      "end": 96.64,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "voidaan",
+      "start": 96.64,
+      "end": 97.08,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "lisätä",
+      "start": 97.08,
+      "end": 97.46,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "julkaisemisvoimavaroilta",
+      "start": 97.46,
+      "end": 98.84,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "ilman,",
+      "start": 98.84,
+      "end": 99.36,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "että",
+      "start": 99.4,
+      "end": 99.88,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "jälkimmäisten",
+      "start": 99.88,
+      "end": 100.58,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "perusjärjestelmän",
+      "start": 100.58,
+      "end": 101.66,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "uudistamista",
+      "start": 101.66,
+      "end": 102.44,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "varten",
+      "start": 102.44,
+      "end": 102.8,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "olisi",
+      "start": 102.8,
+      "end": 103.22,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "tarpeen.",
+      "start": 103.22,
+      "end": 103.8,
+      "exact": true,
+      "block": 20
+    },
+    {
+      "word": "Valittu",
+      "start": 104.78,
+      "end": 105.28,
+      "exact": true,
+      "block": 21
+    },
+    {
+      "word": "työ",
+      "start": 105.28,
+      "end": 105.48,
+      "exact": true,
+      "block": 21
+    },
+    {
+      "word": "Erilaisia",
+      "start": 106.62,
+      "end": 107.12,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "tuotteita.",
+      "start": 107.12,
+      "end": 107.98,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "Teknologia,",
+      "start": 108.56,
+      "end": 109.56,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "joka",
+      "start": 109.78,
+      "end": 110.08,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "kasvaa.",
+      "start": 110.08,
+      "end": 110.76,
+      "exact": true,
+      "block": 22
+    },
+    {
+      "word": "Jokaisella",
+      "start": 111.36,
+      "end": 112.36,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "projektille",
+      "start": 112.36,
+      "end": 112.96,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "on",
+      "start": 112.96,
+      "end": 113.18,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "erilainen",
+      "start": 113.18,
+      "end": 113.82,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "ongelma,",
+      "start": 113.82,
+      "end": 114.44,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "mutta",
+      "start": 114.44,
+      "end": 114.84,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "periyhteinen",
+      "start": 114.96,
+      "end": 115.6,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "tavoite",
+      "start": 115.6,
+      "end": 116.1,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "on",
+      "start": 116.1,
+      "end": 116.26,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "sama:",
+      "start": 116.26,
+      "end": 116.6,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "kehittää",
+      "start": 116.74,
+      "end": 117.34,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "teknologiaa,",
+      "start": 117.34,
+      "end": 118.24,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "järjestelmiä",
+      "start": 118.28,
+      "end": 119.28,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "ja",
+      "start": 119.28,
+      "end": 119.54,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "tuotantotietoisuutta,",
+      "start": 119.54,
+      "end": 120.7,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "jota",
+      "start": 120.82,
+      "end": 121.22,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "voidaan",
+      "start": 121.22,
+      "end": 121.7,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "uudelleenkäyttää",
+      "start": 121.7,
+      "end": 122.64,
+      "exact": false,
+      "block": 23
+    },
+    {
+      "word": "tulevaisuuden",
+      "start": 122.64,
+      "end": 123.36,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "ohjelmistojen",
+      "start": 123.36,
+      "end": 124.08,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "suhteen,",
+      "start": 124.08,
+      "end": 124.66,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "ei",
+      "start": 124.78,
+      "end": 125.04,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "oleisikaan",
+      "start": 125.04,
+      "end": 125.66,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "jäävä",
+      "start": 125.66,
+      "end": 125.96,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "eristyneenä",
+      "start": 125.96,
+      "end": 126.68,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "yhden",
+      "start": 126.68,
+      "end": 127.0,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "sovelluksen",
+      "start": 127.0,
+      "end": 127.6,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "sisäiseen",
+      "start": 127.6,
+      "end": 128.06,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "käytölle.",
+      "start": 128.06,
+      "end": 128.66,
+      "exact": true,
+      "block": 23
+    },
+    {
+      "word": "AI",
+      "start": 129.11999999999998,
+      "end": 129.7,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "·",
+      "start": 129.7,
+      "end": 130.24,
+      "exact": false,
+      "block": 24
+    },
+    {
+      "word": "Automatisointi",
+      "start": 130.24,
+      "end": 131.24,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "·",
+      "start": 131.24,
+      "end": 131.66,
+      "exact": false,
+      "block": 24
+    },
+    {
+      "word": "Tietokoneprosessit",
+      "start": 131.66,
+      "end": 132.96,
+      "exact": true,
+      "block": 24
+    },
+    {
+      "word": "Pysäköintiin",
+      "start": 133.54,
+      "end": 134.58,
+      "exact": true,
+      "block": 25
+    },
+    {
+      "word": "välittele",
+      "start": 134.58,
+      "end": 135.2,
+      "exact": true,
+      "block": 25
+    },
+    {
+      "word": "ainoastaan.",
+      "start": 135.2,
+      "end": 136.18,
+      "exact": true,
+      "block": 25
+    },
+    {
+      "word": "Bolt",
+      "start": 136.82,
+      "end": 137.4,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "tutkii",
+      "start": 137.4,
+      "end": 137.96,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "valvontaisia",
+      "start": 137.96,
+      "end": 138.64,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "AI-orchestraation",
+      "start": 138.64,
+      "end": 139.76,
+      "exact": false,
+      "block": 26
+    },
+    {
+      "word": "mahdollisuuksia",
+      "start": 139.76,
+      "end": 140.72,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "monipuolisen",
+      "start": 140.72,
+      "end": 141.48,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "tietokoneen",
+      "start": 141.48,
+      "end": 142.22,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "työn",
+      "start": 142.22,
+      "end": 142.54,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "suorittamiseen.",
+      "start": 142.54,
+      "end": 143.44,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "Sen",
+      "start": 143.62,
+      "end": 144.62,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "suunnitelma",
+      "start": 144.96,
+      "end": 145.34,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "on",
+      "start": 145.34,
+      "end": 145.46,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "koordinoida",
+      "start": 145.46,
+      "end": 146.16,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "AI-järjestelmät,",
+      "start": 146.16,
+      "end": 147.26,
+      "exact": false,
+      "block": 26
+    },
+    {
+      "word": "paikalliset",
+      "start": 147.26,
+      "end": 147.92,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "työkalut",
+      "start": 147.92,
+      "end": 148.54,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "ja",
+      "start": 148.54,
+      "end": 148.68,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "suoritusprosessit,",
+      "start": 148.68,
+      "end": 149.84,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "samalla",
+      "start": 149.86,
+      "end": 150.36,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "säilyttäen",
+      "start": 150.36,
+      "end": 150.96,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "valvontaa,",
+      "start": 150.96,
+      "end": 151.64,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "käyttöoikeuksia",
+      "start": 151.72,
+      "end": 152.92,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "ja",
+      "start": 152.92,
+      "end": 153.3,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "ihmisen",
+      "start": 153.3,
+      "end": 153.8,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "valvontaa.",
+      "start": 153.8,
+      "end": 154.46,
+      "exact": true,
+      "block": 26
+    },
+    {
+      "word": "Projekti",
+      "start": 155.48999999999998,
+      "end": 156.04,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "tutkii,",
+      "start": 156.04,
+      "end": 156.62,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "miten",
+      "start": 156.64,
+      "end": 156.92,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "johdonmukaisen",
+      "start": 156.92,
+      "end": 157.8,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "toiminnan",
+      "start": 157.8,
+      "end": 158.3,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "uudelleenkäytössä",
+      "start": 158.3,
+      "end": 159.36,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "ihmisten,",
+      "start": 159.36,
+      "end": 159.96,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "mallien",
+      "start": 160.08,
+      "end": 160.7,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "ja",
+      "start": 160.7,
+      "end": 160.96,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "ohjelmistojen",
+      "start": 160.96,
+      "end": 161.66,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "välillä",
+      "start": 161.66,
+      "end": 162.04,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "voitaisiin",
+      "start": 162.04,
+      "end": 162.68,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "vähentää",
+      "start": 162.68,
+      "end": 163.18,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "toistuvaa",
+      "start": 163.18,
+      "end": 163.84,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "vuoropuhelua",
+      "start": 163.84,
+      "end": 164.56,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "sallien",
+      "start": 164.56,
+      "end": 165.0,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "sen",
+      "start": 165.0,
+      "end": 165.2,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "jatkumisen",
+      "start": 165.2,
+      "end": 165.8,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "suorituksen,",
+      "start": 165.8,
+      "end": 166.46,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "testauksen",
+      "start": 166.6,
+      "end": 167.34,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "ja",
+      "start": 167.34,
+      "end": 167.58,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "korjausten",
+      "start": 167.58,
+      "end": 168.2,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "kiertojen",
+      "start": 168.2,
+      "end": 168.68,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "kautta",
+      "start": 168.68,
+      "end": 169.16,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "vähemmällä",
+      "start": 169.16,
+      "end": 169.7,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "epätarpeellisella",
+      "start": 169.7,
+      "end": 170.58,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "rangaistuksellisuudella.",
+      "start": 170.58,
+      "end": 171.82,
+      "exact": true,
+      "block": 27
+    },
+    {
+      "word": "Tekniikan",
+      "start": 172.2,
+      "end": 173.3,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "kehittäminen",
+      "start": 173.3,
+      "end": 174.02,
+      "exact": true,
+      "block": 28
+    },
+    {
+      "word": "Bolt:n",
+      "start": 174.02,
+      "end": 174.8,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "ympärille",
+      "start": 174.8,
+      "end": 175.58,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "voi",
+      "start": 175.58,
+      "end": 176.36,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "sisältyä",
+      "start": 176.36,
+      "end": 177.14000000000001,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "tulevaisuuden",
+      "start": 177.14000000000001,
+      "end": 177.92000000000002,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "automaation,",
+      "start": 177.92000000000002,
+      "end": 178.70000000000002,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "kehityksen",
+      "start": 178.70000000000002,
+      "end": 179.48000000000002,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "ja",
+      "start": 179.48000000000002,
+      "end": 180.26000000000002,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "tietokonetyyppisten",
+      "start": 180.26000000000002,
+      "end": 181.04000000000002,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "valvontajärjestelmien",
+      "start": 181.04000000000002,
+      "end": 181.82,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "edistämisessä",
+      "start": 181.82,
+      "end": 182.60000000000002,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "laajempassa",
+      "start": 182.60000000000002,
+      "end": 183.38,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "Unfire-ecosysteemissa.",
+      "start": 183.38,
+      "end": 184.16,
+      "exact": false,
+      "block": 28
+    },
+    {
+      "word": "Orkestraattiot",
+      "start": 184.16,
+      "end": 184.94,
+      "exact": false,
+      "block": 29
+    },
+    {
+      "word": "·",
+      "start": 184.94,
+      "end": 185.72,
+      "exact": false,
+      "block": 29
+    },
+    {
+      "word": "Paikallinen",
+      "start": 185.72,
+      "end": 186.5,
+      "exact": false,
+      "block": 29
+    },
+    {
+      "word": "suoritus",
+      "start": 186.5,
+      "end": 187.28,
+      "exact": false,
+      "block": 29
+    },
+    {
+      "word": "·",
+      "start": 187.28,
+      "end": 188.06,
+      "exact": false,
+      "block": 29
+    },
+    {
+      "word": "Tarkasteltu",
+      "start": 188.06,
+      "end": 188.84,
+      "exact": false,
+      "block": 29
+    },
+    {
+      "word": "autonomia",
+      "start": 188.84,
+      "end": 189.62,
+      "exact": false,
+      "block": 29
+    },
+    {
+      "word": "·",
+      "start": 189.62,
+      "end": 190.4,
+      "exact": false,
+      "block": 29
+    },
+    {
+      "word": "Uudelleenkäytettävää",
+      "start": 190.4,
+      "end": 191.18,
+      "exact": false,
+      "block": 29
+    },
+    {
+      "word": "automaation",
+      "start": 191.18,
+      "end": 191.96,
+      "exact": false,
+      "block": 29
+    },
+    {
+      "word": "Energia",
+      "start": 191.96,
+      "end": 192.74,
+      "exact": false,
+      "block": 30
+    },
+    {
+      "word": "·",
+      "start": 192.74,
+      "end": 193.52,
+      "exact": false,
+      "block": 30
+    },
+    {
+      "word": "Data",
+      "start": 193.52,
+      "end": 194.3,
+      "exact": false,
+      "block": 30
+    },
+    {
+      "word": "·",
+      "start": 194.3,
+      "end": 195.08,
+      "exact": false,
+      "block": 30
+    },
+    {
+      "word": "Tietojärjestelmät",
+      "start": 195.08,
+      "end": 195.86,
+      "exact": false,
+      "block": 30
+    },
+    {
+      "word": "Vahvuus",
+      "start": 195.86,
+      "end": 196.64,
+      "exact": false,
+      "block": 31
+    },
+    {
+      "word": "Vahvuus",
+      "start": 196.64,
+      "end": 197.42000000000002,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "tutkii,",
+      "start": 197.42000000000002,
+      "end": 198.2,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "miten",
+      "start": 198.2,
+      "end": 198.98000000000002,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "monimutkaiset",
+      "start": 198.98000000000002,
+      "end": 199.76,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "sähkö-",
+      "start": 199.76,
+      "end": 200.54,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "ja",
+      "start": 200.54,
+      "end": 201.32,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "energiamarkkinatiedot",
+      "start": 201.32,
+      "end": 202.1,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "voidaan",
+      "start": 202.1,
+      "end": 202.88,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "muuntaa",
+      "start": 202.88,
+      "end": 203.66,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "ohjelmistoon,",
+      "start": 203.66,
+      "end": 204.44,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "joka",
+      "start": 204.44,
+      "end": 205.22,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "on",
+      "start": 205.22,
+      "end": 205.22,
+      "exact": true,
+      "block": 32
+    },
+    {
+      "word": "helpompaa",
+      "start": 205.22,
+      "end": 205.92871794871795,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "ymmärtää,",
+      "start": 205.92871794871795,
+      "end": 206.6374358974359,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "vertailla",
+      "start": 206.6374358974359,
+      "end": 207.34615384615384,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "ja",
+      "start": 207.34615384615384,
+      "end": 208.0548717948718,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "käyttää.",
+      "start": 208.0548717948718,
+      "end": 208.76358974358973,
+      "exact": false,
+      "block": 32
+    },
+    {
+      "word": "Projekti",
+      "start": 208.76358974358973,
+      "end": 209.47230769230768,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "yhdistää",
+      "start": 209.47230769230768,
+      "end": 210.18102564102566,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "alueellisen",
+      "start": 210.18102564102566,
+      "end": 210.8897435897436,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "dataa,",
+      "start": 210.8897435897436,
+      "end": 211.59846153846155,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "hintatietoja",
+      "start": 211.59846153846155,
+      "end": 212.3071794871795,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "ja",
+      "start": 212.3071794871795,
+      "end": 213.01589743589744,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "strukturoidua",
+      "start": 213.01589743589744,
+      "end": 213.7246153846154,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "tulkintaa",
+      "start": 213.7246153846154,
+      "end": 214.43333333333334,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "yhteen",
+      "start": 214.43333333333334,
+      "end": 215.14205128205128,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "selkeämmäksi",
+      "start": 215.14205128205128,
+      "end": 215.85076923076923,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "käyttöliittymäksi,",
+      "start": 215.85076923076923,
+      "end": 216.55948717948718,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "luodakseen",
+      "start": 216.55948717948718,
+      "end": 217.26820512820512,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "perusta",
+      "start": 217.26820512820512,
+      "end": 217.97692307692307,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "tuleville",
+      "start": 217.97692307692307,
+      "end": 218.68564102564102,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "energiatehokkuustyökaluille.",
+      "start": 218.68564102564102,
+      "end": 219.39435897435897,
+      "exact": false,
+      "block": 33
+    },
+    {
+      "word": "Sama",
+      "start": 219.39435897435897,
+      "end": 220.10307692307694,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "lähestymistapa",
+      "start": 220.10307692307694,
+      "end": 220.8117948717949,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "voidaan",
+      "start": 220.8117948717949,
+      "end": 221.52051282051283,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "myöhemmin",
+      "start": 221.52051282051283,
+      "end": 222.22923076923078,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "tukea",
+      "start": 222.22923076923078,
+      "end": 222.93794871794873,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "myös",
+      "start": 222.93794871794873,
+      "end": 223.64666666666668,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "muista",
+      "start": 223.64666666666668,
+      "end": 224.35538461538462,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "tietoylpeistä",
+      "start": 224.35538461538462,
+      "end": 225.06410256410257,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "tuotteista,",
+      "start": 225.06410256410257,
+      "end": 225.77282051282052,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "joissa",
+      "start": 225.77282051282052,
+      "end": 226.48153846153846,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "osaamattomia",
+      "start": 226.48153846153846,
+      "end": 227.1902564102564,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "ulkoisia",
+      "start": 227.1902564102564,
+      "end": 227.89897435897436,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "tietoja",
+      "start": 227.89897435897436,
+      "end": 228.60769230769233,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "on",
+      "start": 228.60769230769233,
+      "end": 229.31641025641028,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "muodostettava",
+      "start": 229.31641025641028,
+      "end": 230.02512820512823,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "ymmärrettävä",
+      "start": 230.02512820512823,
+      "end": 230.73384615384617,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "ja",
+      "start": 230.73384615384617,
+      "end": 231.44256410256412,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "toimintakykyinen",
+      "start": 231.44256410256412,
+      "end": 232.15128205128207,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "software.",
+      "start": 232.15128205128207,
+      "end": 232.86,
+      "exact": false,
+      "block": 34
+    },
+    {
+      "word": "Energiantunnuisuus",
+      "start": 232.86,
+      "end": 233.94,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "·",
+      "start": 233.94,
+      "end": 234.36,
+      "exact": false,
+      "block": 35
+    },
+    {
+      "word": "Datatulkinta",
+      "start": 234.36,
+      "end": 235.12,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "·",
+      "start": 235.12,
+      "end": 235.62,
+      "exact": false,
+      "block": 35
+    },
+    {
+      "word": "Tietojen",
+      "start": 235.62,
+      "end": 236.06,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "rakennus",
+      "start": 236.06,
+      "end": 236.84,
+      "exact": true,
+      "block": 35
+    },
+    {
+      "word": "Sisäinen",
+      "start": 237.70000000000002,
+      "end": 238.24,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "infrastrukturi",
+      "start": 238.24,
+      "end": 239.0,
+      "exact": false,
+      "block": 36
+    },
+    {
+      "word": "·",
+      "start": 239.0,
+      "end": 239.76,
+      "exact": false,
+      "block": 36
+    },
+    {
+      "word": "Ohjelmistoproducing",
+      "start": 239.76,
+      "end": 240.88,
+      "exact": true,
+      "block": 36
+    },
+    {
+      "word": "UnfireSuitteja",
+      "start": 240.88,
+      "end": 242.70999999999998,
+      "exact": false,
+      "block": 37
+    },
+    {
+      "word": "UnfireSuite",
+      "start": 242.70999999999998,
+      "end": 244.54,
+      "exact": false,
+      "block": 38
+    },
+    {
+      "word": "edustaa",
+      "start": 244.54,
+      "end": 245.12,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "sisäisen",
+      "start": 245.12,
+      "end": 245.64,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "tuotantolainaa",
+      "start": 245.64,
+      "end": 246.54,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "monen",
+      "start": 246.54,
+      "end": 246.96,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "Unfire-projektin",
+      "start": 246.96,
+      "end": 247.98,
+      "exact": false,
+      "block": 38
+    },
+    {
+      "word": "taustalla.",
+      "start": 247.98,
+      "end": 248.52,
+      "exact": true,
+      "block": 38
+    },
+    {
+      "word": "Sen",
+      "start": 248.76,
+      "end": 249.7,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "tarkoitus",
+      "start": 249.7,
+      "end": 250.4,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "on",
+      "start": 250.4,
+      "end": 250.52,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "vähentää",
+      "start": 250.52,
+      "end": 251.02,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "uudelleenkäytettävän",
+      "start": 251.02,
+      "end": 252.22,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "ingeniumin",
+      "start": 252.22,
+      "end": 252.88,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "tarpeen",
+      "start": 252.88,
+      "end": 253.36,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "sallien",
+      "start": 253.36,
+      "end": 253.78,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "ohjelmistocomponenttien,",
+      "start": 253.78,
+      "end": 255.32,
+      "exact": false,
+      "block": 39
+    },
+    {
+      "word": "vahvistusprosessien,",
+      "start": 255.32,
+      "end": 256.64,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "tuotantosysteemien",
+      "start": 256.78,
+      "end": 258.06,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "ja",
+      "start": 258.06,
+      "end": 258.34,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "saamisen",
+      "start": 258.34,
+      "end": 258.78,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "teknisen",
+      "start": 258.78,
+      "end": 259.36,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "tiedon",
+      "start": 259.36,
+      "end": 259.76,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "uudelleenkäytön",
+      "start": 259.76,
+      "end": 260.7,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "paikkoissa.",
+      "start": 260.7,
+      "end": 261.36,
+      "exact": true,
+      "block": 39
+    },
+    {
+      "word": "Tämä",
+      "start": 261.36,
+      "end": 262.54,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "on",
+      "start": 262.54,
+      "end": 262.72,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "tärkeää,",
+      "start": 262.72,
+      "end": 263.44,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "koska",
+      "start": 263.46,
+      "end": 263.74,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "yhtä",
+      "start": 263.74,
+      "end": 264.18,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "projektin",
+      "start": 264.18,
+      "end": 264.7,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "arvoa",
+      "start": 264.7,
+      "end": 265.14,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "ei",
+      "start": 265.14,
+      "end": 265.34,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "tarvitse",
+      "start": 265.34,
+      "end": 265.8,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "päästää",
+      "start": 265.8,
+      "end": 266.2,
+      "exact": false,
+      "block": 40
+    },
+    {
+      "word": "loppuun,",
+      "start": 266.2,
+      "end": 266.92,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "kun",
+      "start": 266.94,
+      "end": 267.24,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "se",
+      "start": 267.24,
+      "end": 267.44,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "on",
+      "start": 267.44,
+      "end": 267.62,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "saatu",
+      "start": 267.62,
+      "end": 268.02,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "päätökseen.",
+      "start": 268.02,
+      "end": 268.74,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "Teknologian",
+      "start": 269.5,
+      "end": 270.44,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "osat",
+      "start": 270.44,
+      "end": 270.82,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "voidaan",
+      "start": 270.82,
+      "end": 271.28,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "muuttaa",
+      "start": 271.28,
+      "end": 271.74,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "infrastruktuureiksi",
+      "start": 271.74,
+      "end": 272.96,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "seuraavalle",
+      "start": 272.96,
+      "end": 273.66,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "tuotteelle,",
+      "start": 273.66,
+      "end": 274.3,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "mikä",
+      "start": 274.38,
+      "end": 274.86,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "mahdollistaa",
+      "start": 274.86,
+      "end": 275.6,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "järjestelmän",
+      "start": 275.6,
+      "end": 276.34,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "omaksuksen",
+      "start": 276.34,
+      "end": 277.04,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "uusien",
+      "start": 277.04,
+      "end": 277.52,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "parannusten",
+      "start": 277.52,
+      "end": 278.2,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "ajan.",
+      "start": 278.2,
+      "end": 278.58,
+      "exact": true,
+      "block": 40
+    },
+    {
+      "word": "J与共",
+      "start": 278.58,
+      "end": 279.43333333333334,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "infrastrukтуuri",
+      "start": 279.43333333333334,
+      "end": 280.28666666666663,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "·",
+      "start": 280.28666666666663,
+      "end": 281.14,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "Vahvistus",
+      "start": 281.14,
+      "end": 281.74,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "·",
+      "start": 281.74,
+      "end": 282.2,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "Uudelleenkäytössä",
+      "start": 282.2,
+      "end": 283.28,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "·",
+      "start": 283.28,
+      "end": 283.72,
+      "exact": false,
+      "block": 41
+    },
+    {
+      "word": "Tuotannosjärjestelmät",
+      "start": 283.72,
+      "end": 285.12,
+      "exact": true,
+      "block": 41
+    },
+    {
+      "word": "Unfire",
+      "start": 286.03,
+      "end": 286.5,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "Audio",
+      "start": 286.5,
+      "end": 286.9,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "·",
+      "start": 286.9,
+      "end": 287.54,
+      "exact": false,
+      "block": 42
+    },
+    {
+      "word": "Ensimmäinen",
+      "start": 287.54,
+      "end": 288.32,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "toteutus",
+      "start": 288.32,
+      "end": 289.08,
+      "exact": true,
+      "block": 42
+    },
+    {
+      "word": "Archer",
+      "start": 289.46,
+      "end": 290.4,
+      "exact": true,
+      "block": 43
+    },
+    {
+      "word": "Archer",
+      "start": 291.36,
+      "end": 291.82,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "on",
+      "start": 291.82,
+      "end": 292.14,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "ensimmäinen",
+      "start": 292.14,
+      "end": 292.88,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "tuotteenkehitys",
+      "start": 292.88,
+      "end": 293.8,
+      "exact": false,
+      "block": 44
+    },
+    {
+      "word": "laajemman",
+      "start": 293.8,
+      "end": 294.44,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "Unfire",
+      "start": 294.44,
+      "end": 294.9,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "Audio-ohjelmiston",
+      "start": 294.9,
+      "end": 296.1,
+      "exact": false,
+      "block": 44
+    },
+    {
+      "word": "ympäri.",
+      "start": 296.1,
+      "end": 296.6,
+      "exact": true,
+      "block": 44
+    },
+    {
+      "word": "Se",
+      "start": 297.23,
+      "end": 297.72,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "on",
+      "start": 297.72,
+      "end": 297.86,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "tarkka",
+      "start": 297.86,
+      "end": 298.32,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "ääniklikkausväline,",
+      "start": 298.32,
+      "end": 299.48,
+      "exact": false,
+      "block": 45
+    },
+    {
+      "word": "jonka",
+      "start": 299.48,
+      "end": 299.8,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "keskipiste",
+      "start": 299.8,
+      "end": 300.46,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "on",
+      "start": 300.46,
+      "end": 300.66,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "Gain,",
+      "start": 300.66,
+      "end": 300.98,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "Threshold",
+      "start": 301.16,
+      "end": 301.66,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "ja",
+      "start": 301.66,
+      "end": 302.08,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "Atmosfēra,",
+      "start": 302.08,
+      "end": 302.84,
+      "exact": false,
+      "block": 45
+    },
+    {
+      "word": "ja",
+      "start": 302.84,
+      "end": 303.14,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "joka",
+      "start": 303.14,
+      "end": 303.34,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "antaa",
+      "start": 303.34,
+      "end": 303.78,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "tuottajille",
+      "start": 303.78,
+      "end": 304.44,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "ja",
+      "start": 304.44,
+      "end": 304.86,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "insinööreille",
+      "start": 304.86,
+      "end": 305.62,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "suoraa",
+      "start": 305.62,
+      "end": 306.12,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "valtaa",
+      "start": 306.12,
+      "end": 306.52,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "klippingon",
+      "start": 306.52,
+      "end": 307.12,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "käyttäytymisestä,",
+      "start": 307.12,
+      "end": 308.02,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "huippeista,",
+      "start": 308.2,
+      "end": 308.86,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "transienneista",
+      "start": 309.04,
+      "end": 309.88,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "ja",
+      "start": 309.88,
+      "end": 310.24,
+      "exact": true,
+      "block": 45
+    },
+    {
+      "word": "äänen",
+      "start": 310.24,
+      "end": 311.09000000000003,
+      "exact": false,
+      "block": 45
+    },
+    {
+      "word": "sävystä.",
+      "start": 311.09000000000003,
+      "end": 311.94,
+      "exact": false,
+      "block": 45
+    },
+    {
+      "word": "Strateginen",
+      "start": 311.94,
+      "end": 312.92,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "rooliansa",
+      "start": 312.92,
+      "end": 313.6,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "on",
+      "start": 313.6,
+      "end": 313.76,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "kuitenkin",
+      "start": 313.76,
+      "end": 314.24,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "laajempi",
+      "start": 314.24,
+      "end": 314.9,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "kuin",
+      "start": 314.9,
+      "end": 315.14,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "yksinkertainen",
+      "start": 315.14,
+      "end": 316.14,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "äänineuvontatehono.",
+      "start": 316.14,
+      "end": 317.26,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "Archer",
+      "start": 317.66,
+      "end": 318.64,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "tarjoaa",
+      "start": 318.64,
+      "end": 319.24,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "käytännöllisen",
+      "start": 319.24,
+      "end": 319.92,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "ympäristön",
+      "start": 319.92,
+      "end": 320.6,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "kehittämään",
+      "start": 320.6,
+      "end": 321.26,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "ja",
+      "start": 321.48,
+      "end": 321.48,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "vahvistamaan",
+      "start": 321.48,
+      "end": 321.96,
+      "exact": false,
+      "block": 46
+    },
+    {
+      "word": "ääniteknologiaa,",
+      "start": 321.96,
+      "end": 323.24,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "käyttöliittymäjärjestelmiä",
+      "start": 323.36,
+      "end": 325.08,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "ja",
+      "start": 325.08,
+      "end": 325.48,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "tuotantokomponenteja,",
+      "start": 325.48,
+      "end": 326.68,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "jotka",
+      "start": 326.78,
+      "end": 327.26,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "myöhemmin",
+      "start": 327.26,
+      "end": 327.84,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "voivat",
+      "start": 327.84,
+      "end": 328.16,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "contribuoida",
+      "start": 328.16,
+      "end": 328.94,
+      "exact": false,
+      "block": 46
+    },
+    {
+      "word": "tuleviin",
+      "start": 328.94,
+      "end": 329.44,
+      "exact": true,
+      "block": 46
+    },
+    {
+      "word": "luovia-sovelluslaitteisiin.",
+      "start": 329.44,
+      "end": 331.94,
+      "exact": false,
+      "block": 46
+    },
+    {
+      "word": "Unfire",
+      "start": 331.94,
+      "end": 332.5,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "Audio",
+      "start": 332.5,
+      "end": 332.88,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "tutkii",
+      "start": 332.88,
+      "end": 333.44,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "myös,",
+      "start": 333.44,
+      "end": 333.74,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "miten",
+      "start": 333.86,
+      "end": 334.16,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "älykkäiden",
+      "start": 334.16,
+      "end": 334.76,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "järjestelmien,",
+      "start": 334.76,
+      "end": 335.6,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "prosessointimenetelmien",
+      "start": 335.78,
+      "end": 337.22,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "ja",
+      "start": 337.22,
+      "end": 337.52,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "uudelleenkäytettävän",
+      "start": 337.52,
+      "end": 338.72,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "ohjelmistoteknologian",
+      "start": 338.72,
+      "end": 339.94,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "voidaan",
+      "start": 339.94,
+      "end": 340.5,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "yhdistää",
+      "start": 340.5,
+      "end": 341.04,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "uusiin",
+      "start": 341.04,
+      "end": 341.62,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "plugin-konseptiin",
+      "start": 341.62,
+      "end": 342.72,
+      "exact": false,
+      "block": 47
+    },
+    {
+      "word": "ja",
+      "start": 342.72,
+      "end": 343.16,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "luovuusprosessointiin",
+      "start": 343.16,
+      "end": 344.44,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "ulottuvien",
+      "start": 344.44,
+      "end": 345.04,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "perinteisten",
+      "start": 345.04,
+      "end": 345.66,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "audio-prosessointitooleiden",
+      "start": 345.66,
+      "end": 347.18,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "ulkopuolelle.",
+      "start": 347.18,
+      "end": 348.0,
+      "exact": true,
+      "block": 47
+    },
+    {
+      "word": "Audioteknologia",
+      "start": 348.0,
+      "end": 349.23,
+      "exact": false,
+      "block": 48
+    },
+    {
+      "word": "·",
+      "start": 349.23,
+      "end": 350.46,
+      "exact": false,
+      "block": 48
+    },
+    {
+      "word": "DSP",
+      "start": 350.46,
+      "end": 351.02,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "·",
+      "start": 351.02,
+      "end": 351.36,
+      "exact": false,
+      "block": 48
+    },
+    {
+      "word": "Järjestelmävalvonta",
+      "start": 351.36,
+      "end": 352.76,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "·",
+      "start": 352.76,
+      "end": 353.40999999999997,
+      "exact": false,
+      "block": 48
+    },
+    {
+      "word": "Kreaatiivinen",
+      "start": 353.40999999999997,
+      "end": 354.06,
+      "exact": false,
+      "block": 48
+    },
+    {
+      "word": "sovellus",
+      "start": 354.06,
+      "end": 354.8,
+      "exact": true,
+      "block": 48
+    },
+    {
+      "word": "Unfire",
+      "start": 355.54,
+      "end": 356.1,
+      "exact": true,
+      "block": 49
+    },
+    {
+      "word": "Audio",
+      "start": 356.1,
+      "end": 356.56,
+      "exact": true,
+      "block": 49
+    },
+    {
+      "word": "Pluginsista",
+      "start": 357.68,
+      "end": 358.24,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "uusiin",
+      "start": 358.24,
+      "end": 358.92,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "ohjelmistokonseptiin.",
+      "start": 358.92,
+      "end": 360.3,
+      "exact": true,
+      "block": 50
+    },
+    {
+      "word": "Unfire",
+      "start": 361.12,
+      "end": 361.68,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "Audio",
+      "start": 361.68,
+      "end": 362.12,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "tutkii,",
+      "start": 362.12,
+      "end": 362.82,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "miten",
+      "start": 362.82,
+      "end": 363.12,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "älykäytetyt",
+      "start": 363.12,
+      "end": 363.92,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "järjestelmät,",
+      "start": 363.92,
+      "end": 364.74,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "prosessioellinen",
+      "start": 364.76,
+      "end": 365.72,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "käsittelemys",
+      "start": 365.72,
+      "end": 366.46,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "ja",
+      "start": 366.46,
+      "end": 366.7,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "uinnissa",
+      "start": 366.7,
+      "end": 367.14,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "käytettävissä",
+      "start": 367.14,
+      "end": 367.88,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "olevat",
+      "start": 367.88,
+      "end": 368.3,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "ohjelmistokomponentit",
+      "start": 368.3,
+      "end": 369.54,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "saavat",
+      "start": 369.54,
+      "end": 369.94,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "yhteen",
+      "start": 369.94,
+      "end": 370.44,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "kreaatiivisiin",
+      "start": 370.44,
+      "end": 371.4,
+      "exact": false,
+      "block": 51
+    },
+    {
+      "word": "työkaluihin,",
+      "start": 371.4,
+      "end": 372.06,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "jotka",
+      "start": 372.12,
+      "end": 372.52,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "ulottuvat",
+      "start": 372.52,
+      "end": 373.26,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "yli",
+      "start": 373.26,
+      "end": 373.42,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "perinteisten",
+      "start": 373.42,
+      "end": 374.04,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "plugin-toteutusten",
+      "start": 374.04,
+      "end": 375.1,
+      "exact": false,
+      "block": 51
+    },
+    {
+      "word": "rajoille.",
+      "start": 375.1,
+      "end": 375.64,
+      "exact": true,
+      "block": 51
+    },
+    {
+      "word": "AI",
+      "start": 375.84,
+      "end": 376.72,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "voi",
+      "start": 376.72,
+      "end": 376.9,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "osallistua",
+      "start": 376.9,
+      "end": 377.58,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "kreatiivisen",
+      "start": 377.58,
+      "end": 378.36,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "sovellustilaan",
+      "start": 378.36,
+      "end": 379.2,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "sen",
+      "start": 379.2,
+      "end": 379.4,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "sijaan,",
+      "start": 379.4,
+      "end": 379.98,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "että",
+      "start": 379.98,
+      "end": 380.36,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "olisi",
+      "start": 380.36,
+      "end": 380.8,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "vain",
+      "start": 380.8,
+      "end": 380.98,
+      "exact": true,
+      "block": 52
+    },
+    {
+      "word": "erillisellä",
+      "start": 380.98,
+      "end": 381.96000000000004,
+      "exact": false,
+      "block": 52
+    },
+    {
+      "word": "apulaisena.",
+      "start": 381.96000000000004,
+      "end": 382.94,
+      "exact": false,
+      "block": 52
+    },
+    {
+      "word": "Parametrit,",
+      "start": 382.94,
+      "end": 384.02,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "äänet",
+      "start": 384.1,
+      "end": 384.5,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "ja",
+      "start": 384.5,
+      "end": 384.64,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "ohjelmistoon",
+      "start": 384.64,
+      "end": 385.36,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "liittyvää",
+      "start": 385.36,
+      "end": 385.9,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "käyttötapaa",
+      "start": 385.9,
+      "end": 386.56,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "voidaan",
+      "start": 386.56,
+      "end": 387.0,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "muuttaa",
+      "start": 387.0,
+      "end": 387.48,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "dynaamisesti,",
+      "start": 387.48,
+      "end": 388.08,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "avoimella",
+      "start": 388.08,
+      "end": 389.14,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "uusien",
+      "start": 389.14,
+      "end": 389.7,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "kreaattisten",
+      "start": 389.7,
+      "end": 390.4,
+      "exact": false,
+      "block": 53
+    },
+    {
+      "word": "interaktiivisten",
+      "start": 390.4,
+      "end": 391.36,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "mallien",
+      "start": 391.36,
+      "end": 391.82,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "välillä.",
+      "start": 391.82,
+      "end": 392.34,
+      "exact": true,
+      "block": 53
+    },
+    {
+      "word": "Onnistuneet",
+      "start": 392.86,
+      "end": 393.94,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "komponentit,",
+      "start": 393.94,
+      "end": 394.64,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "jotka",
+      "start": 394.64,
+      "end": 394.9,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "kehitetään",
+      "start": 394.9,
+      "end": 395.54,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "yhden",
+      "start": 395.54,
+      "end": 395.94,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "tuotteen",
+      "start": 395.94,
+      "end": 396.42,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "osana,",
+      "start": 396.42,
+      "end": 396.9,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "voidaan",
+      "start": 396.98,
+      "end": 397.62,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "myöhemmin",
+      "start": 397.62,
+      "end": 398.1,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "uudelleenkäyttää,",
+      "start": 398.1,
+      "end": 399.22,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "laajentaa",
+      "start": 399.32,
+      "end": 400.02,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "tai",
+      "start": 400.02,
+      "end": 400.36,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "integroida",
+      "start": 400.36,
+      "end": 401.06,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "muihin",
+      "start": 401.06,
+      "end": 401.42,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "projekteihin.",
+      "start": 401.42,
+      "end": 402.2,
+      "exact": true,
+      "block": 54
+    },
+    {
+      "word": "Tavoitteena",
+      "start": 403.28000000000003,
+      "end": 403.84,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "ei",
+      "start": 403.84,
+      "end": 404.04,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "ole",
+      "start": 404.04,
+      "end": 404.26,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "yksinkertaisesti",
+      "start": 404.26,
+      "end": 405.32,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "tuottaa",
+      "start": 405.32,
+      "end": 405.84,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "eristyneet",
+      "start": 405.84,
+      "end": 406.58,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "äänepalvelupiineja.",
+      "start": 406.58,
+      "end": 407.9,
+      "exact": false,
+      "block": 55
+    },
+    {
+      "word": "On",
+      "start": 407.9,
+      "end": 408.76,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "luotava",
+      "start": 408.76,
+      "end": 409.2,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "uudelleenkäyttökohtaisen",
+      "start": 409.2,
+      "end": 410.72,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "kreaatiivisen-tekniikan",
+      "start": 410.72,
+      "end": 412.14,
+      "exact": false,
+      "block": 55
+    },
+    {
+      "word": "perustan,",
+      "start": 412.14,
+      "end": 412.72,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "joka",
+      "start": 412.78,
+      "end": 413.16,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "voi",
+      "start": 413.16,
+      "end": 413.38,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "tukea",
+      "start": 413.38,
+      "end": 413.82,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "tulevia",
+      "start": 413.82,
+      "end": 414.28,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "työkaluja,",
+      "start": 414.28,
+      "end": 414.98,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "laajempia",
+      "start": 415.02,
+      "end": 415.84,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "ympäristöjä",
+      "start": 415.84,
+      "end": 416.58,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "ja",
+      "start": 416.58,
+      "end": 417.02,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "uusia",
+      "start": 417.02,
+      "end": 417.5,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "tuotteen",
+      "start": 417.5,
+      "end": 418.02,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "käsitteitä.",
+      "start": 418.02,
+      "end": 418.78,
+      "exact": true,
+      "block": 55
+    },
+    {
+      "word": "Järjestelmä",
+      "start": 419.68,
+      "end": 420.62,
+      "exact": true,
+      "block": 56
+    },
+    {
+      "word": "Ohjelmistotuotanto",
+      "start": 421.58,
+      "end": 422.52,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "ilman",
+      "start": 422.52,
+      "end": 422.98,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "uuden",
+      "start": 422.98,
+      "end": 423.42,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "alkamista.",
+      "start": 423.42,
+      "end": 424.26,
+      "exact": true,
+      "block": 57
+    },
+    {
+      "word": "Keskeistä",
+      "start": 425.16999999999996,
+      "end": 425.64,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "ajatusta",
+      "start": 425.64,
+      "end": 426.18,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "on",
+      "start": 426.18,
+      "end": 426.46,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "yksinkertaista:",
+      "start": 426.46,
+      "end": 427.46,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "kun",
+      "start": 427.52,
+      "end": 427.92,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "uusi",
+      "start": 427.92,
+      "end": 428.32,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "tuote",
+      "start": 428.32,
+      "end": 428.66,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "voi",
+      "start": 428.66,
+      "end": 428.82,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "käyttää",
+      "start": 428.82,
+      "end": 429.34,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "olemassa",
+      "start": 429.34,
+      "end": 429.76,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "olevaa",
+      "start": 429.76,
+      "end": 430.3,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "teknologiaa",
+      "start": 430.3,
+      "end": 431.1,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "Unfire:ssa,",
+      "start": 431.1,
+      "end": 432.3,
+      "exact": false,
+      "block": 58
+    },
+    {
+      "word": "kehitys",
+      "start": 432.3,
+      "end": 432.94,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "tulisi",
+      "start": 432.94,
+      "end": 433.36,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "hyödyntää",
+      "start": 433.36,
+      "end": 433.92,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "sitä",
+      "start": 433.92,
+      "end": 434.18,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "etukäteen",
+      "start": 434.18,
+      "end": 434.84,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "sijoittamista",
+      "start": 434.84,
+      "end": 435.62,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "sijaan.",
+      "start": 435.62,
+      "end": 436.12,
+      "exact": true,
+      "block": 58
+    },
+    {
+      "word": "Jasenneltu",
+      "start": 436.68,
+      "end": 437.62,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "perusta",
+      "start": 437.62,
+      "end": 438.16,
+      "exact": true,
+      "block": 59
+    },
+    {
+      "word": "Käytettävissä",
+      "start": 438.88,
+      "end": 439.82,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "olevat",
+      "start": 439.82,
+      "end": 440.26,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "ohjelmistosarakkeet,",
+      "start": 440.26,
+      "end": 441.34,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "tuotantokäsitykset",
+      "start": 441.36,
+      "end": 442.7,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "ja",
+      "start": 442.7,
+      "end": 442.82,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "vahvistusjärjestelmät",
+      "start": 442.82,
+      "end": 444.06,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "muodostavat",
+      "start": 444.06,
+      "end": 444.62,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "perusta,",
+      "start": 444.62,
+      "end": 445.22,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "joka",
+      "start": 445.28,
+      "end": 445.7,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "voi",
+      "start": 445.7,
+      "end": 445.98,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "jatkossakin",
+      "start": 445.98,
+      "end": 446.62,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "kehittyä.",
+      "start": 446.62,
+      "end": 447.38,
+      "exact": true,
+      "block": 60
+    },
+    {
+      "word": "Tuoteryhmä",
+      "start": 448.12,
+      "end": 449.16,
+      "exact": true,
+      "block": 61
+    },
+    {
+      "word": "Uudet",
+      "start": 449.82,
+      "end": 450.34,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "sovellukset",
+      "start": 450.34,
+      "end": 451.02,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "voivat",
+      "start": 451.02,
+      "end": 451.38,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "yhdistää",
+      "start": 451.38,
+      "end": 452.0,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "olemassa",
+      "start": 452.0,
+      "end": 452.46,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "olevat",
+      "start": 452.46,
+      "end": 452.9,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "kykyt",
+      "start": 452.9,
+      "end": 453.28,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "tuotetta",
+      "start": 453.28,
+      "end": 453.72,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "koskevalla",
+      "start": 453.72,
+      "end": 454.26,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "teknologialla",
+      "start": 454.26,
+      "end": 455.02,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "sen",
+      "start": 455.02,
+      "end": 455.24,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "sijaan,",
+      "start": 455.24,
+      "end": 455.86,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "että",
+      "start": 455.86,
+      "end": 456.3,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "alkaisivat",
+      "start": 456.3,
+      "end": 456.96,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "tyhjästä",
+      "start": 456.96,
+      "end": 457.5,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "arkkitehtuurista.",
+      "start": 457.5,
+      "end": 458.54,
+      "exact": true,
+      "block": 62
+    },
+    {
+      "word": "Vahvistus",
+      "start": 459.36,
+      "end": 460.4,
+      "exact": true,
+      "block": 63
+    },
+    {
+      "word": "Kehitysyksiköt,",
+      "start": 461.4,
+      "end": 462.44,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "testit",
+      "start": 462.48,
+      "end": 462.96,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "ja",
+      "start": 462.96,
+      "end": 463.08,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "sisäiset",
+      "start": 463.08,
+      "end": 463.58,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "tarkistukset",
+      "start": 463.58,
+      "end": 464.34,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "tarjoavat",
+      "start": 464.34,
+      "end": 464.84,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "mittayhteydet",
+      "start": 464.84,
+      "end": 465.76,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "siitä,",
+      "start": 465.76,
+      "end": 466.02,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "että",
+      "start": 466.24,
+      "end": 466.84,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "ohjelmistovaatimukset",
+      "start": 466.84,
+      "end": 468.06,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "toimivat",
+      "start": 468.06,
+      "end": 468.52,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "odotetulla",
+      "start": 468.52,
+      "end": 469.12,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "tavalla.",
+      "start": 469.12,
+      "end": 469.42,
+      "exact": true,
+      "block": 64
+    },
+    {
+      "word": "Lisätoimintamahdollisuudet",
+      "start": 469.42,
+      "end": 473.32,
+      "exact": false,
+      "block": 65
+    },
+    {
+      "word": "Infrastruktuuri",
+      "start": 473.32,
+      "end": 474.02,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "voi",
+      "start": 474.02,
+      "end": 474.18,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "kasvaa",
+      "start": 474.18,
+      "end": 474.72,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "lisäkaapaus-,",
+      "start": 474.72,
+      "end": 475.66,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "säilö-",
+      "start": 475.66,
+      "end": 476.22,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "ja",
+      "start": 476.22,
+      "end": 476.42,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "testausmahdollisuuksien,",
+      "start": 476.42,
+      "end": 477.8,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "laadunvarmistuksen",
+      "start": 477.86,
+      "end": 479.12,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "sekä",
+      "start": 479.12,
+      "end": 479.72,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "rakenneasioiden",
+      "start": 479.72,
+      "end": 480.6,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "käyttöönoton",
+      "start": 480.6,
+      "end": 481.5,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "lisääntymisen",
+      "start": 481.5,
+      "end": 482.16,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "kautta.",
+      "start": 482.16,
+      "end": 482.72,
+      "exact": true,
+      "block": 66
+    },
+    {
+      "word": "Tuotantotaso",
+      "start": 483.56,
+      "end": 484.68,
+      "exact": true,
+      "block": 67
+    },
+    {
+      "word": "Lankamaa",
+      "start": 485.58,
+      "end": 486.14,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "muuttuu.",
+      "start": 486.14,
+      "end": 486.84,
+      "exact": true,
+      "block": 68
+    },
+    {
+      "word": "Olemalla",
+      "start": 487.62,
+      "end": 488.18,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "vanhan",
+      "start": 488.18,
+      "end": 488.6,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "arkkitehtuurin",
+      "start": 488.6,
+      "end": 489.46,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "sovellettavissa,",
+      "start": 489.46,
+      "end": 490.4,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "sisäinen",
+      "start": 490.44,
+      "end": 491.0,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "kehitys",
+      "start": 491.0,
+      "end": 491.58,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "on",
+      "start": 491.58,
+      "end": 491.7,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "osoittanut,",
+      "start": 491.7,
+      "end": 492.4,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "että",
+      "start": 492.54,
+      "end": 492.96,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "toimiva",
+      "start": 492.96,
+      "end": 493.42,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "ohjelmistokandikaatiorakenteet",
+      "start": 493.42,
+      "end": 495.28,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "voivat",
+      "start": 495.28,
+      "end": 495.72,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "kulkea",
+      "start": 495.72,
+      "end": 496.16,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "erittäin",
+      "start": 496.16,
+      "end": 496.7,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "lyhyissä",
+      "start": 496.7,
+      "end": 497.18,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "rakentamisvaiheissa",
+      "start": 497.18,
+      "end": 498.44,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "—",
+      "start": 498.44,
+      "end": 498.52,
+      "exact": false,
+      "block": 69
+    },
+    {
+      "word": "jopa",
+      "start": 498.52,
+      "end": 499.0,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "joissakin",
+      "start": 499.0,
+      "end": 499.38,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "tapauksissa",
+      "start": 499.38,
+      "end": 500.12,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "mittaamatta",
+      "start": 500.12,
+      "end": 500.82,
+      "exact": true,
+      "block": 69
+    },
+    {
+      "word": "minuutteja.",
+      "start": 500.82,
+      "end": 501.36,
+      "exact": false,
+      "block": 69
+    },
+    {
+      "word": "Koska",
+      "start": 501.36,
+      "end": 502.7,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "uusimpien",
+      "start": 502.7,
+      "end": 503.36,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "teknologijoiden",
+      "start": 503.36,
+      "end": 504.18,
+      "exact": false,
+      "block": 70
+    },
+    {
+      "word": "käyttöonnoilla",
+      "start": 504.18,
+      "end": 505.04,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "rajoittavat",
+      "start": 505.04,
+      "end": 505.62,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "tekijät",
+      "start": 505.62,
+      "end": 506.22,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "on",
+      "start": 506.22,
+      "end": 506.42,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "osoittautunut",
+      "start": 506.42,
+      "end": 507.28,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "olevan",
+      "start": 507.28,
+      "end": 507.68,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "infrastruktuurin",
+      "start": 507.68,
+      "end": 508.7,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "resursseja,",
+      "start": 508.7,
+      "end": 509.48,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "kuten",
+      "start": 509.5,
+      "end": 510.02,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "laskentaa,",
+      "start": 510.02,
+      "end": 510.72,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "tallennustilaa,",
+      "start": 510.8,
+      "end": 511.8,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "testauksesta,",
+      "start": 511.86,
+      "end": 512.64,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "laadun",
+      "start": 512.64,
+      "end": 513.4200000000001,
+      "exact": false,
+      "block": 70
+    },
+    {
+      "word": "varmistuksesta",
+      "start": 513.4200000000001,
+      "end": 514.2,
+      "exact": false,
+      "block": 70
+    },
+    {
+      "word": "ja",
+      "start": 514.2,
+      "end": 514.46,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "kaupallisesta",
+      "start": 514.46,
+      "end": 515.08,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "käyttöönotoksesta",
+      "start": 515.08,
+      "end": 516.28,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "—",
+      "start": 516.28,
+      "end": 516.3199999999999,
+      "exact": false,
+      "block": 70
+    },
+    {
+      "word": "resursseja,",
+      "start": 516.3,
+      "end": 517.12,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "jotka",
+      "start": 517.24,
+      "end": 517.56,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "voivat",
+      "start": 517.56,
+      "end": 517.92,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "itse",
+      "start": 517.92,
+      "end": 518.32,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "asiassa",
+      "start": 518.32,
+      "end": 518.76,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "lisätä.",
+      "start": 518.76,
+      "end": 519.3,
+      "exact": true,
+      "block": 70
+    },
+    {
+      "word": "Pääasiakaspalvelu",
+      "start": 519.3,
+      "end": 521.32,
+      "exact": false,
+      "block": 71
+    },
+    {
+      "word": "seuraa",
+      "start": 521.32,
+      "end": 521.7,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "tällä",
+      "start": 521.7,
+      "end": 522.06,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "hetkellä",
+      "start": 522.06,
+      "end": 522.4,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "käytettyjä",
+      "start": 522.4,
+      "end": 523.06,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "esimerkkejä,",
+      "start": 523.06,
+      "end": 523.82,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "jotka",
+      "start": 523.92,
+      "end": 524.42,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "demoi",
+      "start": 524.42,
+      "end": 524.88,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "välttämättömän",
+      "start": 524.88,
+      "end": 525.64,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "teknologian",
+      "start": 525.64,
+      "end": 526.34,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "suuntaa.",
+      "start": 526.34,
+      "end": 526.84,
+      "exact": true,
+      "block": 71
+    },
+    {
+      "word": "Prioriteetti-veвиä",
+      "start": 526.84,
+      "end": 528.75,
+      "exact": false,
+      "block": 72
+    },
+    {
+      "word": "1-software-kandidaatit",
+      "start": 528.75,
+      "end": 530.66,
+      "exact": false,
+      "block": 72
+    },
+    {
+      "word": "tunnistettu",
+      "start": 530.66,
+      "end": 531.32,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "ja",
+      "start": 531.36,
+      "end": 531.56,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "keskityttömäksi",
+      "start": 531.56,
+      "end": 532.44,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "kehitykseksi",
+      "start": 532.44,
+      "end": 533.16,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "valmistelut.",
+      "start": 533.16,
+      "end": 533.98,
+      "exact": true,
+      "block": 72
+    },
+    {
+      "word": "53",
+      "start": 534.6800000000001,
+      "end": 535.36,
+      "exact": true,
+      "block": 73
+    },
+    {
+      "word": "Yksityiskohtaisesti",
+      "start": 536.84,
+      "end": 538.2,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "suunnitellut",
+      "start": 538.2,
+      "end": 538.88,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "ja",
+      "start": 538.88,
+      "end": 539.08,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "sisäisesti",
+      "start": 539.08,
+      "end": 539.64,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "tarkistetut",
+      "start": 539.64,
+      "end": 540.46,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "solosovellukset.",
+      "start": 540.46,
+      "end": 541.58,
+      "exact": true,
+      "block": 74
+    },
+    {
+      "word": "53/53",
+      "start": 541.58,
+      "end": 545.94,
+      "exact": false,
+      "block": 75
+    },
+    {
+      "word": "Jäsenvaltaindeksin",
+      "start": 545.94,
+      "end": 547.3,
+      "exact": true,
+      "block": 76
+    },
+    {
+      "word": "kesäkuu",
+      "start": 547.3,
+      "end": 547.84,
+      "exact": true,
+      "block": 76
+    },
+    {
+      "word": "2026",
+      "start": 547.84,
+      "end": 549.18,
+      "exact": true,
+      "block": 76
+    },
+    {
+      "word": "onnistuneet",
+      "start": 549.18,
+      "end": 550.44,
+      "exact": true,
+      "block": 76
+    },
+    {
+      "word": "itsenäiset",
+      "start": 550.44,
+      "end": 551.04,
+      "exact": true,
+      "block": 76
+    },
+    {
+      "word": "rakentamiset.",
+      "start": 551.04,
+      "end": 551.9,
+      "exact": true,
+      "block": 76
+    },
+    {
+      "word": "NÄYTYNÄT",
+      "start": 552.7600000000001,
+      "end": 553.44,
+      "exact": true,
+      "block": 77
+    },
+    {
+      "word": "Säännöt:",
+      "start": 553.44,
+      "end": 553.96,
+      "exact": true,
+      "block": 77
+    },
+    {
+      "word": "-",
+      "start": 553.96,
+      "end": 554.8000000000001,
+      "exact": false,
+      "block": 78
+    },
+    {
+      "word": "Palauta",
+      "start": 554.8000000000001,
+      "end": 555.48,
+      "exact": true,
+      "block": 78
+    },
+    {
+      "word": "TRANSLAATTO",
+      "start": 555.48,
+      "end": 556.78,
+      "exact": false,
+      "block": 78
+    },
+    {
+      "word": "vain.",
+      "start": 556.78,
+      "end": 557.02,
+      "exact": true,
+      "block": 78
+    },
+    {
+      "word": "-",
+      "start": 557.02,
+      "end": 557.84,
+      "exact": false,
+      "block": 79
+    },
+    {
+      "word": "Etsi",
+      "start": 557.84,
+      "end": 558.52,
+      "exact": true,
+      "block": 79
+    },
+    {
+      "word": "ehdotuksia",
+      "start": 558.52,
+      "end": 559.2,
+      "exact": true,
+      "block": 79
+    },
+    {
+      "word": "ei",
+      "start": 559.2,
+      "end": 559.44,
+      "exact": true,
+      "block": 79
+    },
+    {
+      "word": "sallita.",
+      "start": 559.44,
+      "end": 560.06,
+      "exact": true,
+      "block": 79
+    },
+    {
+      "word": "-",
+      "start": 560.06,
+      "end": 560.18,
+      "exact": false,
+      "block": 80
+    },
+    {
+      "word": "Lisää",
+      "start": 560.18,
+      "end": 561.34,
+      "exact": true,
+      "block": 80
+    },
+    {
+      "word": "lainauksia",
+      "start": 561.36,
+      "end": 562.06,
+      "exact": true,
+      "block": 80
+    },
+    {
+      "word": "ei",
+      "start": 562.06,
+      "end": 562.28,
+      "exact": true,
+      "block": 80
+    },
+    {
+      "word": "sallita.",
+      "start": 562.28,
+      "end": 562.92,
+      "exact": true,
+      "block": 80
+    },
+    {
+      "word": "-",
+      "start": 562.92,
+      "end": 563.74,
+      "exact": false,
+      "block": 81
+    },
+    {
+      "word": "Tarkista",
+      "start": 563.74,
+      "end": 564.24,
+      "exact": true,
+      "block": 81
+    },
+    {
+      "word": "tarkka",
+      "start": 564.24,
+      "end": 564.74,
+      "exact": true,
+      "block": 81
+    },
+    {
+      "word": "yritys-",
+      "start": 564.74,
+      "end": 565.28,
+      "exact": true,
+      "block": 81
+    },
+    {
+      "word": "ja",
+      "start": 565.28,
+      "end": 565.48,
+      "exact": true,
+      "block": 81
+    },
+    {
+      "word": "ammattitaidon",
+      "start": 565.48,
+      "end": 566.24,
+      "exact": true,
+      "block": 81
+    },
+    {
+      "word": "sävy.",
+      "start": 566.24,
+      "end": 566.62,
+      "exact": true,
+      "block": 81
+    },
+    {
+      "word": "-",
+      "start": 566.62,
+      "end": 567.52,
+      "exact": false,
+      "block": 82
+    },
+    {
+      "word": "Kirjoita",
+      "start": 567.52,
+      "end": 568.02,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "luonnollinen",
+      "start": 568.02,
+      "end": 568.7,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "käännös",
+      "start": 568.7,
+      "end": 569.2,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "suomen",
+      "start": 569.2,
+      "end": 569.62,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "kielellä,",
+      "start": 569.62,
+      "end": 570.22,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "ei",
+      "start": 570.26,
+      "end": 570.6,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "suoraa",
+      "start": 570.6,
+      "end": 571.12,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "käännöksentekoa.",
+      "start": 571.12,
+      "end": 572.02,
+      "exact": true,
+      "block": 82
+    },
+    {
+      "word": "-",
+      "start": 572.02,
+      "end": 572.64,
+      "exact": false,
+      "block": 83
+    },
+    {
+      "word": "Älä",
+      "start": 572.64,
+      "end": 573.2,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "käännä",
+      "start": 573.2,
+      "end": 573.54,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "tai",
+      "start": 573.54,
+      "end": 573.7,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "muuta",
+      "start": 573.7,
+      "end": 574.02,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "tuotteen",
+      "start": 574.02,
+      "end": 574.52,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "nimia:",
+      "start": 574.52,
+      "end": 575.04,
+      "exact": false,
+      "block": 83
+    },
+    {
+      "word": "Unfire,",
+      "start": 575.04,
+      "end": 575.62,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "Bolt,",
+      "start": 575.8,
+      "end": 576.16,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "Archer,",
+      "start": 576.44,
+      "end": 576.9,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "POWER,",
+      "start": 577.06,
+      "end": 577.38,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "AI",
+      "start": 577.38,
+      "end": 577.8299999999999,
+      "exact": false,
+      "block": 83
+    },
+    {
+      "word": "TOKEN",
+      "start": 577.8299999999999,
+      "end": 578.28,
+      "exact": false,
+      "block": 83
+    },
+    {
+      "word": "COUNTER.",
+      "start": 578.28,
+      "end": 578.6,
+      "exact": true,
+      "block": 83
+    },
+    {
+      "word": "-",
+      "start": 578.6,
+      "end": 579.76,
+      "exact": false,
+      "block": 84
+    },
+    {
+      "word": "Tarkista",
+      "start": 579.76,
+      "end": 580.26,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "numeroitujen,",
+      "start": 580.26,
+      "end": 581.1,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "teknisen",
+      "start": 581.12,
+      "end": 581.62,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "terminologian",
+      "start": 581.62,
+      "end": 582.56,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "ja",
+      "start": 582.56,
+      "end": 582.8,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "tuotteen",
+      "start": 582.8,
+      "end": 583.32,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "nimen",
+      "start": 583.32,
+      "end": 583.68,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "tarkkuuden.",
+      "start": 583.68,
+      "end": 584.34,
+      "exact": true,
+      "block": 84
+    },
+    {
+      "word": "-",
+      "start": 584.34,
+      "end": 584.88,
+      "exact": false,
+      "block": 85
+    },
+    {
+      "word": "Tämä",
+      "start": 584.88,
+      "end": 585.48,
+      "exact": true,
+      "block": 85
+    },
+    {
+      "word": "teksti",
+      "start": 585.48,
+      "end": 585.98,
+      "exact": true,
+      "block": 85
+    },
+    {
+      "word": "puhutaan",
+      "start": 585.98,
+      "end": 586.56,
+      "exact": true,
+      "block": 85
+    },
+    {
+      "word": "ammattitaitoinen",
+      "start": 586.56,
+      "end": 587.52,
+      "exact": true,
+      "block": 85
+    },
+    {
+      "word": "nainen.",
+      "start": 587.52,
+      "end": 587.98,
+      "exact": true,
+      "block": 85
+    },
+    {
+      "word": "Uudelleenkäyttö",
+      "start": 587.98,
+      "end": 590.12,
+      "exact": false,
+      "block": 86
+    },
+    {
+      "word": "Altaan",
+      "start": 590.12,
+      "end": 591.44,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "mahdollista,",
+      "start": 591.44,
+      "end": 592.18,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "kun",
+      "start": 592.18,
+      "end": 592.42,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "kyseessä",
+      "start": 592.42,
+      "end": 593.0,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "on",
+      "start": 593.0,
+      "end": 593.2,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "olemassa",
+      "start": 593.2,
+      "end": 593.66,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "oleva",
+      "start": 593.66,
+      "end": 594.1,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "teknologia.",
+      "start": 594.1,
+      "end": 594.78,
+      "exact": true,
+      "block": 87
+    },
+    {
+      "word": "02",
+      "start": 594.78,
+      "end": 596.47,
+      "exact": false,
+      "block": 88
+    },
+    {
+      "word": "KRIITISET",
+      "start": 596.47,
+      "end": 598.16,
+      "exact": false,
+      "block": 89
+    },
+    {
+      "word": "Säännöt:",
+      "start": 598.16,
+      "end": 598.78,
+      "exact": true,
+      "block": 89
+    },
+    {
+      "word": "-",
+      "start": 598.78,
+      "end": 599.34,
+      "exact": false,
+      "block": 90
+    },
+    {
+      "word": "Palauta",
+      "start": 599.34,
+      "end": 600.24,
+      "exact": true,
+      "block": 90
+    },
+    {
+      "word": "VASTAANOTETTU",
+      "start": 600.24,
+      "end": 601.1,
+      "exact": false,
+      "block": 90
+    },
+    {
+      "word": "käännös.",
+      "start": 601.1,
+      "end": 601.62,
+      "exact": true,
+      "block": 90
+    },
+    {
+      "word": "-",
+      "start": 601.62,
+      "end": 602.67,
+      "exact": false,
+      "block": 91
+    },
+    {
+      "word": "Etsi",
+      "start": 602.67,
+      "end": 603.12,
+      "exact": true,
+      "block": 91
+    },
+    {
+      "word": "ehdotuksia",
+      "start": 603.12,
+      "end": 603.8,
+      "exact": true,
+      "block": 91
+    },
+    {
+      "word": "EMPIRIAA.",
+      "start": 603.8,
+      "end": 604.5,
+      "exact": true,
+      "block": 91
+    },
+    {
+      "word": "-",
+      "start": 604.5,
+      "end": 605.3299999999999,
+      "exact": false,
+      "block": 92
+    },
+    {
+      "word": "Tässä",
+      "start": 605.3299999999999,
+      "end": 605.78,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "on",
+      "start": 605.78,
+      "end": 605.98,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "suomenkielinen",
+      "start": 605.98,
+      "end": 606.8,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "käännös,",
+      "start": 606.8,
+      "end": 607.3,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "joka",
+      "start": 607.42,
+      "end": 607.72,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "säilyttää",
+      "start": 607.72,
+      "end": 608.32,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "merkityksen",
+      "start": 608.32,
+      "end": 608.92,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "ja",
+      "start": 608.92,
+      "end": 609.16,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "ammattitieteellisen",
+      "start": 609.16,
+      "end": 610.28,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "yrityston:",
+      "start": 610.28,
+      "end": 610.94,
+      "exact": true,
+      "block": 92
+    },
+    {
+      "word": "-",
+      "start": 610.94,
+      "end": 611.93,
+      "exact": false,
+      "block": 93
+    },
+    {
+      "word": "Unfire,",
+      "start": 611.93,
+      "end": 612.38,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "Bolt,",
+      "start": 612.56,
+      "end": 612.92,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "Archer,",
+      "start": 613.2,
+      "end": 613.64,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "POWER,",
+      "start": 613.8,
+      "end": 614.1,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "AI",
+      "start": 614.1,
+      "end": 614.54,
+      "exact": false,
+      "block": 93
+    },
+    {
+      "word": "TOKEN",
+      "start": 614.54,
+      "end": 614.98,
+      "exact": false,
+      "block": 93
+    },
+    {
+      "word": "COUNTER.",
+      "start": 614.98,
+      "end": 615.34,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "Nimiä",
+      "start": 616.4699999999999,
+      "end": 616.92,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "ei",
+      "start": 616.92,
+      "end": 617.14,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "käännöksessä",
+      "start": 617.14,
+      "end": 617.82,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "muuteta.",
+      "start": 617.82,
+      "end": 618.4,
+      "exact": true,
+      "block": 93
+    },
+    {
+      "word": "-",
+      "start": 618.4,
+      "end": 619.12,
+      "exact": false,
+      "block": 94
+    },
+    {
+      "word": "Numerot,",
+      "start": 619.12,
+      "end": 620.02,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "tekniset",
+      "start": 620.12,
+      "end": 620.58,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "termiologiat",
+      "start": 620.58,
+      "end": 621.46,
+      "exact": false,
+      "block": 94
+    },
+    {
+      "word": "ja",
+      "start": 621.46,
+      "end": 621.64,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "tuotteiden",
+      "start": 621.64,
+      "end": 622.18,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "nimet",
+      "start": 622.18,
+      "end": 622.56,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "säilytetään",
+      "start": 622.56,
+      "end": 623.24,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "tarkoituksissa.",
+      "start": 623.24,
+      "end": 624.22,
+      "exact": true,
+      "block": 94
+    },
+    {
+      "word": "-",
+      "start": 624.22,
+      "end": 624.8199999999999,
+      "exact": false,
+      "block": 95
+    },
+    {
+      "word": "Tämä",
+      "start": 624.8199999999999,
+      "end": 625.4,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "teksti",
+      "start": 625.4,
+      "end": 625.88,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "puhutaan",
+      "start": 625.88,
+      "end": 626.48,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "ammattitieteellisesti",
+      "start": 626.48,
+      "end": 627.52,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "korkean",
+      "start": 627.52,
+      "end": 628.22,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "tason",
+      "start": 628.22,
+      "end": 628.62,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "suomen",
+      "start": 628.62,
+      "end": 629.06,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "kielellä.",
+      "start": 629.06,
+      "end": 629.72,
+      "exact": true,
+      "block": 95
+    },
+    {
+      "word": "rakenna",
+      "start": 630.68,
+      "end": 631.26,
+      "exact": true,
+      "block": 96
+    },
+    {
+      "word": "Luo",
+      "start": 631.36,
+      "end": 632.52,
+      "exact": true,
+      "block": 97
+    },
+    {
+      "word": "tuotetarjontayhdistys.",
+      "start": 632.52,
+      "end": 634.2,
+      "exact": true,
+      "block": 97
+    },
+    {
+      "word": "03",
+      "start": 634.2,
+      "end": 636.74,
+      "exact": false,
+      "block": 98
+    },
+    {
+      "word": "Kunnianhimoiset",
+      "start": 636.74,
+      "end": 637.9,
+      "exact": true,
+      "block": 99
+    },
+    {
+      "word": "säännöt:",
+      "start": 637.9,
+      "end": 638.48,
+      "exact": true,
+      "block": 99
+    },
+    {
+      "word": "-",
+      "start": 638.48,
+      "end": 639.4399999999999,
+      "exact": false,
+      "block": 100
+    },
+    {
+      "word": "Palauta",
+      "start": 639.4399999999999,
+      "end": 640.02,
+      "exact": true,
+      "block": 100
+    },
+    {
+      "word": "TRANSLATION",
+      "start": 640.02,
+      "end": 640.36,
+      "exact": true,
+      "block": 100
+    },
+    {
+      "word": "AINTELIsti.",
+      "start": 640.36,
+      "end": 642.24,
+      "exact": true,
+      "block": 100
+    },
+    {
+      "word": "-",
+      "start": 642.24,
+      "end": 643.3,
+      "exact": false,
+      "block": 101
+    },
+    {
+      "word": "Etsi",
+      "start": 643.3,
+      "end": 643.88,
+      "exact": true,
+      "block": 101
+    },
+    {
+      "word": "mitään.",
+      "start": 643.88,
+      "end": 644.32,
+      "exact": true,
+      "block": 101
+    },
+    {
+      "word": "-",
+      "start": 644.32,
+      "end": 645.0799999999999,
+      "exact": false,
+      "block": 102
+    },
+    {
+      "word": "Lisää",
+      "start": 645.0799999999999,
+      "end": 645.66,
+      "exact": true,
+      "block": 102
+    },
+    {
+      "word": "lainaukset.",
+      "start": 645.66,
+      "end": 646.5,
+      "exact": true,
+      "block": 102
+    },
+    {
+      "word": "-",
+      "start": 646.5,
+      "end": 647.36,
+      "exact": false,
+      "block": 103
+    },
+    {
+      "word": "Täsmennä",
+      "start": 647.36,
+      "end": 647.94,
+      "exact": true,
+      "block": 103
+    },
+    {
+      "word": "merkityksen",
+      "start": 647.94,
+      "end": 648.52,
+      "exact": true,
+      "block": 103
+    },
+    {
+      "word": "ja",
+      "start": 648.52,
+      "end": 648.74,
+      "exact": true,
+      "block": 103
+    },
+    {
+      "word": "ammattitieteellisen",
+      "start": 648.74,
+      "end": 649.92,
+      "exact": true,
+      "block": 103
+    },
+    {
+      "word": "yrityston.",
+      "start": 649.92,
+      "end": 650.02,
+      "exact": false,
+      "block": 103
+    },
+    {
+      "word": "-",
+      "start": 650.02,
+      "end": 650.12,
+      "exact": false,
+      "block": 104
+    },
+    {
+      "word": "Kirjoita",
+      "start": 650.12,
+      "end": 652.0,
+      "exact": true,
+      "block": 104
+    },
+    {
+      "word": "luonnollinen",
+      "start": 652.0,
+      "end": 652.66,
+      "exact": true,
+      "block": 104
+    },
+    {
+      "word": "kääntäjän",
+      "start": 652.66,
+      "end": 653.22,
+      "exact": true,
+      "block": 104
+    },
+    {
+      "word": "tason",
+      "start": 653.22,
+      "end": 653.6,
+      "exact": true,
+      "block": 104
+    },
+    {
+      "word": "suomi,",
+      "start": 653.6,
+      "end": 654.12,
+      "exact": true,
+      "block": 104
+    },
+    {
+      "word": "ei",
+      "start": 654.14,
+      "end": 654.46,
+      "exact": true,
+      "block": 104
+    },
+    {
+      "word": "suorakaiteen",
+      "start": 654.46,
+      "end": 655.34,
+      "exact": true,
+      "block": 104
+    },
+    {
+      "word": "käännös.",
+      "start": 655.34,
+      "end": 655.86,
+      "exact": true,
+      "block": 104
+    },
+    {
+      "word": "-",
+      "start": 655.86,
+      "end": 656.56,
+      "exact": false,
+      "block": 105
+    },
+    {
+      "word": "Älä",
+      "start": 656.56,
+      "end": 657.06,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "käännä",
+      "start": 657.06,
+      "end": 657.4,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "tai",
+      "start": 657.4,
+      "end": 657.54,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "muuta",
+      "start": 657.54,
+      "end": 657.88,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "tuotteen",
+      "start": 657.88,
+      "end": 658.38,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "nimia:",
+      "start": 658.38,
+      "end": 658.9,
+      "exact": false,
+      "block": 105
+    },
+    {
+      "word": "Unfire,",
+      "start": 658.9,
+      "end": 659.48,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "Bolt,",
+      "start": 659.66,
+      "end": 660.02,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "Archer,",
+      "start": 660.3,
+      "end": 660.76,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "POWER,",
+      "start": 660.92,
+      "end": 661.22,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "AI",
+      "start": 661.22,
+      "end": 661.6800000000001,
+      "exact": false,
+      "block": 105
+    },
+    {
+      "word": "TOKEN",
+      "start": 661.6800000000001,
+      "end": 662.14,
+      "exact": false,
+      "block": 105
+    },
+    {
+      "word": "COUNTER.",
+      "start": 662.14,
+      "end": 662.5,
+      "exact": true,
+      "block": 105
+    },
+    {
+      "word": "-",
+      "start": 662.5,
+      "end": 663.78,
+      "exact": false,
+      "block": 106
+    },
+    {
+      "word": "Varataan",
+      "start": 663.78,
+      "end": 664.28,
+      "exact": true,
+      "block": 106
+    },
+    {
+      "word": "numeroita,",
+      "start": 664.28,
+      "end": 664.82,
+      "exact": true,
+      "block": 106
+    },
+    {
+      "word": "teknisiä",
+      "start": 664.92,
+      "end": 665.48,
+      "exact": true,
+      "block": 106
+    },
+    {
+      "word": "termiä",
+      "start": 665.48,
+      "end": 666.08,
+      "exact": true,
+      "block": 106
+    },
+    {
+      "word": "ja",
+      "start": 666.08,
+      "end": 666.26,
+      "exact": true,
+      "block": 106
+    },
+    {
+      "word": "tuotteen",
+      "start": 666.26,
+      "end": 666.76,
+      "exact": true,
+      "block": 106
+    },
+    {
+      "word": "nimia",
+      "start": 666.76,
+      "end": 667.14,
+      "exact": false,
+      "block": 106
+    },
+    {
+      "word": "tarkkana.",
+      "start": 667.14,
+      "end": 667.72,
+      "exact": true,
+      "block": 106
+    },
+    {
+      "word": "-",
+      "start": 667.72,
+      "end": 668.36,
+      "exact": false,
+      "block": 107
+    },
+    {
+      "word": "Tämä",
+      "start": 668.36,
+      "end": 668.86,
+      "exact": true,
+      "block": 107
+    },
+    {
+      "word": "teksti",
+      "start": 668.86,
+      "end": 669.34,
+      "exact": true,
+      "block": 107
+    },
+    {
+      "word": "puhutaan",
+      "start": 669.34,
+      "end": 669.92,
+      "exact": true,
+      "block": 107
+    },
+    {
+      "word": "ammattilaisen",
+      "start": 669.92,
+      "end": 670.76,
+      "exact": true,
+      "block": 107
+    },
+    {
+      "word": "yritystason",
+      "start": 670.76,
+      "end": 671.42,
+      "exact": true,
+      "block": 107
+    },
+    {
+      "word": "naisvoikan",
+      "start": 671.42,
+      "end": 672.04,
+      "exact": true,
+      "block": 107
+    },
+    {
+      "word": "äänellä.",
+      "start": 672.04,
+      "end": 672.76,
+      "exact": true,
+      "block": 107
+    },
+    {
+      "word": "Näyttelijä",
+      "start": 673.4,
+      "end": 674.4,
+      "exact": true,
+      "block": 108
+    },
+    {
+      "word": "Päivitä",
+      "start": 675.14,
+      "end": 675.64,
+      "exact": true,
+      "block": 109
+    },
+    {
+      "word": "infrastruktuuri,",
+      "start": 675.64,
+      "end": 676.76,
+      "exact": true,
+      "block": 109
+    },
+    {
+      "word": "kun",
+      "start": 676.84,
+      "end": 677.12,
+      "exact": true,
+      "block": 109
+    },
+    {
+      "word": "tuotanto",
+      "start": 677.12,
+      "end": 677.66,
+      "exact": true,
+      "block": 109
+    },
+    {
+      "word": "kasvaa.",
+      "start": 677.66,
+      "end": 678.42,
+      "exact": true,
+      "block": 109
+    },
+    {
+      "word": "Yritykset",
+      "start": 679.02,
+      "end": 679.52,
+      "exact": true,
+      "block": 110
+    },
+    {
+      "word": "Maiden",
+      "start": 680.12,
+      "end": 681.36,
+      "exact": true,
+      "block": 111
+    },
+    {
+      "word": "ohjelmistojärjestelmät.",
+      "start": 681.36,
+      "end": 682.92,
+      "exact": true,
+      "block": 111
+    },
+    {
+      "word": "Sama",
+      "start": 683.5,
+      "end": 684.08,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "tuotantoonaineisto",
+      "start": 684.08,
+      "end": 685.26,
+      "exact": false,
+      "block": 112
+    },
+    {
+      "word": "voi",
+      "start": 685.26,
+      "end": 685.46,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "tukea",
+      "start": 685.46,
+      "end": 685.86,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "erityisiä",
+      "start": 685.86,
+      "end": 686.54,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "sovelluksia",
+      "start": 686.54,
+      "end": 687.36,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "ja",
+      "start": 687.36,
+      "end": 687.56,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "ympäristöjä,",
+      "start": 687.56,
+      "end": 688.26,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "jotka",
+      "start": 688.4,
+      "end": 688.9,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "on",
+      "start": 688.9,
+      "end": 689.16,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "suunniteltu",
+      "start": 689.16,
+      "end": 689.84,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "hallinnon",
+      "start": 689.84,
+      "end": 690.3,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "vaatimusten",
+      "start": 690.3,
+      "end": 690.98,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "kohdalleen.",
+      "start": 690.98,
+      "end": 691.7,
+      "exact": true,
+      "block": 112
+    },
+    {
+      "word": "Yhteisöjen",
+      "start": 692.66,
+      "end": 693.24,
+      "exact": true,
+      "block": 113
+    },
+    {
+      "word": "riittävät",
+      "start": 693.24,
+      "end": 693.96,
+      "exact": true,
+      "block": 113
+    },
+    {
+      "word": "säännöt:",
+      "start": 693.96,
+      "end": 694.42,
+      "exact": true,
+      "block": 113
+    },
+    {
+      "word": "Kontrolloituja",
+      "start": 695.12,
+      "end": 696.28,
+      "exact": true,
+      "block": 114
+    },
+    {
+      "word": "ympäristöjä.",
+      "start": 696.28,
+      "end": 697.1,
+      "exact": true,
+      "block": 114
+    },
+    {
+      "word": "Projektit",
+      "start": 698.0799999999999,
+      "end": 698.66,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "voivat",
+      "start": 698.66,
+      "end": 698.94,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "pysyä",
+      "start": 698.94,
+      "end": 699.38,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "eristyneinä,",
+      "start": 699.38,
+      "end": 700.12,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "samalla",
+      "start": 700.12,
+      "end": 700.72,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "kun",
+      "start": 700.72,
+      "end": 700.94,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "ne",
+      "start": 700.94,
+      "end": 701.1,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "hyötyvät",
+      "start": 701.1,
+      "end": 701.62,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "uudistamattomasta",
+      "start": 701.62,
+      "end": 702.54,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "alustavaltistosta,",
+      "start": 702.54,
+      "end": 703.62,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "vahvistusprosessista",
+      "start": 703.82,
+      "end": 705.18,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "ja",
+      "start": 705.18,
+      "end": 705.6,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "tuotannon",
+      "start": 705.6,
+      "end": 706.08,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "infrastruktuurista.",
+      "start": 706.08,
+      "end": 707.34,
+      "exact": true,
+      "block": 115
+    },
+    {
+      "word": "Julkinen",
+      "start": 708.3,
+      "end": 708.88,
+      "exact": true,
+      "block": 116
+    },
+    {
+      "word": "sektori",
+      "start": 708.88,
+      "end": 709.46,
+      "exact": true,
+      "block": 116
+    },
+    {
+      "word": "Mallejärkevi",
+      "start": 710.12,
+      "end": 711.26,
+      "exact": true,
+      "block": 117
+    },
+    {
+      "word": "digitaalit",
+      "start": 711.26,
+      "end": 711.92,
+      "exact": true,
+      "block": 117
+    },
+    {
+      "word": "työkalut.",
+      "start": 711.92,
+      "end": 712.68,
+      "exact": true,
+      "block": 117
+    },
+    {
+      "word": "Arkkitehturi",
+      "start": 713.2,
+      "end": 714.26,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "on",
+      "start": 714.26,
+      "end": 714.44,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "valmis",
+      "start": 714.44,
+      "end": 714.88,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "tulevaisuuden",
+      "start": 714.88,
+      "end": 715.62,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "yhteistyölle,",
+      "start": 715.62,
+      "end": 716.42,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "jossa",
+      "start": 716.54,
+      "end": 716.92,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "tärkeä",
+      "start": 716.92,
+      "end": 717.48,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "ovat",
+      "start": 717.48,
+      "end": 717.7,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "valvonta,",
+      "start": 717.7,
+      "end": 718.3,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "seurattavuus,",
+      "start": 718.44,
+      "end": 719.48,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "vahvistaminen",
+      "start": 719.5,
+      "end": 720.42,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "ja",
+      "start": 720.42,
+      "end": 720.62,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "pitkäajoin",
+      "start": 720.62,
+      "end": 721.32,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "kehittävyyden.",
+      "start": 721.32,
+      "end": 722.08,
+      "exact": true,
+      "block": 118
+    },
+    {
+      "word": "Unfire",
+      "start": 722.89,
+      "end": 723.42,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "voi",
+      "start": 723.42,
+      "end": 723.62,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "osoittaa",
+      "start": 723.62,
+      "end": 724.16,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "tuotteet,",
+      "start": 724.16,
+      "end": 724.86,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "rakentamiset,",
+      "start": 724.86,
+      "end": 725.64,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "sisäiset",
+      "start": 725.78,
+      "end": 726.28,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "tarkistukset",
+      "start": 726.28,
+      "end": 727.06,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "ja",
+      "start": 727.06,
+      "end": 727.16,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "tuotantokapasiteetin",
+      "start": 727.16,
+      "end": 728.32,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "ilman,",
+      "start": 728.32,
+      "end": 728.82,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "ettei",
+      "start": 728.86,
+      "end": 729.46,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "luonnetta",
+      "start": 729.46,
+      "end": 729.96,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "luoda",
+      "start": 729.96,
+      "end": 730.2,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "aiheuttaa",
+      "start": 730.2,
+      "end": 730.92,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "metodit,",
+      "start": 730.92,
+      "end": 731.44,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "joiden",
+      "start": 731.48,
+      "end": 732.02,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "takana",
+      "start": 732.02,
+      "end": 732.48,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "on",
+      "start": 732.48,
+      "end": 732.68,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "kyseinen",
+      "start": 732.68,
+      "end": 733.22,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "hyödyntäminen.",
+      "start": 733.22,
+      "end": 734.02,
+      "exact": true,
+      "block": 119
+    },
+    {
+      "word": "Rahoitus",
+      "start": 734.66,
+      "end": 735.72,
+      "exact": true,
+      "block": 120
+    },
+    {
+      "word": "ja",
+      "start": 735.72,
+      "end": 735.82,
+      "exact": true,
+      "block": 120
+    },
+    {
+      "word": "yhteistyö",
+      "start": 735.82,
+      "end": 736.8,
+      "exact": true,
+      "block": 120
+    },
+    {
+      "word": "Päivitä",
+      "start": 737.5500000000001,
+      "end": 738.08,
+      "exact": true,
+      "block": 121
+    },
+    {
+      "word": "mitä",
+      "start": 738.08,
+      "end": 738.32,
+      "exact": true,
+      "block": 121
+    },
+    {
+      "word": "jo",
+      "start": 738.32,
+      "end": 738.58,
+      "exact": true,
+      "block": 121
+    },
+    {
+      "word": "on",
+      "start": 738.58,
+      "end": 738.86,
+      "exact": true,
+      "block": 121
+    },
+    {
+      "word": "olemassa.",
+      "start": 738.86,
+      "end": 739.54,
+      "exact": true,
+      "block": 121
+    },
+    {
+      "word": "tervetuloa@unfire.technology",
+      "start": 739.54,
+      "end": 743.98,
+      "exact": false,
+      "block": 122
+    }
+  ]
+}

@@ -1,0 +1,8777 @@
+{
+  "language": "nl",
+  "audio_duration": 649.32,
+  "canonical_blocks": 98,
+  "canonical_words": 997,
+  "transcript_words": 1019,
+  "exact_matches": 892,
+  "coverage": 0.8946840521564694,
+  "blocks": [
+    {
+      "index": 0,
+      "text": "Onafhankelijke technologiebedrijf",
+      "word_start": 0,
+      "word_end": 2,
+      "start": 0.0,
+      "end": 2.266446
+    },
+    {
+      "index": 1,
+      "text": "Bouw technologie. Hergebruik de voordel.",
+      "word_start": 2,
+      "word_end": 7,
+      "start": 2.266446,
+      "end": 5.595071
+    },
+    {
+      "index": 2,
+      "text": "Unfire ontwikkelt herbruikbare software systeemën die een enkele technologische basis omvormen tot meerdere producten, werkstromen en toekomstige toepassingen.",
+      "word_start": 7,
+      "word_end": 25,
+      "start": 5.595071,
+      "end": 17.713533
+    },
+    {
+      "index": 3,
+      "text": "Bedrijf",
+      "word_start": 25,
+      "word_end": 26,
+      "start": 17.713533,
+      "end": 18.339436
+    },
+    {
+      "index": 4,
+      "text": "In plaats van elke applicatie afzonderlijk te beschouwen als een apart project, ontwikkelt Unfire technologie die hergebruikt, uitgebreid en overgedragen kan worden naar toekomstige producten.",
+      "word_start": 26,
+      "word_end": 51,
+      "start": 18.339436,
+      "end": 33.183967
+    },
+    {
+      "index": 5,
+      "text": "Bouw maar één keer.",
+      "word_start": 51,
+      "word_end": 55,
+      "start": 33.183967,
+      "end": 34.956335
+    },
+    {
+      "index": 6,
+      "text": "Corefuncties kunnen reusbare bouwstenen worden in plaats van zich te verstoppen binnen een enkele product.",
+      "word_start": 55,
+      "word_end": 70,
+      "start": 34.956335,
+      "end": 43.396763
+    },
+    {
+      "index": 7,
+      "text": "Voer voortdurend.",
+      "word_start": 70,
+      "word_end": 72,
+      "start": 43.396763,
+      "end": 44.859044
+    },
+    {
+      "index": 8,
+      "text": "Nieuw software kan bestaande infrastructuur erfen, verminderend herhaalde engineering wanneer de architectuur van toepassing is.",
+      "word_start": 72,
+      "word_end": 87,
+      "start": 44.859044,
+      "end": 54.643477
+    },
+    {
+      "index": 9,
+      "text": "Schaal het systeem.",
+      "word_start": 87,
+      "word_end": 90,
+      "start": 54.643477,
+      "end": 56.346907
+    },
+    {
+      "index": 10,
+      "text": "Aanvullende opslag, berekening, testen en distributieinfrastructuur kan productiecapaciteit vergroten zonder dat de basistechnologie opnieuw moet worden opgebouwd.",
+      "word_start": 90,
+      "word_end": 107,
+      "start": 56.346907,
+      "end": 68.296461
+    },
+    {
+      "index": 11,
+      "text": "Geselecteerde werkstaking",
+      "word_start": 107,
+      "word_end": 109,
+      "start": 68.296461,
+      "end": 70.140509
+    },
+    {
+      "index": 12,
+      "text": "Verschillende producten. Technologie die samenvloeit.",
+      "word_start": 109,
+      "word_end": 114,
+      "start": 70.140509,
+      "end": 74.295934
+    },
+    {
+      "index": 13,
+      "text": "Elke project ademt een andere probleem op, maar het onderliggende doel is hetzelfde: ontwikkelen van technologie, systemen en productiekennis die hergebruikt kunnen worden in toekomstige software in plaats van geïsoleerd te blijven binnen een enkele toepassing.",
+      "word_start": 114,
+      "word_end": 150,
+      "start": 74.295934,
+      "end": 94.567562
+    },
+    {
+      "index": 14,
+      "text": "KI · Automatisering · Computerwerkstromen",
+      "word_start": 150,
+      "word_end": 155,
+      "start": 94.567562,
+      "end": 97.445384
+    },
+    {
+      "index": 15,
+      "text": "Bolt",
+      "word_start": 155,
+      "word_end": 156,
+      "start": 97.445384,
+      "end": 97.863715
+    },
+    {
+      "index": 16,
+      "text": "Bolt onderzoekt beheerde AI-orchestration voor complexe computerwerk. Het is ontworpen om AI-systeem, lokale hulpmiddelen en uitvoeringsprocessen te coördineren terwijl het zichtbaarheid, toegangseisen en menselijke controle behoudt.",
+      "word_start": 156,
+      "word_end": 182,
+      "start": 97.863715,
+      "end": 115.335077
+    },
+    {
+      "index": 17,
+      "text": "Het project onderzoekt hoe herhaalde interactie tussen mensen, modellen en software kan worden verminderd door een gevalideerde plan te laten doorgaan via uitvoering, testcyclusen en herstelcyclusen met minder onnodige onderbrekingen.",
+      "word_start": 182,
+      "word_end": 212,
+      "start": 115.335077,
+      "end": 133.350627
+    },
+    {
+      "index": 18,
+      "text": "Technologie ontwikkeld rondom Bolt kan bijdragen aan toekomstige automatisering, ontwikkeling en computer-beheersystemen binnen het brede Unfire-ecosysteem.",
+      "word_start": 212,
+      "word_end": 228,
+      "start": 133.350627,
+      "end": 144.807099
+    },
+    {
+      "index": 19,
+      "text": "Orchestration · Lokale uitvoering · Gereguleerde autonomie · Herbruikbare automatisering",
+      "word_start": 228,
+      "word_end": 238,
+      "start": 144.807099,
+      "end": 151.242737
+    },
+    {
+      "index": 20,
+      "text": "Energie · Data · Informatie-systemen",
+      "word_start": 238,
+      "word_end": 243,
+      "start": 151.242737,
+      "end": 153.879849
+    },
+    {
+      "index": 21,
+      "text": "Kracht",
+      "word_start": 243,
+      "word_end": 244,
+      "start": 153.879849,
+      "end": 154.44
+    },
+    {
+      "index": 22,
+      "text": "Machtig ontdekt hoe complexe elektriciteits- en energimarktgegevens kunnen worden omgezet in software die eenvoudiger te begrijpen, te vergelijken en te gebruiken zijn.",
+      "word_start": 244,
+      "word_end": 266,
+      "start": 154.44,
+      "end": 166.933595
+    },
+    {
+      "index": 23,
+      "text": "Het project combineert regionale gegevens, prijsinformatie en structuurde interpretatie in een duidelijker interface, vormend de basis voor toekomstige energie-intelligentie-hulpmiddelen.",
+      "word_start": 266,
+      "word_end": 285,
+      "start": 166.933595,
+      "end": 180.093511
+    },
+    {
+      "index": 24,
+      "text": "Dezelfde aanpak kan later ook worden gebruikt voor andere informatieintensive producten waarbij fragmentaire externe gegevens begrijpbaar en handelbaar moeten worden gemaakt in software.",
+      "word_start": 285,
+      "word_end": 308,
+      "start": 180.093511,
+      "end": 194.04224
+    },
+    {
+      "index": 25,
+      "text": "Energieintelligentie · Gegevensinterpretatie · Informatiearchitectuur",
+      "word_start": 308,
+      "word_end": 313,
+      "start": 194.04224,
+      "end": 198.369235
+    },
+    {
+      "index": 26,
+      "text": "Internerekenkundig infrastructure · Softwareproductie",
+      "word_start": 313,
+      "word_end": 317,
+      "start": 198.369235,
+      "end": 201.876459
+    },
+    {
+      "index": 27,
+      "text": "UnfireSuite",
+      "word_start": 317,
+      "word_end": 318,
+      "start": 201.876459,
+      "end": 202.719294
+    },
+    {
+      "index": 28,
+      "text": "UnfireSuite vertegenwoordigt de interne productie-laag achter meerdere Unfire-projecten.",
+      "word_start": 318,
+      "word_end": 326,
+      "start": 202.719294,
+      "end": 209.015504
+    },
+    {
+      "index": 29,
+      "text": "Zijn doel is om herhalingen in het ingenieurswerk te verminderen door softwarecomponenten, validatieprocessen, productiesystemen en opgedane technische kennis op te nemen waar dat van pas is.",
+      "word_start": 326,
+      "word_end": 352,
+      "start": 209.015504,
+      "end": 223.020838
+    },
+    {
+      "index": 30,
+      "text": "Dit is belangrijk, omdat de waarde van één project niet hoefde te eindigen zodra dat project is voltooid. Deel van de technologie kan infrastructuur worden voor het volgende product, waardoor het productie systeem zelf zichzelf kan verbeteren over tijd.",
+      "word_start": 352,
+      "word_end": 391,
+      "start": 223.020838,
+      "end": 242.677305
+    },
+    {
+      "index": 31,
+      "text": "Gedeelde infrastructuur · Validatie · Herbruik · Productie systeem",
+      "word_start": 391,
+      "word_end": 400,
+      "start": 242.677305,
+      "end": 247.537683
+    },
+    {
+      "index": 32,
+      "text": "Unfire Audio · Eerste implementatie",
+      "word_start": 400,
+      "word_end": 405,
+      "start": 247.537683,
+      "end": 250.205464
+    },
+    {
+      "index": 33,
+      "text": "Bogert",
+      "word_start": 405,
+      "word_end": 406,
+      "start": 250.205464,
+      "end": 250.750227
+    },
+    {
+      "index": 34,
+      "text": "Archer is het eerste product dat is ontwikkeld binnen de brede Unfire Audio richtlijn.",
+      "word_start": 406,
+      "word_end": 420,
+      "start": 250.750227,
+      "end": 257.584732
+    },
+    {
+      "index": 35,
+      "text": "Het is een precisie-audio-clipping-hulpmiddel gebaseerd op Gain, Threshold en Atmosfeer, ontworpen om productiebedrijven en ingenieurs direct controle te geven over het gedrag van clipping, toppen, transiente en akoestische karakter.",
+      "word_start": 420,
+      "word_end": 449,
+      "start": 257.584732,
+      "end": 274.45042
+    },
+    {
+      "index": 36,
+      "text": "Zijn strategische rol gaat verder dan een enkele audio-effect. Archer biedt een praktische omgeving voor het ontwikkelen en valideren van audio-technologie, interface-systeem en productcomponenten die later kunnen bijdragen aan toekomstige creatieve-software-producten.",
+      "word_start": 449,
+      "word_end": 480,
+      "start": 274.45042,
+      "end": 293.913177
+    },
+    {
+      "index": 37,
+      "text": "Unfire Audio onderzoekt ook hoe AI-assisted systeem, procedurale verwerking en herbruikbare softwaretechnologie kunnen samenkomen in nieuwe plugin-concepten en creatieve workflows buiten conventionele vastgelijmd audio-verwerkingsinstrumenten.",
+      "word_start": 480,
+      "word_end": 504,
+      "start": 293.913177,
+      "end": 311.064
+    },
+    {
+      "index": 38,
+      "text": "Audio-technologie · DSP · Procedurale verwerking · Creatief software",
+      "word_start": 504,
+      "word_end": 513,
+      "start": 311.064,
+      "end": 316.139253
+    },
+    {
+      "index": 39,
+      "text": "Unfire Audio",
+      "word_start": 513,
+      "word_end": 515,
+      "start": 316.139253,
+      "end": 317.197535
+    },
+    {
+      "index": 40,
+      "text": "Van plugins tot nieuwe softwareconcepten.",
+      "word_start": 515,
+      "word_end": 520,
+      "start": 317.197535,
+      "end": 320.447852
+    },
+    {
+      "index": 41,
+      "text": "Unfire Audio onderzoekt hoe AI-assisted systeem, procedurale verwerking en herbruikbare softwarecomponenten samenkomen in creatieve hulpmiddelen die verder gaan dan conventionele plugin workflows.",
+      "word_start": 520,
+      "word_end": 542,
+      "start": 320.447852,
+      "end": 335.303461
+    },
+    {
+      "index": 42,
+      "text": "KI kan deel worden van de creatieve softwareomgeving in plaats van alleen te bestaan als een afzonderlijke assistent.",
+      "word_start": 542,
+      "word_end": 560,
+      "start": 335.303461,
+      "end": 344.594678
+    },
+    {
+      "index": 43,
+      "text": "Parameters, geluid en softwaregedrag kunnen dynamisch worden veranderd, creëerend ruimte voor nieuwe creatieve interactie-modellen.",
+      "word_start": 560,
+      "word_end": 574,
+      "start": 344.594678,
+      "end": 354.573633
+    },
+    {
+      "index": 44,
+      "text": "Succesvol ontwikkelde componenten in één product kunnen later worden hergebruikt, uitgebreid of geïntegreerd in andere projecten.",
+      "word_start": 574,
+      "word_end": 590,
+      "start": 354.573633,
+      "end": 364.617138
+    },
+    {
+      "index": 45,
+      "text": "Het doel is niet eenvoudigweg isoléerde audio-plugins te produceren. Het gaat om het creëren van een herbruikbare creatieve-technologiebasis die in staat is om toekomstige tools, brede omgevingen en nieuwe productconcepten te ondersteunen.",
+      "word_start": 590,
+      "word_end": 622,
+      "start": 364.617138,
+      "end": 382.872322
+    },
+    {
+      "index": 46,
+      "text": "Systeem",
+      "word_start": 622,
+      "word_end": 623,
+      "start": 382.872322,
+      "end": 383.502327
+    },
+    {
+      "index": 47,
+      "text": "Softwareproductie zonder opnieuw te beginnen.",
+      "word_start": 623,
+      "word_end": 628,
+      "start": 383.502327,
+      "end": 387.017267
+    },
+    {
+      "index": 48,
+      "text": "Het centrale idee is eenvoudig: wanneer een nieuwe product kan profiteren van technologie die al bestaat binnen Unfire, moet ontwikkeling dat voordeel hergebruiken in plaats van het opnieuw te bouwen.",
+      "word_start": 628,
+      "word_end": 658,
+      "start": 387.017267,
+      "end": 402.963921
+    },
+    {
+      "index": 49,
+      "text": "Gedeelde basis",
+      "word_start": 658,
+      "word_end": 660,
+      "start": 402.963921,
+      "end": 404.151963
+    },
+    {
+      "index": 50,
+      "text": "Baregaanbare softwarecomponenten, productief Kenmerken en validatiesystemen vormen een basis die verder kan ontwikkelen.",
+      "word_start": 660,
+      "word_end": 673,
+      "start": 404.151963,
+      "end": 413.161723
+    },
+    {
+      "index": 51,
+      "text": "Productlaag",
+      "word_start": 673,
+      "word_end": 674,
+      "start": 413.161723,
+      "end": 414.034043
+    },
+    {
+      "index": 52,
+      "text": "Nieuwe toepassingen kunnen bestaande capaciteiten combineren met product-specifieke technologie in plaats van te beginnen met een lege architectuur.",
+      "word_start": 674,
+      "word_end": 692,
+      "start": 414.034043,
+      "end": 425.370549
+    },
+    {
+      "index": 53,
+      "text": "Validatie",
+      "word_start": 692,
+      "word_end": 693,
+      "start": 425.370549,
+      "end": 426.125515
+    },
+    {
+      "index": 54,
+      "text": "Bouwstenen, testen en interne controlepunten bieden meetbare bewijsmateriaal over of softwarekandidaten zoals bedoeld functioneren.",
+      "word_start": 693,
+      "word_end": 707,
+      "start": 426.125515,
+      "end": 435.996921
+    },
+    {
+      "index": 55,
+      "text": "Expansie",
+      "word_start": 707,
+      "word_end": 708,
+      "start": 435.996921,
+      "end": 436.690503
+    },
+    {
+      "index": 56,
+      "text": "Infrastructuur kan groeien door extra berekeningscapaciteit, opslagcapaciteit, testcapaciteit, kwaliteitscontrole en deployementcapaciteit.",
+      "word_start": 708,
+      "word_end": 719,
+      "start": 436.690503,
+      "end": 446.462516
+    },
+    {
+      "index": 57,
+      "text": "Productievoer感此处应为\"Production scale\"的准确翻译，但由于提供的选项中没有合适的直接翻译，且考虑到需要保持专业语气和准确的技术术语，可以这样表达：",
+      "word_start": 719,
+      "word_end": 721,
+      "start": 446.462516,
+      "end": 450.914664
+    },
+    {
+      "index": 58,
+      "text": "Productievoerwaarde",
+      "word_start": 721,
+      "word_end": 722,
+      "start": 450.914664,
+      "end": 452.207596
+    },
+    {
+      "index": 59,
+      "text": "De bottleneck verandert.",
+      "word_start": 722,
+      "word_end": 725,
+      "start": 452.207596,
+      "end": 454.211133
+    },
+    {
+      "index": 60,
+      "text": "Waar de bestaande architectuur van toepassing is, heeft interne ontwikkeling getoond dat werkschikkingscandidaten door extremelijk korte buildciclessen kunnen gaan — in sommige gevallen gemeten in minuten.",
+      "word_start": 725,
+      "word_end": 751,
+      "start": 454.211133,
+      "end": 469.848
+    },
+    {
+      "index": 61,
+      "text": "Met de uitbreiding van de herbruikbare technologie worden de beperkende factoren steeds meer de infrastructuurbronnen, zoals berekening, opslag, testen, kwaliteitsbeheer en commerciële implementatie — bronnen die zelf ook kunnen worden uitgebreid.",
+      "word_start": 751,
+      "word_end": 782,
+      "start": 469.848,
+      "end": 491.4012
+    },
+    {
+      "index": 62,
+      "text": "Flagshipproduct volgt momenteel de technologische richting die algemeen getoond wordt.",
+      "word_start": 782,
+      "word_end": 792,
+      "start": 491.4012,
+      "end": 499.039755
+    },
+    {
+      "index": 63,
+      "text": "Prioriteits golf 1 software-candidaten worden geïdentificeerd voor gefocust ontwikkeling.",
+      "word_start": 792,
+      "word_end": 801,
+      "start": 499.039755,
+      "end": 506.6233
+    },
+    {
+      "index": 64,
+      "text": "53",
+      "word_start": 801,
+      "word_end": 802,
+      "start": 506.6233,
+      "end": 506.916238
+    },
+    {
+      "index": 65,
+      "text": "Standalone-software-candidaten die worden ontwikkeld en interne gecontroleerd.",
+      "word_start": 802,
+      "word_end": 809,
+      "start": 506.916238,
+      "end": 513.293256
+    },
+    {
+      "index": 66,
+      "text": "53/53",
+      "word_start": 809,
+      "word_end": 810,
+      "start": 513.293256,
+      "end": 513.775778
+    },
+    {
+      "index": 67,
+      "text": "Erfolgrechte zelfstandige bouwsels op het interne controlepunt van september 2026.",
+      "word_start": 810,
+      "word_end": 820,
+      "start": 513.775778,
+      "end": 521.114901
+    },
+    {
+      "index": 68,
+      "text": "01 STRICT REGELS:",
+      "word_start": 820,
+      "word_end": 823,
+      "start": 521.114901,
+      "end": 522.780076
+    },
+    {
+      "index": 69,
+      "text": "- Returned ENIGMA ALleen.",
+      "word_start": 823,
+      "word_end": 827,
+      "start": 522.780076,
+      "end": 525.249447
+    },
+    {
+      "index": 70,
+      "text": "- Geen uitleg.",
+      "word_start": 827,
+      "word_end": 830,
+      "start": 525.249447,
+      "end": 526.760434
+    },
+    {
+      "index": 71,
+      "text": "- Geen aanhalingstekens.",
+      "word_start": 830,
+      "word_end": 833,
+      "start": 526.760434,
+      "end": 528.934499
+    },
+    {
+      "index": 72,
+      "text": "- Behoud de betekenis en het professionele bedrijfsachtige toon.",
+      "word_start": 833,
+      "word_end": 842,
+      "start": 528.934499,
+      "end": 534.665881
+    },
+    {
+      "index": 73,
+      "text": "- Schrijf natuurlijk op niveau Nederlands, niet een letterlijke machinevertaling.",
+      "word_start": 842,
+      "word_end": 852,
+      "start": 534.665881,
+      "end": 541.83949
+    },
+    {
+      "index": 74,
+      "text": "- Noem de volgende productnamen NIET in het Nederlands: Unfire, Bolt, Archer, POWER, AI TOKEN COUNTER.",
+      "word_start": 852,
+      "word_end": 868,
+      "start": 541.83949,
+      "end": 551.280399
+    },
+    {
+      "index": 75,
+      "text": "- Behoud cijfers, technische termologie en productnamen accurate.",
+      "word_start": 868,
+      "word_end": 876,
+      "start": 551.280399,
+      "end": 557.129484
+    },
+    {
+      "index": 76,
+      "text": "- Dit tekst zal gesproken worden door een professionele bedrijfsachtige vrouwelijke stem.",
+      "word_start": 876,
+      "word_end": 888,
+      "start": 557.129484,
+      "end": 565.108255
+    },
+    {
+      "index": 77,
+      "text": "Hergebruik",
+      "word_start": 888,
+      "word_end": 889,
+      "start": 565.108255,
+      "end": 566.041582
+    },
+    {
+      "index": 78,
+      "text": "Start waar mogelijk vanaf bestaande technologie.",
+      "word_start": 889,
+      "word_end": 895,
+      "start": 566.041582,
+      "end": 570.521433
+    },
+    {
+      "index": 79,
+      "text": "02",
+      "word_start": 895,
+      "word_end": 896,
+      "start": 570.521433,
+      "end": 570.814371
+    },
+    {
+      "index": 80,
+      "text": "Bouw",
+      "word_start": 896,
+      "word_end": 897,
+      "start": 570.814371,
+      "end": 571.296893
+    },
+    {
+      "index": 81,
+      "text": "Maak de product-specifieke laag.",
+      "word_start": 897,
+      "word_end": 901,
+      "start": 571.296893,
+      "end": 574.184443
+    },
+    {
+      "index": 82,
+      "text": "03",
+      "word_start": 901,
+      "word_end": 902,
+      "start": 574.184443,
+      "end": 574.477381
+    },
+    {
+      "index": 83,
+      "text": "Schalen",
+      "word_start": 902,
+      "word_end": 903,
+      "start": 574.477381,
+      "end": 575.199327
+    },
+    {
+      "index": 84,
+      "text": "Expand je infrastructuur bij groeiend productie.",
+      "word_start": 903,
+      "word_end": 909,
+      "start": 575.199327,
+      "end": 579.584258
+    },
+    {
+      "index": 85,
+      "text": "Bedrijven",
+      "word_start": 909,
+      "word_end": 910,
+      "start": 579.584258,
+      "end": 580.449402
+    },
+    {
+      "index": 86,
+      "text": "Dedicateerde software systeem.",
+      "word_start": 910,
+      "word_end": 913,
+      "start": 580.449402,
+      "end": 583.23492
+    },
+    {
+      "index": 87,
+      "text": "Dezelfde productiestraatbaarmat kan specialiseerde toepassingen en omgevingen ondersteunen die zich richten op de vereisten van een organisatie.",
+      "word_start": 913,
+      "word_end": 930,
+      "start": 583.23492,
+      "end": 595.648853
+    },
+    {
+      "index": 88,
+      "text": "Institutionen",
+      "word_start": 930,
+      "word_end": 931,
+      "start": 595.648853,
+      "end": 596.77624
+    },
+    {
+      "index": 89,
+      "text": "Gereguleerde omgevingen.",
+      "word_start": 931,
+      "word_end": 933,
+      "start": 596.77624,
+      "end": 598.978337
+    },
+    {
+      "index": 90,
+      "text": "Projecten kunnen geïsoleerd blijven terwijl ze van benutbare basistechnologie, validatieprocessen en productieinfrastructuur kunnen profiteren.",
+      "word_start": 933,
+      "word_end": 947,
+      "start": 598.978337,
+      "end": 611.008399
+    },
+    {
+      "index": 91,
+      "text": "Openbare sector",
+      "word_start": 947,
+      "word_end": 949,
+      "start": 611.008399,
+      "end": 612.449305
+    },
+    {
+      "index": 92,
+      "text": "Schaalbare digitale tools.",
+      "word_start": 949,
+      "word_end": 952,
+      "start": 612.449305,
+      "end": 614.948573
+    },
+    {
+      "index": 93,
+      "text": "De architectuur wordt voorbereid op toekomstige samenwerking waarin controle, tracabiliteit, validatie en lange-termijn-mantelbaarheid van belang zijn.",
+      "word_start": 952,
+      "word_end": 968,
+      "start": 614.948573,
+      "end": 627.73314
+    },
+    {
+      "index": 94,
+      "text": "Unfire kan producten, bouwsels, interne controlepunten en productiecapaciteit tonen zonder de implementatiemethoden te onthullen die de onderliggende verdeling mogelijk maken.",
+      "word_start": 968,
+      "word_end": 988,
+      "start": 627.73314,
+      "end": 642.776905
+    },
+    {
+      "index": 95,
+      "text": "Financiering & samenwerking",
+      "word_start": 988,
+      "word_end": 991,
+      "start": 642.776905,
+      "end": 645.08325
+    },
+    {
+      "index": 96,
+      "text": "Verbreid wat er al bestaat.",
+      "word_start": 991,
+      "word_end": 996,
+      "start": 645.08325,
+      "end": 647.78264
+    },
+    {
+      "index": 97,
+      "text": "halo@unfire.technology",
+      "word_start": 996,
+      "word_end": 997,
+      "start": 647.78264,
+      "end": 649.32
+    }
+  ],
+  "words": [
+    {
+      "word": "Onafhankelijke",
+      "start": 0.0,
+      "end": 1.030976,
+      "exact": true,
+      "block": 0,
+      "tts_chunk": 1
+    },
+    {
+      "word": "technologiebedrijf",
+      "start": 1.030976,
+      "end": 2.266446,
+      "exact": true,
+      "block": 0,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bouw",
+      "start": 2.266446,
+      "end": 2.684776,
+      "exact": false,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "technologie.",
+      "start": 2.684776,
+      "end": 3.728727,
+      "exact": false,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Hergebruik",
+      "start": 3.728727,
+      "end": 4.53789,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "de",
+      "start": 4.53789,
+      "end": 4.791858,
+      "exact": true,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "voordel.",
+      "start": 4.791858,
+      "end": 5.595071,
+      "exact": false,
+      "block": 1,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Unfire",
+      "start": 5.595071,
+      "end": 6.155221,
+      "exact": false,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ontwikkelt",
+      "start": 6.155221,
+      "end": 6.964385,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "herbruikbare",
+      "start": 6.964385,
+      "end": 7.887055,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "software",
+      "start": 7.887055,
+      "end": 8.576122,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "systeemën",
+      "start": 8.576122,
+      "end": 9.326173,
+      "exact": false,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 9.326173,
+      "end": 9.666239,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "een",
+      "start": 9.666239,
+      "end": 10.006305,
+      "exact": false,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "enkele",
+      "start": 10.006305,
+      "end": 10.566456,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "technologische",
+      "start": 10.566456,
+      "end": 11.597431,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "basis",
+      "start": 11.597431,
+      "end": 12.088672,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "omvormen",
+      "start": 12.088672,
+      "end": 12.777739,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "tot",
+      "start": 12.777739,
+      "end": 13.117805,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "meerdere",
+      "start": 13.117805,
+      "end": 13.806871,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "producten,",
+      "start": 13.806871,
+      "end": 14.626304,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "werkstromen",
+      "start": 14.626304,
+      "end": 15.492945,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 15.492945,
+      "end": 15.746912,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "toekomstige",
+      "start": 15.746912,
+      "end": 16.613552,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "toepassingen.",
+      "start": 16.613552,
+      "end": 17.713533,
+      "exact": true,
+      "block": 2,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bedrijf",
+      "start": 17.713533,
+      "end": 18.339436,
+      "exact": true,
+      "block": 3,
+      "tts_chunk": 1
+    },
+    {
+      "word": "In",
+      "start": 18.339436,
+      "end": 18.593403,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "plaats",
+      "start": 18.593403,
+      "end": 19.153554,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "van",
+      "start": 19.153554,
+      "end": 19.49362,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "elke",
+      "start": 19.49362,
+      "end": 19.911951,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "applicatie",
+      "start": 19.911951,
+      "end": 20.721114,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "afzonderlijk",
+      "start": 20.721114,
+      "end": 21.643784,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "te",
+      "start": 21.643784,
+      "end": 21.897752,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "beschouwen",
+      "start": 21.897752,
+      "end": 22.706915,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "als",
+      "start": 22.706915,
+      "end": 23.046981,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "een",
+      "start": 23.046981,
+      "end": 23.387047,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "apart",
+      "start": 23.387047,
+      "end": 23.878288,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "project,",
+      "start": 23.878288,
+      "end": 24.573573,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ontwikkelt",
+      "start": 24.573573,
+      "end": 25.382737,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Unfire",
+      "start": 25.382737,
+      "end": 25.942888,
+      "exact": false,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "technologie",
+      "start": 25.942888,
+      "end": 26.809528,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 26.809528,
+      "end": 27.149594,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "hergebruikt,",
+      "start": 27.149594,
+      "end": 28.085617,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "uitgebreid",
+      "start": 28.085617,
+      "end": 28.89478,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 28.89478,
+      "end": 29.148747,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "overgedragen",
+      "start": 29.148747,
+      "end": 30.071418,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kan",
+      "start": 30.071418,
+      "end": 30.411484,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "worden",
+      "start": 30.411484,
+      "end": 30.971635,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "naar",
+      "start": 30.971635,
+      "end": 31.389965,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "toekomstige",
+      "start": 31.389965,
+      "end": 32.256606,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "producten.",
+      "start": 32.256606,
+      "end": 33.183967,
+      "exact": true,
+      "block": 4,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bouw",
+      "start": 33.183967,
+      "end": 33.602297,
+      "exact": true,
+      "block": 5,
+      "tts_chunk": 1
+    },
+    {
+      "word": "maar",
+      "start": 33.602297,
+      "end": 34.020628,
+      "exact": true,
+      "block": 5,
+      "tts_chunk": 1
+    },
+    {
+      "word": "één",
+      "start": 34.020628,
+      "end": 34.360694,
+      "exact": true,
+      "block": 5,
+      "tts_chunk": 1
+    },
+    {
+      "word": "keer.",
+      "start": 34.360694,
+      "end": 34.956335,
+      "exact": true,
+      "block": 5,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Corefuncties",
+      "start": 34.956335,
+      "end": 35.879005,
+      "exact": false,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kunnen",
+      "start": 35.879005,
+      "end": 36.439156,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "reusbare",
+      "start": 36.439156,
+      "end": 37.128222,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "bouwstenen",
+      "start": 37.128222,
+      "end": 37.937386,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "worden",
+      "start": 37.937386,
+      "end": 38.497537,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "in",
+      "start": 38.497537,
+      "end": 38.751504,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "plaats",
+      "start": 38.751504,
+      "end": 39.311655,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "van",
+      "start": 39.311655,
+      "end": 39.651721,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zich",
+      "start": 39.651721,
+      "end": 40.070051,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "te",
+      "start": 40.070051,
+      "end": 40.324019,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "verstoppen",
+      "start": 40.324019,
+      "end": 41.133182,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "binnen",
+      "start": 41.133182,
+      "end": 41.693333,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "een",
+      "start": 41.693333,
+      "end": 42.033399,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "enkele",
+      "start": 42.033399,
+      "end": 42.59355,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "product.",
+      "start": 42.59355,
+      "end": 43.396763,
+      "exact": true,
+      "block": 6,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Voer",
+      "start": 43.396763,
+      "end": 43.815093,
+      "exact": true,
+      "block": 7,
+      "tts_chunk": 1
+    },
+    {
+      "word": "voortdurend.",
+      "start": 43.815093,
+      "end": 44.859044,
+      "exact": true,
+      "block": 7,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Nieuw",
+      "start": 44.859044,
+      "end": 45.350285,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "software",
+      "start": 45.350285,
+      "end": 46.039351,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kan",
+      "start": 46.039351,
+      "end": 46.379417,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "bestaande",
+      "start": 46.379417,
+      "end": 47.129468,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "infrastructuur",
+      "start": 47.129468,
+      "end": 48.160444,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "erfen,",
+      "start": 48.160444,
+      "end": 48.721067,
+      "exact": false,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "verminderend",
+      "start": 48.721067,
+      "end": 49.643738,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "herhaalde",
+      "start": 49.643738,
+      "end": 50.393789,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "engineering",
+      "start": 50.393789,
+      "end": 51.260429,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "wanneer",
+      "start": 51.260429,
+      "end": 51.886332,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "de",
+      "start": 51.886332,
+      "end": 52.140299,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "architectuur",
+      "start": 52.140299,
+      "end": 53.062969,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "van",
+      "start": 53.062969,
+      "end": 53.403036,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "toepassing",
+      "start": 53.403036,
+      "end": 54.212199,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "is.",
+      "start": 54.212199,
+      "end": 54.643477,
+      "exact": true,
+      "block": 8,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Schaal",
+      "start": 54.643477,
+      "end": 55.203627,
+      "exact": true,
+      "block": 9,
+      "tts_chunk": 1
+    },
+    {
+      "word": "het",
+      "start": 55.203627,
+      "end": 55.543694,
+      "exact": true,
+      "block": 9,
+      "tts_chunk": 1
+    },
+    {
+      "word": "systeem.",
+      "start": 55.543694,
+      "end": 56.346907,
+      "exact": true,
+      "block": 9,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Aanvullende",
+      "start": 56.346907,
+      "end": 57.213547,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "opslag,",
+      "start": 57.213547,
+      "end": 57.84308,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "berekening,",
+      "start": 57.84308,
+      "end": 58.721626,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "testen",
+      "start": 58.721626,
+      "end": 59.281777,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 59.281777,
+      "end": 59.535744,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "distributieinfrastructuur",
+      "start": 59.535744,
+      "end": 61.100883,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kan",
+      "start": 61.100883,
+      "end": 61.440949,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "productiecapaciteit",
+      "start": 61.440949,
+      "end": 62.725463,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "vergroten",
+      "start": 62.725463,
+      "end": 63.475514,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zonder",
+      "start": 63.475514,
+      "end": 64.035665,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "dat",
+      "start": 64.035665,
+      "end": 64.375731,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "de",
+      "start": 64.375731,
+      "end": 64.629699,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "basistechnologie",
+      "start": 64.629699,
+      "end": 65.764716,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "opnieuw",
+      "start": 65.764716,
+      "end": 66.390619,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "moet",
+      "start": 66.390619,
+      "end": 66.808949,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "worden",
+      "start": 66.808949,
+      "end": 67.3691,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "opgebouwd.",
+      "start": 67.3691,
+      "end": 68.296461,
+      "exact": true,
+      "block": 10,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Geselecteerde",
+      "start": 68.296461,
+      "end": 69.273868,
+      "exact": true,
+      "block": 11,
+      "tts_chunk": 1
+    },
+    {
+      "word": "werkstaking",
+      "start": 69.273868,
+      "end": 70.140509,
+      "exact": true,
+      "block": 11,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Verschillende",
+      "start": 70.140509,
+      "end": 71.117915,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "producten.",
+      "start": 71.117915,
+      "end": 72.045277,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Technologie",
+      "start": 72.045277,
+      "end": 72.911917,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 72.911917,
+      "end": 73.251983,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "samenvloeit.",
+      "start": 73.251983,
+      "end": 74.295934,
+      "exact": true,
+      "block": 12,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Elke",
+      "start": 74.295934,
+      "end": 74.714264,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "project",
+      "start": 74.714264,
+      "end": 75.340167,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ademt",
+      "start": 75.340167,
+      "end": 75.831408,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "een",
+      "start": 75.831408,
+      "end": 76.171474,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "andere",
+      "start": 76.171474,
+      "end": 76.731625,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "probleem",
+      "start": 76.731625,
+      "end": 77.420691,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "op,",
+      "start": 77.420691,
+      "end": 77.744041,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "maar",
+      "start": 77.744041,
+      "end": 78.162371,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "het",
+      "start": 78.162371,
+      "end": 78.502437,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "onderliggende",
+      "start": 78.502437,
+      "end": 79.479844,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "doel",
+      "start": 79.479844,
+      "end": 79.898175,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "is",
+      "start": 79.898175,
+      "end": 80.152142,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "hetzelfde:",
+      "start": 80.152142,
+      "end": 80.971575,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ontwikkelen",
+      "start": 80.971575,
+      "end": 81.838215,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "van",
+      "start": 81.838215,
+      "end": 82.178282,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "technologie,",
+      "start": 82.178282,
+      "end": 83.114304,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "systemen",
+      "start": 83.114304,
+      "end": 83.803371,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 83.803371,
+      "end": 84.057338,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "productiekennis",
+      "start": 84.057338,
+      "end": 85.14082,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "die",
+      "start": 85.14082,
+      "end": 85.480886,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "hergebruikt",
+      "start": 85.480886,
+      "end": 86.347527,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kunnen",
+      "start": 86.347527,
+      "end": 86.907678,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "worden",
+      "start": 86.907678,
+      "end": 87.467829,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "in",
+      "start": 87.467829,
+      "end": 87.721796,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "toekomstige",
+      "start": 87.721796,
+      "end": 88.588436,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "software",
+      "start": 88.588436,
+      "end": 89.277503,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "in",
+      "start": 89.277503,
+      "end": 89.53147,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "plaats",
+      "start": 89.53147,
+      "end": 90.091621,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "van",
+      "start": 90.091621,
+      "end": 90.431687,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "geïsoleerd",
+      "start": 90.431687,
+      "end": 91.24085,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "te",
+      "start": 91.24085,
+      "end": 91.494818,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "blijven",
+      "start": 91.494818,
+      "end": 92.12072,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "binnen",
+      "start": 92.12072,
+      "end": 92.680871,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "een",
+      "start": 92.680871,
+      "end": 93.020937,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "enkele",
+      "start": 93.020937,
+      "end": 93.581088,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "toepassing.",
+      "start": 93.581088,
+      "end": 94.567562,
+      "exact": true,
+      "block": 13,
+      "tts_chunk": 1
+    },
+    {
+      "word": "KI",
+      "start": 94.567562,
+      "end": 94.821529,
+      "exact": true,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 94.821529,
+      "end": 94.975712,
+      "exact": false,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Automatisering",
+      "start": 94.975712,
+      "end": 96.006688,
+      "exact": true,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 96.006688,
+      "end": 96.16087,
+      "exact": false,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Computerwerkstromen",
+      "start": 96.16087,
+      "end": 97.445384,
+      "exact": true,
+      "block": 14,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bolt",
+      "start": 97.445384,
+      "end": 97.863715,
+      "exact": true,
+      "block": 15,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bolt",
+      "start": 97.863715,
+      "end": 98.282045,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "onderzoekt",
+      "start": 98.282045,
+      "end": 99.091208,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "beheerde",
+      "start": 99.091208,
+      "end": 99.780274,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "AI-orchestration",
+      "start": 99.780274,
+      "end": 100.915292,
+      "exact": false,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "voor",
+      "start": 100.915292,
+      "end": 101.333622,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "complexe",
+      "start": 101.333622,
+      "end": 102.022688,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "computerwerk.",
+      "start": 102.022688,
+      "end": 103.122669,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Het",
+      "start": 103.122669,
+      "end": 103.462736,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "is",
+      "start": 103.462736,
+      "end": 103.716703,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ontworpen",
+      "start": 103.716703,
+      "end": 104.466754,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "om",
+      "start": 104.466754,
+      "end": 104.720721,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "AI-systeem,",
+      "start": 104.720721,
+      "end": 105.599267,
+      "exact": false,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "lokale",
+      "start": 105.599267,
+      "end": 106.159418,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "hulpmiddelen",
+      "start": 106.159418,
+      "end": 107.082088,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 107.082088,
+      "end": 107.336055,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "uitvoeringsprocessen",
+      "start": 107.336055,
+      "end": 108.668895,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "te",
+      "start": 108.668895,
+      "end": 108.922862,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "coördineren",
+      "start": 108.922862,
+      "end": 109.789502,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "terwijl",
+      "start": 109.789502,
+      "end": 110.415405,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "het",
+      "start": 110.415405,
+      "end": 110.755471,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "zichtbaarheid,",
+      "start": 110.755471,
+      "end": 111.80226,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "toegangseisen",
+      "start": 111.80226,
+      "end": 112.779667,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 112.779667,
+      "end": 113.033634,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "menselijke",
+      "start": 113.033634,
+      "end": 113.842798,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "controle",
+      "start": 113.842798,
+      "end": 114.531864,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "behoudt.",
+      "start": 114.531864,
+      "end": 115.335077,
+      "exact": true,
+      "block": 16,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Het",
+      "start": 115.335077,
+      "end": 115.675143,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "project",
+      "start": 115.675143,
+      "end": 116.301046,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "onderzoekt",
+      "start": 116.301046,
+      "end": 117.110209,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "hoe",
+      "start": 117.110209,
+      "end": 117.450275,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "herhaalde",
+      "start": 117.450275,
+      "end": 118.200326,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "interactie",
+      "start": 118.200326,
+      "end": 119.009489,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "tussen",
+      "start": 119.009489,
+      "end": 119.56964,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "mensen,",
+      "start": 119.56964,
+      "end": 120.199174,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "modellen",
+      "start": 120.199174,
+      "end": 120.88824,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 120.88824,
+      "end": 121.142207,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "software",
+      "start": 121.142207,
+      "end": 121.831273,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kan",
+      "start": 121.831273,
+      "end": 122.17134,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "worden",
+      "start": 122.17134,
+      "end": 122.731491,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "verminderd",
+      "start": 122.731491,
+      "end": 123.540654,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "door",
+      "start": 123.540654,
+      "end": 123.958984,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "een",
+      "start": 123.958984,
+      "end": 124.29905,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "gevalideerde",
+      "start": 124.29905,
+      "end": 125.221721,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "plan",
+      "start": 125.221721,
+      "end": 125.640051,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "te",
+      "start": 125.640051,
+      "end": 125.894019,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "laten",
+      "start": 125.894019,
+      "end": 126.38526,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "doorgaan",
+      "start": 126.38526,
+      "end": 127.074326,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "via",
+      "start": 127.074326,
+      "end": 127.414392,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "uitvoering,",
+      "start": 127.414392,
+      "end": 128.292938,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "testcyclusen",
+      "start": 128.292938,
+      "end": 129.215608,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 129.215608,
+      "end": 129.469575,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "herstelcyclusen",
+      "start": 129.469575,
+      "end": 130.553058,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "met",
+      "start": 130.553058,
+      "end": 130.893124,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "minder",
+      "start": 130.893124,
+      "end": 131.453275,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "onnodige",
+      "start": 131.453275,
+      "end": 132.142341,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "onderbrekingen.",
+      "start": 132.142341,
+      "end": 133.350627,
+      "exact": true,
+      "block": 17,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Technologie",
+      "start": 133.350627,
+      "end": 134.217267,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ontwikkeld",
+      "start": 134.217267,
+      "end": 135.026431,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "rondom",
+      "start": 135.026431,
+      "end": 135.586582,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Bolt",
+      "start": 135.586582,
+      "end": 136.004912,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "kan",
+      "start": 136.004912,
+      "end": 136.344978,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "bijdragen",
+      "start": 136.344978,
+      "end": 137.095029,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "aan",
+      "start": 137.095029,
+      "end": 137.435095,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "toekomstige",
+      "start": 137.435095,
+      "end": 138.301736,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "automatisering,",
+      "start": 138.301736,
+      "end": 139.402094,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "ontwikkeling",
+      "start": 139.402094,
+      "end": 140.324764,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "en",
+      "start": 140.324764,
+      "end": 140.578731,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "computer-beheersystemen",
+      "start": 140.578731,
+      "end": 142.052673,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "binnen",
+      "start": 142.052673,
+      "end": 142.612824,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "het",
+      "start": 142.612824,
+      "end": 142.95289,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "brede",
+      "start": 142.95289,
+      "end": 143.444131,
+      "exact": true,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Unfire-ecosysteem.",
+      "start": 143.444131,
+      "end": 144.807099,
+      "exact": false,
+      "block": 18,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Orchestration",
+      "start": 144.807099,
+      "end": 145.784506,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 145.784506,
+      "end": 145.938689,
+      "exact": false,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Lokale",
+      "start": 145.938689,
+      "end": 146.49884,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "uitvoering",
+      "start": 146.49884,
+      "end": 147.308003,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 147.308003,
+      "end": 147.462186,
+      "exact": false,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Gereguleerde",
+      "start": 147.462186,
+      "end": 148.384857,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "autonomie",
+      "start": 148.384857,
+      "end": 149.134908,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 149.134908,
+      "end": 149.28909,
+      "exact": false,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Herbruikbare",
+      "start": 149.28909,
+      "end": 150.211761,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "automatisering",
+      "start": 150.211761,
+      "end": 151.242737,
+      "exact": true,
+      "block": 19,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Energie",
+      "start": 151.242737,
+      "end": 151.868639,
+      "exact": true,
+      "block": 20,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 151.868639,
+      "end": 152.022822,
+      "exact": false,
+      "block": 20,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Data",
+      "start": 152.022822,
+      "end": 152.441152,
+      "exact": true,
+      "block": 20,
+      "tts_chunk": 1
+    },
+    {
+      "word": "·",
+      "start": 152.441152,
+      "end": 152.595335,
+      "exact": false,
+      "block": 20,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Informatie-systemen",
+      "start": 152.595335,
+      "end": 153.879849,
+      "exact": true,
+      "block": 20,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Kracht",
+      "start": 153.879849,
+      "end": 154.44,
+      "exact": true,
+      "block": 21,
+      "tts_chunk": 1
+    },
+    {
+      "word": "Machtig",
+      "start": 154.44,
+      "end": 155.048709,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ontdekt",
+      "start": 155.048709,
+      "end": 155.657419,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "hoe",
+      "start": 155.657419,
+      "end": 155.988144,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "complexe",
+      "start": 155.988144,
+      "end": 156.658282,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "elektriciteits-",
+      "start": 156.658282,
+      "end": 157.712001,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 157.712001,
+      "end": 157.958992,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "energimarktgegevens",
+      "start": 157.958992,
+      "end": 159.208221,
+      "exact": false,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kunnen",
+      "start": 159.208221,
+      "end": 159.752985,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "worden",
+      "start": 159.752985,
+      "end": 160.297749,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "omgezet",
+      "start": 160.297749,
+      "end": 160.906459,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "in",
+      "start": 160.906459,
+      "end": 161.15345,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "software",
+      "start": 161.15345,
+      "end": 161.823588,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "die",
+      "start": 161.823588,
+      "end": 162.154312,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "eenvoudiger",
+      "start": 162.154312,
+      "end": 162.997147,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "te",
+      "start": 162.997147,
+      "end": 163.244138,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "begrijpen,",
+      "start": 163.244138,
+      "end": 164.041062,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "te",
+      "start": 164.041062,
+      "end": 164.288052,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "vergelijken",
+      "start": 164.288052,
+      "end": 165.130887,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 165.130887,
+      "end": 165.377878,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "te",
+      "start": 165.377878,
+      "end": 165.624869,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "gebruiken",
+      "start": 165.624869,
+      "end": 166.354316,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "zijn.",
+      "start": 166.354316,
+      "end": 166.933595,
+      "exact": true,
+      "block": 22,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Het",
+      "start": 166.933595,
+      "end": 167.26432,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "project",
+      "start": 167.26432,
+      "end": 167.873029,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "combineert",
+      "start": 167.873029,
+      "end": 168.659965,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "regionale",
+      "start": 168.659965,
+      "end": 169.389413,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "gegevens,",
+      "start": 169.389413,
+      "end": 170.127027,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "prijsinformatie",
+      "start": 170.127027,
+      "end": 171.180747,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 171.180747,
+      "end": 171.427738,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "structuurde",
+      "start": 171.427738,
+      "end": 172.270572,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "interpretatie",
+      "start": 172.270572,
+      "end": 173.22113,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "in",
+      "start": 173.22113,
+      "end": 173.468121,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "een",
+      "start": 173.468121,
+      "end": 173.798846,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "duidelijker",
+      "start": 173.798846,
+      "end": 174.64168,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "interface,",
+      "start": 174.64168,
+      "end": 175.438604,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "vormend",
+      "start": 175.438604,
+      "end": 176.047314,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "de",
+      "start": 176.047314,
+      "end": 176.294305,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "basis",
+      "start": 176.294305,
+      "end": 176.772051,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "voor",
+      "start": 176.772051,
+      "end": 177.17889,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "toekomstige",
+      "start": 177.17889,
+      "end": 178.021725,
+      "exact": true,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "energie-intelligentie-hulpmiddelen.",
+      "start": 178.021725,
+      "end": 180.093511,
+      "exact": false,
+      "block": 23,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Dezelfde",
+      "start": 180.093511,
+      "end": 180.763649,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "aanpak",
+      "start": 180.763649,
+      "end": 181.308413,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kan",
+      "start": 181.308413,
+      "end": 181.639138,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "later",
+      "start": 181.639138,
+      "end": 182.116885,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ook",
+      "start": 182.116885,
+      "end": 182.44761,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "worden",
+      "start": 182.44761,
+      "end": 182.992373,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "gebruikt",
+      "start": 182.992373,
+      "end": 183.662511,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "voor",
+      "start": 183.662511,
+      "end": 184.069351,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "andere",
+      "start": 184.069351,
+      "end": 184.614114,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "informatieintensive",
+      "start": 184.614114,
+      "end": 185.863343,
+      "exact": false,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "producten",
+      "start": 185.863343,
+      "end": 186.592791,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "waarbij",
+      "start": 186.592791,
+      "end": 187.2015,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "fragmentaire",
+      "start": 187.2015,
+      "end": 188.098826,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "externe",
+      "start": 188.098826,
+      "end": 188.707535,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "gegevens",
+      "start": 188.707535,
+      "end": 189.377673,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "begrijpbaar",
+      "start": 189.377673,
+      "end": 190.220507,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 190.220507,
+      "end": 190.467498,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "handelbaar",
+      "start": 190.467498,
+      "end": 191.254434,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "moeten",
+      "start": 191.254434,
+      "end": 191.799198,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "worden",
+      "start": 191.799198,
+      "end": 192.343962,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "gemaakt",
+      "start": 192.343962,
+      "end": 192.952672,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "in",
+      "start": 192.952672,
+      "end": 193.199663,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "software.",
+      "start": 193.199663,
+      "end": 194.04224,
+      "exact": true,
+      "block": 24,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Energieintelligentie",
+      "start": 194.04224,
+      "end": 195.338467,
+      "exact": true,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 195.338467,
+      "end": 195.488415,
+      "exact": false,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Gegevensinterpretatie",
+      "start": 195.488415,
+      "end": 196.830986,
+      "exact": false,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 196.830986,
+      "end": 196.980934,
+      "exact": false,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Informatiearchitectuur",
+      "start": 196.980934,
+      "end": 198.369235,
+      "exact": false,
+      "block": 25,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Internerekenkundig",
+      "start": 198.369235,
+      "end": 199.570768,
+      "exact": false,
+      "block": 26,
+      "tts_chunk": 2
+    },
+    {
+      "word": "infrastructure",
+      "start": 199.570768,
+      "end": 200.573423,
+      "exact": false,
+      "block": 26,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 200.573423,
+      "end": 200.723371,
+      "exact": false,
+      "block": 26,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Softwareproductie",
+      "start": 200.723371,
+      "end": 201.876459,
+      "exact": true,
+      "block": 26,
+      "tts_chunk": 2
+    },
+    {
+      "word": "UnfireSuite",
+      "start": 201.876459,
+      "end": 202.719294,
+      "exact": false,
+      "block": 27,
+      "tts_chunk": 2
+    },
+    {
+      "word": "UnfireSuite",
+      "start": 202.719294,
+      "end": 203.562128,
+      "exact": false,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "vertegenwoordigt",
+      "start": 203.562128,
+      "end": 204.665967,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "de",
+      "start": 204.665967,
+      "end": 204.912958,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "interne",
+      "start": 204.912958,
+      "end": 205.521667,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "productie-laag",
+      "start": 205.521667,
+      "end": 206.524323,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "achter",
+      "start": 206.524323,
+      "end": 207.069087,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "meerdere",
+      "start": 207.069087,
+      "end": 207.739225,
+      "exact": true,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire-projecten.",
+      "start": 207.739225,
+      "end": 209.015504,
+      "exact": false,
+      "block": 28,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Zijn",
+      "start": 209.015504,
+      "end": 209.422343,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "doel",
+      "start": 209.422343,
+      "end": 209.829182,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "is",
+      "start": 209.829182,
+      "end": 210.076173,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "om",
+      "start": 210.076173,
+      "end": 210.323164,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "herhalingen",
+      "start": 210.323164,
+      "end": 211.165998,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "in",
+      "start": 211.165998,
+      "end": 211.412989,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "het",
+      "start": 211.412989,
+      "end": 211.743714,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ingenieurswerk",
+      "start": 211.743714,
+      "end": 212.746369,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "te",
+      "start": 212.746369,
+      "end": 212.99336,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "verminderen",
+      "start": 212.99336,
+      "end": 213.836194,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "door",
+      "start": 213.836194,
+      "end": 214.243033,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "softwarecomponenten,",
+      "start": 214.243033,
+      "end": 215.559738,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "validatieprocessen,",
+      "start": 215.559738,
+      "end": 216.828748,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "productiesystemen",
+      "start": 216.828748,
+      "end": 217.981836,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 217.981836,
+      "end": 218.228827,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "opgedane",
+      "start": 218.228827,
+      "end": 218.898965,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "technische",
+      "start": 218.898965,
+      "end": 219.685901,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kennis",
+      "start": 219.685901,
+      "end": 220.230665,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "op",
+      "start": 220.230665,
+      "end": 220.477656,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "te",
+      "start": 220.477656,
+      "end": 220.724647,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "nemen",
+      "start": 220.724647,
+      "end": 221.202394,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "waar",
+      "start": 221.202394,
+      "end": 221.609233,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "dat",
+      "start": 221.609233,
+      "end": 221.939958,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "van",
+      "start": 221.939958,
+      "end": 222.270683,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "pas",
+      "start": 222.270683,
+      "end": 222.601407,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "is.",
+      "start": 222.601407,
+      "end": 223.020838,
+      "exact": true,
+      "block": 29,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Dit",
+      "start": 223.020838,
+      "end": 223.351563,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "is",
+      "start": 223.351563,
+      "end": 223.598554,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "belangrijk,",
+      "start": 223.598554,
+      "end": 224.452966,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "omdat",
+      "start": 224.452966,
+      "end": 224.930713,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "de",
+      "start": 224.930713,
+      "end": 225.177704,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "waarde",
+      "start": 225.177704,
+      "end": 225.722468,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "van",
+      "start": 225.722468,
+      "end": 226.053193,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "één",
+      "start": 226.053193,
+      "end": 226.383918,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "project",
+      "start": 226.383918,
+      "end": 226.992627,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "niet",
+      "start": 226.992627,
+      "end": 227.399466,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "hoefde",
+      "start": 227.399466,
+      "end": 227.94423,
+      "exact": false,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "te",
+      "start": 227.94423,
+      "end": 228.191221,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "eindigen",
+      "start": 228.191221,
+      "end": 228.861359,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "zodra",
+      "start": 228.861359,
+      "end": 229.339106,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "dat",
+      "start": 229.339106,
+      "end": 229.669831,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "project",
+      "start": 229.669831,
+      "end": 230.27854,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "is",
+      "start": 230.27854,
+      "end": 230.525531,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "voltooid.",
+      "start": 230.525531,
+      "end": 231.368109,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Deel",
+      "start": 231.368109,
+      "end": 231.774948,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "van",
+      "start": 231.774948,
+      "end": 232.105672,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "de",
+      "start": 232.105672,
+      "end": 232.352663,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "technologie",
+      "start": 232.352663,
+      "end": 233.195498,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kan",
+      "start": 233.195498,
+      "end": 233.526222,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "infrastructuur",
+      "start": 233.526222,
+      "end": 234.528878,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "worden",
+      "start": 234.528878,
+      "end": 235.073642,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "voor",
+      "start": 235.073642,
+      "end": 235.480481,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "het",
+      "start": 235.480481,
+      "end": 235.811206,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "volgende",
+      "start": 235.811206,
+      "end": 236.481343,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "product,",
+      "start": 236.481343,
+      "end": 237.157529,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "waardoor",
+      "start": 237.157529,
+      "end": 237.827667,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "het",
+      "start": 237.827667,
+      "end": 238.158392,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "productie",
+      "start": 238.158392,
+      "end": 238.88784,
+      "exact": false,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "systeem",
+      "start": 238.88784,
+      "end": 239.496549,
+      "exact": false,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "zelf",
+      "start": 239.496549,
+      "end": 239.903388,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "zichzelf",
+      "start": 239.903388,
+      "end": 240.573526,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kan",
+      "start": 240.573526,
+      "end": 240.904251,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "verbeteren",
+      "start": 240.904251,
+      "end": 241.691187,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "over",
+      "start": 241.691187,
+      "end": 242.098026,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "tijd.",
+      "start": 242.098026,
+      "end": 242.677305,
+      "exact": true,
+      "block": 30,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Gedeelde",
+      "start": 242.677305,
+      "end": 243.347443,
+      "exact": true,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "infrastructuur",
+      "start": 243.347443,
+      "end": 244.350098,
+      "exact": true,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 244.350098,
+      "end": 244.500046,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Validatie",
+      "start": 244.500046,
+      "end": 245.229493,
+      "exact": true,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 245.229493,
+      "end": 245.379441,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Herbruik",
+      "start": 245.379441,
+      "end": 246.049579,
+      "exact": true,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 246.049579,
+      "end": 246.199526,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Productie",
+      "start": 246.199526,
+      "end": 246.928974,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "systeem",
+      "start": 246.928974,
+      "end": 247.537683,
+      "exact": false,
+      "block": 31,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire",
+      "start": 247.537683,
+      "end": 248.082447,
+      "exact": false,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Audio",
+      "start": 248.082447,
+      "end": 248.560194,
+      "exact": true,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "·",
+      "start": 248.560194,
+      "end": 248.710142,
+      "exact": false,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Eerste",
+      "start": 248.710142,
+      "end": 249.254905,
+      "exact": true,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "implementatie",
+      "start": 249.254905,
+      "end": 250.205464,
+      "exact": true,
+      "block": 32,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Bogert",
+      "start": 250.205464,
+      "end": 250.750227,
+      "exact": true,
+      "block": 33,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Archer",
+      "start": 250.750227,
+      "end": 251.294991,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "is",
+      "start": 251.294991,
+      "end": 251.541982,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "het",
+      "start": 251.541982,
+      "end": 251.872707,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "eerste",
+      "start": 251.872707,
+      "end": 252.417471,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "product",
+      "start": 252.417471,
+      "end": 253.026181,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "dat",
+      "start": 253.026181,
+      "end": 253.356905,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "is",
+      "start": 253.356905,
+      "end": 253.603896,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ontwikkeld",
+      "start": 253.603896,
+      "end": 254.390832,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "binnen",
+      "start": 254.390832,
+      "end": 254.935596,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "de",
+      "start": 254.935596,
+      "end": 255.182587,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "brede",
+      "start": 255.182587,
+      "end": 255.660334,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire",
+      "start": 255.660334,
+      "end": 256.205098,
+      "exact": false,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Audio",
+      "start": 256.205098,
+      "end": 256.682845,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "richtlijn.",
+      "start": 256.682845,
+      "end": 257.584732,
+      "exact": true,
+      "block": 34,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Het",
+      "start": 257.584732,
+      "end": 257.915457,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "is",
+      "start": 257.915457,
+      "end": 258.162448,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "een",
+      "start": 258.162448,
+      "end": 258.493173,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "precisie-audio-clipping-hulpmiddel",
+      "start": 258.493173,
+      "end": 260.392519,
+      "exact": false,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "gebaseerd",
+      "start": 260.392519,
+      "end": 261.121967,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "op",
+      "start": 261.121967,
+      "end": 261.368958,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Gain,",
+      "start": 261.368958,
+      "end": 261.843273,
+      "exact": false,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Threshold",
+      "start": 261.843273,
+      "end": 262.572721,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 262.572721,
+      "end": 262.819712,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Atmosfeer,",
+      "start": 262.819712,
+      "end": 263.616636,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ontworpen",
+      "start": 263.616636,
+      "end": 264.346083,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "om",
+      "start": 264.346083,
+      "end": 264.593074,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "productiebedrijven",
+      "start": 264.593074,
+      "end": 265.794607,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 265.794607,
+      "end": 266.041598,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ingenieurs",
+      "start": 266.041598,
+      "end": 266.828534,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "direct",
+      "start": 266.828534,
+      "end": 267.373298,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "controle",
+      "start": 267.373298,
+      "end": 268.043436,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "te",
+      "start": 268.043436,
+      "end": 268.290427,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "geven",
+      "start": 268.290427,
+      "end": 268.768174,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "over",
+      "start": 268.768174,
+      "end": 269.175013,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "het",
+      "start": 269.175013,
+      "end": 269.505738,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "gedrag",
+      "start": 269.505738,
+      "end": 270.050502,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "van",
+      "start": 270.050502,
+      "end": 270.381226,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "clipping,",
+      "start": 270.381226,
+      "end": 271.118841,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "toppen,",
+      "start": 271.118841,
+      "end": 271.731081,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "transiente",
+      "start": 271.731081,
+      "end": 272.518017,
+      "exact": false,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 272.518017,
+      "end": 272.765008,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "akoestische",
+      "start": 272.765008,
+      "end": 273.607842,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "karakter.",
+      "start": 273.607842,
+      "end": 274.45042,
+      "exact": true,
+      "block": 35,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Zijn",
+      "start": 274.45042,
+      "end": 274.857259,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "strategische",
+      "start": 274.857259,
+      "end": 275.754584,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "rol",
+      "start": 275.754584,
+      "end": 276.085309,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "gaat",
+      "start": 276.085309,
+      "end": 276.492148,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "verder",
+      "start": 276.492148,
+      "end": 277.036912,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "dan",
+      "start": 277.036912,
+      "end": 277.367637,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "een",
+      "start": 277.367637,
+      "end": 277.698362,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "enkele",
+      "start": 277.698362,
+      "end": 278.243126,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "audio-effect.",
+      "start": 278.243126,
+      "end": 279.312891,
+      "exact": false,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Archer",
+      "start": 279.312891,
+      "end": 279.857655,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "biedt",
+      "start": 279.857655,
+      "end": 280.335402,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "een",
+      "start": 280.335402,
+      "end": 280.666126,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "praktische",
+      "start": 280.666126,
+      "end": 281.453062,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "omgeving",
+      "start": 281.453062,
+      "end": 282.1232,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "voor",
+      "start": 282.1232,
+      "end": 282.53004,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "het",
+      "start": 282.53004,
+      "end": 282.860764,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ontwikkelen",
+      "start": 282.860764,
+      "end": 283.703599,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 283.703599,
+      "end": 283.950589,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "valideren",
+      "start": 283.950589,
+      "end": 284.680037,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "van",
+      "start": 284.680037,
+      "end": 285.010762,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "audio-technologie,",
+      "start": 285.010762,
+      "end": 286.231327,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "interface-systeem",
+      "start": 286.231327,
+      "end": 287.384415,
+      "exact": false,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 287.384415,
+      "end": 287.631406,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "productcomponenten",
+      "start": 287.631406,
+      "end": 288.832939,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "die",
+      "start": 288.832939,
+      "end": 289.163664,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "later",
+      "start": 289.163664,
+      "end": 289.641411,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kunnen",
+      "start": 289.641411,
+      "end": 290.186175,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "bijdragen",
+      "start": 290.186175,
+      "end": 290.915622,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "aan",
+      "start": 290.915622,
+      "end": 291.246347,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "toekomstige",
+      "start": 291.246347,
+      "end": 292.089181,
+      "exact": true,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "creatieve-software-producten.",
+      "start": 292.089181,
+      "end": 293.913177,
+      "exact": false,
+      "block": 36,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Unfire",
+      "start": 293.913177,
+      "end": 294.457941,
+      "exact": false,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Audio",
+      "start": 294.457941,
+      "end": 294.935688,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "onderzoekt",
+      "start": 294.935688,
+      "end": 295.722624,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "ook",
+      "start": 295.722624,
+      "end": 296.053348,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "hoe",
+      "start": 296.053348,
+      "end": 296.384073,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "AI-assisted",
+      "start": 296.384073,
+      "end": 297.226907,
+      "exact": false,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "systeem,",
+      "start": 297.226907,
+      "end": 297.903093,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "procedurale",
+      "start": 297.903093,
+      "end": 298.745928,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "verwerking",
+      "start": 298.745928,
+      "end": 299.532864,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 299.532864,
+      "end": 299.779855,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "herbruikbare",
+      "start": 299.779855,
+      "end": 300.67718,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "softwaretechnologie",
+      "start": 300.67718,
+      "end": 301.926409,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "kunnen",
+      "start": 301.926409,
+      "end": 302.471173,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "samenkomen",
+      "start": 302.471173,
+      "end": 303.258109,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "in",
+      "start": 303.258109,
+      "end": 303.5051,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "nieuwe",
+      "start": 303.5051,
+      "end": 304.049864,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "plugin-concepten",
+      "start": 304.049864,
+      "end": 305.153703,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "en",
+      "start": 305.153703,
+      "end": 305.400694,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "creatieve",
+      "start": 305.400694,
+      "end": 306.130141,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "workflows",
+      "start": 306.130141,
+      "end": 306.859589,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "buiten",
+      "start": 306.859589,
+      "end": 307.404353,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "conventionele",
+      "start": 307.404353,
+      "end": 308.354911,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "vastgelijmd",
+      "start": 308.354911,
+      "end": 309.197745,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "audio-verwerkingsinstrumenten.",
+      "start": 309.197745,
+      "end": 311.064,
+      "exact": true,
+      "block": 37,
+      "tts_chunk": 2
+    },
+    {
+      "word": "Audio-technologie",
+      "start": 311.064,
+      "end": 312.257428,
+      "exact": false,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "·",
+      "start": 312.257428,
+      "end": 312.412621,
+      "exact": false,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "DSP",
+      "start": 312.412621,
+      "end": 312.754916,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "·",
+      "start": 312.754916,
+      "end": 312.91011,
+      "exact": false,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Procedurale",
+      "start": 312.91011,
+      "end": 313.78243,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "verwerking",
+      "start": 313.78243,
+      "end": 314.596896,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "·",
+      "start": 314.596896,
+      "end": 314.752089,
+      "exact": false,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Creatief",
+      "start": 314.752089,
+      "end": 315.445671,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "software",
+      "start": 315.445671,
+      "end": 316.139253,
+      "exact": true,
+      "block": 38,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Unfire",
+      "start": 316.139253,
+      "end": 316.703075,
+      "exact": false,
+      "block": 39,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Audio",
+      "start": 316.703075,
+      "end": 317.197535,
+      "exact": true,
+      "block": 39,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Van",
+      "start": 317.197535,
+      "end": 317.53983,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 3
+    },
+    {
+      "word": "plugins",
+      "start": 317.53983,
+      "end": 318.169835,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 3
+    },
+    {
+      "word": "tot",
+      "start": 318.169835,
+      "end": 318.512129,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 3
+    },
+    {
+      "word": "nieuwe",
+      "start": 318.512129,
+      "end": 319.075951,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 3
+    },
+    {
+      "word": "softwareconcepten.",
+      "start": 319.075951,
+      "end": 320.447852,
+      "exact": true,
+      "block": 40,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Unfire",
+      "start": 320.447852,
+      "end": 321.011674,
+      "exact": false,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Audio",
+      "start": 321.011674,
+      "end": 321.506134,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "onderzoekt",
+      "start": 321.506134,
+      "end": 322.3206,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "hoe",
+      "start": 322.3206,
+      "end": 322.662895,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "AI-assisted",
+      "start": 322.662895,
+      "end": 323.535215,
+      "exact": false,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "systeem,",
+      "start": 323.535215,
+      "end": 324.235056,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "procedurale",
+      "start": 324.235056,
+      "end": 325.107376,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "verwerking",
+      "start": 325.107376,
+      "end": 325.921842,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "en",
+      "start": 325.921842,
+      "end": 326.177474,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "herbruikbare",
+      "start": 326.177474,
+      "end": 327.106191,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "softwarecomponenten",
+      "start": 327.106191,
+      "end": 328.399123,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "samenkomen",
+      "start": 328.399123,
+      "end": 329.213589,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 329.213589,
+      "end": 329.469221,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "creatieve",
+      "start": 329.469221,
+      "end": 330.224187,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "hulpmiddelen",
+      "start": 330.224187,
+      "end": 331.152905,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "die",
+      "start": 331.152905,
+      "end": 331.4952,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "verder",
+      "start": 331.4952,
+      "end": 332.059022,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "gaan",
+      "start": 332.059022,
+      "end": 332.480093,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "dan",
+      "start": 332.480093,
+      "end": 332.822388,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "conventionele",
+      "start": 332.822388,
+      "end": 333.806201,
+      "exact": true,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "plugin",
+      "start": 333.806201,
+      "end": 334.370022,
+      "exact": false,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "workflows.",
+      "start": 334.370022,
+      "end": 335.303461,
+      "exact": false,
+      "block": 41,
+      "tts_chunk": 3
+    },
+    {
+      "word": "KI",
+      "start": 335.303461,
+      "end": 335.559093,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 335.559093,
+      "end": 335.901388,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "deel",
+      "start": 335.901388,
+      "end": 336.32246,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "worden",
+      "start": 336.32246,
+      "end": 336.886282,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "van",
+      "start": 336.886282,
+      "end": 337.228576,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "de",
+      "start": 337.228576,
+      "end": 337.484208,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "creatieve",
+      "start": 337.484208,
+      "end": 338.239174,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "softwareomgeving",
+      "start": 338.239174,
+      "end": 339.38163,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 339.38163,
+      "end": 339.637262,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "plaats",
+      "start": 339.637262,
+      "end": 340.201084,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "van",
+      "start": 340.201084,
+      "end": 340.543379,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "alleen",
+      "start": 340.543379,
+      "end": 341.107201,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "te",
+      "start": 341.107201,
+      "end": 341.362832,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bestaan",
+      "start": 341.362832,
+      "end": 341.992837,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "als",
+      "start": 341.992837,
+      "end": 342.335132,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "een",
+      "start": 342.335132,
+      "end": 342.677426,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "afzonderlijke",
+      "start": 342.677426,
+      "end": 343.661239,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "assistent.",
+      "start": 343.661239,
+      "end": 344.594678,
+      "exact": true,
+      "block": 42,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Parameters,",
+      "start": 344.594678,
+      "end": 345.478981,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "geluid",
+      "start": 345.478981,
+      "end": 346.042803,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "en",
+      "start": 346.042803,
+      "end": 346.298434,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "softwaregedrag",
+      "start": 346.298434,
+      "end": 347.336166,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kunnen",
+      "start": 347.336166,
+      "end": 347.899988,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "dynamisch",
+      "start": 347.899988,
+      "end": 348.654955,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "worden",
+      "start": 348.654955,
+      "end": 349.218777,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "veranderd,",
+      "start": 349.218777,
+      "end": 350.04358,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "creëerend",
+      "start": 350.04358,
+      "end": 350.798546,
+      "exact": false,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ruimte",
+      "start": 350.798546,
+      "end": 351.362368,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "voor",
+      "start": 351.362368,
+      "end": 351.78344,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "nieuwe",
+      "start": 351.78344,
+      "end": 352.347262,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "creatieve",
+      "start": 352.347262,
+      "end": 353.102229,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "interactie-modellen.",
+      "start": 353.102229,
+      "end": 354.573633,
+      "exact": true,
+      "block": 43,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Succesvol",
+      "start": 354.573633,
+      "end": 355.328599,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ontwikkelde",
+      "start": 355.328599,
+      "end": 356.200919,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "componenten",
+      "start": 356.200919,
+      "end": 357.073239,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 357.073239,
+      "end": 357.328871,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "één",
+      "start": 357.328871,
+      "end": 357.671165,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "product",
+      "start": 357.671165,
+      "end": 358.30117,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kunnen",
+      "start": 358.30117,
+      "end": 358.864992,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "later",
+      "start": 358.864992,
+      "end": 359.359452,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "worden",
+      "start": 359.359452,
+      "end": 359.923274,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "hergebruikt,",
+      "start": 359.923274,
+      "end": 360.865431,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "uitgebreid",
+      "start": 360.865431,
+      "end": 361.679897,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "of",
+      "start": 361.679897,
+      "end": 361.935529,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "geïntegreerd",
+      "start": 361.935529,
+      "end": 362.864246,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 362.864246,
+      "end": 363.119878,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "andere",
+      "start": 363.119878,
+      "end": 363.6837,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "projecten.",
+      "start": 363.6837,
+      "end": 364.617138,
+      "exact": true,
+      "block": 44,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Het",
+      "start": 364.617138,
+      "end": 364.959433,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "doel",
+      "start": 364.959433,
+      "end": 365.380505,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "is",
+      "start": 365.380505,
+      "end": 365.636137,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "niet",
+      "start": 365.636137,
+      "end": 366.057209,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "eenvoudigweg",
+      "start": 366.057209,
+      "end": 366.985926,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "isoléerde",
+      "start": 366.985926,
+      "end": 367.740892,
+      "exact": false,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "audio-plugins",
+      "start": 367.740892,
+      "end": 368.724705,
+      "exact": false,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "te",
+      "start": 368.724705,
+      "end": 368.980336,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "produceren.",
+      "start": 368.980336,
+      "end": 369.973275,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Het",
+      "start": 369.973275,
+      "end": 370.31557,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "gaat",
+      "start": 370.31557,
+      "end": 370.736642,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "om",
+      "start": 370.736642,
+      "end": 370.992273,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "het",
+      "start": 370.992273,
+      "end": 371.334568,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "creëren",
+      "start": 371.334568,
+      "end": 371.964573,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "van",
+      "start": 371.964573,
+      "end": 372.306867,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "een",
+      "start": 372.306867,
+      "end": 372.649162,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "herbruikbare",
+      "start": 372.649162,
+      "end": 373.57788,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "creatieve-technologiebasis",
+      "start": 373.57788,
+      "end": 375.198398,
+      "exact": false,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "die",
+      "start": 375.198398,
+      "end": 375.540692,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 375.540692,
+      "end": 375.796324,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "staat",
+      "start": 375.796324,
+      "end": 376.290784,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "is",
+      "start": 376.290784,
+      "end": 376.546416,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "om",
+      "start": 376.546416,
+      "end": 376.802048,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "toekomstige",
+      "start": 376.802048,
+      "end": 377.674368,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "tools,",
+      "start": 377.674368,
+      "end": 378.238665,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "brede",
+      "start": 378.238665,
+      "end": 378.733125,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "omgevingen",
+      "start": 378.733125,
+      "end": 379.547591,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "en",
+      "start": 379.547591,
+      "end": 379.803223,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "nieuwe",
+      "start": 379.803223,
+      "end": 380.367045,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "productconcepten",
+      "start": 380.367045,
+      "end": 381.509501,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "te",
+      "start": 381.509501,
+      "end": 381.765132,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ondersteunen.",
+      "start": 381.765132,
+      "end": 382.872322,
+      "exact": true,
+      "block": 45,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Systeem",
+      "start": 382.872322,
+      "end": 383.502327,
+      "exact": true,
+      "block": 46,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Softwareproductie",
+      "start": 383.502327,
+      "end": 384.695755,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "zonder",
+      "start": 384.695755,
+      "end": 385.259577,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "opnieuw",
+      "start": 385.259577,
+      "end": 385.889581,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "te",
+      "start": 385.889581,
+      "end": 386.145213,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "beginnen.",
+      "start": 386.145213,
+      "end": 387.017267,
+      "exact": true,
+      "block": 47,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Het",
+      "start": 387.017267,
+      "end": 387.359562,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "centrale",
+      "start": 387.359562,
+      "end": 388.053144,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "idee",
+      "start": 388.053144,
+      "end": 388.474216,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "is",
+      "start": 388.474216,
+      "end": 388.729847,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "eenvoudig:",
+      "start": 388.729847,
+      "end": 389.554651,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "wanneer",
+      "start": 389.554651,
+      "end": 390.184655,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "een",
+      "start": 390.184655,
+      "end": 390.52695,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "nieuwe",
+      "start": 390.52695,
+      "end": 391.090772,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "product",
+      "start": 391.090772,
+      "end": 391.720777,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 391.720777,
+      "end": 392.063071,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "profiteren",
+      "start": 392.063071,
+      "end": 392.877538,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "van",
+      "start": 392.877538,
+      "end": 393.219832,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "technologie",
+      "start": 393.219832,
+      "end": 394.092152,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "die",
+      "start": 394.092152,
+      "end": 394.434447,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "al",
+      "start": 394.434447,
+      "end": 394.690079,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bestaat",
+      "start": 394.690079,
+      "end": 395.320083,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "binnen",
+      "start": 395.320083,
+      "end": 395.883905,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Unfire,",
+      "start": 395.883905,
+      "end": 396.517564,
+      "exact": false,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "moet",
+      "start": 396.517564,
+      "end": 396.938636,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ontwikkeling",
+      "start": 396.938636,
+      "end": 397.867353,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "dat",
+      "start": 397.867353,
+      "end": 398.209648,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "voordeel",
+      "start": 398.209648,
+      "end": 398.90323,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "hergebruiken",
+      "start": 398.90323,
+      "end": 399.831947,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 399.831947,
+      "end": 400.087579,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "plaats",
+      "start": 400.087579,
+      "end": 400.651401,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "van",
+      "start": 400.651401,
+      "end": 400.993696,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "het",
+      "start": 400.993696,
+      "end": 401.335991,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "opnieuw",
+      "start": 401.335991,
+      "end": 401.965995,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "te",
+      "start": 401.965995,
+      "end": 402.221627,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bouwen.",
+      "start": 402.221627,
+      "end": 402.963921,
+      "exact": true,
+      "block": 48,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Gedeelde",
+      "start": 402.963921,
+      "end": 403.657503,
+      "exact": true,
+      "block": 49,
+      "tts_chunk": 3
+    },
+    {
+      "word": "basis",
+      "start": 403.657503,
+      "end": 404.151963,
+      "exact": true,
+      "block": 49,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Baregaanbare",
+      "start": 404.151963,
+      "end": 405.080681,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "softwarecomponenten,",
+      "start": 405.080681,
+      "end": 406.44345,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "productief",
+      "start": 406.44345,
+      "end": 407.257916,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Kenmerken",
+      "start": 407.257916,
+      "end": 408.012882,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "en",
+      "start": 408.012882,
+      "end": 408.268514,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "validatiesystemen",
+      "start": 408.268514,
+      "end": 409.461942,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "vormen",
+      "start": 409.461942,
+      "end": 410.025764,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "een",
+      "start": 410.025764,
+      "end": 410.368059,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "basis",
+      "start": 410.368059,
+      "end": 410.862519,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "die",
+      "start": 410.862519,
+      "end": 411.204814,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "verder",
+      "start": 411.204814,
+      "end": 411.768636,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 411.768636,
+      "end": 412.110931,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ontwikkelen.",
+      "start": 412.110931,
+      "end": 413.161723,
+      "exact": true,
+      "block": 50,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Productlaag",
+      "start": 413.161723,
+      "end": 414.034043,
+      "exact": true,
+      "block": 51,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Nieuwe",
+      "start": 414.034043,
+      "end": 414.597865,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "toepassingen",
+      "start": 414.597865,
+      "end": 415.526582,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kunnen",
+      "start": 415.526582,
+      "end": 416.090404,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bestaande",
+      "start": 416.090404,
+      "end": 416.84537,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "capaciteiten",
+      "start": 416.84537,
+      "end": 417.774088,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "combineren",
+      "start": 417.774088,
+      "end": 418.588554,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "met",
+      "start": 418.588554,
+      "end": 418.930849,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "product-specifieke",
+      "start": 418.930849,
+      "end": 420.174416,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "technologie",
+      "start": 420.174416,
+      "end": 421.046736,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 421.046736,
+      "end": 421.302367,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "plaats",
+      "start": 421.302367,
+      "end": 421.866189,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "van",
+      "start": 421.866189,
+      "end": 422.208484,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "te",
+      "start": 422.208484,
+      "end": 422.464116,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "beginnen",
+      "start": 422.464116,
+      "end": 423.157698,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "met",
+      "start": 423.157698,
+      "end": 423.499993,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "een",
+      "start": 423.499993,
+      "end": 423.842287,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "lege",
+      "start": 423.842287,
+      "end": 424.263359,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "architectuur.",
+      "start": 424.263359,
+      "end": 425.370549,
+      "exact": true,
+      "block": 52,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Validatie",
+      "start": 425.370549,
+      "end": 426.125515,
+      "exact": true,
+      "block": 53,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Bouwstenen,",
+      "start": 426.125515,
+      "end": 427.009818,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "testen",
+      "start": 427.009818,
+      "end": 427.57364,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "en",
+      "start": 427.57364,
+      "end": 427.829272,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "interne",
+      "start": 427.829272,
+      "end": 428.459277,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "controlepunten",
+      "start": 428.459277,
+      "end": 429.497009,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bieden",
+      "start": 429.497009,
+      "end": 430.06083,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "meetbare",
+      "start": 430.06083,
+      "end": 430.754413,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bewijsmateriaal",
+      "start": 430.754413,
+      "end": 431.844996,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "over",
+      "start": 431.844996,
+      "end": 432.266067,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "of",
+      "start": 432.266067,
+      "end": 432.521699,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "softwarekandidaten",
+      "start": 432.521699,
+      "end": 433.765266,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "zoals",
+      "start": 433.765266,
+      "end": 434.259727,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bedoeld",
+      "start": 434.259727,
+      "end": 434.889731,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "functioneren.",
+      "start": 434.889731,
+      "end": 435.996921,
+      "exact": true,
+      "block": 54,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Expansie",
+      "start": 435.996921,
+      "end": 436.690503,
+      "exact": true,
+      "block": 55,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Infrastructuur",
+      "start": 436.690503,
+      "end": 437.728235,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kan",
+      "start": 437.728235,
+      "end": 438.07053,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "groeien",
+      "start": 438.07053,
+      "end": 438.700534,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "door",
+      "start": 438.700534,
+      "end": 439.121606,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "extra",
+      "start": 439.121606,
+      "end": 439.616066,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "berekeningscapaciteit,",
+      "start": 439.616066,
+      "end": 441.075443,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "opslagcapaciteit,",
+      "start": 441.075443,
+      "end": 442.287736,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "testcapaciteit,",
+      "start": 442.287736,
+      "end": 443.395305,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kwaliteitscontrole",
+      "start": 443.395305,
+      "end": 444.638872,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "en",
+      "start": 444.638872,
+      "end": 444.894504,
+      "exact": true,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "deployementcapaciteit.",
+      "start": 444.894504,
+      "end": 446.462516,
+      "exact": false,
+      "block": 56,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Productievoer感此处应为\"Production",
+      "start": 446.462516,
+      "end": 448.171849,
+      "exact": false,
+      "block": 57,
+      "tts_chunk": 3
+    },
+    {
+      "word": "scale\"的准确翻译，但由于提供的选项中没有合适的直接翻译，且考虑到需要保持专业语气和准确的技术术语，可以这样表达：",
+      "start": 448.171849,
+      "end": 450.914664,
+      "exact": false,
+      "block": 57,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Productievoerwaarde",
+      "start": 450.914664,
+      "end": 452.207596,
+      "exact": false,
+      "block": 58,
+      "tts_chunk": 3
+    },
+    {
+      "word": "De",
+      "start": 452.207596,
+      "end": 452.463228,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bottleneck",
+      "start": 452.463228,
+      "end": 453.277694,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "verandert.",
+      "start": 453.277694,
+      "end": 454.211133,
+      "exact": true,
+      "block": 59,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Waar",
+      "start": 454.211133,
+      "end": 454.632205,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "de",
+      "start": 454.632205,
+      "end": 454.887836,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "bestaande",
+      "start": 454.887836,
+      "end": 455.642803,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "architectuur",
+      "start": 455.642803,
+      "end": 456.57152,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "van",
+      "start": 456.57152,
+      "end": 456.913815,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "toepassing",
+      "start": 456.913815,
+      "end": 457.728281,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "is,",
+      "start": 457.728281,
+      "end": 458.05375,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "heeft",
+      "start": 458.05375,
+      "end": 458.54821,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "interne",
+      "start": 458.54821,
+      "end": 459.178215,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "ontwikkeling",
+      "start": 459.178215,
+      "end": 460.106932,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "getoond",
+      "start": 460.106932,
+      "end": 460.736936,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "dat",
+      "start": 460.736936,
+      "end": 461.079231,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "werkschikkingscandidaten",
+      "start": 461.079231,
+      "end": 462.608998,
+      "exact": false,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "door",
+      "start": 462.608998,
+      "end": 463.03007,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "extremelijk",
+      "start": 463.03007,
+      "end": 463.902389,
+      "exact": false,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "korte",
+      "start": 463.902389,
+      "end": 464.39685,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "buildciclessen",
+      "start": 464.39685,
+      "end": 465.434582,
+      "exact": false,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "kunnen",
+      "start": 465.434582,
+      "end": 465.998404,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "gaan",
+      "start": 465.998404,
+      "end": 466.419476,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "—",
+      "start": 466.419476,
+      "end": 466.574669,
+      "exact": false,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 466.574669,
+      "end": 466.830301,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "sommige",
+      "start": 466.830301,
+      "end": 467.460305,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "gevallen",
+      "start": 467.460305,
+      "end": 468.153887,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "gemeten",
+      "start": 468.153887,
+      "end": 468.783892,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "in",
+      "start": 468.783892,
+      "end": 469.039523,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "minuten.",
+      "start": 469.039523,
+      "end": 469.848,
+      "exact": true,
+      "block": 60,
+      "tts_chunk": 3
+    },
+    {
+      "word": "Met",
+      "start": 469.848,
+      "end": 470.240248,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "de",
+      "start": 470.240248,
+      "end": 470.533186,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "uitbreiding",
+      "start": 470.533186,
+      "end": 471.53281,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "van",
+      "start": 471.53281,
+      "end": 471.925059,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "de",
+      "start": 471.925059,
+      "end": 472.217997,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "herbruikbare",
+      "start": 472.217997,
+      "end": 473.282249,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "technologie",
+      "start": 473.282249,
+      "end": 474.281873,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "worden",
+      "start": 474.281873,
+      "end": 474.927977,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "de",
+      "start": 474.927977,
+      "end": 475.220915,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "beperkende",
+      "start": 475.220915,
+      "end": 476.154242,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "factoren",
+      "start": 476.154242,
+      "end": 476.949044,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "steeds",
+      "start": 476.949044,
+      "end": 477.595149,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "meer",
+      "start": 477.595149,
+      "end": 478.077671,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "de",
+      "start": 478.077671,
+      "end": 478.370609,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "infrastructuurbronnen,",
+      "start": 478.370609,
+      "end": 480.042963,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "zoals",
+      "start": 480.042963,
+      "end": 480.609583,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "berekening,",
+      "start": 480.609583,
+      "end": 481.62294,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "opslag,",
+      "start": 481.62294,
+      "end": 482.349073,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "testen,",
+      "start": 482.349073,
+      "end": 483.075206,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kwaliteitsbeheer",
+      "start": 483.075206,
+      "end": 484.384389,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "en",
+      "start": 484.384389,
+      "end": 484.677327,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "commerciële",
+      "start": 484.677327,
+      "end": 485.676951,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "implementatie",
+      "start": 485.676951,
+      "end": 486.804339,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "—",
+      "start": 486.804339,
+      "end": 486.98218,
+      "exact": false,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "bronnen",
+      "start": 486.98218,
+      "end": 487.704126,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "die",
+      "start": 487.704126,
+      "end": 488.096375,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "zelf",
+      "start": 488.096375,
+      "end": 488.578897,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ook",
+      "start": 488.578897,
+      "end": 488.971145,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kunnen",
+      "start": 488.971145,
+      "end": 489.61725,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "worden",
+      "start": 489.61725,
+      "end": 490.263354,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "uitgebreid.",
+      "start": 490.263354,
+      "end": 491.4012,
+      "exact": true,
+      "block": 61,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Flagshipproduct",
+      "start": 491.4012,
+      "end": 492.65094,
+      "exact": false,
+      "block": 62,
+      "tts_chunk": 4
+    },
+    {
+      "word": "volgt",
+      "start": 492.65094,
+      "end": 493.21756,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 4
+    },
+    {
+      "word": "momenteel",
+      "start": 493.21756,
+      "end": 494.082705,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 4
+    },
+    {
+      "word": "de",
+      "start": 494.082705,
+      "end": 494.375642,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 4
+    },
+    {
+      "word": "technologische",
+      "start": 494.375642,
+      "end": 495.564818,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 4
+    },
+    {
+      "word": "richting",
+      "start": 495.564818,
+      "end": 496.35962,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 4
+    },
+    {
+      "word": "die",
+      "start": 496.35962,
+      "end": 496.751869,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 4
+    },
+    {
+      "word": "algemeen",
+      "start": 496.751869,
+      "end": 497.54667,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 4
+    },
+    {
+      "word": "getoond",
+      "start": 497.54667,
+      "end": 498.268616,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 4
+    },
+    {
+      "word": "wordt.",
+      "start": 498.268616,
+      "end": 499.039755,
+      "exact": true,
+      "block": 62,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Prioriteits",
+      "start": 499.039755,
+      "end": 500.039379,
+      "exact": false,
+      "block": 63,
+      "tts_chunk": 4
+    },
+    {
+      "word": "golf",
+      "start": 500.039379,
+      "end": 500.521901,
+      "exact": false,
+      "block": 63,
+      "tts_chunk": 4
+    },
+    {
+      "word": "1",
+      "start": 500.521901,
+      "end": 500.699742,
+      "exact": true,
+      "block": 63,
+      "tts_chunk": 4
+    },
+    {
+      "word": "software-candidaten",
+      "start": 500.699742,
+      "end": 502.181361,
+      "exact": false,
+      "block": 63,
+      "tts_chunk": 4
+    },
+    {
+      "word": "worden",
+      "start": 502.181361,
+      "end": 502.827466,
+      "exact": true,
+      "block": 63,
+      "tts_chunk": 4
+    },
+    {
+      "word": "geïdentificeerd",
+      "start": 502.827466,
+      "end": 504.077206,
+      "exact": true,
+      "block": 63,
+      "tts_chunk": 4
+    },
+    {
+      "word": "voor",
+      "start": 504.077206,
+      "end": 504.559728,
+      "exact": true,
+      "block": 63,
+      "tts_chunk": 4
+    },
+    {
+      "word": "gefocust",
+      "start": 504.559728,
+      "end": 505.35453,
+      "exact": true,
+      "block": 63,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ontwikkeling.",
+      "start": 505.35453,
+      "end": 506.6233,
+      "exact": true,
+      "block": 63,
+      "tts_chunk": 4
+    },
+    {
+      "word": "53",
+      "start": 506.6233,
+      "end": 506.916238,
+      "exact": true,
+      "block": 64,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Standalone-software-candidaten",
+      "start": 506.916238,
+      "end": 508.974787,
+      "exact": false,
+      "block": 65,
+      "tts_chunk": 4
+    },
+    {
+      "word": "die",
+      "start": 508.974787,
+      "end": 509.367035,
+      "exact": true,
+      "block": 65,
+      "tts_chunk": 4
+    },
+    {
+      "word": "worden",
+      "start": 509.367035,
+      "end": 510.01314,
+      "exact": true,
+      "block": 65,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ontwikkeld",
+      "start": 510.01314,
+      "end": 510.946467,
+      "exact": true,
+      "block": 65,
+      "tts_chunk": 4
+    },
+    {
+      "word": "en",
+      "start": 510.946467,
+      "end": 511.239405,
+      "exact": true,
+      "block": 65,
+      "tts_chunk": 4
+    },
+    {
+      "word": "interne",
+      "start": 511.239405,
+      "end": 511.961351,
+      "exact": true,
+      "block": 65,
+      "tts_chunk": 4
+    },
+    {
+      "word": "gecontroleerd.",
+      "start": 511.961351,
+      "end": 513.293256,
+      "exact": true,
+      "block": 65,
+      "tts_chunk": 4
+    },
+    {
+      "word": "53/53",
+      "start": 513.293256,
+      "end": 513.775778,
+      "exact": false,
+      "block": 66,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Erfolgrechte",
+      "start": 513.775778,
+      "end": 514.84003,
+      "exact": false,
+      "block": 67,
+      "tts_chunk": 4
+    },
+    {
+      "word": "zelfstandige",
+      "start": 514.84003,
+      "end": 515.904282,
+      "exact": true,
+      "block": 67,
+      "tts_chunk": 4
+    },
+    {
+      "word": "bouwsels",
+      "start": 515.904282,
+      "end": 516.699084,
+      "exact": true,
+      "block": 67,
+      "tts_chunk": 4
+    },
+    {
+      "word": "op",
+      "start": 516.699084,
+      "end": 516.992022,
+      "exact": true,
+      "block": 67,
+      "tts_chunk": 4
+    },
+    {
+      "word": "het",
+      "start": 516.992022,
+      "end": 517.38427,
+      "exact": true,
+      "block": 67,
+      "tts_chunk": 4
+    },
+    {
+      "word": "interne",
+      "start": 517.38427,
+      "end": 518.106216,
+      "exact": true,
+      "block": 67,
+      "tts_chunk": 4
+    },
+    {
+      "word": "controlepunt",
+      "start": 518.106216,
+      "end": 519.170468,
+      "exact": true,
+      "block": 67,
+      "tts_chunk": 4
+    },
+    {
+      "word": "van",
+      "start": 519.170468,
+      "end": 519.562716,
+      "exact": true,
+      "block": 67,
+      "tts_chunk": 4
+    },
+    {
+      "word": "september",
+      "start": 519.562716,
+      "end": 520.42786,
+      "exact": true,
+      "block": 67,
+      "tts_chunk": 4
+    },
+    {
+      "word": "2026.",
+      "start": 520.42786,
+      "end": 521.114901,
+      "exact": true,
+      "block": 67,
+      "tts_chunk": 4
+    },
+    {
+      "word": "01",
+      "start": 521.114901,
+      "end": 521.407838,
+      "exact": false,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "STRICT",
+      "start": 521.407838,
+      "end": 522.053943,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "REGELS:",
+      "start": 522.053943,
+      "end": 522.780076,
+      "exact": true,
+      "block": 68,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 522.780076,
+      "end": 522.957918,
+      "exact": false,
+      "block": 69,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Returned",
+      "start": 522.957918,
+      "end": 523.75272,
+      "exact": true,
+      "block": 69,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ENIGMA",
+      "start": 523.75272,
+      "end": 524.398825,
+      "exact": true,
+      "block": 69,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ALleen.",
+      "start": 524.398825,
+      "end": 525.249447,
+      "exact": true,
+      "block": 69,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 525.249447,
+      "end": 525.427289,
+      "exact": false,
+      "block": 70,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Geen",
+      "start": 525.427289,
+      "end": 525.909811,
+      "exact": true,
+      "block": 70,
+      "tts_chunk": 4
+    },
+    {
+      "word": "uitleg.",
+      "start": 525.909811,
+      "end": 526.760434,
+      "exact": true,
+      "block": 70,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 526.760434,
+      "end": 526.938276,
+      "exact": false,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Geen",
+      "start": 526.938276,
+      "end": 527.420798,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "aanhalingstekens.",
+      "start": 527.420798,
+      "end": 528.934499,
+      "exact": true,
+      "block": 71,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 528.934499,
+      "end": 529.112341,
+      "exact": false,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Behoud",
+      "start": 529.112341,
+      "end": 529.758445,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "de",
+      "start": 529.758445,
+      "end": 530.051383,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "betekenis",
+      "start": 530.051383,
+      "end": 530.916527,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "en",
+      "start": 530.916527,
+      "end": 531.209465,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "het",
+      "start": 531.209465,
+      "end": 531.601714,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "professionele",
+      "start": 531.601714,
+      "end": 532.729101,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "bedrijfsachtige",
+      "start": 532.729101,
+      "end": 533.978841,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "toon.",
+      "start": 533.978841,
+      "end": 534.665881,
+      "exact": true,
+      "block": 72,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 534.665881,
+      "end": 534.843723,
+      "exact": false,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Schrijf",
+      "start": 534.843723,
+      "end": 535.565669,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "natuurlijk",
+      "start": 535.565669,
+      "end": 536.498996,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "op",
+      "start": 536.498996,
+      "end": 536.791934,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "niveau",
+      "start": 536.791934,
+      "end": 537.438039,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Nederlands,",
+      "start": 537.438039,
+      "end": 538.451395,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "niet",
+      "start": 538.451395,
+      "end": 538.933917,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "een",
+      "start": 538.933917,
+      "end": 539.326165,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "letterlijke",
+      "start": 539.326165,
+      "end": 540.325789,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "machinevertaling.",
+      "start": 540.325789,
+      "end": 541.83949,
+      "exact": true,
+      "block": 73,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 541.83949,
+      "end": 542.017332,
+      "exact": false,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Noem",
+      "start": 542.017332,
+      "end": 542.499854,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "de",
+      "start": 542.499854,
+      "end": 542.792792,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "volgende",
+      "start": 542.792792,
+      "end": 543.587594,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "productnamen",
+      "start": 543.587594,
+      "end": 544.651846,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "NIET",
+      "start": 544.651846,
+      "end": 545.134368,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "in",
+      "start": 545.134368,
+      "end": 545.427305,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "het",
+      "start": 545.427305,
+      "end": 545.819554,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Nederlands:",
+      "start": 545.819554,
+      "end": 546.83291,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Unfire,",
+      "start": 546.83291,
+      "end": 547.559043,
+      "exact": false,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bolt,",
+      "start": 547.559043,
+      "end": 548.121594,
+      "exact": false,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Archer,",
+      "start": 548.121594,
+      "end": 548.847728,
+      "exact": false,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "POWER,",
+      "start": 548.847728,
+      "end": 549.494377,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "AI",
+      "start": 549.494377,
+      "end": 549.787315,
+      "exact": false,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "TOKEN",
+      "start": 549.787315,
+      "end": 550.353936,
+      "exact": false,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "COUNTER.",
+      "start": 550.353936,
+      "end": 551.280399,
+      "exact": true,
+      "block": 74,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 551.280399,
+      "end": 551.458241,
+      "exact": false,
+      "block": 75,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Behoud",
+      "start": 551.458241,
+      "end": 552.104346,
+      "exact": true,
+      "block": 75,
+      "tts_chunk": 4
+    },
+    {
+      "word": "cijfers,",
+      "start": 552.104346,
+      "end": 552.90632,
+      "exact": true,
+      "block": 75,
+      "tts_chunk": 4
+    },
+    {
+      "word": "technische",
+      "start": 552.90632,
+      "end": 553.839648,
+      "exact": true,
+      "block": 75,
+      "tts_chunk": 4
+    },
+    {
+      "word": "termologie",
+      "start": 553.839648,
+      "end": 554.772975,
+      "exact": false,
+      "block": 75,
+      "tts_chunk": 4
+    },
+    {
+      "word": "en",
+      "start": 554.772975,
+      "end": 555.065913,
+      "exact": true,
+      "block": 75,
+      "tts_chunk": 4
+    },
+    {
+      "word": "productnamen",
+      "start": 555.065913,
+      "end": 556.130165,
+      "exact": true,
+      "block": 75,
+      "tts_chunk": 4
+    },
+    {
+      "word": "accurate.",
+      "start": 556.130165,
+      "end": 557.129484,
+      "exact": true,
+      "block": 75,
+      "tts_chunk": 4
+    },
+    {
+      "word": "-",
+      "start": 557.129484,
+      "end": 557.307326,
+      "exact": false,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Dit",
+      "start": 557.307326,
+      "end": 557.699575,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "tekst",
+      "start": 557.699575,
+      "end": 558.266195,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "zal",
+      "start": 558.266195,
+      "end": 558.658444,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "gesproken",
+      "start": 558.658444,
+      "end": 559.523588,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "worden",
+      "start": 559.523588,
+      "end": 560.169693,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "door",
+      "start": 560.169693,
+      "end": 560.652215,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "een",
+      "start": 560.652215,
+      "end": 561.044463,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "professionele",
+      "start": 561.044463,
+      "end": 562.171851,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "bedrijfsachtige",
+      "start": 562.171851,
+      "end": 563.421591,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "vrouwelijke",
+      "start": 563.421591,
+      "end": 564.421215,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "stem.",
+      "start": 564.421215,
+      "end": 565.108255,
+      "exact": true,
+      "block": 76,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Hergebruik",
+      "start": 565.108255,
+      "end": 566.041582,
+      "exact": true,
+      "block": 77,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Start",
+      "start": 566.041582,
+      "end": 566.608203,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "waar",
+      "start": 566.608203,
+      "end": 567.090725,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "mogelijk",
+      "start": 567.090725,
+      "end": 567.885526,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "vanaf",
+      "start": 567.885526,
+      "end": 568.452147,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "bestaande",
+      "start": 568.452147,
+      "end": 569.317291,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "technologie.",
+      "start": 569.317291,
+      "end": 570.521433,
+      "exact": true,
+      "block": 78,
+      "tts_chunk": 4
+    },
+    {
+      "word": "02",
+      "start": 570.521433,
+      "end": 570.814371,
+      "exact": true,
+      "block": 79,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bouw",
+      "start": 570.814371,
+      "end": 571.296893,
+      "exact": true,
+      "block": 80,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Maak",
+      "start": 571.296893,
+      "end": 571.779415,
+      "exact": true,
+      "block": 81,
+      "tts_chunk": 4
+    },
+    {
+      "word": "de",
+      "start": 571.779415,
+      "end": 572.072353,
+      "exact": true,
+      "block": 81,
+      "tts_chunk": 4
+    },
+    {
+      "word": "product-specifieke",
+      "start": 572.072353,
+      "end": 573.497403,
+      "exact": false,
+      "block": 81,
+      "tts_chunk": 4
+    },
+    {
+      "word": "laag.",
+      "start": 573.497403,
+      "end": 574.184443,
+      "exact": true,
+      "block": 81,
+      "tts_chunk": 4
+    },
+    {
+      "word": "03",
+      "start": 574.184443,
+      "end": 574.477381,
+      "exact": true,
+      "block": 82,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Schalen",
+      "start": 574.477381,
+      "end": 575.199327,
+      "exact": true,
+      "block": 83,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Expand",
+      "start": 575.199327,
+      "end": 575.845432,
+      "exact": false,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "je",
+      "start": 575.845432,
+      "end": 576.138369,
+      "exact": true,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "infrastructuur",
+      "start": 576.138369,
+      "end": 577.327545,
+      "exact": true,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "bij",
+      "start": 577.327545,
+      "end": 577.719794,
+      "exact": true,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "groeiend",
+      "start": 577.719794,
+      "end": 578.514595,
+      "exact": true,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "productie.",
+      "start": 578.514595,
+      "end": 579.584258,
+      "exact": true,
+      "block": 84,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Bedrijven",
+      "start": 579.584258,
+      "end": 580.449402,
+      "exact": true,
+      "block": 85,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Dedicateerde",
+      "start": 580.449402,
+      "end": 581.513654,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "software",
+      "start": 581.513654,
+      "end": 582.308456,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "systeem.",
+      "start": 582.308456,
+      "end": 583.23492,
+      "exact": true,
+      "block": 86,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Dezelfde",
+      "start": 583.23492,
+      "end": 584.029721,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "productiestraatbaarmat",
+      "start": 584.029721,
+      "end": 585.676284,
+      "exact": false,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kan",
+      "start": 585.676284,
+      "end": 586.068532,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "specialiseerde",
+      "start": 586.068532,
+      "end": 587.257708,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "toepassingen",
+      "start": 587.257708,
+      "end": 588.32196,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "en",
+      "start": 588.32196,
+      "end": 588.614898,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "omgevingen",
+      "start": 588.614898,
+      "end": 589.548225,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ondersteunen",
+      "start": 589.548225,
+      "end": 590.612477,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "die",
+      "start": 590.612477,
+      "end": 591.004726,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "zich",
+      "start": 591.004726,
+      "end": 591.487248,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "richten",
+      "start": 591.487248,
+      "end": 592.209194,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "op",
+      "start": 592.209194,
+      "end": 592.502131,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "de",
+      "start": 592.502131,
+      "end": 592.795069,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "vereisten",
+      "start": 592.795069,
+      "end": 593.660214,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "van",
+      "start": 593.660214,
+      "end": 594.052462,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "een",
+      "start": 594.052462,
+      "end": 594.444711,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "organisatie.",
+      "start": 594.444711,
+      "end": 595.648853,
+      "exact": true,
+      "block": 87,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Institutionen",
+      "start": 595.648853,
+      "end": 596.77624,
+      "exact": true,
+      "block": 88,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Gereguleerde",
+      "start": 596.77624,
+      "end": 597.840492,
+      "exact": true,
+      "block": 89,
+      "tts_chunk": 4
+    },
+    {
+      "word": "omgevingen.",
+      "start": 597.840492,
+      "end": 598.978337,
+      "exact": true,
+      "block": 89,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Projecten",
+      "start": 598.978337,
+      "end": 599.843482,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kunnen",
+      "start": 599.843482,
+      "end": 600.489586,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "geïsoleerd",
+      "start": 600.489586,
+      "end": 601.422914,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "blijven",
+      "start": 601.422914,
+      "end": 602.144859,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "terwijl",
+      "start": 602.144859,
+      "end": 602.866805,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "ze",
+      "start": 602.866805,
+      "end": 603.159743,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "van",
+      "start": 603.159743,
+      "end": 603.551991,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "benutbare",
+      "start": 603.551991,
+      "end": 604.417136,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "basistechnologie,",
+      "start": 604.417136,
+      "end": 605.806347,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "validatieprocessen",
+      "start": 605.806347,
+      "end": 607.231397,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "en",
+      "start": 607.231397,
+      "end": 607.524335,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "productieinfrastructuur",
+      "start": 607.524335,
+      "end": 609.224449,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kunnen",
+      "start": 609.224449,
+      "end": 609.870554,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "profiteren.",
+      "start": 609.870554,
+      "end": 611.008399,
+      "exact": true,
+      "block": 90,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Openbare",
+      "start": 611.008399,
+      "end": 611.803201,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "sector",
+      "start": 611.803201,
+      "end": 612.449305,
+      "exact": true,
+      "block": 91,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Schaalbare",
+      "start": 612.449305,
+      "end": 613.382633,
+      "exact": true,
+      "block": 92,
+      "tts_chunk": 4
+    },
+    {
+      "word": "digitale",
+      "start": 613.382633,
+      "end": 614.177434,
+      "exact": true,
+      "block": 92,
+      "tts_chunk": 4
+    },
+    {
+      "word": "tools.",
+      "start": 614.177434,
+      "end": 614.948573,
+      "exact": true,
+      "block": 92,
+      "tts_chunk": 4
+    },
+    {
+      "word": "De",
+      "start": 614.948573,
+      "end": 615.241511,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "architectuur",
+      "start": 615.241511,
+      "end": 616.305763,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "wordt",
+      "start": 616.305763,
+      "end": 616.872383,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "voorbereid",
+      "start": 616.872383,
+      "end": 617.805711,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "op",
+      "start": 617.805711,
+      "end": 618.098648,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "toekomstige",
+      "start": 618.098648,
+      "end": 619.098273,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "samenwerking",
+      "start": 619.098273,
+      "end": 620.162524,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "waarin",
+      "start": 620.162524,
+      "end": 620.808629,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "controle,",
+      "start": 620.808629,
+      "end": 621.683459,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "tracabiliteit,",
+      "start": 621.683459,
+      "end": 622.890876,
+      "exact": false,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "validatie",
+      "start": 622.890876,
+      "end": 623.75602,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "en",
+      "start": 623.75602,
+      "end": 624.048958,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "lange-termijn-mantelbaarheid",
+      "start": 624.048958,
+      "end": 626.007747,
+      "exact": false,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "van",
+      "start": 626.007747,
+      "end": 626.399996,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "belang",
+      "start": 626.399996,
+      "end": 627.0461,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "zijn.",
+      "start": 627.0461,
+      "end": 627.73314,
+      "exact": true,
+      "block": 93,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Unfire",
+      "start": 627.73314,
+      "end": 628.379245,
+      "exact": false,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "kan",
+      "start": 628.379245,
+      "end": 628.771494,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "producten,",
+      "start": 628.771494,
+      "end": 629.716667,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "bouwsels,",
+      "start": 629.716667,
+      "end": 630.591497,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "interne",
+      "start": 630.591497,
+      "end": 631.313443,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "controlepunten",
+      "start": 631.313443,
+      "end": 632.502619,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "en",
+      "start": 632.502619,
+      "end": 632.795557,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "productiecapaciteit",
+      "start": 632.795557,
+      "end": 634.277176,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "tonen",
+      "start": 634.277176,
+      "end": 634.843796,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "zonder",
+      "start": 634.843796,
+      "end": 635.489901,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "de",
+      "start": 635.489901,
+      "end": 635.782839,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "implementatiemethoden",
+      "start": 635.782839,
+      "end": 637.375164,
+      "exact": false,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "te",
+      "start": 637.375164,
+      "end": 637.668102,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "onthullen",
+      "start": 637.668102,
+      "end": 638.533246,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "die",
+      "start": 638.533246,
+      "end": 638.925495,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "de",
+      "start": 638.925495,
+      "end": 639.218433,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "onderliggende",
+      "start": 639.218433,
+      "end": 640.34582,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "verdeling",
+      "start": 640.34582,
+      "end": 641.210964,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "mogelijk",
+      "start": 641.210964,
+      "end": 642.005766,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "maken.",
+      "start": 642.005766,
+      "end": 642.776905,
+      "exact": true,
+      "block": 94,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Financiering",
+      "start": 642.776905,
+      "end": 643.841157,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "&",
+      "start": 643.841157,
+      "end": 644.018999,
+      "exact": false,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "samenwerking",
+      "start": 644.018999,
+      "end": 645.08325,
+      "exact": true,
+      "block": 95,
+      "tts_chunk": 4
+    },
+    {
+      "word": "Verbreid",
+      "start": 645.08325,
+      "end": 645.878052,
+      "exact": true,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "wat",
+      "start": 645.878052,
+      "end": 646.270301,
+      "exact": true,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "er",
+      "start": 646.270301,
+      "end": 646.563238,
+      "exact": true,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "al",
+      "start": 646.563238,
+      "end": 646.856176,
+      "exact": true,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "bestaat.",
+      "start": 646.856176,
+      "end": 647.78264,
+      "exact": true,
+      "block": 96,
+      "tts_chunk": 4
+    },
+    {
+      "word": "halo@unfire.technology",
+      "start": 647.78264,
+      "end": 649.32,
+      "exact": false,
+      "block": 97,
+      "tts_chunk": 4
+    }
+  ],
+  "timeline_source": "regenerated-edge-tts-reference-chunks",
+  "timeline_method": "4-identical-duration-tts-chunks-weighted-word-interpolation",
+  "tts_chunks": 4,
+  "whisper_coverage_reference": 0.8946840521564694
+}
