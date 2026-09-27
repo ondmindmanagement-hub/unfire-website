@@ -6849,288 +6849,1112 @@ if(document.readyState === "loading"){
 
 
 <!-- unfire-simple-drag-editor-v1 -->
-<style id="unfire-simple-drag-editor-style">
-  body.uf-drag-editing #unfire-floating-player {
-    cursor: grab !important;
-    user-select: none !important;
-    touch-action: none !important;
-    outline: 1px dashed rgba(255,255,255,.22) !important;
-    outline-offset: 4px !important;
-  }
 
-  body.uf-drag-editing #unfire-floating-player.uf-dragging {
-    cursor: grabbing !important;
-  }
-</style>
 
-<script id="unfire-simple-drag-editor-script">
-(() => {
-  const params = new URLSearchParams(location.search);
-  if (params.get('edit') !== '1') return;
 
-  const STORAGE_KEY = 'unfire-player-position-v1';
 
-  function init() {
-    const player = document.getElementById('unfire-floating-player');
-    if (!player) {
-      setTimeout(init, 100);
-      return;
+
+<!-- UNFIRE PLAYER CLEAN RESPONSIVE FINAL -->
+<style id="unfire-player-clean-responsive-style">
+
+/* Slot solo usado en pantallas estrechas */
+#unfire-player-safe-slot-final {
+    display: none;
+}
+
+/* ==============================
+   ESCRITORIO ANCHO
+   ============================== */
+
+@media (min-width: 1101px) {
+
+    #unfire-real-player,
+    #unfire-floating-player {
+        position: fixed !important;
+
+        top: 128px !important;
+        left: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
+
+        transform: translateX(-50%) !important;
+
+        width: 150px !important;
+        min-width: 150px !important;
+        max-width: 150px !important;
+
+        margin: 0 !important;
+
+        z-index: 999999 !important;
+    }
+}
+
+/* ==============================
+   VENTANA ESTRECHA + MÓVIL
+   ============================== */
+
+@media (max-width: 1100px) {
+
+    #unfire-player-safe-slot-final {
+        display: flex !important;
+
+        width: 100% !important;
+        height: 74px !important;
+
+        align-items: center !important;
+        justify-content: center !important;
+
+        position: relative !important;
+
+        background: #000 !important;
+
+        z-index: 30 !important;
     }
 
-    document.body.classList.add('uf-drag-editing');
+    #unfire-player-safe-slot-final #unfire-real-player,
+    #unfire-player-safe-slot-final #unfire-floating-player {
+        position: relative !important;
 
-    // Restaurar posición guardada
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+
+        transform: none !important;
+
+        width: 150px !important;
+        min-width: 150px !important;
+        max-width: 150px !important;
+
+        margin: 0 !important;
+
+        z-index: 31 !important;
+    }
+}
+
+/* móvil pequeño */
+@media (max-width: 600px) {
+
+    #unfire-player-safe-slot-final {
+        height: 66px !important;
+    }
+
+    #unfire-player-safe-slot-final #unfire-real-player,
+    #unfire-player-safe-slot-final #unfire-floating-player {
+        width: 142px !important;
+        min-width: 142px !important;
+        max-width: 142px !important;
+    }
+}
+
+</style>
+
+<script id="unfire-player-clean-responsive-script">
+(() => {
+
+    const BREAKPOINT = 1100;
+
+    function player() {
+        return (
+            document.getElementById('unfire-real-player') ||
+            document.getElementById('unfire-floating-player')
+        );
+    }
+
+    function header() {
+        return (
+            document.querySelector('header') ||
+            document.querySelector('.site-header') ||
+            document.querySelector('[role="banner"]')
+        );
+    }
+
+    function createSlot() {
+
+        let slot = document.getElementById(
+            'unfire-player-safe-slot-final'
+        );
+
+        if (slot) return slot;
+
+        slot = document.createElement('div');
+        slot.id = 'unfire-player-safe-slot-final';
+
+        const h = header();
+        const main = document.querySelector('main');
+
+        if (h) {
+            h.insertAdjacentElement('afterend', slot);
+        }
+        else if (main) {
+            main.insertAdjacentElement('beforebegin', slot);
+        }
+        else {
+            document.body.prepend(slot);
+        }
+
+        return slot;
+    }
+
+    function layout() {
+
+        const p = player();
+
+        if (!p) {
+            setTimeout(layout, 80);
+            return;
+        }
+
+        const narrow = window.innerWidth <= BREAKPOINT;
+
+        if (narrow) {
+
+            const slot = createSlot();
+
+            if (p.parentElement !== slot) {
+                slot.appendChild(p);
+            }
+
+            p.style.removeProperty('top');
+            p.style.removeProperty('left');
+            p.style.removeProperty('right');
+            p.style.removeProperty('bottom');
+            p.style.removeProperty('transform');
+
+        } else {
+
+            /* En escritorio vuelve al viewport */
+            if (p.parentElement !== document.body) {
+                document.body.appendChild(p);
+            }
+        }
+    }
+
+    /* borrar la posición manual antigua que causaba conflictos */
     try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-      if (saved && Number.isFinite(saved.left) && Number.isFinite(saved.top)) {
-        player.style.setProperty('left', saved.left + 'px', 'important');
-        player.style.setProperty('top', saved.top + 'px', 'important');
-        player.style.setProperty('right', 'auto', 'important');
-        player.style.setProperty('bottom', 'auto', 'important');
-        player.style.setProperty('transform', 'none', 'important');
-      }
+        localStorage.removeItem('unfire-real-player-position-v2');
+        localStorage.removeItem('unfire-player-position-v1');
     } catch {}
 
-    let dragging = false;
-    let offsetX = 0;
-    let offsetY = 0;
+    let timer;
 
-    player.addEventListener('pointerdown', (e) => {
-      // no iniciar drag desde controles interactivos
-      if (e.target.closest('button, input, select, a')) return;
-
-      const r = player.getBoundingClientRect();
-
-      dragging = true;
-      offsetX = e.clientX - r.left;
-      offsetY = e.clientY - r.top;
-
-      player.classList.add('uf-dragging');
-      player.setPointerCapture?.(e.pointerId);
-
-      e.preventDefault();
+    window.addEventListener('resize', () => {
+        clearTimeout(timer);
+        timer = setTimeout(layout, 60);
     });
 
-    player.addEventListener('pointermove', (e) => {
-      if (!dragging) return;
+    if (document.readyState === 'loading') {
+        document.addEventListener(
+            'DOMContentLoaded',
+            layout,
+            { once: true }
+        );
+    } else {
+        layout();
+    }
 
-      const r = player.getBoundingClientRect();
-
-      const maxLeft = Math.max(0, window.innerWidth - r.width);
-      const maxTop = Math.max(0, window.innerHeight - r.height);
-
-      const left = Math.min(maxLeft, Math.max(0, e.clientX - offsetX));
-      const top = Math.min(maxTop, Math.max(0, e.clientY - offsetY));
-
-      player.style.setProperty('left', left + 'px', 'important');
-      player.style.setProperty('top', top + 'px', 'important');
-      player.style.setProperty('right', 'auto', 'important');
-      player.style.setProperty('bottom', 'auto', 'important');
-      player.style.setProperty('transform', 'none', 'important');
-
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({ left, top })
-      );
-    });
-
-    const stop = () => {
-      dragging = false;
-      player.classList.remove('uf-dragging');
-    };
-
-    player.addEventListener('pointerup', stop);
-    player.addEventListener('pointercancel', stop);
-
-    console.log('[Unfire] simple drag editor active');
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init, { once: true });
-  } else {
-    init();
-  }
 })();
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+<!-- ======================================================
+     UNFIRE FINAL CORPORATE LAYOUT SYSTEM
+====================================================== -->
+
+<style id="unfire-layout-reset-final">
+
+:root {
+    --uf-black: #000000;
+    --uf-1: #090a0c;
+    --uf-2: #0d0f11;
+    --uf-3: #111316;
+    --uf-4: #15181c;
+    --uf-5: #181b20;
+
+    --uf-line: rgba(255,255,255,.07);
+    --uf-line-soft: rgba(255,255,255,.045);
+
+    --uf-text: rgba(255,255,255,.96);
+    --uf-muted: rgba(235,238,243,.61);
+    --uf-soft: rgba(255,255,255,.43);
+}
+
+
+/* ======================================================
+   ESTRUCTURA GENERAL
+====================================================== */
+
+html,
+body {
+    background: var(--uf-black) !important;
+}
+
+body.uf-layout-final {
+    overflow-x: hidden;
+}
+
+.uf-frame {
+    box-sizing: border-box !important;
+
+    min-height: 0 !important;
+    height: auto !important;
+
+    margin: 0 !important;
+
+    padding-top: clamp(72px, 8vw, 122px) !important;
+    padding-bottom: clamp(72px, 8vw, 122px) !important;
+
+    border-top: 1px solid var(--uf-line-soft) !important;
+
+    position: relative;
+}
+
+
+/* Evitar marcos gigantes causados por alturas heredadas */
+
+.uf-frame > div,
+.uf-frame .container,
+.uf-frame [class*="container"],
+.uf-frame [class*="inner"],
+.uf-frame [class*="content"] {
+    min-height: 0 !important;
+}
+
+
+/* ======================================================
+   HERO
+====================================================== */
+
+.uf-hero {
+    background: #000 !important;
+
+    border-top: none !important;
+
+    padding-top: clamp(76px, 8vw, 118px) !important;
+    padding-bottom: clamp(90px, 10vw, 150px) !important;
+}
+
+
+/* ======================================================
+   COMPANY
+====================================================== */
+
+.uf-company {
+    background: var(--uf-2) !important;
+}
+
+
+/* ======================================================
+   SELECTED WORK
+====================================================== */
+
+.uf-selected-work {
+    background: #000 !important;
+}
+
+
+/* ======================================================
+   PRODUCTOS
+====================================================== */
+
+.uf-product-bolt {
+    background: var(--uf-3) !important;
+}
+
+.uf-product-power {
+    background: var(--uf-1) !important;
+}
+
+.uf-product-suite {
+    background: var(--uf-3) !important;
+}
+
+.uf-product-archer {
+    background: var(--uf-1) !important;
+}
+
+
+/* ======================================================
+   AUDIO
+====================================================== */
+
+.uf-audio {
+    background: var(--uf-3) !important;
+}
+
+
+/* ======================================================
+   SYSTEM
+====================================================== */
+
+.uf-system {
+    background: #000 !important;
+}
+
+
+/* ======================================================
+   PRODUCTION SCALE
+====================================================== */
+
+.uf-scale {
+    background:
+        linear-gradient(
+            180deg,
+            #101216 0%,
+            #0c0e11 100%
+        ) !important;
+}
+
+
+/* ======================================================
+   COMPANIES / INSTITUTIONS / PUBLIC
+====================================================== */
+
+.uf-companies,
+.uf-institutions,
+.uf-public {
+    background: var(--uf-2) !important;
+
+    padding-top: clamp(56px, 6vw, 90px) !important;
+    padding-bottom: clamp(56px, 6vw, 90px) !important;
+}
+
+
+/* pequeñas variaciones para separar bloques */
+
+.uf-institutions {
+    background: #101215 !important;
+}
+
+.uf-public {
+    background: #121417 !important;
+}
+
+
+/* ======================================================
+   FUNDING
+====================================================== */
+
+.uf-funding {
+    background:
+        linear-gradient(
+            180deg,
+            #0d0f12 0%,
+            #090a0c 100%
+        ) !important;
+
+    padding-top: clamp(78px, 8vw, 118px) !important;
+    padding-bottom: clamp(78px, 8vw, 118px) !important;
+}
+
+
+/* ======================================================
+   BLOQUE CORPORATIVO INFERIOR
+====================================================== */
+
+.uf-lower-company {
+    background: #171a1f !important;
+
+    padding-top: clamp(54px, 6vw, 82px) !important;
+    padding-bottom: clamp(54px, 6vw, 82px) !important;
+
+    text-align: center !important;
+
+    border-top: 1px solid rgba(255,255,255,.075) !important;
+    border-bottom: 1px solid rgba(255,255,255,.06) !important;
+}
+
+.uf-lower-company p {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+
+/* ======================================================
+   STRATEGIC EXPANSION
+====================================================== */
+
+.uf-strategic {
+    background:
+        linear-gradient(
+            180deg,
+            #111419 0%,
+            #0c0f13 100%
+        ) !important;
+
+    padding-top: clamp(70px, 8vw, 116px) !important;
+    padding-bottom: clamp(70px, 8vw, 116px) !important;
+
+    border-bottom: 1px solid var(--uf-line) !important;
+}
+
+
+/* ======================================================
+   TIPOGRAFÍA GENERAL
+====================================================== */
+
+.uf-frame h1,
+.uf-frame h2,
+.uf-frame h3 {
+    color: var(--uf-text) !important;
+}
+
+.uf-frame p {
+    color: var(--uf-muted) !important;
+}
+
+.uf-frame .eyebrow,
+.uf-frame [class*="eyebrow"],
+.uf-frame [class*="label"] {
+    color: var(--uf-soft) !important;
+}
+
+
+/* ======================================================
+   ELIMINAR FOOTERS ANTIGUOS
+====================================================== */
+
+body.uf-layout-final footer:not(#unfire-final-footer) {
+    display: none !important;
+}
+
+
+/* ======================================================
+   FOOTER DEFINITIVO
+====================================================== */
+
+#unfire-final-footer {
+    background: #080a0d !important;
+
+    border-top: 1px solid rgba(255,255,255,.07);
+
+    margin: 0;
+    padding: 0;
+
+    min-height: 0;
+}
+
+.uf-final-footer-inner {
+    width: min(1180px, calc(100% - 56px));
+    margin: 0 auto;
+
+    min-height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+}
+
+.uf-final-footer-links {
+    display: flex;
+    align-items: center;
+
+    white-space: nowrap;
+}
+
+.uf-final-footer-links a {
+    color: rgba(255,255,255,.44);
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1;
+
+    transition: color .18s ease;
+}
+
+.uf-final-footer-links a:hover {
+    color: rgba(255,255,255,.86);
+}
+
+.uf-final-footer-links a + a::before {
+    content: "·";
+
+    display: inline-block;
+
+    margin: 0 10px;
+
+    color: rgba(255,255,255,.20);
+}
+
+.uf-final-footer-copy {
+    color: rgba(255,255,255,.36);
+
+    font-size: 12px;
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+
+/* ======================================================
+   ELIMINAR EDITOR VISUAL DE LA WEB NORMAL
+====================================================== */
+
+#unfire-global-editor,
+.unfire-global-editor,
+#unfire-editor-toolbar,
+.unfire-editor-toolbar {
+    display: none !important;
+}
+
+
+/* ======================================================
+   MÓVIL
+====================================================== */
+
+@media (max-width: 700px) {
+
+    .uf-frame {
+        padding-top: 64px !important;
+        padding-bottom: 64px !important;
+    }
+
+    .uf-hero {
+        padding-top: 66px !important;
+        padding-bottom: 82px !important;
+    }
+
+    .uf-lower-company {
+        padding-top: 48px !important;
+        padding-bottom: 48px !important;
+    }
+
+    .uf-strategic {
+        padding-top: 62px !important;
+        padding-bottom: 68px !important;
+    }
+
+    .uf-final-footer-inner {
+        width: calc(100% - 40px);
+
+        min-height: 92px;
+
+        flex-direction: column;
+
+        justify-content: center;
+        align-items: center;
+
+        gap: 13px;
+
+        text-align: center;
+    }
+
+    .uf-final-footer-links {
+        justify-content: center;
+    }
+
+    .uf-final-footer-copy {
+        text-align: center;
+    }
+}
+
+</style>
+
+
+<script id="unfire-layout-reset-final-script">
+(() => {
+
+    const normalize = text =>
+        (text || "")
+            .replace(/\s+/g, " ")
+            .trim()
+            .toLowerCase();
+
+
+    /*
+      Encuentra el contenedor lógico más cercano de un título.
+    */
+    function containerFor(el) {
+
+        if (!el) return null;
+
+        return (
+            el.closest(
+                'section, article, [data-section], .section, .panel, .block'
+            ) ||
+            el.parentElement?.parentElement ||
+            el.parentElement
+        );
+    }
+
+
+    /*
+      Busca encabezados exactos o suficientemente distintivos.
+    */
+    function markByHeading(text, cls) {
+
+        const target = normalize(text);
+
+        const headings = [
+            ...document.querySelectorAll(
+                'h1, h2, h3, h4, [class*="eyebrow"], [class*="section-title"]'
+            )
+        ];
+
+        const heading = headings.find(el => {
+
+            const value = normalize(el.textContent);
+
+            return (
+                value === target ||
+                value.includes(target)
+            );
+        });
+
+        const block = containerFor(heading);
+
+        if (block) {
+            block.classList.add("uf-frame", cls);
+            return block;
+        }
+
+        return null;
+    }
+
+
+    /*
+      Busca una sección por una frase interna distintiva.
+    */
+    function markByText(text, cls) {
+
+        const target = normalize(text);
+
+        const candidates = [
+            ...document.querySelectorAll(
+                'section, article, [data-section], .section'
+            )
+        ];
+
+        const block = candidates.find(el =>
+            normalize(el.innerText).includes(target)
+        );
+
+        if (block) {
+            block.classList.add("uf-frame", cls);
+            return block;
+        }
+
+        return null;
+    }
+
+
+    function rebuildFooter() {
+
+        /*
+          Ocultamos cualquier footer antiguo y creamos uno limpio
+          al FINAL REAL del documento.
+        */
+
+        let finalFooter =
+            document.getElementById("unfire-final-footer");
+
+        if (finalFooter) {
+            finalFooter.remove();
+        }
+
+        finalFooter = document.createElement("footer");
+
+        finalFooter.id = "unfire-final-footer";
+
+        finalFooter.innerHTML = `
+            <div class="uf-final-footer-inner">
+
+                <nav
+                    class="uf-final-footer-links"
+                    aria-label="Legal"
+                >
+                    <a href="privacy.html">Privacy</a>
+                    <a href="cookies.html">Cookies</a>
+                    <a href="legal.html">Legal</a>
+                </nav>
+
+                <div class="uf-final-footer-copy">
+                    © 2026 Unfire
+                </div>
+
+            </div>
+        `;
+
+        document.body.appendChild(finalFooter);
+    }
+
+
+    function init() {
+
+        document.body.classList.add("uf-layout-final");
+
+
+        /*
+        ==================================================
+        MARCOS PRINCIPALES
+        ==================================================
+        */
+
+        markByHeading(
+            "Build technology.",
+            "uf-hero"
+        );
+
+        markByHeading(
+            "A software company designed around compounding technology.",
+            "uf-company"
+        );
+
+        markByHeading(
+            "Different products.",
+            "uf-selected-work"
+        );
+
+        markByHeading(
+            "Bolt",
+            "uf-product-bolt"
+        );
+
+        markByHeading(
+            "Power",
+            "uf-product-power"
+        );
+
+        markByHeading(
+            "UnfireSuite",
+            "uf-product-suite"
+        );
+
+        markByHeading(
+            "Archer",
+            "uf-product-archer"
+        );
+
+        markByHeading(
+            "From plugins to new software concepts.",
+            "uf-audio"
+        );
+
+        markByHeading(
+            "Software production without starting over.",
+            "uf-system"
+        );
+
+        markByHeading(
+            "The bottleneck is changing.",
+            "uf-scale"
+        );
+
+        markByHeading(
+            "Dedicated software systems.",
+            "uf-companies"
+        );
+
+        markByHeading(
+            "Controlled environments.",
+            "uf-institutions"
+        );
+
+        markByHeading(
+            "Scalable digital tools.",
+            "uf-public"
+        );
+
+        markByHeading(
+            "Expand what already exists.",
+            "uf-funding"
+        );
+
+
+        /*
+        ==================================================
+        BLOQUE CORPORATIVO INFERIOR
+        ==================================================
+        */
+
+        markByText(
+            "Energy · Business · Real Estate · Finance",
+            "uf-lower-company"
+        );
+
+
+        /*
+        ==================================================
+        STRATEGIC EXPANSION
+        ==================================================
+        */
+
+        markByHeading(
+            "Built to scale into higher-value technological projects.",
+            "uf-strategic"
+        );
+
+
+        /*
+        ==================================================
+        MARCOS NO IDENTIFICADOS
+        ==================================================
+        */
+
+        /*
+          Cualquier section principal que no tenga clase aún
+          recibe un framing neutro consistente.
+        */
+
+        document
+            .querySelectorAll("main > section")
+            .forEach(section => {
+
+                if (!section.classList.contains("uf-frame")) {
+
+                    section.classList.add("uf-frame");
+
+                    section.style.background =
+                        section.style.background || "#000";
+
+                }
+
+            });
+
+
+        rebuildFooter();
+
+        console.log(
+            "[Unfire] Full corporate layout rebuilt"
+        );
+    }
+
+
+    if (document.readyState === "loading") {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            init,
+            { once: true }
+        );
+
+    } else {
+
+        init();
+
+    }
+
+})();
+</script>
+
+<!-- UNFIRE_COMPANY_METAL_FRAME_START -->
+<style>
+.uf-company-metal-panel{
+    background:
+        linear-gradient(180deg, rgba(38,40,46,.96) 0%, rgba(26,28,34,.98) 38%, rgba(18,20,25,.99) 100%) !important;
+    border: 1px solid rgba(255,255,255,.10) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.07),
+        inset 0 -1px 0 rgba(255,255,255,.03),
+        0 18px 50px rgba(0,0,0,.28) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.uf-company-metal-panel::before{
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 28%, rgba(255,255,255,0) 72%, rgba(255,255,255,.04) 100%);
+    pointer-events: none !important;
+}
+
+.uf-company-metal-panel > *{
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.uf-company-metal-panel h2,
+.uf-company-metal-panel h3,
+.uf-company-metal-panel h4{
+    color: rgba(255,255,255,.96) !important;
+}
+
+.uf-company-metal-panel p{
+    color: rgba(255,255,255,.72) !important;
+}
+
+.uf-company-metal-panel [class*="eyebrow"],
+.uf-company-metal-panel [class*="label"],
+.uf-company-metal-panel .section-label{
+    color: rgba(255,255,255,.52) !important;
+    letter-spacing: .14em !important;
+}
+
+.uf-company-metal-panel strong,
+.uf-company-metal-panel b{
+    color: rgba(255,255,255,.92) !important;
+}
+
+.uf-company-metal-panel .metric,
+.uf-company-metal-panel .number,
+.uf-company-metal-panel [data-number]{
+    color: rgba(255,255,255,.96) !important;
+}
+
+.uf-company-metal-panel hr{
+    border-color: rgba(255,255,255,.08) !important;
+}
+
+@media (max-width: 768px){
+    .uf-company-metal-panel{
+        box-shadow:
+            inset 0 1px 0 rgba(255,255,255,.06),
+            inset 0 -1px 0 rgba(255,255,255,.025),
+            0 10px 28px rgba(0,0,0,.24) !important;
+    }
+}
+</style>
+
+<script>
+(function () {
+    function norm(el){
+        return (el?.innerText || "")
+            .replace(/\s+/g, " ")
+            .trim()
+            .toLowerCase();
+    }
+
+    function closestSection(el){
+        return el?.closest("section, article, .section, .panel, .block, div") || el;
+    }
+
+    function bestMatch() {
+        const all = Array.from(document.querySelectorAll("section, article, div"));
+        const candidates = all.filter(el => {
+            const t = norm(el);
+            return t.includes("a software company designed around") &&
+                   t.includes("build once") &&
+                   t.includes("extend continuously") &&
+                   t.includes("scale the system");
+        });
+
+        if (!candidates.length) return null;
+
+        candidates.sort((a,b) => norm(a).length - norm(b).length);
+        return closestSection(candidates[0]);
+    }
+
+    const panel = bestMatch();
+    if (panel) {
+        panel.classList.add("uf-company-metal-panel");
+        console.log("✓ Company panel metálico aplicado");
+    } else {
+        console.log("⚠ No encontré el panel COMPANY");
+    }
+
+    document.body.innerHTML = document.body.innerHTML.replaceAll(
+        "aroundcompounding technology",
+        "around compounding technology"
+    );
+})();
+</script>
+<!-- UNFIRE_COMPANY_METAL_FRAME_END -->
 </body>
 </html>
 
 <!-- UNFIRE PLAYER FINAL POSITION OVERRIDE -->
-<style id="unfire-player-final-position-v2">
 
-/* Desktop — compacto, debajo del header, sin tapar el hero */
-#unfire-floating-player {
-    position: fixed !important;
-
-    top: 88px !important;
-    right: 28px !important;
-    bottom: auto !important;
-    left: auto !important;
-
-    width: 154px !important;
-    max-width: 154px !important;
-    min-width: 0 !important;
-
-    transform: none !important;
-
-    padding: 7px 10px !important;
-    margin: 0 !important;
-
-    border-radius: 999px !important;
-
-    background: rgba(20,20,22,.76) !important;
-    border: 1px solid rgba(255,255,255,.11) !important;
-
-    -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
-    backdrop-filter: blur(24px) saturate(160%) !important;
-
-    box-shadow:
-        0 10px 32px rgba(0,0,0,.30),
-        inset 0 1px 0 rgba(255,255,255,.06) !important;
-
-    z-index: 999999 !important;
-
-    opacity: 1;
-    transition:
-        opacity .38s cubic-bezier(.22,1,.36,1),
-        transform .45s cubic-bezier(.22,1,.36,1) !important;
-}
-
-/* cuando reproduce */
-#unfire-floating-player.uf-player-hidden {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-
-    transform: translateY(-7px) scale(.97) !important;
-}
-
-/* Controles más pequeños */
-#unfire-floating-player button {
-    transform: scale(.88);
-    transform-origin: center;
-}
-
-#unfire-floating-player input[type="range"] {
-    max-width: 92px !important;
-}
-
-/* zona invisible para recuperarlo */
-#unfire-player-reveal-zone {
-    position: fixed !important;
-
-    top: 72px !important;
-    right: 12px !important;
-    bottom: auto !important;
-    left: auto !important;
-
-    width: 190px !important;
-    height: 76px !important;
-
-    transform: none !important;
-
-    background: transparent !important;
-    z-index: 999998 !important;
-}
-
-/* móvil */
-@media (max-width: 700px) {
-
-    #unfire-floating-player {
-        top: 78px !important;
-        right: 14px !important;
-        left: auto !important;
-        bottom: auto !important;
-
-        width: 142px !important;
-        max-width: 142px !important;
-
-        transform: none !important;
-    }
-
-    #unfire-player-reveal-zone {
-        top: 66px !important;
-        right: 4px !important;
-
-        width: 170px !important;
-        height: 70px !important;
-    }
-}
-
-</style>
 
 <!-- UNFIRE PLAYER VIEWPORT PORTAL FIX -->
-<style id="unfire-player-viewport-portal-v3">
 
-#unfire-floating-player {
-    position: fixed !important;
 
-    /* justo debajo del header, a la derecha */
-    top: 86px !important;
-    right: 22px !important;
+
+
+
+<!-- UNFIRE REAL PLAYER SIMPLE DRAG -->
+
+
+
+
+
+
+
+
+<style id="unfire-player-desktop-up-final">
+@media (min-width: 1101px) {
+  #unfire-real-player,
+  #unfire-floating-player {
+    top: 104px !important;
+    left: 50% !important;
+    right: auto !important;
     bottom: auto !important;
-    left: auto !important;
 
-    width: 156px !important;
-    max-width: 156px !important;
-    min-width: 156px !important;
+    transform: translateX(-50%) !important;
+  }
+}
+</style>
+
+
+<!-- UNFIRE PLAYER UNIFIED LAYOUT FINAL -->
+<style id="unfire-player-unified-layout-final">
+
+/* MISMA POSICIÓN EN TODOS LOS TAMAÑOS */
+#unfire-player-safe-slot-final {
+    display: flex !important;
+
+    width: 100% !important;
+    height: 72px !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    position: relative !important;
+
+    background: #000 !important;
 
     margin: 0 !important;
-    padding: 7px 10px !important;
+    padding: 0 !important;
 
-    transform: none !important;
-
-    z-index: 2147483000 !important;
-
-    border-radius: 999px !important;
-    border: 1px solid rgba(255,255,255,.12) !important;
-
-    background: rgba(22,22,24,.78) !important;
-
-    -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
-    backdrop-filter: blur(24px) saturate(160%) !important;
-
-    box-shadow:
-        0 12px 34px rgba(0,0,0,.32),
-        inset 0 1px 0 rgba(255,255,255,.06) !important;
-
-    transition:
-        opacity .38s cubic-bezier(.22,1,.36,1),
-        transform .42s cubic-bezier(.22,1,.36,1) !important;
+    z-index: 30 !important;
 }
 
-#unfire-floating-player.uf-player-hidden {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    transform: translateY(-8px) scale(.97) !important;
-}
+/* El reproductor nunca vuelve a flotar sobre el hero */
+#unfire-player-safe-slot-final #unfire-real-player,
+#unfire-player-safe-slot-final #unfire-floating-player {
 
-/* zona de recuperación */
-#unfire-player-reveal-zone {
-    position: fixed !important;
+    position: relative !important;
 
-    top: 70px !important;
-    right: 8px !important;
+    top: auto !important;
+    right: auto !important;
     bottom: auto !important;
     left: auto !important;
 
-    width: 190px !important;
-    height: 90px !important;
-
     transform: none !important;
 
-    z-index: 2147482999 !important;
-    background: transparent !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+
+    margin: 0 !important;
+
+    z-index: 31 !important;
 }
 
-/* móvil */
-@media (max-width: 700px) {
-    #unfire-floating-player {
-        top: 78px !important;
-        right: 12px !important;
+/* Solo reducimos ligeramente el tamaño en teléfonos muy pequeños */
+@media (max-width: 600px) {
 
+    #unfire-player-safe-slot-final {
+        height: 68px !important;
+    }
+
+    #unfire-player-safe-slot-final #unfire-real-player,
+    #unfire-player-safe-slot-final #unfire-floating-player {
         width: 146px !important;
         min-width: 146px !important;
         max-width: 146px !important;
@@ -7139,239 +7963,387 @@ if(document.readyState === "loading"){
 
 </style>
 
-<script id="unfire-player-viewport-portal-script">
-(() => {
-    function movePlayerToViewport() {
-        const player = document.getElementById('unfire-floating-player');
-
-        if (!player) {
-            setTimeout(movePlayerToViewport, 100);
-            return;
-        }
-
-        /*
-         * CLAVE:
-         * sacarlo de cualquier contenedor transformado del hero.
-         * Mover el nodo conserva listeners y controles.
-         */
-        if (player.parentElement !== document.body) {
-            document.body.appendChild(player);
-        }
-
-        const zone = document.getElementById('unfire-player-reveal-zone');
-        if (zone && zone.parentElement !== document.body) {
-            document.body.appendChild(zone);
-        }
-
-        console.log('[Unfire] Player mounted directly on viewport');
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener(
-            'DOMContentLoaded',
-            () => setTimeout(movePlayerToViewport, 150),
-            { once: true }
-        );
-    } else {
-        setTimeout(movePlayerToViewport, 150);
-    }
-})();
-</script>
-
-
-<!-- UNFIRE REAL PLAYER SIMPLE DRAG -->
-<style id="unfire-real-player-drag-v1">
-
-/* matar el editor grande anterior */
-#unfire-global-editor,
-.unfire-global-editor,
-[id*="global-editor-panel"],
-[class*="global-editor-panel"] {
-    display: none !important;
-}
-
-/* solo en modo edición */
-body.unfire-player-drag-mode #unfire-real-player {
-    cursor: grab !important;
-    user-select: none !important;
-    touch-action: none !important;
-
-    outline: 1px dashed rgba(255,255,255,.22) !important;
-    outline-offset: 5px !important;
-
-    z-index: 2147483640 !important;
-}
-
-body.unfire-player-drag-mode #unfire-real-player.uf-dragging {
-    cursor: grabbing !important;
-}
-
-</style>
-
-<script id="unfire-real-player-drag-script-v1">
+<script id="unfire-player-unified-layout-script-final">
 (() => {
 
-    const editMode =
-        new URLSearchParams(location.search).get('edit') === '1';
-
-    const KEY = 'unfire-real-player-position-v2';
-
-    function findPlayer() {
+    function getPlayer() {
         return (
             document.getElementById('unfire-real-player') ||
             document.getElementById('unfire-floating-player')
         );
     }
 
-    function applyPosition(player, pos) {
-        player.style.setProperty('position', 'fixed', 'important');
-        player.style.setProperty('left', pos.left + 'px', 'important');
-        player.style.setProperty('top', pos.top + 'px', 'important');
-
-        player.style.setProperty('right', 'auto', 'important');
-        player.style.setProperty('bottom', 'auto', 'important');
-        player.style.setProperty('transform', 'none', 'important');
+    function getHeader() {
+        return (
+            document.querySelector('header') ||
+            document.querySelector('.site-header') ||
+            document.querySelector('[role="banner"]')
+        );
     }
 
-    function init() {
+    function getSlot() {
 
-        const player = findPlayer();
+        let slot = document.getElementById(
+            'unfire-player-safe-slot-final'
+        );
+
+        if (slot) return slot;
+
+        slot = document.createElement('div');
+        slot.id = 'unfire-player-safe-slot-final';
+
+        const header = getHeader();
+        const main = document.querySelector('main');
+
+        if (header) {
+            header.insertAdjacentElement('afterend', slot);
+        } else if (main) {
+            main.insertAdjacentElement('beforebegin', slot);
+        } else {
+            document.body.prepend(slot);
+        }
+
+        return slot;
+    }
+
+    function enforce() {
+
+        const player = getPlayer();
 
         if (!player) {
-            setTimeout(init, 100);
+            setTimeout(enforce, 100);
             return;
         }
 
-        /* sacarlo de cualquier contenedor del hero */
-        if (player.parentElement !== document.body) {
-            document.body.appendChild(player);
+        const slot = getSlot();
+
+        if (player.parentElement !== slot) {
+            slot.appendChild(player);
         }
 
-        /* recuperar posición guardada */
-        try {
-            const saved = JSON.parse(localStorage.getItem(KEY));
+        player.style.setProperty(
+            'position',
+            'relative',
+            'important'
+        );
 
-            if (
-                saved &&
-                Number.isFinite(saved.left) &&
-                Number.isFinite(saved.top)
-            ) {
-                applyPosition(player, saved);
-            }
-        } catch {}
+        player.style.setProperty(
+            'top',
+            'auto',
+            'important'
+        );
 
-        if (!editMode) return;
+        player.style.setProperty(
+            'right',
+            'auto',
+            'important'
+        );
 
-        document.body.classList.add('unfire-player-drag-mode');
+        player.style.setProperty(
+            'bottom',
+            'auto',
+            'important'
+        );
 
-        let dragging = false;
-        let moved = false;
+        player.style.setProperty(
+            'left',
+            'auto',
+            'important'
+        );
 
-        let startX = 0;
-        let startY = 0;
-
-        let initialLeft = 0;
-        let initialTop = 0;
-
-        player.addEventListener('pointerdown', e => {
-
-            const rect = player.getBoundingClientRect();
-
-            dragging = true;
-            moved = false;
-
-            startX = e.clientX;
-            startY = e.clientY;
-
-            initialLeft = rect.left;
-            initialTop = rect.top;
-
-            player.classList.add('uf-dragging');
-
-            try {
-                player.setPointerCapture(e.pointerId);
-            } catch {}
-
-        }, true);
-
-        player.addEventListener('pointermove', e => {
-
-            if (!dragging) return;
-
-            const dx = e.clientX - startX;
-            const dy = e.clientY - startY;
-
-            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
-                moved = true;
-            }
-
-            if (!moved) return;
-
-            const rect = player.getBoundingClientRect();
-
-            let left = initialLeft + dx;
-            let top = initialTop + dy;
-
-            left = Math.max(
-                8,
-                Math.min(left, window.innerWidth - rect.width - 8)
-            );
-
-            top = Math.max(
-                8,
-                Math.min(top, window.innerHeight - rect.height - 8)
-            );
-
-            applyPosition(player, { left, top });
-
-            localStorage.setItem(
-                KEY,
-                JSON.stringify({ left, top })
-            );
-
-            e.preventDefault();
-
-        }, true);
-
-        function stop(e) {
-            if (!dragging) return;
-
-            dragging = false;
-            player.classList.remove('uf-dragging');
-
-            try {
-                player.releasePointerCapture(e.pointerId);
-            } catch {}
-        }
-
-        player.addEventListener('pointerup', stop, true);
-        player.addEventListener('pointercancel', stop, true);
-
-        /*
-         Evita activar Play accidentalmente
-         únicamente cuando realmente hemos arrastrado.
-        */
-        player.addEventListener('click', e => {
-            if (moved) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                moved = false;
-            }
-        }, true);
-
-        console.log('[Unfire] REAL PLAYER drag enabled');
+        player.style.setProperty(
+            'transform',
+            'none',
+            'important'
+        );
     }
+
+    /* eliminar posiciones manuales antiguas */
+    try {
+        localStorage.removeItem('unfire-real-player-position-v2');
+        localStorage.removeItem('unfire-player-position-v1');
+    } catch {}
 
     if (document.readyState === 'loading') {
         document.addEventListener(
             'DOMContentLoaded',
-            init,
+            () => setTimeout(enforce, 200),
             { once: true }
         );
     } else {
-        init();
+        setTimeout(enforce, 200);
     }
 
+    /*
+      Los scripts antiguos no podrán volver a moverlo
+      cuando cambie el ancho de la ventana.
+    */
+    window.addEventListener('resize', () => {
+        setTimeout(enforce, 180);
+    });
+
+})();
+</script>
+
+
+<!-- UNFIRE CORPORATE LOWER AREA -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style id="unfire-final-frames-lighter">
+
+/* Bloque institucional inferior */
+.uf-lower-company {
+    background: #23262b !important;
+    border-top: 1px solid rgba(255,255,255,.10) !important;
+    border-bottom: 1px solid rgba(255,255,255,.08) !important;
+}
+
+/* Strategic Expansion */
+.uf-strategic {
+    background: #1d2025 !important;
+    border-top: 1px solid rgba(255,255,255,.07) !important;
+    border-bottom: 1px solid rgba(255,255,255,.08) !important;
+}
+
+/* Footer */
+#unfire-final-footer {
+    background: #17191d !important;
+    border-top: 1px solid rgba(255,255,255,.09) !important;
+}
+
+/* Mejor contraste del texto secundario */
+.uf-lower-company p,
+.uf-strategic p {
+    color: rgba(245,247,250,.68) !important;
+}
+
+.uf-lower-company h1,
+.uf-lower-company h2,
+.uf-lower-company h3,
+.uf-strategic h1,
+.uf-strategic h2,
+.uf-strategic h3 {
+    color: rgba(255,255,255,.98) !important;
+}
+
+.uf-final-footer-links a {
+    color: rgba(255,255,255,.58) !important;
+}
+
+.uf-final-footer-copy {
+    color: rgba(255,255,255,.48) !important;
+}
+
+</style>
+
+
+<style id="unfire-final-two-blocks-fix">
+
+.uf-force-company-final {
+    background: #23262b !important;
+    border-top: 1px solid rgba(255,255,255,.10) !important;
+    border-bottom: 1px solid rgba(255,255,255,.08) !important;
+
+    padding-top: 58px !important;
+    padding-bottom: 58px !important;
+}
+
+.uf-force-strategic-final {
+    background: #1d2025 !important;
+    border-top: 1px solid rgba(255,255,255,.08) !important;
+    border-bottom: 1px solid rgba(255,255,255,.08) !important;
+
+    padding-top: 68px !important;
+    padding-bottom: 68px !important;
+}
+
+.uf-force-company-final h1,
+.uf-force-company-final h2,
+.uf-force-company-final h3,
+.uf-force-strategic-final h1,
+.uf-force-strategic-final h2,
+.uf-force-strategic-final h3 {
+    color: rgba(255,255,255,.98) !important;
+}
+
+.uf-force-company-final p,
+.uf-force-strategic-final p {
+    color: rgba(245,247,250,.68) !important;
+}
+
+</style>
+
+<script id="unfire-final-two-blocks-fix-script">
+(() => {
+
+    function findBestBlock(needle) {
+        const target = needle.toLowerCase();
+
+        const candidates = [
+            ...document.querySelectorAll(
+                'section, article, [class*="section"], [class*="block"], div'
+            )
+        ];
+
+        const matches = candidates.filter(el => {
+            const txt = (el.innerText || '')
+                .replace(/\s+/g, ' ')
+                .trim()
+                .toLowerCase();
+
+            return txt.includes(target);
+        });
+
+        if (!matches.length) return null;
+
+        // coger el bloque más pequeño que contenga el contenido
+        matches.sort((a, b) => {
+            const ta = (a.innerText || '').length;
+            const tb = (b.innerText || '').length;
+            return ta - tb;
+        });
+
+        return matches[0];
+    }
+
+    const company = findBestBlock(
+        'Independent technology company.'
+    );
+
+    const strategic = findBestBlock(
+        'Built to scale into higher-value technological projects.'
+    );
+
+    if (company) {
+        const block =
+            company.closest('section, article, [class*="section"], [class*="block"]')
+            || company;
+
+        block.classList.add('uf-force-company-final');
+    }
+
+    if (strategic) {
+        const block =
+            strategic.closest('section, article, [class*="section"], [class*="block"]')
+            || strategic;
+
+        block.classList.add('uf-force-strategic-final');
+    }
+
+    console.log('[Unfire] Final lower blocks forced');
+})();
+</script>
+
+
+<style id="unfire-final-two-blocks-fix">
+
+.uf-force-company-final {
+    background: #23262b !important;
+    border-top: 1px solid rgba(255,255,255,.10) !important;
+    border-bottom: 1px solid rgba(255,255,255,.08) !important;
+
+    padding-top: 58px !important;
+    padding-bottom: 58px !important;
+}
+
+.uf-force-strategic-final {
+    background: #1d2025 !important;
+    border-top: 1px solid rgba(255,255,255,.08) !important;
+    border-bottom: 1px solid rgba(255,255,255,.08) !important;
+
+    padding-top: 68px !important;
+    padding-bottom: 68px !important;
+}
+
+.uf-force-company-final h1,
+.uf-force-company-final h2,
+.uf-force-company-final h3,
+.uf-force-strategic-final h1,
+.uf-force-strategic-final h2,
+.uf-force-strategic-final h3 {
+    color: rgba(255,255,255,.98) !important;
+}
+
+.uf-force-company-final p,
+.uf-force-strategic-final p {
+    color: rgba(245,247,250,.68) !important;
+}
+
+</style>
+
+<script id="unfire-final-two-blocks-fix-script">
+(() => {
+
+    function findBestBlock(needle) {
+        const target = needle.toLowerCase();
+
+        const candidates = [
+            ...document.querySelectorAll(
+                'section, article, [class*="section"], [class*="block"], div'
+            )
+        ];
+
+        const matches = candidates.filter(el => {
+            const txt = (el.innerText || '')
+                .replace(/\s+/g, ' ')
+                .trim()
+                .toLowerCase();
+
+            return txt.includes(target);
+        });
+
+        if (!matches.length) return null;
+
+        // coger el bloque más pequeño que contenga el contenido
+        matches.sort((a, b) => {
+            const ta = (a.innerText || '').length;
+            const tb = (b.innerText || '').length;
+            return ta - tb;
+        });
+
+        return matches[0];
+    }
+
+    const company = findBestBlock(
+        'Independent technology company.'
+    );
+
+    const strategic = findBestBlock(
+        'Built to scale into higher-value technological projects.'
+    );
+
+    if (company) {
+        const block =
+            company.closest('section, article, [class*="section"], [class*="block"]')
+            || company;
+
+        block.classList.add('uf-force-company-final');
+    }
+
+    if (strategic) {
+        const block =
+            strategic.closest('section, article, [class*="section"], [class*="block"]')
+            || strategic;
+
+        block.classList.add('uf-force-strategic-final');
+    }
+
+    console.log('[Unfire] Final lower blocks forced');
 })();
 </script>
 
