@@ -3853,7 +3853,148 @@ main > section:first-of-type {
 </style>
 
 
+<style id="unfire-global-editor-style">
 
+#uf-global-editor,
+#uf-global-editor *{
+    box-sizing:border-box;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+}
+
+#uf-global-editor{
+    position:fixed;
+    top:18px;
+    right:18px;
+    width:320px;
+    max-height:calc(100vh - 36px);
+    overflow:auto;
+    z-index:2147483647;
+    background:rgba(24,24,26,.94);
+    color:#fff;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:18px;
+    padding:14px;
+    box-shadow:0 24px 70px rgba(0,0,0,.55);
+    backdrop-filter:blur(24px) saturate(140%);
+    -webkit-backdrop-filter:blur(24px) saturate(140%);
+}
+
+#uf-global-editor.hidden{
+    display:none !important;
+}
+
+#uf-global-editor h3{
+    margin:0 0 4px;
+    font-size:15px;
+    font-weight:650;
+}
+
+#uf-global-editor .uf-sub{
+    font-size:11px;
+    color:rgba(255,255,255,.5);
+    margin-bottom:12px;
+    word-break:break-all;
+}
+
+#uf-global-editor .uf-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+#uf-global-editor label{
+    display:block;
+    font-size:10px;
+    color:rgba(255,255,255,.55);
+    margin:8px 0 4px;
+}
+
+#uf-global-editor input,
+#uf-global-editor textarea,
+#uf-global-editor select{
+    width:100%;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:9px;
+    background:rgba(255,255,255,.07);
+    color:#fff;
+    padding:7px 8px;
+    font-size:12px;
+    outline:none;
+}
+
+#uf-global-editor textarea{
+    min-height:58px;
+    resize:vertical;
+}
+
+#uf-global-editor button{
+    border:1px solid rgba(255,255,255,.13);
+    background:rgba(255,255,255,.08);
+    color:#fff;
+    border-radius:9px;
+    padding:8px 10px;
+    font-size:11px;
+    cursor:pointer;
+}
+
+#uf-global-editor button:hover{
+    background:rgba(255,255,255,.14);
+}
+
+#uf-global-editor .uf-primary{
+    background:#fff;
+    color:#000;
+}
+
+#uf-global-editor .uf-danger{
+    color:#ff7878;
+}
+
+#uf-global-editor .uf-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    margin-top:12px;
+}
+
+#uf-global-editor .uf-separator{
+    height:1px;
+    background:rgba(255,255,255,.08);
+    margin:12px 0;
+}
+
+.uf-editor-selected{
+    outline:2px solid #0a84ff !important;
+    outline-offset:3px !important;
+}
+
+#uf-editor-toggle{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:2147483646;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(24,24,26,.92);
+    color:#fff;
+    border-radius:999px;
+    padding:10px 15px;
+    font:600 12px -apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;
+    box-shadow:0 12px 40px rgba(0,0,0,.45);
+    backdrop-filter:blur(20px);
+    cursor:pointer;
+}
+
+body.uf-global-editor-on a,
+body.uf-global-editor-on button:not(#uf-global-editor button):not(#uf-editor-toggle){
+    cursor:crosshair !important;
+}
+
+/* ocultar editor viejo mientras usamos el nuevo */
+body.uf-global-editor-on #ue4-edit{
+    display:none !important;
+}
+
+</style>
 
 
 
@@ -3959,6 +4100,225 @@ main > section:first-of-type {
 
 #unfire-real-player{
     top:54px !important;
+}
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style id="unfire-corporate-listen-style">
+
+/*
+    UNFIRE — CORPORATE NARRATION UI
+
+    El reproductor antiguo sigue existiendo para conservar
+    toda la lógica original, pero deja de ser interfaz visible.
+*/
+#unfire-real-player{
+    display:none !important;
+}
+
+
+/* Botón del header */
+#unfire-listen-trigger{
+    appearance:none;
+    border:0;
+    background:transparent;
+    color:rgba(255,255,255,.72);
+    font:inherit;
+    cursor:pointer;
+    padding:8px 10px;
+    margin:0;
+    transition:color .18s ease;
+}
+
+#unfire-listen-trigger:hover,
+#unfire-listen-trigger[aria-expanded="true"]{
+    color:#fff;
+}
+
+
+/* Panel */
+#unfire-listen-panel{
+    position:fixed;
+    z-index:2147483000;
+
+    top:72px;
+    right:24px;
+
+    width:340px;
+    max-width:calc(100vw - 32px);
+
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:18px;
+
+    background:rgba(22,22,24,.88);
+    color:#fff;
+
+    box-shadow:
+        0 24px 70px rgba(0,0,0,.42);
+
+    backdrop-filter:blur(28px) saturate(150%);
+    -webkit-backdrop-filter:blur(28px) saturate(150%);
+
+    padding:14px;
+
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+
+    transform:translateY(-8px) scale(.985);
+
+    transition:
+        opacity .18s ease,
+        transform .18s ease,
+        visibility 0s linear .18s;
+}
+
+#unfire-listen-panel.open{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+
+    transform:translateY(0) scale(1);
+
+    transition:
+        opacity .18s ease,
+        transform .18s ease;
+}
+
+.unfire-listen-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:12px;
+}
+
+.unfire-listen-title{
+    font:
+        600 13px/1.2
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Text",
+        sans-serif;
+
+    letter-spacing:-.01em;
+}
+
+#unfire-listen-close{
+    appearance:none;
+    border:0;
+    background:transparent;
+    color:rgba(255,255,255,.55);
+    cursor:pointer;
+    font-size:20px;
+    line-height:1;
+    padding:2px 4px;
+}
+
+#unfire-listen-close:hover{
+    color:#fff;
+}
+
+.unfire-listen-controls{
+    display:grid;
+    grid-template-columns:40px 1fr auto;
+    align-items:center;
+    gap:10px;
+}
+
+#unfire-listen-play{
+    width:40px;
+    height:40px;
+
+    display:grid;
+    place-items:center;
+
+    border:0;
+    border-radius:50%;
+
+    background:#fff;
+    color:#000;
+
+    cursor:pointer;
+    font-size:16px;
+    padding:0;
+}
+
+#unfire-listen-progress{
+    width:100%;
+    min-width:0;
+    accent-color:#fff;
+    cursor:pointer;
+}
+
+#unfire-listen-time{
+    min-width:39px;
+    text-align:right;
+
+    color:rgba(255,255,255,.54);
+
+    font:
+        500 11px/1
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Text",
+        sans-serif;
+
+    font-variant-numeric:tabular-nums;
+}
+
+
+/* iPad */
+@media (max-width:1024px){
+
+    #unfire-listen-panel{
+        right:18px;
+        top:70px;
+    }
+
+}
+
+
+/* iPhone */
+@media (max-width:600px){
+
+    #unfire-listen-panel{
+        top:auto;
+        right:12px;
+        bottom:
+            calc(
+                12px +
+                env(safe-area-inset-bottom, 0px)
+            );
+
+        width:calc(100vw - 24px);
+        max-width:none;
+
+        border-radius:20px;
+    }
+
+    .unfire-listen-controls{
+        grid-template-columns:44px 1fr auto;
+    }
+
+    #unfire-listen-play{
+        width:44px;
+        height:44px;
+    }
+
 }
 
 </style>
@@ -6205,13 +6565,13 @@ function install(){
 
     player.style.setProperty(
         "left",
-        "50vw",
+        "50%",
         "important"
     );
 
     player.style.setProperty(
         "top",
-        "82px",
+        "auto",
         "important"
     );
 
@@ -6223,13 +6583,19 @@ function install(){
 
     player.style.setProperty(
         "bottom",
-        "auto",
+        "28px",
         "important"
     );
 
     player.style.setProperty(
         "transform",
-        "translateX(-50%)",
+        "translateX(-50%) scale(1.18)",
+        "important"
+    );
+
+    player.style.setProperty(
+        "transform-origin",
+        "bottom center",
         "important"
     );
 
@@ -6436,7 +6802,921 @@ if(document.readyState === "loading"){
 
 
 
+<script id="unfire-global-editor-script">
+(function(){
 
+"use strict";
+
+const params =
+    new URLSearchParams(location.search);
+
+if(!params.has("edit")){
+    return;
+}
+
+const STORAGE_KEY =
+    "unfire-global-editor-v1";
+
+let selected = null;
+let changes = {};
+
+try{
+    changes =
+        JSON.parse(
+            localStorage.getItem(STORAGE_KEY) || "{}"
+        );
+}catch(e){
+    changes = {};
+}
+
+document.body.classList.add(
+    "uf-global-editor-on"
+);
+
+
+/* ------------------------------------------
+   Selector estable
+------------------------------------------ */
+
+function selectorFor(el){
+
+    if(el.id){
+        return "#" + CSS.escape(el.id);
+    }
+
+    let parts = [];
+    let node = el;
+
+    while(
+        node &&
+        node !== document.body &&
+        parts.length < 5
+    ){
+
+        let part =
+            node.tagName.toLowerCase();
+
+        if(node.classList.length){
+
+            const useful =
+                [...node.classList]
+                    .filter(c =>
+                        !c.startsWith("uf-editor")
+                    )
+                    .slice(0,2);
+
+            if(useful.length){
+                part += "." +
+                    useful
+                        .map(CSS.escape)
+                        .join(".");
+            }
+        }
+
+        const parent =
+            node.parentElement;
+
+        if(parent){
+
+            const siblings =
+                [...parent.children]
+                    .filter(x =>
+                        x.tagName === node.tagName
+                    );
+
+            if(siblings.length > 1){
+
+                part +=
+                    `:nth-of-type(${siblings.indexOf(node)+1})`;
+            }
+        }
+
+        parts.unshift(part);
+        node = parent;
+    }
+
+    return parts.join(" > ");
+}
+
+
+/* ------------------------------------------
+   Aplicar estilos
+------------------------------------------ */
+
+function applyStyles(
+    el,
+    data
+){
+
+    if(!el || !data){
+        return;
+    }
+
+    const s = el.style;
+
+    if(data.x !== undefined ||
+       data.y !== undefined){
+
+        s.translate =
+            `${data.x || 0}px ${data.y || 0}px`;
+    }
+
+    const map = {
+        width:"width",
+        height:"height",
+        marginTop:"marginTop",
+        marginRight:"marginRight",
+        marginBottom:"marginBottom",
+        marginLeft:"marginLeft",
+        paddingTop:"paddingTop",
+        paddingRight:"paddingRight",
+        paddingBottom:"paddingBottom",
+        paddingLeft:"paddingLeft",
+        fontSize:"fontSize",
+        borderRadius:"borderRadius",
+        borderWidth:"borderWidth",
+        opacity:"opacity",
+        zIndex:"zIndex"
+    };
+
+    for(const [key,prop] of Object.entries(map)){
+
+        if(
+            data[key] !== undefined &&
+            data[key] !== ""
+        ){
+
+            if(
+                ["opacity","zIndex"].includes(key)
+            ){
+                s[prop] = data[key];
+            }else{
+                s[prop] = data[key] + "px";
+            }
+        }
+    }
+
+    if(data.color){
+        s.color = data.color;
+    }
+
+    if(data.background){
+        s.background = data.background;
+    }
+
+    if(data.borderColor){
+        s.borderColor = data.borderColor;
+        s.borderStyle = "solid";
+    }
+
+    if(data.text !== undefined){
+
+        const unsafe =
+            ["INPUT","TEXTAREA","SELECT","IMG","VIDEO","AUDIO"];
+
+        if(!unsafe.includes(el.tagName)){
+            el.textContent = data.text;
+        }
+    }
+}
+
+
+/* ------------------------------------------
+   Restaurar cambios guardados
+------------------------------------------ */
+
+for(
+    const [selector,data]
+    of Object.entries(changes)
+){
+
+    try{
+        const el =
+            document.querySelector(selector);
+
+        if(el){
+            applyStyles(el,data);
+        }
+    }catch(e){}
+}
+
+
+/* ------------------------------------------
+   UI
+------------------------------------------ */
+
+const panel =
+    document.createElement("div");
+
+panel.id =
+    "uf-global-editor";
+
+panel.innerHTML = `
+<h3>Unfire Global Editor</h3>
+<div class="uf-sub" id="uf-editor-selector">
+Haz clic en cualquier elemento
+</div>
+
+<div class="uf-grid">
+    <div>
+        <label>X</label>
+        <input id="ufe-x" type="number" step="1">
+    </div>
+    <div>
+        <label>Y</label>
+        <input id="ufe-y" type="number" step="1">
+    </div>
+
+    <div>
+        <label>Anchura px</label>
+        <input id="ufe-width" type="number">
+    </div>
+    <div>
+        <label>Altura px</label>
+        <input id="ufe-height" type="number">
+    </div>
+</div>
+
+<div class="uf-separator"></div>
+
+<div class="uf-grid">
+    <div>
+        <label>Margen arriba</label>
+        <input id="ufe-mt" type="number">
+    </div>
+    <div>
+        <label>Margen abajo</label>
+        <input id="ufe-mb" type="number">
+    </div>
+    <div>
+        <label>Margen izquierda</label>
+        <input id="ufe-ml" type="number">
+    </div>
+    <div>
+        <label>Margen derecha</label>
+        <input id="ufe-mr" type="number">
+    </div>
+</div>
+
+<div class="uf-grid">
+    <div>
+        <label>Padding arriba</label>
+        <input id="ufe-pt" type="number">
+    </div>
+    <div>
+        <label>Padding abajo</label>
+        <input id="ufe-pb" type="number">
+    </div>
+    <div>
+        <label>Padding izquierda</label>
+        <input id="ufe-pl" type="number">
+    </div>
+    <div>
+        <label>Padding derecha</label>
+        <input id="ufe-pr" type="number">
+    </div>
+</div>
+
+<div class="uf-separator"></div>
+
+<div class="uf-grid">
+    <div>
+        <label>Fuente px</label>
+        <input id="ufe-font" type="number">
+    </div>
+    <div>
+        <label>Opacidad</label>
+        <input id="ufe-opacity"
+               type="number"
+               min="0"
+               max="1"
+               step=".05">
+    </div>
+
+    <div>
+        <label>Radio borde</label>
+        <input id="ufe-radius" type="number">
+    </div>
+
+    <div>
+        <label>Grosor borde</label>
+        <input id="ufe-border-width" type="number">
+    </div>
+
+    <div>
+        <label>Z-index</label>
+        <input id="ufe-z" type="number">
+    </div>
+</div>
+
+<label>Color texto</label>
+<input id="ufe-color" type="text"
+       placeholder="#ffffff / rgba(...)">
+
+<label>Fondo</label>
+<input id="ufe-bg" type="text"
+       placeholder="#000 / transparent">
+
+<label>Color borde</label>
+<input id="ufe-border-color" type="text"
+       placeholder="rgba(...)">
+
+<label>Texto</label>
+<textarea id="ufe-text"></textarea>
+
+<div class="uf-actions">
+    <button id="ufe-reset" class="uf-danger">
+        Reset elemento
+    </button>
+    <button id="ufe-hide">
+        Ocultar
+    </button>
+    <button id="ufe-export" class="uf-primary">
+        Exportar CSS
+    </button>
+    <button id="ufe-clear">
+        Reset todo
+    </button>
+</div>
+`;
+
+document.body.appendChild(panel);
+
+
+const toggle =
+    document.createElement("button");
+
+toggle.id =
+    "uf-editor-toggle";
+
+toggle.textContent =
+    "Editor";
+
+document.body.appendChild(toggle);
+
+
+toggle.onclick = () => {
+    panel.classList.toggle("hidden");
+};
+
+
+/* ------------------------------------------
+   Inputs
+------------------------------------------ */
+
+const ids = {
+    x:"ufe-x",
+    y:"ufe-y",
+    width:"ufe-width",
+    height:"ufe-height",
+
+    marginTop:"ufe-mt",
+    marginBottom:"ufe-mb",
+    marginLeft:"ufe-ml",
+    marginRight:"ufe-mr",
+
+    paddingTop:"ufe-pt",
+    paddingBottom:"ufe-pb",
+    paddingLeft:"ufe-pl",
+    paddingRight:"ufe-pr",
+
+    fontSize:"ufe-font",
+    opacity:"ufe-opacity",
+    borderRadius:"ufe-radius",
+    borderWidth:"ufe-border-width",
+    zIndex:"ufe-z",
+
+    color:"ufe-color",
+    background:"ufe-bg",
+    borderColor:"ufe-border-color",
+
+    text:"ufe-text"
+};
+
+
+function numberValue(
+    style,
+    prop
+){
+
+    const n =
+        parseFloat(style[prop]);
+
+    return Number.isFinite(n)
+        ? n
+        : "";
+}
+
+
+function loadSelected(){
+
+    if(!selected){
+        return;
+    }
+
+    const selector =
+        selectorFor(selected);
+
+    document
+        .getElementById(
+            "uf-editor-selector"
+        )
+        .textContent =
+            selector;
+
+    const cs =
+        getComputedStyle(selected);
+
+    const existing =
+        changes[selector] || {};
+
+    const values = {
+
+        x:
+            existing.x ?? 0,
+
+        y:
+            existing.y ?? 0,
+
+        width:
+            existing.width ??
+            Math.round(
+                selected.getBoundingClientRect().width
+            ),
+
+        height:
+            existing.height ??
+            Math.round(
+                selected.getBoundingClientRect().height
+            ),
+
+        marginTop:
+            existing.marginTop ??
+            numberValue(cs,"marginTop"),
+
+        marginBottom:
+            existing.marginBottom ??
+            numberValue(cs,"marginBottom"),
+
+        marginLeft:
+            existing.marginLeft ??
+            numberValue(cs,"marginLeft"),
+
+        marginRight:
+            existing.marginRight ??
+            numberValue(cs,"marginRight"),
+
+        paddingTop:
+            existing.paddingTop ??
+            numberValue(cs,"paddingTop"),
+
+        paddingBottom:
+            existing.paddingBottom ??
+            numberValue(cs,"paddingBottom"),
+
+        paddingLeft:
+            existing.paddingLeft ??
+            numberValue(cs,"paddingLeft"),
+
+        paddingRight:
+            existing.paddingRight ??
+            numberValue(cs,"paddingRight"),
+
+        fontSize:
+            existing.fontSize ??
+            numberValue(cs,"fontSize"),
+
+        opacity:
+            existing.opacity ??
+            cs.opacity,
+
+        borderRadius:
+            existing.borderRadius ??
+            numberValue(cs,"borderTopLeftRadius"),
+
+        borderWidth:
+            existing.borderWidth ??
+            numberValue(cs,"borderTopWidth"),
+
+        zIndex:
+            existing.zIndex ??
+            (
+                cs.zIndex === "auto"
+                    ? ""
+                    : cs.zIndex
+            ),
+
+        color:
+            existing.color ??
+            cs.color,
+
+        background:
+            existing.background ??
+            cs.backgroundColor,
+
+        borderColor:
+            existing.borderColor ??
+            cs.borderTopColor,
+
+        text:
+            existing.text ??
+            selected.textContent.trim()
+    };
+
+
+    for(
+        const [key,id]
+        of Object.entries(ids)
+    ){
+        document
+            .getElementById(id)
+            .value =
+                values[key] ?? "";
+    }
+}
+
+
+function saveSelected(){
+
+    if(!selected){
+        return;
+    }
+
+    const selector =
+        selectorFor(selected);
+
+    const data = {};
+
+    for(
+        const [key,id]
+        of Object.entries(ids)
+    ){
+
+        const input =
+            document.getElementById(id);
+
+        if(!input){
+            continue;
+        }
+
+        const raw =
+            input.value;
+
+        if(
+            [
+                "color",
+                "background",
+                "borderColor",
+                "text"
+            ].includes(key)
+        ){
+            data[key] = raw;
+        }else{
+
+            const n =
+                Number(raw);
+
+            if(
+                raw !== "" &&
+                Number.isFinite(n)
+            ){
+                data[key] = n;
+            }
+        }
+    }
+
+    changes[selector] =
+        data;
+
+    applyStyles(
+        selected,
+        data
+    );
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(changes)
+    );
+}
+
+
+for(
+    const id
+    of Object.values(ids)
+){
+
+    const el =
+        document.getElementById(id);
+
+    el.addEventListener(
+        "input",
+        saveSelected
+    );
+}
+
+
+/* ------------------------------------------
+   Seleccionar cualquier elemento
+------------------------------------------ */
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if(
+            event.target.closest("#uf-global-editor") ||
+            event.target.closest("#uf-editor-toggle")
+        ){
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        if(selected){
+            selected.classList.remove(
+                "uf-editor-selected"
+            );
+        }
+
+        selected =
+            event.target;
+
+        selected.classList.add(
+            "uf-editor-selected"
+        );
+
+        loadSelected();
+
+    },
+    true
+);
+
+
+/* ------------------------------------------
+   Teclado: mover 1px / 10px
+------------------------------------------ */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(!selected){
+            return;
+        }
+
+        if(
+            event.target.closest &&
+            event.target.closest(
+                "#uf-global-editor"
+            )
+        ){
+            return;
+        }
+
+        const step =
+            event.shiftKey
+                ? 10
+                : 1;
+
+        const selector =
+            selectorFor(selected);
+
+        const data =
+            changes[selector] || {
+                x:0,
+                y:0
+            };
+
+        data.x =
+            Number(data.x || 0);
+
+        data.y =
+            Number(data.y || 0);
+
+        let used = true;
+
+        if(event.key === "ArrowLeft"){
+            data.x -= step;
+        }
+        else if(event.key === "ArrowRight"){
+            data.x += step;
+        }
+        else if(event.key === "ArrowUp"){
+            data.y -= step;
+        }
+        else if(event.key === "ArrowDown"){
+            data.y += step;
+        }
+        else{
+            used = false;
+        }
+
+        if(!used){
+            return;
+        }
+
+        event.preventDefault();
+
+        changes[selector] = data;
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(changes)
+        );
+
+        applyStyles(
+            selected,
+            data
+        );
+
+        loadSelected();
+
+    }
+);
+
+
+/* ------------------------------------------
+   Reset elemento
+------------------------------------------ */
+
+document
+    .getElementById(
+        "ufe-reset"
+    )
+    .onclick = () => {
+
+        if(!selected){
+            return;
+        }
+
+        const selector =
+            selectorFor(selected);
+
+        delete changes[selector];
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(changes)
+        );
+
+        location.reload();
+    };
+
+
+/* ------------------------------------------
+   Ocultar
+------------------------------------------ */
+
+document
+    .getElementById(
+        "ufe-hide"
+    )
+    .onclick = () => {
+
+        if(!selected){
+            return;
+        }
+
+        selected.style.display =
+            "none";
+    };
+
+
+/* ------------------------------------------
+   Reset total
+------------------------------------------ */
+
+document
+    .getElementById(
+        "ufe-clear"
+    )
+    .onclick = () => {
+
+        if(
+            confirm(
+                "¿Borrar todos los cambios del editor?"
+            )
+        ){
+            localStorage.removeItem(
+                STORAGE_KEY
+            );
+
+            location.reload();
+        }
+    };
+
+
+/* ------------------------------------------
+   Exportar CSS
+------------------------------------------ */
+
+document
+    .getElementById(
+        "ufe-export"
+    )
+    .onclick =
+    async () => {
+
+        let css =
+            "/* Unfire Visual Editor export */\n\n";
+
+        for(
+            const [selector,data]
+            of Object.entries(changes)
+        ){
+
+            css +=
+                selector +
+                " {\n";
+
+            if(
+                data.x !== undefined ||
+                data.y !== undefined
+            ){
+                css +=
+                    `  translate:${data.x || 0}px ${data.y || 0}px;\n`;
+            }
+
+            const map = {
+                width:"width",
+                height:"height",
+                marginTop:"margin-top",
+                marginRight:"margin-right",
+                marginBottom:"margin-bottom",
+                marginLeft:"margin-left",
+                paddingTop:"padding-top",
+                paddingRight:"padding-right",
+                paddingBottom:"padding-bottom",
+                paddingLeft:"padding-left",
+                fontSize:"font-size",
+                borderRadius:"border-radius",
+                borderWidth:"border-width"
+            };
+
+            for(
+                const [key,prop]
+                of Object.entries(map)
+            ){
+
+                if(data[key] !== undefined){
+                    css +=
+                        `  ${prop}:${data[key]}px;\n`;
+                }
+            }
+
+            if(data.opacity !== undefined){
+                css +=
+                    `  opacity:${data.opacity};\n`;
+            }
+
+            if(data.zIndex !== undefined){
+                css +=
+                    `  z-index:${data.zIndex};\n`;
+            }
+
+            if(data.color){
+                css +=
+                    `  color:${data.color};\n`;
+            }
+
+            if(data.background){
+                css +=
+                    `  background:${data.background};\n`;
+            }
+
+            if(data.borderColor){
+                css +=
+                    `  border-color:${data.borderColor};\n`;
+            }
+
+            css += "}\n\n";
+        }
+
+        try{
+
+            await navigator.clipboard.writeText(css);
+
+            alert(
+                "CSS copiado al portapapeles"
+            );
+
+        }catch(e){
+
+            prompt(
+                "Copia este CSS:",
+                css
+            );
+        }
+    };
+
+
+console.log(
+    "[Unfire] Global Visual Editor READY"
+);
+
+})();
+</script>
 
 
 
@@ -6609,1741 +7889,395 @@ if(document.readyState === "loading"){
 
 
 
-<!-- unfire-apple-floating-player-v1 -->
-<style id="unfire-apple-floating-player-style">
-  :root{
-    --uf-player-bg: rgba(18,18,20,.72);
-    --uf-player-border: rgba(255,255,255,.12);
-    --uf-player-shadow:
-      0 12px 38px rgba(0,0,0,.32),
-      inset 0 1px 0 rgba(255,255,255,.06);
-  }
 
-  #unfire-floating-player{
-    position: fixed !important;
-    left: auto !important;
-    bottom: auto !important;
-    top: 88px !important;
-    right: 24px !important;
-    top: auto !important;
-    right: 24px !important;
 
-    transform: translate3d(0,0,0) scale(1) !important;
 
-    z-index: 2147483000 !important;
 
-    width: auto !important;
-    max-width: 190px !important;
 
-    margin: 0 !important;
 
-    border: 1px solid var(--uf-player-border) !important;
-    border-radius: 999px !important;
+<script id="unfire-corporate-listen-script">
+(function(){
 
-    background: var(--uf-player-bg) !important;
+    let booted = false;
 
-    -webkit-backdrop-filter: blur(24px) saturate(155%) !important;
-    backdrop-filter: blur(24px) saturate(155%) !important;
+    function formatTime(seconds){
 
-    box-shadow: var(--uf-player-shadow) !important;
-
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-
-    transition:
-      opacity .42s cubic-bezier(.22,1,.36,1),
-      transform .52s cubic-bezier(.22,1,.36,1),
-      filter .42s ease !important;
-
-    will-change: transform, opacity;
-  }
-
-  #unfire-floating-player.uf-player-hidden{
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-
-    transform:
-      translate3d(0,-8px,0)
-      scale(.965) !important;
-
-    filter: blur(3px);
-  }
-
-  #unfire-floating-player:hover{
-    border-color: rgba(255,255,255,.18) !important;
-
-    box-shadow:
-      0 16px 46px rgba(0,0,0,.38),
-      inset 0 1px 0 rgba(255,255,255,.08) !important;
-  }
-
-  #unfire-player-reveal-zone{
-    position: fixed;
-    z-index: 2147482999;
-
-    left: 50%;
-    bottom: 0;
-
-    width: min(620px,100vw);
-    height: 88px;
-
-    transform: translateX(-50%);
-
-    pointer-events: auto;
-    background: transparent;
-  }
-
-  #unfire-player-reveal-zone.uf-zone-disabled{
-    pointer-events: none;
-  }
-
-  @media (max-width: 640px){
-    #unfire-floating-player{
-      bottom: auto !important;
-      top: 76px !important;
-      left: 50% !important;
-      right: auto !important;
-      transform: translateX(-50%) !important;
-      max-width: calc(100vw - 24px) !important;
-    }
-
-    #unfire-player-reveal-zone{
-      height: 74px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    #unfire-floating-player{
-      transition: opacity .18s linear !important;
-    }
-  }
-</style>
-
-<script id="unfire-apple-floating-player-script">
-(() => {
-  const MARKER = 'unfire-apple-floating-player-v1';
-
-  function initApplePlayer(){
-    const audio = document.getElementById('unfire-narration');
-    if (!audio) return;
-
-    /*
-      Localiza el contenedor visual del reproductor existente.
-      No altera el audio ni la lógica del reader.
-    */
-    let node = audio.parentElement;
-    let player = null;
-
-    while (node && node !== document.body) {
-      const hasButton = node.querySelector('button');
-      const hasRange  = node.querySelector('input[type="range"]');
-
-      if (hasButton || hasRange) {
-        player = node;
-        break;
-      }
-
-      node = node.parentElement;
-    }
-
-    if (!player) {
-      console.warn('[Unfire] Player container not found.');
-      return;
-    }
-
-    player.id = 'unfire-floating-player';
-
-    let zone = document.getElementById('unfire-player-reveal-zone');
-
-    if (!zone) {
-      zone = document.createElement('div');
-      zone.id = 'unfire-player-reveal-zone';
-      zone.setAttribute('aria-hidden','true');
-      document.body.appendChild(zone);
-    }
-
-    let hideTimer = null;
-
-    const show = () => {
-      clearTimeout(hideTimer);
-      player.classList.remove('uf-player-hidden');
-    };
-
-    const hide = (delay = 850) => {
-      clearTimeout(hideTimer);
-
-      hideTimer = setTimeout(() => {
-        if (!audio.paused && !audio.ended) {
-          player.classList.add('uf-player-hidden');
-        }
-      }, delay);
-    };
-
-    /*
-      Al entrar en la página:
-      siempre visible.
-    */
-    show();
-
-    /*
-      Play:
-      permanece visible un instante para confirmar la acción,
-      después desaparece fluidamente.
-    */
-    audio.addEventListener('play', () => {
-      show();
-      hide(950);
-    });
-
-    /*
-      Pause / final:
-      vuelve automáticamente.
-    */
-    audio.addEventListener('pause', show);
-    audio.addEventListener('ended', show);
-
-    /*
-      Si el usuario se acerca a la parte inferior,
-      recupera el control sin añadir botones extra.
-    */
-    zone.addEventListener('mouseenter', () => {
-      if (!audio.paused) show();
-    });
-
-    zone.addEventListener('mousemove', () => {
-      if (!audio.paused) show();
-    });
-
-    /*
-      Al salir otra vez, se oculta si continúa reproduciendo.
-    */
-    zone.addEventListener('mouseleave', () => {
-      if (!audio.paused) hide(650);
-    });
-
-    player.addEventListener('mouseenter', show);
-
-    player.addEventListener('mouseleave', () => {
-      if (!audio.paused) hide(650);
-    });
-
-    /*
-      Escape recupera el reproductor.
-    */
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') show();
-    });
-
-    console.log('[Unfire] Apple floating player ready');
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initApplePlayer, { once:true });
-  } else {
-    initApplePlayer();
-  }
-})();
-</script>
-
-
-<!-- unfire-simple-drag-editor-v1 -->
-
-
-
-
-
-<!-- UNFIRE PLAYER CLEAN RESPONSIVE FINAL -->
-<style id="unfire-player-clean-responsive-style">
-
-/* Slot solo usado en pantallas estrechas */
-#unfire-player-safe-slot-final {
-    display: none;
-}
-
-/* ==============================
-   ESCRITORIO ANCHO
-   ============================== */
-
-@media (min-width: 1101px) {
-
-    #unfire-real-player,
-    #unfire-floating-player {
-        position: fixed !important;
-
-        top: 128px !important;
-        left: 50% !important;
-        right: auto !important;
-        bottom: auto !important;
-
-        transform: translateX(-50%) !important;
-
-        width: 150px !important;
-        min-width: 150px !important;
-        max-width: 150px !important;
-
-        margin: 0 !important;
-
-        z-index: 999999 !important;
-    }
-}
-
-/* ==============================
-   VENTANA ESTRECHA + MÓVIL
-   ============================== */
-
-@media (max-width: 1100px) {
-
-    #unfire-player-safe-slot-final {
-        display: flex !important;
-
-        width: 100% !important;
-        height: 74px !important;
-
-        align-items: center !important;
-        justify-content: center !important;
-
-        position: relative !important;
-
-        background: #000 !important;
-
-        z-index: 30 !important;
-    }
-
-    #unfire-player-safe-slot-final #unfire-real-player,
-    #unfire-player-safe-slot-final #unfire-floating-player {
-        position: relative !important;
-
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
-        bottom: auto !important;
-
-        transform: none !important;
-
-        width: 150px !important;
-        min-width: 150px !important;
-        max-width: 150px !important;
-
-        margin: 0 !important;
-
-        z-index: 31 !important;
-    }
-}
-
-/* móvil pequeño */
-@media (max-width: 600px) {
-
-    #unfire-player-safe-slot-final {
-        height: 66px !important;
-    }
-
-    #unfire-player-safe-slot-final #unfire-real-player,
-    #unfire-player-safe-slot-final #unfire-floating-player {
-        width: 142px !important;
-        min-width: 142px !important;
-        max-width: 142px !important;
-    }
-}
-
-</style>
-
-<script id="unfire-player-clean-responsive-script">
-(() => {
-
-    const BREAKPOINT = 1100;
-
-    function player() {
-        return (
-            document.getElementById('unfire-real-player') ||
-            document.getElementById('unfire-floating-player')
-        );
-    }
-
-    function header() {
-        return (
-            document.querySelector('header') ||
-            document.querySelector('.site-header') ||
-            document.querySelector('[role="banner"]')
-        );
-    }
-
-    function createSlot() {
-
-        let slot = document.getElementById(
-            'unfire-player-safe-slot-final'
-        );
-
-        if (slot) return slot;
-
-        slot = document.createElement('div');
-        slot.id = 'unfire-player-safe-slot-final';
-
-        const h = header();
-        const main = document.querySelector('main');
-
-        if (h) {
-            h.insertAdjacentElement('afterend', slot);
-        }
-        else if (main) {
-            main.insertAdjacentElement('beforebegin', slot);
-        }
-        else {
-            document.body.prepend(slot);
+        if(!Number.isFinite(seconds)){
+            return "0:00";
         }
 
-        return slot;
+        const m =
+            Math.floor(seconds / 60);
+
+        const s =
+            Math.floor(seconds % 60);
+
+        return m + ":" +
+            String(s).padStart(2,"0");
     }
 
-    function layout() {
 
-        const p = player();
+    function boot(){
 
-        if (!p) {
-            setTimeout(layout, 80);
+        if(booted) return;
+
+        const audio =
+            document.getElementById(
+                "unfire-narration"
+            );
+
+        if(!audio){
+            setTimeout(boot,100);
             return;
         }
 
-        const narrow = window.innerWidth <= BREAKPOINT;
+        booted = true;
 
-        if (narrow) {
-
-            const slot = createSlot();
-
-            if (p.parentElement !== slot) {
-                slot.appendChild(p);
-            }
-
-            p.style.removeProperty('top');
-            p.style.removeProperty('left');
-            p.style.removeProperty('right');
-            p.style.removeProperty('bottom');
-            p.style.removeProperty('transform');
-
-        } else {
-
-            /* En escritorio vuelve al viewport */
-            if (p.parentElement !== document.body) {
-                document.body.appendChild(p);
-            }
-        }
-    }
-
-    /* borrar la posición manual antigua que causaba conflictos */
-    try {
-        localStorage.removeItem('unfire-real-player-position-v2');
-        localStorage.removeItem('unfire-player-position-v1');
-    } catch {}
-
-    let timer;
-
-    window.addEventListener('resize', () => {
-        clearTimeout(timer);
-        timer = setTimeout(layout, 60);
-    });
-
-    if (document.readyState === 'loading') {
-        document.addEventListener(
-            'DOMContentLoaded',
-            layout,
-            { once: true }
-        );
-    } else {
-        layout();
-    }
-
-})();
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ======================================================
-     UNFIRE FINAL CORPORATE LAYOUT SYSTEM
-====================================================== -->
-
-<style id="unfire-layout-reset-final">
-
-:root {
-    --uf-black: #000000;
-    --uf-1: #090a0c;
-    --uf-2: #0d0f11;
-    --uf-3: #111316;
-    --uf-4: #15181c;
-    --uf-5: #181b20;
-
-    --uf-line: rgba(255,255,255,.07);
-    --uf-line-soft: rgba(255,255,255,.045);
-
-    --uf-text: rgba(255,255,255,.96);
-    --uf-muted: rgba(235,238,243,.61);
-    --uf-soft: rgba(255,255,255,.43);
-}
-
-
-/* ======================================================
-   ESTRUCTURA GENERAL
-====================================================== */
-
-html,
-body {
-    background: var(--uf-black) !important;
-}
-
-body.uf-layout-final {
-    overflow-x: hidden;
-}
-
-.uf-frame {
-    box-sizing: border-box !important;
-
-    min-height: 0 !important;
-    height: auto !important;
-
-    margin: 0 !important;
-
-    padding-top: clamp(72px, 8vw, 122px) !important;
-    padding-bottom: clamp(72px, 8vw, 122px) !important;
-
-    border-top: 1px solid var(--uf-line-soft) !important;
-
-    position: relative;
-}
-
-
-/* Evitar marcos gigantes causados por alturas heredadas */
-
-.uf-frame > div,
-.uf-frame .container,
-.uf-frame [class*="container"],
-.uf-frame [class*="inner"],
-.uf-frame [class*="content"] {
-    min-height: 0 !important;
-}
-
-
-/* ======================================================
-   HERO
-====================================================== */
-
-.uf-hero {
-    background: #000 !important;
-
-    border-top: none !important;
-
-    padding-top: clamp(76px, 8vw, 118px) !important;
-    padding-bottom: clamp(90px, 10vw, 150px) !important;
-}
-
-
-/* ======================================================
-   COMPANY
-====================================================== */
-
-.uf-company {
-    background: var(--uf-2) !important;
-}
-
-
-/* ======================================================
-   SELECTED WORK
-====================================================== */
-
-.uf-selected-work {
-    background: #000 !important;
-}
-
-
-/* ======================================================
-   PRODUCTOS
-====================================================== */
-
-.uf-product-bolt {
-    background: var(--uf-3) !important;
-}
-
-.uf-product-power {
-    background: var(--uf-1) !important;
-}
-
-.uf-product-suite {
-    background: var(--uf-3) !important;
-}
-
-.uf-product-archer {
-    background: var(--uf-1) !important;
-}
-
-
-/* ======================================================
-   AUDIO
-====================================================== */
-
-.uf-audio {
-    background: var(--uf-3) !important;
-}
-
-
-/* ======================================================
-   SYSTEM
-====================================================== */
-
-.uf-system {
-    background: #000 !important;
-}
-
-
-/* ======================================================
-   PRODUCTION SCALE
-====================================================== */
-
-.uf-scale {
-    background:
-        linear-gradient(
-            180deg,
-            #101216 0%,
-            #0c0e11 100%
-        ) !important;
-}
-
-
-/* ======================================================
-   COMPANIES / INSTITUTIONS / PUBLIC
-====================================================== */
-
-.uf-companies,
-.uf-institutions,
-.uf-public {
-    background: var(--uf-2) !important;
-
-    padding-top: clamp(56px, 6vw, 90px) !important;
-    padding-bottom: clamp(56px, 6vw, 90px) !important;
-}
-
-
-/* pequeñas variaciones para separar bloques */
-
-.uf-institutions {
-    background: #101215 !important;
-}
-
-.uf-public {
-    background: #121417 !important;
-}
-
-
-/* ======================================================
-   FUNDING
-====================================================== */
-
-.uf-funding {
-    background:
-        linear-gradient(
-            180deg,
-            #0d0f12 0%,
-            #090a0c 100%
-        ) !important;
-
-    padding-top: clamp(78px, 8vw, 118px) !important;
-    padding-bottom: clamp(78px, 8vw, 118px) !important;
-}
-
-
-/* ======================================================
-   BLOQUE CORPORATIVO INFERIOR
-====================================================== */
-
-.uf-lower-company {
-    background: #171a1f !important;
-
-    padding-top: clamp(54px, 6vw, 82px) !important;
-    padding-bottom: clamp(54px, 6vw, 82px) !important;
-
-    text-align: center !important;
-
-    border-top: 1px solid rgba(255,255,255,.075) !important;
-    border-bottom: 1px solid rgba(255,255,255,.06) !important;
-}
-
-.uf-lower-company p {
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
-
-
-/* ======================================================
-   STRATEGIC EXPANSION
-====================================================== */
-
-.uf-strategic {
-    background:
-        linear-gradient(
-            180deg,
-            #111419 0%,
-            #0c0f13 100%
-        ) !important;
-
-    padding-top: clamp(70px, 8vw, 116px) !important;
-    padding-bottom: clamp(70px, 8vw, 116px) !important;
-
-    border-bottom: 1px solid var(--uf-line) !important;
-}
-
-
-/* ======================================================
-   TIPOGRAFÍA GENERAL
-====================================================== */
-
-.uf-frame h1,
-.uf-frame h2,
-.uf-frame h3 {
-    color: var(--uf-text) !important;
-}
-
-.uf-frame p {
-    color: var(--uf-muted) !important;
-}
-
-.uf-frame .eyebrow,
-.uf-frame [class*="eyebrow"],
-.uf-frame [class*="label"] {
-    color: var(--uf-soft) !important;
-}
-
-
-/* ======================================================
-   ELIMINAR FOOTERS ANTIGUOS
-====================================================== */
-
-body.uf-layout-final footer:not(#unfire-final-footer) {
-    display: none !important;
-}
-
-
-/* ======================================================
-   FOOTER DEFINITIVO
-====================================================== */
-
-#unfire-final-footer {
-    background: #080a0d !important;
-
-    border-top: 1px solid rgba(255,255,255,.07);
-
-    margin: 0;
-    padding: 0;
-
-    min-height: 0;
-}
-
-.uf-final-footer-inner {
-    width: min(1180px, calc(100% - 56px));
-    margin: 0 auto;
-
-    min-height: 72px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 24px;
-}
-
-.uf-final-footer-links {
-    display: flex;
-    align-items: center;
-
-    white-space: nowrap;
-}
-
-.uf-final-footer-links a {
-    color: rgba(255,255,255,.44);
-
-    text-decoration: none;
-
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1;
-
-    transition: color .18s ease;
-}
-
-.uf-final-footer-links a:hover {
-    color: rgba(255,255,255,.86);
-}
-
-.uf-final-footer-links a + a::before {
-    content: "·";
-
-    display: inline-block;
-
-    margin: 0 10px;
-
-    color: rgba(255,255,255,.20);
-}
-
-.uf-final-footer-copy {
-    color: rgba(255,255,255,.36);
-
-    font-size: 12px;
-    line-height: 1;
-
-    white-space: nowrap;
-}
-
-
-/* ======================================================
-   ELIMINAR EDITOR VISUAL DE LA WEB NORMAL
-====================================================== */
-
-#unfire-global-editor,
-.unfire-global-editor,
-#unfire-editor-toolbar,
-.unfire-editor-toolbar {
-    display: none !important;
-}
-
-
-/* ======================================================
-   MÓVIL
-====================================================== */
-
-@media (max-width: 700px) {
-
-    .uf-frame {
-        padding-top: 64px !important;
-        padding-bottom: 64px !important;
-    }
-
-    .uf-hero {
-        padding-top: 66px !important;
-        padding-bottom: 82px !important;
-    }
-
-    .uf-lower-company {
-        padding-top: 48px !important;
-        padding-bottom: 48px !important;
-    }
-
-    .uf-strategic {
-        padding-top: 62px !important;
-        padding-bottom: 68px !important;
-    }
-
-    .uf-final-footer-inner {
-        width: calc(100% - 40px);
-
-        min-height: 92px;
-
-        flex-direction: column;
-
-        justify-content: center;
-        align-items: center;
-
-        gap: 13px;
-
-        text-align: center;
-    }
-
-    .uf-final-footer-links {
-        justify-content: center;
-    }
-
-    .uf-final-footer-copy {
-        text-align: center;
-    }
-}
-
-</style>
-
-
-<script id="unfire-layout-reset-final-script">
-(() => {
-
-    const normalize = text =>
-        (text || "")
-            .replace(/\s+/g, " ")
-            .trim()
-            .toLowerCase();
-
-
-    /*
-      Encuentra el contenedor lógico más cercano de un título.
-    */
-    function containerFor(el) {
-
-        if (!el) return null;
-
-        return (
-            el.closest(
-                'section, article, [data-section], .section, .panel, .block'
-            ) ||
-            el.parentElement?.parentElement ||
-            el.parentElement
-        );
-    }
-
-
-    /*
-      Busca encabezados exactos o suficientemente distintivos.
-    */
-    function markByHeading(text, cls) {
-
-        const target = normalize(text);
-
-        const headings = [
-            ...document.querySelectorAll(
-                'h1, h2, h3, h4, [class*="eyebrow"], [class*="section-title"]'
-            )
-        ];
-
-        const heading = headings.find(el => {
-
-            const value = normalize(el.textContent);
-
-            return (
-                value === target ||
-                value.includes(target)
-            );
-        });
-
-        const block = containerFor(heading);
-
-        if (block) {
-            block.classList.add("uf-frame", cls);
-            return block;
-        }
-
-        return null;
-    }
-
-
-    /*
-      Busca una sección por una frase interna distintiva.
-    */
-    function markByText(text, cls) {
-
-        const target = normalize(text);
-
-        const candidates = [
-            ...document.querySelectorAll(
-                'section, article, [data-section], .section'
-            )
-        ];
-
-        const block = candidates.find(el =>
-            normalize(el.innerText).includes(target)
-        );
-
-        if (block) {
-            block.classList.add("uf-frame", cls);
-            return block;
-        }
-
-        return null;
-    }
-
-
-    function rebuildFooter() {
 
         /*
-          Ocultamos cualquier footer antiguo y creamos uno limpio
-          al FINAL REAL del documento.
+            HEADER BUTTON
         */
+        const trigger =
+            document.createElement("button");
 
-        let finalFooter =
-            document.getElementById("unfire-final-footer");
+        trigger.id =
+            "unfire-listen-trigger";
 
-        if (finalFooter) {
-            finalFooter.remove();
+        trigger.type =
+            "button";
+
+        trigger.textContent =
+            "Listen";
+
+        trigger.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        trigger.setAttribute(
+            "aria-controls",
+            "unfire-listen-panel"
+        );
+
+
+        const nav =
+            document.querySelector("header nav") ||
+            document.querySelector("nav") ||
+            document.querySelector("header");
+
+        if(nav){
+            nav.appendChild(trigger);
+        }else{
+            document.body.appendChild(trigger);
         }
 
-        finalFooter = document.createElement("footer");
 
-        finalFooter.id = "unfire-final-footer";
+        /*
+            PANEL
+        */
+        const panel =
+            document.createElement("div");
 
-        finalFooter.innerHTML = `
-            <div class="uf-final-footer-inner">
+        panel.id =
+            "unfire-listen-panel";
 
-                <nav
-                    class="uf-final-footer-links"
-                    aria-label="Legal"
+        panel.setAttribute(
+            "role",
+            "dialog"
+        );
+
+        panel.setAttribute(
+            "aria-label",
+            "Narration"
+        );
+
+        panel.innerHTML = `
+            <div class="unfire-listen-head">
+                <div class="unfire-listen-title">
+                    Narration
+                </div>
+
+                <button
+                    id="unfire-listen-close"
+                    type="button"
+                    aria-label="Close narration"
+                >×</button>
+            </div>
+
+            <div class="unfire-listen-controls">
+
+                <button
+                    id="unfire-listen-play"
+                    type="button"
+                    aria-label="Play narration"
+                >▶</button>
+
+                <input
+                    id="unfire-listen-progress"
+                    type="range"
+                    min="0"
+                    max="1000"
+                    value="0"
+                    aria-label="Narration progress"
                 >
-                    <a href="privacy.html">Privacy</a>
-                    <a href="cookies.html">Cookies</a>
-                    <a href="legal.html">Legal</a>
-                </nav>
 
-                <div class="uf-final-footer-copy">
-                    © 2026 Unfire
+                <div id="unfire-listen-time">
+                    0:00
                 </div>
 
             </div>
         `;
 
-        document.body.appendChild(finalFooter);
-    }
+        document.body.appendChild(panel);
 
 
-    function init() {
+        const play =
+            panel.querySelector(
+                "#unfire-listen-play"
+            );
 
-        document.body.classList.add("uf-layout-final");
+        const progress =
+            panel.querySelector(
+                "#unfire-listen-progress"
+            );
 
+        const time =
+            panel.querySelector(
+                "#unfire-listen-time"
+            );
 
-        /*
-        ==================================================
-        MARCOS PRINCIPALES
-        ==================================================
-        */
-
-        markByHeading(
-            "Build technology.",
-            "uf-hero"
-        );
-
-        markByHeading(
-            "A software company designed around compounding technology.",
-            "uf-company"
-        );
-
-        markByHeading(
-            "Different products.",
-            "uf-selected-work"
-        );
-
-        markByHeading(
-            "Bolt",
-            "uf-product-bolt"
-        );
-
-        markByHeading(
-            "Power",
-            "uf-product-power"
-        );
-
-        markByHeading(
-            "UnfireSuite",
-            "uf-product-suite"
-        );
-
-        markByHeading(
-            "Archer",
-            "uf-product-archer"
-        );
-
-        markByHeading(
-            "From plugins to new software concepts.",
-            "uf-audio"
-        );
-
-        markByHeading(
-            "Software production without starting over.",
-            "uf-system"
-        );
-
-        markByHeading(
-            "The bottleneck is changing.",
-            "uf-scale"
-        );
-
-        markByHeading(
-            "Dedicated software systems.",
-            "uf-companies"
-        );
-
-        markByHeading(
-            "Controlled environments.",
-            "uf-institutions"
-        );
-
-        markByHeading(
-            "Scalable digital tools.",
-            "uf-public"
-        );
-
-        markByHeading(
-            "Expand what already exists.",
-            "uf-funding"
-        );
+        const close =
+            panel.querySelector(
+                "#unfire-listen-close"
+            );
 
 
-        /*
-        ==================================================
-        BLOQUE CORPORATIVO INFERIOR
-        ==================================================
-        */
+        function openPanel(){
 
-        markByText(
-            "Energy · Business · Real Estate · Finance",
-            "uf-lower-company"
-        );
+            panel.classList.add("open");
 
+            trigger.setAttribute(
+                "aria-expanded",
+                "true"
+            );
 
-        /*
-        ==================================================
-        STRATEGIC EXPANSION
-        ==================================================
-        */
-
-        markByHeading(
-            "Built to scale into higher-value technological projects.",
-            "uf-strategic"
-        );
+        }
 
 
-        /*
-        ==================================================
-        MARCOS NO IDENTIFICADOS
-        ==================================================
-        */
+        function closePanel(){
 
-        /*
-          Cualquier section principal que no tenga clase aún
-          recibe un framing neutro consistente.
-        */
+            panel.classList.remove("open");
 
-        document
-            .querySelectorAll("main > section")
-            .forEach(section => {
+            trigger.setAttribute(
+                "aria-expanded",
+                "false"
+            );
 
-                if (!section.classList.contains("uf-frame")) {
+        }
 
-                    section.classList.add("uf-frame");
 
-                    section.style.background =
-                        section.style.background || "#000";
+        trigger.addEventListener(
+            "click",
+            function(){
 
+                if(
+                    panel.classList.contains(
+                        "open"
+                    )
+                ){
+                    closePanel();
+                }else{
+                    openPanel();
                 }
 
-            });
-
-
-        rebuildFooter();
-
-        console.log(
-            "[Unfire] Full corporate layout rebuilt"
+            }
         );
+
+
+        close.addEventListener(
+            "click",
+            closePanel
+        );
+
+
+        play.addEventListener(
+            "click",
+            async function(){
+
+                try{
+
+                    if(audio.paused){
+                        await audio.play();
+                    }else{
+                        audio.pause();
+                    }
+
+                }catch(e){
+                    console.error(
+                        "[Unfire] narration:",
+                        e
+                    );
+                }
+
+            }
+        );
+
+
+        audio.addEventListener(
+            "play",
+            function(){
+
+                play.textContent = "Ⅱ";
+
+                play.setAttribute(
+                    "aria-label",
+                    "Pause narration"
+                );
+
+            }
+        );
+
+
+        audio.addEventListener(
+            "pause",
+            function(){
+
+                play.textContent = "▶";
+
+                play.setAttribute(
+                    "aria-label",
+                    "Play narration"
+                );
+
+            }
+        );
+
+
+        function updateProgress(){
+
+            if(
+                Number.isFinite(audio.duration) &&
+                audio.duration > 0
+            ){
+
+                const ratio =
+                    audio.currentTime /
+                    audio.duration;
+
+                progress.value =
+                    Math.round(
+                        ratio * 1000
+                    );
+
+            }
+
+            time.textContent =
+                formatTime(
+                    audio.currentTime
+                );
+
+        }
+
+
+        audio.addEventListener(
+            "timeupdate",
+            updateProgress
+        );
+
+        audio.addEventListener(
+            "loadedmetadata",
+            updateProgress
+        );
+
+        audio.addEventListener(
+            "durationchange",
+            updateProgress
+        );
+
+
+        progress.addEventListener(
+            "input",
+            function(){
+
+                if(
+                    !Number.isFinite(
+                        audio.duration
+                    ) ||
+                    audio.duration <= 0
+                ){
+                    return;
+                }
+
+                audio.currentTime =
+                    (
+                        Number(progress.value) /
+                        1000
+                    ) *
+                    audio.duration;
+
+            }
+        );
+
+
+        document.addEventListener(
+            "keydown",
+            function(e){
+
+                if(
+                    e.key === "Escape" &&
+                    panel.classList.contains(
+                        "open"
+                    )
+                ){
+                    closePanel();
+                }
+
+            }
+        );
+
+
+        document.addEventListener(
+            "pointerdown",
+            function(e){
+
+                if(
+                    !panel.classList.contains(
+                        "open"
+                    )
+                ){
+                    return;
+                }
+
+                if(
+                    panel.contains(e.target) ||
+                    trigger.contains(e.target)
+                ){
+                    return;
+                }
+
+                closePanel();
+
+            }
+        );
+
+        updateProgress();
+
     }
 
 
-    if (document.readyState === "loading") {
-
+    if(
+        document.readyState === "loading"
+    ){
         document.addEventListener(
             "DOMContentLoaded",
-            init,
-            { once: true }
+            boot
         );
-
-    } else {
-
-        init();
-
+    }else{
+        boot();
     }
 
 })();
 </script>
 
-<!-- UNFIRE_COMPANY_METAL_FRAME_START -->
-<style>
-.uf-company-metal-panel{
-    background:
-        linear-gradient(180deg, rgba(38,40,46,.96) 0%, rgba(26,28,34,.98) 38%, rgba(18,20,25,.99) 100%) !important;
-    border: 1px solid rgba(255,255,255,.10) !important;
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.07),
-        inset 0 -1px 0 rgba(255,255,255,.03),
-        0 18px 50px rgba(0,0,0,.28) !important;
-    position: relative !important;
-    overflow: hidden !important;
-}
-
-.uf-company-metal-panel::before{
-    content: "" !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background:
-        linear-gradient(135deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 28%, rgba(255,255,255,0) 72%, rgba(255,255,255,.04) 100%);
-    pointer-events: none !important;
-}
-
-.uf-company-metal-panel > *{
-    position: relative !important;
-    z-index: 1 !important;
-}
-
-.uf-company-metal-panel h2,
-.uf-company-metal-panel h3,
-.uf-company-metal-panel h4{
-    color: rgba(255,255,255,.96) !important;
-}
-
-.uf-company-metal-panel p{
-    color: rgba(255,255,255,.72) !important;
-}
-
-.uf-company-metal-panel [class*="eyebrow"],
-.uf-company-metal-panel [class*="label"],
-.uf-company-metal-panel .section-label{
-    color: rgba(255,255,255,.52) !important;
-    letter-spacing: .14em !important;
-}
-
-.uf-company-metal-panel strong,
-.uf-company-metal-panel b{
-    color: rgba(255,255,255,.92) !important;
-}
-
-.uf-company-metal-panel .metric,
-.uf-company-metal-panel .number,
-.uf-company-metal-panel [data-number]{
-    color: rgba(255,255,255,.96) !important;
-}
-
-.uf-company-metal-panel hr{
-    border-color: rgba(255,255,255,.08) !important;
-}
-
-@media (max-width: 768px){
-    .uf-company-metal-panel{
-        box-shadow:
-            inset 0 1px 0 rgba(255,255,255,.06),
-            inset 0 -1px 0 rgba(255,255,255,.025),
-            0 10px 28px rgba(0,0,0,.24) !important;
-    }
-}
-</style>
-
-<script>
-(function () {
-    function norm(el){
-        return (el?.innerText || "")
-            .replace(/\s+/g, " ")
-            .trim()
-            .toLowerCase();
-    }
-
-    function closestSection(el){
-        return el?.closest("section, article, .section, .panel, .block, div") || el;
-    }
-
-    function bestMatch() {
-        const all = Array.from(document.querySelectorAll("section, article, div"));
-        const candidates = all.filter(el => {
-            const t = norm(el);
-            return t.includes("a software company designed around") &&
-                   t.includes("build once") &&
-                   t.includes("extend continuously") &&
-                   t.includes("scale the system");
-        });
-
-        if (!candidates.length) return null;
-
-        candidates.sort((a,b) => norm(a).length - norm(b).length);
-        return closestSection(candidates[0]);
-    }
-
-    const panel = bestMatch();
-    if (panel) {
-        panel.classList.add("uf-company-metal-panel");
-        console.log("✓ Company panel metálico aplicado");
-    } else {
-        console.log("⚠ No encontré el panel COMPANY");
-    }
-
-    document.body.innerHTML = document.body.innerHTML.replaceAll(
-        "aroundcompounding technology",
-        "around compounding technology"
-    );
-})();
-</script>
-<!-- UNFIRE_COMPANY_METAL_FRAME_END -->
 </body>
 </html>
-
-<!-- UNFIRE PLAYER FINAL POSITION OVERRIDE -->
-
-
-<!-- UNFIRE PLAYER VIEWPORT PORTAL FIX -->
-
-
-
-
-
-<!-- UNFIRE REAL PLAYER SIMPLE DRAG -->
-
-
-
-
-
-
-
-
-<style id="unfire-player-desktop-up-final">
-@media (min-width: 1101px) {
-  #unfire-real-player,
-  #unfire-floating-player {
-    top: 104px !important;
-    left: 50% !important;
-    right: auto !important;
-    bottom: auto !important;
-
-    transform: translateX(-50%) !important;
-  }
-}
-</style>
-
-
-<!-- UNFIRE PLAYER UNIFIED LAYOUT FINAL -->
-<style id="unfire-player-unified-layout-final">
-
-/* MISMA POSICIÓN EN TODOS LOS TAMAÑOS */
-#unfire-player-safe-slot-final {
-    display: flex !important;
-
-    width: 100% !important;
-    height: 72px !important;
-
-    align-items: center !important;
-    justify-content: center !important;
-
-    position: relative !important;
-
-    background: #000 !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    z-index: 30 !important;
-}
-
-/* El reproductor nunca vuelve a flotar sobre el hero */
-#unfire-player-safe-slot-final #unfire-real-player,
-#unfire-player-safe-slot-final #unfire-floating-player {
-
-    position: relative !important;
-
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    left: auto !important;
-
-    transform: none !important;
-
-    width: 150px !important;
-    min-width: 150px !important;
-    max-width: 150px !important;
-
-    margin: 0 !important;
-
-    z-index: 31 !important;
-}
-
-/* Solo reducimos ligeramente el tamaño en teléfonos muy pequeños */
-@media (max-width: 600px) {
-
-    #unfire-player-safe-slot-final {
-        height: 68px !important;
-    }
-
-    #unfire-player-safe-slot-final #unfire-real-player,
-    #unfire-player-safe-slot-final #unfire-floating-player {
-        width: 146px !important;
-        min-width: 146px !important;
-        max-width: 146px !important;
-    }
-}
-
-</style>
-
-<script id="unfire-player-unified-layout-script-final">
-(() => {
-
-    function getPlayer() {
-        return (
-            document.getElementById('unfire-real-player') ||
-            document.getElementById('unfire-floating-player')
-        );
-    }
-
-    function getHeader() {
-        return (
-            document.querySelector('header') ||
-            document.querySelector('.site-header') ||
-            document.querySelector('[role="banner"]')
-        );
-    }
-
-    function getSlot() {
-
-        let slot = document.getElementById(
-            'unfire-player-safe-slot-final'
-        );
-
-        if (slot) return slot;
-
-        slot = document.createElement('div');
-        slot.id = 'unfire-player-safe-slot-final';
-
-        const header = getHeader();
-        const main = document.querySelector('main');
-
-        if (header) {
-            header.insertAdjacentElement('afterend', slot);
-        } else if (main) {
-            main.insertAdjacentElement('beforebegin', slot);
-        } else {
-            document.body.prepend(slot);
-        }
-
-        return slot;
-    }
-
-    function enforce() {
-
-        const player = getPlayer();
-
-        if (!player) {
-            setTimeout(enforce, 100);
-            return;
-        }
-
-        const slot = getSlot();
-
-        if (player.parentElement !== slot) {
-            slot.appendChild(player);
-        }
-
-        player.style.setProperty(
-            'position',
-            'relative',
-            'important'
-        );
-
-        player.style.setProperty(
-            'top',
-            'auto',
-            'important'
-        );
-
-        player.style.setProperty(
-            'right',
-            'auto',
-            'important'
-        );
-
-        player.style.setProperty(
-            'bottom',
-            'auto',
-            'important'
-        );
-
-        player.style.setProperty(
-            'left',
-            'auto',
-            'important'
-        );
-
-        player.style.setProperty(
-            'transform',
-            'none',
-            'important'
-        );
-    }
-
-    /* eliminar posiciones manuales antiguas */
-    try {
-        localStorage.removeItem('unfire-real-player-position-v2');
-        localStorage.removeItem('unfire-player-position-v1');
-    } catch {}
-
-    if (document.readyState === 'loading') {
-        document.addEventListener(
-            'DOMContentLoaded',
-            () => setTimeout(enforce, 200),
-            { once: true }
-        );
-    } else {
-        setTimeout(enforce, 200);
-    }
-
-    /*
-      Los scripts antiguos no podrán volver a moverlo
-      cuando cambie el ancho de la ventana.
-    */
-    window.addEventListener('resize', () => {
-        setTimeout(enforce, 180);
-    });
-
-})();
-</script>
-
-
-<!-- UNFIRE CORPORATE LOWER AREA -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style id="unfire-final-frames-lighter">
-
-/* Bloque institucional inferior */
-.uf-lower-company {
-    background: #23262b !important;
-    border-top: 1px solid rgba(255,255,255,.10) !important;
-    border-bottom: 1px solid rgba(255,255,255,.08) !important;
-}
-
-/* Strategic Expansion */
-.uf-strategic {
-    background: #1d2025 !important;
-    border-top: 1px solid rgba(255,255,255,.07) !important;
-    border-bottom: 1px solid rgba(255,255,255,.08) !important;
-}
-
-/* Footer */
-#unfire-final-footer {
-    background: #17191d !important;
-    border-top: 1px solid rgba(255,255,255,.09) !important;
-}
-
-/* Mejor contraste del texto secundario */
-.uf-lower-company p,
-.uf-strategic p {
-    color: rgba(245,247,250,.68) !important;
-}
-
-.uf-lower-company h1,
-.uf-lower-company h2,
-.uf-lower-company h3,
-.uf-strategic h1,
-.uf-strategic h2,
-.uf-strategic h3 {
-    color: rgba(255,255,255,.98) !important;
-}
-
-.uf-final-footer-links a {
-    color: rgba(255,255,255,.58) !important;
-}
-
-.uf-final-footer-copy {
-    color: rgba(255,255,255,.48) !important;
-}
-
-</style>
-
-
-<style id="unfire-final-two-blocks-fix">
-
-.uf-force-company-final {
-    background: #23262b !important;
-    border-top: 1px solid rgba(255,255,255,.10) !important;
-    border-bottom: 1px solid rgba(255,255,255,.08) !important;
-
-    padding-top: 58px !important;
-    padding-bottom: 58px !important;
-}
-
-.uf-force-strategic-final {
-    background: #1d2025 !important;
-    border-top: 1px solid rgba(255,255,255,.08) !important;
-    border-bottom: 1px solid rgba(255,255,255,.08) !important;
-
-    padding-top: 68px !important;
-    padding-bottom: 68px !important;
-}
-
-.uf-force-company-final h1,
-.uf-force-company-final h2,
-.uf-force-company-final h3,
-.uf-force-strategic-final h1,
-.uf-force-strategic-final h2,
-.uf-force-strategic-final h3 {
-    color: rgba(255,255,255,.98) !important;
-}
-
-.uf-force-company-final p,
-.uf-force-strategic-final p {
-    color: rgba(245,247,250,.68) !important;
-}
-
-</style>
-
-<script id="unfire-final-two-blocks-fix-script">
-(() => {
-
-    function findBestBlock(needle) {
-        const target = needle.toLowerCase();
-
-        const candidates = [
-            ...document.querySelectorAll(
-                'section, article, [class*="section"], [class*="block"], div'
-            )
-        ];
-
-        const matches = candidates.filter(el => {
-            const txt = (el.innerText || '')
-                .replace(/\s+/g, ' ')
-                .trim()
-                .toLowerCase();
-
-            return txt.includes(target);
-        });
-
-        if (!matches.length) return null;
-
-        // coger el bloque más pequeño que contenga el contenido
-        matches.sort((a, b) => {
-            const ta = (a.innerText || '').length;
-            const tb = (b.innerText || '').length;
-            return ta - tb;
-        });
-
-        return matches[0];
-    }
-
-    const company = findBestBlock(
-        'Independent technology company.'
-    );
-
-    const strategic = findBestBlock(
-        'Built to scale into higher-value technological projects.'
-    );
-
-    if (company) {
-        const block =
-            company.closest('section, article, [class*="section"], [class*="block"]')
-            || company;
-
-        block.classList.add('uf-force-company-final');
-    }
-
-    if (strategic) {
-        const block =
-            strategic.closest('section, article, [class*="section"], [class*="block"]')
-            || strategic;
-
-        block.classList.add('uf-force-strategic-final');
-    }
-
-    console.log('[Unfire] Final lower blocks forced');
-})();
-</script>
-
-
-<style id="unfire-final-two-blocks-fix">
-
-.uf-force-company-final {
-    background: #23262b !important;
-    border-top: 1px solid rgba(255,255,255,.10) !important;
-    border-bottom: 1px solid rgba(255,255,255,.08) !important;
-
-    padding-top: 58px !important;
-    padding-bottom: 58px !important;
-}
-
-.uf-force-strategic-final {
-    background: #1d2025 !important;
-    border-top: 1px solid rgba(255,255,255,.08) !important;
-    border-bottom: 1px solid rgba(255,255,255,.08) !important;
-
-    padding-top: 68px !important;
-    padding-bottom: 68px !important;
-}
-
-.uf-force-company-final h1,
-.uf-force-company-final h2,
-.uf-force-company-final h3,
-.uf-force-strategic-final h1,
-.uf-force-strategic-final h2,
-.uf-force-strategic-final h3 {
-    color: rgba(255,255,255,.98) !important;
-}
-
-.uf-force-company-final p,
-.uf-force-strategic-final p {
-    color: rgba(245,247,250,.68) !important;
-}
-
-</style>
-
-<script id="unfire-final-two-blocks-fix-script">
-(() => {
-
-    function findBestBlock(needle) {
-        const target = needle.toLowerCase();
-
-        const candidates = [
-            ...document.querySelectorAll(
-                'section, article, [class*="section"], [class*="block"], div'
-            )
-        ];
-
-        const matches = candidates.filter(el => {
-            const txt = (el.innerText || '')
-                .replace(/\s+/g, ' ')
-                .trim()
-                .toLowerCase();
-
-            return txt.includes(target);
-        });
-
-        if (!matches.length) return null;
-
-        // coger el bloque más pequeño que contenga el contenido
-        matches.sort((a, b) => {
-            const ta = (a.innerText || '').length;
-            const tb = (b.innerText || '').length;
-            return ta - tb;
-        });
-
-        return matches[0];
-    }
-
-    const company = findBestBlock(
-        'Independent technology company.'
-    );
-
-    const strategic = findBestBlock(
-        'Built to scale into higher-value technological projects.'
-    );
-
-    if (company) {
-        const block =
-            company.closest('section, article, [class*="section"], [class*="block"]')
-            || company;
-
-        block.classList.add('uf-force-company-final');
-    }
-
-    if (strategic) {
-        const block =
-            strategic.closest('section, article, [class*="section"], [class*="block"]')
-            || strategic;
-
-        block.classList.add('uf-force-strategic-final');
-    }
-
-    console.log('[Unfire] Final lower blocks forced');
-})();
-</script>
-
