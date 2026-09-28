@@ -2483,8 +2483,8 @@ section[id] > *{
    No fuerza el ancho de controles flotantes.
 */
 
-main section > div,
-section[id] > div{
+main section > div:not([id*="player"]):not([class*="player"]),
+section[id] > div:not([id*="player"]):not([class*="player"]){
   width:min(var(--uf-page),calc(100vw - var(--uf-gutter))) !important;
 
   margin-left:auto !important;
