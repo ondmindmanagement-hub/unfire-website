@@ -1,0 +1,134 @@
+cir=========================================
+BOLT TECHNICAL EVIDENCE
+=========================================
+
+DATE:
+domingo, 27 de septiembre de 2026, 20:07:10 CEST
+
+=== PROJECT PATH ===
+/Users/omarbaro/Desktop/ESCRITORIO 3/BOLT
+
+=== GIT STATUS ===
+
+=== RECENT BOLT COMMITS ===
+2fcdf5e Sign in a staging folder outside the synced Desktop and identify the certificates by hash (the accented names do not match)
+75071f1 Point the icon script's usage note at the artwork's new location
+f055567 Give the app icon the macOS shape (824 px body, rounded corners, soft shadow); reproducible icon pipeline
+030a66e Add the app icon (.icns) and the public contact address to the store pages; test the store assets
+fd9772b App Store build: compile the Git checkpoint out, add a sandbox smoke test, and prepare the privacy policy, support page and listing kit
+6c6a823 Prepare the Mac App Store build: sandbox entitlements, store Info.plist, release script (assemble/sign/pkg), scratch space moved to Application Support
+0537f62 Revert "Require the Mac's identity check (Touch ID, or the login password) before API keys can be viewed or saved"
+408ae76 Revert "Add an optional, off-by-default identity check on Aprobar in REAL mode; persist only that switch, with the exception documented and enforced"
+d9af92b Add an optional, off-by-default identity check on Aprobar in REAL mode; persist only that switch, with the exception documented and enforced
+d9ffd3f Require the Mac's identity check (Touch ID, or the login password) before API keys can be viewed or saved
+64da890 Make the usage indicator a neutral level reading ($0.03 usados) and the mode badge non-alarming
+ca4307c Add a discreet spending indicator by role (Constructor/Auditor), neutral until near the authorized limit; plain-language usage labels
+a9b8bde Remove the automatic switch to REAL: the mode is chosen explicitly on the confirmation screen, with the spending authorization in plain words
+99ff468 Accept harmless wording variants in Claude replies, name the failing field when a reply is unusable, admit the charge and explain failures plainly
+e9126ff Fix the setup proposal seeing too little: list shallow source files first, skip asset catalogs and binaries, ask for specific checks, explain thin plans
+c2ba8e7 v1.1: step-by-step native flow (project, task, confirmation, review, done) with a bottom action bar and Ajustes avanzados; engine unchanged
+6e1c339 v1.1 phase 3: propose editable files and acceptance checks before the run (editable, explicit accept, per-run authorization); REAL selected only when both providers are ready
+d4abc44 v1.1 phase 3a: setup proposal engine (project listing, strict validation, gated proposal call), no UI yet
+c0bce41 v1.1 phase 2: simple mode by default; manual controls, mode, loop, checkpoint and usage moved under a collapsed Avanzado
+cd59e1f v1.1 phase 1: pin nested-folder creation for new files (already supported) with approval, symlink and escape tests
+a9d0768 Make transport timeout/cancel tests deterministic (no wall-clock bounds)
+586b0da Test that differing failures then success is not no-progress, while a genuine repeat still is
+64587db Make the UI usable at 520x500: wrapping rows, pinned STOP/RUN/APPROVE/REJECT bar, smaller sheet minimums
+46aedab Add governed replace-existing-file edits: base-bound approval, diffs, and modified-file Git checkpoint
+385b0be Fail fast on acceptance checks that name existing files; tighten Builder file-name rules
+2f9704e Fix Claude Sonnet 5 truncation: explicit thinkingMode, clearer truncation error
+c4eb45a Add Autonomous Loop MVP: acceptance checks, bounded retries, STOP, and isolated Git checkpoint
+a269683 Add OpenAI auditor, REAL/MOCK mode, per-run network consent and cost guard
+eef15eb Finalize terminal approval controls
+0649e45 Add secure provider foundation and Claude builder integration
+
+=== PACKAGE ===
+-rw-r--r--  1 omarbaro  staff   4,6K 21 sept. 13:39 /Users/omarbaro/Desktop/ESCRITORIO 3/BOLT/Package.swift
+
+=== SOURCE MODULES ===
+BOLTApp
+BoltApprovalEngine
+BoltCore
+BoltCredentials
+BoltGit
+BoltLedger
+BoltMVP
+BoltPolicyEngine
+BoltProviderProtocol
+BoltProviders
+BoltRouter
+BoltSandbox
+BoltTransport
+BoltVerifier
+
+=== TEST MODULES ===
+BoltApprovalEngineTests
+BoltCoreTests
+BoltCredentialsTests
+BoltGitTests
+BoltMVPTests
+BoltPolicyEngineTests
+BoltProviderProtocolTests
+BoltProvidersTests
+BoltRouterTests
+BoltTransportTests
+
+=== SWIFT SOURCE COUNT ===
+      55
+
+=== SWIFT TEST COUNT ===
+      52
+
+=== EXISTING BOLT APP ===
+5,1M	/Users/omarbaro/Desktop/ESCRITORIO 3/BOLT/dist/BOLT.app
+
+=== APP SIGNATURE ===
+Identifier=local.bolt.app
+TeamIdentifier=not set
+
+=== APP BUNDLE INFO ===
+local.bolt.app
+0.1.0
+1
+
+=== HIGH-LEVEL ARCHITECTURE EVIDENCE ===
+✓ BoltApprovalEngine — 1 Swift files
+✓ BoltCore — 1 Swift files
+✓ BoltCredentials — 4 Swift files
+✓ BoltGit — 2 Swift files
+✓ BoltLedger — 1 Swift files
+✓ BoltMVP — 17 Swift files
+✓ BoltPolicyEngine — 1 Swift files
+✓ BoltProviderProtocol — 6 Swift files
+✓ BoltProviders — 7 Swift files
+✓ BoltRouter — 4 Swift files
+✓ BoltSandbox — 1 Swift files
+✓ BoltTransport — 2 Swift files
+✓ BoltVerifier — 1 Swift files BOLT="/Users/omarbaro/Desktop/ESCRITORIO 3/BOLT"
+
+cd "$BOLT"
+
+echo "========== SWIFT TEST =========="
+swift test
+
+echo ""
+echo "========== SWIFT BUILD RELEASE =========="
+swift build -c release
+
+echo ""
+echo "========== FIN =========="
+
+BOLT="/Users/omarbaro/Desktop/ESCRITORIO 3/BOLT"
+
+cd "$BOLT"
+
+echo "========== SWIFT TEST =========="
+swift test
+
+echo ""
+echo "========== SWIFT BUILD RELEASE =========="
+swift build -c release
+
+echo ""
+echo "========== FIN =========="
+©

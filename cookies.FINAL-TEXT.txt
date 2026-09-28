@@ -1,0 +1,15 @@
+Cookie Policy — Unfire
+← Unfire
+Cookie Policy
+Last updated: September 2026
+This website uses only the storage necessary to provide basic functionality and remember certain user preferences.
+Essential storage
+Unfire may use local browser storage to remember choices such as cookie consent. This information is stored on your device and is required for basic website functionality.
+Analytics and optional technologies
+Unfire does not currently activate optional analytics or advertising technologies without the user's consent.
+If analytics or other optional technologies are introduced in the future, they will only be activated where required after appropriate consent.
+Managing your choice
+You may accept or reject optional technologies through the consent controls shown on the website. You can also clear stored website data through your browser settings.
+Contact
+For questions about this policy, contact:
+hello@unfire.technology

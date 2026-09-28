@@ -1,0 +1,17 @@
+vertical,products,status,open_opportunities,watch_opportunities,partner_opportunities,needs_more_research
+AI_AND_DEVELOPER,Bolt / AI Token Counter / AI File Prep / App Store Prep Checker,ACTIVE,5,2,3,YES
+CYBERSECURITY_PRIVACY,Cybersecurity / Privacy Lens / Compliance,ACTIVE,0,1,4,YES
+ENERGY_CLIMATE,Power / Energy Hub / Climate Radar,ACTIVE,1,2,2,YES
+HYDROGEN,Power / Hydrogen,ACTIVE,0,1,1,YES
+WATER_AGRICULTURE,Water / Agriculture / Resource Management,ACTIVE,0,1,0,YES
+INDUSTRY_MANUFACTURING,Industry / Business Cost Control / Operations,ACTIVE,0,1,2,YES
+LOGISTICS_SUPPLY_CHAIN,Supply / Logistics / Network,ACTIVE,0,0,2,YES
+PUBLIC_MUNICIPAL,Municipal / Public / Public Resources,ACTIVE,1,0,2,YES
+FINANCE_FINTECH,Finance / Banking / Markets / Funds / Insurance,UNCOVERED,0,0,0,YES
+REAL_ESTATE_RETAIL,Real Estate / Retail / Commerce,UNCOVERED,0,0,0,YES
+CREATOR_MEDIA_AUDIO,Creator / Rights Manager / Archer / audiovisual,ACTIVE,0,1,1,YES
+EDUCATION,Education,UNCOVERED,0,0,0,YES
+CRITICAL_MATERIALS,Materials / Mineral / Commodities / Resource Management,PARTIAL,0,1,0,YES
+SAFETY_RESILIENCE,Safety / Resilience / Critical Infrastructure,PARTIAL,0,1,2,YES
+CONNECTIVITY_WIFI,Connectivity / Wi-Fi / Network,UNCOVERED,0,0,0,YES
+INTERNATIONALISATION,Multiple products,ACTIVE,0,0,1,YES

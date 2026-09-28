@@ -1,0 +1,122 @@
+=== UNFIRE / BOLT EVIDENCE SNAPSHOT ===
+
+DATE:
+domingo, 27 de septiembre de 2026, 20:02:12 CEST
+
+=== UNFIRE WEBSITE GIT STATUS ===
+ M assets/video/.DS_Store
+ M index.html
+?? audio/.DS_Store
+?? audio/masters/
+?? audio/narration-text/
+?? audio/tests/
+?? audio/voice-map.json
+?? funding/
+?? index-before-apple-player-fix-20260927-012618.html
+?? index-before-apple-smooth-playback.html
+?? index-before-apple-status-clean-final.html
+?? index-before-apple-status-header-final.html
+?? index-before-apple-status-next-to-logo.html
+?? index-before-apple-status-return.html
+?? index-before-audio-scroll-500ms.html
+?? index-before-audio-scroll-final-fix.html
+?? index-before-bidirectional-scroll-20260927-014253.html
+?? index-before-center-active-frame-return.html
+?? index-before-claude-reader-final.html
+?? index-before-direct-audio-follow-20260927-015007.html
+?? index-before-fast-narration-scroll-20260927-014152.html
+?? index-before-fast-native-scroll-20260927-014707.html
+?? index-before-fast-travel-scroll-20260927-015149.html
+?? index-before-global-visual-editor.html
+?? index-before-lightning-follow-20260927-014827.html
+?? index-before-logo-player-20260927-011823.html
+?? index-before-manual-wait-11s.html
+?? index-before-playback-smooth-fix.html
+?? index-before-player-autohide-top-20260927-013638.html
+?? index-before-player-final-center-20260927-013228.html
+?? index-before-player-fix-20260927-011330.html
+?? index-before-player-grid-sync-20260927-012815.html
+?? index-before-player-layout-20260927-011525.html
+?? index-before-player-real-top-20260927-013314.html
+?? index-before-player-shrink-20260927-012233.html
+?? index-before-player-shrink-20260927-012247.html
+?? index-before-player-static-center-20260927-013142.html
+?? index-before-player-strategic-center-20260927-013035.html
+?? index-before-player-symmetry-20260927-012937.html
+?? index-before-player-top-20260927-012344.html
+?? index-before-reading-dot.html
+?? index-before-reading-frame-highlight.html
+?? index-before-remove-clean-promo.html
+?? index-before-remove-line-20260927-013754.html
+?? index-before-scroll-365-20260927-020039.html
+?? index-before-scroll-4015-20260927-020115.html
+?? index-before-seek500-fix.html
+?? index-before-stars-background.html
+?? index-before-strategic-expansion-20260927-015800.html
+?? index-before-strategic-minimal-20260927-015903.html
+?? index-before-strategic-minimal-20260927-015943.html
+?? index-before-sync-clean-20260927-014614.html
+?? index-before-topbar-apple-status.html
+?? index-before-ultrafast-audio-follow-20260927-014416.html
+?? index-before-youtube-player-20260927-012016.html
+?? index-black-screen-backup-20260927-011615.html
+?? index-unseen-apple-test-before-seek500-fix.html
+?? index-unseen-apple-test-old.html
+?? index-unseen-apple-test.html
+?? scripts/
+
+=== RECENT UNFIRE COMMITS ===
+877c2be Place Apple platform status in top header bar
+0a6c757 Add privacy cookies and legal pages
+c8a16f7 Update Unfire website
+dd1bab2 Add clean Apple-style visual story sequence
+d66b67c Add canonical bilingual content model
+daeb568 Add canonical Spanish narration sections
+b59c165 Add canonical bilingual narration timelines
+8af52ba Replace karaoke with fluid line narration fill
+4bc38cd Rebuild narration into stable fluid production reader
+1a1fdf2 Add letter by letter narration karaoke
+a478675 Fix frame accurate narration karaoke
+747d85c Make karaoke cover every spoken word
+88679a8 Polish white karaoke highlighting
+0944c64 Restore stable narration reader
+f5c466e Make narration camera forward only
+f04deb2 Smooth narration auto scroll
+2bc6156 Increase narration playback speed
+6502aa2 Add fluid narration scroll and word highlighting
+34e0844 Make narration player ultra minimal
+b635163 Simplify and redesign narration player
+dd2c559 Match narration to visible page language
+2106e3a Sync narration with translated page language
+b41e0cb Add bilingual English Spanish narration
+4af393c Add Spanish premium narration
+9385446 Switch website to premium narration
+
+=== FUNDING FILES ===
+funding/nlnet/.DS_Store
+funding/nlnet/codesupply/application.md
+funding/nlnet/codesupply/budget.md
+funding/nlnet/codesupply/milestones.md
+funding/nlnet/codesupply/README.md
+funding/nlnet/evidence/AI-USAGE-LOG.md
+funding/nlnet/evidence/HUMAN-DEVELOPMENT-LOG.md
+funding/nlnet/evidence/snapshots/project-evidence.txt
+funding/nlnet/FINAL-CHECKLIST.md
+funding/nlnet/restack/application.md
+funding/nlnet/restack/budget.md
+funding/nlnet/restack/milestones.md
+funding/nlnet/restack/README.md
+
+=== WEBSITE / AUDIO ASSETS ===
+audio/masters/unfire-master-en.mp3
+audio/masters/unfire-master-sv.mp3
+audio/masters/unfire-master-fr.mp3
+audio/masters/unfire-master-nl.mp3
+audio/masters/unfire-master-no.mp3
+audio/masters/unfire-master-ca.mp3
+audio/masters/unfire-master-is.mp3
+audio/masters/unfire-master-es.mp3
+audio/masters/unfire-master-fi.mp3
+audio/masters/unfire-master-de.mp3
+audio/masters/unfire-master-it.mp3
+audio/masters/unfire-master-pt.mp3

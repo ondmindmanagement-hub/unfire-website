@@ -1,0 +1,5704 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+
+
+<style id="unfire-critical-no-overlays">
+#unfire-editor-v4-panel,
+#uf-editor-panel,
+#uf-editor-toggle {
+    display: none!important;
+    visibility: hidden!important;
+    opacity: 0!important;
+    pointer-events: none!important;
+}
+</style>
+
+    <!-- Unfire brand icons -->
+
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Unfire builds reusable technology systems for software production, AI-assisted workflows and new digital products." name="description"/>
+<meta content="notranslate" name="google"/>
+<title>Unfire — Technology Systems</title>
+<style>:root{
+  --bg:#000;
+  --surface:#0a0a0c;
+  --surface2:#0d0d10;
+  --text:#f5f5f7;
+  --muted:#8e8e93;
+  --muted2:#66666d;
+  --line:#1d1d21;
+  --max:1180px;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+  background:var(--bg);
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button,
+input{
+  font:inherit;
+}.notranslate{
+  unicode-bidi:isolate;
+}.wrap{
+  width:min(calc(100% - 48px),var(--max));
+  margin:0 auto;
+}
+
+/* HEADER */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(0,0,0,.82);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+}.nav{
+  min-height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}.brand{
+  font-size:18px;
+  font-weight:650;
+  letter-spacing:-.01em;
+}.nav-links{
+  display:flex;
+  align-items:center;
+  gap:30px;
+  color:#8c8c92;
+  font-size:13px;
+}.nav-links a:hover{
+  color:#fff;
+}
+
+/* GENERAL */
+
+section{
+  padding:130px 0;
+  border-bottom:1px solid var(--line);
+}.eyebrow{
+  margin-bottom:24px;
+  color:#78787f;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+h1,h2,h3,p{
+  margin-top:0;
+}
+
+h1{
+  max-width:1050px;
+  margin-bottom:38px;
+  font-size:clamp(4rem,8vw,8.3rem);
+  line-height:.97;
+  letter-spacing:-.025em;
+  font-weight:590;
+}
+
+h2{
+  max-width:1020px;
+  margin-bottom:32px;
+  font-size:clamp(3rem,6vw,6.2rem);
+  line-height:1.02;
+  letter-spacing:-.02em;
+  font-weight:590;
+}
+
+h3{
+  margin-bottom:14px;
+  font-size:26px;
+  line-height:1.16;
+  letter-spacing:0;
+  font-weight:590;
+}.lead{
+  max-width:790px;
+  margin-bottom:0;
+  color:var(--muted);
+  font-size:clamp(18px,2vw,23px);
+  line-height:1.58;
+}.small{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+}
+
+/* HERO */.hero{
+  min-height:calc(100vh - 64px);
+  display:flex;
+  align-items:center;
+  padding:110px 0 130px;
+}.hero-inner{
+  width:100%;
+}.hero-kicker{
+  margin-bottom:28px;
+  color:#77777d;
+  font-size:12px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}.hero p{
+  max-width:760px;
+  margin:0;
+  color:#9a9aa1;
+  font-size:clamp(19px,2vw,25px);
+  line-height:1.55;
+}.hero-actions{
+  display:flex;
+  gap:14px;
+  margin-top:44px;
+}.button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:0 20px;
+  border:1px solid #2b2b30;
+  border-radius:999px;
+  color:#fff;
+  background:#111114;
+  font-size:13px;
+  transition:.2s ease;
+}.button.primary{
+  color:#000;
+  background:#f5f5f7;
+  border-color:#f5f5f7;
+}.button:hover{
+  transform:translateY(-1px);
+}
+
+/* COMPANY */.statement{
+  max-width:1020px;
+  font-size:clamp(2.4rem,5vw,5.1rem);
+  line-height:1.08;
+  letter-spacing:-.015em;
+  font-weight:570;
+}.statement-muted{
+  color:#64646b;
+}.three{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:78px;
+}.simple-card{
+  min-height:235px;
+  padding:30px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:var(--surface);
+}.simple-card span{
+  display:block;
+  margin-bottom:48px;
+  color:#616168;
+  font-size:11px;
+}.simple-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.65;
+}
+
+/* WORK */.work-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:68px;
+}.product{
+  min-height:390px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:36px;
+  border:1px solid var(--line);
+  border-radius:26px;
+  background:linear-gradient(180deg,#0c0c0f,#09090b);
+}.product-type{
+  margin-bottom:38px;
+  color:#6e6e75;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}.product h3{
+  font-size:36px;
+}.product p{
+  max-width:520px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.7;
+}.product footer{
+  margin-top:54px;
+  color:#66666d;
+  font-size:11px;
+}.subproduct{
+  margin-top:28px;
+  padding-top:25px;
+  border-top:1px solid var(--line);
+}.subproduct-label{
+  color:#68686f;
+  font-size:10px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}.subproduct-name{
+  display:block;
+  margin:9px 0 10px;
+  font-size:20px;
+  font-weight:600;
+}
+
+/* AUDIO */.audio-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:68px;
+}.audio-item{
+  padding:30px 0;
+  border-top:1px solid var(--line);
+}.audio-item span{
+  color:#606067;
+  font-size:11px;
+}.audio-item strong{
+  display:block;
+  margin-top:18px;
+  font-size:21px;
+  font-weight:590;
+}.audio-item p{
+  margin:15px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+}.big-message{
+  max-width:990px;
+  margin-top:95px;
+  font-size:clamp(2.7rem,5vw,5.5rem);
+  line-height:1.07;
+  letter-spacing:-.015em;
+  font-weight:580;
+}.big-message p{
+  max-width:740px;
+  margin:30px 0 0;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.7;
+  font-weight:400;
+  letter-spacing:0;
+}
+
+/* SYSTEM */.system-diagram{
+  margin-top:75px;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}.system-row{
+  display:grid;
+  grid-template-columns:180px 1fr;
+  gap:40px;
+  padding:32px 0;
+  border-bottom:1px solid var(--line);
+}.system-row:last-child{
+  border-bottom:0;
+}.system-row strong{
+  font-size:15px;
+}.system-row p{
+  max-width:680px;
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.65;
+}
+
+/* SCALE */.scale-panel{
+  margin-top:65px;
+  padding:44px;
+  border:1px solid var(--line);
+  border-radius:28px;
+  background:var(--surface);
+}.scale-panel-title{
+  max-width:900px;
+  font-size:clamp(2.7rem,5vw,5.2rem);
+  line-height:1.05;
+  letter-spacing:-.015em;
+  font-weight:580;
+}.scale-panel p{
+  max-width:760px;
+  margin:28px 0 0;
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.72;
+}.metrics{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:16px;
+}.metric{
+  min-height:190px;
+  padding:28px;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:var(--surface);
+}.metric strong{
+  display:block;
+  font-size:clamp(2.5rem,4vw,4.2rem);
+  line-height:1;
+  font-weight:590;
+}.metric span{
+  display:block;
+  margin-top:25px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.55;
+}.flow{
+  display:grid;
+  grid-template-columns:1fr auto 1fr auto 1fr;
+  align-items:center;
+  gap:26px;
+  margin-top:90px;
+}.flow-step{
+  padding:24px 0;
+}.flow-num{
+  color:#626268;
+  font-size:10px;
+}.flow-step strong{
+  display:block;
+  margin-top:14px;
+  font-size:19px;
+}.flow-step p{
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}.arrow{
+  color:#44444a;
+  font-size:24px;
+}.sector-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-top:100px;
+}.sector{
+  padding-top:26px;
+  border-top:1px solid var(--line);
+}.sector h3{
+  margin-top:17px;
+}.sector p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+}.proprietary{
+  margin-top:95px;
+  padding-top:30px;
+  border-top:1px solid var(--line);
+}.proprietary strong{
+  display:block;
+  font-size:19px;
+}.proprietary p{
+  max-width:750px;
+  margin:14px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+}
+
+/* FUNDING */.funding-panel{
+  display:grid;
+  grid-template-columns:1.15fr.85fr;
+  gap:80px;
+  align-items:end;
+  margin-top:70px;
+}.funding-big{
+  font-size:clamp(2.8rem,5vw,5.8rem);
+  line-height:1.04;
+  letter-spacing:-.018em;
+  font-weight:580;
+}.funding-copy{
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.75;
+}.contact{
+  display:inline-block;
+  margin-top:30px;
+  color:#fff;
+  font-size:15px;
+  border-bottom:1px solid #444;
+}
+
+/* FOOTER */.site-footer{
+  padding:38px 0 120px;
+}.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  gap:30px;
+  color:#5f5f65;
+  font-size:11px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){.nav-links{
+    gap:16px;
+  }
+
+  section{
+    padding:100px 0;
+  }.three,.work-grid,.audio-grid,.metrics,.sector-grid,.funding-panel{
+    grid-template-columns:1fr;
+  }.flow{
+    grid-template-columns:1fr;
+    gap:4px;
+  }.arrow{
+    transform:rotate(90deg);
+    text-align:center;
+  }.system-row{
+    grid-template-columns:1fr;
+    gap:12px;
+  }.metric{
+    min-height:150px;
+  }
+}
+
+@media(max-width:620px){.wrap{
+    width:min(calc(100% - 32px),var(--max));
+  }.nav{
+    min-height:58px;
+  }.nav-links a:nth-child(2),.nav-links a:nth-child(3){
+    display:none;
+  }.hero{
+    min-height:auto;
+    padding:100px 0;
+  }
+
+  h1{
+    font-size:clamp(3.2rem,15vw,5rem);
+  }
+
+  h2{
+    font-size:clamp(2.7rem,12vw,4rem);
+  }.product,.scale-panel{
+    padding:26px;
+  }
+}
+</style>
+<style id="unfire-layout-fix">
+
+/* -------------------------------------------------------
+   GLOBAL ALIGNMENT FIX
+------------------------------------------------------- */:root{
+  --max:1180px;
+  --page-pad:32px;
+}.wrap{
+  width:min(calc(100% - (var(--page-pad) * 2)), var(--max))!important;
+  max-width:var(--max)!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+/* HERO MUST NOT OVERRIDE.wrap */.hero-inner{
+  width:min(calc(100% - (var(--page-pad) * 2)), var(--max))!important;
+  max-width:var(--max)!important;
+  margin:0 auto!important;
+}
+
+/* Header uses exactly same visual axis */.nav{
+  width:100%;
+}
+
+/* cleaner hero */.hero{
+  min-height:calc(100vh - 64px);
+  display:flex;
+  align-items:center;
+  padding:80px 0 105px!important;
+}.hero-inner{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+}.hero-kicker{
+  margin-bottom:28px!important;
+}.hero h1{
+  max-width:1050px!important;
+  margin:0 0 34px!important;
+  font-size:clamp(4.2rem,7.3vw,7.4rem)!important;
+  line-height:.98!important;
+  letter-spacing:-.025em!important;
+}.hero p{
+  max-width:720px!important;
+  margin:0!important;
+  font-size:clamp(18px,1.75vw,23px)!important;
+  line-height:1.55!important;
+}.hero-actions{
+  margin-top:38px!important;
+}
+
+/* all sections share same rhythm */
+section{
+  padding:120px 0!important;
+}
+
+section >.wrap{
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+/* stop oversized empty gaps */
+#company,
+#work,
+#audio,
+#system,
+#scale,
+#funding{
+  min-height:auto!important;
+}
+
+/* headings aligned and readable */
+h2{
+  max-width:940px!important;
+  font-size:clamp(3rem,5.4vw,5.7rem)!important;
+  line-height:1.03!important;
+  letter-spacing:-.018em!important;
+}.lead{
+  max-width:760px!important;
+}
+
+/* desktop optical centering */
+@media(min-width:1200px){:root{
+    --page-pad:48px;
+  }
+}
+
+/* tablet */
+@media(max-width:900px){:root{
+    --page-pad:26px;
+  }.hero{
+    padding:80px 0 90px!important;
+  }
+}
+
+/* mobile */
+@media(max-width:620px){:root{
+    --page-pad:18px;
+  }.hero{
+    padding:70px 0 80px!important;
+  }.hero h1{
+    font-size:clamp(3.2rem,14vw,4.8rem)!important;
+  }
+
+  section{
+    padding:90px 0!important;
+  }
+}
+
+</style>
+<style id="work-detail-upgrade">
+
+#work.lead{
+  margin-bottom:68px!important;
+}
+
+#work.work-grid{
+  margin-top:0!important;
+  align-items:stretch!important;
+}
+
+#work.product{
+  min-height:560px!important;
+  padding:38px!important;
+}
+
+#work.product h3{
+  margin-bottom:22px!important;
+}
+
+#work.product p{
+  max-width:560px!important;
+  margin:0 0 18px!important;
+  color:#929299!important;
+  font-size:14px!important;
+  line-height:1.72!important;
+}
+
+#work.product footer{
+  padding-top:26px!important;
+  margin-top:38px!important;
+  border-top:1px solid var(--line)!important;
+  line-height:1.55!important;
+}
+
+@media(max-width:900px){
+  #work.product{
+    min-height:auto!important;
+  }
+}
+
+</style>
+<style id="unfire-manual-nav-style">
+html{
+  scroll-behavior:auto!important;
+}
+
+#company,
+#work,
+#audio,
+#system,
+#scale,
+#funding{
+  scroll-margin-top:120px;
+}
+</style><style id="unfire-real-hero-fix">:root{
+  --unfire-lava:#C84A3A;
+  --unfire-lava-hover:#D65A49;
+  --unfire-lava-soft:rgba(200,74,58,.18);
+  --unfire-lava-border:rgba(200,74,58,.38);
+  --unfire-text:#F5F5F7;
+  --unfire-muted:#A1A1A6;
+}.unfire-real-hero{
+  min-height:0!important;
+  height:auto!important;
+
+  padding-top:42px!important;
+  padding-bottom:72px!important;
+
+  margin-top:0!important;
+
+  display:block!important;
+
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  place-items:start!important;
+}.unfire-real-hero > div{
+  min-height:0!important;
+  height:auto!important;
+
+  margin-top:0!important;
+  padding-top:0!important;
+
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+
+  transform:none!important;
+}.unfire-real-hero > div > div{
+  min-height:0!important;
+  height:auto!important;
+
+  margin-top:0!important;
+
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+
+  transform:none!important;
+}.unfire-real-hero h1,.unfire-real-hero h2{
+  margin-top:0!important;
+  margin-bottom:26px!important;
+
+  max-width:1000px!important;
+
+  letter-spacing:-.055em!important;
+  line-height:.96!important;
+}.unfire-real-hero p{
+  margin-top:0!important;
+  margin-bottom:30px!important;
+
+  max-width:700px!important;
+
+  color:var(--unfire-muted)!important;
+  line-height:1.52!important;
+}.unfire-lava-primary{
+  background:var(--unfire-lava)!important;
+  color:#fff!important;
+
+  border:1px solid rgba(255,255,255,.10)!important;
+
+  box-shadow:
+    0 8px 28px var(--unfire-lava-soft)!important;
+}.unfire-lava-primary:hover{
+  background:var(--unfire-lava-hover)!important;
+  color:#fff!important;
+}.unfire-lava-secondary{
+  border-color:var(--unfire-lava-border)!important;
+}.unfire-lava-secondary:hover{
+  background:rgba(200,74,58,.07)!important;
+  border-color:rgba(200,74,58,.60)!important;
+  color:#F2B8AF!important;
+}
+
+nav a{
+  transition:color.2s ease;
+}
+
+nav a:hover{
+  color:#E19A90!important;
+}
+
+nav a.active{
+  color:var(--unfire-text)!important;
+}
+
+input[type="range"]{
+  accent-color:var(--unfire-lava)!important;
+}::selection{
+  background:rgba(200,74,58,.30);
+  color:#fff;
+}
+
+@media(max-width:900px){.unfire-real-hero{
+    padding-top:30px!important;
+    padding-bottom:56px!important;
+  }
+}
+</style><style id="unfire-apple-first-style">
+#unfire-apple-first-line{
+  margin-top:6px;
+  margin-bottom:28px;
+
+  font-size:13px;
+  line-height:1.4;
+  font-weight:500;
+  letter-spacing:.015em;
+
+  color:#B0B0B5;
+
+  white-space:nowrap;
+}
+
+#unfire-apple-first-line::before{
+  content:"";
+  display:inline-block;
+
+  width:5px;
+  height:5px;
+
+  margin-right:8px;
+
+  border-radius:999px;
+  background:#C64A3A;
+
+  box-shadow:0 0 10px rgba(198,74,58,.22);
+
+  vertical-align:1px;
+}
+
+@media(max-width:700px){
+  #unfire-apple-first-line{
+    white-space:normal;
+  }
+}
+</style><style id="unfire-verticals-style">
+#unfire-verticals-line{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+
+  margin-left:18px;
+
+  max-width:calc(100vw - 520px);
+
+  overflow-x:auto;
+  overflow-y:hidden;
+
+  white-space:nowrap;
+
+  scrollbar-width:none;
+
+  vertical-align:middle;
+}
+
+#unfire-verticals-line::-webkit-scrollbar{
+  display:none;
+}.unfire-vertical{
+  flex:0 0 auto;
+
+  color:#8E8E93;
+
+  font-size:10px;
+  line-height:1;
+  font-weight:500;
+  letter-spacing:.01em;
+
+  transition:color.2s ease;
+}.unfire-vertical:hover{
+  color:#F5F5F7;
+}.unfire-vertical-sep{
+  flex:0 0 auto;
+
+  color:#C64A3A;
+  opacity:.72;
+
+  font-size:9px;
+}
+
+@media(max-width:1100px){
+  #unfire-verticals-line{
+    max-width:calc(100vw - 420px);
+    margin-left:12px;
+  }
+}
+
+@media(max-width:820px){
+  #unfire-verticals-line{
+    display:none;
+  }
+}
+</style><style id="unfire-editor-v4-style">
+[data-unfire-move]{
+  position:relative!important;
+  left:var(--ue-left,0px)!important;
+  top:var(--ue-top,0px)!important;
+}
+
+html.unfire-editing [data-unfire-move]{
+  outline:1px dashed rgba(198,74,58,.7)!important;
+  outline-offset:6px!important;
+  cursor:grab!important;
+  user-select:none!important;
+  -webkit-user-select:none!important;
+}
+
+html.unfire-editing [data-unfire-move]:hover{
+  outline:2px solid #C64A3A!important;
+}
+
+html.unfire-editing [data-unfire-move].ue-selected{
+  outline:2px solid #FF6048!important;
+  outline-offset:7px!important;
+}
+
+html.unfire-editing [data-unfire-move].ue-dragging{
+  cursor:grabbing!important;
+  outline:2px solid #FF6048!important;
+}
+
+#unfire-editor-v4-panel{
+  position:fixed!important;
+  left:18px!important;
+  bottom:18px!important;
+  top:auto!important;
+  right:auto!important;
+
+  z-index:2147483647!important;
+
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+
+  padding:8px!important;
+
+  border:1px solid rgba(255,255,255,.16)!important;
+  border-radius:14px!important;
+
+  background:rgba(20,20,22,.96)!important;
+  color:#fff!important;
+
+  box-shadow:0 12px 40px rgba(0,0,0,.4)!important;
+
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif!important;
+}
+
+#unfire-editor-v4-panel button{
+  appearance:none!important;
+
+  padding:7px 11px!important;
+
+  border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:9px!important;
+
+  background:rgba(255,255,255,.08)!important;
+  color:#fff!important;
+
+  font-size:11px!important;
+  font-weight:600!important;
+
+  cursor:pointer!important;
+}
+
+#ue4-edit.active{
+  background:#C64A3A!important;
+  border-color:#C64A3A!important;
+}
+
+#ue4-name{
+  min-width:100px!important;
+  color:#A1A1A6!important;
+  font-size:10px!important;
+}
+</style><style id="unfire-final-apple-layout">:root{
+  --uf-bg:#000;
+  --uf-surface:#0a0a0a;
+  --uf-text:#f5f5f7;
+  --uf-secondary:#a1a1a6;
+  --uf-muted:#86868b;
+  --uf-border:rgba(255,255,255,.09);
+
+  --uf-lava:#d84f3d;
+  --uf-lava-hover:#e35a47;
+
+  --uf-width:980px;
+}
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+html,
+body{
+  margin:0!important;
+  background:#000!important;
+  color:var(--uf-text)!important;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Text",
+    "SF Pro Display",
+    Helvetica,
+    Arial,
+    sans-serif!important;
+
+  -webkit-font-smoothing:antialiased!important;
+  text-rendering:optimizeLegibility!important;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+h1,h2,h3,h4,
+p{
+  text-wrap:balance;
+}
+
+/* =========================================================
+   HEADER GENERAL — 2 FILAS COMO APPLE
+   ========================================================= */
+
+header{
+  position:sticky!important;
+  top:0!important;
+  z-index:10000!important;
+
+  height:82px!important;
+  min-height:82px!important;
+
+  padding:0!important;
+
+  background:rgba(0,0,0,.88)!important;
+
+  border-bottom:1px solid var(--uf-border)!important;
+
+  backdrop-filter:saturate(180%) blur(20px)!important;
+  -webkit-backdrop-filter:saturate(180%) blur(20px)!important;
+}
+
+header > *{
+  position:relative!important;
+
+  width:min(1120px,calc(100vw - 44px))!important;
+  height:82px!important;
+  min-height:82px!important;
+
+  margin:0 auto!important;
+  padding:0!important;
+}
+
+/* =========================================================
+   FILA 1
+   marca izquierda / verticales centradas
+   ========================================================= */
+
+/* Unfire */
+
+[data-unfire-move="brand"]{
+  position:absolute!important;
+
+  left:0!important;
+  top:0!important;
+
+  width:auto!important;
+  height:44px!important;
+
+  display:flex!important;
+  align-items:center!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  color:var(--uf-text)!important;
+
+  font-size:14px!important;
+  line-height:1!important;
+  font-weight:600!important;
+  letter-spacing:-.015em!important;
+
+  transform:none!important;
+  translate:none!important;
+  scale:1!important;
+}
+
+/* Energy / Business / etc. */
+
+#unfire-verticals-line{
+  position:absolute!important;
+
+  left:50%!important;
+  top:0!important;
+
+  transform:translateX(-50%)!important;
+  translate:none!important;
+  scale:1!important;
+
+  height:44px!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  width:max-content!important;
+  max-width:780px!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  white-space:nowrap!important;
+  overflow:visible!important;
+}.unfire-vertical{
+  display:flex!important;
+  align-items:center!important;
+
+  height:44px!important;
+
+  padding:0 8px!important;
+
+  color:var(--uf-secondary)!important;
+
+  font-size:10.5px!important;
+  line-height:1!important;
+  font-weight:400!important;
+  letter-spacing:0!important;
+
+  transition:color.18s ease!important;
+}.unfire-vertical:hover{
+  color:var(--uf-text)!important;
+}.unfire-vertical-sep{
+  display:none!important;
+}
+
+/* =========================================================
+   FILA 2
+   Apple positioning izquierda / navegación derecha
+   ========================================================= */
+
+#unfire-apple-header-line,
+#unfire-apple-line{
+  position:absolute!important;
+
+  left:0!important;
+  top:44px!important;
+
+  transform:none!important;
+  translate:none!important;
+  scale:1!important;
+
+  height:38px!important;
+
+  display:flex!important;
+  align-items:center!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  color:#737378!important;
+
+  font-size:9.5px!important;
+  line-height:1!important;
+  font-weight:400!important;
+
+  white-space:nowrap!important;
+}
+
+#unfire-apple-header-line::before,
+#unfire-apple-line::before{
+  content:""!important;
+
+  display:block!important;
+
+  width:4px!important;
+  height:4px!important;
+
+  margin-right:8px!important;
+
+  border-radius:50%!important;
+
+  background:var(--uf-lava)!important;
+
+  box-shadow:none!important;
+}
+
+/* navegación */
+
+header nav,
+[data-unfire-move="navigation"]{
+  position:absolute!important;
+
+  right:0!important;
+  left:auto!important;
+  top:44px!important;
+
+  transform:none!important;
+  translate:none!important;
+  scale:1!important;
+
+  width:auto!important;
+  height:38px!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+
+  gap:22px!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  background:transparent!important;
+  border:0!important;
+
+  white-space:nowrap!important;
+}
+
+header nav a,
+[data-unfire-move="navigation"] a{
+  display:flex!important;
+  align-items:center!important;
+
+  height:38px!important;
+
+  padding:0!important;
+  margin:0!important;
+
+  color:var(--uf-muted)!important;
+
+  background:transparent!important;
+  border:0!important;
+
+  font-size:10.5px!important;
+  line-height:1!important;
+  font-weight:400!important;
+
+  transition:color.18s ease!important;
+}
+
+header nav a:hover,
+header nav a.active{
+  color:var(--uf-text)!important;
+}
+
+header nav a.active{
+  font-weight:500!important;
+}
+
+header nav a.active::after{
+  display:none!important;
+}
+
+/* =========================================================
+   HERO — PROPORCIÓN TIPO APPLE
+   ========================================================= */.unfire-main-hero{
+  min-height:auto!important;
+  height:auto!important;
+
+  padding:
+    72px
+    0
+    86px
+    0!important;
+
+  margin:0!important;
+
+  background:#000!important;
+}.unfire-main-hero > *{
+  width:min(var(--uf-width),calc(100vw - 44px))!important;
+
+  margin-left:auto!important;
+  margin-right:auto!important;
+
+  transform:none!important;
+}
+
+/* eyebrow */
+
+[data-unfire-move="hero-eyebrow"]{
+  margin:
+    0
+    0
+    18px
+    0!important;
+
+  color:var(--uf-muted)!important;
+
+  font-size:11px!important;
+  line-height:1.25!important;
+
+  font-weight:600!important;
+
+  letter-spacing:.13em!important;
+}
+
+/* título */
+
+[data-unfire-move="hero-title"],.unfire-main-hero h1,.unfire-main-hero h2{
+  max-width:820px!important;
+
+  margin:
+    0
+    0
+    24px
+    0!important;
+
+  color:var(--uf-text)!important;
+
+  font-size:clamp(50px,4.15vw,62px)!important;
+  line-height:1.035!important;
+
+  font-weight:600!important;
+
+  letter-spacing:-.047em!important;
+}
+
+/* texto descriptivo */
+
+[data-unfire-move="hero-copy"],.unfire-main-hero p{
+  max-width:620px!important;
+
+  margin:
+    0
+    0
+    30px
+    0!important;
+
+  color:var(--uf-secondary)!important;
+
+  font-size:19px!important;
+  line-height:1.45!important;
+
+  font-weight:400!important;
+
+  letter-spacing:-.012em!important;
+}
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+[data-unfire-move="hero-button-1"],.unfire-primary-cta{
+  min-height:42px!important;
+
+  padding:0 20px!important;
+
+  border:0!important;
+  border-radius:999px!important;
+
+  background:var(--uf-lava)!important;
+  color:#fff!important;
+
+  font-size:13px!important;
+  font-weight:500!important;
+
+  box-shadow:none!important;
+
+  transition:background.18s ease!important;
+}
+
+[data-unfire-move="hero-button-1"]:hover,.unfire-primary-cta:hover{
+  background:var(--uf-lava-hover)!important;
+}
+
+[data-unfire-move="hero-button-2"]{
+  min-height:42px!important;
+
+  padding:0 19px!important;
+
+  border:1px solid rgba(255,255,255,.18)!important;
+  border-radius:999px!important;
+
+  background:transparent!important;
+  color:var(--uf-text)!important;
+
+  font-size:13px!important;
+  font-weight:400!important;
+
+  box-shadow:none!important;
+}
+
+/* =========================================================
+   RESTO DE LA WEB — ESCALA COHERENTE
+   ========================================================= */
+
+section[id]:not(.unfire-main-hero){
+  min-height:auto!important;
+
+  padding:
+    88px
+    0
+    88px
+    0!important;
+
+  background:#000!important;
+}
+
+section[id]:not(.unfire-main-hero) > *{
+  width:min(var(--uf-width),calc(100vw - 44px))!important;
+
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+section[id]:not(.unfire-main-hero) h1,
+section[id]:not(.unfire-main-hero) h2{
+  max-width:760px!important;
+
+  color:var(--uf-text)!important;
+
+  font-size:clamp(40px,3.7vw,52px)!important;
+  line-height:1.06!important;
+
+  font-weight:600!important;
+
+  letter-spacing:-.04em!important;
+}
+
+section[id] h3{
+  color:var(--uf-text)!important;
+
+  font-size:27px!important;
+  line-height:1.12!important;
+
+  font-weight:600!important;
+
+  letter-spacing:-.025em!important;
+}
+
+section[id] p{
+  max-width:660px;
+
+  color:var(--uf-secondary)!important;
+
+  font-size:16.5px!important;
+  line-height:1.5!important;
+
+  font-weight:400!important;
+}
+
+section[id].eyebrow,
+section[id] [class*="eyebrow"],
+section[id] [class*="kicker"],
+section[id] [class*="label"]{
+  color:var(--uf-muted)!important;
+
+  font-size:10px!important;
+  line-height:1.3!important;
+
+  font-weight:600!important;
+
+  letter-spacing:.12em!important;
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */.card,
+[class*="card"]{
+  background:#0b0b0d!important;
+
+  border:1px solid var(--uf-border)!important;
+  border-radius:18px!important;
+
+  box-shadow:none!important;
+}.card h1,.card h2,.card h3,.card h4,
+[class*="card"] h1,
+[class*="card"] h2,
+[class*="card"] h3,
+[class*="card"] h4{
+  color:var(--uf-text)!important;
+}.card p,
+[class*="card"] p{
+  color:var(--uf-secondary)!important;
+}
+
+input[type="range"]{
+  accent-color:var(--uf-lava)!important;
+}
+
+/* =========================================================
+   EDITOR
+   solo visible en local
+   ========================================================= */
+
+#unfire-editor-v4-panel{
+  opacity:.94;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:1050px){
+
+  #unfire-verticals-line{
+    max-width:650px!important;
+  }.unfire-vertical{
+    padding:0 5px!important;
+    font-size:9.5px!important;
+  }
+}
+
+@media(max-width:850px){
+
+  header{
+    height:48px!important;
+    min-height:48px!important;
+  }
+
+  header > *{
+    height:48px!important;
+    min-height:48px!important;
+  }
+
+  [data-unfire-move="brand"]{
+    height:48px!important;
+  }
+
+  #unfire-verticals-line,
+  #unfire-apple-header-line,
+  #unfire-apple-line{
+    display:none!important;
+  }
+
+  header nav,
+  [data-unfire-move="navigation"]{
+    top:0!important;
+    height:48px!important;
+    gap:13px!important;
+  }
+
+  header nav a{
+    height:48px!important;
+    font-size:9.5px!important;
+  }.unfire-main-hero{
+    padding-top:56px!important;
+    padding-bottom:64px!important;
+  }
+
+  [data-unfire-move="hero-title"],.unfire-main-hero h1,.unfire-main-hero h2{
+    font-size:40px!important;
+  }
+
+  [data-unfire-move="hero-copy"],.unfire-main-hero p{
+    font-size:18px!important;
+  }
+}
+</style><style id="unfire-short-header-full-footer-style">
+/* HEADER: breve y limpio */
+
+#unfire-apple-header-line,
+#unfire-apple-line{
+  color:#737378!important;
+
+  font-size:9.5px!important;
+  font-weight:400!important;
+
+  white-space:nowrap!important;
+}
+
+#unfire-apple-header-line::before,
+#unfire-apple-line::before{
+  width:4px!important;
+  height:4px!important;
+
+  background:#C64A3A!important;
+}
+
+/* FOOTER CORPORATIVO */
+
+#unfire-footer-signature{
+  padding:
+    96px
+    28px
+    72px!important;
+
+  background:#000!important;
+  color:#F5F5F7!important;
+
+  text-align:center!important;
+
+  border-top:1px solid rgba(255,255,255,.08)!important;
+}.unfire-footer-brand{
+  display:inline-block;
+
+  margin-bottom:10px;
+
+  color:#F5F5F7!important;
+
+  font-size:28px;
+  line-height:1;
+  font-weight:600;
+  letter-spacing:-.035em;
+
+  text-decoration:none;
+}.unfire-footer-tagline{
+  margin-bottom:30px;
+
+  color:#A1A1A6;
+
+  font-size:15px;
+  line-height:1.4;
+  font-weight:400;
+}.unfire-footer-verticals{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+
+  gap:8px;
+
+  max-width:900px;
+
+  margin:
+    0 auto
+    18px;
+
+  color:#A1A1A6;
+
+  font-size:12px;
+  line-height:1.5;
+  font-weight:400;
+}.unfire-footer-sep{
+  color:#C64A3A;
+  opacity:.8;
+}.unfire-footer-apple{
+  margin-bottom:30px;
+
+  color:#86868B;
+
+  font-size:11px;
+  line-height:1.4;
+  font-weight:400;
+}.unfire-footer-description{
+  max-width:620px!important;
+
+  margin:
+    0 auto!important;
+
+  color:#6E6E73!important;
+
+  font-size:14px!important;
+  line-height:1.55!important;
+  font-weight:400!important;
+}
+
+@media(max-width:700px){
+
+  #unfire-footer-signature{
+    padding:
+      70px
+      20px
+      52px!important;
+  }.unfire-footer-brand{
+    font-size:24px;
+  }.unfire-footer-verticals{
+    max-width:420px;
+  }.unfire-footer-description{
+    max-width:420px!important;
+  }
+}
+</style>
+<style id="unfire-clean-apple-header">
+/* ==========================
+   HEADER PRINCIPAL
+   ========================== */
+
+header{
+  position:sticky!important;
+  top:0!important;
+  z-index:10000!important;
+
+  height:44px!important;
+  min-height:44px!important;
+
+  padding:0!important;
+
+  background:rgba(0,0,0,.88)!important;
+  border-bottom:1px solid rgba(255,255,255,.07)!important;
+
+  backdrop-filter:saturate(180%) blur(20px)!important;
+  -webkit-backdrop-filter:saturate(180%) blur(20px)!important;
+}
+
+header > *{
+  width:min(980px,calc(100vw - 40px))!important;
+  height:44px!important;
+
+  margin:0 auto!important;
+  padding:0!important;
+
+  display:flex!important;
+  align-items:center!important;
+}
+
+/* Unfire izquierda */
+
+[data-unfire-move="brand"]{
+  position:static!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  color:#f5f5f7!important;
+
+  font-size:14px!important;
+  line-height:44px!important;
+  font-weight:600!important;
+
+  transform:none!important;
+  translate:none!important;
+  scale:1!important;
+}
+
+/* navegación derecha */
+
+header nav,
+[data-unfire-move="navigation"]{
+  position:static!important;
+
+  width:auto!important;
+  height:44px!important;
+
+  margin-left:auto!important;
+  padding:0!important;
+
+  display:flex!important;
+  align-items:center!important;
+
+  gap:26px!important;
+
+  background:transparent!important;
+  border:0!important;
+
+  transform:none!important;
+  translate:none!important;
+  scale:1!important;
+}
+
+header nav a{
+  height:44px!important;
+
+  display:flex!important;
+  align-items:center!important;
+
+  padding:0!important;
+
+  color:#86868b!important;
+
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:400!important;
+
+  text-decoration:none!important;
+}
+
+header nav a:hover,
+header nav a.active{
+  color:#f5f5f7!important;
+}
+
+/* ==========================
+   SEGUNDA BARRA
+   ========================== */
+
+#unfire-apple-promo-bar{
+  position:relative!important;
+  z-index:9990!important;
+
+  width:100%!important;
+  height:42px!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  gap:8px!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  background:#000!important;
+
+  border-bottom:1px solid rgba(255,255,255,.07)!important;
+
+  color:#a1a1a6!important;
+
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:400!important;
+}
+
+/* luz verde */.unfire-green-dot{
+  width:6px!important;
+  height:6px!important;
+
+  display:block!important;
+
+  border-radius:50%!important;
+
+  background:#30d158!important;
+
+  box-shadow:
+    0 0 7px rgba(48,209,88,.48)!important;
+}
+
+/* eliminar verticales de arriba */
+
+#unfire-verticals-line{
+  display:none!important;
+}
+
+/* IMPORTANTE:
+   no tocamos posición del hero */
+
+body{
+  padding-top:0!important;
+}
+
+/* móvil */
+
+@media(max-width:800px){
+
+  header > *{
+    width:calc(100vw - 28px)!important;
+  }
+
+  header nav{
+    gap:12px!important;
+  }
+
+  header nav a{
+    font-size:9.5px!important;
+  }
+
+  #unfire-apple-promo-bar{
+    height:38px!important;
+    font-size:10px!important;
+  }
+}
+</style><style id="unfire-clean-header-v2-style">
+/* ==========================================================
+   OCULTAR LA CABECERA VIEJA
+   ========================================================== */
+
+header[data-unfire-old-header="true"]{
+  display:none!important;
+}
+
+/* ==========================================================
+   CABECERA UNFIRE V2
+   ========================================================== */
+
+#unfire-clean-header-v2{
+  position:sticky;
+  top:0;
+  z-index:100000;
+
+  width:100%;
+
+  background:#000;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Text",
+    "SF Pro Display",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  -webkit-font-smoothing:antialiased;
+}
+
+/* --------------------------
+   FILA PRINCIPAL
+   -------------------------- */.unfire-clean-mainbar{
+  height:44px;
+
+  background:rgba(0,0,0,.88);
+
+  border-bottom:1px solid rgba(255,255,255,.06);
+
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+}.unfire-clean-inner{
+  width:min(980px, calc(100% - 40px));
+  height:44px;
+
+  margin:0 auto;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+/* Unfire */.unfire-clean-brand{
+  display:flex;
+  align-items:center;
+
+  height:44px;
+
+  color:#f5f5f7!important;
+
+  font-size:14px;
+  line-height:1;
+  font-weight:600;
+  letter-spacing:-.015em;
+
+  text-decoration:none!important;
+}
+
+/* navegación */.unfire-clean-nav{
+  display:flex;
+  align-items:center;
+
+  height:44px;
+
+  gap:28px;
+}.unfire-clean-nav a{
+  display:flex;
+  align-items:center;
+
+  height:44px;
+
+  padding:0;
+  margin:0;
+
+  color:#86868b!important;
+
+  font-size:11px;
+  line-height:1;
+  font-weight:400;
+
+  text-decoration:none!important;
+
+  transition:color.18s ease;
+}.unfire-clean-nav a:hover{
+  color:#f5f5f7!important;
+}
+
+/* --------------------------
+   SEGUNDA FILA
+   -------------------------- */.unfire-clean-promo{
+  height:38px;
+
+  background:#000;
+
+  border-bottom:1px solid rgba(255,255,255,.07);
+}.unfire-clean-promo-inner{
+  height:38px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:8px;
+
+  color:#a1a1a6;
+
+  font-size:11px;
+  line-height:1;
+  font-weight:400;
+}
+
+/* luz verde */.unfire-clean-green-dot{
+  display:block;
+
+  width:6px;
+  height:6px;
+
+  flex:0 0 6px;
+
+  border-radius:999px;
+
+  background:#30d158;
+
+  box-shadow:
+    0 0 7px rgba(48,209,88,.46);
+}
+
+/* ==========================================================
+   ANCLAS
+   ========================================================== */
+
+#company,
+#work,
+#system,
+#scale,
+#funding{
+  scroll-margin-top:96px!important;
+}
+
+/* ==========================================================
+   MÓVIL
+   ========================================================== */
+
+@media(max-width:800px){.unfire-clean-inner{
+    width:calc(100% - 28px);
+  }.unfire-clean-nav{
+    gap:12px;
+  }.unfire-clean-nav a{
+    font-size:9.5px;
+  }.unfire-clean-promo,.unfire-clean-promo-inner{
+    height:36px;
+  }.unfire-clean-promo-inner{
+    font-size:10px;
+  }
+}
+</style><style id="unfire-header-editor-unlock">
+/* permitir que el editor mueva la nueva cabecera */.unfire-clean-brand[data-unfire-move],.unfire-clean-nav[data-unfire-move],.unfire-clean-promo-inner[data-unfire-move]{
+  position:relative!important;
+
+  left:var(--ue-left,0px)!important;
+  top:var(--ue-top,0px)!important;
+}
+
+html.unfire-editing.unfire-clean-brand[data-unfire-move],
+
+html.unfire-editing.unfire-clean-nav[data-unfire-move],
+
+html.unfire-editing.unfire-clean-promo-inner[data-unfire-move]{
+  pointer-events:auto!important;
+
+  cursor:grab!important;
+
+  outline:
+    1px dashed rgba(198,74,58,.75)!important;
+
+  outline-offset:6px!important;
+
+  z-index:200000!important;
+}
+
+html.unfire-editing.unfire-clean-brand.ue-selected,
+
+html.unfire-editing.unfire-clean-nav.ue-selected,
+
+html.unfire-editing.unfire-clean-promo-inner.ue-selected{
+  outline:
+    2px solid #C64A3A!important;
+}
+
+html.unfire-editing.unfire-clean-brand.ue-dragging,
+
+html.unfire-editing.unfire-clean-nav.ue-dragging,
+
+html.unfire-editing.unfire-clean-promo-inner.ue-dragging{
+  cursor:grabbing!important;
+}
+</style><style id="unfire-master-centering-style">:root{
+  --uf-page:980px;
+  --uf-gutter:40px;
+}
+
+/* ==================================================
+   EVITAR DESPLAZAMIENTOS ANTIGUOS
+   ================================================== */
+
+/* Las posiciones del editor permanecen también fuera del modo edición */
+
+[data-unfire-move]{
+  left:var(--ue-left,0px)!important;
+  top:var(--ue-top,0px)!important;
+}
+
+/* ==================================================
+   ANCHO GENERAL
+   ================================================== */
+
+html,
+body{
+  width:100%!important;
+  max-width:none!important;
+
+  margin:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
+
+  overflow-x:hidden!important;
+
+  background:#000!important;
+}
+
+/* ==================================================
+   CABECERA NUEVA
+   ================================================== */
+
+#unfire-clean-header-v2{
+  width:100%!important;
+  margin:0!important;
+}.unfire-clean-inner{
+  width:min(var(--uf-page),calc(100vw - var(--uf-gutter)))!important;
+
+  margin-left:auto!important;
+  margin-right:auto!important;
+}.unfire-clean-promo{
+  width:100%!important;
+}.unfire-clean-promo-inner{
+  width:min(var(--uf-page),calc(100vw - var(--uf-gutter)))!important;
+
+  margin-left:auto!important;
+  margin-right:auto!important;
+
+  justify-content:center!important;
+}
+
+/* ==================================================
+   MAIN
+   ================================================== */
+
+main{
+  width:100%!important;
+
+  margin:0!important;
+  padding:0!important;
+}
+
+/* ==================================================
+   HERO
+   ================================================== */.unfire-main-hero{
+  width:100%!important;
+
+  margin:0!important;
+
+  padding-left:0!important;
+  padding-right:0!important;
+
+  box-sizing:border-box!important;
+}.unfire-main-hero > *{
+  width:min(var(--uf-page),calc(100vw - var(--uf-gutter)))!important;
+  max-width:var(--uf-page)!important;
+
+  margin-left:auto!important;
+  margin-right:auto!important;
+
+  box-sizing:border-box!important;
+}
+
+/* El bloque del hero parte siempre del mismo eje */
+
+[data-unfire-move="hero-eyebrow"],
+[data-unfire-move="hero-title"],
+[data-unfire-move="hero-copy"]{
+  margin-left:0!important;
+}
+
+/* ==================================================
+   RESTO DE SECCIONES
+   ================================================== */
+
+main section,
+section[id]{
+  width:100%!important;
+
+  margin-left:0!important;
+  margin-right:0!important;
+
+  padding-left:0!important;
+  padding-right:0!important;
+
+  box-sizing:border-box!important;
+}
+
+main section > *,
+section[id] > *{
+  max-width:var(--uf-page);
+
+  box-sizing:border-box;
+}
+
+/*
+   Contenedores principales de cada sección.
+   No fuerza el ancho de controles flotantes.
+*/
+
+main section > div:not([id*="player"]):not([class*="player"]),
+section[id] > div:not([id*="player"]):not([class*="player"]){
+  width:min(var(--uf-page),calc(100vw - var(--uf-gutter)))!important;
+
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+/* líneas de separación siempre a todo el ancho */
+
+main section::before,
+main section::after{
+  box-sizing:border-box;
+}
+
+/* ==================================================
+   FOOTER UNFIRE
+   ================================================== */
+
+#unfire-footer-signature{
+  width:100%!important;
+
+  margin-left:0!important;
+  margin-right:0!important;
+
+  box-sizing:border-box!important;
+}
+
+#unfire-footer-signature > *{
+  max-width:var(--uf-page)!important;
+
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+/* ==================================================
+   EDITOR
+   NO FORZARLO A LA CUADRÍCULA
+   ================================================== */
+
+#unfire-editor-v4-panel{
+  max-width:none;
+}
+
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
+@media(max-width:800px){:root{
+    --uf-gutter:28px;
+  }
+}
+</style><style id="unfire-developer-nav-style">
+/* ================================================
+   UNFIRE HEADER — APPLE DEVELOPER-LIKE STRUCTURE
+   ================================================ */.unfire-clean-mainbar{
+  height:48px!important;
+  background:#1d1d1f!important;
+  border-bottom:1px solid rgba(255,255,255,.06)!important;
+}.unfire-clean-inner{
+  width:min(980px,calc(100vw - 40px))!important;
+  height:48px!important;
+
+  margin:0 auto!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+}
+
+/* UNFIRE */.unfire-clean-brand{
+  flex:0 0 auto!important;
+
+  height:48px!important;
+
+  display:flex!important;
+  align-items:center!important;
+
+  margin:0!important;
+
+  color:#f5f5f7!important;
+
+  font-size:15px!important;
+  line-height:1!important;
+  font-weight:600!important;
+  letter-spacing:-.018em!important;
+}
+
+/* MENÚ COMO APPLE DEVELOPER */.unfire-clean-nav{
+  position:relative!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+
+  height:48px!important;
+
+  margin-left:68px!important;
+  margin-right:0!important;
+
+  gap:42px!important;
+
+  left:0!important;
+  top:0!important;
+
+  transform:none!important;
+  translate:none!important;
+}.unfire-clean-nav a{
+  display:flex!important;
+  align-items:center!important;
+
+  height:48px!important;
+
+  padding:0!important;
+  margin:0!important;
+
+  color:#a1a1a6!important;
+
+  font-size:12px!important;
+  line-height:1!important;
+  font-weight:400!important;
+  letter-spacing:-.005em!important;
+
+  white-space:nowrap!important;
+
+  text-decoration:none!important;
+
+  transition:color.16s ease!important;
+}.unfire-clean-nav a:hover{
+  color:#f5f5f7!important;
+}.unfire-clean-nav a.active{
+  color:#f5f5f7!important;
+  font-weight:400!important;
+}
+
+/* Built for Apple queda como información secundaria */.unfire-clean-promo{
+  height:36px!important;
+
+  background:#000!important;
+  border-bottom:1px solid rgba(255,255,255,.07)!important;
+}.unfire-clean-promo-inner{
+  width:min(980px,calc(100vw - 40px))!important;
+  height:36px!important;
+
+  margin:0 auto!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+
+  gap:8px!important;
+
+  color:#86868b!important;
+
+  font-size:10.5px!important;
+  font-weight:400!important;
+}
+
+/* luz verde */.unfire-clean-green-dot{
+  width:6px!important;
+  height:6px!important;
+  min-width:6px!important;
+
+  border-radius:50%!important;
+
+  background:#30d158!important;
+
+  box-shadow:
+    0 0 7px rgba(48,209,88,.42)!important;
+}
+
+/* móvil */
+
+@media(max-width:800px){.unfire-clean-inner,.unfire-clean-promo-inner{
+    width:calc(100vw - 28px)!important;
+  }.unfire-clean-nav{
+    margin-left:25px!important;
+    gap:14px!important;
+  }.unfire-clean-nav a{
+    font-size:10px!important;
+  }.unfire-clean-promo-inner{
+    justify-content:center!important;
+  }
+}
+</style><style id="unfire-header-recenter-style">
+/* =========================================
+   CABECERA CENTRADA TIPO APPLE DEVELOPER
+   ========================================= */
+
+#unfire-clean-header-v2{
+  width:100%!important;
+  margin:0!important;
+  background:#000!important;
+}
+
+/* contenedor central común */.unfire-clean-inner{
+  width:min(980px, calc(100vw - 40px))!important;
+  height:48px!important;
+
+  margin-left:auto!important;
+  margin-right:auto!important;
+
+  padding:0!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+
+  position:relative!important;
+}
+
+/* UNFIRE izquierda */.unfire-clean-brand{
+  position:relative!important;
+
+  left:0!important;
+  top:0!important;
+
+  flex:0 0 auto!important;
+
+  height:48px!important;
+
+  display:flex!important;
+  align-items:center!important;
+
+  margin:0!important;
+
+  color:#f5f5f7!important;
+
+  font-size:15px!important;
+  font-weight:600!important;
+}
+
+/* MENÚ después de Unfire, como Apple Developer */.unfire-clean-nav{
+  position:relative!important;
+
+  left:0!important;
+  top:0!important;
+
+  display:flex!important;
+  align-items:center!important;
+
+  margin-left:72px!important;
+  margin-right:0!important;
+
+  gap:38px!important;
+
+  height:48px!important;
+}.unfire-clean-nav a{
+  height:48px!important;
+
+  display:flex!important;
+  align-items:center!important;
+
+  color:#a1a1a6!important;
+
+  font-size:12px!important;
+  font-weight:400!important;
+
+  white-space:nowrap!important;
+}.unfire-clean-nav a:hover,.unfire-clean-nav a.active{
+  color:#f5f5f7!important;
+}
+
+/* SEGUNDA LÍNEA */.unfire-clean-promo{
+  width:100%!important;
+  height:36px!important;
+
+  background:#000!important;
+
+  border-bottom:1px solid rgba(255,255,255,.07)!important;
+}.unfire-clean-promo-inner{
+  position:relative!important;
+
+  left:0!important;
+  top:0!important;
+
+  width:min(980px, calc(100vw - 40px))!important;
+  height:36px!important;
+
+  margin-left:auto!important;
+  margin-right:auto!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  gap:8px!important;
+
+  color:#86868b!important;
+
+  font-size:10.5px!important;
+}
+
+/* punto verde */.unfire-clean-green-dot{
+  width:6px!important;
+  height:6px!important;
+
+  flex:0 0 6px!important;
+
+  background:#30d158!important;
+
+  border-radius:50%!important;
+
+  box-shadow:
+    0 0 7px rgba(48,209,88,.45)!important;
+}
+
+/* editor: sigue pudiendo moverlos después */
+
+html.unfire-editing.unfire-clean-brand{
+  left:var(--ue-left,0px)!important;
+  top:var(--ue-top,0px)!important;
+}
+
+html.unfire-editing.unfire-clean-nav{
+  left:var(--ue-left,0px)!important;
+  top:var(--ue-top,0px)!important;
+}
+
+html.unfire-editing.unfire-clean-promo-inner{
+  left:var(--ue-left,0px)!important;
+  top:var(--ue-top,0px)!important;
+}
+
+@media(max-width:800px){.unfire-clean-inner,.unfire-clean-promo-inner{
+    width:calc(100vw - 28px)!important;
+  }.unfire-clean-nav{
+    margin-left:24px!important;
+    gap:13px!important;
+  }.unfire-clean-nav a{
+    font-size:9.5px!important;
+  }
+}
+</style><style id="unfire-header-logo-style">.unfire-clean-brand{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+
+  height:48px!important;
+
+  padding:0!important;
+  margin:0!important;
+
+  text-decoration:none!important;
+}.unfire-header-logo{
+  display:block!important;
+
+  width:auto!important;
+  height:30px!important;
+
+  max-width:54px!important;
+
+  object-fit:contain!important;
+  object-position:center!important;
+
+  margin:0!important;
+  padding:0!important;
+}
+
+/* no añadir fondo ni borde */.unfire-header-logo,.unfire-clean-brand{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+
+@media(max-width:800px){.unfire-header-logo{
+    height:26px!important;
+    max-width:46px!important;
+  }
+}
+</style><style id="unfire-header-brand-complete-style">.unfire-clean-brand{
+  display:flex!important;
+  align-items:center!important;
+
+  gap:8px!important;
+
+  height:48px!important;
+
+  padding:0!important;
+  margin:0!important;
+
+  text-decoration:none!important;
+}.unfire-header-logo{
+  display:block!important;
+
+  width:auto!important;
+  height:29px!important;
+
+  max-width:50px!important;
+
+  object-fit:contain!important;
+
+  margin:0!important;
+  padding:0!important;
+}.unfire-header-name{
+  color:#F5F5F7!important;
+
+  font-size:15px!important;
+  line-height:1!important;
+
+  font-weight:600!important;
+  letter-spacing:-.018em!important;
+
+  white-space:nowrap!important;
+}
+
+@media(max-width:800px){.unfire-header-logo{
+    height:25px!important;
+    max-width:44px!important;
+  }.unfire-header-name{
+    font-size:14px!important;
+  }
+}
+</style>
+<style id="unfire-brand-spacing-fix">.header-brand,.brand,.nav-brand,.logo-brand,
+a[class*="brand"] {
+    gap: 0!important;
+}.header-brand img,.brand img,.nav-brand img,.logo-brand img {
+    margin-right: 0!important;
+}.header-brand span,.brand span,.nav-brand span,.logo-brand span {
+    margin-left: -113px!important;
+}
+</style>
+<style id="unfire-cookie-style">
+#unfire-cookie-banner{
+    position:fixed;
+    left:50%;
+    bottom:22px;
+    transform:translateX(-50%);
+    width:min(720px, calc(100% - 32px));
+    background:rgba(28,28,30,.94);
+    color:#f5f5f7;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:18px;
+    padding:16px 18px;
+    z-index:999999;
+    display:none;
+    align-items:center;
+    gap:18px;
+    box-shadow:0 18px 50px rgba(0,0,0,.35);
+    -webkit-backdrop-filter:blur(24px);
+    backdrop-filter:blur(24px);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+}
+
+#unfire-cookie-banner p{
+    margin:0;
+    flex:1;
+    font-size:13px;
+    line-height:1.45;
+    color:#d2d2d7;
+}
+
+#unfire-cookie-banner a{
+    color:#fff;
+    text-decoration:underline;
+    text-underline-offset:2px;
+}.unfire-cookie-actions{
+    display:flex;
+    gap:8px;
+    flex-shrink:0;
+}.unfire-cookie-btn{
+    border:0;
+    border-radius:999px;
+    padding:9px 14px;
+    font-size:13px;
+    cursor:pointer;
+    font-family:inherit;
+}
+
+#unfire-cookie-reject{
+    background:rgba(255,255,255,.10);
+    color:#fff;
+}
+
+#unfire-cookie-accept{
+    background:#fff;
+    color:#000;
+}
+
+@media(max-width:650px){
+    #unfire-cookie-banner{
+        align-items:flex-start;
+        flex-direction:column;
+    }.unfire-cookie-actions{
+        width:100%;
+    }.unfire-cookie-btn{
+        flex:1;
+    }
+}
+</style>
+<style id="unfire-translation-protection">.unfire-protected-name{
+    display:inline;
+    font:inherit;
+    color:inherit;
+    letter-spacing:inherit;
+}
+</style><style id="unfire-brand-lock-style">.unfire-brand-lock{
+    display:inline!important;
+    font:inherit!important;
+    color:inherit!important;
+    letter-spacing:inherit!important;
+    text-transform:none!important;
+}
+</style>
+<style id="unfire-apple-precision">
+
+/* ======================================================
+   UNFIRE — PRECISION TYPOGRAPHY
+   ====================================================== */:root{
+    --uf-content-width:980px;
+    --uf-mobile-pad:24px;
+}
+
+/* ------------------------------------------------------
+   HERO
+------------------------------------------------------ */.uf-hero-section{
+    padding-top:76px!important;
+    padding-bottom:92px!important;
+}
+
+/* Mantener el contenido dentro de una retícula estable */.uf-hero-section > div{
+    width:min(
+        var(--uf-content-width),
+        calc(100% - 48px)
+    )!important;
+
+    margin-left:auto!important;
+    margin-right:auto!important;
+}
+
+/* ------------------------------------------------------
+   EYEBROW
+------------------------------------------------------ */.uf-hero-eyebrow{
+    margin:0 0 27px 0!important;
+
+    font-size:11px!important;
+    line-height:1.2!important;
+
+    font-weight:600!important;
+
+    letter-spacing:.145em!important;
+
+    color:#86868b!important;
+}
+
+/* ------------------------------------------------------
+   TITULAR
+------------------------------------------------------ */.uf-hero-title{
+    margin:0!important;
+
+    max-width:960px!important;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "Helvetica Neue",
+        Arial,
+        sans-serif!important;
+
+    font-size:88px!important;
+
+    line-height:.985!important;
+
+    /*
+       IMPORTANTE:
+       antes estaba a -0.052em.
+       Eso comprimía las letras demasiado.
+    */
+    letter-spacing:-0.021em!important;
+
+    font-weight:600!important;
+
+    font-kerning:normal!important;
+    font-feature-settings:
+        "kern" 1,
+        "liga" 1!important;
+
+    text-rendering:optimizeLegibility!important;
+
+    word-spacing:-0.012em!important;
+
+    text-wrap:balance!important;
+}
+
+/* ------------------------------------------------------
+   TEXTO DE APOYO
+------------------------------------------------------ */.uf-hero-copy{
+    max-width:650px!important;
+
+    margin-top:29px!important;
+    margin-bottom:0!important;
+
+    font-size:21px!important;
+    line-height:1.48!important;
+
+    letter-spacing:-0.012em!important;
+
+    font-weight:400!important;
+
+    color:#a1a1a6!important;
+}
+
+/* ------------------------------------------------------
+   BOTONES DESPUÉS DEL TEXTO
+------------------------------------------------------ */.uf-hero-copy + *{
+    margin-top:28px!important;
+}
+
+/* ------------------------------------------------------
+   NAVEGACIÓN
+------------------------------------------------------ */
+
+header nav a,
+header a{
+    font-kerning:normal;
+    text-rendering:optimizeLegibility;
+}
+
+/* ------------------------------------------------------
+   SECCIONES
+------------------------------------------------------ */
+
+/*
+NO cambiamos tamaños de h2/h3/p de las demás secciones.
+Únicamente corregimos el rendering tipográfico.
+*/
+
+main h2,
+main h3{
+    font-kerning:normal;
+    font-feature-settings:"kern" 1,"liga" 1;
+    text-rendering:optimizeLegibility;
+}
+
+/* ------------------------------------------------------
+   RESPONSIVE
+------------------------------------------------------ */
+
+@media(max-width:1060px){.uf-hero-section > div{
+        width:calc(100% - 64px)!important;
+    }.uf-hero-title{
+        font-size:clamp(68px,8vw,88px)!important;
+    }
+}
+
+@media(max-width:700px){.uf-hero-section{
+        padding-top:56px!important;
+        padding-bottom:68px!important;
+    }.uf-hero-section > div{
+        width:calc(100% - 44px)!important;
+    }.uf-hero-eyebrow{
+        margin-bottom:20px!important;
+        font-size:10px!important;
+    }.uf-hero-title{
+        font-size:clamp(48px,13vw,64px)!important;
+
+        line-height:.99!important;
+
+        letter-spacing:-0.025em!important;
+
+        word-spacing:0!important;
+    }.uf-hero-copy{
+        margin-top:24px!important;
+
+        font-size:19px!important;
+
+        line-height:1.45!important;
+    }
+}
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style id="unfire-remove-top-line-style">
+
+/* =========================================
+   QUITAR LA LÍNEA FINA SUPERIOR
+========================================= */
+
+/* Header / nav */
+header,
+nav,.site-header{
+    border-bottom:none!important;
+    box-shadow:none!important;
+}
+
+/* Primera sección / hero */
+main > section:first-of-type,.hero,.hero-section{
+    border-top:none!important;
+    box-shadow:none!important;
+}
+
+/* Pseudo-elementos que a veces dibujan la línea */
+header::before,
+header::after,
+nav::before,
+nav::after,.site-header::before,.site-header::after,
+main > section:first-of-type::before,
+main > section:first-of-type::after,.hero::before,.hero::after{
+    display:none!important;
+    content:none!important;
+    border:0!important;
+    box-shadow:none!important;
+}
+
+/* Si existe algún divisor fino justo arriba del hero */
+hr{
+    border:0!important;
+    box-shadow:none!important;
+}
+
+/* Seguridad extra para la franja superior */
+main > section:first-of-type{
+    outline:none!important;
+}
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style id="unfire-strategic-expansion-style">
+
+#strategic-expansion{
+    width:100%;
+    box-sizing:border-box;
+    padding:110px 24px 100px;
+}
+
+#strategic-expansion.strategic-inner{
+    width:min(860px, 100%);
+    margin:0 auto;
+}
+
+#strategic-expansion.strategic-label{
+    margin:0 0 18px;
+    font-size:11px;
+    line-height:1;
+    font-weight:600;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.38);
+}
+
+#strategic-expansion h2{
+    max-width:760px;
+    margin:0;
+    font-size:clamp(34px,4.8vw,60px);
+    line-height:1.02;
+    letter-spacing:-.04em;
+    font-weight:600;
+    color:#fff;
+}
+
+#strategic-expansion p{
+    max-width:640px;
+    margin:24px 0 0;
+    font-size:17px;
+    line-height:1.55;
+    color:rgba(255,255,255,.58);
+}
+
+@media(max-width:700px){
+
+    #strategic-expansion{
+        padding:82px 20px 78px;
+    }
+
+    #strategic-expansion p{
+        font-size:16px;
+    }
+}
+
+</style>
+
+
+<style id="unfire-remove-faint-line">
+main > section:first-of-type,
+main > section:first-of-type::before,
+main > section:first-of-type::after,.hero,.hero::before,.hero::after {
+    border-top: none!important;
+    box-shadow: none!important;
+}
+</style>
+
+
+<style id="unfire-header-seam-fix">
+
+/* Quitar cualquier línea real del bloque superior */
+header,
+header::before,
+header::after {
+    border-bottom: 0!important;
+    box-shadow: none!important;
+}
+
+/* Solapar ligeramente el contenido negro con el header
+   para eliminar el seam/subpíxel visible */
+main {
+    position: relative;
+    margin-top: -2px!important;
+}
+
+/* Evitar que aparezca una separación en el primer bloque */
+main > section:first-of-type {
+    border-top: 0!important;
+    margin-top: 0!important;
+}
+
+</style>
+
+
+<style id="unfire-kill-hero-line">
+
+#unfire-apple-header-line,
+#unfire-apple-line,
+#unfire-apple-header-line::before,
+#unfire-apple-header-line::after,
+#unfire-apple-line::before,
+#unfire-apple-line::after {
+    content: none!important;
+    display: none!important;
+    border: 0!important;
+    background: transparent!important;
+    box-shadow: none!important;
+}
+
+</style>
+
+
+<style id="unfire-global-editor-style">
+
+#uf-global-editor,
+#uf-global-editor *{
+    box-sizing:border-box;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+}
+
+#uf-global-editor{
+    position:fixed;
+    top:18px;
+    right:18px;
+    width:320px;
+    max-height:calc(100vh - 36px);
+    overflow:auto;
+    z-index:2147483647;
+    background:rgba(24,24,26,.94);
+    color:#fff;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:18px;
+    padding:14px;
+    box-shadow:0 24px 70px rgba(0,0,0,.55);
+    backdrop-filter:blur(24px) saturate(140%);
+    -webkit-backdrop-filter:blur(24px) saturate(140%);
+}
+
+#uf-global-editor.hidden{
+    display:none!important;
+}
+
+#uf-global-editor h3{
+    margin:0 0 4px;
+    font-size:15px;
+    font-weight:650;
+}
+
+#uf-global-editor.uf-sub{
+    font-size:11px;
+    color:rgba(255,255,255,.5);
+    margin-bottom:12px;
+    word-break:break-all;
+}
+
+#uf-global-editor.uf-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+#uf-global-editor label{
+    display:block;
+    font-size:10px;
+    color:rgba(255,255,255,.55);
+    margin:8px 0 4px;
+}
+
+#uf-global-editor input,
+#uf-global-editor textarea,
+#uf-global-editor select{
+    width:100%;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:9px;
+    background:rgba(255,255,255,.07);
+    color:#fff;
+    padding:7px 8px;
+    font-size:12px;
+    outline:none;
+}
+
+#uf-global-editor textarea{
+    min-height:58px;
+    resize:vertical;
+}
+
+#uf-global-editor button{
+    border:1px solid rgba(255,255,255,.13);
+    background:rgba(255,255,255,.08);
+    color:#fff;
+    border-radius:9px;
+    padding:8px 10px;
+    font-size:11px;
+    cursor:pointer;
+}
+
+#uf-global-editor button:hover{
+    background:rgba(255,255,255,.14);
+}
+
+#uf-global-editor.uf-primary{
+    background:#fff;
+    color:#000;
+}
+
+#uf-global-editor.uf-danger{
+    color:#ff7878;
+}
+
+#uf-global-editor.uf-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    margin-top:12px;
+}
+
+#uf-global-editor.uf-separator{
+    height:1px;
+    background:rgba(255,255,255,.08);
+    margin:12px 0;
+}.uf-editor-selected{
+    outline:2px solid #0a84ff!important;
+    outline-offset:3px!important;
+}
+
+#uf-editor-toggle{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:2147483646;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(24,24,26,.92);
+    color:#fff;
+    border-radius:999px;
+    padding:10px 15px;
+    font:600 12px -apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;
+    box-shadow:0 12px 40px rgba(0,0,0,.45);
+    backdrop-filter:blur(20px);
+    cursor:pointer;
+}
+
+body.uf-global-editor-on a,
+body.uf-global-editor-on button:not(#uf-global-editor button):not(#uf-editor-toggle){
+    cursor:crosshair!important;
+}
+
+/* ocultar editor viejo mientras usamos el nuevo */
+body.uf-global-editor-on #ue4-edit{
+    display:none!important;
+}
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style id="unfire-apple-status-style">.uf-apple-status-host{
+    position:relative!important;
+}
+
+#unfire-apple-status{
+    position:absolute!important;
+
+    right:24px!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+
+    display:flex!important;
+    align-items:center!important;
+    gap:7px!important;
+
+    margin:0!important;
+    padding:0!important;
+
+    white-space:nowrap!important;
+
+    color:rgba(255,255,255,.60)!important;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Text",
+        "Helvetica Neue",
+        Arial,
+        sans-serif!important;
+
+    font-size:11px!important;
+    font-weight:500!important;
+    line-height:1!important;
+
+    z-index:100!important;
+
+    pointer-events:none!important;
+    user-select:none!important;
+}
+
+#unfire-apple-status.uf-apple-dot{
+    width:6px!important;
+    height:6px!important;
+    flex:0 0 6px!important;
+
+    border-radius:50%!important;
+
+    background:#30d158!important;
+
+    box-shadow:
+        0 0 0 1px rgba(48,209,88,.12),
+        0 0 7px rgba(48,209,88,.22)!important;
+}
+
+@media(max-width:900px){
+    #unfire-apple-status{
+        display:none!important;
+    }
+}
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style id="unfire-mobile-header-clean-style">
+
+/*
+   MOBILE HEADER CLEAN
+   - NO duplica contenido
+   - Mantiene el hero original
+   - Solo recupera el Apple status original
+*/
+
+@media (max-width:600px){
+
+    header{
+        width:100%!important;
+    }
+
+    header nav{
+        display:flex!important;
+        align-items:center!important;
+        justify-content:center!important;
+        flex-wrap:wrap!important;
+
+        gap:10px 16px!important;
+
+        width:100%!important;
+        margin:0 auto!important;
+
+        padding-left:14px!important;
+        padding-right:14px!important;
+    }.uf-apple-status-original,.uf-apple-status-original-parent{
+        display:flex!important;
+        visibility:visible!important;
+        opacity:1!important;
+    }.uf-apple-status-original{
+        align-items:center!important;
+        justify-content:center!important;
+
+        width:auto!important;
+
+        margin-left:auto!important;
+        margin-right:auto!important;
+
+        text-align:center!important;
+
+        transform:none!important;
+        translate:none!important;
+    }
+
+    /*
+       Evita el gran hueco que creó el bloque móvil anterior
+    */
+    #unfire-mobile-top-match{
+        display:none!important;
+    }
+
+}
+
+</style>
+
+
+<style id="unfire-nav-center-final">
+
+header nav{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:24px!important;
+
+    width:100%!important;
+    margin:0 auto!important;
+
+    text-align:center!important;
+}
+
+header nav a{
+    margin:0!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+}
+
+@media (max-width:600px){
+
+    header nav{
+        justify-content:center!important;
+        gap:14px!important;
+        flex-wrap:wrap!important;
+
+        padding-left:12px!important;
+        padding-right:12px!important;
+    }
+
+}
+
+</style>
+
+
+    
+
+
+    <!-- Unfire favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#000000">
+
+
+
+
+
+<style id="unfire-navbar-dragon-style">.unfire-navbar-dragon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
+}
+</style>
+
+
+
+
+
+
+</head>
+<body>
+<div id="unfire-clean-header-v2"><div class="unfire-clean-mainbar"><div class="unfire-clean-inner"><a class="unfire-clean-brand notranslate" data-unfire-move="header-brand" href="#top" translate="no"><img src="/unfire-dragon-transparent.png"
+alt="Unfire"
+class="unfire-navbar-dragon"><span class="unfire-header-name notranslate" translate="no"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span></span></a><nav aria-label="Main navigation" class="unfire-clean-nav" data-unfire-move="header-navigation"><a href="#company">Company</a><a href="#work">Work</a><a href="#system">System</a><a href="#scale">Scale</a><a href="#funding">Funding</a>
+</nav></div></div></div></div>
+<header data-unfire-old-header="true">
+<div class="wrap nav">
+<div id="unfire-brand-stack"><a class="brand notranslate" data-unfire-move="brand" href="#top" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></a><div data-unfire-move="apple" id="unfire-apple-header-line" style="display:none!important;">Built for Apple platforms.</div></div>
+<nav class="nav-links" data-unfire-move="navigation">
+<a href="#company">Company</a>
+<a href="#work">Work</a>
+<a href="#system">System</a>
+<a href="#scale">Scale</a>
+<a class="unfire-lava-secondary" href="#funding">Funding</a>
+</nav>
+</div>
+
+
+
+
+</header>
+<main id="top">
+<section class="hero unfire-real-hero uf-hero-section">
+<div class="wrap hero-inner">
+<div class="hero-kicker" data-unfire-move="hero-eyebrow">
+      Independent technology company
+    </div>
+<h1 class="uf-hero-title" data-unfire-move="hero-title">
+      Build technology.<br/>
+      Reuse what already works.
+    </h1>
+<p data-unfire-move="hero-copy">
+<span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span> develops reusable software
+      systems designed to turn one technological foundation into multiple products,
+      workflows and future applications.
+    </p>
+<div class="hero-actions">
+<a class="button primary unfire-lava-primary" data-unfire-move="hero-button-1" href="#system">Explore the system</a>
+<a class="button unfire-lava-secondary" data-unfire-move="hero-button-2" href="#funding">Funding &amp; collaboration</a>
+</div>
+</div>
+</section>
+<section id="company">
+<div class="wrap">
+<div class="eyebrow">Company</div>
+<div class="statement">
+      A software company built around
+      <span class="statement-muted">reusable technology.</span>
+</div>
+<p class="lead" style="margin-top:38px">
+      Instead of treating every application as an isolated project, <span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span> develops technology that can be reused, extended and transferred into future products.
+    </p>
+<div class="three">
+<div class="simple-card">
+<span>01</span>
+<h3>Build once.</h3>
+<p>
+          Core capabilities can become reusable building blocks rather than
+          disappearing inside a single product.
+        </p>
+</div>
+<div class="simple-card">
+<span>02</span>
+<h3>Extend continuously.</h3>
+<p>
+          New software can inherit existing infrastructure, reducing repeated
+          engineering when the architecture applies.
+        </p>
+</div>
+<div class="simple-card">
+<span>03</span>
+<h3>Scale the system.</h3>
+<p>
+          Additional storage, compute, testing and distribution infrastructure
+          can increase production capacity without recreating the underlying system.
+        </p>
+</div>
+</div>
+</div>
+</section>
+<section id="work">
+<div class="wrap">
+<div class="eyebrow">Selected work</div>
+<h2>
+      Different products.<br/>
+      Technology that builds on itself.
+    </h2>
+<p class="lead">
+      Each project addresses a different problem, but the underlying objective
+      is the same: develop technology, systems and production knowledge that can
+      be reused across future software rather than remaining isolated inside
+      a single application.
+    </p>
+<div class="work-grid">
+<article class="product">
+<div>
+<div class="product-type">AI · Automation · Computer workflows</div>
+<h3 class="notranslate" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Bolt</span></h3>
+<p>
+<span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Bolt</span></span> explores controlled AI orchestration for complex computer work.
+            It is designed to coordinate AI systems, local tools and execution
+            processes while preserving visibility, permissions and human control.
+          </p>
+<p>
+            The project investigates how repetitive interaction between people,
+            models and software can be reduced by allowing a validated plan to
+            continue through execution, testing and repair cycles with fewer
+            unnecessary interruptions.
+          </p>
+<p>
+            Technology developed around <span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Bolt</span></span> can contribute to future automation, development and computer-control systems across the wider <span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span> ecosystem.</span>.
+          </p>
+</div>
+
+
+
+<footer>
+          Orchestration · Local execution · Controlled autonomy · Reusable automation
+        </footer>
+</article>
+<article class="product">
+<div>
+<div class="product-type">Energy · Data · Information systems</div>
+<h3 class="notranslate" translate="no">Power</h3>
+<p>
+            Power explores how complex electricity and energy-market information
+            can be converted into software that is easier to understand, compare
+            and use.
+          </p>
+<p>
+            The project combines regional data, pricing information and structured
+            interpretation into a clearer interface, creating a foundation for
+            future energy intelligence tools.
+          </p>
+<p>
+            The same approach can later support other information-heavy products
+            where fragmented external data needs to become understandable and
+            actionable software.
+          </p>
+</div>
+<footer>
+          Energy intelligence · Data interpretation · Information architecture
+        </footer>
+</article>
+<article class="product">
+<div>
+<div class="product-type">Internal infrastructure · Software production</div>
+<h3 class="notranslate" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span>Suite</h3>
+<p>
+<span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span>Suite represents the internal production layer behind multiple
+            <span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span> projects.
+          </p>
+<p>
+            Its purpose is to reduce repeated engineering by allowing software
+            components, validation processes, production systems and accumulated
+            technical knowledge to be reused where appropriate.
+          </p>
+<p>
+            This is important because the value of one project does not need to
+            end when that project is completed. Parts of the technology can become
+            infrastructure for the next product, allowing the production system
+            itself to improve over time.
+          </p>
+</div>
+<footer>
+          Shared infrastructure · Validation · Reuse · Production systems
+        </footer>
+</article>
+<article class="product">
+<div>
+<div class="product-type"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span> Audio · First implementation</div>
+<h3 class="notranslate" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Archer</span></h3>
+<p>
+<span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Archer</span></span> is the first product developed within the broader
+            <span class="notranslate" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span> Audio</span> direction.
+          </p>
+<p>
+            It is a precision audio clipping tool built around Gain, Threshold
+            and Atmosphere, designed to give producers and engineers direct control
+            over clipping behaviour, peaks, transients and sonic character.
+          </p>
+<p>
+            Its strategic role extends beyond a single audio effect. <span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Archer</span></span> provides a practical environment for developing and validating audio technology, interface systems and production components that can later contribute to future creative software products.
+          </p>
+<p>
+<span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span> Audio is also exploring how AI-assisted systems, procedural
+            processing and reusable software technology can converge into new
+            plugin concepts and creative workflows beyond conventional fixed
+            audio-processing tools.
+          </p>
+</div>
+<footer>
+          Audio technology · DSP · Procedural processing · Creative software
+        </footer>
+</article>
+</div>
+</div>
+</section>
+<section id="audio">
+<div class="wrap">
+<div class="eyebrow"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span> Audio</div>
+<h2>
+      From plugins to new software concepts.
+    </h2>
+<p class="lead">
+<span class="notranslate" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span> Audio</span> explores how
+      AI-assisted systems, procedural processing and reusable software components
+      can converge into creative tools that extend beyond conventional plugin workflows.
+    </p>
+<div class="audio-grid">
+<div class="audio-item">
+<span>01</span>
+<strong>AI-assisted systems</strong>
+<p>
+          AI can become part of the creative software environment rather than
+          existing only as a separate assistant.
+        </p>
+</div>
+<div class="audio-item">
+<span>02</span>
+<strong>Procedural transformation</strong>
+<p>
+          Parameters, sound and software behaviour can be transformed dynamically,
+          opening space for new creative interaction models.
+        </p>
+</div>
+<div class="audio-item">
+<span>03</span>
+<strong>Transferable technology</strong>
+<p>
+          Successful components developed in one product can later be reused,
+          extended or integrated into other projects.
+        </p>
+</div>
+</div>
+<div class="big-message">
+      Research carried out in one product can strengthen the next.
+
+      <p>
+        The objective is not simply to produce isolated audio plugins.
+        It is to create a reusable creative-technology base capable of supporting
+        future tools, broader environments and new product concepts.
+      </p>
+</div>
+</div>
+</section>
+<section id="system">
+<div class="wrap">
+<div class="eyebrow">System</div>
+<h2>
+      Software production without starting from scratch.
+    </h2>
+<p class="lead">
+      The central idea is simple: when a new product can use technology that already
+      exists inside <span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span>, development should build on that foundation instead of rebuilding it.
+    </p>
+<div class="system-diagram">
+<div class="system-row">
+<strong>Shared foundation</strong>
+<p>
+          Reusable software components, production knowledge and validation systems
+          form a base that can continue evolving.
+        </p>
+</div>
+<div class="system-row">
+<strong>Product layer</strong>
+<p>
+          New applications can combine existing capabilities with product-specific
+          technology rather than beginning from an empty architecture.
+        </p>
+</div>
+<div class="system-row">
+<strong>Validation</strong>
+<p>
+          Builds, tests and internal checkpoints provide measurable evidence of
+          whether software candidates are functioning as intended.
+        </p>
+</div>
+<div class="system-row">
+<strong>Expansion</strong>
+<p>
+          Infrastructure can grow through additional compute, storage, testing,
+          quality assurance and deployment capacity.
+        </p>
+</div>
+</div>
+</div>
+</section>
+<section id="scale">
+<div class="wrap">
+<div class="eyebrow">Production scale</div>
+<h2>
+      The bottleneck is shifting.
+    </h2>
+<p class="lead">
+      Where the existing architecture applies, internal development has demonstrated that functional software candidates can progress through extremely short build cycles — in some cases measured in minutes.
+    </p>
+<div class="scale-panel">
+<div class="scale-panel-title">
+        From rebuilding software to scaling infrastructure.
+      </div>
+<p>
+        As reusable technology expands, the limiting factors increasingly become
+        infrastructure resources such as compute, storage, testing, quality assurance
+        and commercial deployment — resources that can themselves be expanded.
+      </p>
+</div>
+<div class="metrics">
+<div class="metric">
+<strong>3</strong>
+<span>
+          Flagship product lines currently used to demonstrate the broader technology direction.
+        </span>
+</div>
+<div class="metric">
+<strong>8</strong>
+<span>
+          Priority Wave 1 software candidates identified for priority development.
+        </span>
+</div>
+<div class="metric">
+<strong>53</strong>
+<span>
+          Standalone software candidates built and internally audited.
+        </span>
+</div>
+<div class="metric">
+<strong>53/53</strong>
+<span>
+          Successful standalone builds at the September 2026 internal checkpoint.
+        </span>
+</div>
+</div>
+<div class="flow">
+<div class="flow-step">
+<div class="flow-num">01</div>
+<strong>Reuse</strong>
+<p>Start with existing technology where possible.</p>
+</div>
+<div class="arrow">→</div>
+<div class="flow-step">
+<div class="flow-num">02</div>
+<strong>Build</strong>
+<p>Create the product-specific layer.</p>
+</div>
+<div class="arrow">→</div>
+<div class="flow-step">
+<div class="flow-num">03</div>
+<strong>Scale</strong>
+<p>Expand infrastructure as production grows.</p>
+</div>
+</div>
+<div class="sector-grid">
+<div class="sector">
+<div class="eyebrow">Companies</div>
+<h3>Specialised software systems.</h3>
+<p>
+          The same production foundation can support specialised applications and environments designed around organisational needs.
+        </p>
+</div>
+<div class="sector">
+<div class="eyebrow">Institutions</div>
+<h3>Controlled project environments.</h3>
+<p>
+          Projects can remain isolated while benefiting from reusable underlying
+          technology, validation processes and production infrastructure.
+        </p>
+</div>
+<div class="sector">
+<div class="eyebrow">Public sector</div>
+<h3>Digital tools designed to scale.</h3>
+<p>
+          The architecture is being prepared for future collaboration in which control, traceability, validation and long-term maintainability matter.
+        </p>
+</div>
+</div>
+<div class="proprietary">
+<strong>The capability can be demonstrated. The underlying mechanism remains proprietary.</strong>
+<p>
+<span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span> can demonstrate products, builds, internal checkpoints and production capacity without exposing the implementation methods that create the underlying advantage.
+      </p>
+</div>
+</div>
+</section>
+<section id="funding">
+<div class="wrap">
+<div class="eyebrow">Funding &amp; collaboration</div>
+<h2>
+      Build on what already exists.
+    </h2>
+<div class="funding-panel">
+<div class="funding-big">
+        More infrastructure.<br/>
+        More validation.<br/>
+        More products.
+      </div>
+<div class="funding-copy">
+        Funding can accelerate infrastructure, testing, product hardening,
+        deployment and the transition from internal technology validation
+        toward larger commercial and institutional applications.
+
+        <br/><br/>
+<span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span> is interested in
+        funding programmes, strategic partnerships and future projects with
+        companies, research institutions and public-sector organisations.
+
+        <br/>
+<a class="contact notranslate" href="mailto:hello@unfire.technology" translate="no">hello@unfire.technology</a>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="wrap footer-inner">
+<div>
+      © 2026 <span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span>
+</div>
+<div>
+      Technology · Software · Research
+    </div>
+</div>
+</footer>
+<!-- UNFIRE PROCEDURAL FILM START -->
+<!-- UNFIRE PROCEDURAL FILM END -->
+<script id="unfire-manual-nav-script">
+(() => {
+  "use strict";
+
+  /*
+    Menu anchor navigation with its own local rAF.
+  */
+
+  const SECTION_IDS = new Set([
+    "company",
+    "work",
+    "audio",
+    "system",
+    "scale",
+    "funding"
+  ]);
+
+  const NAV_DURATION = 480;
+
+  let animationFrame = null;
+
+  function cancelNavAnimation(){
+    if(animationFrame){
+      cancelAnimationFrame(animationFrame);
+      animationFrame = null;
+    }
+  }
+
+  function getOffset(){
+    let offset = 24;
+
+    const elements =
+      document.querySelectorAll(
+        "header, nav, [class*='header'], [class*='nav']"
+      );
+
+    elements.forEach(el => {
+      const style =
+        getComputedStyle(el);
+
+      const rect =
+        el.getBoundingClientRect();
+
+      if(
+        (
+          style.position === "fixed" ||
+          style.position === "sticky"
+        ) &&
+        rect.height > 0 &&
+        rect.top <= 8 &&
+        rect.bottom > 0
+      ){
+        offset =
+          Math.max(
+            offset,
+            rect.bottom + 18
+          );
+      }
+    });
+
+    return Math.min(
+      offset,
+      160
+    );
+  }
+
+  function targetY(target){
+    const rect =
+      target.getBoundingClientRect();
+
+    const max =
+      Math.max(
+        0,
+        document.documentElement.scrollHeight -
+        window.innerHeight
+      );
+
+    return Math.min(
+      max,
+      Math.max(
+        0,
+        window.scrollY +
+        rect.top -
+        getOffset()
+      )
+    );
+  }
+
+  function setScroll(y){
+    window.scrollTo({
+      top:y,
+      left:0,
+      behavior:"instant"
+    });
+  }
+
+  function animateTo(target){
+    cancelNavAnimation();
+
+    const startY =
+      window.scrollY;
+
+    const endY =
+      targetY(target);
+
+    const started =
+      performance.now();
+
+    function ease(t){
+      return 1 -
+        Math.pow(1 - t, 3);
+    }
+
+    function frame(now){
+      const progress =
+        Math.min(
+          (now - started) / NAV_DURATION,
+          1
+        );
+
+      setScroll(
+        startY +
+        (endY - startY) *
+        ease(progress)
+      );
+
+      if(progress < 1){
+        animationFrame =
+          requestAnimationFrame(frame);
+      }else{
+        animationFrame = null;
+        setScroll(targetY(target));
+      }
+    }
+
+    animationFrame =
+      requestAnimationFrame(frame);
+  }
+
+  document.addEventListener(
+    "click",
+    event => {
+
+      const link =
+        event.target.closest(
+          'a[href^="#"]'
+        );
+
+      if(!link){
+        return;
+      }
+
+      const href =
+        link.getAttribute("href");
+
+      if(!href ||
+        href === "#"
+      ){
+        return;
+      }
+
+      const id =
+        href.slice(1);
+
+      if(!SECTION_IDS.has(id)
+      ){
+        return;
+      }
+
+      const target =
+        document.getElementById(id);
+
+      if(!target){
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+
+      animateTo(target);
+
+      history.replaceState(
+        null,
+        "",
+        "#" + id
+      );
+
+    },
+    true
+  );
+
+  /* User input interrupts menu travel */
+  const interrupt = () => cancelNavAnimation();
+
+  window.addEventListener(
+    "wheel",
+    interrupt,
+    {passive:true}
+  );
+
+  window.addEventListener(
+    "touchmove",
+    interrupt,
+    {passive:true}
+  );
+
+})();
+</script><script id="unfire-editor-v4-script">
+(() => {
+  "use strict";
+
+  if (
+    location.hostname!== "localhost" &&
+    location.hostname!== "127.0.0.1"
+  ) return;
+
+  const KEY = "unfire-editor-v4";
+
+  let state = {};
+  let drag = null;
+  let selected = null;
+
+  try {
+    state = JSON.parse(localStorage.getItem(KEY) || "{}");
+  } catch (_) {
+    state = {};
+  }
+
+  function save() {
+    localStorage.setItem(KEY, JSON.stringify(state));
+  }
+
+  function keyFor(el) {
+    return el?.dataset?.unfireMove || null;
+  }
+
+  function ensure(el) {
+    const key = keyFor(el);
+
+    if (!key) return null;
+
+    if (!state[key]) {
+      state[key] = {
+        x: 0,
+        y: 0
+      };
+    }
+
+    return state[key];
+  }
+
+  function apply(el) {
+    const p = ensure(el);
+
+    if (!p) return;
+
+    el.style.setProperty("--ue-left", `${p.x || 0}px`);
+    el.style.setProperty("--ue-top", `${p.y || 0}px`);
+  }
+
+  function applyAll() {
+    document.querySelectorAll("[data-unfire-move]").forEach(apply);
+  }
+
+  function select(el) {
+    document.querySelectorAll(".ue-selected").forEach(n => n.classList.remove("ue-selected"));
+
+    selected = el;
+
+    if (selected) {
+      selected.classList.add("ue-selected");
+    }
+
+    const name = document.getElementById("ue4-name");
+
+    if (name) {
+      name.textContent = selected? keyFor(selected): "Selecciona";
+    }
+  }
+
+  function buildPanel() {
+    const panel = document.createElement("div");
+    panel.id = "unfire-editor-v4-panel";
+
+    const edit = document.createElement("button");
+    edit.id = "ue4-edit";
+    edit.textContent = "Edit layout";
+
+    const reset = document.createElement("button");
+    reset.textContent = "Reset";
+
+    const name = document.createElement("span");
+    name.id = "ue4-name";
+    name.textContent = "Selecciona";
+
+    panel.append(edit, reset, name);
+    /* Unfire production: internal overlay disabled */
+
+    edit.addEventListener("click", () => {
+      const enabled =
+        document.documentElement.classList.toggle("unfire-editing");
+
+      edit.classList.toggle("active", enabled);
+      edit.textContent = enabled? "Editing": "Edit layout";
+
+      if (!enabled) {
+        select(null);
+      }
+    });
+
+    reset.addEventListener("click", () => {
+      state = {};
+      localStorage.removeItem(KEY);
+
+      document.querySelectorAll("[data-unfire-move]").forEach(el => {
+          el.style.removeProperty("--ue-left");
+          el.style.removeProperty("--ue-top");
+        });
+
+      select(null);
+    });
+  }
+
+  document.addEventListener("pointerdown", event => {
+    if (!document.documentElement.classList.contains("unfire-editing")) {
+      return;
+    }
+
+    if (event.target.closest("#unfire-editor-v4-panel")) {
+      return;
+    }
+
+    const el = event.target.closest("[data-unfire-move]");
+
+    if (!el) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    select(el);
+
+    const p = ensure(el);
+
+    drag = {
+      el,
+      startX: event.clientX,
+      startY: event.clientY,
+      baseX: p.x || 0,
+      baseY: p.y || 0
+    };
+
+    el.classList.add("ue-dragging");
+
+    try {
+      el.setPointerCapture(event.pointerId);
+    } catch (_) {}
+
+  }, true);
+
+  document.addEventListener("pointermove", event => {
+    if (!drag) return;
+
+    event.preventDefault();
+
+    const p = ensure(drag.el);
+
+    p.x =
+      drag.baseX +
+      event.clientX -
+      drag.startX;
+
+    p.y =
+      drag.baseY +
+      event.clientY -
+      drag.startY;
+
+    apply(drag.el);
+
+  }, true);
+
+  function endDrag() {
+    if (!drag) return;
+
+    drag.el.classList.remove("ue-dragging");
+
+    save();
+    drag = null;
+  }
+
+  document.addEventListener("pointerup", endDrag, true);
+  document.addEventListener("pointercancel", endDrag, true);
+
+  applyAll();
+  buildPanel();
+
+  console.log(
+    "UNFIRE EDITOR V4:",
+    document.querySelectorAll("[data-unfire-move]").length,
+    "editable elements"
+  );
+})();
+</script><section id="unfire-footer-signature"><a class="unfire-footer-brand notranslate" href="#top" translate="no"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span></a><div class="unfire-footer-tagline">Independent technology company.</div><div class="unfire-footer-verticals"><span>Energy</span><span class="unfire-footer-sep">·</span><span>Business</span><span class="unfire-footer-sep">·</span><span>Real Estate</span><span class="unfire-footer-sep">·</span><span>Finance</span><span class="unfire-footer-sep">·</span><span>Markets</span><span class="unfire-footer-sep">·</span><span>Education</span><span class="unfire-footer-sep">·</span><span>Utilities</span><span class="unfire-footer-sep">·</span><span>Safety</span><span class="unfire-footer-sep">·</span><span>Connectivity</span></div><div class="unfire-footer-apple">Built for Apple platforms. Designed for macOS. Built to scale.</div><p class="unfire-footer-description"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span> develops reusable technology across multiple industries, creating shared software foundations that support new products, systems and future applications.</p></section><script id="unfire-editor-persistence-restore">
+(() => {
+  if (
+    location.hostname!== "localhost" &&
+    location.hostname!== "127.0.0.1"
+  ) return;
+
+  const KEY = "unfire-editor-v4";
+
+  let state = {};
+
+  try {
+    state = JSON.parse(localStorage.getItem(KEY) || "{}");
+  } catch (_) {
+    state = {};
+  }
+
+  document.querySelectorAll("[data-unfire-move]").forEach(el => {
+    const key = el.dataset.unfireMove;
+    const value = state[key];
+
+    if (!value) return;
+
+    el.style.setProperty(
+      "--ue-left",
+      `${Number(value.x) || 0}px`
+    );
+
+    el.style.setProperty(
+      "--ue-top",
+      `${Number(value.y) || 0}px`
+    );
+  });
+})();
+</script><script id="unfire-header-recenter-once">
+(() => {
+  if (
+    location.hostname!== "localhost" &&
+    location.hostname!== "127.0.0.1"
+  ) return;
+
+  const MIGRATION = "unfire-header-centered-v1";
+
+  if (localStorage.getItem(MIGRATION)) return;
+
+  const KEY = "unfire-editor-v4";
+
+  try {
+    const state = JSON.parse(localStorage.getItem(KEY) || "{}");
+
+    delete state["header-brand"];
+    delete state["header-navigation"];
+    delete state["header-apple-message"];
+
+    localStorage.setItem(KEY, JSON.stringify(state));
+  } catch (_) {}
+
+  document.querySelectorAll(
+    '[data-unfire-move="header-brand"],' +
+    '[data-unfire-move="header-navigation"],' +
+    '[data-unfire-move="header-apple-message"]'
+  ).forEach(el => {
+    el.style.removeProperty("--ue-left");
+    el.style.removeProperty("--ue-top");
+    el.style.removeProperty("left");
+    el.style.removeProperty("top");
+  });
+
+  localStorage.setItem(MIGRATION, "1");
+})();
+</script>
+<div id="unfire-cookie-banner">
+<p>
+<span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span> uses essential storage to provide core website functionality. Optional analytics are enabled only with your consent.
+        <a href="/cookies.html">Cookie Policy</a>
+</p>
+<div class="unfire-cookie-actions">
+<button class="unfire-cookie-btn" id="unfire-cookie-reject">
+            Reject
+        </button>
+<button class="unfire-cookie-btn" id="unfire-cookie-accept">
+            Accept
+        </button>
+</div>
+</div>
+<script id="unfire-cookie-script">
+(function(){
+
+    const banner = document.getElementById("unfire-cookie-banner");
+
+    if(!banner) return;
+
+    const choice = localStorage.getItem("unfire-cookie-consent");
+
+    if(!choice){
+        banner.style.display = "flex";
+    }
+
+    document.getElementById("unfire-cookie-accept").onclick = function(){
+        localStorage.setItem("unfire-cookie-consent","accepted");
+        banner.style.display = "none";
+
+        // Aquí podremos activar Analytics en el futuro.
+    };
+
+    document.getElementById("unfire-cookie-reject").onclick = function(){
+        localStorage.setItem("unfire-cookie-consent","rejected");
+        banner.style.display = "none";
+    };
+
+})();
+</script>
+
+
+
+
+<section id="strategic-expansion">
+    <div class="strategic-inner">
+
+        <p class="strategic-label">
+            Strategic Expansion
+        </p>
+
+        <h2>
+            Built to scale toward higher-value technology projects.
+        </h2>
+
+        <p>
+            <span translate="no" class="notranslate">Unfire</span> is designed to evolve toward increasingly complex projects where control, reliability and confidentiality are essential.
+        </p>
+
+    </div>
+</section>
+
+<footer id="unfire-legal-footer" style="
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:28px 24px 34px;
+    text-align:center;
+    font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;
+    font-size:13px;
+    color:#6e6e73;
+">
+<a href="/privacy.html" style="color:#86868b;text-decoration:none;margin:0 8px;">Privacy</a>
+<span>·</span>
+<a href="/cookies.html" style="color:#86868b;text-decoration:none;margin:0 8px;">Cookies</a>
+<span>·</span>
+<a href="/legal.html" style="color:#86868b;text-decoration:none;margin:0 8px;">Legal</a>
+<span style="margin-left:14px;">© 2026 <span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span></span>
+</footer>
+<script id="unfire-brand-lock-script">
+(function(){
+
+const replacements = [
+  [/\bDesenfo\b/g, "Unfire"],
+  [/\bUnfire\b/g, "Unfire"]
+];
+
+function repair(root){
+    if(!root) return;
+
+    const walker = document.createTreeWalker(
+        root,
+        NodeFilter.SHOW_TEXT
+    );
+
+    const nodes = [];
+
+    while(walker.nextNode()){
+        nodes.push(walker.currentNode);
+    }
+
+    nodes.forEach(node => {
+        const parent = node.parentElement;
+
+        if(!parent) return;
+
+        if(
+            parent.closest("script,style,textarea,code,pre")
+        ) return;
+
+        let value = node.nodeValue;
+
+        replacements.forEach(([from,to])=>{
+            value = value.replace(from,to);
+        });
+
+        if(value!== node.nodeValue){
+            node.nodeValue = value;
+        }
+    });
+}
+
+repair(document.body);
+
+const observer = new MutationObserver(function(){
+    repair(document.body);
+});
+
+observer.observe(document.documentElement,{
+    subtree:true,
+    childList:true,
+    characterData:true
+});
+
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="unfire-global-editor-script">
+(function(){
+
+"use strict";
+
+const params =
+    new URLSearchParams(location.search);
+
+if(!params.has("edit")){
+    return;
+}
+
+const STORAGE_KEY =
+    "unfire-global-editor-v1";
+
+let selected = null;
+let changes = {};
+
+try{
+    changes =
+        JSON.parse(
+            localStorage.getItem(STORAGE_KEY) || "{}"
+        );
+}catch(e){
+    changes = {};
+}
+
+document.body.classList.add(
+    "uf-global-editor-on"
+);
+
+
+/* ------------------------------------------
+   Selector estable
+------------------------------------------ */
+
+function selectorFor(el){
+
+    if(el.id){
+        return "#" + CSS.escape(el.id);
+    }
+
+    let parts = [];
+    let node = el;
+
+    while(
+        node &&
+        node!== document.body &&
+        parts.length < 5
+    ){
+
+        let part =
+            node.tagName.toLowerCase();
+
+        if(node.classList.length){
+
+            const useful =
+                [...node.classList].filter(c =>!c.startsWith("uf-editor")
+                    ).slice(0,2);
+
+            if(useful.length){
+                part += "." +
+                    useful.map(CSS.escape).join(".");
+            }
+        }
+
+        const parent =
+            node.parentElement;
+
+        if(parent){
+
+            const siblings =
+                [...parent.children].filter(x =>
+                        x.tagName === node.tagName
+                    );
+
+            if(siblings.length > 1){
+
+                part +=
+                    `:nth-of-type(${siblings.indexOf(node)+1})`;
+            }
+        }
+
+        parts.unshift(part);
+        node = parent;
+    }
+
+    return parts.join(" > ");
+}
+
+
+/* ------------------------------------------
+   Aplicar estilos
+------------------------------------------ */
+
+function applyStyles(
+    el,
+    data
+){
+
+    if(!el ||!data){
+        return;
+    }
+
+    const s = el.style;
+
+    if(data.x!== undefined ||
+       data.y!== undefined){
+
+        s.translate =
+            `${data.x || 0}px ${data.y || 0}px`;
+    }
+
+    const map = {
+        width:"width",
+        height:"height",
+        marginTop:"marginTop",
+        marginRight:"marginRight",
+        marginBottom:"marginBottom",
+        marginLeft:"marginLeft",
+        paddingTop:"paddingTop",
+        paddingRight:"paddingRight",
+        paddingBottom:"paddingBottom",
+        paddingLeft:"paddingLeft",
+        fontSize:"fontSize",
+        borderRadius:"borderRadius",
+        borderWidth:"borderWidth",
+        opacity:"opacity",
+        zIndex:"zIndex"
+    };
+
+    for(const [key,prop] of Object.entries(map)){
+
+        if(
+            data[key]!== undefined &&
+            data[key]!== ""
+        ){
+
+            if(
+                ["opacity","zIndex"].includes(key)
+            ){
+                s[prop] = data[key];
+            }else{
+                s[prop] = data[key] + "px";
+            }
+        }
+    }
+
+    if(data.color){
+        s.color = data.color;
+    }
+
+    if(data.background){
+        s.background = data.background;
+    }
+
+    if(data.borderColor){
+        s.borderColor = data.borderColor;
+        s.borderStyle = "solid";
+    }
+
+    if(data.text!== undefined){
+
+        const unsafe =
+            ["INPUT","TEXTAREA","SELECT","IMG","VIDEO","AUDIO"];
+
+        if(!unsafe.includes(el.tagName)){
+            el.textContent = data.text;
+        }
+    }
+}
+
+
+/* ------------------------------------------
+   Restaurar cambios guardados
+------------------------------------------ */
+
+for(
+    const [selector,data]
+    of Object.entries(changes)
+){
+
+    try{
+        const el =
+            document.querySelector(selector);
+
+        if(el){
+            applyStyles(el,data);
+        }
+    }catch(e){}
+}
+
+
+/* ------------------------------------------
+   UI
+------------------------------------------ */
+
+const panel =
+    document.createElement("div");
+
+panel.id =
+    "uf-global-editor";
+
+panel.innerHTML = `
+<h3>Unfire Global Editor</h3>
+<div class="uf-sub" id="uf-editor-selector">
+Haz clic en cualquier elemento
+</div>
+
+<div class="uf-grid">
+    <div>
+        <label>X</label>
+        <input id="ufe-x" type="number" step="1">
+    </div>
+    <div>
+        <label>Y</label>
+        <input id="ufe-y" type="number" step="1">
+    </div>
+
+    <div>
+        <label>Anchura px</label>
+        <input id="ufe-width" type="number">
+    </div>
+    <div>
+        <label>Altura px</label>
+        <input id="ufe-height" type="number">
+    </div>
+</div>
+
+<div class="uf-separator"></div>
+
+<div class="uf-grid">
+    <div>
+        <label>Margen arriba</label>
+        <input id="ufe-mt" type="number">
+    </div>
+    <div>
+        <label>Margen abajo</label>
+        <input id="ufe-mb" type="number">
+    </div>
+    <div>
+        <label>Margen izquierda</label>
+        <input id="ufe-ml" type="number">
+    </div>
+    <div>
+        <label>Margen derecha</label>
+        <input id="ufe-mr" type="number">
+    </div>
+</div>
+
+<div class="uf-grid">
+    <div>
+        <label>Padding arriba</label>
+        <input id="ufe-pt" type="number">
+    </div>
+    <div>
+        <label>Padding abajo</label>
+        <input id="ufe-pb" type="number">
+    </div>
+    <div>
+        <label>Padding izquierda</label>
+        <input id="ufe-pl" type="number">
+    </div>
+    <div>
+        <label>Padding derecha</label>
+        <input id="ufe-pr" type="number">
+    </div>
+</div>
+
+<div class="uf-separator"></div>
+
+<div class="uf-grid">
+    <div>
+        <label>Fuente px</label>
+        <input id="ufe-font" type="number">
+    </div>
+    <div>
+        <label>Opacidad</label>
+        <input id="ufe-opacity"
+               type="number"
+               min="0"
+               max="1"
+               step=".05">
+    </div>
+
+    <div>
+        <label>Radio borde</label>
+        <input id="ufe-radius" type="number">
+    </div>
+
+    <div>
+        <label>Grosor borde</label>
+        <input id="ufe-border-width" type="number">
+    </div>
+
+    <div>
+        <label>Z-index</label>
+        <input id="ufe-z" type="number">
+    </div>
+</div>
+
+<label>Color texto</label>
+<input id="ufe-color" type="text"
+       placeholder="#ffffff / rgba(...)">
+
+<label>Fondo</label>
+<input id="ufe-bg" type="text"
+       placeholder="#000 / transparent">
+
+<label>Color borde</label>
+<input id="ufe-border-color" type="text"
+       placeholder="rgba(...)">
+
+<label>Texto</label>
+<textarea id="ufe-text"></textarea>
+
+<div class="uf-actions">
+    <button id="ufe-reset" class="uf-danger">
+        Reset elemento
+    </button>
+    <button id="ufe-hide">
+        Ocultar
+    </button>
+    <button id="ufe-export" class="uf-primary">
+        Exportar CSS
+    </button>
+    <button id="ufe-clear">
+        Reset todo
+    </button>
+</div>
+`;
+
+/* Unfire production: internal overlay disabled */
+
+
+const toggle =
+    document.createElement("button");
+
+toggle.id =
+    "uf-editor-toggle";
+
+toggle.textContent =
+    "Editor";
+
+/* Unfire production: editor toggle disabled */
+
+
+toggle.onclick = () => {
+    panel.classList.toggle("hidden");
+};
+
+
+/* ------------------------------------------
+   Inputs
+------------------------------------------ */
+
+const ids = {
+    x:"ufe-x",
+    y:"ufe-y",
+    width:"ufe-width",
+    height:"ufe-height",
+
+    marginTop:"ufe-mt",
+    marginBottom:"ufe-mb",
+    marginLeft:"ufe-ml",
+    marginRight:"ufe-mr",
+
+    paddingTop:"ufe-pt",
+    paddingBottom:"ufe-pb",
+    paddingLeft:"ufe-pl",
+    paddingRight:"ufe-pr",
+
+    fontSize:"ufe-font",
+    opacity:"ufe-opacity",
+    borderRadius:"ufe-radius",
+    borderWidth:"ufe-border-width",
+    zIndex:"ufe-z",
+
+    color:"ufe-color",
+    background:"ufe-bg",
+    borderColor:"ufe-border-color",
+
+    text:"ufe-text"
+};
+
+
+function numberValue(
+    style,
+    prop
+){
+
+    const n =
+        parseFloat(style[prop]);
+
+    return Number.isFinite(n)? n: "";
+}
+
+
+function loadSelected(){
+
+    if(!selected){
+        return;
+    }
+
+    const selector =
+        selectorFor(selected);
+
+    document.getElementById(
+            "uf-editor-selector"
+        ).textContent =
+            selector;
+
+    const cs =
+        getComputedStyle(selected);
+
+    const existing =
+        changes[selector] || {};
+
+    const values = {
+
+        x:
+            existing.x?? 0,
+
+        y:
+            existing.y?? 0,
+
+        width:
+            existing.width??
+            Math.round(
+                selected.getBoundingClientRect().width
+            ),
+
+        height:
+            existing.height??
+            Math.round(
+                selected.getBoundingClientRect().height
+            ),
+
+        marginTop:
+            existing.marginTop??
+            numberValue(cs,"marginTop"),
+
+        marginBottom:
+            existing.marginBottom??
+            numberValue(cs,"marginBottom"),
+
+        marginLeft:
+            existing.marginLeft??
+            numberValue(cs,"marginLeft"),
+
+        marginRight:
+            existing.marginRight??
+            numberValue(cs,"marginRight"),
+
+        paddingTop:
+            existing.paddingTop??
+            numberValue(cs,"paddingTop"),
+
+        paddingBottom:
+            existing.paddingBottom??
+            numberValue(cs,"paddingBottom"),
+
+        paddingLeft:
+            existing.paddingLeft??
+            numberValue(cs,"paddingLeft"),
+
+        paddingRight:
+            existing.paddingRight??
+            numberValue(cs,"paddingRight"),
+
+        fontSize:
+            existing.fontSize??
+            numberValue(cs,"fontSize"),
+
+        opacity:
+            existing.opacity??
+            cs.opacity,
+
+        borderRadius:
+            existing.borderRadius??
+            numberValue(cs,"borderTopLeftRadius"),
+
+        borderWidth:
+            existing.borderWidth??
+            numberValue(cs,"borderTopWidth"),
+
+        zIndex:
+            existing.zIndex??
+            (
+                cs.zIndex === "auto"? "": cs.zIndex
+            ),
+
+        color:
+            existing.color??
+            cs.color,
+
+        background:
+            existing.background??
+            cs.backgroundColor,
+
+        borderColor:
+            existing.borderColor??
+            cs.borderTopColor,
+
+        text:
+            existing.text??
+            selected.textContent.trim()
+    };
+
+
+    for(
+        const [key,id]
+        of Object.entries(ids)
+    ){
+        document.getElementById(id).value =
+                values[key]?? "";
+    }
+}
+
+
+function saveSelected(){
+
+    if(!selected){
+        return;
+    }
+
+    const selector =
+        selectorFor(selected);
+
+    const data = {};
+
+    for(
+        const [key,id]
+        of Object.entries(ids)
+    ){
+
+        const input =
+            document.getElementById(id);
+
+        if(!input){
+            continue;
+        }
+
+        const raw =
+            input.value;
+
+        if(
+            [
+                "color",
+                "background",
+                "borderColor",
+                "text"
+            ].includes(key)
+        ){
+            data[key] = raw;
+        }else{
+
+            const n =
+                Number(raw);
+
+            if(
+                raw!== "" &&
+                Number.isFinite(n)
+            ){
+                data[key] = n;
+            }
+        }
+    }
+
+    changes[selector] =
+        data;
+
+    applyStyles(
+        selected,
+        data
+    );
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(changes)
+    );
+}
+
+
+for(
+    const id
+    of Object.values(ids)
+){
+
+    const el =
+        document.getElementById(id);
+
+    el.addEventListener(
+        "input",
+        saveSelected
+    );
+}
+
+
+/* ------------------------------------------
+   Seleccionar cualquier elemento
+------------------------------------------ */
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if(
+            event.target.closest("#uf-global-editor") ||
+            event.target.closest("#uf-editor-toggle")
+        ){
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        if(selected){
+            selected.classList.remove(
+                "uf-editor-selected"
+            );
+        }
+
+        selected =
+            event.target;
+
+        selected.classList.add(
+            "uf-editor-selected"
+        );
+
+        loadSelected();
+
+    },
+    true
+);
+
+
+/* ------------------------------------------
+   Teclado: mover 1px / 10px
+------------------------------------------ */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(!selected){
+            return;
+        }
+
+        if(
+            event.target.closest &&
+            event.target.closest(
+                "#uf-global-editor"
+            )
+        ){
+            return;
+        }
+
+        const step =
+            event.shiftKey? 10: 1;
+
+        const selector =
+            selectorFor(selected);
+
+        const data =
+            changes[selector] || {
+                x:0,
+                y:0
+            };
+
+        data.x =
+            Number(data.x || 0);
+
+        data.y =
+            Number(data.y || 0);
+
+        let used = true;
+
+        if(event.key === "ArrowLeft"){
+            data.x -= step;
+        }
+        else if(event.key === "ArrowRight"){
+            data.x += step;
+        }
+        else if(event.key === "ArrowUp"){
+            data.y -= step;
+        }
+        else if(event.key === "ArrowDown"){
+            data.y += step;
+        }
+        else{
+            used = false;
+        }
+
+        if(!used){
+            return;
+        }
+
+        event.preventDefault();
+
+        changes[selector] = data;
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(changes)
+        );
+
+        applyStyles(
+            selected,
+            data
+        );
+
+        loadSelected();
+
+    }
+);
+
+
+/* ------------------------------------------
+   Reset elemento
+------------------------------------------ */
+
+document.getElementById(
+        "ufe-reset"
+    ).onclick = () => {
+
+        if(!selected){
+            return;
+        }
+
+        const selector =
+            selectorFor(selected);
+
+        delete changes[selector];
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(changes)
+        );
+
+        location.reload();
+    };
+
+
+/* ------------------------------------------
+   Ocultar
+------------------------------------------ */
+
+document.getElementById(
+        "ufe-hide"
+    ).onclick = () => {
+
+        if(!selected){
+            return;
+        }
+
+        selected.style.display =
+            "none";
+    };
+
+
+/* ------------------------------------------
+   Reset total
+------------------------------------------ */
+
+document.getElementById(
+        "ufe-clear"
+    ).onclick = () => {
+
+        if(
+            confirm(
+                "¿Borrar todos los cambios del editor?"
+            )
+        ){
+            localStorage.removeItem(
+                STORAGE_KEY
+            );
+
+            location.reload();
+        }
+    };
+
+
+/* ------------------------------------------
+   Exportar CSS
+------------------------------------------ */
+
+document.getElementById(
+        "ufe-export"
+    ).onclick =
+    async () => {
+
+        let css =
+            "/* Unfire Visual Editor export */\n\n";
+
+        for(
+            const [selector,data]
+            of Object.entries(changes)
+        ){
+
+            css +=
+                selector +
+                " {\n";
+
+            if(
+                data.x!== undefined ||
+                data.y!== undefined
+            ){
+                css +=
+                    `  translate:${data.x || 0}px ${data.y || 0}px;\n`;
+            }
+
+            const map = {
+                width:"width",
+                height:"height",
+                marginTop:"margin-top",
+                marginRight:"margin-right",
+                marginBottom:"margin-bottom",
+                marginLeft:"margin-left",
+                paddingTop:"padding-top",
+                paddingRight:"padding-right",
+                paddingBottom:"padding-bottom",
+                paddingLeft:"padding-left",
+                fontSize:"font-size",
+                borderRadius:"border-radius",
+                borderWidth:"border-width"
+            };
+
+            for(
+                const [key,prop]
+                of Object.entries(map)
+            ){
+
+                if(data[key]!== undefined){
+                    css +=
+                        `  ${prop}:${data[key]}px;\n`;
+                }
+            }
+
+            if(data.opacity!== undefined){
+                css +=
+                    `  opacity:${data.opacity};\n`;
+            }
+
+            if(data.zIndex!== undefined){
+                css +=
+                    `  z-index:${data.zIndex};\n`;
+            }
+
+            if(data.color){
+                css +=
+                    `  color:${data.color};\n`;
+            }
+
+            if(data.background){
+                css +=
+                    `  background:${data.background};\n`;
+            }
+
+            if(data.borderColor){
+                css +=
+                    `  border-color:${data.borderColor};\n`;
+            }
+
+            css += "}\n\n";
+        }
+
+        try{
+
+            await navigator.clipboard.writeText(css);
+
+            alert(
+                "CSS copiado al portapapeles"
+            );
+
+        }catch(e){
+
+            prompt(
+                "Copia este CSS:",
+                css
+            );
+        }
+    };
+
+
+console.log(
+    "[Unfire] Global Visual Editor READY"
+);
+
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="unfire-apple-status-script">
+(function(){
+
+"use strict";
+
+function commonAncestor(a,b){
+
+    const parents = new Set();
+
+    let x = a;
+
+    while(x){
+        parents.add(x);
+        x = x.parentElement;
+    }
+
+    x = b;
+
+    while(x){
+
+        if(parents.has(x)){
+            return x;
+        }
+
+        x = x.parentElement;
+    }
+
+    return null;
+}
+
+
+function install(){
+
+    const old =
+        document.getElementById(
+            "unfire-apple-status"
+        );
+
+    if(old){
+        old.remove();
+    }
+
+    const links =
+        Array.from(
+            document.querySelectorAll("a")
+        );
+
+    const company =
+        links.find(a =>
+            a.textContent.trim() === "Company"
+        );
+
+    const funding =
+        links.find(a =>
+            a.textContent.trim() === "Funding"
+        );
+
+    if(!company ||!funding){
+        console.warn(
+            "[Unfire] No encuentro Company/Funding"
+        );
+        return;
+    }
+
+    let host =
+        commonAncestor(
+            company,
+            funding
+        );
+
+    /*
+      Subir hasta encontrar la barra horizontal
+      completa, pero sin irnos al body.
+    */
+    while(
+        host &&
+        host.parentElement &&
+        host.parentElement!== document.body
+    ){
+
+        const r =
+            host.getBoundingClientRect();
+
+        if(
+            r.width > window.innerWidth *.65 &&
+            r.height >= 40 &&
+            r.height <= 120
+        ){
+            break;
+        }
+
+        host =
+            host.parentElement;
+    }
+
+    if(!host){
+        return;
+    }
+
+    host.classList.add(
+        "uf-apple-status-host"
+    );
+
+    const status =
+        document.createElement("div");
+
+    status.id =
+        "unfire-apple-status";
+
+    status.className =
+        "notranslate";
+
+    status.setAttribute(
+        "translate",
+        "no"
+    );
+
+    status.innerHTML =
+        '<span class="uf-apple-dot"></span>' +
+        '<span>Built for Apple platforms.</span>';
+
+    host.appendChild(status);
+
+    console.log(
+        "[Unfire] Apple status instalado dentro del header real"
+    );
+}
+
+
+if(document.readyState === "loading"){
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        install,
+        {once:true}
+    );
+
+}else{
+
+    install();
+}
+
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="unfire-mobile-header-clean-script">
+(function(){
+
+    function norm(v){
+        return (v || "").replace(/\s+/g," ").trim();
+    }
+
+    function boot(){
+
+        const candidates =
+            Array.from(
+                document.querySelectorAll("header *")
+            );
+
+        const status =
+            candidates.find(function(el){
+
+                return norm(el.textContent) ===
+                    "Built for Apple platforms.";
+
+            });
+
+        if(!status){
+            console.warn(
+                "[Unfire] Apple platform status original no encontrado"
+            );
+            return;
+        }
+
+        status.classList.add(
+            "uf-apple-status-original"
+        );
+
+        /*
+           Si un contenedor padre es el que estaba oculto
+           en móvil, lo recuperamos también.
+        */
+        let parent = status.parentElement;
+
+        while(
+            parent &&
+            parent.tagName!== "HEADER"
+        ){
+
+            const cs =
+                getComputedStyle(parent);
+
+            if(
+                cs.display === "none" ||
+                cs.visibility === "hidden"
+            ){
+                parent.classList.add(
+                    "uf-apple-status-original-parent"
+                );
+
+                break;
+            }
+
+            parent =
+                parent.parentElement;
+        }
+
+    }
+
+    if(document.readyState === "loading"){
+        document.addEventListener(
+            "DOMContentLoaded",
+            boot
+        );
+    }else{
+        boot();
+    }
+
+})();
+</script>
+
+</body>
+</html>
