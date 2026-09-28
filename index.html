@@ -4323,6 +4323,118 @@ body.uf-global-editor-on #ue4-edit{
 
 </style>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style id="unfire-mobile-header-clean-style">
+
+/*
+   MOBILE HEADER CLEAN
+   - NO duplica contenido
+   - Mantiene el hero original
+   - Solo recupera el Apple status original
+*/
+
+@media (max-width:600px){
+
+    header{
+        width:100% !important;
+    }
+
+    header nav{
+        display:flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+        flex-wrap:wrap !important;
+
+        gap:10px 16px !important;
+
+        width:100% !important;
+        margin:0 auto !important;
+
+        padding-left:14px !important;
+        padding-right:14px !important;
+    }
+
+    .uf-apple-status-original,
+    .uf-apple-status-original-parent{
+        display:flex !important;
+        visibility:visible !important;
+        opacity:1 !important;
+    }
+
+    .uf-apple-status-original{
+        align-items:center !important;
+        justify-content:center !important;
+
+        width:auto !important;
+
+        margin-left:auto !important;
+        margin-right:auto !important;
+
+        text-align:center !important;
+
+        transform:none !important;
+        translate:none !important;
+    }
+
+    /*
+       Evita el gran hueco que creó el bloque móvil anterior
+    */
+    #unfire-mobile-top-match{
+        display:none !important;
+    }
+
+}
+
+</style>
+
+
+<style id="unfire-nav-center-final">
+
+header nav{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:24px !important;
+
+    width:100% !important;
+    margin:0 auto !important;
+
+    text-align:center !important;
+}
+
+header nav a{
+    margin:0 !important;
+    text-align:center !important;
+    white-space:nowrap !important;
+}
+
+@media (max-width:600px){
+
+    header nav{
+        justify-content:center !important;
+        gap:14px !important;
+        flex-wrap:wrap !important;
+
+        padding-left:12px !important;
+        padding-right:12px !important;
+    }
+
+}
+
+</style>
+
 </head>
 <body><div id="unfire-clean-header-v2"><div class="unfire-clean-mainbar"><div class="unfire-clean-inner"><a class="unfire-clean-brand notranslate" data-unfire-move="header-brand" href="#top" translate="no"><img alt="Unfire" class="unfire-header-logo" src="assets/logo/unfire-logo-white.png"/><span class="unfire-header-name notranslate" translate="no"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no"><span class="notranslate unfire-brand-lock" lang="zxx" translate="no">Unfire</span></span></span></a><nav aria-label="Main navigation" class="unfire-clean-nav" data-unfire-move="header-navigation"><a href="#company">Company</a><a href="#work">Work</a><a href="#system">System</a><a href="#scale">Scale</a><a href="#funding">Funding</a>
 </nav></div></div></div></div>
@@ -8268,6 +8380,94 @@ if(document.readyState === "loading"){
     if(
         document.readyState === "loading"
     ){
+        document.addEventListener(
+            "DOMContentLoaded",
+            boot
+        );
+    }else{
+        boot();
+    }
+
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script id="unfire-mobile-header-clean-script">
+(function(){
+
+    function norm(v){
+        return (v || "")
+            .replace(/\s+/g," ")
+            .trim();
+    }
+
+    function boot(){
+
+        const candidates =
+            Array.from(
+                document.querySelectorAll("header *")
+            );
+
+        const status =
+            candidates.find(function(el){
+
+                return norm(el.textContent) ===
+                    "Built for Apple platforms.";
+
+            });
+
+        if(!status){
+            console.warn(
+                "[Unfire] Apple platform status original no encontrado"
+            );
+            return;
+        }
+
+        status.classList.add(
+            "uf-apple-status-original"
+        );
+
+        /*
+           Si un contenedor padre es el que estaba oculto
+           en móvil, lo recuperamos también.
+        */
+        let parent = status.parentElement;
+
+        while(
+            parent &&
+            parent.tagName !== "HEADER"
+        ){
+
+            const cs =
+                getComputedStyle(parent);
+
+            if(
+                cs.display === "none" ||
+                cs.visibility === "hidden"
+            ){
+                parent.classList.add(
+                    "uf-apple-status-original-parent"
+                );
+
+                break;
+            }
+
+            parent =
+                parent.parentElement;
+        }
+
+    }
+
+    if(document.readyState === "loading"){
         document.addEventListener(
             "DOMContentLoaded",
             boot
