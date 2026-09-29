@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en">>
 <head>
     <!-- Unfire favicon: Safari 26+ and modern browsers -->
     <link rel="icon" href="/favicon.svg?v=20260929-safari-svg" type="image/svg+xml" sizes="any">
@@ -1265,10 +1265,7 @@ header > *{
   padding:0 !important;
 }
 
-/* =========================================================
-   FILA 1
-   marca izquierda / verticales centradas
-   ========================================================= */
+
 
 /* Unfire */
 
@@ -1353,10 +1350,7 @@ header > *{
   display:none !important;
 }
 
-/* =========================================================
-   FILA 2
-   Apple positioning izquierda / navegación derecha
-   ========================================================= */
+
 
 #unfire-apple-header-line,
 #unfire-apple-line{
@@ -1404,7 +1398,7 @@ header > *{
   box-shadow:none !important;
 }
 
-/* navegación */
+
 
 header nav,
 [data-unfire-move="navigation"]{
@@ -1471,9 +1465,7 @@ header nav a.active::after{
   display:none !important;
 }
 
-/* =========================================================
-   HERO — PROPORCIÓN TIPO APPLE
-   ========================================================= */
+
 
 .unfire-main-hero{
   min-height:auto !important;
@@ -1518,7 +1510,7 @@ header nav a.active::after{
   letter-spacing:.13em !important;
 }
 
-/* título */
+
 
 [data-unfire-move="hero-title"],
 .unfire-main-hero h1,
@@ -1976,7 +1968,7 @@ header > *{
   scale:1 !important;
 }
 
-/* navegación derecha */
+
 
 header nav,
 [data-unfire-move="navigation"]{
@@ -2070,20 +2062,19 @@ header nav a.active{
     0 0 7px rgba(48,209,88,.48) !important;
 }
 
-/* eliminar verticales de arriba */
+
 
 #unfire-verticals-line{
   display:none !important;
 }
 
-/* IMPORTANTE:
-   no tocamos posición del hero */
+
 
 body{
   padding-top:0 !important;
 }
 
-/* móvil */
+
 
 @media(max-width:800px){
 
@@ -2182,7 +2173,7 @@ header[data-unfire-old-header="true"]{
   text-decoration:none !important;
 }
 
-/* navegación */
+
 
 .unfire-clean-nav{
   display:flex;
@@ -2275,9 +2266,7 @@ header[data-unfire-old-header="true"]{
   scroll-margin-top:96px !important;
 }
 
-/* ==========================================================
-   MÓVIL
-   ========================================================== */
+
 
 @media(max-width:800px){
 
@@ -2366,7 +2355,7 @@ html.unfire-editing
    EVITAR DESPLAZAMIENTOS ANTIGUOS
    ================================================== */
 
-/* Las posiciones del editor permanecen también fuera del modo edición */
+
 
 [data-unfire-move]{
   left:var(--ue-left,0px) !important;
@@ -2464,9 +2453,7 @@ main{
   margin-left:0 !important;
 }
 
-/* ==================================================
-   RESTO DE SECCIONES
-   ================================================== */
+
 
 main section,
 section[id]{
@@ -2488,10 +2475,7 @@ section[id] > *{
   box-sizing:border-box;
 }
 
-/*
-   Contenedores principales de cada sección.
-   No fuerza el ancho de controles flotantes.
-*/
+
 
 main section > div:not([id*="player"]):not([class*="player"]),
 section[id] > div:not([id*="player"]):not([class*="player"]){
@@ -2501,7 +2485,7 @@ section[id] > div:not([id*="player"]):not([class*="player"]){
   margin-right:auto !important;
 }
 
-/* líneas de separación siempre a todo el ancho */
+
 
 main section::before,
 main section::after{
@@ -2528,10 +2512,7 @@ main section::after{
   margin-right:auto !important;
 }
 
-/* ==================================================
-   EDITOR
-   NO FORZARLO A LA CUADRÍCULA
-   ================================================== */
+
 
 #unfire-editor-v4-panel{
   max-width:none;
@@ -2588,7 +2569,7 @@ main section::after{
   letter-spacing:-.018em !important;
 }
 
-/* MENÚ COMO APPLE DEVELOPER */
+
 
 .unfire-clean-nav{
   position:relative !important;
@@ -2643,7 +2624,7 @@ main section::after{
   font-weight:400 !important;
 }
 
-/* Built for Apple queda como información secundaria */
+
 
 .unfire-clean-promo{
   height:36px !important;
@@ -2685,7 +2666,7 @@ main section::after{
     0 0 7px rgba(48,209,88,.42) !important;
 }
 
-/* móvil */
+
 
 @media(max-width:800px){
 
@@ -2718,7 +2699,7 @@ main section::after{
   background:#000 !important;
 }
 
-/* contenedor central común */
+
 
 .unfire-clean-inner{
   width:min(980px, calc(100vw - 40px)) !important;
@@ -2759,7 +2740,7 @@ main section::after{
   font-weight:600 !important;
 }
 
-/* MENÚ después de Unfire, como Apple Developer */
+
 
 .unfire-clean-nav{
   position:relative !important;
@@ -2797,7 +2778,7 @@ main section::after{
   color:#f5f5f7 !important;
 }
 
-/* SEGUNDA LÍNEA */
+
 
 .unfire-clean-promo{
   width:100% !important;
@@ -2847,7 +2828,7 @@ main section::after{
     0 0 7px rgba(48,209,88,.45) !important;
 }
 
-/* editor: sigue pudiendo moverlos después */
+
 
 html.unfire-editing .unfire-clean-brand{
   left:var(--ue-left,0px) !important;
@@ -2909,7 +2890,7 @@ html.unfire-editing .unfire-clean-promo-inner{
   padding:0 !important;
 }
 
-/* no añadir fondo ni borde */
+
 .unfire-header-logo,
 .unfire-clean-brand{
   background:transparent !important;
@@ -3110,7 +3091,7 @@ a[class*="brand"] {
     padding-bottom:92px !important;
 }
 
-/* Mantener el contenido dentro de una retícula estable */
+
 .uf-hero-section > div{
     width:min(
         var(--uf-content-width),
@@ -3159,11 +3140,7 @@ a[class*="brand"] {
 
     line-height:.985 !important;
 
-    /*
-       IMPORTANTE:
-       antes estaba a -0.052em.
-       Eso comprimía las letras demasiado.
-    */
+    
     letter-spacing:-0.021em !important;
 
     font-weight:600 !important;
@@ -3200,17 +3177,13 @@ a[class*="brand"] {
     color:#a1a1a6 !important;
 }
 
-/* ------------------------------------------------------
-   BOTONES DESPUÉS DEL TEXTO
------------------------------------------------------- */
+
 
 .uf-hero-copy + *{
     margin-top:28px !important;
 }
 
-/* ------------------------------------------------------
-   NAVEGACIÓN
------------------------------------------------------- */
+
 
 header nav a,
 header a{
@@ -3218,14 +3191,9 @@ header a{
     text-rendering:optimizeLegibility;
 }
 
-/* ------------------------------------------------------
-   SECCIONES
------------------------------------------------------- */
 
-/*
-NO cambiamos tamaños de h2/h3/p de las demás secciones.
-Únicamente corregimos el rendering tipográfico.
-*/
+
+
 
 main h2,
 main h3{
@@ -3336,9 +3304,7 @@ main h3{
 
 <style id="unfire-remove-top-line-style">
 
-/* =========================================
-   QUITAR LA LÍNEA FINA SUPERIOR
-========================================= */
+
 
 /* Header / nav */
 header,
@@ -3348,7 +3314,7 @@ nav,
     box-shadow:none !important;
 }
 
-/* Primera sección / hero */
+
 main > section:first-of-type,
 .hero,
 .hero-section{
@@ -3356,7 +3322,7 @@ main > section:first-of-type,
     box-shadow:none !important;
 }
 
-/* Pseudo-elementos que a veces dibujan la línea */
+
 header::before,
 header::after,
 nav::before,
@@ -3373,7 +3339,7 @@ main > section:first-of-type::after,
     box-shadow:none !important;
 }
 
-/* Si existe algún divisor fino justo arriba del hero */
+
 hr{
     border:0 !important;
     box-shadow:none !important;
@@ -3500,7 +3466,7 @@ main > section:first-of-type::after,
 
 <style id="unfire-header-seam-fix">
 
-/* Quitar cualquier línea real del bloque superior */
+
 header,
 header::before,
 header::after {
@@ -3508,14 +3474,13 @@ header::after {
     box-shadow: none !important;
 }
 
-/* Solapar ligeramente el contenido negro con el header
-   para eliminar el seam/subpíxel visible */
+
 main {
     position: relative;
     margin-top: -2px !important;
 }
 
-/* Evitar que aparezca una separación en el primer bloque */
+
 main > section:first-of-type {
     border-top: 0 !important;
     margin-top: 0 !important;
@@ -3865,9 +3830,7 @@ body.uf-global-editor-on #ue4-edit{
         translate:none !important;
     }
 
-    /*
-       Evita el gran hueco que creó el bloque móvil anterior
-    */
+    
     #unfire-mobile-top-match{
         display:none !important;
     }
@@ -5878,7 +5841,7 @@ document
             await navigator.clipboard.writeText(css);
 
             alert(
-                "CSS copiado al portapapeles"
+                "CSS copied to clipboard"
             );
 
         }catch(e){
@@ -6121,10 +6084,7 @@ if(document.readyState === "loading"){
             "uf-apple-status-original"
         );
 
-        /*
-           Si un contenedor padre es el que estaba oculto
-           en móvil, lo recuperamos también.
-        */
+        
         let parent = status.parentElement;
 
         while(
