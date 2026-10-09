@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark"><meta name="theme-color" content="#050505">
+<title>BOLT — Written Feasibility &amp; Pilot Enquiries | Unfire</title>
+<meta name="description" content="A small, measurable, written-only feasibility study for permission-aware AI workflows. BOLT is an early macOS prototype, using synthetic data for internal tests.">
+<meta property="og:type" content="website"><meta property="og:title" content="BOLT — Written-First Controlled AI Workflow Pilot">
+<meta property="og:url" content="https://unfire.technology/pilot/">
+<link rel="canonical" href="https://unfire.technology/pilot/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260929-safari-svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260929-unfire">
+<style>
+:root{color-scheme:dark;--bg:#050505;--surface:#101013;--line:#28282d;--text:#f4f4f6;--muted:#9999a0;--accent:#ce5548}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}a:focus-visible{outline:2px solid #e9aaa3;outline-offset:4px}.wrap{width:min(1080px,calc(100% - 48px));margin:auto}
+header{position:sticky;top:0;z-index:3;border-bottom:1px solid var(--line);background:rgba(5,5,5,.94);backdrop-filter:blur(16px)}
+header .wrap{height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-size:19px;font-weight:650}
+nav{display:flex;gap:24px;color:#b6b6bd;font-size:13px}nav a:hover,footer a:hover{color:#fff}
+main section{border-bottom:1px solid var(--line)}section .wrap{padding-top:90px;padding-bottom:90px}
+.hero .wrap{padding-top:115px;padding-bottom:105px}.eyebrow{color:#d67b6e;font-size:11px;font-weight:640;letter-spacing:.16em;text-transform:uppercase;margin:0 0 24px}
+h1{max-width:1000px;margin:0 0 32px;font-size:clamp(3.6rem,8vw,7rem);line-height:.96;letter-spacing:-.05em;font-weight:590}
+h2{font-size:clamp(2.3rem,4.5vw,4.3rem);line-height:1.05;letter-spacing:-.035em;font-weight:590;margin:0 0 27px}
+h3{font-size:20px;letter-spacing:-.02em;margin:0 0 14px}p{line-height:1.66}
+.lead{max-width:790px;color:#b6b6bd;font-size:clamp(17px,2vw,23px);margin:0}.intro{max-width:790px;color:var(--muted);font-size:16px;margin:0 0 42px}
+.buttons{display:flex;flex-wrap:wrap;gap:12px;margin:34px 0 0}.button{display:inline-flex;align-items:center;justify-content:center;min-height:47px;padding:10px 21px;border:1px solid #3c3c40;border-radius:100px;font-size:14px}
+.button.primary{background:#f4f4f6;color:#080808;border-color:#f4f4f6}.button:hover{border-color:#bfbfc5}.button.primary:hover{background:#dadade}
+.note{color:#87878d;font-size:12px;margin:21px 0 0}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{border:1px solid var(--line);background:var(--surface);border-radius:23px;padding:29px;min-height:217px}.card .num{display:block;color:#d58176;font-size:11px;letter-spacing:.09em;margin-bottom:33px}.card p{color:var(--muted);font-size:14px;margin:0}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.steps .step{border-top:1px solid #444;padding:20px 0}.step span{color:#d58176;font-size:12px}.step h3{font-size:18px;margin-top:18px}.step p{font-size:13px;color:var(--muted)}
+.evidence{display:grid;grid-template-columns:1fr 1.3fr;gap:45px;align-items:start}.metric{border:1px solid var(--line);background:linear-gradient(#18181a,#0d0d0f);border-radius:24px;padding:40px}
+.metric strong{display:block;font-size:clamp(3.8rem,7vw,5.8rem);line-height:1;font-weight:590}.metric span{display:block;color:var(--muted);font-size:13px;margin-top:20px;line-height:1.7}
+.limits{list-style:none;margin:0;padding:0}.limits li{padding:14px 0;color:#b4b4bc;font-size:14px;line-height:1.63;border-bottom:1px solid var(--line)}
+.limits li:first-child{border-top:1px solid var(--line)}.limits strong{color:#f1f1f2}
+.price{padding:36px;background:linear-gradient(145deg,#1c1110,#0e0b0b);border:1px solid #402926;border-radius:24px;max-width:800px}
+.price strong{display:block;font-size:clamp(2.3rem,5vw,4rem);letter-spacing:-.045em;font-weight:590}.price p{color:#c0b6b5;font-size:14px;margin:15px 0 0}
+.email{font-size:clamp(1.6rem,3.7vw,2.7rem);border-bottom:1px solid var(--accent);display:inline-block;padding-bottom:6px}
+.fine{color:var(--muted);font-size:12px;max-width:840px}footer .wrap{padding:36px 0 75px;display:flex;justify-content:space-between;gap:20px;color:#88888f;font-size:12px}
+@media(max-width:850px){.cards,.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.evidence{grid-template-columns:1fr}}
+@media(max-width:550px){.wrap{width:calc(100% - 32px)}header .wrap{height:62px}nav{font-size:12px;gap:12px}.hero .wrap{padding-top:75px;padding-bottom:75px}section .wrap{padding-top:65px;padding-bottom:65px}h1{font-size:clamp(3rem,12.5vw,5.4rem)}.cards,.steps{grid-template-columns:1fr}.card{min-height:auto}.buttons .button{width:100%}.evidence{gap:25px}footer .wrap{flex-direction:column}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="/" class="brand" aria-label="Unfire homepage">Unfire</a>
+<nav aria-label="Primary"><a href="/">Home</a><a href="/about/">About</a><a href="#contact">Email enquiries</a></nav></div></header>
+<main>
+<section class="hero"><div class="wrap">
+<p class="eyebrow">BOLT · Exploratory pilots</p>
+<h1>One workflow.<br>Under control.</h1>
+<p class="lead">A tightly scoped feasibility study for AI-assisted workflows with explicit review boundaries, exception handling and traceable decisions. BOLT is an early macOS prototype, currently tested internally. Independent customer validation remains to be done.</p>
+<div class="buttons">
+<a class="button primary" href="mailto:hello@unfire.technology?subject=BOLT%20written%20feasibility%20enquiry&amp;body=Hello%20Unfire%2C%0A%0AI%20would%20like%20to%20explore%20a%20written-only%20feasibility%20review.%0AOperational%20problem%3A%20%0ADesired%20outcome%3A%20%0A%0APlease%20reply%20by%20email.">Request a written review →</a>
+<a class="button" href="#evidence">See what is verified</a>
+</div>
+<p class="note">Email only · Fully remote · No telephone calls, video meetings or in-person sessions</p>
+</div></section>
+<section id="scope"><div class="wrap">
+<p class="eyebrow">Narrow scope</p><h2>Prove one useful thing first.</h2>
+<p class="intro">We seek an operational owner who can describe a recurring, non-critical exception in writing. We start with fictional test inputs and define a measurable acceptance criterion before discussing real systems.</p>
+<div class="cards">
+<article class="card"><span class="num">01 / UNDERSTAND</span><h3>Define the exception</h3><p>Pick one approval bottleneck, status discrepancy or multi-step administrative handoff. Agree on expected outcomes.</p></article>
+<article class="card"><span class="num">02 / CONTROL</span><h3>Bound the actions</h3><p>Specify what may be suggested, what must await review, and what is denied. Never assume unrestricted execution.</p></article>
+<article class="card"><span class="num">03 / EVALUATE</span><h3>Inspect the evidence</h3><p>Measure pass/fail on synthetic cases, review exceptions and document limitations. No customer ROI is presumed.</p></article>
+</div></div></section>
+<section id="approach"><div class="wrap">
+<p class="eyebrow">Written-first collaboration</p><h2>No meetings required.</h2>
+<div class="steps">
+<div class="step"><span>01</span><h3>Describe by email</h3><p>State the problem without confidential records, customer information or access credentials.</p></div>
+<div class="step"><span>02</span><h3>Agree boundaries</h3><p>Review a proposed scope, written milestones and an indicative non-binding budget.</p></div>
+<div class="step"><span>03</span><h3>Test synthetic inputs</h3><p>Subject to separate legal and written agreement, run a constrained feasibility exercise.</p></div>
+<div class="step"><span>04</span><h3>Receive findings</h3><p>Get a written outcome summary, failure cases and any prerequisites for future integration.</p></div>
+</div></div></section>
+<section id="evidence"><div class="wrap">
+<p class="eyebrow">Current technical evidence</p><h2>What we can substantiate.</h2>
+<div class="evidence">
+<div class="metric"><strong>14</strong><span>Entirely fictional logistics exception events classified offline. Five were passed to the separate Swift BOLT test harness: three scripted approvals and two scripted rejections. No customer deployment.</span></div>
+<ul class="limits">
+<li><strong>Internal only.</strong> Test providers and approvals were simulated; no real employee approved an external operation.</li>
+<li><strong>Not production.</strong> No WMS, ERP, industrial controller, carrier or customer application is integrated.</li>
+<li><strong>Validation outstanding.</strong> Developer tests passed, but independent user testing, security certification and commercial benefits are unproven.</li>
+<li><strong>Separate public example.</strong> <a style="text-decoration:underline" href="https://github.com/ondmindmanagement-hub/bolt-agent-control-plane" rel="noopener noreferrer">MIT demonstration of action decisions</a> is not the proprietary macOS BOLT product.</li>
+</ul>
+</div></div></section>
+<section id="budget"><div class="wrap">
+<p class="eyebrow">Indicative scope</p><h2>Small and measurable.</h2>
+<div class="price"><strong>€3,000–€5,000</strong><p>Illustrative, non-binding range for a 2–3 week feasibility exercise. Final scope, timeline, taxes and any price depend on technical fit, resources, written agreement and legal readiness. This page is not a fixed-price purchase offer.</p></div>
+<p class="intro" style="margin:28px 0 0">Unfire is a founder-led technology initiative in Spain, not a separately incorporated company. No remunerated work would begin before resolving relevant Spanish tax, Social Security and benefits obligations.</p>
+</div></section>
+<section id="contact"><div class="wrap">
+<p class="eyebrow">Email enquiries</p><h2>Start with the problem.</h2>
+<p class="intro">Tell us which process is failing, how a reviewer would know it was resolved and whether a written exploratory project could help. Please do not send passwords, private documents, production credentials or personal data.</p>
+<a class="email" href="mailto:hello@unfire.technology?subject=BOLT%20written%20feasibility%20enquiry">hello@unfire.technology ↗</a>
+<p class="fine" style="margin-top:25px">Communication exclusively by email. No calls, video conferences, visits, compulsory live demonstrations or unapproved access. No support-time guarantee or production SLA is implied.</p>
+</div></section>
+</main>
+<footer><div class="wrap"><span>© 2026 Unfire · Founded by <a href="/omar-baro/">Omar Baró</a></span><span><a href="/legal.html">Legal</a> · <a href="/privacy.html">Privacy</a> · <a href="/cookies.html">Cookies</a></span></div></footer>
+</body></html>
