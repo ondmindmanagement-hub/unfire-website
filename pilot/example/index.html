@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050505">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'; connect-src 'none'; object-src 'none'">
+<title>Warehouse exception example — Unfire BOLT pilot</title>
+<meta name="description" content="Try four completely fictional warehouse exception scenarios with clear, reproducible rule outcomes. Independent illustrative browser demo, not macOS BOLT.">
+<link rel="canonical" href="https://unfire.technology/pilot/example/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260929-safari-svg">
+<style>
+:root{color-scheme:dark;--bg:#050505;--fg:#f5f5f7;--muted:#a2a2aa;--line:#303036;--accent:#d58074}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:#ededf1}a:hover,a:focus-visible{color:#f5a79e}button:focus-visible,a:focus-visible{outline:2px solid #f5a79e;outline-offset:4px}
+.wrap{width:min(1060px,calc(100% - 44px));margin:auto}header{border-bottom:1px solid var(--line)}header .wrap{display:flex;align-items:center;justify-content:space-between;min-height:65px}header a{text-decoration:none}header .brand{font-size:20px;font-weight:700}header nav{font-size:13px;color:var(--muted);display:flex;gap:23px}
+main{padding:85px 0 100px}.eyebrow{color:var(--accent);font-size:11px;letter-spacing:.14em;font-weight:700;text-transform:uppercase}
+h1{font-size:clamp(2.5rem,7vw,5.4rem);line-height:1;letter-spacing:-.055em;font-weight:600;margin:16px 0 25px;max-width:850px}
+p{color:var(--muted)}.lead{max-width:790px;font-size:19px;line-height:1.6}.caveat{margin:34px 0 50px;padding:19px 23px;border:1px solid #543832;border-radius:16px;background:#160e0d;font-size:14px;color:#dbb8b4}
+.layout{display:grid;grid-template-columns:minmax(230px,340px) minmax(0,1fr);gap:24px;margin-top:38px}
+.panel{background:#101013;border:1px solid var(--line);border-radius:23px;padding:26px}.panel h2{font-size:20px;margin:0 0 12px}.panel .hint{font-size:13px;margin:0 0 20px}
+#scenarios{display:flex;flex-direction:column;gap:9px}.scenario{background:#18181d;color:#e3e3e6;border:1px solid #38383f;border-radius:12px;text-align:left;padding:14px 16px;font:inherit;font-size:13px;cursor:pointer;line-height:1.5}.scenario[aria-pressed="true"]{border-color:#d58074;background:#261714}.scenario:hover{border-color:#b6b6bb}
+#detail{min-height:76px;color:#b9b9bf;font-size:15px}.controls{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:20px 0}
+button.run{background:#f5f5f7;color:#111;border:0;border-radius:25px;padding:13px 23px;font:inherit;font-weight:600;cursor:pointer}.controls a{font-size:13px}
+#output{white-space:pre-wrap;overflow-wrap:anywhere;color:#dadbe1;border-radius:14px;background:#080809;border:1px solid #2c2c32;min-height:175px;padding:22px;font-size:13px;line-height:1.65}#output[data-decision="allow"]{border-color:#477057}#output[data-decision="review"]{border-color:#9e803d}#output[data-decision="block"]{border-color:#9d544b}
+.fine{font-size:12px;max-width:800px;margin:29px 0}.next{border-top:1px solid var(--line);padding-top:32px;margin-top:50px}.next h2{font-size:28px;letter-spacing:-.03em}.next .button{display:inline-block;background:#f5f5f7;color:#090909;padding:12px 22px;border-radius:99px;text-decoration:none;font-size:14px;font-weight:600}
+footer{border-top:1px solid var(--line);color:#8d8d95;font-size:12px;padding:28px 0 60px}
+@media(max-width:780px){.layout{grid-template-columns:1fr}main{padding:65px 0}.panel{padding:21px}.wrap{width:calc(100% - 30px)}}
+</style>
+<script src="/pilot/example/engine.js" defer></script>
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="/">Unfire</a><nav><a href="/pilot/">Pilot overview</a><a href="#written-scope">Email enquiry</a></nav></div></header>
+<main class="wrap">
+<p class="eyebrow">BOLT / written-only pilot · independent example</p>
+<h1>One exception.<br>One clear decision.</h1>
+<p class="lead">Explore four fictional warehouse situations. See what an illustrative rule set would allow, hold for review, or block, with an inspectable evidence record.</p>
+<div class="caveat"><strong>Illustration, not a BOLT integration.</strong> This page runs a deterministic JavaScript rule example locally in your browser. It does not use an AI model, the proprietary macOS BOLT application, production data, real human approvals or external systems. No business performance, certification or safety guarantee is claimed.</div>
+<section class="layout" aria-label="Synthetic workflow exercise">
+<div class="panel"><h2>Choose an exception</h2><p class="hint">All identifiers, quantities and proposed actions are invented. Nothing is uploaded.</p><div id="scenarios" aria-label="Four fictional cases"></div></div>
+<div class="panel"><h2>Inspect the decision</h2><p id="detail"></p><div class="controls"><button type="button" class="run" id="run">Run the example →</button><a href="/pilot/" aria-label="Back to pilot scope">Pilot scope ↗</a></div><pre id="output" aria-live="polite" data-decision="unset">Select a scenario.</pre></div>
+</section>
+<p class="fine">The four pre-defined cases demonstrate traceable <strong>rule output</strong>, not an AI accuracy benchmark. “ALLOW” means a fictional read-only summary may be drafted, not that an external action occurred. “REVIEW” does not imply anyone has actually approved a request. “BLOCK” simply means the toy policy denies the proposed action.</p>
+<section class="next" id="written-scope"><h2>Does your team face a different exception?</h2>
+<p>Describe one recurring, non-sensitive operational problem by email. We can discuss a custom written feasibility scope, acceptance criteria and limitations before proposing any paid work. Do not send credentials, private records or production data.</p>
+<a class="button" id="email" href="mailto:hello@unfire.technology?subject=BOLT%20written%20feasibility%20enquiry">Request a written scope →</a>
+<p class="fine">Email only · No calls, video meetings or in-person sessions · No binding commercial offer · Unfire is a founder-led pre-incorporation initiative in Spain.</p>
+</section>
+</main>
+<footer><div class="wrap">© 2026 Unfire · <a href="/legal.html">Legal</a> · <a href="/privacy.html">Privacy</a></div></footer>
+</body>
+</html>
