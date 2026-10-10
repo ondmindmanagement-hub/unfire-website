@@ -9,4 +9,7 @@
   <url><loc>https://unfire.technology/legal.html</loc></url>
   <url><loc>https://unfire.technology/privacy.html</loc></url>
   <url><loc>https://unfire.technology/cookies.html</loc></url>
+  <url><loc>https://unfire.technology/archer/</loc><priority>0.9</priority></url>
+  <url><loc>https://unfire.technology/archer/logic-pro/</loc><priority>0.9</priority></url>
+  <url><loc>https://unfire.technology/archer/press/</loc><priority>0.6</priority></url>
 </urlset>
