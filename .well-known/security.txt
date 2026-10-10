@@ -1,0 +1,10 @@
+Contact: mailto:hello@unfire.technology
+Expires: 2027-04-11T00:00:00Z
+Canonical: https://unfire.technology/.well-known/security.txt
+Preferred-Languages: en, es, ca
+
+# Responsible disclosure for unfire.technology only.
+# Please report reproducible security issues by email.
+# Do not send credentials, personal data, or sensitive customer information.
+# Please avoid destructive testing, denial-of-service, and access to third-party data.
+# Unfire does not operate a paid bug bounty program.
