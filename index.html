@@ -6152,7 +6152,14 @@ if(document.readyState === "loading"){
   var now=Date.now();
   var begins=Date.UTC(2026,9,13), ends=Date.UTC(2026,9,27);
   var note=document.getElementById('archerIntroSale');
-  if (note && now>=begins && now<ends) note.style.display='block';
+  if (now>=begins && now<ends) {
+    if (note) note.style.display='block';
+    // Apple-generated App Store Connect campaign: no analytics scripts or cookies here.
+    var campaign='https://apps.apple.com/app/apple-store/id6812968924?pt=129469597&ct=ARCHEROct26Website&mt=8';
+    document.querySelectorAll('a[href*="apps.apple.com"][href*="id6812968924"]').forEach(function(link) {
+      link.href=campaign;
+    });
+  }
 })();
 </script>
 </body>
