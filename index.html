@@ -6150,7 +6150,7 @@ if(document.readyState === "loading"){
 <script>
 (function() {
   var now=Date.now();
-  var begins=Date.UTC(2026,9,13), ends=Date.UTC(2026,9,27);
+  var begins=Date.UTC(2026,9,13,9), ends=Date.UTC(2026,9,27); // Start 02:00 PDT on Oct 13; US offer must not be advertised during Oct 12 there.
   var note=document.getElementById('archerIntroSale');
   if (now>=begins && now<ends) {
     if (note) note.style.display='block';
