@@ -4130,6 +4130,7 @@ main,section,header,.wrap{max-width:100%}
 <p>It is built around Gain, Threshold and Atmosphere, designed to give direct control over clipping behaviour, peaks, transients and sonic character.</p>
 <p><strong>Available now on the Mac App Store · macOS only · See current regional price on the Mac App Store.</strong></p>
 <p><a class="button primary" href="https://apps.apple.com/us/app/archer-by-unfair/id6812968924" target="_blank" rel="noopener">Get ARCHER on the Mac App Store</a></p>
+<p id="archerIntroSale" style="display:none" aria-live="off"><strong>Limited-time ARCHER offer: $1.99 (US) / €1.99 (Spain), October 13–26.</strong> Check the live price in your App Store before buying.</p>
 <p>Beyond the individual product, <span class="notranslate" translate="no">Archer</span> provides a practical environment for validating audio technology, interface decisions and production components.</p>
 <p><span><span class="notranslate" translate="no">Unfire</span> Audio</span> also explores how AI-assisted systems, procedural processing and software can support new creative tools and workflows.</p>
 </div>
@@ -6146,5 +6147,13 @@ if(document.readyState === "loading"){
 })();
 </script>
 
+<script>
+(function() {
+  var now=Date.now();
+  var begins=Date.UTC(2026,9,13), ends=Date.UTC(2026,9,27);
+  var note=document.getElementById('archerIntroSale');
+  if (note && now>=begins && now<ends) note.style.display='block';
+})();
+</script>
 </body>
 </html>

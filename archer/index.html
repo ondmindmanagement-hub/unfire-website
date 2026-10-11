@@ -46,7 +46,8 @@ footer{padding:30px 0 60px;border-top:1px solid var(--line);color:#666;font-size
 <a class="button" href="/archer/press/">Press / review information</a>
 <a class="button" href="/archer/faq/">Installation &amp; support</a>
 </div>
-<div class="regions"><span>Other stores:</span><a href="https://apps.apple.com/gb/app/archer-by-unfair/id6812968924" target="_blank" rel="noopener">UK £9.99</a><a href="https://apps.apple.com/es/app/archer-by-unfair/id6812968924" target="_blank" rel="noopener">Spain €9.99</a><a href="https://apps.apple.com/de/app/archer-by-unfair/id6812968924" target="_blank" rel="noopener">Germany €9.99</a></div>
+<div class="regions"><span>Other stores:</span><a href="https://apps.apple.com/gb/app/archer-by-unfair/id6812968924" target="_blank" rel="noopener">UK Mac App Store</a><a href="https://apps.apple.com/es/app/archer-by-unfair/id6812968924" target="_blank" rel="noopener">Spain Mac App Store</a><a href="https://apps.apple.com/de/app/archer-by-unfair/id6812968924" target="_blank" rel="noopener">Germany Mac App Store</a></div>
+<p id="archerIntroSale" style="display:none" aria-live="off"><strong>Limited-time ARCHER offer: $1.99 (US) / €1.99 (Spain), October 13–26.</strong> Check the live price in your App Store before buying.</p>
 <p class="proof"><a href="/archer/logic-pro/">Using Logic Pro? Explore the AUv3 workflow →</a></p>
 <p class="proof">Covered by <a href="https://www.audiopluginguy.com/news-unfire-has-released-archer-by-unfair-a-compact-clipping-tool-for-producers-and-mix-engineers-for-macos" target="_blank" rel="noopener">Audio Plugin Guy</a> · <a href="https://www.producthunt.com/products/archer-by-unfair" target="_blank" rel="noopener">ARCHER on Product Hunt</a></p>
 <div class="grid">
@@ -65,5 +66,13 @@ footer{padding:30px 0 60px;border-top:1px solid var(--line);color:#666;font-size
 <p class="note"><strong>Platform:</strong> macOS 12 or later (per Mac App Store). <strong>Availability:</strong> Mac App Store. <strong>Price:</strong> Check the latest local price in the Mac App Store. The product listing includes an audio demonstration.</p>
 </div></main>
 <footer><div class="wrap">© 2026 Unfire · hello@unfire.technology</div></footer>
+<script>
+(function() {
+  var now=Date.now();
+  var begins=Date.UTC(2026,9,13), ends=Date.UTC(2026,9,27);
+  var note=document.getElementById('archerIntroSale');
+  if (note && now>=begins && now<ends) note.style.display='block';
+})();
+</script>
 </body>
 </html>
