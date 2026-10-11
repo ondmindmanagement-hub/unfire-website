@@ -46,6 +46,14 @@
         typeof candidate.action !== "string") {
       return { ...base, decision: "BLOCK", reason: "Malformed or missing synthetic inputs.", next: "Do not proceed. Check source records." };
     }
+    // Unknown actions must not be presented as eligible for human review.
+    // This toy policy only recognizes the four explicitly documented operations.
+    const knownActions = ["draft_read_only_summary", "change_inventory",
+      "issue_refund", "export_personal_records"];
+    if (!knownActions.includes(candidate.action)) {
+      return { ...base, decision: "BLOCK", reason: "Unknown action is not in the documented synthetic policy.",
+        next: "Do not proceed. Define and independently review a new policy before any use." };
+    }
     if (candidate.action === "issue_refund" || candidate.action === "export_personal_records") {
       return { ...base, decision: "BLOCK", reason: "Financial transfers and personal-data exports are forbidden in the illustrative policy.", next: "Handle through separate authorized procedures." };
     }
