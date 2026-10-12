@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#09090b">
+<meta name="description" content="A focused written-only, synthetic-data feasibility study for textile and apparel teams facing conflicting workflow or supplier records. BOLT by Unfire, early internal prototype, indicative €3,000 + taxes.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Textile Operations: Human-Reviewed Exception Workflows | Unfire">
+<meta property="og:description" content="One workflow. One evidence trail. One human decision. Explore a carefully scoped synthetic feasibility study, not a production integration.">
+<meta property="og:url" content="https://unfire.technology/pilot/textile/">
+<link rel="canonical" href="https://unfire.technology/pilot/textile/">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<title>Textile Operations — One Controlled Workflow | Unfire</title>
+<style>
+:root{color-scheme:dark;--bg:#09090b;--surface:#151518;--border:#35353a;--fg:#f4f4f7;--muted:#b4b4bd;--accent:#e5a7a0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.7 -apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}a:hover{color:var(--accent)}a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.wrap{width:min(1040px,calc(100% - 44px));margin-inline:auto}
+header{border-bottom:1px solid #27272c;background:#0c0c0e}header .wrap{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-size:20px;letter-spacing:-.035em;font-weight:720;text-decoration:none}nav{display:flex;gap:22px;flex-wrap:wrap}nav a{text-decoration:none;color:var(--muted);font-size:12px}
+.hero{padding:108px 0 102px}.eyebrow{text-transform:uppercase;font-weight:730;letter-spacing:.17em;font-size:11px;color:var(--accent);margin:0}
+h1{font-size:clamp(3rem,7vw,6.2rem);letter-spacing:-.066em;line-height:1.04;font-weight:620;max-width:880px;margin:21px 0 27px}
+.lead{max-width:790px;font-size:clamp(17px,2.25vw,23px);color:#cbcad1;line-height:1.55;margin:0}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin:35px 0 14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid #54545b;min-height:47px;padding:12px 22px;border-radius:50px;font-weight:620}
+.btn.primary{background:#f5f5f8;color:#09090b;border-color:#f5f5f8}.btn.primary:hover{background:#dddde3}.btn:hover{border-color:#fff}
+.micro{font-size:12px;color:var(--muted);max-width:730px}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin-top:75px}.strip>div{border-top:1px solid #48484c;padding-top:20px}.strip strong{display:block;font-weight:650;font-size:15px}.strip small{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+section{padding:87px 0;border-top:1px solid #29292e}
+h2{font-size:clamp(1.95rem,4.1vw,3rem);line-height:1.16;letter-spacing:-.043em;font-weight:620;margin:15px 0 22px}
+.intro{font-size:16px;color:var(--muted);max-width:805px;margin:0 0 36px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.card{border:1px solid var(--border);border-radius:17px;background:var(--surface);padding:27px 24px}
+.card .number{font-size:11px;color:var(--accent);font-weight:690;letter-spacing:.12em}.card h3{font-size:19px;line-height:1.32;margin:29px 0 12px}.card p{color:var(--muted);font-size:13px;margin:0}
+.sequence{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;list-style:none;padding:0;margin:37px 0 0}
+.sequence li{border-top:1px solid #616169;padding:16px 7px 0 0}.sequence b{color:var(--accent);font-size:12px}.sequence span{display:block;font-weight:640;margin:12px 0 7px}.sequence p{font-size:12px;color:var(--muted);margin:0}
+.example{border:1px solid #4a3635;border-radius:16px;padding:28px;background:#181112}
+.example .overline{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:730}
+.example p{color:#ded0ce;font-size:14px;max-width:770px}
+.example code{display:block;white-space:normal;overflow-wrap:anywhere;font-size:13px;color:#f3d3ce;padding:14px 18px;background:#0d0b0b;border-radius:10px}
+.evidence{display:grid;grid-template-columns:1fr 1.3fr;gap:28px;align-items:start}
+.metric{border-radius:20px;border:1px solid var(--border);padding:37px;background:var(--surface)}
+.metric strong{font-size:clamp(3.5rem,7vw,5rem);line-height:1;font-weight:650;letter-spacing:-.055em}
+.metric p{color:var(--muted);margin:20px 0 0;font-size:14px}
+.evidence ul{margin:0;padding-left:20px;color:#c6c6ce;font-size:14px}.evidence li{margin-bottom:16px}
+.cost{border:1px solid #50413f;background:#171112;border-radius:20px;padding:36px;display:grid;grid-template-columns:.8fr 1.2fr;gap:28px}
+.cost strong{display:block;font-size:clamp(2.9rem,5.5vw,4.8rem);line-height:1.12;letter-spacing:-.05em}
+.cost .terms{color:var(--muted);font-size:14px;margin:12px 0 0}.cost ul{margin:0;padding-left:22px;color:#d0c5c5;font-size:14px}.cost li{margin-bottom:8px}
+.questions{display:grid;grid-template-columns:1fr 1fr;gap:13px;counter-reset:question;list-style:none;padding:0;margin:25px 0}
+.questions li{padding:23px;border:1px solid var(--border);border-radius:15px;font-size:15px}
+.questions li::before{counter-increment:question;content:"0" counter(question);display:block;font-size:11px;color:var(--accent);font-weight:720;margin-bottom:10px}
+.warning{border-left:2px solid var(--accent);padding:3px 18px;color:var(--muted);max-width:800px;font-size:13px;margin-top:32px}
+footer{padding:25px 0 50px;border-top:1px solid var(--border);color:var(--muted);font-size:12px}footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px}footer a{color:var(--muted)}
+@media(max-width:830px){.cards{grid-template-columns:1fr}.sequence{grid-template-columns:repeat(2,minmax(0,1fr))}.evidence,.cost{grid-template-columns:1fr}.strip{gap:10px}.hero{padding:74px 0}}
+@media(max-width:540px){header .wrap{align-items:flex-start;flex-direction:column;padding:14px 0}nav{gap:12px}.strip,.questions,.sequence{grid-template-columns:1fr}section{padding:62px 0}.actions{flex-direction:column}.btn{width:100%}.cost,.metric{padding:25px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="/" class="brand">Unfire</a><nav aria-label="Primary"><a href="/pilot/">Pilot overview</a><a href="/pilot/evidence/">Internal evidence</a><a href="/pilot/intake/">Written enquiry</a></nav></div></header>
+<main>
+<div class="wrap hero">
+<p class="eyebrow">BOLT feasibility · Textile and apparel operations</p>
+<h1>One exception.<br>One clear decision.</h1>
+<p class="lead">When order status, lot documents or supplier records disagree, the next action should not be a guess. Explore a small, human-reviewed workflow assessment using <strong>fictional records only</strong>, before considering any production integration.</p>
+<div class="actions">
+<a class="btn primary" href="#qualify">Discuss one workflow in writing →</a>
+<a class="btn" href="/pilot/example/">Explore the fictional example</a>
+</div>
+<p class="micro">For manufacturers, fashion operations and logistics teams. This is a proposed service concept, not evidence that any named textile company has these problems or has hired Unfire.</p>
+<div class="strip">
+<div><strong>One defined exception</strong><small>Not a broad digital transformation project</small></div>
+<div><strong>Written collaboration</strong><small>No mandatory calls, travel or system access</small></div>
+<div><strong>Human-review boundary</strong><small>Observe allow, review and blocked paths</small></div>
+</div>
+</div>
+<section id="problem"><div class="wrap">
+<p class="eyebrow">Illustrative challenges</p>
+<h2>Where information conflicts, people need evidence.</h2>
+<p class="intro">Choose only one operational question for a feasibility assessment. These are hypothetical examples, not findings from customer research.</p>
+<div class="cards">
+<article class="card"><span class="number">01 / LOT</span><h3>Missing lot evidence</h3><p>A fictional lot has an accepted status, but the required supporting document is absent. The proposed next step is held for human verification.</p></article>
+<article class="card"><span class="number">02 / ORDER</span><h3>Contradictory statuses</h3><p>An invented order is marked complete by one record and pending by another. The report identifies the discrepancy rather than silently choosing a source.</p></article>
+<article class="card"><span class="number">03 / HANDOFF</span><h3>Duplicate or stale events</h3><p>Two artificial notifications appear out of order. The workflow flags ambiguity and records why a proposed step is blocked or needs review.</p></article>
+</div>
+</div></section>
+<section id="approach"><div class="wrap">
+<p class="eyebrow">A bounded assessment</p><h2>Five stages, documented entirely by email.</h2>
+<ol class="sequence">
+<li><b>01</b><span>Describe</span><p>One recurring, non-critical administrative exception.</p></li>
+<li><b>02</b><span>Define</span><p>Rule table, review owner, expected allow/hold/block outcomes.</p></li>
+<li><b>03</b><span>Simulate</span><p>Invent representative cases; no real orders or private records.</p></li>
+<li><b>04</b><span>Inspect</span><p>Compare actual fixture decisions with expected results and limitations.</p></li>
+<li><b>05</b><span>Report</span><p>Written evidence pack and go/hold/no-go recommendation.</p></li>
+</ol>
+<div class="example" style="margin-top:45px">
+<span class="overline">Illustrative input — not real supplier data</span>
+<p>Lot DEMO-042 is marked “accepted” in one made-up record, while a required quality document is missing in another. A safe offline assessment should <strong>hold the proposed administrative next step</strong> and explain what requires review.</p>
+<code>demo_lot: DEMO-042 · document_present: false · proposed_action: release_record · expected_decision: HOLD_FOR_REVIEW</code>
+<p>No inventory, machine, digital product passport or enterprise application is updated by this example.</p>
+</div>
+</div></section>
+<section id="evidence"><div class="wrap">
+<p class="eyebrow">Evidence and limits</p><h2>What we have actually tested.</h2>
+<div class="evidence">
+<div class="metric"><strong>13 / 13</strong><p>Developer-run Python checks passed on 12 October 2026, including nine deliberate input-manipulation cases in an offline synthetic handoff test.</p></div>
+<div><ul>
+<li>An invented 14-event logistics fixture was classified offline. Five selected cases entered an isolated copy of BOLT's actual Swift TaskWorkflow; the other nine were held.</li>
+<li>Three scripted approvals and two scripted rejections behaved as expected inside the isolated test sandbox. No actual employee approval or customer data was involved.</li>
+<li>Zero external business-system changes were made. This result is <strong>not</strong> a real textile connector, customer trial, audited security system, productivity improvement or ROI measurement.</li>
+<li><a href="/pilot/evidence/">Read a separate local-model research example</a> and <a href="/pilot/example/">try the fictional interactive example</a>. Those examples are distinct from the Swift handoff test.</li>
+</ul></div>
+</div>
+</div></section>
+<section id="offer"><div class="wrap">
+<p class="eyebrow">Indicative, non-binding commercial scope</p><h2>Small enough to evaluate.</h2>
+<div class="cost">
+<div><strong>€3,000</strong><p class="terms">Indicative fee plus applicable taxes<br>Approximately 10 working days<br>No binding offer or purchase commitment</p></div>
+<div><ul>
+<li>One jointly defined administrative exception with expected outcomes</li>
+<li>Review-ready fictional test set and explicit allow/hold/block boundaries</li>
+<li>Reproducible observations, failure cases and written assessment</li>
+<li>Written recommendation for whether a real-world pilot could be justified</li>
+<li>No production deployment, real datasets, ERP/DPP integration, PLC control, security certification or guaranteed savings</li>
+</ul></div>
+</div>
+<p class="warning">Any billable engagement requires a named budget owner, eligibility to contract, a separately agreed statement of work, and appropriate Spanish tax, Social Security and benefits checks. Unfire is currently a founder-led project, not an incorporated company. Technical feasibility and commercial acceptance are not yet independently validated.</p>
+</div></section>
+<section id="qualify"><div class="wrap">
+<p class="eyebrow">Four qualification questions</p><h2>Start with the problem, not the software.</h2>
+<ol class="questions">
+<li>What is one repeatable administrative exception, and which records disagree?</li>
+<li>Who owns the process and can approve or reject a proposed outcome?</li>
+<li>Can the first evaluation use completely invented records and run remotely?</li>
+<li>Is a non-binding budget near €3,000 potentially available for a scoped study?</li>
+</ol>
+<div class="actions">
+<a class="btn primary" href="mailto:hello@unfire.technology?subject=Textile%20workflow%20feasibility%20enquiry&amp;body=Hello%20Unfire%2C%0A%0AOur%20fictional%2Fnon-confidential%20scenario%3A%0AProcess%20owner%3A%0ABudget%20range%3A%0AWritten%20contact%3A%0A">Send a written enquiry →</a>
+<a class="btn" href="/pilot/intake/">Review the structured enquiry form</a>
+</div>
+<p class="micro">Please do not include personal data, client files, passwords, sensitive records or system credentials. No inquiry is sent automatically by this page. Contact: <a href="mailto:hello@unfire.technology">hello@unfire.technology</a>.</p>
+</div></section>
+</main>
+<footer><div class="wrap"><span>© 2026 Unfire · Founder-led software initiative</span><span><a href="/pilot/">BOLT feasibility</a> · <a href="/legal.html">Legal</a> · <a href="/privacy.html">Privacy</a> · <a href="/">Company</a></span></div></footer>
+</body>
+</html>
