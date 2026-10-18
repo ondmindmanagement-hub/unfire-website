@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scope a BOLT feasibility review | Unfire</title>
-<meta name="description" content="Describe one non-critical workflow exception and generate a written-only, non-binding BOLT pilot enquiry. No accounts, analytics or upload required.">
+<title>Scope a Bolt feasibility review | Unfire</title>
+<meta name="description" content="Describe one non-critical workflow exception and generate a written-only, non-binding Bolt pilot enquiry. No accounts, analytics or upload required.">
 <link rel="canonical" href="https://unfire.technology/pilot/intake/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
@@ -42,7 +42,7 @@ footer .wrap{display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap}
 <body>
 <header><div class="wrap"><a class="brand" href="/">Unfire</a><nav aria-label="Primary"><a href="/pilot/">Pilot overview</a><a href="/pilot/example/">Synthetic example</a><a href="mailto:hello@unfire.technology">Email</a></nav></div></header>
 <main><div class="wrap">
-<p class="eyebrow">BOLT / Buyer qualification</p>
+<p class="eyebrow">Bolt / Buyer qualification</p>
 <h1>One problem.<br>One written scope.</h1>
 <p class="lead">Tell us about a recurring, non-critical workflow exception. We will assess whether a small, synthetic-data feasibility exercise could help you make a better-informed decision.</p>
 <p class="note">No calls, video meetings, accounts or production-system access. Initial discussions are by email. No payment or agreement is created by this page.</p>
@@ -67,7 +67,7 @@ footer .wrap{display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap}
 <div class="field"><label for="scope">Indicative review budget</label><select id="scope" name="scope"><option>Budget not confirmed</option><option>EU feasibility — around EUR 3,000 + tax</option><option>EU extended study — around EUR 5,000 + tax</option><option>US discussion — around USD 6,500 + tax</option><option>Different scope — discuss by email</option></select></div>
 <div class="field"><label for="timing">Decision horizon</label><select id="timing" name="timing"><option>Exploratory / no date</option><option>Within 30 days</option><option>Within 90 days</option><option>More than 90 days</option></select></div>
 </div>
-<div class="disclaimer">BOLT is an early, internally tested macOS prototype, not a validated production integration or certified assurance product. We start with fabricated inputs. Prices are non-binding discussion ranges; availability, legal eligibility, taxes and a signed scope must be confirmed before any paid work.</div>
+<div class="disclaimer">Bolt is an early, internally tested macOS prototype, not a validated production integration or certified assurance product. We start with fabricated inputs. Prices are non-binding discussion ranges; availability, legal eligibility, taxes and a signed scope must be confirmed before any paid work.</div>
 <div class="actions"><button class="primary" type="submit">Prepare written enquiry →</button><a class="btn" href="/pilot/">Review offer first</a></div>
 <p id="status" role="status" aria-live="polite"></p>
 </form>
@@ -85,14 +85,14 @@ footer .wrap{display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap}
 (function(){
  const $=id=>document.getElementById(id),form=$('intake'),status=$('status'),box=$('previewBox'),preview=$('preview');
  const clean=(v,max)=>v.trim().replace(/[\r\n\t]+/g,' ').slice(0,max);
- let subject='BOLT written feasibility enquiry';
+ let subject='Bolt written feasibility enquiry';
  form.addEventListener('submit',event=>{
   event.preventDefault();status.textContent='';
   if(!form.checkValidity()){form.reportValidity();status.textContent='Please complete the required fields with a valid email address.';return;}
   const org=clean($('org').value,100),email=clean($('contact').value,150);
   const problem=$('problem').value.trim().slice(0,750),outcome=$('outcome').value.trim().slice(0,500);
   if(problem.length<20||outcome.length<12){status.textContent='Please give a little more detail about the issue and intended result.';return;}
-  subject='BOLT pilot qualification — '+org.slice(0,65);
+  subject='Bolt pilot qualification — '+org.slice(0,65);
   preview.value=['Hello Unfire,','', 'I would like a written-only discussion of a non-binding, synthetic-data feasibility review.','',
     'Organization: '+org, 'Reply-to email: '+email, 'Operating area: '+$('sector').value,
     'Process owner: '+$('owner').value,'','Recurring problem:',' '+problem,'','Desired measurable outcome:',' '+outcome,
