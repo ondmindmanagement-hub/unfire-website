@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Power · AI Energy Response Layer | Unfire</title>
+<meta name="description" content="Working research demonstration of an explainable, human-approved energy scheduling assistant. Synthetic data, offline.">
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;color:#eaf1fa;background:#0b111b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% -20%,#18375c 0,#0b111b 47%);min-height:100vh}
+.wrap{max-width:1130px;margin:auto;padding:36px 22px 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:36px}
+.brand{font-size:19px;font-weight:750;letter-spacing:-.5px}.brand span{opacity:.48;font-size:13px;margin-left:12px;font-weight:500}
+.tag{padding:9px 14px;color:#a7d1ff;background:#102842;border:1px solid #2b4c74;border-radius:99px;font-size:12px;font-weight:700}
+h1{font-size:clamp(38px,6vw,68px);letter-spacing:-3px;margin:0;max-width:900px;line-height:1.04}
+.lead{font-size:17px;color:#aab9cc;line-height:1.65;max-width:790px;margin:20px 0 30px}
+.subtle{font-size:12px;color:#90a3ba}.notice{padding:14px 18px;border:1px solid #365274;border-radius:14px;background:#122338;color:#c7d8ea;font-size:13px;margin-bottom:24px;line-height:1.5}
+.grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,1fr);gap:18px}
+.panel{background:rgba(19,29,44,.96);border:1px solid #29384c;border-radius:20px;padding:24px;box-shadow:0 15px 50px #0003}
+.panel h2{font-size:16px;margin:0 0 18px;font-weight:700;letter-spacing:-.25px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.metric{background:#0f1b2a;border:1px solid #243348;padding:16px;border-radius:14px}
+.metric .v{font-size:28px;font-weight:800;letter-spacing:-1px;margin-top:7px}.metric .k{font-size:11px;color:#a1b0c5}
+.chart{height:225px;display:flex;align-items:end;gap:4px;border-bottom:1px solid #476078;padding:13px 0 0;margin:20px 0 4px}
+.col{display:flex;flex-direction:column;align-items:center;justify-content:end;gap:8px;flex:1;height:100%;min-width:0}
+.bar{width:100%;border-radius:5px 5px 0 0;background:linear-gradient(#7da8c9,#4678aa);min-height:7px;opacity:.64;transition:height .45s,background .3s}
+.bar.best{background:linear-gradient(#81efca,#2ba7a1);opacity:1}
+.hh{color:#7389a7;font-size:10px;text-align:center;height:13px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:15px}.key{display:flex;gap:12px;color:#8fa4bc;font-size:11px;margin-top:18px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:2px;background:#578dbe;margin-right:5px}.dot.best{background:#42c9ac}
+label{display:block;color:#a6b7cb;font-size:12px;margin:12px 0 6px}
+input,select{width:100%;font:inherit;color:#e9f2ff;background:#0f1b2a;border:1px solid #394a62;border-radius:10px;padding:12px 13px;outline:none}select:focus,input:focus{border-color:#7dbbff}
+.fields{display:grid;grid-template-columns:repeat(2,1fr);gap:0 12px}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:14px 16px;font-weight:700;background:#e1f0ff;color:#0c243e;width:100%;margin-top:18px}
+button:hover{background:#c4e2ff}button.secondary{background:#173950;color:#bff0e3;margin-top:9px;border:1px solid #426d76}
+button:disabled{opacity:.55;cursor:not-allowed}
+.result{border:1px solid #315b5c;background:#0e2529;border-radius:14px;padding:18px;margin-top:18px;line-height:1.6}
+.result strong{font-size:22px;color:#a4f3d9}.result p{font-size:13px;color:#bcd1dc;line-height:1.5}
+.explainer{font-size:13px;line-height:1.65;color:#a3b6c9;margin:14px 0 0}
+footer{font-size:12px;color:#8494aa;line-height:1.6;max-width:850px;margin-top:26px}
+footer a{color:#a0c9ff}#approved{display:none;color:#bafce3;border-top:1px solid #315b5c;padding-top:10px;margin-top:12px}
+@media(max-width:790px){.grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr 1fr}.metric .v{font-size:21px}.top{align-items:flex-start}.tag{max-width:180px;text-align:center}.wrap{padding:22px 13px 45px}}
+</style></head><body><main class="wrap">
+<div class="top"><div class="brand">UNFIRE <span>POWER / RESEARCH</span></div><div class="tag">AI4CLIMATE · 2026 DEMO</div></div>
+<h1>Make flexible energy use easier to schedule.</h1>
+<p class="lead">An experimental decision aid for Spanish households and small businesses. It uses a simple trained forecasting model to rank electricity-use windows, explains the trade-off, and leaves every decision with the person.</p>
+<div class="notice"><b>Research-only demonstration.</b> All hourly prices and historical examples below are generated synthetically for reproducibility. They are NOT live Spanish tariffs, grid readings, or validated emissions data. This demo makes no claim of actual CO₂ reduction, customer adoption, or appliance integration.</div>
+<div class="grid"><section class="panel"><div class="row"><h2>Illustrative 24-hour price forecast</h2><div class="subtle">€/kWh · synthetic</div></div>
+<div class="metrics"><div class="metric"><div class="k">Earliest-window cost</div><div class="v" id="baseCost">—</div></div><div class="metric"><div class="k">Suggested-window cost</div><div class="v" id="optCost">—</div></div><div class="metric"><div class="k">Illustrative difference</div><div class="v" id="saving">—</div></div></div>
+<div class="chart" id="chart" role="img" aria-label="Hourly synthetic electricity price forecast"></div>
+<div class="key"><span><i class="dot"></i> Predicted hourly price</span><span><i class="dot best"></i> Suggested window</span></div>
+<p class="explainer">Model: 5-nearest-neighbours trained on 9 simulated days of hourly prices, evaluated on one held-out simulated day. This is an experimental machine-learning price forecaster, <b>not</b> a validated operational model. Its purpose is to show a testable recommendation workflow.</p>
+<div class="subtle" id="validation" style="margin-top:12px"></div>
+</section><section class="panel"><h2>Plan a flexible task</h2>
+<label for="job">Load type</label><select id="job"><option value="washing">Laundry · 1.5 kWh</option><option value="ev">EV top-up · 7.2 kWh</option><option value="compute">Batch computing · 2.4 kWh</option></select>
+<div class="fields"><div><label for="earliest">Earliest start</label><select id="earliest"></select></div><div><label for="latest">Latest finish</label><select id="latest"></select></div></div>
+<div class="fields"><div><label for="hours">Task duration</label><select id="hours"><option value="1">1 hour</option><option value="2" selected>2 hours</option><option value="3">3 hours</option></select></div><div><label for="energy">Total energy (kWh)</label><input id="energy" type="number" min=".1" max="100" step=".1" value="1.5"></div></div>
+<button id="recommend">Recommend a window</button><div class="result"><div class="subtle">SUGGESTION · REQUIRES HUMAN APPROVAL</div><strong id="window">Calculating…</strong><p id="why">No equipment or account is controlled.</p><div id="approved">✓ Approved locally as a hypothetical plan. No device command or booking has been executed.</div></div>
+<button id="approve" class="secondary">Accept suggestion (local only)</button>
+</section></div>
+<footer><b>Method & safeguards.</b> An offline deterministic sample-data generator creates repeatable price curves. A k-nearest-neighbours regressor estimates each future hour from historical hour-of-day patterns. A transparent contiguous-window search uses model estimates to find a cheaper feasible start time. A real 90-day pilot would add authorised historical price feeds, time-aligned grid emissions measurements, uncertainty calibration and opt-in household feedback; no emissions proxy is used in this demo. Incorrect advice is possible. Always verify real tariffs and constraints before changing consumption. The Power Energy Prices iOS application is a separate product; this research demonstrator does not claim to implement autonomous appliance control. <a href="https://unfire.technology/" target="_blank" rel="noopener">Unfire</a>.</footer>
+</main><script>
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const hours=Array.from({length:24},(_,i)=>i);
+const profile=(day,h)=>Math.max(.035,.11+.058*Math.exp(-Math.pow((h-20)/3.7,2))+.028*Math.exp(-Math.pow((h-8)/2.5,2))-.027*Math.exp(-Math.pow((h-3)/3.6,2))+.008*Math.sin(day*1.9+h*.95)+.007*Math.cos(day*.71));
+const history=Array.from({length:10},(_,day)=>hours.map(h=>profile(day,h)));
+const distance=(a,b)=>Math.min(Math.abs(a-b),24-Math.abs(a-b));
+const forecast=h=>{
+ const candidates=[];
+ for(let day=0;day<9;day++)for(let hour=0;hour<24;hour++)candidates.push({d:distance(h,hour)+Math.abs(8-day)*.04,p:history[day][hour]});
+ candidates.sort((a,b)=>a.d-b.d);
+ return candidates.slice(0,5).reduce((a,x)=>a+x.p,0)/5;
+};
+const prediction=hours.map(forecast);
+const mae=prediction.reduce((sum,p,i)=>sum+Math.abs(p-history[9][i]),0)/24;
+const fmt=n=>"€"+n.toFixed(2);
+const hh=h=>String(h).padStart(2,"0")+":00";
+let selected={start:0,duration:2,cost:0};
+const redraw=()=>{
+ const barMax=Math.max(...prediction);
+ $("chart").innerHTML=prediction.map((p,h)=>'<div class="col" title="'+hh(h)+' · '+p.toFixed(3)+' €/kWh"><div class="bar '+(h>=selected.start&&h<selected.start+selected.duration?'best':'')+'" style="height:'+(p/barMax*90).toFixed(1)+'%"></div><div class="hh">'+(h%3===0?String(h).padStart(2,"0"):"")+'</div></div>').join("");
+};
+const score=(start,duration,kwh)=>prediction.slice(start,start+duration).reduce((a,v)=>a+v,0)*kwh/duration;
+const calculate=()=>{
+ const earliest=Math.max(0,Number($("earliest").value)),latest=Math.min(24,Number($("latest").value));
+ const duration=Math.max(1,Number($("hours").value)), energy=Number($("energy").value);
+ $("approved").style.display="none";
+ if(!Number.isFinite(energy)||energy<=0||latest-earliest<duration){$("window").textContent="Adjust the available window";$("why").textContent="Choose a positive energy amount and enough available hours.";return;}
+ let best={start:earliest,cost:Infinity};
+ for(let s=earliest;s+duration<=latest;s++){const c=score(s,duration,energy);if(c<best.cost)best={start:s,cost:c};}
+ selected={start:best.start,duration,cost:best.cost};
+ const base=score(earliest,duration,energy);
+ $("baseCost").textContent=fmt(base);$("optCost").textContent=fmt(best.cost);$("saving").textContent=fmt(Math.max(0,base-best.cost));
+ $("window").textContent=hh(best.start)+"–"+hh(best.start+duration);
+ $("why").textContent="Model-estimated cost: "+fmt(best.cost)+" for "+energy.toFixed(1)+" kWh. Compared with starting at "+hh(earliest)+", the illustrative difference is "+fmt(Math.max(0,base-best.cost))+". This is synthetic price forecasting, not a carbon claim; no device is controlled.";
+ redraw();
+};
+for(const h of hours){const a=document.createElement("option");a.value=h;a.textContent=hh(h);$("earliest").appendChild(a);}
+for(let h=1;h<=24;h++){const a=document.createElement("option");a.value=h;a.textContent=hh(h);$("latest").appendChild(a);}
+$("earliest").value="9";$("latest").value="23";
+$("validation").textContent="Held-out synthetic-day mean absolute error: "+mae.toFixed(3)+" €/kWh (synthetic evaluation only).";
+$("job").addEventListener("change",()=>{$("energy").value=({washing:1.5,ev:7.2,compute:2.4})[$("job").value];calculate();});
+["earliest","latest","hours","energy"].forEach(id=>$(id).addEventListener("change",calculate));
+$("recommend").addEventListener("click",calculate);
+$("approve").addEventListener("click",()=>{if($("window").textContent.includes("–"))$("approved").style.display="block";});
+calculate();
+window.UNFIRE_DEMO_TEST={prediction,mae,score,calculate};
+})();
+</script></body></html>
