@@ -29,11 +29,11 @@
     var ui = document.createElement("div");
     ui.innerHTML =
       '<button type="button" id="launcher" aria-controls="panel" aria-expanded="false">' +
-        face + '<span class="launch-copy"><strong>Ask Unfire <span class="online" aria-hidden="true"></span></strong><small id="launch-sub">Talk with Unfire</small></span>' +
+        face + '<span class="launch-copy"><strong>Ask <span class="notranslate" translate="no">Unfire</span> <span class="online" aria-hidden="true"></span></strong><small id="launch-sub">Talk with <span class="notranslate" translate="no">Unfire</span></small></span>' +
       '</button>' +
       '<section id="panel" role="dialog" aria-label="Ask Unfire — site assistant" hidden>' +
         '<header id="panel-header">' + face +
-          '<div class="identity"><strong>Ask Unfire <span class="online" aria-hidden="true"></span></strong><small id="subtitle">Unfire site support</small></div>' +
+          '<div class="identity"><strong>Ask <span class="notranslate" translate="no">Unfire</span> <span class="online" aria-hidden="true"></span></strong><small id="subtitle"><span class="notranslate" translate="no">Unfire</span> site support</small></div>' +
           '<div class="actions">' +
             '<button type="button" id="lang" class="ghost" aria-label="Change language">ES</button>' +
             '<button type="button" id="voice" class="ghost" aria-label="Enable spoken answers" aria-pressed="false">' + soundOffIcon + '</button>' +
@@ -57,6 +57,24 @@
     while (ui.firstChild) root.appendChild(ui.firstChild);
     document.body.appendChild(host);
     var $ = function (id) { return root.getElementById(id); };
+    // Preserve the Unfire brand in the assistant's dynamic replies and labels.
+    // Run only when rendering/updating text; no DOM observers or polling.
+    function brandText(target, text) {
+      var value = String(text == null ? "" : text);
+      var re = /\bUnfire\b/gi;
+      var match, last = 0;
+      target.textContent = "";
+      while ((match = re.exec(value))) {
+        if (match.index > last) target.appendChild(document.createTextNode(value.slice(last, match.index)));
+        var brand = document.createElement("span");
+        brand.textContent = match[0];
+        brand.className = "notranslate";
+        brand.setAttribute("translate", "no");
+        target.appendChild(brand);
+        last = re.lastIndex;
+      }
+      if (last < value.length) target.appendChild(document.createTextNode(value.slice(last)));
+    }
     var launcher = $("launcher"), panel = $("panel"), messages = $("messages"), input = $("message-input");
     var mic = $("mic"), status = $("status"), voice = $("voice"), langButton = $("lang");
     var Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -151,8 +169,8 @@
     function addMessage(text, who) {
       var node = document.createElement("div"); node.className = "message " + who;
       var sender = document.createElement("span"); sender.className = "sender";
-      sender.textContent = who === "agent" ? "Unfire" : copy[lang].you;
-      var content = document.createElement("span"); content.textContent = text;
+      brandText(sender, who === "agent" ? "Unfire" : copy[lang].you);
+      var content = document.createElement("span"); brandText(content, text);
       if (who === "agent") lastAssistantText = text;
       node.appendChild(sender); node.appendChild(content); messages.appendChild(node);
       messages.scrollTop = messages.scrollHeight;
@@ -200,7 +218,7 @@
       voice.setAttribute("aria-label",voiceEnabled ? c.mute : c.unmute);
       voice.setAttribute("aria-pressed",String(voiceEnabled));
       voice.innerHTML = voiceEnabled ? soundOnIcon : soundOffIcon;
-      root.querySelectorAll("[data-topic]").forEach(function(b,i) { b.textContent = c.questions[i]; });
+      root.querySelectorAll("[data-topic]").forEach(function(b,i) { brandText(b, c.questions[i]); });
       if (!Recognition) mic.title = c.unsupported;
     }
     function stopListen() {

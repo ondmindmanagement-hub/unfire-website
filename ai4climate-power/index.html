@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Power · AI Energy Response Layer | Unfire</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title translate="no">Power · AI Energy Response Layer | Unfire</title>
 <meta name="description" content="Working research demonstration of an explainable, human-approved energy scheduling assistant. Synthetic data, offline.">
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;color:#eaf1fa;background:#0b111b}
@@ -42,8 +42,9 @@ footer a{color:#a0c9ff}#approved{display:none;color:#bafce3;border-top:1px solid
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/assets/css/unfire-display-typography-20261019.css?v=2">
+<link rel="stylesheet" href="/assets/css/unfire-compact-system-20261019.css?v=1">
 </head><body><main class="wrap">
-<div class="top"><div class="brand">UNFIRE <span>POWER / RESEARCH</span></div><div class="tag">AI4CLIMATE · 2026 DEMO</div></div>
+<div class="top"><div class="brand"><span class="notranslate" translate="no">UNFIRE</span> <span>POWER / RESEARCH</span></div><div class="tag">AI4CLIMATE · 2026 DEMO</div></div>
 <h1>Make flexible energy use easier to schedule.</h1>
 <p class="lead">An experimental decision aid for Spanish households and small businesses. It uses a simple trained forecasting model to rank electricity-use windows, explains the trade-off, and leaves every decision with the person.</p>
 <div class="notice"><b>Research-only demonstration.</b> All hourly prices and historical examples below are generated synthetically for reproducibility. They are NOT live Spanish tariffs, grid readings, or validated emissions data. This demo makes no claim of actual CO₂ reduction, customer adoption, or appliance integration.</div>
@@ -60,7 +61,7 @@ footer a{color:#a0c9ff}#approved{display:none;color:#bafce3;border-top:1px solid
 <button id="recommend">Recommend a window</button><div class="result"><div class="subtle">SUGGESTION · REQUIRES HUMAN APPROVAL</div><strong id="window">Calculating…</strong><p id="why">No equipment or account is controlled.</p><div id="approved">✓ Approved locally as a hypothetical plan. No device command or booking has been executed.</div></div>
 <button id="approve" class="secondary">Accept suggestion (local only)</button>
 </section></div>
-<footer><b>Method & safeguards.</b> An offline deterministic sample-data generator creates repeatable price curves. A k-nearest-neighbours regressor estimates each future hour from historical hour-of-day patterns. A transparent contiguous-window search uses model estimates to find a cheaper feasible start time. A real 90-day pilot would add authorised historical price feeds, time-aligned grid emissions measurements, uncertainty calibration and opt-in household feedback; no emissions proxy is used in this demo. Incorrect advice is possible. Always verify real tariffs and constraints before changing consumption. The Power Energy Prices iOS application is a separate product; this research demonstrator does not claim to implement autonomous appliance control. <a href="https://unfire.technology/" target="_blank" rel="noopener">Unfire</a>.</footer>
+<footer><b>Method & safeguards.</b> An offline deterministic sample-data generator creates repeatable price curves. A k-nearest-neighbours regressor estimates each future hour from historical hour-of-day patterns. A transparent contiguous-window search uses model estimates to find a cheaper feasible start time. A real 90-day pilot would add authorised historical price feeds, time-aligned grid emissions measurements, uncertainty calibration and opt-in household feedback; no emissions proxy is used in this demo. Incorrect advice is possible. Always verify real tariffs and constraints before changing consumption. The Power Energy Prices iOS application is a separate product; this research demonstrator does not claim to implement autonomous appliance control. <a href="https://unfire.technology/" target="_blank" rel="noopener"><span class="notranslate" translate="no">Unfire</span></a>.</footer>
 </main><script>
 (function(){
 "use strict";

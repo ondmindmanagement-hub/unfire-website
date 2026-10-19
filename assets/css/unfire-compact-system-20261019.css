@@ -1,0 +1,197 @@
+/* Unfire compact editorial system — 19 October 2026.
+   A restrained scale across the public site. Preserve responsive layouts,
+   text accessibility and the equalized letter-spacing of display titles. */
+:root {
+  --unfire-content-measure: 980px;
+  --unfire-card-radius: 18px;
+}
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { font-size: 15px !important; }
+/* The brand name stays a single non-translatable, optically continuous unit. */
+.notranslate[translate="no"] { unicode-bidi: isolate; }
+h1, h2, h3, h4 { text-wrap: balance; overflow-wrap: normal; }
+html body h1 {
+  font-size: clamp(2.8rem, 5.8vw, 5.5rem) !important;
+  line-height: 1.08 !important;
+}
+html body h2 {
+  font-size: clamp(1.8rem, 3.7vw, 3.65rem) !important;
+  line-height: 1.14 !important;
+}
+html body h3 {
+  font-size: clamp(1.16rem, 2.1vw, 1.55rem) !important;
+  line-height: 1.23 !important;
+}
+html body .lead,
+html body .hero .lead,
+html body .hero p.lead {
+  font-size: clamp(1rem, 1.7vw, 1.25rem) !important;
+  line-height: 1.55 !important;
+}
+html body .eyebrow,
+html body .hero-kicker,
+html body .tag,
+html body .label,
+html body .product-type {
+  font-size: clamp(10px, .9vw, 12px) !important;
+}
+header .brand, header .unfire-clean-brand, nav .brand {
+  font-size: clamp(15px, 1.3vw, 19px) !important;
+}
+header nav a, header .nav a, header .back,
+header .nav-links a, nav .secondary {
+  font-size: clamp(11px, 1vw, 13px) !important;
+}
+/* Consistent but not cramped horizontal breathing room. */
+main .card,
+main .simple-card,
+main .product,
+main .sector {
+  border-radius: var(--unfire-card-radius) !important;
+}
+main .card, main .simple-card {
+  padding: clamp(18px, 2vw, 26px) !important;
+}
+main .cards, main .grid, main .three,
+main .work-grid, main .sector-grid {
+  gap: clamp(12px, 1.5vw, 17px) !important;
+}
+/* Readable, balanced controls; keep touch targets at least 44px on mobile. */
+main a.button, main .button, main .btn, main .main-email,
+main .subnav a, main .links a, main .hero-actions a {
+  font-size: clamp(12px, 1vw, 14px) !important;
+}
+main .button, main a.button, main .main-email {
+  padding: 10px 17px !important;
+  min-height: 42px;
+}
+main .hero { padding-top: clamp(66px, 7vw, 92px) !important; padding-bottom: clamp(53px, 6vw, 78px) !important; }
+main section.features, main section.family, main section.faq,
+main section.contact-options {
+  padding-top: clamp(44px, 5vw, 61px) !important;
+  padding-bottom: clamp(45px, 5vw, 67px) !important;
+}
+main .family-head { margin-bottom: 23px !important; }
+main .card .name { font-size: clamp(19px, 1.8vw, 23px) !important; }
+main .card .copy { font-size: 13px !important; line-height: 1.58 !important; }
+main .card .platform { font-size: 11px !important; }
+main .card .foot { gap: 12px; }
+/* Home: measured hero, product work and software gallery. */
+html body #top .uf-hero-title,
+html body main .uf-hero-title,
+html body .hero h1 {
+  font-size: clamp(3rem, 6vw, 6.05rem) !important;
+  line-height: 1.03 !important;
+}
+html body #apps h2 {
+  font-size: clamp(2.2rem, 4.2vw, 3.85rem) !important;
+  line-height: 1.12 !important;
+}
+html body #apps .uf-gallery-copy h3 {
+  font-size: clamp(1.25rem, 1.9vw, 1.7rem) !important;
+}
+html body #apps.uf-app-showcase {
+  padding-top: clamp(64px, 6.5vw, 90px) !important;
+  padding-bottom: clamp(68px, 7vw, 95px) !important;
+}
+html body #apps .wrap { max-width: 1060px !important; }
+html body #apps .uf-gallery-intro { margin-bottom: 34px !important; }
+html body #apps .uf-gallery-grid { gap: 14px !important; }
+html body #apps .uf-gallery-card { border-radius: 18px !important; }
+html body #apps .uf-gallery-copy { padding: 19px 22px 23px !important; }
+html body #apps .uf-gallery-card--mobile .uf-gallery-media {
+  height: 365px !important; padding: 17px 17px 0 !important;
+}
+html body #apps .uf-gallery-subtitle { font-size: clamp(14px, 1.4vw, 17px) !important; }
+html body #unfire-clean-header-v2 .unfire-clean-mainbar,
+html body #unfire-clean-header-v2 .unfire-clean-inner {
+  min-height: 51px !important;
+}
+html body #unfire-clean-header-v2 .unfire-clean-mainbar {
+  height: 51px !important;
+}
+html body #unfire-clean-header-v2 .unfire-clean-inner {
+  height: 51px !important;
+}
+html body #unfire-clean-header-v2 .unfire-clean-brand {
+  height: 51px !important;
+}
+html body #unfire-clean-header-v2 .unfire-clean-nav {
+  height: 51px !important;
+  margin-left: clamp(26px, 4vw, 50px) !important;
+  gap: clamp(11px, 1.25vw, 19px) !important;
+}
+html body #unfire-clean-header-v2 .unfire-clean-nav a {
+  height: 51px !important; font-size: 11.5px !important;
+}
+/* Article and legal pages: avoid giant empty upper and lower gutters. */
+html body > main:not(.wrap) { padding-top: clamp(70px, 7vw, 94px); padding-bottom: clamp(78px, 8vw, 112px); }
+html body main > section > .wrap,
+html body main .hero > .wrap { max-width: var(--unfire-content-measure); }
+html body .rule { margin-top: 48px; margin-bottom: 48px; }
+html body .row { margin-top: 20px; margin-bottom: 20px; }
+footer { line-height: 1.55; }
+@media (max-width: 850px) {
+  html body #unfire-clean-header-v2 .unfire-clean-mainbar,
+  html body #unfire-clean-header-v2 .unfire-clean-inner,
+  html body #unfire-clean-header-v2 .unfire-clean-nav {
+    height: auto !important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-brand { height: 44px !important; }
+  html body #unfire-clean-header-v2 .unfire-clean-nav {
+    margin-left: 0 !important; min-height: 39px !important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-nav a { height: 39px !important; }
+}
+@media (max-width: 620px) {
+  html body h1 { font-size: clamp(2.45rem, 10vw, 3.9rem) !important; }
+  html body h2 { font-size: clamp(1.65rem, 6.4vw, 2.55rem) !important; }
+  html body .hero h1, html body main .uf-hero-title {
+    font-size: clamp(2.5rem, 10.4vw, 4rem) !important;
+  }
+  main .hero { padding-top: 59px !important; padding-bottom: 51px !important; }
+  main .card, main .simple-card { padding: 20px !important; }
+  main .card .copy { font-size: 13px !important; }
+  main .button, main a.button, main .main-email { min-height: 44px; }
+  html body #apps .uf-gallery-grid { gap: 14px !important; }
+  html body #apps .uf-gallery-copy { padding: 18px 19px 22px !important; }
+  html body #apps .uf-gallery-card--mobile .uf-gallery-media { height: 330px !important; }
+  html body #unfire-clean-header-v2 .unfire-clean-nav {
+    height: auto !important; min-height: 80px !important;
+    gap: 0 4px !important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-nav a { height: 38px !important; font-size: 11px !important; }
+}
+@media (max-width: 380px) {
+  html body #unfire-clean-header-v2 .unfire-clean-nav a { font-size: 10.5px !important; }
+  html body #apps .uf-gallery-card--mobile .uf-gallery-media { height: 295px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+/* Home display subheads and proof metrics need the same reduction as H1–H3. */
+html body main .funding-big,
+html body main .scale-panel-title,
+html body main .statement,
+html body main .big-message {
+  font-size: clamp(1.95rem, 4.5vw, 4rem) !important;
+  line-height: 1.12 !important;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+html body main .metric strong {
+  font-size: clamp(2.65rem, 5vw, 4.5rem) !important;
+  line-height: 1.08 !important;
+}
+html body main .uf-hero-copy {
+  font-size: clamp(16px, 1.55vw, 19px) !important;
+  line-height: 1.55 !important;
+}
+html body main .funding-panel {
+  gap: clamp(19px, 2.7vw, 38px) !important;
+  margin-top: clamp(24px, 3.2vw, 45px) !important;
+}
+@media (max-width: 900px) {
+  html body main .funding-panel { grid-template-columns: minmax(0, 1fr) !important; }
+  html body main .funding-big, html body main .funding-copy { min-width: 0; }
+}
