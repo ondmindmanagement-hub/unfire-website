@@ -46,3 +46,10 @@ html body [class*="hero-title"] {
 @media (max-width: 370px) {
   :root { --unfire-display-tracking: 0.012em; }
 }
+
+/* The cookie decision is higher priority than the optional site assistant.
+   Do not let the floating assistant obscure Accept/Reject on mobile. */
+#unfire-cookie-banner[style*="display: flex"] ~ #ask-unfire-host {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
