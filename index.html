@@ -3684,69 +3684,23 @@ body.uf-global-editor-on #ue4-edit{
 
 
 
-<style id="unfire-apple-status-style">
 
-.uf-apple-status-host{
-    position:relative !important;
-}
 
-#unfire-apple-status{
-    position:absolute !important;
 
-    right:24px !important;
-    top:50% !important;
-    transform:translateY(-50%) !important;
 
-    display:flex !important;
-    align-items:center !important;
-    gap:7px !important;
 
-    margin:0 !important;
-    padding:0 !important;
 
-    white-space:nowrap !important;
 
-    color:rgba(255,255,255,.60) !important;
 
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "SF Pro Text",
-        "Helvetica Neue",
-        Arial,
-        sans-serif !important;
 
-    font-size:11px !important;
-    font-weight:500 !important;
-    line-height:1 !important;
 
-    z-index:100 !important;
 
-    pointer-events:none !important;
-    user-select:none !important;
-}
 
-#unfire-apple-status .uf-apple-dot{
-    width:6px !important;
-    height:6px !important;
-    flex:0 0 6px !important;
 
-    border-radius:50% !important;
 
-    background:#30d158 !important;
 
-    box-shadow:
-        0 0 0 1px rgba(48,209,88,.12),
-        0 0 7px rgba(48,209,88,.22) !important;
-}
 
-@media(max-width:900px){
-    #unfire-apple-status{
-        display:none !important;
-    }
-}
 
-</style>
 
 
 
@@ -3768,81 +3722,6 @@ body.uf-global-editor-on #ue4-edit{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style id="unfire-mobile-header-clean-style">
-
-/*
-   MOBILE HEADER CLEAN
-   - NO duplica contenido
-   - Mantiene el hero original
-   - Solo recupera el Apple status original
-*/
-
-@media (max-width:600px){
-
-    header{
-        width:100% !important;
-    }
-
-    header nav{
-        display:flex !important;
-        align-items:center !important;
-        justify-content:center !important;
-        flex-wrap:wrap !important;
-
-        gap:10px 16px !important;
-
-        width:100% !important;
-        margin:0 auto !important;
-
-        padding-left:14px !important;
-        padding-right:14px !important;
-    }
-
-    .uf-apple-status-original,
-    .uf-apple-status-original-parent{
-        display:flex !important;
-        visibility:visible !important;
-        opacity:1 !important;
-    }
-
-    .uf-apple-status-original{
-        align-items:center !important;
-        justify-content:center !important;
-
-        width:auto !important;
-
-        margin-left:auto !important;
-        margin-right:auto !important;
-
-        text-align:center !important;
-
-        transform:none !important;
-        translate:none !important;
-    }
-
-    
-    #unfire-mobile-top-match{
-        display:none !important;
-    }
-
-}
-
-</style>
 
 
 <style id="unfire-nav-center-final">
@@ -4013,6 +3892,29 @@ main,section,header,.wrap{max-width:100%}
 .uf-hero-title{max-width:100%!important;overflow-wrap:normal;word-break:normal}
 @media(max-width:700px){.wrap{width:min(calc(100% - 32px),var(--max))}}
 </style>
+
+<style id="unfire-header-no-overlap-20261019">
+/* Keep navigation and brand in normal flex flow. No absolute status overlay. */
+#unfire-clean-header-v2 .unfire-clean-inner{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:16px!important;min-width:0!important}
+#unfire-clean-header-v2 .unfire-clean-brand{flex:0 0 auto!important;min-width:0!important}
+#unfire-clean-header-v2 .unfire-clean-nav{position:static!important;flex:1 1 auto!important;min-width:0!important;margin:0!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:clamp(11px,2vw,25px)!important;transform:none!important;translate:none!important}
+#unfire-clean-header-v2 .unfire-clean-nav a{position:static!important;flex:0 0 auto!important;white-space:nowrap!important}
+#unfire-apple-status,.uf-apple-status-host #unfire-apple-status{display:none!important}
+.unfire-platform-note{position:relative!important;inset:auto!important;transform:none!important;display:flex;align-items:center;gap:9px;margin:10px 0 22px;color:#a1a1a6;font-size:12px;line-height:1.5;letter-spacing:normal;white-space:normal;max-width:100%}
+.unfire-platform-dot{width:5px;height:5px;flex:0 0 5px;background:#a1a1a6;border-radius:50%;display:inline-block}
+@media(max-width:850px){
+  #unfire-clean-header-v2 .unfire-clean-mainbar{height:auto!important;min-height:48px!important}
+  #unfire-clean-header-v2 .unfire-clean-inner{height:auto!important;min-height:48px!important;flex-wrap:wrap!important;gap:0!important;padding:0 0 5px!important}
+  #unfire-clean-header-v2 .unfire-clean-brand{height:44px!important}
+  #unfire-clean-header-v2 .unfire-clean-nav{flex:1 0 100%!important;width:100%!important;min-height:36px!important;height:auto!important;gap:12px!important;overflow-x:auto!important;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;justify-content:space-between!important}
+  #unfire-clean-header-v2 .unfire-clean-nav::-webkit-scrollbar{display:none}
+  #unfire-clean-header-v2 .unfire-clean-nav a{height:36px!important;font-size:clamp(10px,2vw,12px)!important}
+}
+@media(max-width:410px){
+  #unfire-clean-header-v2 .unfire-clean-nav{justify-content:flex-start!important;gap:16px!important}
+  .unfire-platform-note{font-size:11px;line-height:1.6;margin-bottom:14px}
+}
+</style>
 </head>
 <body>
 <div id="unfire-clean-header-v2"><div class="unfire-clean-mainbar"><div class="unfire-clean-inner"><a class="unfire-clean-brand notranslate" data-unfire-move="header-brand" href="#top" translate="no"><img alt="Unfire" class="unfire-header-logo" src="assets/logo/unfire-logo-white.png"/><span class="unfire-header-name notranslate" translate="no"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no">Unfire</span></span></a><nav aria-label="Main navigation" class="unfire-clean-nav" data-unfire-move="header-navigation"><a href="#company">Company</a><a href="#work">Work</a><a href="/apps/">Apps</a><a href="#system">System</a><a href="#scale">Scale</a><a href="#funding">Funding</a><a href="/contact/">Contact</a>
@@ -4038,6 +3940,7 @@ main,section,header,.wrap{max-width:100%}
 <section class="hero unfire-real-hero uf-hero-section">
 <div class="wrap hero-inner">
 <div class="hero-kicker" data-unfire-move="hero-eyebrow">Independent technology initiative</div>
+<div class="unfire-platform-note" aria-label="Cross-platform software and technology"><span class="unfire-platform-dot" aria-hidden="true"></span>Cross-platform software and technology.</div>
 <h1 class="uf-hero-title" data-unfire-move="hero-title">
       Build technology.<br/>
       Turn it into products.
@@ -5929,249 +5832,33 @@ console.log(
 
 
 
-<script id="unfire-apple-status-script">
-(function(){
-
-"use strict";
 
-function commonAncestor(a,b){
 
-    const parents = new Set();
 
-    let x = a;
 
-    while(x){
-        parents.add(x);
-        x = x.parentElement;
-    }
 
-    x = b;
 
-    while(x){
 
-        if(parents.has(x)){
-            return x;
-        }
 
-        x = x.parentElement;
-    }
 
-    return null;
-}
 
 
-function install(){
 
-    const old =
-        document.getElementById(
-            "unfire-apple-status"
-        );
 
-    if(old){
-        old.remove();
-    }
 
-    const links =
-        Array.from(
-            document.querySelectorAll("a")
-        );
 
-    const company =
-        links.find(a =>
-            a.textContent.trim() === "Company"
-        );
 
-    const funding =
-        links.find(a =>
-            a.textContent.trim() === "Funding"
-        );
 
-    if(!company || !funding){
-        console.warn(
-            "[Unfire] No encuentro Company/Funding"
-        );
-        return;
-    }
 
-    let host =
-        commonAncestor(
-            company,
-            funding
-        );
 
-    /*
-      Subir hasta encontrar la barra horizontal
-      completa, pero sin irnos al body.
-    */
-    while(
-        host &&
-        host.parentElement &&
-        host.parentElement !== document.body
-    ){
 
-        const r =
-            host.getBoundingClientRect();
 
-        if(
-            r.width > window.innerWidth * .65 &&
-            r.height >= 40 &&
-            r.height <= 120
-        ){
-            break;
-        }
 
-        host =
-            host.parentElement;
-    }
 
-    if(!host){
-        return;
-    }
 
-    host.classList.add(
-        "uf-apple-status-host"
-    );
 
-    const status =
-        document.createElement("div");
 
-    status.id =
-        "unfire-apple-status";
 
-    status.className =
-        "notranslate";
-
-    status.setAttribute(
-        "translate",
-        "no"
-    );
-
-    status.innerHTML =
-        '<span class="uf-apple-dot"></span>' +
-        '<span>Cross-platform software and technology.</span>';
-
-    host.appendChild(status);
-
-    console.log(
-        "[Unfire] Apple status instalado dentro del header real"
-    );
-}
-
-
-if(document.readyState === "loading"){
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        install,
-        {once:true}
-    );
-
-}else{
-
-    install();
-}
-
-})();
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script id="unfire-mobile-header-clean-script">
-(function(){
-
-    function norm(v){
-        return (v || "")
-            .replace(/\s+/g," ")
-            .trim();
-    }
-
-    function boot(){
-
-        const candidates =
-            Array.from(
-                document.querySelectorAll("header *")
-            );
-
-        const status =
-            candidates.find(function(el){
-
-                return norm(el.textContent) ===
-                    "Cross-platform software and technology.";
-
-            });
-
-        if(!status){
-            console.warn(
-                "[Unfire] Apple platform status original no encontrado"
-            );
-            return;
-        }
-
-        status.classList.add(
-            "uf-apple-status-original"
-        );
-
-        
-        let parent = status.parentElement;
-
-        while(
-            parent &&
-            parent.tagName !== "HEADER"
-        ){
-
-            const cs =
-                getComputedStyle(parent);
-
-            if(
-                cs.display === "none" ||
-                cs.visibility === "hidden"
-            ){
-                parent.classList.add(
-                    "uf-apple-status-original-parent"
-                );
-
-                break;
-            }
-
-            parent =
-                parent.parentElement;
-        }
-
-    }
-
-    if(document.readyState === "loading"){
-        document.addEventListener(
-            "DOMContentLoaded",
-            boot
-        );
-    }else{
-        boot();
-    }
-
-})();
-</script>
 
 <script>
 (function() {
