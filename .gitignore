@@ -22,3 +22,16 @@ audio/masters/unfire-master-es.mp3
 
 # Local audio experiments
 audio/tests/
+
+# Keep internal grant research and historical website snapshots out of GitHub Pages.
+# Archive these privately outside the public repository.
+/funding/
+/backup-icons-before-*/
+/index*before*.html
+/index*BEFORE*.html
+/index*backup*.html
+/index*BACKUP*.html
+/index*broken*.html
+/index*BROKEN*.html
+/privacy*before*.html
+/privacy*BEFORE*.html
