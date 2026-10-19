@@ -127,7 +127,7 @@
         identity:"I am Unfire's website help assistant. I answer common questions about public information, and cannot access your Mac, files or private data.",
         about:"Unfire is an independent technology initiative founded by Omar Baró. It develops software, audio tools, AI systems and interaction technology. Learn more at unfire.technology/about/.",
         control:"Unfire Control is a Mac interaction project using hand gestures and voice commands. It needs a compatible camera and microphone and permissions you choose to grant. The Mac version is currently listed as under review; see /apps/unfire-control/ for availability.",
-        mac:"This website assistant cannot move your cursor or launch apps on your computer. Those functions belong to Unfire Control for Mac, subject to availability and permissions.",
+        mac:"This website assistant cannot move your cursor or launch apps on your computer. Those functions belong to Unfire Control, subject to availability and permissions.",
         apps:"Explore products at unfire.technology/apps/. They include ARCHER (audio processing), BOLT (human-approved AI workflows), Unfire Control, Pocket Capture and Power. Features and availability vary by platform.",
         archer:"ARCHER is an audio-clipping tool for creators and producers, with gain, threshold and sound-character controls. Find details and download links at /apps/ and /archer/.",
         bolt:"BOLT helps you review AI-proposed file changes on Mac, with local checks and explicit human approval before execution. See compatibility and terms at /bolt/.",
