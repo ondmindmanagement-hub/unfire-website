@@ -210,7 +210,7 @@ main .sector-grid {
   align-items:center!important;
   justify-content:normal!important;
   gap:20px!important;
-  width:min(980px,calc(100vw - 40px))!important;
+  width:min(var(--uf-page),calc(100vw - var(--uf-gutter)))!important;
   max-width:980px!important;
   height:48px!important;
   min-height:48px!important;
@@ -282,7 +282,7 @@ main .sector-grid {
     display:grid!important;
     grid-template-columns:minmax(0,1fr) max-content!important;
     grid-template-rows:45px 38px!important;
-    width:min(980px,calc(100vw - 40px))!important;
+    width:min(var(--uf-page),calc(100vw - var(--uf-gutter)))!important;
     height:auto!important;
     min-height:83px!important;
     row-gap:0!important;
@@ -322,7 +322,7 @@ main .sector-grid {
   #unfire-clean-header-v2 .unfire-clean-inner{
     grid-template-columns:1fr!important;
     grid-template-rows:44px auto 29px!important;
-    width:calc(100vw - 32px)!important;
+    width:calc(100vw - var(--uf-gutter))!important;
     min-height:0!important;
     row-gap:0!important;
   }
