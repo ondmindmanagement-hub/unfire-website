@@ -165,28 +165,30 @@ main .sector-grid {
     max-width:none!important;
   }
   #unfire-clean-header-v2 .unfire-clean-nav {
-    display:grid!important;
-    grid-template-columns:repeat(4,minmax(0,1fr))!important;
-    grid-auto-rows:38px!important;
-    justify-content:stretch!important;
+    display:flex!important;
+    flex-wrap:wrap!important;
+    justify-content:center!important;
+    align-content:center!important;
     align-items:center!important;
     column-gap:4px!important;
     row-gap:0!important;
     height:auto!important;
-    min-height:76px!important;
+    min-height:84px!important;
     padding-bottom:4px!important;
   }
   #unfire-clean-header-v2 .unfire-clean-nav a {
     display:flex!important;
-    width:100%!important;
-    height:38px!important;
+    width:calc((100% - 12px)/4)!important;
+    flex:0 0 calc((100% - 12px)/4)!important;
+    height:40px!important;
     min-width:0!important;
     padding:0 2px!important;
-    font-size:10.5px!important;
+    font-size:11px!important;
     line-height:1.1!important;
     white-space:nowrap!important;
     text-align:center!important;
   }
+  #company, #work, #audio, #system, #scale, #funding { scroll-margin-top:146px!important; }
   #top .uf-hero-title { max-width:100%!important; }
   #company .simple-card,
   #work .product { border-radius:14px!important; }
