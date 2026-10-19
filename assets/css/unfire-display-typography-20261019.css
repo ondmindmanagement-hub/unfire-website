@@ -1,0 +1,48 @@
+/* Unfire display typography — 19 October 2026.
+   Shared optical rhythm across public pages. The natural glyph width is
+   retained; kerning and discretionary ligatures cannot compress individual
+   letter pairs (notably "Tu" in the homepage hero). */
+:root {
+  --unfire-display-tracking: 0.018em;
+}
+html body h1,
+html body h2,
+html body h3,
+html body h4,
+html body .statement,
+html body .big-message,
+html body .scale-panel-title,
+html body .funding-big,
+html body .product h3,
+html body .metric strong,
+html body [class*="hero-title"],
+html body [class*="display-title"] {
+  letter-spacing: var(--unfire-display-tracking) !important;
+  font-kerning: none !important;
+  font-feature-settings: "kern" 0, "liga" 0, "clig" 0 !important;
+  font-variant-ligatures: none !important;
+  word-spacing: normal !important;
+  text-rendering: geometricPrecision;
+  word-break: normal;
+  hyphens: none;
+}
+html body h1,
+html body h2,
+html body .statement,
+html body .scale-panel-title,
+html body [class*="hero-title"] {
+  text-wrap: balance;
+  max-width: 100%;
+}
+/* Keep typography within narrow viewports without scaling entire sections. */
+@media (max-width: 620px) {
+  :root { --unfire-display-tracking: 0.014em; }
+  html body h1,
+  html body h2,
+  html body [class*="hero-title"] {
+    overflow-wrap: break-word;
+  }
+}
+@media (max-width: 370px) {
+  :root { --unfire-display-tracking: 0.012em; }
+}
