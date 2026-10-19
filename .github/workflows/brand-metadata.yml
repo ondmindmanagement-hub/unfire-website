@@ -1,0 +1,15 @@
+name: Unfire brand metadata
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  metadata-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check product names and trademark claims
+        run: python3 scripts/check-brand-metadata.py

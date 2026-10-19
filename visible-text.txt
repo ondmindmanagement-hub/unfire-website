@@ -5,7 +5,7 @@ Work
 System
 Scale
 Funding
-Built for Apple platforms.
+Independent software and technology.
 Independent technology company
 Build technology.
 Reuse the advantage.
@@ -126,7 +126,7 @@ Education
 Utilities
 Safety
 Connectivity
-Built for Apple platforms. Designed for macOS. Built to expand.
+Independent software. Designed for practical use. Built to expand.
 develops reusable technology across multiple industries, building shared software foundations that can support new products, systems and future applications.
 uses essential storage for basic website functionality. Optional analytics will only be enabled with your consent.
 Cookie Policy

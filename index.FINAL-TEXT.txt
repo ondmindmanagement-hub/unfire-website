@@ -6,7 +6,7 @@ System
 Scale
 Funding
 Unfire
-Built for Apple platforms.
+Independent software and technology.
 Company
 Work
 System
@@ -178,7 +178,7 @@ Utilities
 Safety
 ·
 Connectivity
-Built for Apple platforms. Designed for macOS. Built to scale.
+Independent software. Designed for practical use. Built to scale.
 Unfire
 develops reusable technology across multiple industries, creating shared software foundations that support new products, systems and future applications.
 Unfire
