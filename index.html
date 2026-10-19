@@ -3960,6 +3960,34 @@ main .uf-hero-title {
 }
 </style>
 <link rel="stylesheet" href="/assets/css/unfire-display-typography-20261019.css?v=2">
+<style id="unfire-showcase-web-gallery">
+/* Selected app covers: all media sourced from the existing real-interface portfolio. */
+#apps.uf-app-showcase{position:relative;isolation:isolate;background:linear-gradient(180deg,#08090e 0%,#090b12 55%,#08090c 100%);padding:112px 0 120px;color:#f5f6fa;overflow:hidden}
+#apps.uf-app-showcase *{box-sizing:border-box}
+#apps .wrap{max-width:1190px;margin-inline:auto;padding-inline:clamp(20px,4vw,44px)}
+#apps .uf-gallery-intro{max-width:850px;margin:0 0 48px}
+#apps .uf-gallery-kicker{font-size:11px;font-weight:650;color:#a0aabe;letter-spacing:.13em;text-transform:uppercase;margin-bottom:18px;line-height:1.5}
+#apps h2{font-size:clamp(40px,5.5vw,76px)!important;line-height:1.09!important;letter-spacing:-.034em!important;font-weight:650!important;margin:0 0 19px!important;max-width:850px;overflow-wrap:break-word}
+#apps h2 span{color:#979eaf}
+#apps .uf-gallery-subtitle{font-size:clamp(15px,1.4vw,18px);line-height:1.7;color:#a6aabb;max-width:675px;margin:0}
+#apps .uf-gallery-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px;align-items:stretch}
+#apps .uf-gallery-card{grid-column:span 2;min-width:0;display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(167,190,242,.14);border-radius:24px;background:linear-gradient(180deg,#131826 0%,#0c1019 100%);box-shadow:0 15px 48px rgba(0,0,0,.15)}
+#apps .uf-gallery-card--wide{grid-column:span 3}
+#apps .uf-gallery-media{display:flex;align-items:center;justify-content:center;width:100%;min-width:0;min-height:0;padding:0;overflow:hidden;outline-offset:-5px;text-decoration:none;background:radial-gradient(ellipse at 50% 46%,rgba(51,69,108,.26),rgba(10,13,21,.04) 68%)}
+#apps .uf-gallery-card--wide .uf-gallery-media{aspect-ratio:16/10}
+#apps .uf-gallery-card--mobile .uf-gallery-media{height:430px;padding:23px 20px 2px}
+#apps .uf-gallery-media img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center;transition:transform .35s ease}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){#apps .uf-gallery-media:hover img{transform:scale(1.025)}}
+#apps .uf-gallery-media:focus-visible{outline:2px solid #bcd0ff}
+#apps .uf-gallery-copy{padding:23px 25px 28px;min-width:0}
+#apps .uf-gallery-type{font-size:10px;line-height:1.6;text-transform:uppercase;letter-spacing:.12em;color:#8f9fc4;margin:0 0 8px}
+#apps .uf-gallery-copy h3{font-size:clamp(23px,2vw,30px)!important;line-height:1.18!important;letter-spacing:-.025em!important;color:#f1f3f8;margin:0 0 10px!important;font-weight:650!important;overflow-wrap:break-word}
+#apps .uf-gallery-copy p:last-child{font-size:14px;line-height:1.7;letter-spacing:normal;color:#a9adba;margin:0}
+#apps .uf-gallery-footnote{font-size:12px;line-height:1.6;color:#7d8291;margin:22px 0 0}
+@media(max-width:900px){#apps.uf-app-showcase{padding:84px 0}#apps .uf-gallery-card--mobile{grid-column:span 3}#apps .uf-gallery-card--mobile:last-child{grid-column:2 / span 4}#apps .uf-gallery-card--mobile .uf-gallery-media{height:390px}}
+@media(max-width:620px){#apps.uf-app-showcase{padding:72px 0 80px}#apps .uf-gallery-grid{grid-template-columns:minmax(0,1fr);gap:16px}#apps .uf-gallery-card,#apps .uf-gallery-card--wide,#apps .uf-gallery-card--mobile,#apps .uf-gallery-card--mobile:last-child{grid-column:1 / -1}#apps .uf-gallery-card{border-radius:20px}#apps .uf-gallery-card--mobile .uf-gallery-media{height:410px;padding:20px}#apps .uf-gallery-intro{margin-bottom:34px}#apps .uf-gallery-copy{padding:21px 22px 26px}#apps h2{font-size:clamp(36px,10vw,54px)!important}}
+@media(prefers-reduced-motion:reduce){#apps .uf-gallery-media img{transition:none}}
+</style>
 </head>
 <body>
 <div id="unfire-clean-header-v2"><div class="unfire-clean-mainbar"><div class="unfire-clean-inner"><a class="unfire-clean-brand notranslate" data-unfire-move="header-brand" href="#top" translate="no"><img alt="Unfire" class="unfire-header-logo" src="assets/logo/unfire-logo-white.png"/><span class="unfire-header-name notranslate" translate="no"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no">Unfire</span></span></a><nav aria-label="Main navigation" class="unfire-clean-nav" data-unfire-move="header-navigation"><a href="#company">Company</a><a href="#work">Work</a><a href="/apps/">Apps</a><a href="#system">System</a><a href="#scale">Scale</a><a href="#funding">Funding</a><a href="/contact/">Contact</a>
@@ -4093,6 +4121,39 @@ main .uf-hero-title {
 </div>
 </div>
 </section>
+<section id="apps" class="uf-app-showcase" aria-labelledby="uf-apps-title">
+<div class="wrap">
+<div class="uf-gallery-intro">
+<div class="uf-gallery-kicker">Unfire / Applications</div>
+<h2 id="uf-apps-title">Software, in focus.<span> Built for real work.</span></h2>
+<p class="uf-gallery-subtitle">A closer look at the interfaces behind our work, from creative audio tools to AI-assisted workflows and practical everyday utilities.</p>
+</div>
+<div class="uf-gallery-grid">
+<article class="uf-gallery-card uf-gallery-card--wide">
+<a class="uf-gallery-media" href="assets/products/bolt-mac.webp" target="_blank" rel="noopener" aria-label="View the BOLT for Mac cover at full size"><img src="assets/products/bolt-mac.webp" width="1400" height="875" alt="BOLT for Mac presentation featuring the app's real AI task interface" loading="lazy" decoding="async"></a>
+<div class="uf-gallery-copy"><p class="uf-gallery-type">AI / Mac</p><h3>BOLT</h3><p>Guided AI workflows with visibility, permissions and human control.</p></div>
+</article>
+<article class="uf-gallery-card uf-gallery-card--wide">
+<a class="uf-gallery-media" href="assets/products/archer-mac.webp" target="_blank" rel="noopener" aria-label="View the ARCHER for Mac cover at full size"><img src="assets/products/archer-mac.webp" width="1400" height="875" alt="ARCHER for Mac presentation showing the real audio plugin interface" loading="lazy" decoding="async"></a>
+<div class="uf-gallery-copy"><p class="uf-gallery-type">Audio / Mac</p><h3>ARCHER</h3><p>Precision clipping with tactile sound controls and a distinctive interface.</p></div>
+</article>
+<article class="uf-gallery-card uf-gallery-card--mobile">
+<a class="uf-gallery-media" href="assets/products/power-iphone.webp" target="_blank" rel="noopener" aria-label="View the Power iPhone cover at full size"><img src="assets/products/power-iphone.webp" alt="Power app cover showing the real iPhone energy price and usage interface" loading="lazy" decoding="async"></a>
+<div class="uf-gallery-copy"><p class="uf-gallery-type">Energy / iPhone</p><h3>Power</h3><p>Energy market information and usage in one clear view.</p></div>
+</article>
+<article class="uf-gallery-card uf-gallery-card--mobile">
+<a class="uf-gallery-media" href="assets/products/pocket-capture-ipad.webp" target="_blank" rel="noopener" aria-label="View the Pocket Capture iPad cover at full size"><img src="assets/products/pocket-capture-ipad.webp" alt="Pocket Capture app cover featuring its real audio recording interface for iPad" loading="lazy" decoding="async"></a>
+<div class="uf-gallery-copy"><p class="uf-gallery-type">Recording / iPad</p><h3>Pocket Capture</h3><p>A focused way to record, review and work with audio.</p></div>
+</article>
+<article class="uf-gallery-card uf-gallery-card--mobile">
+<a class="uf-gallery-media" href="assets/products/bolt-iphone.webp" target="_blank" rel="noopener" aria-label="View the BOLT Mobile iPhone cover at full size"><img src="assets/products/bolt-iphone.webp" alt="BOLT Mobile app cover showing the real iPhone local review interface" loading="lazy" decoding="async"></a>
+<div class="uf-gallery-copy"><p class="uf-gallery-type">AI Review / iPhone</p><h3>BOLT Mobile</h3><p>Keep the original intact and review proposed changes before deciding.</p></div>
+</article>
+</div>
+<p class="uf-gallery-footnote">Product imagery adapted from existing Unfire app presentations and genuine interface captures.</p>
+</div>
+</section>
+
 <section id="audio">
 <div class="wrap">
 <div class="eyebrow">Unfire Audio</div>

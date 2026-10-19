@@ -1,0 +1,76 @@
+{
+  "source_collection": "Unfire_AppStore_Real_Captures_20261019/FINAL_PROFESSIONAL_MEDIA",
+  "policy": "Derivatives of local product-cover assets; no invented UI, screenshots or generated people.",
+  "images": [
+    {
+      "app_visual": "bolt-mac",
+      "source_original": "BOLT/Mac/01_overview_REAL_2560x1600.png",
+      "original_size": [
+        2560,
+        1600
+      ],
+      "web_size": [
+        1400,
+        875
+      ],
+      "web_asset": "bolt-mac.webp",
+      "bytes": 23020
+    },
+    {
+      "app_visual": "archer-mac",
+      "source_original": "ARCHER/Mac/01_overview_Mac_2560x1600.png",
+      "original_size": [
+        2560,
+        1600
+      ],
+      "web_size": [
+        1400,
+        875
+      ],
+      "web_asset": "archer-mac.webp",
+      "bytes": 84392
+    },
+    {
+      "app_visual": "power-iphone",
+      "source_original": "POWER/iPhone/01_Power.png",
+      "original_size": [
+        1206,
+        2622
+      ],
+      "web_size": [
+        740,
+        1609
+      ],
+      "web_asset": "power-iphone.webp",
+      "bytes": 34498
+    },
+    {
+      "app_visual": "pocket-capture-ipad",
+      "source_original": "Pocket_Capture/iPad/01_overview.png",
+      "original_size": [
+        2064,
+        2752
+      ],
+      "web_size": [
+        940,
+        1253
+      ],
+      "web_asset": "pocket-capture-ipad.webp",
+      "bytes": 33072
+    },
+    {
+      "app_visual": "bolt-iphone",
+      "source_original": "BOLT/iPhone/01_BOLT.png",
+      "original_size": [
+        1206,
+        2622
+      ],
+      "web_size": [
+        740,
+        1609
+      ],
+      "web_asset": "bolt-iphone.webp",
+      "bytes": 46046
+    }
+  ]
+}
