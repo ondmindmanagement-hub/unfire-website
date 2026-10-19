@@ -23,3 +23,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89d8ac;outline-offse
 @keyframes mic-pulse{50%{box-shadow:0 0 0 5px rgba(101,203,152,.12)}}
 @media(max-width:520px){:host{right:12px;bottom:max(12px,env(safe-area-inset-bottom))}#panel{width:calc(100vw - 24px);height:min(620px,calc(100dvh - 98px));border-radius:19px}#launcher{min-height:54px}.message{font-size:14px}}
 @media(prefers-reduced-motion:reduce){#launcher,#mic{animation:none;transition:none}}
+
+/* Sr. Dante's own robot portrait: no human faces; keeps the subtle green online dot. */
+.face{overflow:hidden;background:#111 url("/assets/img/sr-dante-robot.webp?v=20261019-2") center/cover no-repeat;border-radius:11px;border-color:rgba(255,255,255,.28)}
+.face:before,.face:after,.face i,.face b{display:none!important}

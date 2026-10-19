@@ -14,7 +14,7 @@
     var root = host.attachShadow({mode:"open"});
     var sheet = document.createElement("link");
     sheet.rel = "stylesheet";
-    sheet.href = "/assets/css/sr-dante.css?v=20261019-1";
+    sheet.href = "/assets/css/sr-dante.css?v=20261019-2";
     sheet.onload = function () { host.style.visibility = "visible"; };
     sheet.onerror = function () { host.style.visibility = "visible"; host.style.position = "fixed"; host.style.right = "16px"; host.style.bottom = "16px"; host.style.zIndex = "2147483000"; };
     root.appendChild(sheet);
@@ -160,11 +160,34 @@
       try {
         var s = new SpeechSynthesisUtterance(text);
         s.lang = lang === "es" ? "es-ES" : "en-US";
-        s.rate = 0.98; s.pitch = 1.04;
+        // Sr. Dante has a stable masculine voice identity per language when installed.
+        // Browsers expose different voices; never choose a random voice merely by list order.
+        s.rate = 0.96; s.pitch = 0.97;
+        var locale = lang === "es" ? "es-es" : "en-us";
         var voices = window.speechSynthesis.getVoices();
-        var candidates = voices.filter(function(v) { return v.lang && v.lang.toLowerCase().indexOf(lang) === 0; });
-        var preferred = candidates.find(function(v) { return /monica|paulina|samantha|sofia|siri|allison|ava|serena|lucia|isabela|victoria/i.test(v.name); });
-        if (preferred || candidates[0]) s.voice = preferred || candidates[0];
+        var candidates = voices.filter(function(v) {
+          return v.lang && v.lang.toLowerCase().replace("_", "-").indexOf(lang) === 0;
+        });
+        function score(v) {
+          var name = (v.name || "").toLowerCase();
+          var speechLocale = (v.lang || "").toLowerCase().replace("_", "-");
+          var value = speechLocale === locale ? 30 : 0;
+          if (/\beddy\b/.test(name)) value += 110;
+          else if (lang === "es" && /\bjorge\b/.test(name)) value += 90;
+          else if (lang === "en" && /\bdaniel\b|\balex\b|\baaron\b/.test(name)) value += 90;
+          else if (/\breed\b|\bgrandpa\b/.test(name)) value += 65;
+          if (/enhanced|premium|natural|neural/.test(name)) value += 12;
+          if (/grandma|samantha|monica|mónica|paulina|flo\b|sandy|shelley|victoria|siri/.test(name)) value -= 80;
+          return value;
+        }
+        candidates.sort(function(a,b) { return score(b)-score(a) || a.name.localeCompare(b.name); });
+        if (candidates.length) s.voice = candidates[0];
+        else {
+          // Avoid passing an arbitrary browser voice off as Sr. Dante.
+          setStatus(lang === "es" ? "La voz de Dante no está instalada en este navegador; puedes leer la respuesta." :
+            "Dante's voice isn't installed in this browser; you can read the answer.",true);
+          return;
+        }
         window.speechSynthesis.speak(s);
       } catch (e) { setStatus(copy[lang].neterr,true); }
     }
