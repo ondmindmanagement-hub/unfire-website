@@ -195,3 +195,136 @@ html body main .funding-panel {
   html body main .funding-panel { grid-template-columns: minmax(0, 1fr) !important; }
   html body main .funding-big, html body main .funding-copy { min-width: 0; }
 }
+
+/* 19 October · Small, precise editorial scale v2.
+   Applies to the shared website without resizing whole windows or suppressing translations. */
+:root {
+  --unfire-content-measure: 920px;
+  --unfire-card-radius: 15px;
+}
+html body { font-size: 14.5px !important; line-height: 1.58; }
+html body h1 { font-size: clamp(2.55rem, 4.5vw, 4.5rem) !important; line-height: 1.08 !important; }
+html body h2 { font-size: clamp(1.85rem, 3.25vw, 3.15rem) !important; line-height: 1.14 !important; }
+html body h3 { font-size: clamp(1.12rem, 1.8vw, 1.45rem) !important; }
+html body .lead { font-size: clamp(14px, 1.3vw, 16.5px) !important; line-height: 1.62 !important; }
+html body main .statement,
+html body main .funding-big,
+html body main .scale-panel-title,
+html body main .big-message {
+  font-size: clamp(2rem, 3.45vw, 3.2rem) !important;
+  line-height: 1.17 !important;
+}
+html body main .metric strong { font-size: clamp(2.2rem, 3.7vw, 3.55rem) !important; }
+html body #top .hero {
+  padding-top: clamp(56px, 5.7vw, 78px) !important;
+  padding-bottom: clamp(54px, 5.8vw, 79px) !important;
+  min-height: 0 !important;
+}
+html body #top .hero .hero-inner { min-height: 0 !important; }
+html body #top .hero .uf-hero-title,
+html body #top .hero h1 {
+  font-size: clamp(2.7rem, 4.4vw, 4.35rem) !important;
+  line-height: 1.07 !important;
+  max-width: 950px !important;
+  margin-bottom: 21px !important;
+}
+html body #top .hero p,
+html body #top .hero .uf-hero-copy {
+  font-size: clamp(15px, 1.3vw, 17px) !important;
+  line-height: 1.57 !important;
+  max-width: 670px !important;
+}
+html body #top .hero-kicker { font-size: 10px !important; margin-bottom: 19px !important; }
+html body #top .hero-actions { margin-top: 23px !important; gap: 10px !important; }
+html body #top .hero-actions a { column-gap: .3em !important; }
+html body #top > #company,
+html body #top > #work,
+html body #top > #audio,
+html body #top > #system,
+html body #top > #scale,
+html body #top > #funding,
+html body #top > #contact,
+html body #top > #strategic-expansion {
+  padding-top: clamp(54px, 5.3vw, 76px) !important;
+  padding-bottom: clamp(57px, 5.5vw, 82px) !important;
+}
+html body #top #company .statement { max-width: 900px !important; }
+html body #top #company .lead { margin-top: 25px !important; }
+html body #top .three,
+html body #top .work-grid,
+html body #top .sector-grid,
+html body #top .audio-grid { gap: clamp(12px, 1.35vw, 16px) !important; }
+html body main .simple-card,
+html body main .product,
+html body main .sector,
+html body main .card { padding: clamp(17px, 1.75vw, 23px) !important; }
+html body main .product p,
+html body main .simple-card p,
+html body main .sector p,
+html body main .system-row p,
+html body main .funding-copy,
+html body main .uf-gallery-copy p { font-size: 14px !important; line-height: 1.62 !important; }
+html body main .eyebrow,
+html body main .hero-kicker,
+html body main .product-type { font-size: 10px !important; }
+html body main a.button,
+html body main .button,
+html body main .btn,
+html body main .hero-actions a {
+  font-size: 12px !important;
+  min-height: 40px !important;
+  padding: 10px 16px !important;
+}
+html body #apps.uf-app-showcase { padding-block: clamp(57px, 6vw, 78px) !important; }
+html body #apps h2 { font-size: clamp(2rem, 3.6vw, 3.4rem) !important; }
+html body #apps .uf-gallery-intro { margin-bottom: 29px !important; }
+html body #apps .uf-gallery-grid { gap: 12px !important; }
+html body #apps .uf-gallery-card { border-radius: 15px !important; }
+html body #apps .uf-gallery-copy { padding: 16px 18px 19px !important; }
+html body #apps .uf-gallery-copy h3 { font-size: clamp(17px, 1.7vw, 23px) !important; }
+html body #apps .uf-gallery-card--mobile .uf-gallery-media { height: 315px !important; padding: 14px 14px 0 !important; }
+html body #unfire-clean-header-v2 .unfire-clean-mainbar,
+html body #unfire-clean-header-v2 .unfire-clean-inner,
+html body #unfire-clean-header-v2 .unfire-clean-brand,
+html body #unfire-clean-header-v2 .unfire-clean-nav,
+html body #unfire-clean-header-v2 .unfire-clean-nav a { height: 48px !important; min-height: 48px !important; }
+html body #unfire-clean-header-v2 .unfire-clean-nav a { font-size: 11px !important; }
+html body #unfire-clean-header-v2 .unfire-clean-brand { font-size: 14px !important; }
+html body footer { font-size: 12.5px; }
+@media (max-width: 850px) {
+  html body #unfire-clean-header-v2 .unfire-clean-mainbar,
+  html body #unfire-clean-header-v2 .unfire-clean-inner,
+  html body #unfire-clean-header-v2 .unfire-clean-nav { height: auto !important; min-height: 0 !important; }
+  html body #unfire-clean-header-v2 .unfire-clean-brand { height: 44px !important; min-height: 44px !important; }
+  html body #unfire-clean-header-v2 .unfire-clean-nav a { height: 40px !important; min-height: 40px !important; }
+}
+@media (max-width: 620px) {
+  html body h1 { font-size: clamp(2.15rem, 8.4vw, 3.15rem) !important; }
+  html body h2 { font-size: clamp(1.65rem, 6.2vw, 2.3rem) !important; }
+  html body #top .hero .uf-hero-title,
+  html body #top .hero h1 { font-size: clamp(2.2rem, 8.8vw, 3.25rem) !important; }
+  html body #top .hero { padding-top: 48px !important; padding-bottom: 50px !important; }
+  html body #top .hero p { font-size: 15px !important; }
+  html body #top > #company,
+  html body #top > #work,
+  html body #top > #audio,
+  html body #top > #system,
+  html body #top > #scale,
+  html body #top > #funding,
+  html body #top > #contact,
+  html body #top > #strategic-expansion { padding-block: 52px !important; }
+  html body main .statement,
+  html body main .funding-big,
+  html body main .scale-panel-title { font-size: clamp(1.8rem, 7.1vw, 2.5rem) !important; }
+  html body main .simple-card,
+  html body main .product,
+  html body main .sector,
+  html body main .card { padding: 18px !important; }
+  html body main a.button,
+  html body main .button,
+  html body main .btn,
+  html body main .hero-actions a { min-height: 44px !important; }
+  html body #apps .uf-gallery-card--mobile .uf-gallery-media { height: 300px !important; }
+  html body #unfire-clean-header-v2 .unfire-clean-nav { height: auto !important; min-height: 78px !important; }
+  html body #unfire-clean-header-v2 .unfire-clean-nav a { height: 39px !important; min-height: 39px !important; }
+}
