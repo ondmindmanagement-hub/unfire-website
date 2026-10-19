@@ -196,3 +196,157 @@ main .sector-grid {
 @media (prefers-reduced-motion:reduce) {
   #work .product, #company .simple-card { transition:none!important; }
 }
+
+
+/* Compact, centered navigation with the original green cross-platform indicator.
+   No absolute positioning: Contact and status occupy separate grid cells. */
+#unfire-clean-header-v2 .unfire-clean-mainbar{
+  height:48px!important;
+  min-height:48px!important;
+}
+#unfire-clean-header-v2 .unfire-clean-inner{
+  display:grid!important;
+  grid-template-columns:max-content minmax(0,1fr) max-content!important;
+  align-items:center!important;
+  justify-content:normal!important;
+  gap:20px!important;
+  width:min(980px,calc(100vw - 40px))!important;
+  max-width:980px!important;
+  height:48px!important;
+  min-height:48px!important;
+  padding:0!important;
+}
+#unfire-clean-header-v2 .unfire-clean-brand{
+  position:static!important;
+  height:48px!important;
+  width:auto!important;
+  min-width:0!important;
+}
+#unfire-clean-header-v2 .unfire-clean-nav{
+  position:static!important;
+  display:flex!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:none!important;
+  width:100%!important;
+  height:48px!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  column-gap:clamp(13px,1.45vw,21px)!important;
+  row-gap:0!important;
+  overflow:visible!important;
+}
+#unfire-clean-header-v2 .unfire-clean-nav a{
+  flex:0 0 auto!important;
+  width:auto!important;
+  min-width:0!important;
+  height:48px!important;
+  padding:0!important;
+  font-size:11.5px!important;
+  letter-spacing:0!important;
+}
+#unfire-clean-header-v2 .unfire-header-platform-status{
+  position:static!important;
+  display:inline-flex!important;
+  flex:none!important;
+  gap:8px;
+  align-items:center;
+  justify-content:flex-end;
+  color:#a1a1a6;
+  font-size:10.5px;
+  font-weight:400;
+  line-height:1.25;
+  letter-spacing:0;
+  white-space:nowrap;
+  pointer-events:none;
+  user-select:none;
+}
+#unfire-clean-header-v2 .unfire-header-platform-status .unfire-status-dot{
+  display:inline-block;
+  width:6px;
+  height:6px;
+  flex:none;
+  border-radius:50%;
+  background:#30d158;
+  box-shadow:0 0 0 1px rgba(48,209,88,.16),0 0 6px rgba(48,209,88,.22);
+}
+/* Restore a tidy two-level header where width cannot accommodate three columns. */
+@media(max-width:1000px){
+  #unfire-clean-header-v2 .unfire-clean-mainbar{
+    height:auto!important;
+    min-height:0!important;
+  }
+  #unfire-clean-header-v2 .unfire-clean-inner{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) max-content!important;
+    grid-template-rows:45px 38px!important;
+    width:min(980px,calc(100vw - 40px))!important;
+    height:auto!important;
+    min-height:83px!important;
+    row-gap:0!important;
+    column-gap:12px!important;
+    padding:0!important;
+  }
+  #unfire-clean-header-v2 .unfire-clean-brand{
+    grid-column:1!important;
+    grid-row:1!important;
+    height:45px!important;
+    width:max-content!important;
+  }
+  #unfire-clean-header-v2 .unfire-header-platform-status{
+    grid-column:2!important;
+    grid-row:1!important;
+    justify-self:end!important;
+  }
+  #unfire-clean-header-v2 .unfire-clean-nav{
+    grid-column:1/-1!important;
+    grid-row:2!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    justify-content:center!important;
+    align-content:center!important;
+    column-gap:clamp(16px,3vw,28px)!important;
+    height:38px!important;
+    min-height:38px!important;
+    width:100%!important;
+  }
+  #unfire-clean-header-v2 .unfire-clean-nav a{
+    font-size:11.5px!important;
+    height:38px!important;
+  }
+}
+/* Narrow phones: compact centered links, then a separate status line. */
+@media(max-width:550px){
+  #unfire-clean-header-v2 .unfire-clean-inner{
+    grid-template-columns:1fr!important;
+    grid-template-rows:44px auto 29px!important;
+    width:calc(100vw - 32px)!important;
+    min-height:0!important;
+    row-gap:0!important;
+  }
+  #unfire-clean-header-v2 .unfire-clean-brand{
+    grid-column:1!important;grid-row:1!important;height:44px!important;
+  }
+  #unfire-clean-header-v2 .unfire-clean-nav{
+    grid-column:1!important;grid-row:2!important;
+    display:flex!important;flex-wrap:wrap!important;
+    align-items:center!important;justify-content:center!important;
+    align-content:center!important;
+    width:100%!important;height:auto!important;min-height:70px!important;
+    gap:0 16px!important;padding:0 0 4px!important;
+    overflow:visible!important;
+  }
+  #unfire-clean-header-v2 .unfire-clean-nav a{
+    height:34px!important;
+    font-size:11px!important;
+  }
+  #unfire-clean-header-v2 .unfire-header-platform-status{
+    grid-column:1!important;grid-row:3!important;
+    justify-self:center!important;
+    justify-content:center!important;
+    font-size:10px;
+  }
+  #company,#work,#audio,#system,#scale,#funding{scroll-margin-top:172px!important}
+}
