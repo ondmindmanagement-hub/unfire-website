@@ -1,0 +1,24 @@
+{
+  "id": "/dante/",
+  "name": "Dante — Unfire Public Guide",
+  "short_name": "Dante",
+  "description": "Discover Unfire's publicly documented apps and technologies with Dante.",
+  "start_url": "/dante/",
+  "scope": "/dante/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0b0c10",
+  "theme_color": "#0b0c10",
+  "icons": [
+    {
+      "src": "/unfire-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/unfire-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'">
+<meta name="theme-color" content="#0b0c10">
+<meta name="description" content="Meet Dante, Unfire's animated public site guide. Explore verified information about Unfire products, audio, AI workflows and gesture control with a privacy-first interactive demo.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Meet Dante | Unfire Interactive Guide">
+<meta property="og:description" content="Explore Unfire with an animated, bilingual site guide that uses verified public facts without storing conversations.">
+<meta property="og:url" content="https://unfire.technology/dante/">
+<link rel="canonical" href="https://unfire.technology/dante/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/dante/manifest.webmanifest">
+<link rel="stylesheet" href="/dante/dante.css">
+<title>Meet Dante | Unfire</title>
+<style>
+:root{color-scheme:dark;--ink:#f5f5f7;--muted:#9b9fa9;--line:rgba(255,255,255,.12)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 83% 20%,#1b202b 0%,#0d1017 34%,#06070a 75%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;min-height:100dvh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:4px}
+.topnav{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:auto;padding:25px 26px;border-bottom:1px solid var(--line)}
+.brand{font-weight:670;font-size:17px;letter-spacing:-.01em}
+.topnav nav{display:flex;gap:20px;color:#b3b6be;font-size:13px}
+main{max-width:1180px;margin:auto;padding:76px 26px 100px}
+.eyebrow{font-size:11px;font-weight:650;letter-spacing:.18em;color:#b7c1d1;text-transform:uppercase;margin-bottom:21px}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,470px);gap:clamp(30px,8vw,110px);align-items:center}
+h1{font-size:clamp(60px,9vw,115px);font-weight:600;line-height:.91;letter-spacing:-.055em;margin:0 0 30px}
+.lede{max-width:550px;font-size:clamp(17px,2vw,22px);line-height:1.5;color:#b7bec9;margin:0 0 28px}
+.meta{font-size:12px;color:#959eac;line-height:1.7;max-width:510px}
+.pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:27px}
+.pills span{font-size:12px;border:1px solid var(--line);padding:9px 11px;border-radius:99px;color:#cbd0db}
+.demo{max-width:470px;width:100%}
+.docs{border-top:1px solid var(--line);margin-top:100px;padding-top:42px;max-width:790px}
+.docs h2{letter-spacing:-.03em;font-size:30px;font-weight:570;margin:0 0 25px}
+.docs h3{font-size:16px;margin:27px 0 9px}
+.docs p{line-height:1.68;color:#afb5c0;font-size:14px;margin:0 0 13px}
+.docs a{color:#e1eaf9;text-decoration:underline}
+footer{border-top:1px solid var(--line);max-width:1180px;margin:auto;padding:30px 26px 50px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12px;color:#999ea8}
+@media(max-width:820px){.hero{grid-template-columns:1fr}.demo{max-width:600px}.docs{margin-top:70px}main{padding-top:48px}.topnav{padding:20px 22px}}
+@media(max-width:450px){main{padding-left:15px;padding-right:15px}.topnav nav{gap:12px}h1{font-size:65px}.demo{max-width:100%}.docs{padding:27px 5px}}
+</style>
+<script src="/dante/knowledge.js" defer></script>
+<script src="/dante/widget.js" defer></script>
+</head>
+<body data-dante-mode="standalone">
+<header class="topnav">
+  <a class="brand" href="/" aria-label="Unfire homepage">Unfire</a>
+  <nav aria-label="Site navigation"><a href="/apps/">Products</a><a href="/about/">Company</a><a href="/contact/">Contact</a></nav>
+</header>
+<main>
+<section class="hero">
+  <div>
+    <div class="eyebrow">UNFIRE · INTERACTIVE PREVIEW</div>
+    <h1>Meet<br>Dante.</h1>
+    <p class="lede">A small character. A clearer way to discover what we're building.</p>
+    <p class="meta">Ask about Unfire's publicly documented applications, human-approved AI workflows, audio tools, gesture control and research collaborations.</p>
+    <div class="pills"><span>Public knowledge only</span><span>English + Español</span><span>No account</span><span>No microphone</span></div>
+  </div>
+  <div id="danteMount" class="demo" aria-label="Interactive Dante conversation"></div>
+</section>
+<section class="docs" id="demo-information" aria-labelledby="demo-title">
+  <div class="eyebrow">TRANSPARENT BY DESIGN</div>
+  <h2 id="demo-title">About this demonstration</h2>
+  <h3>What Dante can answer</h3>
+  <p>This first version looks up reviewed public Unfire information about current product pages, official contact routes and early-access research enquiries. Replies link to the underlying public page when available. Dante never claims to know a fact not present in the approved demo material.</p>
+  <h3>What this version cannot do</h3>
+  <p>This is a guided, rule-based preview rather than a general-purpose AI chatbot or a live connection to ChatGPT. It cannot run apps, control your computer, access private systems, inspect screens or respond reliably to questions outside its public knowledge base. The independent native application and richer conversational experience are separate development work.</p>
+  <h3>Privacy and how it works</h3>
+  <p>Questions are matched against a small public knowledge base locally within your browser. The Dante demo does not send message content to an AI provider or Unfire server, save chat history, set cookies, access a camera or use your microphone. If you enable spoken replies, the browser's speech-synthesis capability may be used; no microphone input is involved. Standard website hosting may still involve routine server access logs outside the Dante widget.</p>
+  <h3>Demo terms and safe use</h3>
+  <p>This preview provides general information only, with no guarantees of completeness or suitability for a particular use. Do not submit passwords, API keys, confidential business information, health information or other sensitive data. The demo does not perform actions or accept agreements on behalf of Unfire. Product availability, platform support and pricing must be checked on the linked official product pages.</p>
+  <p>For the general policies, see <a href="/privacy.html">Privacy</a> and <a href="/legal.html">Legal</a>. For support, partnerships, feedback or written early-access enquiries, visit <a href="/contact/">Contact Unfire</a> or email <a href="mailto:hello@unfire.technology">hello@unfire.technology</a>.</p>
+</section>
+</main>
+<footer><span>© 2026 Unfire · Independent technology initiative</span><span><a href="/">Home</a> · <a href="/apps/">Products</a> · <a href="/privacy.html">Privacy</a> · <a href="/contact/">Contact</a></span></footer>
+</body>
+</html>
