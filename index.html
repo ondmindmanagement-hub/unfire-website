@@ -3150,14 +3150,15 @@ a[class*="brand"] {
 
     font-weight:600 !important;
 
-    font-kerning:normal !important;
+    font-kerning:none !important;
     font-feature-settings:
-        "kern" 1,
-        "liga" 1 !important;
+        "kern" 0,
+        "liga" 0,
+        "clig" 0 !important;
 
     text-rendering:optimizeLegibility !important;
 
-    word-spacing:-0.012em !important;
+    word-spacing:0 !important;
 
     text-wrap:balance !important;
 }
@@ -3202,8 +3203,8 @@ header a{
 
 main h2,
 main h3{
-    font-kerning:normal;
-    font-feature-settings:"kern" 1,"liga" 1;
+    font-kerning:none;
+    font-feature-settings:"kern" 0,"liga" 0,"clig" 0;
     text-rendering:optimizeLegibility;
 }
 
@@ -3916,17 +3917,46 @@ main,section,header,.wrap{max-width:100%}
 <link rel="stylesheet" href="/assets/css/unfire-layout-refinement-20261019.css?v=4">
 
 <style id="unfire-typography-consistency-20261019">
-/* Equal tracking values across display typography; preserve natural glyph widths. */
-h1, h2, h3, .statement, .big-message, .scale-panel-title,
-.funding-big, .product h3, .metric strong {
-  letter-spacing: 0.008em !important;
-  font-kerning: normal;
-  font-variant-ligatures: none;
+/* Unified display tracking. Disable font-pair kerning so Tu, To, Va and
+   other pairs do not compress relative to adjacent letters. */
+:root {
+  --uf-display-tracking: 0.018em;
+  --uf-label-tracking: 0.12em;
+}
+main h1,
+main h2,
+main h3,
+main .statement,
+main .big-message,
+main .scale-panel-title,
+main .funding-big,
+main .product h3,
+main .metric strong,
+#strategic-expansion h2 {
+  letter-spacing: var(--uf-display-tracking) !important;
+  font-kerning: none !important;
+  font-feature-settings: "kern" 0, "liga" 0, "clig" 0 !important;
+  font-variant-ligatures: none !important;
+  text-rendering: geometricPrecision;
+  word-spacing: 0 !important;
+  word-break: normal;
   overflow-wrap: break-word;
 }
-/* Stable small-label tracking, including section and product labels. */
+/* The hero has historical, high-specificity font overrides. */
+main .uf-hero-title {
+  font-kerning: none !important;
+  font-feature-settings: "kern" 0, "liga" 0, "clig" 0 !important;
+  letter-spacing: var(--uf-display-tracking) !important;
+  word-spacing: 0 !important;
+}
 .eyebrow, .hero-kicker, .product-type, .subproduct-label {
-  letter-spacing: 0.12em !important;
+  letter-spacing: var(--uf-label-tracking) !important;
+}
+@media (max-width: 620px) {
+  :root { --uf-display-tracking: 0.014em; }
+}
+@media (max-width: 370px) {
+  :root { --uf-display-tracking: 0.012em; }
 }
 </style>
 </head>
