@@ -103,7 +103,9 @@
   function answer(text) {
     var q = normal(text).slice(0, 400);
     if (!q) return null;
-    if (/\b(password|contrase|secret|secretos|credentials|credenciales|internal|internos|confidential|confidencial|api key|private files|archivo privado|codigo fuente|source code|private keys|claves privadas)\b/i.test(q)) return fact("security");
+    if (/\b(password|contrasena|secret|secretos|credentials|credenciales|internal|internos|confidential|confidencial|api key|private files|archivo privado|codigo fuente|source code|private keys|claves privadas)\b/i.test(q)) return fact("security");
+    if (/\b(founder|founded|fundador|fundadora|fundo|omar|baro|who created|quien creo)\b/i.test(q)) return fact("founder");
+    if (/\b(unfire control|gesture control|control por gestos|control de gestos)\b/i.test(q)) return fact("control");
     if (/\b(price|pricing|cost|fee|precio|precios|gratis|free|buy|comprar|cuanto cuesta|how much)\b/i.test(q)) return fact("cost");
     if (/\b(windows|linux|android|compatibility|compatible|sistemas operativos|operating system)\b/i.test(q)) return fact("platform");
     if (/\b(download|release|published|available|app store|descargar|disponible|lanzamiento|publicado)\b/i.test(q)) return fact("availability");
