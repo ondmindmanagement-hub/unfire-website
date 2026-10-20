@@ -1,0 +1,270 @@
+/*
+  Unfire responsive design system — the same clean horizontal identity on all devices.
+  This is the final loaded stylesheet for header layout, so it supersedes historical overrides.
+  Desktop: one rectangular bar. Tablet/phone: the same bar with a closely grouped
+  navigation line underneath, never individual cards or a huge drop-down.
+*/
+#unfire-clean-header-v2 {
+  display:block!important;
+  position:relative!important;
+  width:100%!important;
+  height:auto!important;
+  max-width:none!important;
+  background:#1d1d1f!important;
+  color:#f5f5f7!important;
+  isolation:isolate;
+}
+html body #unfire-clean-header-v2 .unfire-clean-mainbar {
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:0!important;
+  margin:0!important;
+  background:#1d1d1f!important;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  /* Historical frosted-glass filter trapped fixed dialogs inside the header. */
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+html body #unfire-clean-header-v2 .unfire-clean-inner {
+  position:relative!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:max-content minmax(0,1fr) minmax(0,max-content) 44px!important;
+  grid-template-rows:56px!important;
+  align-items:center!important;
+  justify-content:normal!important;
+  column-gap:clamp(14px,2vw,26px)!important;
+  row-gap:0!important;
+  width:min(1200px,calc(100% - 44px))!important;
+  max-width:1200px!important;
+  height:auto!important;
+  min-height:56px!important;
+  margin-inline:auto!important;
+  padding:0!important;
+  transform:none!important;
+}
+html body #unfire-clean-header-v2 .unfire-clean-brand {
+  position:static!important;
+  grid-column:1!important;
+  grid-row:1!important;
+  flex:none!important;
+  justify-self:start!important;
+  align-self:center!important;
+  display:inline-flex!important;
+  width:auto!important;
+  height:56px!important;
+  min-width:0!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  white-space:nowrap!important;
+}
+html body #unfire-clean-header-v2 .unfire-clean-nav {
+  position:static!important;
+  grid-column:2!important;
+  grid-row:1!important;
+  display:flex!important;
+  flex:initial!important;
+  flex-wrap:nowrap!important;
+  align-content:center!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  height:56px!important;
+  min-height:0!important;
+  gap:clamp(12px,1.35vw,21px)!important;
+  margin:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  overflow:visible!important;
+  transform:none!important;
+  translate:none!important;
+}
+html body #unfire-clean-header-v2 .unfire-clean-nav a {
+  position:static!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 auto!important;
+  width:auto!important;
+  max-width:none!important;
+  min-width:0!important;
+  height:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:#b6b6bb!important;
+  font-size:12px!important;
+  line-height:1.35!important;
+  font-weight:450!important;
+  letter-spacing:0!important;
+  white-space:nowrap!important;
+  text-align:center!important;
+  text-decoration:none!important;
+  transition:color .15s ease;
+}
+html body #unfire-clean-header-v2 .unfire-clean-nav a:hover,
+html body #unfire-clean-header-v2 .unfire-clean-nav a:focus-visible {color:#fff!important;}
+html body #unfire-clean-header-v2 .unfire-clean-nav a:focus-visible {outline:2px solid #f5f5f7;outline-offset:2px;border-radius:5px;}
+html body #unfire-clean-header-v2 .unfire-header-platform-status {
+  position:static!important;
+  grid-column:3!important;
+  grid-row:1!important;
+  display:inline-flex!important;
+  justify-self:end!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  flex:none!important;
+  width:auto!important;
+  max-width:none!important;
+  min-width:0!important;
+  gap:8px!important;
+  white-space:nowrap!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  color:#999ba1!important;
+  font-size:10.5px!important;
+  line-height:1.35!important;
+  white-space:nowrap!important;
+  text-align:right!important;
+  pointer-events:none;
+}
+html body #unfire-clean-header-v2 .unfire-header-platform-status .unfire-status-dot {
+  display:inline-block!important;
+  flex:0 0 6px!important;
+  width:6px!important;
+  height:6px!important;
+  margin-right:0!important;
+  border-radius:50%!important;
+  background:#30d158!important;
+}
+html body #unfire-clean-header-v2 #ask-unfire-host {
+  position:relative!important;
+  grid-column:4!important;
+  grid-row:1!important;
+  justify-self:end!important;
+  align-self:center!important;
+  display:block!important;
+  width:44px!important;
+  height:44px!important;
+  min-width:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:0!important;
+}
+/* Mid-sized windows retain the seven desktop links in a single quiet nav line. */
+@media(max-width:1090px) {
+  html body #unfire-clean-header-v2 .unfire-clean-inner {
+    grid-template-columns:max-content minmax(0,1fr) 44px!important;
+    grid-template-rows:49px 42px!important;
+    column-gap:14px!important;
+    width:calc(100% - 36px)!important;
+    min-height:91px!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-brand {
+    grid-column:1!important;grid-row:1!important;height:49px!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-header-platform-status {
+    grid-column:2!important;grid-row:1!important;
+    justify-self:end!important;max-width:none!important;
+  }
+  html body #unfire-clean-header-v2 #ask-unfire-host {
+    grid-column:3!important;grid-row:1!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-nav {
+    grid-column:1/-1!important;
+    grid-row:2!important;
+    display:flex!important;
+    justify-content:center!important;
+    height:42px!important;
+    gap:clamp(17px,3vw,36px)!important;
+    border-top:1px solid rgba(255,255,255,.08)!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-nav a {
+    height:40px!important;min-height:40px!important;font-size:12px!important;
+  }
+}
+/* Phone: precisely the same horizontal text nav, compact 4 + 3 wrap. */
+@media(max-width:560px) {
+  html body #unfire-clean-header-v2 .unfire-clean-inner {
+    grid-template-columns:max-content minmax(0,1fr) 42px!important;
+    grid-template-rows:51px auto!important;
+    column-gap:9px!important;
+    width:calc(100% - 28px)!important;
+    min-height:0!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-brand {
+    grid-column:1!important;grid-row:1!important;height:51px!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-header-platform-status {
+    grid-column:2!important;grid-row:1!important;
+    display:flex!important;
+    justify-content:flex-end!important;
+    justify-self:stretch!important;
+    width:auto!important;
+    max-width:100%!important;
+    white-space:normal!important;
+    font-size:10px!important;
+    line-height:1.25!important;
+    text-align:right!important;
+  }
+  html body #unfire-clean-header-v2 #ask-unfire-host {
+    grid-column:3!important;grid-row:1!important;
+    width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-nav {
+    display:grid!important;
+    grid-column:1/-1!important;
+    grid-row:2!important;
+    grid-template-columns:repeat(4,max-content)!important;
+    grid-auto-rows:38px!important;
+    align-items:center!important;
+    justify-items:center!important;
+    align-content:center!important;
+    justify-content:center!important;
+    column-gap:clamp(12px,3.4vw,20px)!important;
+    row-gap:0!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:76px!important;
+    padding:0!important;
+    margin:0!important;
+    border-top:1px solid rgba(255,255,255,.08)!important;
+    overflow:visible!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-nav a {
+    display:flex!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:38px!important;
+    min-height:38px!important;
+    padding:0 2px!important;
+    font-size:clamp(10.5px,2.8vw,11.75px)!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-nav a:nth-child(5) {grid-column:1!important;}
+  /* An even second row: three links centered across the entire bar. */
+  html body #unfire-clean-header-v2 .unfire-clean-nav a:nth-child(6) {grid-column:2 / span 2!important;justify-self:center!important;width:auto!important;}
+  html body #unfire-clean-header-v2 .unfire-clean-nav a:nth-child(7) {grid-column:4!important;}
+  #company,#work,#audio,#system,#scale,#funding {scroll-margin-top:135px!important;}
+}
+@media(max-width:340px) {
+  html body #unfire-clean-header-v2 .unfire-clean-inner {width:calc(100% - 20px)!important;column-gap:6px!important;}
+  html body #unfire-clean-header-v2 .unfire-header-platform-status {font-size:9.5px!important;}
+}
+@media(prefers-reduced-motion:reduce) {
+  html body #unfire-clean-header-v2 .unfire-clean-nav a {transition:none!important;}
+}
+
+/* Lift the header stacking context only while its assistant dialog is open. */
+#unfire-clean-header-v2:has(#ask-unfire-host.is-open) {z-index:2147483000!important;}

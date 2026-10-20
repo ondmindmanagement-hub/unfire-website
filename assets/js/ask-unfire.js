@@ -12,9 +12,9 @@
     var root = host.attachShadow({mode:"open"});
     var sheet = document.createElement("link");
     sheet.rel = "stylesheet";
-    sheet.href = "/assets/css/ask-unfire.css?v=20261019-4";
+    sheet.href = "/assets/css/ask-unfire.css?v=20261020-2";
     sheet.onload = function () { host.style.visibility = "visible"; };
-    sheet.onerror = function () { host.style.visibility = "visible"; host.style.position = "fixed"; host.style.right = "16px"; host.style.bottom = "16px"; host.style.zIndex = "2147483000"; };
+    sheet.onerror = function () { host.style.visibility = "visible"; };
     root.appendChild(sheet);
 
     var face = '<span class="assistant-mark" aria-hidden="true">' +
@@ -28,8 +28,8 @@
     var sendIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"></path></svg>';
     var ui = document.createElement("div");
     ui.innerHTML =
-      '<button type="button" id="launcher" aria-controls="panel" aria-expanded="false">' +
-        face + '<span class="launch-copy"><strong>Ask <span class="notranslate" translate="no">Unfire</span> <span class="online" aria-hidden="true"></span></strong><small id="launch-sub">Talk with <span class="notranslate" translate="no">Unfire</span></small></span>' +
+      '<button type="button" id="launcher" aria-label="Open Ask Unfire assistant" title="Ask Unfire" aria-controls="panel" aria-expanded="false">' +
+        face + '<span class="launch-copy" hidden><strong>Ask <span class="notranslate" translate="no">Unfire</span> <span class="online" aria-hidden="true"></span></strong><small id="launch-sub">Talk with <span class="notranslate" translate="no">Unfire</span></small></span>' +
       '</button>' +
       '<section id="panel" role="dialog" aria-label="Ask Unfire — site assistant" hidden>' +
         '<header id="panel-header">' + face +
@@ -55,7 +55,13 @@
         '<div id="disclosure">Voice recognition is provided by your browser and may use its provider. Microphone only starts when you tap it. <a href="/privacy.html" target="_blank" rel="noopener noreferrer">Privacy</a></div>' +
       '</section>';
     while (ui.firstChild) root.appendChild(ui.firstChild);
-    document.body.appendChild(host);
+    // Keep the closed assistant entirely inside the document layout:
+    // in the unified homepage header, or immediately after the footer elsewhere.
+    var homeHeader = document.querySelector("#unfire-clean-header-v2 .unfire-clean-inner");
+    var footer = document.querySelector("footer.site-footer, footer");
+    if (homeHeader) homeHeader.appendChild(host);
+    else if (footer && footer.parentNode) footer.parentNode.insertBefore(host, footer.nextSibling);
+    else document.body.appendChild(host);
     var $ = function (id) { return root.getElementById(id); };
     // Preserve the Unfire brand in the assistant's dynamic replies and labels.
     // Run only when rendering/updating text; no DOM observers or polling.
@@ -214,6 +220,8 @@
       $("launch-sub").textContent = c.teaser; $("subtitle").textContent = c.sub;
       $("disclosure").firstChild.textContent = c.privacy + " ";
       input.placeholder = c.placeholder; input.setAttribute("aria-label",c.placeholder);
+      launcher.setAttribute("aria-label", lang === "es" ? "Abrir asistente de Unfire" : "Open Unfire assistant");
+      launcher.title = lang === "es" ? "Preguntar a Unfire" : "Ask Unfire";
       langButton.textContent = lang === "es" ? "EN" : "ES";
       voice.setAttribute("aria-label",voiceEnabled ? c.mute : c.unmute);
       voice.setAttribute("aria-pressed",String(voiceEnabled));
@@ -245,7 +253,7 @@
     launcher.addEventListener("click",function () {
       panel.hidden = false; launcher.setAttribute("aria-expanded","true");
       host.classList.add("is-open");
-      if (window.matchMedia("(max-width:1000px)").matches) panel.setAttribute("aria-modal", "true");
+      panel.setAttribute("aria-modal", "true");
       if (!opened) {
         opened = true;
         addMessage(copy[lang].welcome,"agent");
