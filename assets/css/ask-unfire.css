@@ -19,108 +19,33 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid #a9e4
 #mic,#send{display:grid;place-items:center;border-radius:12px;height:41px;width:41px;flex:none;border:1px solid rgba(255,255,255,.17);background:#303239;color:#f5f5f7}#mic:hover{background:#3b3e45}#mic[aria-pressed=true]{background:#346a4e;color:white;border-color:#78c99a;animation:mic-pulse 1.2s ease-in-out infinite}#send{background:#f1f1f3;color:#191a1d;border-color:#f1f1f3}#send:hover{background:#d9dae0}#mic:disabled{opacity:.35;cursor:not-allowed}
 #disclosure{font-size:10px;line-height:1.5;color:#a5a9b3;padding:9px 15px 12px;background:#1c1d21}#disclosure a{color:#e3e5ea;text-decoration:underline;text-underline-offset:3px}svg{display:block}
 @keyframes mic-pulse{50%{box-shadow:0 0 0 5px rgba(111,209,156,.14)}}
-@media(max-width:520px){:host{right:12px;bottom:max(12px,env(safe-area-inset-bottom))}#panel{width:calc(100vw - 24px);height:min(600px,calc(100dvh - 98px));border-radius:20px}#launcher{min-height:53px}.message{font-size:14px}}
 @media(prefers-reduced-motion:reduce){#launcher,#mic{animation:none;transition:none}}
 
 
-/* Mobile: the assistant lives after the footer, in the document flow.
-   It never floats across links or text while browsing. Opening the chat
-   intentionally shows a full-height, dismissible dialog. */
-@media (max-width:1000px) {
-  :host {
-    all:initial;
-    box-sizing:border-box!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    position:relative!important;
-    inset:auto!important;
-    right:auto!important;
-    bottom:auto!important;
-    left:auto!important;
-    top:auto!important;
-    width:100%!important;
-    max-width:100%!important;
-    min-height:108px;
-    margin:0!important;
-    padding:20px 18px calc(30px + env(safe-area-inset-bottom))!important;
-    background:#070707;
-    color-scheme:dark;
-    color:#f5f5f7;
-    font:13px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif;
-    -webkit-font-smoothing:antialiased;
-    z-index:auto!important;
-  }
-  #launcher {
-    flex:0 1 300px;
-    width:min(100%,300px)!important;
-    max-width:100%;
-    min-height:50px!important;
-    padding:6px 13px 6px 7px!important;
-    box-shadow:0 5px 19px rgba(0,0,0,.2);
-  }
-  .launch-copy strong {font-size:13px;}
-  .launch-copy small {font-size:11px;}
-  :host(.is-open) {
-    z-index:2147483000!important;
-  }
-  :host(.is-open)::before {
-    content:"";
-    position:fixed;
-    z-index:1;
-    inset:0;
-    background:rgba(0,0,0,.65);
-  }
-  #panel {
-    position:fixed!important;
-    z-index:2!important;
-    top:max(12px,env(safe-area-inset-top))!important;
-    bottom:max(12px,env(safe-area-inset-bottom))!important;
-    left:50%!important;
-    right:auto!important;
-    transform:translateX(-50%)!important;
-    width:min(calc(100vw - 24px),460px)!important;
-    max-width:calc(100vw - 14px)!important;
-    height:auto!important;
-    max-height:none!important;
-    border-radius:20px!important;
-    overscroll-behavior:contain;
-  }
-  #messages {-webkit-overflow-scrolling:touch;}
-  #close {min-width:44px;min-height:44px;}
-}
-@media(max-width:370px){
-  #panel {width:calc(100vw - 14px)!important;}
-  #panel-header {padding:10px!important;gap:6px!important;}
-  #panel-header .actions {gap:3px!important;}
-  #panel-header .ghost {min-width:32px;}
-  #panel-header #close {min-width:42px;}
-}
 
-/* 2026-10-20: Icon-only assistant, part of the page layout on every device.
-   A dialog overlays the viewport only after the visitor intentionally opens it. */
+/* Compact, non-modal Ask Unfire on every platform. No page scrim or scroll lock.
+   The closed assistant is a 42px icon; the conversation stays in the corner
+   while visitors can still click links and scroll anywhere else on the page. */
 :host {
   all:initial;
   display:flex!important;
-  position:relative!important;
   box-sizing:border-box!important;
+  position:relative!important;
   inset:auto!important;
-  top:auto!important;
-  left:auto!important;
-  right:auto!important;
-  bottom:auto!important;
   justify-content:center!important;
   align-items:center!important;
   width:44px!important;
   min-width:44px!important;
+  max-width:44px!important;
   height:44px!important;
   min-height:44px!important;
-  max-width:44px!important;
-  padding:0!important;
   margin:14px auto!important;
-  background:transparent!important;
+  padding:0!important;
   color:#f5f5f7;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif;
+  color-scheme:dark;
+  background:transparent!important;
+  font:13px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased;
   z-index:1!important;
 }
 #launcher {
@@ -129,13 +54,13 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid #a9e4
   flex:none!important;
   gap:0!important;
   width:42px!important;
-  height:42px!important;
   min-width:42px!important;
-  min-height:42px!important;
   max-width:42px!important;
+  height:42px!important;
+  min-height:42px!important;
   max-height:42px!important;
-  padding:0!important;
   margin:0!important;
+  padding:0!important;
   border-radius:50%!important;
   border:1px solid rgba(255,255,255,.19)!important;
   background:#292a2f!important;
@@ -143,8 +68,8 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid #a9e4
   transform:none!important;
   transition:background .16s ease,border-color .16s ease!important;
 }
-#launcher:hover { background:#393b42!important;border-color:rgba(255,255,255,.36)!important;transform:none!important; }
-#launcher:focus-visible {outline:2px solid #f5f5f7;outline-offset:2px;}
+#launcher:hover {background:#393b42!important;border-color:rgba(255,255,255,.36)!important;transform:none!important}
+#launcher:focus-visible {outline:2px solid #f5f5f7;outline-offset:2px}
 #launcher .assistant-mark {
   display:grid!important;
   place-items:center!important;
@@ -156,56 +81,82 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid #a9e4
   background:transparent!important;
   box-shadow:none!important;
 }
-#launcher .assistant-mark svg {width:21px!important;height:21px!important;}
-#launcher .launch-copy {display:none!important;}
-:host(.is-open) {
-  z-index:2147483000!important;
-}
-:host(.is-open)::before {
-  content:"";
-  position:fixed!important;
-  inset:0!important;
-  z-index:1!important;
-  width:100vw;
-  height:100dvh;
-  background:rgba(0,0,0,.68);
-}
+#launcher .assistant-mark svg {width:21px!important;height:21px!important}
+#launcher .launch-copy {display:none!important}
+:host(.is-open) {z-index:2147483000!important}
+/* Non-modal panel: there is deliberately no backdrop or full-page hit area. */
+:host(.is-open)::before {content:none!important;display:none!important}
 #panel {
   position:fixed!important;
-  top:50%!important;
-  left:50%!important;
-  right:auto!important;
-  bottom:auto!important;
   z-index:2!important;
-  display:flex;
-  flex-direction:column;
-  width:min(420px,calc(100vw - 28px))!important;
+  top:auto!important;
+  left:auto!important;
+  right:max(18px,env(safe-area-inset-right))!important;
+  bottom:max(18px,env(safe-area-inset-bottom))!important;
+  display:flex!important;
+  flex-direction:column!important;
+  width:min(355px,calc(100vw - 32px))!important;
+  max-width:calc(100vw - 24px)!important;
   min-width:0!important;
-  max-width:calc(100vw - 18px)!important;
-  height:min(610px,calc(100dvh - 36px))!important;
-  max-height:calc(100dvh - 28px)!important;
-  transform:translate(-50%,-50%)!important;
-  border-radius:20px!important;
+  height:min(480px,62dvh)!important;
+  max-height:calc(100dvh - 40px)!important;
+  transform:none!important;
+  border:1px solid rgba(255,255,255,.21)!important;
+  border-radius:18px!important;
+  background:#17181c!important;
+  box-shadow:0 14px 44px rgba(0,0,0,.38)!important;
+  overflow:hidden!important;
   overscroll-behavior:contain;
 }
-#panel[hidden] {display:none!important;}
-#close {min-width:42px;min-height:42px;}
-#messages {-webkit-overflow-scrolling:touch;}
-@media(max-width:560px) {
-  :host {width:42px!important;min-width:42px!important;max-width:42px!important;height:42px!important;min-height:42px!important;margin:0 auto!important;}
-  #launcher {width:40px!important;height:40px!important;min-width:40px!important;min-height:40px!important;max-width:40px!important;max-height:40px!important;}
+#panel[hidden] {display:none!important}
+#panel-header {padding:10px 12px!important;gap:8px!important}
+#panel-header .assistant-mark {height:31px!important;width:31px!important}
+.identity strong {font-size:14px!important}
+.identity small {font-size:10px!important}
+#close {min-width:38px;min-height:38px}
+#messages {padding:12px!important;-webkit-overflow-scrolling:touch}
+.message {font-size:12.5px}
+#quick {gap:5px!important;padding:0 12px 7px!important}
+#quick button {font-size:10px!important;padding:6px 9px!important}
+#status {min-height:18px!important;padding:0 12px 3px!important}
+#composer {padding:8px 10px!important}
+#message-input {padding:9px 10px!important}
+#mic,#send {width:38px!important;height:38px!important}
+#disclosure {padding:7px 12px 9px!important;font-size:9px!important}
+@media (max-width:650px) {
+  :host {
+    width:42px!important;
+    min-width:42px!important;
+    max-width:42px!important;
+    height:42px!important;
+    min-height:42px!important;
+    margin:0 auto!important;
+  }
+  #launcher {
+    width:40px!important;
+    min-width:40px!important;
+    max-width:40px!important;
+    height:40px!important;
+    min-height:40px!important;
+    max-height:40px!important;
+  }
   #panel {
-    width:calc(100vw - 20px)!important;
-    max-width:calc(100vw - 14px)!important;
-    height:calc(100dvh - max(26px, env(safe-area-inset-top) + env(safe-area-inset-bottom) + 18px))!important;
-    max-height:calc(100dvh - max(26px, env(safe-area-inset-top) + env(safe-area-inset-bottom) + 18px))!important;
-    border-radius:18px!important;
+    right:max(12px,env(safe-area-inset-right))!important;
+    bottom:max(12px,env(safe-area-inset-bottom))!important;
+    width:min(340px,calc(100vw - 24px))!important;
+    max-width:calc(100vw - 24px)!important;
+    height:min(386px,52dvh)!important;
+    max-height:calc(100dvh - 40px)!important;
+    border-radius:16px!important;
   }
 }
 @media(max-width:370px) {
-  #panel {width:calc(100vw - 14px)!important;}
-  #panel-header {padding:11px!important;gap:5px!important;}
+  #panel-header {gap:5px!important;padding:8px!important}
+  #panel-header .actions {gap:3px!important}
+  #panel-header .ghost {min-width:31px!important}
+  #panel-header #close {min-width:38px!important}
+  #quick button {font-size:9.5px!important}
 }
 @media(prefers-reduced-motion:reduce) {
-  #launcher {transition:none!important;}
+  #launcher {transition:none!important}
 }

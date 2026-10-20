@@ -12,7 +12,7 @@
     var root = host.attachShadow({mode:"open"});
     var sheet = document.createElement("link");
     sheet.rel = "stylesheet";
-    sheet.href = "/assets/css/ask-unfire.css?v=20261020-2";
+    sheet.href = "/assets/css/ask-unfire.css?v=20261020-3";
     sheet.onload = function () { host.style.visibility = "visible"; };
     sheet.onerror = function () { host.style.visibility = "visible"; };
     root.appendChild(sheet);
@@ -248,17 +248,17 @@
       panel.hidden = true; launcher.setAttribute("aria-expanded","false");
       host.classList.remove("is-open");
       panel.removeAttribute("aria-modal");
-      stopListen(); silence(); launcher.focus();
+      stopListen(); silence(); launcher.focus({preventScroll:true});
     }
     launcher.addEventListener("click",function () {
       panel.hidden = false; launcher.setAttribute("aria-expanded","true");
       host.classList.add("is-open");
-      panel.setAttribute("aria-modal", "true");
+      // Non-modal: the rest of the website stays interactive and scrollable.
       if (!opened) {
         opened = true;
         addMessage(copy[lang].welcome,"agent");
       }
-      input.focus({preventScroll:true});
+      if (!window.matchMedia("(max-width:650px)").matches) input.focus({preventScroll:true});
     });
     $("close").addEventListener("click",close);
     $("composer").addEventListener("submit",function(e) { e.preventDefault(); send(input.value); });
