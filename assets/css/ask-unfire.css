@@ -21,3 +21,78 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid #a9e4
 @keyframes mic-pulse{50%{box-shadow:0 0 0 5px rgba(111,209,156,.14)}}
 @media(max-width:520px){:host{right:12px;bottom:max(12px,env(safe-area-inset-bottom))}#panel{width:calc(100vw - 24px);height:min(600px,calc(100dvh - 98px));border-radius:20px}#launcher{min-height:53px}.message{font-size:14px}}
 @media(prefers-reduced-motion:reduce){#launcher,#mic{animation:none;transition:none}}
+
+
+/* Mobile: the assistant lives after the footer, in the document flow.
+   It never floats across links or text while browsing. Opening the chat
+   intentionally shows a full-height, dismissible dialog. */
+@media (max-width:1000px) {
+  :host {
+    all:initial;
+    box-sizing:border-box!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    position:relative!important;
+    inset:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    left:auto!important;
+    top:auto!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-height:108px;
+    margin:0!important;
+    padding:20px 18px calc(30px + env(safe-area-inset-bottom))!important;
+    background:#070707;
+    color-scheme:dark;
+    color:#f5f5f7;
+    font:13px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    z-index:auto!important;
+  }
+  #launcher {
+    flex:0 1 300px;
+    width:min(100%,300px)!important;
+    max-width:100%;
+    min-height:50px!important;
+    padding:6px 13px 6px 7px!important;
+    box-shadow:0 5px 19px rgba(0,0,0,.2);
+  }
+  .launch-copy strong {font-size:13px;}
+  .launch-copy small {font-size:11px;}
+  :host(.is-open) {
+    z-index:2147483000!important;
+  }
+  :host(.is-open)::before {
+    content:"";
+    position:fixed;
+    z-index:1;
+    inset:0;
+    background:rgba(0,0,0,.65);
+  }
+  #panel {
+    position:fixed!important;
+    z-index:2!important;
+    top:max(12px,env(safe-area-inset-top))!important;
+    bottom:max(12px,env(safe-area-inset-bottom))!important;
+    left:50%!important;
+    right:auto!important;
+    transform:translateX(-50%)!important;
+    width:min(calc(100vw - 24px),460px)!important;
+    max-width:calc(100vw - 14px)!important;
+    height:auto!important;
+    max-height:none!important;
+    border-radius:20px!important;
+    overscroll-behavior:contain;
+  }
+  #messages {-webkit-overflow-scrolling:touch;}
+  #close {min-width:44px;min-height:44px;}
+}
+@media(max-width:370px){
+  #panel {width:calc(100vw - 14px)!important;}
+  #panel-header {padding:10px!important;gap:6px!important;}
+  #panel-header .actions {gap:3px!important;}
+  #panel-header .ghost {min-width:32px;}
+  #panel-header #close {min-width:42px;}
+}

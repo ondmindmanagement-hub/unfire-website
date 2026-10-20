@@ -238,10 +238,14 @@
     }
     function close() {
       panel.hidden = true; launcher.setAttribute("aria-expanded","false");
+      host.classList.remove("is-open");
+      panel.removeAttribute("aria-modal");
       stopListen(); silence(); launcher.focus();
     }
     launcher.addEventListener("click",function () {
       panel.hidden = false; launcher.setAttribute("aria-expanded","true");
+      host.classList.add("is-open");
+      if (window.matchMedia("(max-width:1000px)").matches) panel.setAttribute("aria-modal", "true");
       if (!opened) {
         opened = true;
         addMessage(copy[lang].welcome,"agent");
