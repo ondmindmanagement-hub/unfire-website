@@ -1,0 +1,6 @@
+const CAPAT=(()=>{const base=document.currentScript&&document.currentScript.dataset.base||'';const A={a:new Image(),b:new Image(),cache:{}};
+ A.thumb=(i,o)=>{const k=(o?'b':'a')+i;if(A.cache[k])return A.cache[k];const im=A[o?'b':'a'];if(!im.complete||!im.naturalWidth)return null;const c=document.createElement('canvas');c.width=c.height=180;c.getContext('2d').drawImage(im,(i%10)*180,Math.floor(i/10)*180,180,180,0,0,180,180);return A.cache[k]=c.toDataURL('image/webp',.9)};
+ A.fill=()=>document.querySelectorAll('img[data-cap]').forEach(el=>{const u=A.thumb(+el.dataset.cap,el.dataset.o==='1');if(u&&el.src!==u)el.src=u});
+ document.addEventListener('mouseover',e=>{const el=e.target.closest&&e.target.closest('[data-capcard]');if(!el)return;const im=el.querySelector('img[data-cap]');if(im&&im.dataset.o!=='1'){im.dataset.o='1';A.fill()}});
+ document.addEventListener('mouseout',e=>{const el=e.target.closest&&e.target.closest('[data-capcard]');if(!el||el.contains(e.relatedTarget))return;const im=el.querySelector('img[data-cap]');if(im){im.dataset.o='0';A.fill()}});
+ A.a.onload=A.b.onload=()=>{A.fill();A.ready&&A.ready()};A.a.src=base+'img/caps-a.webp';A.b.src=base+'img/caps-b.webp';return A})();

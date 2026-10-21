@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+<defs>
+ <radialGradient id="bg" cx="36%" cy="30%" r="62%"><stop offset="0" stop-color="#ffffff"/><stop offset=".18" stop-color="#3d8bff"/><stop offset=".75" stop-color="#0b2a7a"/><stop offset="1" stop-color="#040b24"/></radialGradient>
+ <linearGradient id="ring" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#e6edf6"/><stop offset=".55" stop-color="#b9c4d2"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+ <linearGradient id="wing" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3eefc"/></linearGradient>
+ <filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".45"/></filter>
+ <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="20"/></filter>
+</defs>
+<circle cx="500" cy="500" r="478" fill="#3d8bff" opacity=".5" filter="url(#glow)"/>
+<circle cx="500" cy="500" r="470" fill="url(#ring)"/>
+<circle cx="500" cy="500" r="440" fill="#8fa0b8"/>
+<circle cx="500" cy="500" r="434" fill="url(#bg)"/>
+<g transform="translate(500 530) scale(4.6)">
+ <g filter="url(#sh)" fill="url(#wing)">
+  <ellipse cx="36" cy="-20" rx="34" ry="25" transform="rotate(-24 36 -20)"/><ellipse cx="-36" cy="-20" rx="34" ry="25" transform="rotate(24 -36 -20)"/>
+  <ellipse cx="25" cy="24" rx="20" ry="15" transform="rotate(31.5 25 24)"/><ellipse cx="-25" cy="24" rx="20" ry="15" transform="rotate(-31.5 -25 24)"/>
+ </g>
+ <g fill="#3d8bff"><circle cx="44" cy="-24" r="8"/><circle cx="-44" cy="-24" r="8"/><circle cx="27" cy="26" r="5"/><circle cx="-27" cy="26" r="5"/></g>
+ <g fill="#ffffff" opacity=".9"><circle cx="41.5" cy="-26.5" r="2.4"/><circle cx="-46.5" cy="-26.5" r="2.4"/></g>
+ <ellipse cx="0" cy="2" rx="5" ry="30" fill="#1b1d22"/>
+ <ellipse cx="-1.4" cy="-8" rx="1.4" ry="14" fill="#5b6270"/>
+ <g stroke="#ffffff" stroke-width="3.2" fill="none" stroke-linecap="round"><path d="M0,-26 Q6,-46 18,-54"/><path d="M0,-26 Q-6,-46 -18,-54"/></g>
+</g>
+<path d="M150,320 A370,370 0 0 1 410,138" stroke="#ffffff" stroke-opacity=".55" stroke-width="10" fill="none" stroke-linecap="round"/>
+</svg>
