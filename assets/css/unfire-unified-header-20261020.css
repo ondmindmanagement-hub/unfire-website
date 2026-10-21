@@ -61,6 +61,9 @@ html body #unfire-clean-header-v2 .unfire-clean-brand {
   height:54px!important;
   min-height:0!important;
   margin:0!important;
+  /* Line up the dragon and wordmark with the 960px hero column,
+     while keeping the central navigation and assistant fixed. */
+  margin-left:clamp(0px,calc((100vw - 1000px)/2),120px)!important;
   padding:0!important;
   white-space:nowrap!important;
 }
@@ -154,6 +157,7 @@ html body #unfire-clean-header-v2 #ask-unfire-host {
     grid-column:1!important;
     grid-row:1!important;
     height:48px!important;
+    margin-left:0!important;
   }
   html body #unfire-clean-header-v2 #ask-unfire-host {
     grid-column:2!important;
