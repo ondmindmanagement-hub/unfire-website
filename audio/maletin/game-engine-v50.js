@@ -942,7 +942,7 @@
   items.forEach((it) => { const [w, d] = it.kind === 'hyper' ? [1.3, 1.2] : it.kind === 'cap' ? [0.4, 0.36] : it.kind === 'mut' ? [0.27, 0.34] : it.kind === 'fx' ? [0.44, 0.3] : it.laptop ? [0.95, 0.66] : [0.5, 0.42];
     const hg = new THREE.Group(); hg.position.set(it.kind === 'hyper' ? -1.95 : it.pos.x, 0.021, it.kind === 'hyper' ? -0.85 : it.pos.z); caseG.add(hg); const hole = mesh(new THREE.BoxGeometry(w, 0.004, d), HOLE); hg.add(hole);
     const pl = [-1, 1].map((sx) => { const p = new THREE.Group(); p.position.x = sx * w / 2; hg.add(p); const m = mesh(rbox(w / 2, 0.01, d, 0.004), HM); m.position.x = -sx * w / 4; p.add(m); const l = mesh(new THREE.BoxGeometry(0.004, 0.012, d - 0.02), Y2K.led('#3d8bff', 2)); l.position.x = -sx * (w / 2 - 0.004); p.add(l); return p; }); HATCH.push({ hole, pl, k: it.comp }); });
-  const openComp = (k) => { if (!compG[k].userData.open) hap(0.7); compG[k].userData.open = 1; if (k === 'hw' && HW) HW.autoT = 1; }, openAllComp = () => CK.filter((k) => k !== 'hw').forEach(openComp), allOpen = () => CK.every((k) => compG[k].userData.open);
+  const openComp = (k) => { if (!compG[k].userData.open) hap(0.7); compG[k].userData.open = 1; if (k === 'hw' && HW) HW.autoT = 1; }, openAllComp = () => CK.filter((k) => k !== 'hw').forEach(openComp), allOpen = () => CK.filter((k) => k !== 'hw').every((k) => compG[k].userData.open);
   // botón de mariposa dentro de la tapa (la parte "pantalla"): abre todas las compuertas
   const lidBtn = new THREE.Group(); lidBtn.position.set(0, -0.02, -0.66); lid.add(lidBtn);
   { const em = Y2K.cnv(256, 256); G3.drawEmblem(em.getContext('2d'), 256, '#7fd0ff'); lidBtn.add(mesh(new THREE.TorusGeometry(0.3, 0.05, 16, 64).rotateX(H2), CHROME));
