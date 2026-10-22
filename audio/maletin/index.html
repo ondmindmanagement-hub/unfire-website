@@ -4355,7 +4355,7 @@ window.STORY_INIT = function (H) {
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } };
   const store = (s) => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} };
   let SAVE = load() || { name: '', level: 1, ch: 0, step: 0, done: [], met: false, ts: 0 };
-  const FREE = 3;
+  const FREE = 12; // All twelve chapters of the free game are playable.
   // ---------- reparto ----------
   const CAST = {
     NIMBO: { col: '#5fe0ff', pitch: 1.18, rate: 1.04, pref: ['Paulina', 'Mónica', 'Monica', 'Marisol', 'Helena', 'Google español', 'Elvira'] },
@@ -4395,16 +4395,44 @@ window.STORY_INIT = function (H) {
       { say: [['NIMBO', 'grito', () => '¡Eso! ¿Lo has oído? Ese brillo era el primer pedacito del segundo perdido: el de Piscis. Los de Piscis sueñan tan fuerte que a veces se les olvida despertarse.'], ['NIMBO', 'risa', () => 'Yo una vez me soñé a mí mismo soñando. Me desperté dos veces. Fue agotador.'], ['NIMBO', 'feliz', () => 'Capítulo uno, completado. Lo guardo para que no se nos escape otro segundo.']], end: true },
     ] },
     { t: 'Aries quiere ser DJ', steps: [
-      { say: [['ARI', 'grito', () => '¡Apartad, que viene el mejor DJ de la historia del maletín!'], ['LIBRA', 'serio', () => 'Ari, eres el único DJ de la historia del maletín.'], ['ARI', 'feliz', () => '¡Por eso soy el mejor! ' + N() + ', dale a MEGA y que tiemble la mesa.']], wait: { ev: 'mega' }, hint: 'Pulsa el botón MEGA de la tapa', at: [0, -1.6], mini: 1 },
+      { say: [['ARI', 'grito', () => '¡Apartad, que viene el mejor DJ de la historia del maletín!'], ['LIBRA', 'serio', () => 'Ari, eres el único DJ de la historia del maletín.'], ['ARI', 'feliz', () => '¡Por eso soy el mejor! ' + N() + ', pulsa la mariposa del maletín: abre o cierra la tapa, ¡pero que siga la música!']], wait: { ev: 'case' }, hint: 'Pulsa una vez la mariposa del maletín', at: [0, -1.6], mini: 1 },
       { say: [['LIBRA', 'duda', () => 'Demasiado ruido. Demasiada luz. Necesito equilibrio. ' + N() + ', ¿cambiarías la canción en la radio de la pared o en el tocadiscos?']], wait: { ev: 'radio' }, hint: 'Cambia la canción (botón ⏭ o el tocadiscos)', at: [-5, 92] },
       { say: [['ARI', 'triste', () => 'Vale… a lo mejor no hace falta que todo suene a la vez.'], ['LIBRA', 'feliz', () => 'Y a lo mejor un poco de caos no está tan mal.'], ['NIMBO', 'misterio', () => 'Fuego y balanza. Lo que arde y lo que mide. Cuando se dan la mano, aparece el pedacito de Aries. Lo tienes.']], end: true },
     ] },
     { t: 'Los cuadros que hablan', steps: [
       { say: [['NIMBO', 'susurro', () => 'Los cuadros de esta casa no son decoración. Son ventanas a sitios donde la música cambió de piel. Pasea y toca tres.']], wait: { ev: 'poster', n: 3 }, hint: 'Pasea (botón PASEAR) y toca 3 cuadros', at: [-70, 40] },
       { say: [['GEMI', 'risa', () => 'Nosotros somos los gemelos de Géminis. Yo empiezo las frases…'], ['GEMI', 'feliz', () => '…y yo me como el final. Oye, ' + N() + ', la máquina de bolas guarda un aparato para ti. Gira la manivela.']], wait: { ev: 'gacha' }, hint: 'Usa la máquina de bolas roja', at: [44, 8] },
-      { say: [['ESCORPIO', 'misterio', () => 'Todos creen que el segundo se perdió. Yo creo que alguien lo escondió a propósito.'], ['NIMBO', 'duda', () => 'Escorpio, no asustes a ' + N() + ' en su primer día.'], ['ESCORPIO', 'susurro', () => 'Detrás de la puerta azul hay más mundo del que parece. Cuando quieras saber la verdad, ya sabes dónde buscar.'], ['NIMBO', 'feliz', () => 'Tres pedacitos de doce. Lo que viene después necesita el maletín completo: islas, la ciudad, el skatepark y la verdad de Escorpio.']], end: true },
+      { say: [['ESCORPIO', 'misterio', () => 'Todos creen que el segundo se perdió. Yo creo que alguien lo escondió a propósito.'], ['NIMBO', 'duda', () => 'Escorpio, no asustes a ' + N() + ' en su primer día.'], ['ESCORPIO', 'susurro', () => 'Detrás de la puerta azul hay más mundo del que parece. Cuando quieras saber la verdad, ya sabes dónde buscar.'], ['NIMBO', 'feliz', () => 'Tres fragmentos de doce. ¡Ahora empieza la aventura! Las ventanas de la casa llevan a los otros mundos. La historia entera es gratis.']], end: true },
     ] },
-    { t: 'La puerta azul', locked: true }, { t: 'Tauro y la ballena que no sabía cantar', locked: true }, { t: 'El cerdo volador pide asilo', locked: true }, { t: 'Cáncer construye una ciudad en una caja', locked: true }, { t: 'Leo y el concurso de skate', locked: true }, { t: 'Virgo ordena el tiempo', locked: true }, { t: 'Sagitario dispara a la luna', locked: true }, { t: 'Capricornio y la montaña de nieve', locked: true }, { t: 'Acuario y el año que por fin llegó', locked: true },
+    { t: 'La puerta azul', steps: [
+  { say: [['ESCORPIO','misterio','Hay puertas que no tienen pomo. Son ventanas. El segundo perdido cayó en el mapa de fuera.'],['NIMBO','feliz','Salta hacia una ventana, no contra la pared: cruzarla te llevará al lugar que enseña. Puedes volver a casa cuando quieras.']], wait:{ev:'portal'}, hint:'Vuela o salta atravesando una de las ventanas de la casa' },
+  { say: [['ESCORPIO','susurro','Lo has conseguido. La puerta azul estaba en todas partes. Cuatro fragmentos recuperados.'],['NIMBO','risa','Y el maletín viene contigo. No hace falta guardarlo en el vestíbulo.']], end:true }
+]}, { t:'Tauro y la ballena que no sabía cantar', steps:[
+  {say:[['NIMBO','feliz','Tauro está junto al mar. Una ballena cree que cantar es enseñar sus facturas.'],['ARI','risa','Encuentra la ventana de las olas y cruza hacia el mar.']],wait:{ev:'portal:sea'},hint:'Salta por la ventana de las olas y llega al mar'},
+  {say:[['NIMBO','feliz','La ballena ha cantado una nota sin darse cuenta. ¡Es el quinto fragmento!'],['LIBRA','serio','Perfecta afinación. Aunque fuese un accidente.']],end:true}
+]}, {t:'El cerdo volador pide asilo',steps:[
+  {say:[['GEMI','risa','¡Hay un cerdo que pide vivir en una nube! Dice que su pasaporte se lo comió una impresora.'],['NIMBO','feliz','Salta por la ventana del cielo. Vamos a comprobar si realmente sabe volar.']],wait:{ev:'portal:sky'},hint:'Cruza la gran ventana del cielo de la casa'},
+  {say:[['ARI','risa','El cerdo ha aterrizado en una nube. Parece que la nube tiene alquiler.'],['NIMBO','feliz','Otro fragmento rescatado: el sexto. Los cerdos también pueden soñar.']],end:true}
+]}, {t:'Cáncer construye una ciudad en una caja',steps:[
+  {say:[['LIBRA','serio','Cáncer quiere construir una ciudad diminuta. Nos faltan las ventanas de colores.'],['NIMBO','feliz','Busca el acuario del arrecife y atraviesa su cristal. El coral parece una ciudad.']],wait:{ev:'portal:reef'},hint:'Salta por el acuario del arrecife'},
+  {say:[['GEMI','feliz','¡Edificios de coral y vecinos con aletas! ¿Pagan impuestos las medusas?'],['NIMBO','feliz','Séptimo fragmento. Esta ciudad se queda dentro de la historia.']],end:true}
+]}, {t:'Leo y el concurso de skate',steps:[
+  {say:[['ARI','grito','Leo ha organizado una competición de skate sobre arena. ¡Eso no rueda!'],['NIMBO','risa','Ve por la ventana del desierto y descubre el circuito.']],wait:{ev:'portal:desert'},hint:'Cruza la ventana del desierto'},
+  {say:[['NIMBO','serio','Para ganar tienes que completar una misión de exploración de Nimbo. Sigue la estrella del mapa.']],wait:{ev:'side'},hint:'Completa una misión secundaria en el mapa exterior'},
+  {say:[['ARI','feliz','¡Victoria! Leo ha descubierto que caminar también cuenta como estilo.'],['NIMBO','feliz','Octavo fragmento. Recompensa: permiso universal para bailar fatal.']],end:true}
+]}, {t:'Virgo ordena el tiempo',steps:[
+  {say:[['LIBRA','serio','Virgo ha ordenado todas las canciones por milisegundo. Ahora nadie encuentra la música.'],['NIMBO','duda','Regresa a la casa y cambia una canción de la radio o del tocadiscos.']],wait:{ev:'radio'},hint:'Vuelve a casa y cambia la canción en la radio o tocadiscos'},
+  {say:[['LIBRA','feliz','La música vuelve a respirar. Virgo ha prometido no ordenar los aplausos.'],['NIMBO','feliz','Noveno fragmento recuperado.']],end:true}
+]}, {t:'Sagitario dispara a la luna',steps:[
+  {say:[['GEMI','misterio','Sagitario ha enviado una flecha a la luna, pero alguien recibió un mensaje de voz.'],['NIMBO','feliz','El ojo de buey de la casa abre la órbita espacial. Salta por él para encontrar la señal.']],wait:{ev:'portal:space'},hint:'Salta por la ventana redonda que muestra el espacio'},
+  {say:[['ESCORPIO','susurro','La señal venía del futuro. No preguntes cómo, la respuesta tiene demasiadas ecuaciones.'],['NIMBO','feliz','Décimo fragmento, y un misterio más.']],end:true}
+]}, {t:'Capricornio y la montaña de nieve',steps:[
+  {say:[['ARI','grito','Capricornio está en lo alto de una montaña y dice que el frío da energía gratis.'],['NIMBO','feliz','Salta por la ventana de las montañas y las nubes. El mundo sigue siendo el mismo.']],wait:{ev:'portal:mountain'},hint:'Atraviesa la ventana de montañas y nubes'},
+  {say:[['LIBRA','serio','Hace tanto frío que el robot ha empezado a contar copos por número de serie.'],['NIMBO','feliz','Undécimo fragmento. Ya solo queda uno.']],end:true}
+]}, {t:'Acuario y el año que por fin llegó',steps:[
+  {say:[['ESCORPIO','misterio','El último fragmento está donde las medusas flotan como recuerdos.'],['NIMBO','feliz','Atraviesa el segundo acuario. El del mundo de las medusas. No cierres los ojos.']],wait:{ev:'portal:jelly'},hint:'Salta por la ventana del acuario de las medusas'},
+  {say:[['ESCORPIO','susurro','No robé el segundo. Lo guardé para que nadie tuviera miedo de que terminara una época.'],['GEMI','risa','Pero llevamos veintiséis años sin cambiar de calendario. ¡Eso es reciclar!'],['ARI','feliz','Que empiece el año dos mil. ¡Pon música!'],['LIBRA','feliz','Doce piezas. El tiempo vuelve a avanzar. Y por fin todo tiene sentido. Más o menos.'],['NIMBO','feliz',()=> '¡Lo has conseguido, '+N()+'! Has completado EL SEGUNDO PERDIDO. Los doce fragmentos están juntos, pero el universo de Unfire sigue abierto. Puedes explorar, crear música y jugar con tus amigos cuando quieras.']],end:true}
+]},
   ];
 
   // ---------- interfaz: barras de cine, nombre, subtítulos y opciones ----------
@@ -4431,7 +4459,7 @@ window.STORY_INIT = function (H) {
   function save(msg) { SAVE.ts = Date.now(); store(SAVE); if (msg) H.say('💾 Partida guardada · capítulo ' + (SAVE.ch + 1)); }
   function setObj(t) { const ob = document.getElementById('stO'); ob.textContent = t ? '🎯 ' + t : ''; ob.style.display = t ? '' : 'none'; }
   function runStep() { const C = CH[SAVE.ch]; if (!C || C.locked) { setObj(''); return; } inStory = true; const S0 = C.steps[SAVE.step]; if (!S0) return;
-    play(S0.say, () => { if (S0.end) { SAVE.done.includes(SAVE.ch) || SAVE.done.push(SAVE.ch); SAVE.ch++; SAVE.step = 0; save(true); const nxt = CH[SAVE.ch]; if (nxt && !nxt.locked) choices([['▶ SIGUIENTE CAPÍTULO', () => runStep()], ['MÁS TARDE', () => { show(false); setObj('Capítulo ' + (SAVE.ch + 1) + ' esperando · 📖 HISTORIA'); }, 1]]); else choices([['🔓 VER EL MALETÍN COMPLETO', () => { H.buy(); show(false); }], ['CERRAR', () => { show(false); setObj(''); }, 1]]); return; }
+    play(S0.say, () => { if (S0.end) { SAVE.done.includes(SAVE.ch) || SAVE.done.push(SAVE.ch); SAVE.ch++; SAVE.step = 0; save(true); const nxt = CH[SAVE.ch]; if (nxt && !nxt.locked) choices([['▶ SIGUIENTE CAPÍTULO', () => runStep()], ['MÁS TARDE', () => { show(false); setObj('Capítulo ' + (SAVE.ch + 1) + ' esperando · 📖 HISTORIA'); }, 1]]); else choices([['🏆 HISTORIA COMPLETA · SEGUIR JUGANDO', () => { show(false); setObj('🏆 Los doce fragmentos reunidos · el mundo sigue abierto'); }], ['📖 REVISAR CAPÍTULOS', () => { show(false); openMenu(); }, 1]]); return; }
       if (S0.wait) { waitEv = S0.wait.ev; waitN = S0.wait.n || 1; setObj(S0.hint); choices([['¡VAMOS!', () => show(false)]]); } else { SAVE.step++; save(); runStep(); } }); }
   function ev(name) { if (!waitEv || name !== waitEv) return; waitN--; if (waitN > 0) { setObj(CH[SAVE.ch].steps[SAVE.step].hint + ' · faltan ' + waitN); return; } waitEv = null; SAVE.step++; save(); setTimeout(runStep, 700); }
   function intro() { if (hostShown) return; hostShown = true; H.showHost(true); hud.style.display = 'flex';
@@ -4455,7 +4483,7 @@ window.STORY_INIT = function (H) {
   let chatT = 25, lastChat = -1;
   function chatter(dt, ok) { if (!SAVE.met || active || mute) return; chatT -= dt; if (chatT > 0 || !ok) return; chatT = 30 + Math.random() * 40; let w, e, tx; const usedC = (() => { try { return JSON.parse(localStorage.getItem('unfire_chat') || '[]'); } catch (er) { return []; } })(); const freeC = CHAT.map((_, j) => j).filter((j) => !usedC.includes(j)); if (freeC.length && Math.random() < 0.5) { const i = freeC[Math.floor(Math.random() * freeC.length)]; usedC.push(i); try { localStorage.setItem('unfire_chat', JSON.stringify(usedC)); } catch (er) {} const C0 = CHAT[i]; w = C0[0]; e = C0[1]; tx = typeof C0[2] === 'function' ? C0[2]() : C0[2]; } else { const ks = Object.keys(CAST); w = ks[Math.floor(Math.random() * ks.length)]; e = ['feliz', 'misterio', 'risa', 'duda', 'susurro', 'serio'][Math.floor(Math.random() * 6)]; tx = genLine(w); } H.say('💬 ' + w + ': ' + tx); H.focusHost(w, true); voice(w, tx, e, () => {}); }
   const curObj = () => { const C = CH[SAVE.ch]; const S0 = C && !C.locked && C.steps[SAVE.step]; return waitEv && S0 && S0.at ? { x: S0.at[0], z: S0.at[1], mini: !!S0.mini, t: S0.hint } : null; };
-  return { ev, intro, chatter, get obj() { return curObj(); }, get active() { return active; }, tick(st) { if (!hostShown && st.open && st.far) intro(); hud.style.display = hostShown && st.open ? 'flex' : 'none'; }, get save() { return SAVE; } };
+  return { ev, intro, chatter, get chapters(){return CH.map(c=>({title:c.t,steps:c.steps?.length||0,locked:!!c.locked,hasEnding:!!c.steps?.some(x=>x.end)}))}, get obj() { return curObj(); }, get active() { return active; }, tick(st) { if (!hostShown && st.open && st.far) intro(); hud.style.display = hostShown && st.open ? 'flex' : 'none'; }, get save() { return SAVE; } };
 };
 
 </script>
