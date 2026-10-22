@@ -27,7 +27,22 @@ const assert=require('node:assert/strict');
   await f.evaluate(()=>{const b=document.getElementById('unfireCarryCase');if(!b)throw Error('Carry control was not created');b.click()});
   const opened=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,mission:window.__UNFIRE_CASE_QA.mission}));
   assert(!opened.closed&&!opened.carrying&&opened.mission===initial.mission,'Reopen does not work');
-  const states=await f.evaluate(()=>{const a=[];for(let i=0;i<4;i++){window.__mal.toggleCase();a.push(window.__UNFIRE_CASE_QA.closed)}return a});
+  // Reopen away from the original table and recover it at the player without losing the mission.
+  await f.evaluate(()=>{window.__roamAPI.ROAMS.p.set(35,4.5,29);});
+  const recovery=await f.evaluate(()=>({
+    shown:window.__UNFIRE_CASE_QA.recoverVisible,
+    mission:window.__UNFIRE_CASE_QA.mission
+  }));
+  assert(recovery.shown&&recovery.mission===initial.mission,'A displaced case must remain recoverable during the story');
+  await f.evaluate(()=>document.getElementById('unfireCarryCase').click());
+  const rescued=await f.evaluate(()=>({
+    c:window.__UNFIRE_CASE_QA.casePos,
+    p:window.__UNFIRE_CASE_QA.playerPos,
+    mission:window.__UNFIRE_CASE_QA.mission
+  }));
+  assert(Math.hypot(rescued.c[0]-rescued.p[0],rescued.c[2]-rescued.p[2])<5,'Recovered case is too far from the player');
+  assert(rescued.mission===initial.mission,'Recovering the case erased mission');
+    const states=await f.evaluate(()=>{const a=[];for(let i=0;i<4;i++){window.__mal.toggleCase();a.push(window.__UNFIRE_CASE_QA.closed)}return a});
   assert.deepEqual(states,[true,false,true,false],'Rapid click target-state toggle not alternating');
   const missions=await f.evaluate(()=>{
     const result=[];
