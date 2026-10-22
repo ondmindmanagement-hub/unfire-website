@@ -3980,6 +3980,91 @@ window.ROOMC = function (D) {
 
   // ================= VITRINAS de cristal: todos los artilugios por familias (en su forma base); tócalos y salen y se transforman =================
   const capA = new THREE.TextureLoader().load((D.IMG || '../img/') + 'caps-a.webp'), capB = new THREE.TextureLoader().load((D.IMG || '../img/') + 'caps-b.webp'); [capA, capB].forEach((t) => { t.encoding = THREE.sRGBEncoding; t.anisotropy = 8; });
+  // Y2K Garage: bounded, deterministic small-body physics for deployed exhibits and
+  // their independent platforms. Existing GEAR3/GEAR4/ROBOT transforms are untouched.
+  const GARAGE_PHYS=(()=>{
+    const bodies=[], floor=FY+0.5, limit=30;
+    const chrome=new THREE.MeshStandardMaterial({color:0xa5daff,metalness:0.72,roughness:0.19,emissive:0x09284c,emissiveIntensity:0.18});
+    const rim=new THREE.MeshBasicMaterial({color:0x62e9ff,toneMapped:false});
+    let accumulator=0, domeTimer=0;
+    const cleanup=(body)=>{
+      const i=bodies.indexOf(body);if(i>=0)bodies.splice(i,1);
+      if(body.isPlatform&&body.obj.parent){body.obj.parent.remove(body.obj);}
+    };
+    const remove=(q)=>{if(!q)return;for(const b of bodies.slice())if(b.owner===q)cleanup(b);};
+    const put=(q)=>{
+      // Only exhibits actually taken out of a cabinet become dynamic.
+      const obj=q.dv.root;
+      if(!obj||!obj.parent)return;
+      while(bodies.length>=limit)cleanup(bodies[0]);
+      const p=obj.position;
+      const source=q.wall,dir=source==='R'?-1:source==='L'?1:0;
+      const dz=source==='F'?-1:source==='W'?1:0;
+      const seed=q.seed||1;
+      const flight=(seed%4===0);
+      const body={obj,owner:q,r:q.dv.robot?1.65:1.2,m:2.5,vel:V(dir*(5+seed%5)+(seed%3-1)*3,12+(seed%4)*3,dz*(6+seed%5)+(seed%2?2:-2)),
+        spin:V((seed%3-1)*0.7,(seed%5-2)*0.5,0.38),age:0,life:0,flight,rest:0.58,isPlatform:false};
+      const disk=new THREE.Group();
+      const base=mesh(new THREE.CylinderGeometry(1.35,1.46,0.25,14),chrome);
+      const stripe=mesh(new THREE.TorusGeometry(1.27,0.07,6,20),rim);stripe.rotation.x=H2;stripe.position.y=0.15;
+      disk.add(base,stripe);disk.position.copy(p);disk.position.y-=1.35;
+      R.add(disk);
+      const pad={obj:disk,owner:q,r:1.3,m:3.6,vel:body.vel.clone().multiplyScalar(0.67),spin:V(0,body.spin.y*0.45,0.27),age:0,life:0,flight:flight&&seed%8===0,rest:0.45,isPlatform:true};
+      q.physics=body;q.platform=pad;
+      bodies.push(body,pad);
+    };
+    const integrate=(b,h)=>{
+      const p=b.obj.position;
+      b.age+=h;
+      if(b.flight&&b.age>1.2){
+        // Only selected items travel toward the existing roof dome opening.
+        const dx=-p.x,dz=40-p.z,dd=Math.max(1,Math.hypot(dx,dz));
+        b.vel.x+=dx/dd*9*h;b.vel.z+=dz/dd*9*h;b.vel.y+=19*h;
+        if(window.__DOME && dd<34 && p.y>CY-8)window.__DOME.open=1;
+      }
+      b.vel.y-=24*h;
+      const sp=b.vel.length();if(sp>38)b.vel.multiplyScalar(38/sp);
+      p.addScaledVector(b.vel,h);
+      b.obj.rotation.x+=b.spin.x*h;b.obj.rotation.y+=b.spin.y*h;b.obj.rotation.z+=b.spin.z*h;
+      const drag=Math.exp(-0.28*h);b.vel.x*=drag;b.vel.z*=drag;b.spin.multiplyScalar(Math.exp(-0.7*h));
+      if(p.y<b.r+floor){p.y=b.r+floor;if(b.vel.y<0)b.vel.y=-b.vel.y*b.rest;b.vel.x*=0.85;b.vel.z*=0.85;if(Math.abs(b.vel.y)<0.8)b.vel.y=0;}
+      // Keep floor movers in the house; flying exhibits can only escape through
+      // the open dome, then return to their original cabinet after timeout.
+      const domeOpen=b.flight && Math.hypot(p.x,p.z-40)<34 && p.y>CY-8;
+      if(!domeOpen){
+        if(p.x < -RX+b.r){p.x=-RX+b.r;b.vel.x=Math.abs(b.vel.x)*b.rest;}
+        if(p.x > RX-b.r){p.x=RX-b.r;b.vel.x=-Math.abs(b.vel.x)*b.rest;}
+        if(p.z < WZ+b.r){p.z=WZ+b.r;b.vel.z=Math.abs(b.vel.z)*b.rest;}
+        if(p.z > RZ-b.r){p.z=RZ-b.r;b.vel.z=-Math.abs(b.vel.z)*b.rest;}
+        if(p.y > CY-b.r){p.y=CY-b.r;b.vel.y=-Math.abs(b.vel.y)*b.rest;}
+      }
+    };
+    const tick=(dt)=>{
+      if(!SHOW()||window.ATM_OUT||!bodies.length)return;
+      accumulator=Math.min(0.11,accumulator+Math.min(dt,0.05));
+      const h=1/45;let loops=0;
+      while(accumulator>=h&&loops++<3){accumulator-=h;
+        for(const b of bodies)integrate(b,h);
+        // Sphere collision approximation; exchange impulses weighted by mass.
+        for(let i=0;i<bodies.length;i++)for(let j=i+1;j<bodies.length;j++){
+          const a=bodies[i],b=bodies[j];
+          if(a.owner===b.owner)continue;
+          const d=b.obj.position.clone().sub(a.obj.position),dist=d.length(),minDist=a.r+b.r;
+          if(dist>=minDist)continue;
+          if(dist<0.001)d.set(1,0,0);else d.multiplyScalar(1/dist);
+          const invA=1/a.m,invB=1/b.m,pen=(minDist-Math.max(0.001,dist))/(invA+invB);
+          a.obj.position.addScaledVector(d,-pen*invA*0.8);
+          b.obj.position.addScaledVector(d,pen*invB*0.8);
+          const along=b.vel.clone().sub(a.vel).dot(d);
+          if(along<0){const imp=-(1+Math.min(a.rest,b.rest))*along/(invA+invB);
+            a.vel.addScaledVector(d,-imp*invA);b.vel.addScaledVector(d,imp*invB);}
+        }
+      }
+    };
+    anim.push((dt)=>tick(dt));
+    return {put,remove,tick,get count(){return bodies.length},get bodies(){return bodies}};
+  })();
+  window.__GARAGE_PHYS=GARAGE_PHYS;
   const vitrine = (wall, a, y0, cols, items, title) => { const C = 2.5, rows = Math.ceil(items.length / cols), W = cols * C + 1.2, H = rows * C + 2.4; block(wall, a, y0 + H / 2, W + 1, H + 1, 0.4); const g = G(wall, a, y0, 0.05); const glassM = new THREE.MeshPhysicalMaterial({ color: 0xdff4ff, transmission: 0.9, roughness: 0.02, transparent: true, opacity: 0.16, depthWrite: false, clearcoat: 1 }); const fr = new THREE.MeshPhysicalMaterial({ color: 0xe9eef6, metalness: 0.9, roughness: 0.18 });
     const back = new THREE.Mesh(new THREE.PlaneGeometry(W, H), new THREE.MeshStandardMaterial({ map: cnv(256, 256, (c) => { const gr = c.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, '#0d1638'); gr.addColorStop(1, '#1d3a8a'); c.fillStyle = gr; c.fillRect(0, 0, 256, 256); }), roughness: 0.6 })); back.position.set(0, H / 2, 0.02); g.add(back);
     for (const [bw, bh, bd, px, py, pz] of [[W + 0.4, 0.4, 3, 0, 0.2, 1.5], [W + 0.4, 0.4, 3, 0, H - 0.2, 1.5], [0.4, H, 3, -W / 2, H / 2, 1.5], [0.4, H, 3, W / 2, H / 2, 1.5]]) { const b = nm(mesh(new THREE.BoxGeometry(bw, bh, bd), fr)); b.position.set(px, py, pz); g.add(b); }
@@ -4000,10 +4085,13 @@ window.ROOMC = function (D) {
     anim.push((dt) => { if (!SHOW()) return; for (const s of spinners) s.dv.root.rotation.y += dt * s.sp; });
     let cur = null; const wpos = new THREE.Vector3(); const VX = document.createElement('button'); VX.textContent = '✕ DEVOLVER A LA VITRINA'; VX.style.cssText = 'position:fixed;left:50%;bottom:calc(9vh + 60px);transform:translateX(-50%);z-index:62;display:none;border:2px solid #fff;border-radius:999px;padding:9px 14px;font:800 12px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#ff6b81,#d8203a);cursor:pointer;box-shadow:0 6px 18px #0008'; document.body.appendChild(VX); VX.addEventListener('pointerdown', (e) => e.stopPropagation()); VX.onclick = (e) => { e.stopPropagation(); if (cur) cur.out = true; VX.style.display = 'none'; };
     cells.forEach((c) => picks.push({ o: c.m, noFocus: false, f: () => { hap(0.4); openT = 6; if (cur && cur.cell === c) { cur.out = true; return; } if (cur) { cur.out = true; } try { let dv; if (c.it.spec) dv = D.device(c.it.spec, true); else { const r0 = ROBOT.build(c.it.mspec); const w = new THREE.Group(); const w2 = new THREE.Group(); w.add(w2); w2.add(r0.root); r0.update(3.7, 0.016, {}); const bb = new THREE.Box3().setFromObject(r0.root); w2.scale.setScalar(1 / Math.max(0.001, bb.getSize(V(0, 0, 0)).y)); r0.root.position.y -= bb.min.y; w2.position.y = -0.5; r0.update(0, 0.016, {}); dv = { root: w, update: (T, dt) => r0.update(T * 1.7, dt, { act: T > 2 ? 'dance' : null, ph: performance.now() / 1000, mood: 'happy' }), robot: 1 }; }
-        dv.root.position.set(c.m.position.x, c.m.position.y, 4.5); dv.root.scale.setScalar(0.01); g.add(dv.root); cur = { dv, cell: c, T: 0, tg: 2.2, s: 0, out: false }; const nm2 = c.it.name || 'Artilugio'; say('🔎 ' + nm2 + (c.it.fam ? ' · ' + c.it.fam : '') + ' · ✕ o tócalo otra vez para devolverlo a la vitrina'); VX.style.display = 'block'; c.mat.map = c.it.atlas != null ? capB : c.mat.map; } catch (e) { console.warn('vitrina', e); } } }));
+        const wp=c.m.getWorldPosition(new THREE.Vector3());R.worldToLocal(wp);wp.y+=1.7;
+        dv.root.position.copy(wp);dv.root.scale.setScalar(0.01);R.add(dv.root);
+        cur={dv,cell:c,T:0,tg:2.2,s:0,out:false,wall,seed:i+items.length+Math.floor(a*3)};
+        GARAGE_PHYS.put(cur); const nm2 = c.it.name || 'Artilugio'; say('🔎 ' + nm2 + (c.it.fam ? ' · ' + c.it.fam : '') + ' · ✕ o tócalo otra vez para devolverlo a la vitrina'); VX.style.display = 'block'; c.mat.map = c.it.atlas != null ? capB : c.mat.map; } catch (e) { console.warn('vitrina', e); } } }));
     const olds = []; anim.push((dt, t) => { if (!SHOW()) { VX.style.display = 'none'; return; } openT = Math.max(0, openT - dt); open += ((openT > 0 || cur ? 1 : 0) - open) * Math.min(1, dt * 3); doorL.position.x = -W / 4 - open * W * 0.24; doorR.position.x = W / 4 + open * W * 0.24;
-      if (cur) { const q = cur; q.age = (q.age || 0) + dt; if (q.age > 45) q.out = true; if (q.out) { olds.push(q); cur = null; VX.style.display = 'none'; } else { q.s = Math.min(1, q.s + dt * 1.2); const big = q.dv.robot ? 4.5 : 1.3; q.dv.root.scale.setScalar(Math.max(0.01, q.s) * big); q.T += clamp(q.tg - q.T, -dt * 0.9, dt * 0.45); q.dv.update(q.T, dt, { level: 0.25 }); if (q.T > 2.15) q.dv.root.rotation.y += dt * 0.4; else q.dv.root.rotation.y *= 0.95; } }
-      for (let i = olds.length - 1; i >= 0; i--) { const q = olds[i]; q.T = Math.max(0, q.T - dt * 1.4); q.dv.update(q.T, dt, { level: 0 }); if (q.T <= 0) { q.s -= dt * 2; q.dv.root.scale.setScalar(Math.max(0.01, q.s) * (q.dv.robot ? 4.5 : 1.3)); if (q.s <= 0) { g.remove(q.dv.root); if (q.cell.it.atlas != null) q.cell.mat.map = capA; olds.splice(i, 1); } } } });
+      if (cur) { const q = cur; q.age = (q.age || 0) + dt; if (q.age > 36 || (q.physics && q.physics.obj.position.y>CY+65)) q.out = true; if (q.out) { olds.push(q); cur = null; VX.style.display = 'none'; } else { q.s = Math.min(1, q.s + dt * 1.2); const big = q.dv.robot ? 4.5 : 1.3; q.dv.root.scale.setScalar(Math.max(0.01, q.s) * big); q.T += clamp(q.tg - q.T, -dt * 0.9, dt * 0.45); q.dv.update(q.T, dt, { level: 0.25 }); if (q.T > 2.15) q.dv.root.rotation.y += dt * 0.4; else q.dv.root.rotation.y *= 0.95; } }
+      for (let i = olds.length - 1; i >= 0; i--) { const q = olds[i]; q.T = Math.max(0, q.T - dt * 1.4); q.dv.update(q.T, dt, { level: 0 }); if (q.T <= 0) { q.s -= dt * 2; q.dv.root.scale.setScalar(Math.max(0.01, q.s) * (q.dv.robot ? 4.5 : 1.3)); if (q.s <= 0) { GARAGE_PHYS.remove(q);if(q.dv.root.parent)q.dv.root.parent.remove(q.dv.root); if (q.cell.it.atlas != null) q.cell.mat.map = capA; olds.splice(i, 1); } } } });
     return g; };
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
   try { const PL = D.PLUGINS.list.map((spec, i) => ({ spec, atlas: i, name: spec.name, fam: spec.famLabel || spec.family })); const FX = PL.filter((p) => !['sampler', 'granular', 'drums', 'synth'].includes(p.spec.engine)), INST = PL.filter((p) => ['sampler', 'granular', 'drums', 'synth'].includes(p.spec.engine));
