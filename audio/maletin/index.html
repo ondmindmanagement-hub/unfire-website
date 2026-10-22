@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023c" as="script"></head><body><title>UNFIRE Maletín</title>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023d" as="script"></head><body><title>UNFIRE Maletín</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
@@ -36,6 +36,56 @@ body.cine::before, body.cine::after { height:9vh }
 #directOpen:focus-visible{outline:3px solid #d6eaff;outline-offset:4px}
 #directOpen:disabled{cursor:progress}
 @media(max-width:600px){#directOpen{bottom:max(28px,calc(env(safe-area-inset-bottom) + 22px));min-width:158px}}
+
+/* Small-screen game HUD: portrait, landscape, browser bars and safe areas. */
+body.unfire-roaming #cv{touch-action:none}
+@media(pointer:coarse){
+ #howto{box-sizing:border-box!important;width:min(94vw,520px)!important;max-height:calc(100dvh - 24px)!important;overflow-y:auto!important;overscroll-behavior:contain}
+ #onl{box-sizing:border-box;padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}
+ #onl:not(.workshop) .b{box-sizing:border-box;max-height:calc(100dvh - 24px)!important;overflow-y:auto}
+ #onlHud{max-width:calc(100vw - 16px);box-sizing:border-box;flex-wrap:wrap;gap:4px}
+ #ctlDock{position:fixed!important;right:max(7px,env(safe-area-inset-right))!important;top:calc(env(safe-area-inset-top) + 114px)!important;bottom:auto!important;max-height:38dvh!important;overflow-y:auto;overscroll-behavior:contain;flex-direction:column-reverse!important;gap:4px!important}
+ #ctlDock button{min-height:34px!important;font-size:10px!important;padding:5px 8px!important}
+ #cfgB{right:max(8px,env(safe-area-inset-right))!important;top:calc(env(safe-area-inset-top) + 52px)!important}
+ #storyHud.cfgOn{right:max(8px,env(safe-area-inset-right))!important;top:calc(env(safe-area-inset-top) + 101px)!important;max-height:55dvh;overflow-y:auto}
+ #minimap{left:max(7px,env(safe-area-inset-left))!important;top:calc(env(safe-area-inset-top) + 60px)!important;width:110px!important;height:110px!important}
+ #stO{top:calc(env(safe-area-inset-top) + 9px)!important;max-width:55vw!important;font-size:10px!important}
+ #unfireCarryCase{right:max(8px,env(safe-area-inset-right))!important;bottom:calc(env(safe-area-inset-bottom) + 170px)!important;max-width:calc(100vw - 20px)}
+ #unfireTouchPad{left:max(9px,env(safe-area-inset-left))!important;bottom:calc(env(safe-area-inset-bottom) + 10px)!important;width:112px!important;height:112px!important}
+ #unfireTouchKnob{width:44px!important;height:44px!important}
+ #unfireFly,#unfireTalk,#unfireDown{right:max(10px,env(safe-area-inset-right))!important;min-height:42px!important;min-width:86px!important;padding:8px 11px!important;font-size:11px!important}
+ #unfireFly{bottom:calc(env(safe-area-inset-bottom) + 12px)!important}
+ #unfireTalk{bottom:calc(env(safe-area-inset-bottom) + 63px)!important}
+ #unfireDown{bottom:calc(env(safe-area-inset-bottom) + 115px)!important}
+}
+@media(pointer:coarse) and (orientation:portrait){
+ #minimap{width:96px!important;height:96px!important}
+ #ctlDock{max-height:32dvh!important}
+ #howto{font-size:12px!important;padding:14px!important}
+}
+@media(pointer:coarse) and (orientation:landscape){
+ #howto{font-size:11px!important;padding:10px 14px!important}
+ #minimap{width:88px!important;height:88px!important;top:calc(env(safe-area-inset-top) + 48px)!important}
+ #ctlDock{top:calc(env(safe-area-inset-top) + 68px)!important;max-height:calc(100dvh - 82px)!important}
+ #cfgB{top:calc(env(safe-area-inset-top) + 8px)!important}
+ #storyHud.cfgOn{top:calc(env(safe-area-inset-top) + 62px)!important;max-height:calc(100dvh - 70px)}
+ #stO{top:calc(env(safe-area-inset-top) + 4px)!important;max-width:45vw!important}
+ #unfireCarryCase{bottom:calc(env(safe-area-inset-bottom) + 110px)!important;right:calc(env(safe-area-inset-right) + 105px)!important}
+ #onl.workshop .b{max-height:calc(100dvh - 12px)!important}
+ #unfireTouchPad{width:92px!important;height:92px!important}
+ #unfireTouchKnob{width:38px!important;height:38px!important}
+ #unfireFly,#unfireTalk,#unfireDown{min-height:36px!important;padding:5px 8px!important}
+ #unfireFly{bottom:calc(env(safe-area-inset-bottom) + 8px)!important}
+ #unfireTalk{bottom:calc(env(safe-area-inset-bottom) + 51px)!important}
+ #unfireDown{right:calc(env(safe-area-inset-right) + 104px)!important;bottom:calc(env(safe-area-inset-bottom) + 8px)!important}
+}
+@media(pointer:coarse) and (max-height:420px) and (orientation:landscape){
+ #onl:not(.workshop) .b{padding:9px!important}
+ #ctlDock{max-width:114px}
+ #ctlDock button{min-height:30px!important;padding:3px 6px!important;font-size:9px!important}
+ #minimap{width:72px!important;height:72px!important}
+}
+
 </style>
 
 <canvas id="cv" aria-label="Maletín UNFIRE en 3D. Acerca la vista con la rueda para entrar"></canvas>
@@ -4538,5 +4588,5 @@ window.STORY_INIT = function (H) {
 };
 
 </script>
-<script src="game-engine-v50.js?v=20261023c"></script>
+<script src="game-engine-v50.js?v=20261023d"></script>
 </body></html>
