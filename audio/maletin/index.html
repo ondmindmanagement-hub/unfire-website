@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js" as="script"></head><body><title>UNFIRE Maletín</title>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v51.js" as="script"></head><body><title>UNFIRE Maletín</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
@@ -3956,7 +3956,7 @@ window.ROOMC = function (D) {
         vec2 g = floor(vec2(lon, lat) * 160.0); float s = h(g); col += vec3(0.0 * s); }
       if (on2 > 0.5) { vec2 u2 = proj(d2, k2, 1.0) + off2; if (u2.x > 0.0 && u2.x < 1.0 && u2.y > 0.0 && u2.y < 1.0) { vec3 c2 = texture2D(map2, u2).rgb; col = max(col, c2 * 1.05); } }
       vec2 e = abs(vP / size * 2.0); float vig = 1.0 - 0.3 * pow(max(e.x, e.y), 5.0); gl_FragColor = vec4(col * vig * bright, 1.0); }`;
-  const portal = (wall, a, y, w, h, o) => { block(wall, a, y, w + 1.4, h + 1.4, 0.6); const g = G(wall, a, y, 0.02); const U = { map: { value: o.map }, map2: { value: o.map2 || o.map }, camL: { value: V(0, 0, 10) }, size: { value: new THREE.Vector2(w, h) }, depth: { value: o.depth || 12 }, k: { value: o.k || 1 + (o.depth || 12) / 13 }, vasp: { value: o.vasp || 16 / 9 }, mode: { value: o.mode || 0 }, t: { value: 0 }, bright: { value: o.bright || 1 }, d2: { value: o.d2 || 40 }, k2: { value: o.k2 || 1 }, on2: { value: o.map2 ? 1 : 0 }, off2: { value: o.off2 || new THREE.Vector2(0, 0) }, round: { value: o.round ? 1 : 0 } };
+  const portal = (wall, a, y, w, h, o) => { block(wall, a, y, w + 1.4, h + 1.4, 0.6); const g = G(wall, a, y, 0.02); g.userData.noCollide=true; const U = { map: { value: o.map }, map2: { value: o.map2 || o.map }, camL: { value: V(0, 0, 10) }, size: { value: new THREE.Vector2(w, h) }, depth: { value: o.depth || 12 }, k: { value: o.k || 1 + (o.depth || 12) / 13 }, vasp: { value: o.vasp || 16 / 9 }, mode: { value: o.mode || 0 }, t: { value: 0 }, bright: { value: o.bright || 1 }, d2: { value: o.d2 || 40 }, k2: { value: o.k2 || 1 }, on2: { value: o.map2 ? 1 : 0 }, off2: { value: o.off2 || new THREE.Vector2(0, 0) }, round: { value: o.round ? 1 : 0 } };
     const pl = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.ShaderMaterial({ uniforms: U, vertexShader: PVS, fragmentShader: PFS })); pl.position.z = -0.02; g.add(pl);
     const fm = new THREE.MeshPhysicalMaterial({ color: o.frame || 0xffffff, roughness: 0.22, clearcoat: 1, metalness: o.round ? 0.6 : 0 });
     if (o.round) { const ring = nm(mesh(new THREE.TorusGeometry(w / 2 + 0.35, 0.55, 20, 72), fm)); g.add(ring); for (let k = 0; k < 12; k++) { const b = nm(mesh(new THREE.SphereGeometry(0.22, 10, 8), M.chrome)); const an = k / 12 * TAU; b.position.set(Math.cos(an) * (w / 2 + 0.35), Math.sin(an) * (w / 2 + 0.35), 0.5); g.add(b); } }
@@ -3972,6 +3972,16 @@ window.ROOMC = function (D) {
   portal('L', 70, 7, 13, 13, { map: jelly.t, v: jelly, depth: 9, k: 1.9 });
   portal('R', 24, 6.5, 22, 12.4, { map: steens.t, v: steens, depth: 30, k: 2.6 });
   portal('R', 70, 7, 16, 9, { map: waves.t, v: waves, depth: 16 });
+  // Desert door-window: a single cached canvas, no extra video streams or animation loops.
+  const sandCanvas=Y2K.cnv(512,320),sandCtx=sandCanvas.getContext('2d');
+  {const grad=sandCtx.createLinearGradient(0,0,0,320);grad.addColorStop(0,'#237dc5');grad.addColorStop(.56,'#fbd194');grad.addColorStop(1,'#e5a45d');sandCtx.fillStyle=grad;sandCtx.fillRect(0,0,512,320);
+  sandCtx.fillStyle='#ffedc1';sandCtx.beginPath();sandCtx.arc(390,72,34,0,Math.PI*2);sandCtx.fill();
+  for(let j=0;j<5;j++){sandCtx.beginPath();sandCtx.moveTo(0,230+j*18);
+    for(let x=0;x<=512;x+=16)sandCtx.lineTo(x,227+j*18+Math.sin(x*.012+j)*13);
+    sandCtx.lineTo(512,320);sandCtx.lineTo(0,320);sandCtx.fillStyle=['#d78a4b','#e4a75b','#c87d46','#b66839','#a85d37'][j];sandCtx.fill();}
+  sandCtx.fillStyle='#663b2d';sandCtx.font='bold 23px Arial';sandCtx.fillText('DESIERTO · SALTA',19,38);}
+  const desertTexture=Y2K.toTex(sandCanvas,{color:true});
+  portal('F',-44,8,15,14,{map:desertTexture,depth:18,bright:1.05,frame:0xffd798});
   const milky = img('s_milky.jpg'), earthD = img('a_jupiter.jpg');
   const nomip = (t) => { t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.wrapS = THREE.RepeatWrapping; return t; }; const milkyW = nomip(img('s_milky_w.jpg')), earthW = nomip(img('a_jupiter_w.jpg')); portal('F', 44, 8, 15, 15, { map: milkyW, map2: earthW, mode: 1, round: true, d2: 55, k2: 1.6, off2: new THREE.Vector2(0.18, -0.12), spin: 0.004, frame: 0xc8d0e0 });
   { const pl = G('F', 44, -1.6, 0.05); const lb = new THREE.Mesh(new THREE.PlaneGeometry(7, 1), new THREE.MeshBasicMaterial({ map: cnv(512, 72, (c) => { c.fillStyle = '#0a1030'; c.fillRect(0, 0, 512, 72); c.fillStyle = '#9fd0ff'; c.font = '700 30px Orbitron, Arial'; c.textAlign = 'center'; c.fillText('ÓRBITA · CUBIERTA 7', 256, 46); }), toneMapped: false })); pl.add(lb); }
