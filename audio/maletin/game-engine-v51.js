@@ -948,9 +948,32 @@
   portalFlash.id='unfirePortalFlash';portalFlash.setAttribute('aria-live','polite');
   portalFlash.style.cssText='position:fixed;inset:0;z-index:83;pointer-events:none;display:grid;place-items:center;text-align:center;opacity:0;transition:opacity .3s ease-out;background:radial-gradient(ellipse at center,rgba(192,244,255,.5),rgba(48,117,255,.3) 35%,transparent 80%);color:white;text-shadow:0 0 18px #82dfff;font:800 clamp(14px,3vw,24px) Arial,sans-serif;letter-spacing:.1em';
   document.body.appendChild(portalFlash);
+  // One lightweight in-world return control; missions, actors and multiplayer remain alive.
+  const returnWindowBtn=document.createElement('button');
+  returnWindowBtn.id='unfireWindowHome';
+  returnWindowBtn.type='button';
+  returnWindowBtn.textContent='🏠 VOLVER A LA CASA';
+  returnWindowBtn.style.cssText='position:fixed;left:max(12px,env(safe-area-inset-left));bottom:max(16px,env(safe-area-inset-bottom));z-index:54;display:none;background:#112246e8;border:1px solid #90c9ff;border-radius:999px;padding:11px 15px;color:#fff;font:700 11px Arial,sans-serif;cursor:pointer;touch-action:manipulation;box-shadow:0 4px 18px #0009';
+  document.body.appendChild(returnWindowBtn);
+  function returnThroughWindow(){
+    if(!ROAMS.on||!window.ATM_OUT)return false;
+    ATM.setOut(false);
+    ROAMS.p.set(0,4.5,23);
+    ROAMS.h=0;ROAMS.vy=0;ROAMS.fly=false;ROAMS.flyH=null;
+    ROAMS.climbV=0;ROAMS.wet=false;ROAMS.air=false;ROAMS.tgt=null;
+    ROAMS.k={};ROAMS.stkN=0;lastPortalId='';portalUntil=performance.now()+1350;
+    returnWindowBtn.style.display='none';
+    portalFlash.textContent='✦ CASA ✦';portalFlash.style.opacity='1';
+    clearTimeout(portalFadeTimer);
+    portalFadeTimer=setTimeout(()=>{portalFlash.style.opacity='0';},360);
+    return true;
+  }
+  returnWindowBtn.addEventListener('pointerdown',e=>e.stopPropagation());
+  returnWindowBtn.addEventListener('click',e=>{e.stopPropagation();returnThroughWindow();});
   function warpWindow(w){
     if(!w||!ROAMS.on||ROAMS.mini||window.ATM_OUT||performance.now()<portalUntil)return false;
     portalUntil=performance.now()+1750;lastPortalId=w.id;
+    returnWindowBtn.style.display='block';
     ATM.setOut(true); // preserves network rooms, mission data and robot identity
     ROAMS.p.set(w.to[0],4.5,w.to[1]);
     ROAMS.h=w.to[2];ROAMS.vy=0;ROAMS.fly=w.fly;
@@ -1040,8 +1063,10 @@
     REC.v.lerp(want, Math.min(1, dt * 2.5)); REC.p.addScaledVector(REC.v, dt); if (!window.ATM_OUT) { REC.p.x = clamp(REC.p.x, -77, 77); REC.p.z = clamp(REC.p.z, -13.5, 93.5); REC.p.y = clamp(REC.p.y, -8, 23.5); } else { REC.p.y = clamp(REC.p.y, -6, 3200); const r = Math.hypot(REC.p.x, REC.p.z), RM = window.__WORLD_R || 4200; if (r > RM) REC.p.multiplyScalar(RM / r); }
     if (!REC.cq) { REC.cy = REC.yaw; REC.cpch = REC.pitch; REC.cq = 1; } REC.cy = angL(REC.cy, REC.yaw, Math.min(1, dt * 6)); REC.cpch += (REC.pitch - REC.cpch) * Math.min(1, dt * 6);
     cam.position.copy(REC.p); const c2 = Math.cos(REC.cpch); cam.lookAt(REC.p.x + Math.sin(REC.cy) * c2, REC.p.y + Math.sin(REC.cpch), REC.p.z - Math.cos(REC.cy) * c2); cam.near = 0.08; };
-  function enterRoam() { if (ROAMS.on) return; ROAMS.on = true;  ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
+  function enterRoam() { if (ROAMS.on) return; ROAMS.on = true;
+    if(window.ATM_OUT && lastPortalId)returnWindowBtn.style.display='block';  ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
   function exitRoam() { if (REC.on) REC.set(false); if (!ROAMS.on) return;
+    returnWindowBtn.style.display='none';
     if(carryingCase){carryingCase=false;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();}
  ROAMS.on = false; ROAMS.cp = null; ROAMS.mini = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
   roamB.onclick = (e) => { e.stopPropagation(); ROAMS.on ? exitRoam() : enterRoam(); };
@@ -2058,7 +2083,7 @@
     get openControl(){return getComputedStyle(carryButton).display},
     get scrollLock(){return lidControlledByPlayer},get portal(){return lastPortalId},get location(){return window.ATM_OUT?'outside':'house'},get altitude(){return ROAMS.h||0},get worldCoords(){return [ROAMS.p.x,ROAMS.p.z]}
   };
-  window.__UNFIRE_WINDOWS={definitions:WINDOWS,warp:warpWindow,cross:crossWindow,get last(){return lastPortalId}};
+  window.__UNFIRE_WINDOWS={definitions:WINDOWS,warp:warpWindow,cross:crossWindow,home:returnThroughWindow,get last(){return lastPortalId}};
   window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
   // A direct-link visitor can tap the button before the heavy 3D scene is initialized.
   if (parent === window && window.__unfireDirectOpenPending) {
