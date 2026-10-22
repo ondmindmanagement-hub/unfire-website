@@ -1211,7 +1211,7 @@
         #onl.workshop .ty{grid-template-columns:repeat(2,minmax(0,1fr))}
         #onl.workshop #onT{max-height:43dvh}
       }`;
-      document.head.appendChild(st);}
+      ui.appendChild(st);}
 
     const hud = document.createElement('div'); hud.id = 'onlHud'; hud.innerHTML = '<span id="onlT"></span><button id="onlInv">📨 INVITAR</button><button id="onlMic" type="button" aria-pressed="false" aria-label="Activar micrófono del chat de proximidad">🎤 ACTIVAR VOZ</button><button class="q" id="onlQ">✕</button>'; document.body.appendChild(hud); hud.addEventListener('pointerdown', (e) => e.stopPropagation());
     const $o = (id) => document.getElementById(id), msg = (t) => { $o('onMsg').textContent = window.T ? window.T(t) : t; };
