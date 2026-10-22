@@ -781,6 +781,9 @@ const UNFIRE_SCENE=(()=>{
   ['wheel','touchstart','pointerdown','keydown'].forEach(ev=>addEventListener(ev,engage,{passive:true}));
   addEventListener('scroll',()=>{if(performance.now()>=skipUntil&&scrollY>20&&nearHero())start()},{passive:true});
   addEventListener('pageshow',()=>{if(scrollY>20&&nearHero())start()},{once:true});
+  // Pages opened in background resume the full 3D when their tab becomes visible.
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&nearHero())start()});
+  addEventListener('focus',()=>{if(!document.hidden&&nearHero())start()});
   setTimeout(()=>{if(!document.hidden&&nearHero())start()},matchMedia('(max-width:700px)').matches?3200:1900);
   return{start};
 })();
