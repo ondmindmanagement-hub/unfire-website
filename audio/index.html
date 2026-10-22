@@ -1,4 +1,17 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="robots" content="noindex,follow"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="Explora Unfire Audio: instrumentos, efectos, demostraciones interactivas y experiencias sonoras."><meta name="theme-color" content="#08090c"><link rel="canonical" href="https://unfire.technology/audio/"><title>Unfire Audio | Unfire Technology</title>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="robots" content="index,follow,max-image-preview:large"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="Juega gratis en el universo 3D de Unfire Audio: 20 robots transformables, música, secretos y aventuras. Descubre además sintetizadores y efectos interactivos."><meta name="theme-color" content="#08090c"><link rel="canonical" href="https://unfire.technology/audio/"><title>Unfire Audio — juego 3D gratis, sintetizadores y efectos</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Unfire">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Unfire Audio — entra en un universo 3D gratuito">
+<meta property="og:description" content="Robots transformables, música, aventuras y secretos en el navegador. Juega gratis, sin instalación.">
+<meta property="og:url" content="https://unfire.technology/audio/">
+<meta property="og:image" content="https://unfire.technology/audio/img/hyperwave-open.webp">
+<meta property="og:image:alt" content="Unfire Audio, experiencias musicales e instrumentos interactivos">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Unfire Audio — universo 3D gratis">
+<meta name="twitter:description" content="20 robots transformables, música, secretos y una experiencia interactiva. Gratis en tu navegador.">
+<meta name="twitter:image" content="https://unfire.technology/audio/img/hyperwave-open.webp">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"UNFIRE Mutants — Unfire Audio","url":"https://unfire.technology/audio/","description":"Experiencia interactiva gratuita en 3D con robots transformables, exploración, música y secretos.","inLanguage":["es","en"],"gamePlatform":"Web browser","applicationCategory":"Game","publisher":{"@type":"Organization","name":"Unfire","url":"https://unfire.technology"},"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR","availability":"https://schema.org/InStock"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -387,7 +400,7 @@ footer a{color:var(--soft)}
 <div class="draft"><div class="wrap"><span>UNFIRE AUDIO · VISTA PREVIA INTERACTIVA</span><span>Los precios y lanzamientos pueden cambiar. No hay pagos activados.</span></div></div>
 
 <header class="top"><div class="wrap">
-  <a class="brand" href="#top" aria-label="UNFIRE AUDIO, inicio"><img src="img/logo-unfire-256.webp" alt="" width="34" height="34" style="width:34px;height:34px;align-self:center"><b>UNFIRE</b><span>AUDIO</span></a>
+  <a class="brand" href="#top" aria-label="UNFIRE AUDIO, inicio"><img src="img/logo-unfire-256.webp" alt="" width="34" height="34" style="width:34px;height:34px;align-self:center"><b translate="no">UNFIRE</b><span translate="no">AUDIO</span></a>
   <nav class="nav" aria-label="Secciones">
     <a href="#instrumentos" data-sec="instrumentos">Instrumentos</a><a href="#efectos" data-sec="efectos">Efectos</a><a href="#transformables" data-sec="transformables">Transformables</a><a href="#capsulas" data-sec="capsulas">Cápsulas</a><a href="#precios" data-sec="precios">Precios</a><a href="#licencia" data-sec="licencia">Licencia</a><a href="catalogo/index.html">Catálogo</a><a href="fabrica/index.html" style="color:#b6ff3b">Fábrica ✦</a>
   </nav>
@@ -545,10 +558,18 @@ footer a{color:var(--soft)}
 </div>
 
 <footer><div class="wrap">
-  <div style="display:flex;gap:14px;align-items:center"><img src="img/logo-unfire-256.webp" alt="" width="44" height="44" style="width:44px;height:44px"><div>UNFIRE AUDIO es parte de <a href="https://unfire.technology" target="_blank" rel="noopener">Unfire</a> · Cardedeu, Barcelona<br>Contacto: <span class="sel">hello@unfire.technology</span><br><a href="/terms.html">Términos</a> · <a href="/software-license.html">Licencia</a> · <a href="/refunds.html">Reembolsos</a> · <a href="legal/">Propiedad intelectual de UNFIRE AUDIO</a></div></div>
+  <div style="display:flex;gap:14px;align-items:center"><img src="img/logo-unfire-256.webp" alt="" width="44" height="44" style="width:44px;height:44px"><div>UNFIRE AUDIO es parte de <a href="https://unfire.technology" target="_blank" rel="noopener">Unfire</a> · Cardedeu, Barcelona<br>Contacto: <span class="sel">hello@unfire.technology</span><br><a href="/terms.html">Términos</a> · <a href="/software-license.html">Licencia</a> · <a href="/refunds.html">Reembolsos</a> · <a href="legal/">Propiedad intelectual de UNFIRE AUDIO</a> · <a href="media-credits.html">Créditos multimedia</a></div></div>
   <div style="max-width:56ch">Fotografías de los FX20: The Metropolitan Museum of Art, Open Access (dominio público). Sonidos de las demos: VCSL (CC0). Melodías de dominio público. Tipografías SIL OFL y Apache 2.0.</div>
+  <div><button class="btn btn-ghost btn-sm" type="button" id="shareGame" aria-label="Compartir el juego gratuito">↗ Compartir juego gratis</button></div>
 </div></footer>
-
+<script>
+document.getElementById('shareGame').addEventListener('click',async function(){
+  const data={title:'Unfire Audio — juego 3D gratis',text:'20 robots transformables, música y un mundo por explorar. Juega gratis:',url:'https://unfire.technology/audio/'};
+  if(navigator.share){try{await navigator.share(data);return;}catch(e){if(e.name==='AbortError')return;}}
+  try{await navigator.clipboard.writeText(data.url);this.textContent='✓ Enlace copiado';setTimeout(()=>{this.textContent='↗ Compartir juego gratis';},2500);}
+  catch(e){window.prompt('Copia el enlace del juego',data.url);}
+});
+</script>
 <dialog id="sheet" aria-labelledby="sheetTitle"><div style="position:relative">
   <button class="x" type="button" data-close aria-label="Cerrar">✕</button>
   <div class="sheet">
