@@ -3,9 +3,13 @@ const assert=require('node:assert/strict');
 (async()=>{
  let browser, page; const errors=[];
  try{
-  browser=await chromium.launch({headless:true,args:['--enable-unsafe-swiftshader','--disable-dev-shm-usage','--no-sandbox','--autoplay-policy=no-user-gesture-required']});
-  page=await browser.newPage({viewport:{width:1080,height:760},deviceScaleFactor:1});page.on('pageerror',err=>errors.push(err.message.slice(0,180)));
-  await page.goto('http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded',timeout:30000});
+  browser=await chromium.launch({headless:true,executablePath:process.env.UNFIRE_CHROME||undefined,args:['--enable-unsafe-swiftshader','--disable-dev-shm-usage','--no-sandbox','--autoplay-policy=no-user-gesture-required']});
+  const page=await browser.newPage({viewport:{width:1080,height:760},deviceScaleFactor:1});
+  const errors=[];page.on('pageerror',err=>errors.push(err.message.slice(0,180)));
+  await page.addInitScript(()=>{
+    try{localStorage.setItem('unfire_save_v1',JSON.stringify({name:'Tester',level:1,ch:2,step:0,done:[0,1],met:true,ts:Date.now()}));}catch(e){}
+  });
+  await page.goto(process.env.UNFIRE_TEST_URL||'http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded',timeout:30000});
   await page.locator('#openBtn').evaluate(e=>e.click());
   const frame=page.frameLocator('#malFrame');
   await frame.locator('#directOpen').count();
@@ -22,6 +26,7 @@ const assert=require('node:assert/strict');
   await f.evaluate(()=>{window.__mal.setP(1);window.__mal.requestOpen();window.__roamAPI.enterRoam();window.__SIDEM.offer('NIMBO')});
   const initial=await f.evaluate(()=>({mission:window.__UNFIRE_CASE_QA.mission,originalButterfly:window.__UNFIRE_CASE_QA.originalButterfly,roam:window.__UNFIRE_CASE_QA.roam}));
   assert(initial.mission&&initial.originalButterfly&&initial.roam,'Mission, roam or real 3D butterfly not initialized');
+  assert(await f.evaluate(()=>window.__UNFIRE_CASE_QA.portableUnlocked),'Capsule should unlock at third mission');
   await f.evaluate(()=>window.__mal.toggleCase());
   const closed=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,mission:window.__UNFIRE_CASE_QA.mission}));
   console.log('CASE_STATE_DIAGNOSTIC',JSON.stringify({initial,closed}));
@@ -40,6 +45,11 @@ const assert=require('node:assert/strict');
   assert(landed,'Capsule did not land after physical simulation steps');
   const opened=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,mission:window.__UNFIRE_CASE_QA.mission,visible:window.__UNFIRE_CASE_QA.caseVisible}));
   assert(!opened.closed&&!opened.carrying&&opened.visible&&opened.mission===initial.mission,'Capsule landing lost case or active mission');
+  await f.evaluate(()=>{window.__mal.showCaseView();});
+  const inspecting=await f.evaluate(()=>window.__UNFIRE_CASE_QA.inspecting);
+  assert(inspecting,'Case close-up camera did not enable');
+  await f.evaluate(()=>window.__mal.showRobotView());
+  assert(!(await f.evaluate(()=>window.__UNFIRE_CASE_QA.inspecting)),'Robot view did not restore');
   // Pack again; player stays walking with no case mesh in front of the camera.
   await f.evaluate(()=>document.getElementById('unfireCarryCase').click());
   const repacked=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,visible:window.__UNFIRE_CASE_QA.caseVisible,mission:window.__UNFIRE_CASE_QA.mission}));
@@ -63,8 +73,8 @@ const assert=require('node:assert/strict');
     function assertExists(v,msg){if(!v)throw Error(msg);}
   });
   assert(secret.rejected&&secret.unlocked&&secret.questStillActive&&secret.storyUnchanged&&secret.confirmation.includes('desbloqueados'),'Secret app unlock/persistence or mission isolation failed: '+JSON.stringify(secret));
-  const states=await f.evaluate(()=>{const a=[];for(let i=0;i<4;i++){window.__mal.toggleCase();a.push(window.__UNFIRE_CASE_QA.closed)}return a});
-  assert.deepEqual(states,[false,true,false,true],'Four toggles after packed case should open, close, open, close');
+  const rapid=await f.evaluate(()=>{const a=[],initial=window.__UNFIRE_CASE_QA.closed;for(let i=0;i<4;i++){window.__mal.toggleCase();a.push(window.__UNFIRE_CASE_QA.closed)}return {initial,states:a};});
+  assert(rapid.states.every((v,i)=>v===(i%2===0?!rapid.initial:rapid.initial)),'Rapid click target-state toggle not alternating: '+JSON.stringify(rapid));
   const missions=await f.evaluate(()=>{
     const result=[];
     for(let i=0;i<11;i++){
@@ -78,8 +88,26 @@ const assert=require('node:assert/strict');
     return result;
   });
   assert.equal(missions.filter(Boolean).length,11,'Some side mission completion rules failed');
+  // Workshop must display actual cached 3D robot portraits and leave room for player.
+  await f.evaluate(()=>{const b=[...document.querySelectorAll('button')].find(x=>x.textContent.trim()==='🔧 TALLER');if(!b)throw Error('Workshop action missing');b.click()});
+  await f.waitForFunction(()=>document.querySelectorAll("#onT .robotCard img").length>=2,{timeout:20000}).catch(()=>{});
+  const studio=await f.evaluate(()=>{const panel=document.querySelector('#onl .b').getBoundingClientRect();return {cards:document.querySelectorAll('#onT .robotCard').length,locked:document.querySelectorAll('#onT .robotCard:disabled').length,portraits:document.querySelectorAll('#onT .robotCard img').length,width:panel.width,viewport:innerWidth}});
+  assert(studio.cards===20&&studio.locked===0&&studio.portraits>=2&&studio.width<studio.viewport*0.5,'Workshop obstructs player or 3D portraits missing: '+JSON.stringify(studio));
+  // First-time players use the case on the table; carrying is locked until chapter 3.
+  const firstPage=await browser.newPage({viewport:{width:960,height:700}});
+  const firstErrors=[];firstPage.on('pageerror',e=>firstErrors.push(e.message));
+  await firstPage.addInitScript(()=>{try{localStorage.setItem('unfire_save_v1',JSON.stringify({name:'New',level:1,ch:0,step:0,done:[],met:true,ts:Date.now()}))}catch(e){}});
+  await firstPage.goto(process.env.UNFIRE_TEST_URL||'http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded'});
+  await firstPage.locator('#openBtn').evaluate(e=>e.click());
+  await firstPage.waitForFunction(()=>!!document.getElementById('malFrame')?.contentWindow?.__mal?.S,{timeout:80000});
+  const newcomer=firstPage.frames().find(x=>x.url().includes('/audio/maletin/index.html'));
+  await newcomer.evaluate(()=>{window.__mal.setP(1);window.__mal.requestOpen();window.__roamAPI.enterRoam();window.__mal.toggleCase()});
+  const newbie=await newcomer.evaluate(()=>({unlocked:window.__UNFIRE_CASE_QA.portableUnlocked,carrying:window.__UNFIRE_CASE_QA.carrying,visible:window.__UNFIRE_CASE_QA.caseVisible,roam:window.__UNFIRE_CASE_QA.roam,disabled:document.getElementById('unfireCarryCase').disabled}));
+  assert(!newbie.unlocked&&!newbie.carrying&&newbie.visible&&newbie.roam&&newbie.disabled,'Newcomer portable case should stay locked but normal gameplay continue: '+JSON.stringify(newbie));
+  assert.equal(firstErrors.length,0,'Newcomer browser errors: '+firstErrors.join(' | '));
+  await firstPage.close();
   assert.equal(errors.length,0,'Browser JavaScript errors: '+errors.join(' | '));
-  console.log('PASS desktop browser: portable capsule throw/repack, mystery code, preserved quest and game, 11 mission completion predicates, no JS errors');
- }catch(e){console.error('FAIL',e.stack?.slice(0,1200));if(page){try{console.error('PAGE_DIAG',JSON.stringify(await page.evaluate(()=>({ready:document.readyState,frameSrc:document.getElementById('malFrame')?.getAttribute('src'),iframeReady:!!document.getElementById('malFrame')?.contentWindow?.__mal,hero:document.getElementById('heroPin')?.className,immersive:document.body.classList.contains('immOn')}))));console.error('JS_ERRORS',JSON.stringify(errors.slice(0,8)));}catch(err){console.error('DIAGNOSTIC_FAILED',err.message)}}process.exitCode=1}
+  console.log('PASS Chrome: capsule/repack, case camera, 20 3D workshop slots, 11 side missions, first-time chapter gate, no JS errors');
+ }catch(e){console.error('FAIL',e.stack?.slice(0,1200));process.exitCode=1}
  finally{if(browser)await browser.close()}
 })();
