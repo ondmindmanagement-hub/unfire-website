@@ -90,7 +90,10 @@ p{margin:0}
   --plate:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cg stroke-linecap='round' fill='none'%3E%3Cpath d='M5 12L12 5' stroke='rgba(255,255,255,.85)' stroke-width='3.2'/%3E%3Cpath d='M6.5 13.5L13.5 6.5' stroke='rgba(40,46,56,.35)' stroke-width='2'/%3E%3Cpath d='M22 5L29 12' stroke='rgba(255,255,255,.85)' stroke-width='3.2'/%3E%3Cpath d='M20.5 6.5L27.5 13.5' stroke='rgba(40,46,56,.35)' stroke-width='2'/%3E%3Cpath d='M5 22L12 29' stroke='rgba(255,255,255,.85)' stroke-width='3.2'/%3E%3Cpath d='M6.5 20.5L13.5 27.5' stroke='rgba(40,46,56,.35)' stroke-width='2'/%3E%3Cpath d='M22 29L29 22' stroke='rgba(255,255,255,.85)' stroke-width='3.2'/%3E%3Cpath d='M23.5 30.5L30.5 23.5' stroke='rgba(40,46,56,.35)' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E")}
 .hero{height:160vh;position:relative}
 #malFrame{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;display:block}
-.hero-pin.imm{position:fixed!important;inset:0!important;top:0!important;height:100vh!important;height:100dvh!important;z-index:9999;background:#000}.hero-pin.imm #malFrame{clip-path:none!important;pointer-events:auto!important}body.immOn{overflow:hidden}body.immOn header,body.immOn .hero-copy{visibility:hidden}body.immOn #stopAll,body.immOn #sndBtn{display:none!important}
+.hero-pin.imm{position:fixed!important;inset:0!important;top:0!important;height:100vh!important;height:100dvh!important;z-index:9999;background:#000} .hero-pin.imm #malFrame{clip-path:none!important;pointer-events:auto!important}
+#heroPin:fullscreen,#heroPin:-webkit-full-screen{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;background:#000!important}
+#heroPin:fullscreen #malFrame,#heroPin:-webkit-full-screen #malFrame{inset:0!important;width:100%!important;height:100%!important;clip-path:none!important}
+body.immOn{overflow:hidden}body.immOn header,body.immOn .hero-copy{visibility:hidden}body.immOn #stopAll,body.immOn #sndBtn{display:none!important}
 .hero-pin{position:sticky;top:62px;height:calc(100vh - 62px);overflow:hidden;display:grid;place-items:center}
 /* Defer heavy WebGL startup until the document is interactive. Same full-resolution game. */
 .hero-pin:not(.scene-ready)::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 70%,#1c3353 0%,#08090c 65%)}
@@ -848,7 +851,27 @@ const Snd={mal:false,ui(){const open=[...document.querySelectorAll('#sheet,#hype
   all(){this.stopMal();document.querySelectorAll('#sheet,#hyper,#synth').forEach(x=>x.open&&x.close());this.mal=false;this.ui()}};
 (()=>{const sm=HTMLDialogElement.prototype.showModal;HTMLDialogElement.prototype.showModal=function(){if(['sheet','hyper','synth'].includes(this.id)){Snd.stopMal();document.querySelectorAll('#sheet,#hyper,#synth').forEach(x=>x!==this&&x.open&&x.close())}const r=sm.call(this);Snd.ui();return r};
   document.addEventListener('close',()=>setTimeout(()=>Snd.ui(),0),true);addEventListener('pagehide',()=>Snd.all());document.addEventListener('visibilitychange',()=>{if(document.hidden)Snd.all()})})();
-const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp=0,snap=0;let anim=0,passUntil=0,parked=0,loadingIntent=false,caseLocal=false;const open=(D=1100)=>{
+const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp=0,snap=0;let anim=0,passUntil=0,parked=0,loadingIntent=false,caseLocal=false;
+  // A single tap starts the game; Safari uses viewport immersion when native
+  // element fullscreen is unavailable (most iPhones).
+  const immersive=()=>{
+    caseLocal=true;$('#heroPin').classList.add('imm');
+    document.body.classList.add('immOn');
+    fr.style.pointerEvents='auto';fr.style.clipPath='none';
+    try{fr.contentWindow.postMessage({unfire:1,vis:true},location.origin);}catch(_){}
+  };
+  const fullscreenFromGesture=()=>{
+    const pin=$('#heroPin');
+    if(document.fullscreenElement||typeof pin.requestFullscreen!=='function')return;
+    try{const p=pin.requestFullscreen({navigationUI:'hide'});p?.catch?.(()=>{});}catch(_){}
+  };
+  const enterGame=()=>{
+    immersive();
+    try{fr.contentWindow.postMessage({unfire:1,entryStart:true,vis:true},location.origin);}catch(_){}
+  };
+  const open=(D=1100)=>{
+  immersive();
+  fullscreenFromGesture();
   if($('#heroPin').classList.contains('scene-error')){loadingIntent=false;UNFIRE_SCENE.start(true);}
   else UNFIRE_SCENE.start();
   if(anim||loadingIntent)return;
@@ -861,10 +884,14 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
     });
     return;
   }
-  anim=1;parked=0;$('#openBtn').classList.add('press');const y0=scrollY,y1=hero.offsetTop+(hero.offsetHeight-innerHeight)*.62,t0=performance.now();const st=(n)=>{const k=Math.min(1,(n-t0)/D),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;scrollTo(0,y0+(y1-y0)*e);if(k<1)requestAnimationFrame(st);else{anim=0;$('#openBtn').classList.remove('press')}};requestAnimationFrame(st)};
+  // Do not scroll back into the website after the 3D scene has loaded.
+  enterGame();loadingIntent=false;anim=0;parked=0;
+  const btn=$('#openBtn');btn.classList.remove('press');btn.removeAttribute('aria-busy');
+  const title=btn.querySelector('b');if(title)title.textContent='ABRIR';
+};
   const y1o=()=>hero.offsetTop+(hero.offsetHeight-innerHeight)*.62;const gate=(dy)=>{if(anim)return true;const y=scrollY,Y=y1o();if(dy>0&&y<Y-6&&y>hero.offsetTop-120){open(1300);return true}return false};addEventListener('wheel',e=>{if(gate(e.deltaY))e.preventDefault()},{passive:false});
   const prog=()=>{const r=hero.getBoundingClientRect();return Math.min(1,Math.max(0,-r.top/Math.max(1,r.height-innerHeight)))};
-  function tick(){if(parked&&scrollY<=hero.offsetTop+8)parked=0;const v=parked?0:prog();try{const rb=hero.getBoundingClientRect();fr.contentWindow.postMessage({unfire:1,vis:caseLocal||rb.bottom>90,...(caseLocal?{}:{p:Math.min(1,v*1.5)})},'*')}catch(e){}hc.style.opacity=1-Math.min(1,v*3.2);$('#openBtn').classList.toggle('gone',v>.18);
+  function tick(){if(caseLocal)return;if(parked&&scrollY<=hero.offsetTop+8)parked=0;const v=parked?0:prog();try{const rb=hero.getBoundingClientRect();fr.contentWindow.postMessage({unfire:1,vis:caseLocal||rb.bottom>90,...(caseLocal?{}:{p:Math.min(1,v*1.5)})},'*')}catch(e){}hc.style.opacity=1-Math.min(1,v*3.2);$('#openBtn').classList.toggle('gone',v>.18);
     const cross=(x)=>(lp<x&&v>=x)||(lp>x&&v<=x);if(cross(.06)||cross(.1))CaseSfx.play('latch');if(cross(.2))CaseSfx.play('lid',v<lp);if(cross(.5)&&v>lp)CaseSfx.play('thud');if(cross(.54)&&v>lp)CaseSfx.play('chime');lp=v}
   addEventListener('scroll',tick,{passive:true});fr.addEventListener('load',()=>{tick();setTimeout(tick,600)});
   addEventListener('keydown',e=>{const t=e.target;if(t&&/INPUT|TEXTAREA|SELECT/.test(t.tagName)||e.metaKey||e.ctrlKey)return;try{fr.contentWindow.postMessage({unfire:1,kd:e.key},'*')}catch(_){}});addEventListener('keyup',e=>{try{fr.contentWindow.postMessage({unfire:1,ku:e.key},'*')}catch(_){}});
@@ -889,7 +916,9 @@ if(d.lv!=null)document.documentElement.style.setProperty('--lv',d.lv);if(d.rect)
   addEventListener('unfire:scene-error',()=>{loadingIntent=false;});
   $('#openBtn').onclick=()=>open(1050);fr.style.pointerEvents='none';
   function shut(){caseLocal=true;$('#heroPin').classList.add('imm');document.body.classList.add('immOn');fr.style.pointerEvents='auto';fr.style.clipPath='none';}
-  function exitGame(){$('#heroPin').classList.remove('imm');document.body.classList.remove('immOn');parked=1;tick();fr.style.pointerEvents='none';
+  function exitGame(){caseLocal=false;
+    if(document.fullscreenElement){try{document.exitFullscreen()?.catch?.(()=>{});}catch(_){}}
+    $('#heroPin').classList.remove('imm');document.body.classList.remove('immOn');parked=1;tick();fr.style.pointerEvents='none';
     setTimeout(()=>{const y0=scrollY,y1=hero.offsetTop+hero.offsetHeight+2,t0=performance.now(),D=1300;const st=(n)=>{const k=Math.min(1,(n-t0)/D),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;scrollTo(0,y0+(y1-y0)*e);if(k<1)requestAnimationFrame(st)};requestAnimationFrame(st)},1500)}
   return{tick,open,rect,shut,gate,exitGame};})();
 /* ================= Precios en la página ================= */
