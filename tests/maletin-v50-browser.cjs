@@ -64,7 +64,7 @@ const assert=require('node:assert/strict');
   });
   assert(secret.rejected&&secret.unlocked&&secret.questStillActive&&secret.storyUnchanged&&secret.confirmation.includes('desbloqueados'),'Secret app unlock/persistence or mission isolation failed: '+JSON.stringify(secret));
   const states=await f.evaluate(()=>{const a=[];for(let i=0;i<4;i++){window.__mal.toggleCase();a.push(window.__UNFIRE_CASE_QA.closed)}return a});
-  assert.deepEqual(states,[true,false,true,false],'Rapid click target-state toggle not alternating');
+  assert.deepEqual(states,[false,true,false,true],'Four toggles after packed case should open, close, open, close');
   const missions=await f.evaluate(()=>{
     const result=[];
     for(let i=0;i<11;i++){
