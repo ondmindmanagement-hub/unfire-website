@@ -6,6 +6,9 @@ const assert=require('node:assert/strict');
   browser=await chromium.launch({headless:true,executablePath:process.env.UNFIRE_CHROME||undefined,args:['--enable-unsafe-swiftshader','--disable-dev-shm-usage','--no-sandbox','--autoplay-policy=no-user-gesture-required']});
   const page=await browser.newPage({viewport:{width:1080,height:760},deviceScaleFactor:1});
   const errors=[];page.on('pageerror',err=>errors.push(err.message.slice(0,180)));
+  await page.addInitScript(()=>{
+    try{localStorage.setItem('unfire_save_v1',JSON.stringify({name:'Tester',level:1,ch:2,step:0,done:[0,1],met:true,ts:Date.now()}));}catch(e){}
+  });
   await page.goto(process.env.UNFIRE_TEST_URL||'http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded',timeout:30000});
   await page.locator('#openBtn').evaluate(e=>e.click());
   const frame=page.frameLocator('#malFrame');
@@ -16,6 +19,7 @@ const assert=require('node:assert/strict');
   await f.evaluate(()=>{window.__mal.setP(1);window.__mal.requestOpen();window.__roamAPI.enterRoam();window.__SIDEM.offer('NIMBO')});
   const initial=await f.evaluate(()=>({mission:window.__UNFIRE_CASE_QA.mission,originalButterfly:window.__UNFIRE_CASE_QA.originalButterfly,roam:window.__UNFIRE_CASE_QA.roam}));
   assert(initial.mission&&initial.originalButterfly&&initial.roam,'Mission, roam or real 3D butterfly not initialized');
+  assert(await f.evaluate(()=>window.__UNFIRE_CASE_QA.portableUnlocked),'Capsule should unlock at third mission');
   await f.evaluate(()=>window.__mal.toggleCase());
   const closed=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,mission:window.__UNFIRE_CASE_QA.mission}));
   console.log('CASE_STATE_DIAGNOSTIC',JSON.stringify({initial,closed}));
@@ -55,6 +59,11 @@ const assert=require('node:assert/strict');
     function assertExists(v,msg){if(!v)throw Error(msg);}
   });
   assert(secret.rejected&&secret.unlocked&&secret.questStillActive&&secret.storyUnchanged&&secret.confirmation.includes('desbloqueados'),'Secret app unlock/persistence or mission isolation failed: '+JSON.stringify(secret));
+  await f.evaluate(()=>{window.__mal.showCaseView();});
+  const inspecting=await f.evaluate(()=>window.__UNFIRE_CASE_QA.inspecting);
+  assert(inspecting,'Case close-up camera did not enable');
+  await f.evaluate(()=>window.__mal.showRobotView());
+  assert(!(await f.evaluate(()=>window.__UNFIRE_CASE_QA.inspecting)),'Robot view did not restore');
   const states=await f.evaluate(()=>{const a=[];for(let i=0;i<4;i++){window.__mal.toggleCase();a.push(window.__UNFIRE_CASE_QA.closed)}return a});
   assert.deepEqual(states,[true,false,true,false],'Rapid click target-state toggle not alternating');
   const missions=await f.evaluate(()=>{
