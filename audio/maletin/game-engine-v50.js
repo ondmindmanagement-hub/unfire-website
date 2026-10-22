@@ -773,7 +773,6 @@
   // The case is a game prop: toggling the lid never means exiting to the website.
   let lidControlledByPlayer = false, carryingCase = false, carryUIShown = false;
   const originalCasePosition = caseG.position.clone();
-  const carryDest = new THREE.Vector3();
   const carryButton = document.createElement('button');
   carryButton.id = 'unfireCarryCase';
   carryButton.type = 'button';
@@ -784,7 +783,8 @@
   function updateCarryUI(){
     const show=ROAMS.on;
     const far=ROAMS.on && Math.hypot(caseG.position.x-ROAMS.p.x,caseG.position.z-ROAMS.p.z)>12;
-    const label=carryingCase?'🎒 LANZAR CÁPSULA':far?'🎒 RECUPERAR EN CÁPSULA':'🎒 GUARDAR EN CÁPSULA';
+    const label=CAPS.flying?'🎒 DESPLEGANDO…':carryingCase?'🎒 LANZAR CÁPSULA':far?'🎒 RECUPERAR EN CÁPSULA':'🎒 GUARDAR EN CÁPSULA';
+    carryButton.disabled=CAPS.flying;
     const labelNode=carryButton.querySelector('span');
     if(labelNode && labelNode.textContent!==label)labelNode.textContent=label;
     if(show!==carryUIShown){carryUIShown=show;carryButton.style.display=show?'flex':'none';}
@@ -1332,16 +1332,13 @@
     g('onlInv').onclick = async () => { const l = ONLINE.link(), txt = '¡Ven a jugar conmigo a UNFIRE AUDIO! Sala: '; try { if (navigator.share) { await navigator.share({ title: 'UNFIRE AUDIO', text: txt, url: l }); return; } } catch (e) {} try { await navigator.clipboard.writeText(l); say('📨 Enlace copiado: ' + l + ' · pégalo a tus amigos'); } catch (e) { say('📨 Envía este enlace a tus amigos: ' + l); } }; }
   // ===== Reusable capsule inventory: pack, throw, deploy and collect without leaving roam =====
   const CAPS=(()=>{
-    let capsule=null, flight=0, start=null, target=null, spinning=0;
+    let capsule=null, flight=0, start=null, target=null;
     const build=()=>{
       if(capsule)return;
       capsule=new THREE.Group();
-      const geo=new THREE.SphereGeometry(0.63,12,8);
-      const upper=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xff2fb0,metalness:0.35,roughness:0.34}));
-      const lower=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xeaf2ff,metalness:0.2,roughness:0.37}));
-      // Two clipped hemispheres, low-poly and shared for repeated throws.
-      upper.geometry=new THREE.SphereGeometry(0.63,12,8,0,TAU,0,H2);
-      lower.geometry=new THREE.SphereGeometry(0.63,12,8,0,TAU,H2,H2);
+      // Two low-poly hemispheres, created once and reused for every throw.
+      const upper=new THREE.Mesh(new THREE.SphereGeometry(0.63,12,8,0,TAU,0,H2),new THREE.MeshStandardMaterial({color:0xff2fb0,metalness:0.35,roughness:0.34}));
+      const lower=new THREE.Mesh(new THREE.SphereGeometry(0.63,12,8,0,TAU,H2,H2),new THREE.MeshStandardMaterial({color:0xeaf2ff,metalness:0.2,roughness:0.37}));
       capsule.add(upper,lower);capsule.visible=false;S.scene.add(capsule);
     };
     const cancel=()=>{flight=0;if(capsule)capsule.visible=false;};
@@ -1357,7 +1354,7 @@
       start=V(ROAMS.p.x,floor+6.5,ROAMS.p.z);
       target=V(ROAMS.p.x+dirX*7,floor+0.8,ROAMS.p.z+dirZ*7);
       capsule.position.copy(start);capsule.rotation.set(0,0,0);
-      capsule.visible=true;flight=0.001;spinning=0;
+      capsule.visible=true;flight=0.001;
       say('🎒 ¡Cápsula lanzada!');hap(0.3);
       return true;
     };
@@ -1375,6 +1372,9 @@
       btn.textContent='🎒 CÁPSULA (G)';btn.onclick=action;h.insertBefore(btn,h.firstChild);
     },1600);
     return {throwIt,pack,cancel,get flying(){return flight>0;},tick(dt){
+      // Self-heal display mismatches without spawning more meshes or audio.
+      if(ROAMS.on && carryingCase && caseG.visible)caseG.visible=false;
+      if(ROAMS.on && !carryingCase && !caseG.visible)caseG.visible=true;
       if(!flight||!capsule)return;
       flight=Math.min(0.85,flight+Math.min(dt,0.06));
       const u=flight/0.85;
