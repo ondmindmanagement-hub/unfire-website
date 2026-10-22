@@ -1290,10 +1290,11 @@
       }).join('');
       if(workshop&&portraitQueue.length&&!portraitBusy){portraitBusy=true;setTimeout(pumpPortraits,80);}
     };
-    $o('onC').onclick = (e) => { const c = e.target.dataset.c; if (c) { cfg.col = c; paint(); applyMe(); } }; $o('onT').onclick = (e) => { const btn=e.target.closest('button[data-t]');if(!btn)return;const t=Number(btn.dataset.t);if(!ALLT.includes(t)||ALLT.indexOf(t)>=unl())return;cfg.type=t;paint();applyMe(); };
+    $o('onC').onclick = (e) => { const c = e.target.dataset.c; if (c) { cfg.col = c; paint(); applyMe(); } }; $o('onT').onclick = (e) => { const btn=e.target.closest('button[data-t]');if(!btn)return;const t=Number(btn.dataset.t);if(!ALLT.includes(t)||ALLT.indexOf(t)>=unl())return;cfg.type=t;save();applyMe();paint();msg('✓ '+(MUTANTS.list[t].name||'Robot')+' seleccionado'); };
     addEventListener('unfire:avatars-unlocked',()=>{if(ui.classList.contains('on'))paint();});
     const save = () => { cfg.name = ($o('onN').value || '').trim().slice(0, 14) || 'Jugador'; cfg.num = Math.max(0, Math.min(99, parseInt($o('onNum').value, 10) || 27)); try { localStorage.setItem('unfire_onl', JSON.stringify(cfg)); } catch (e) {} };
-    function applyMe() { ROAMS.myType = cfg.type; ROAMS.myCol = cfg.col; ROAMS.myNum = cfg.num || 27; const pk = PERK[Math.max(0, ALLT.indexOf(cfg.type)) % PERK.length]; ROAMS.perkV = pk[1]; ROAMS.perkF = pk[2]; if (ROAMS.av && ROAMS.av.w) { S.scene.remove(ROAMS.av.w); } ROAMS.av = null; }
+    function applyMe() { if(!ALLT.slice(0,unl()).includes(cfg.type))cfg.type=ALLT[0]; ROAMS.myType = cfg.type; ROAMS.myCol = cfg.col; ROAMS.myNum = cfg.num || 27; const pk = PERK[Math.max(0, ALLT.indexOf(cfg.type)) % PERK.length]; ROAMS.perkV = pk[1]; ROAMS.perkF = pk[2]; if (ROAMS.av && ROAMS.av.w) { S.scene.remove(ROAMS.av.w); } ROAMS.av = null; }
+    window.__UNFIRE_WORKSHOP_QA={get selected(){return cfg.type},get available(){return unl()},get avatar(){return ROAMS.myType},choose:(n)=>{if(!ALLT.includes(n)||ALLT.indexOf(n)>=unl())return false;cfg.type=n;save();applyMe();if(ui.classList.contains('on'))paint();return true;}};
     const tint = (o, col) => { const C = new THREE.Color(col); o.traverse((m) => { if (m.isMesh && m.material && m.material.color) { m.material = m.material.clone(); m.material.color.lerp(C, 0.6); } }); };
     window.__tintAvatar = tint;
     const load = (cb) => { if (window.Peer) return cb(); const s = document.createElement('script'); s.src = 'https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js'; s.onload = cb; s.onerror = () => msg('No se pudo conectar con el servidor online. Revisa tu conexión.'); document.head.appendChild(s); };
@@ -1815,14 +1816,14 @@
     function stop() { if (!on) return; on = false; G.forEach((g) => { g.st = 'home'; g.t = 0; g.tgt = V(clamp(g.w.position.x, -10, 10), FL, 9); }); say('🤖⬇ Los robots vuelven al maletín'); }
     function tick(dt, t) { if (on && lidOpen < 0.5) stop(); if (PEND.length && on) { pendT -= dt; if (pendT <= 0) { pendT = 0.25; PEND.shift()(); } } else if (!on) PEND.length = 0; for (let i = FXQ.length - 1; i >= 0; i--) if (FXQ[i](dt)) FXQ.splice(i, 1); if (!G.length) return;
       for (let i = 0; i < G.length; i++) for (let j = i + 1; j < G.length; j++) { const a = G[i].w.position, b = G[j].w.position; if (G[i].st !== 'roam' && G[i].st !== 'home') continue; if (G[j].st !== 'roam' && G[j].st !== 'home') continue; const dx = b.x - a.x, dz = b.z - a.z, d = Math.hypot(dx, dz) || 0.01; if (d < 7) { const p = (7 - d) / 2 / d; a.x -= dx * p; a.z -= dz * p; b.x += dx * p; b.z += dz * p; } }
-      G.forEach((g) => { g.t += dt; const ws = g.w.scale.x / g.k;
-        if (g.st === 'grow') { if (g.t < 0) return; const k = Math.min(1, g.t / 2.6), e = k < 1 ? 1 - Math.pow(1 - k, 3) * Math.cos(k * 9) : 1; g.w.scale.setScalar(g.k * Math.max(0.02, 0.02 + 0.98 * e)); const p = g.from.clone().lerp(g.land, k); p.y = g.from.y + (g.land.y - g.from.y) * k + Math.sin(k * Math.PI) * 9; g.w.position.copy(p); g.w.rotation.y += dt * 6 * (1 - k); if (g.t > 0 && !g.fx0) { g.fx0 = 1; fxRing(g.from, 0xb6ff3b); } g.r0.update(3.7, dt, { act: 'fly', ph: t + g.ph, mood: 'wow' }); if (k >= 1) { g.st = 'roam'; fxRing(g.land, 0x5fe0ff); g.tgt = freePt(); } return; }
-        if (g.st === 'shrink') { const k = Math.min(1, g.t / 1.6); const dst = g.it ? g.it.W.getWorldPosition(V(0, 0, 0)) : V(0, 0.3, 0.6); g.w.scale.setScalar(g.k * Math.max(0.02, 1 - k * 0.98)); const p = g.from.clone().lerp(dst, k); p.y += Math.sin(k * Math.PI) * 6; g.w.position.copy(p); g.r0.update(3.7, dt, { act: 'fly', ph: t + g.ph, mood: 'happy' }); if (k >= 1) { g.done = 1; ROOM.R.remove(g.w); if (g.it) g.it.W.visible = true; } return; }
+      G.forEach((g) => { g.t += dt;g.poseT=lerp(g.poseT==null?3.7:g.poseT,g.poseTarget==null?3.7:g.poseTarget,Math.min(1,dt*6)); const ws = g.w.scale.x / g.k;
+        if (g.st === 'grow') { if (g.t < 0) return; const k = Math.min(1, g.t / 2.6), e = k < 1 ? 1 - Math.pow(1 - k, 3) * Math.cos(k * 9) : 1; g.w.scale.setScalar(g.k * Math.max(0.02, 0.02 + 0.98 * e)); const p = g.from.clone().lerp(g.land, k); p.y = g.from.y + (g.land.y - g.from.y) * k + Math.sin(k * Math.PI) * 9; g.w.position.copy(p); g.w.rotation.y += dt * 6 * (1 - k); if (g.t > 0 && !g.fx0) { g.fx0 = 1; fxRing(g.from, 0xb6ff3b); } g.r0.update(g.poseT==null?3.7:g.poseT, dt, { act: 'fly', ph: t + g.ph, mood: 'wow' }); if (k >= 1) { g.st = 'roam'; fxRing(g.land, 0x5fe0ff); g.tgt = freePt(); } return; }
+        if (g.st === 'shrink') { const k = Math.min(1, g.t / 1.6); const dst = g.it ? g.it.W.getWorldPosition(V(0, 0, 0)) : V(0, 0.3, 0.6); g.w.scale.setScalar(g.k * Math.max(0.02, 1 - k * 0.98)); const p = g.from.clone().lerp(dst, k); p.y += Math.sin(k * Math.PI) * 6; g.w.position.copy(p); g.r0.update(g.poseT==null?3.7:g.poseT, dt, { act: 'fly', ph: t + g.ph, mood: 'happy' }); if (k >= 1) { g.done = 1; ROOM.R.remove(g.w); if (g.it) g.it.W.visible = true; } return; }
         const P0 = g.w.position, dx = g.tgt.x - P0.x, dz = g.tgt.z - P0.z, d = Math.hypot(dx, dz);
         if (g.st === 'home' && d < 2) { g.st = 'shrink'; g.t = 0; g.from = P0.clone(); fxRing(P0, 0xff2fb0); return; }
         let moving = false; if (g.idle > 0) g.idle -= dt; else if (d > 1.2) { const sp = Math.min(d, g.spd * dt), nx = P0.x + dx / d * sp, nz = P0.z + dz / d * sp; if (g.st !== 'home' && blocked(nx, nz, 1)) { g.tgt = freePt(); } else { P0.x = nx; P0.z = nz; moving = true; g.dist += sp; g.yaw = Math.atan2(dx, dz); } } else if (g.st === 'roam') { g.idle = 1.5 + Math.random() * 3; g.tgt = freePt(); if (Math.random() < 0.3) g.vy = 9; }
         g.w.rotation.y = angL(g.w.rotation.y, g.yaw, 0.15); g.vy -= 22 * dt; P0.y = Math.max(FL, P0.y + g.vy * dt); if (P0.y <= FL) g.vy = Math.max(0, g.vy);
-        const music = RADIO.st.on; g.r0.update(3.7, dt, { act: moving ? 'walk' : P0.y > FL + 0.1 ? 'fly' : music ? 'dance' : ['wave', 'cheer', 'look', 'dance'][Math.floor((t * 0.3 + g.ph) % 4)], ph: moving ? STEPPH(g.dist, HT) + g.ph : t * 0.8 + g.ph, mood: ['happy', 'star', 'wow', 'love'][Math.floor(g.ph) % 4], beatPhase: (t * (RADIO.bpm || 120) / 60) }); });
+        const music = RADIO.st.on; g.r0.update(g.poseT==null?3.7:g.poseT, dt, { act: moving ? 'walk' : P0.y > FL + 0.1 ? 'fly' : music ? 'dance' : ['wave', 'cheer', 'look', 'dance'][Math.floor((t * 0.3 + g.ph) % 4)], ph: moving ? STEPPH(g.dist, HT) + g.ph : t * 0.8 + g.ph, mood: ['happy', 'star', 'wow', 'love'][Math.floor(g.ph) % 4], beatPhase: (t * (RADIO.bpm || 120) / 60) }); });
       for (let i = G.length - 1; i >= 0; i--) if (G[i].done) G.splice(i, 1); }
     const api = { get on() { return on; }, toggle() { on ? stop() : start(); }, start, stop, tick, get list() { return G; } }; window.__GROW = api; return api; })();
   const angL = (a, b, k) => { let d = ((b - a + Math.PI) % TAU + TAU) % TAU - Math.PI; return a + d * k; };
@@ -1943,7 +1944,38 @@
     else if (SEL.type === 'dev') { const it = SEL.it; if (a === 'next') { if (it.on) parentPost(it.kind === 'fx' ? { open: 'fx', id: it.id } : { open: it.kind }); it.on = 1; } if (a === 'back' || a === 'close') { it.on = 0; SEL = null; } if (a === 'move') MV = { o: it.g }; }
     $('tb').querySelectorAll('button').forEach((b) => b.classList.toggle('on', !!MV && b.dataset.a === 'move')); }
   $('tb').addEventListener('pointerdown', (e) => e.stopPropagation()); $('tb').onclick = (e) => { const a = e.target.closest('[data-a]'); if (a) act(a.dataset.a); };
+  // Click-to-fold uses the original ROBOT.update() transformations already
+  // authored for the characters. Never generate replacement geometry or models.
+  function toggleRobotFromCursor(e){
+    if(!ROAMS.on||CASE_VIEW.on||!e||e.button>0)return false;
+    ndc.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);
+    ray.setFromCamera(ndc,cam);
+    const candidates=[];
+    if(ROAMS.av&&ROAMS.av.w&&ROAMS.av.w.visible)candidates.push({o:ROAMS.av.w,kind:'self'});
+    for(const it of items)if(it.kind==='mut'&&it.W&&it.W.visible)candidates.push({o:it.W,kind:'mut',it});
+    const grown=window.__GROW&&window.__GROW.list||[];
+    for(const g of grown)if(g.w&&g.w.visible&&g.r0)candidates.push({o:g.w,kind:'giant',g});
+    if(!candidates.length)return false;
+    let chosen=null,nearest=Infinity;
+    for(const c of candidates){
+      const hit=ray.intersectObject(c.o,true)[0];
+      if(hit&&hit.distance<nearest){nearest=hit.distance;chosen=c;}
+    }
+    if(!chosen||nearest>120)return false;
+    if(chosen.kind==='self'){
+      ROAMS.foldTarget=(ROAMS.foldTarget===0?3.7:0);
+      say(ROAMS.foldTarget?'🤖 Tu robot se despliega':'🎒 Tu robot se pliega');
+    }else if(chosen.kind==='mut'){
+      chosen.it.tgt=chosen.it.tgt>1.5?0:3;
+      say(chosen.it.tgt?'🤖 Robot desplegado':'🎒 Robot plegado');
+    }else{
+      const g=chosen.g;g.poseTarget=(g.poseTarget===0?3.7:0);
+      say(g.poseTarget?'🤖 Transformación desplegada':'🎒 Transformación plegada');
+    }
+    hap(0.25);return true;
+  }
   function onClick(e) {
+    if(toggleRobotFromCursor(e))return;
     // A real click on the unfolded case switches to its usable overhead camera.
     if(ROAMS.on&&!CASE_VIEW.on&&!carryingCase&&caseG.visible&&pTarget>0.5){
       ndc.set((e.clientX/innerWidth)*2-1,-(e.clientY/innerHeight)*2+1);
@@ -1963,7 +1995,7 @@
     if (!best) { const p = cursorPoint(e); if (!p) return; let bd = 0.22; for (const it of items) { if (it.tok || it.g) continue; const d = Math.hypot(it.pos.x - p.x, it.pos.z - p.z); if (d < bd) { bd = d; best = it; } } }
     if (!best) return;
     if (best.kind === 'cap') { const g = openGear(best, true); activate(g); SEL = { type: 'cap', g }; return; }
-    if (best.kind === 'mut') { if (best.tgt < 0.5) { best.tgt = 3; if (audioOk()) { RADIO.start(); RADIO.chime(UA.ctx.currentTime + 0.02); } } SEL = { type: 'mut', it: best }; return; }
+    if (best.kind === 'mut') { best.tgt = best.tgt > 1.5 ? 0 : 3; if (audioOk()) { RADIO.start(); RADIO.chime(UA.ctx.currentTime + 0.02); } SEL = { type: 'mut', it: best }; return; }
     if (best.kind === 'hyper') { if (!compG.hw.userData.open) openComp('hw'); SEL = { type: 'hw' }; return; }
     if (best.g) { SEL = { type: 'dev', it: best }; if (!best.home) best.home = best.g.position.clone(); if (!best.on) { best.on = 1; if (best.kind === 'fx') { const b0 = best; setTimeout(() => { if (b0.on) parentPost({ open: 'fx', id: b0.id }); }, 650); } return; } best.on = 0; SEL = null; return; }
     if (best.kind === 'fx') parentPost({ open: 'fx', id: best.id });
@@ -2120,7 +2152,7 @@
         // SURF: tabla bajo los pies en el agua, postura de lado, trucos con ESPACIO (360, flip, grab, superman) y puntuación con récord
         { const surf = !!(window.ATM_OUT && ROAMS.wet && !ROAMS.fly && ROAMS.board); AV.bk = (AV.bk || 0) + ((surf || ROAMS.trick ? 1 : 0) - (AV.bk || 0)) * Math.min(1, dt * 5); if (AV.BRD) { AV.BRD.visible = AV.bk > 0.02; const e3 = AV.bk; AV.BRD.scale.set(e3, 1, Math.max(0.05, e3 * e3)); AV.BRD.rotation.y = (1 - e3) * 3.0; } AV.st = (AV.st || 0) + ((surf ? 1 : 0) - (AV.st || 0)) * Math.min(1, dt * 6); if (AV.r0 && AV.r0.root) AV.r0.root.rotation.y = AV.st * 1.25 * (1 - (ROAMS.trick && ROAMS.trick.k === 'SUPERMAN' ? 1 : 0)); window.__T = t; if (surf && window.__WAVE) { const W1 = window.__WAVE, px = ROAMS.p.x, pz = ROAMS.p.z, fx = Math.sin(cyy), fz = -Math.cos(cyy), e = 3; const sF = (W1(px + fx * e, pz + fz * e, t) - W1(px - fx * e, pz - fz * e, t)) / (2 * e), sS = (W1(px - fz * e, pz + fx * e, t) - W1(px + fz * e, pz - fx * e, t)) / (2 * e); AV.sp0 = (AV.sp0 || 0) + (Math.atan(sF) - (AV.sp0 || 0)) * Math.min(1, dt * 6); AV.sr0 = (AV.sr0 || 0) + (Math.atan(sS) - (AV.sr0 || 0)) * Math.min(1, dt * 6); AV.w.rotation.x = -AV.sp0 * 0.9; AV.w.rotation.z = (AV.bank || 0) * 1.6 + AV.sr0 * 0.9 + Math.sin(t * 1.3) * 0.04; }
           const TK = ROAMS.trick; if (TK) { TK.t += dt; const u = Math.min(1, TK.t / 0.95), e = u * u * (3 - 2 * u); if (TK.k === '360') AV.w.rotation.y += TK.sd * e * TAU; else if (TK.k === 'FLIP') AV.w.rotation.x += e * TAU; else if (TK.k === 'GRAB') AV.w.rotation.z += Math.sin(u * Math.PI) * 0.7 * TK.sd; else AV.w.rotation.x -= Math.sin(u * Math.PI) * 1.3;
-            if (TK.t > 0.35 && !ROAMS.air) { const ok = u >= 0.85; ROAMS.trick = null; if (ok) { const P0 = { '360': 500, FLIP: 800, GRAB: 300, SUPERMAN: 650 }[TK.k]; ROAMS.combo = (performance.now() - (ROAMS.lastTrick || 0) < 4000 ? (ROAMS.combo || 1) + 1 : 1); ROAMS.lastTrick = performance.now(); ROAMS.surfPts = (ROAMS.surfPts || 0) + P0 * ROAMS.combo; let best = 0; try { best = +localStorage.getItem('unfire_surf_best') || 0; if (ROAMS.surfPts > best) { best = ROAMS.surfPts; localStorage.setItem('unfire_surf_best', String(best)); } } catch (e2) {} say('🏄 ' + TK.k + '! +' + P0 + (ROAMS.combo > 1 ? ' ×' + ROAMS.combo : '') + ' · ' + ROAMS.surfPts + ' pts · récord ' + best); hap(0.5); } else { ROAMS.combo = 0; say('🌊 ¡Wipeout! Casi…'); } } } }  let lk = ROAMS.yaw - cyy; lk = Math.atan2(Math.sin(lk), Math.cos(lk)); AV.r0.update(3.7, dt, { act: ROAMS.air && !ROAMS.wet ? 'fly' : ROAMS.wet ? null : ROAMS.moving ? (ROAMS.run ? 'run' : 'walk') : null, ph: ROAMS.moving ? STEPPH(ROAMS.wd || 0, 10.5, ROAMS.run) : t, mood: 'happy', look: clamp(-lk, -0.9, 0.9) }); }
+            if (TK.t > 0.35 && !ROAMS.air) { const ok = u >= 0.85; ROAMS.trick = null; if (ok) { const P0 = { '360': 500, FLIP: 800, GRAB: 300, SUPERMAN: 650 }[TK.k]; ROAMS.combo = (performance.now() - (ROAMS.lastTrick || 0) < 4000 ? (ROAMS.combo || 1) + 1 : 1); ROAMS.lastTrick = performance.now(); ROAMS.surfPts = (ROAMS.surfPts || 0) + P0 * ROAMS.combo; let best = 0; try { best = +localStorage.getItem('unfire_surf_best') || 0; if (ROAMS.surfPts > best) { best = ROAMS.surfPts; localStorage.setItem('unfire_surf_best', String(best)); } } catch (e2) {} say('🏄 ' + TK.k + '! +' + P0 + (ROAMS.combo > 1 ? ' ×' + ROAMS.combo : '') + ' · ' + ROAMS.surfPts + ' pts · récord ' + best); hap(0.5); } else { ROAMS.combo = 0; say('🌊 ¡Wipeout! Casi…'); } } } }  let lk = ROAMS.yaw - cyy; lk = Math.atan2(Math.sin(lk), Math.cos(lk)); ROAMS.foldPose=lerp(ROAMS.foldPose==null?3.7:ROAMS.foldPose,ROAMS.foldTarget==null?3.7:ROAMS.foldTarget,Math.min(1,dt*6));AV.r0.update(ROAMS.foldPose, dt, { act: ROAMS.air && !ROAMS.wet ? 'fly' : ROAMS.wet ? null : ROAMS.moving ? (ROAMS.run ? 'run' : 'walk') : null, ph: ROAMS.moving ? STEPPH(ROAMS.wd || 0, 10.5, ROAMS.run) : t, mood: 'happy', look: clamp(-lk, -0.9, 0.9) }); }
       const sx = -fz * 1.3, sz = fx * 1.3; const inPyr = window.ATM_OUT && Math.abs(ROAMS.p.x - 600) < 97 && Math.abs(ROAMS.p.z) < 97 && (ROAMS.h || 0) < 24; const FAR = MODE === '3pl' && !inPyr, boost = window.ATM_OUT && ROAMS.fly ? (ROAMS.camBoost || 0) : 0, CD2 = inPyr ? 5 : FAR ? 20 : 11.5 + boost * 2.5, CH2 = (inPyr ? 9.5 : FAR ? 17 : 12.2 + boost * 1.2) + (ROAMS.h || 0); const want = V(ROAMS.p.x - fx * CD2 + sx, -8.9 + CH2 - Math.sin(ROAMS.pitch) * 3, ROAMS.p.z - fz * CD2 + sz);
       // la cámara nunca atraviesa paredes: dentro se queda dentro, fuera se queda fuera (se acerca al personaje como en GTA)
       { const inside = (x, z) => Math.abs(x) < 81 && z > -17.5 && z < 97.5; const pin = !window.ATM_OUT; for (let k = 0; k < 12; k++) { const ok = pin ? (Math.abs(want.x) < 78 && want.z > -14.5 && want.z < 94.5) : !inside(want.x, want.z) || (Math.abs(want.x + 30) < 4.5 && want.z > 92); if (ok) break; want.x += (ROAMS.p.x - want.x) * 0.2; want.z += (ROAMS.p.z - want.z) * 0.2; } if (pin) want.y = Math.min(want.y, 24); } if (!ROAMS.cp) ROAMS.cp = cam.position.clone(); { const pf = window.__PROP ? window.__PROP() : 1; if (pf > 1 && ROAMS.cp.distanceTo(want) > 400) ROAMS.cp.copy(want); else ROAMS.cp.lerp(want, Math.min(1, dt * 9 * Math.sqrt(pf))); } cam.position.copy(ROAMS.cp); cam.lookAt(ROAMS.p.x + fx * 14 * cp + sx * 0.6, -8.9 + (FAR ? 5 : 9.4) + (ROAMS.h || 0) + Math.sin(ROAMS.pitch) * 10, ROAMS.p.z + fz * 14 * cp + sz * 0.6); cam.near = window.ATM_OUT ? 1.0 : 0.1; } }
