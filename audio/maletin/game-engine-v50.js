@@ -773,6 +773,27 @@
   // The case is a game prop: toggling the lid never means exiting to the website.
   let lidControlledByPlayer = false, carryingCase = false, carryUIShown = false;
   const originalCasePosition = caseG.position.clone();
+  // Camera-choice state is separate from the player's roaming state: quests and online continue.
+  const CASE_VIEW={on:false,dist:8.4,angle:0.25,elevation:0.78};
+  const caseModeHud=document.createElement('div');
+  caseModeHud.id='caseModeHud';
+  caseModeHud.innerHTML='<button type="button" id="caseInspectBtn">🎥 CÁMARA MALETÍN</button><button type="button" id="caseRobotBtn">🤖 DESDE PERSONAJE</button>';
+  caseModeHud.style.cssText='position:fixed;left:50%;bottom:max(17px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:54;display:none;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;max-width:calc(100vw - 36px);padding:5px;border:1px solid #81b9ff99;border-radius:15px;background:#09142bdc;box-shadow:0 8px 25px #0008';
+  {const st=document.createElement('style');st.textContent='#caseModeHud button{border:1px solid #819fc9;border-radius:11px;background:#172845;color:#eef6ff;padding:9px 11px;font:700 11px Arial;cursor:pointer;touch-action:manipulation}#caseModeHud button.active{background:#236b9b;border-color:#8ed9ff}body.recOn #caseModeHud{display:none!important}@media(max-width:680px){#caseModeHud{bottom:74px;max-width:calc(100vw - 18px)}#caseModeHud button{font-size:10px;padding:7px 9px}}';document.head.appendChild(st);}
+  document.body.appendChild(caseModeHud);
+  caseModeHud.addEventListener('pointerdown',e=>e.stopPropagation());
+  const showCaseView=()=>{
+    if(!ROAMS.on||carryingCase||CAPS.flying||!caseG.visible)return;
+    try{if(REC.on)REC.set(false);}catch(e){}
+    try{if(window.__VIEW?.on)window.__VIEW.stop();}catch(e){}
+    CASE_VIEW.on=true;CASE_VIEW.dist=8.4;CASE_VIEW.angle=caseG.rotation.y+0.25;
+    ROAMS.tgt=null;for(const k in ROAMS.k)ROAMS.k[k]=0;
+    say('🎥 Cámara del maletín: toca sus controles, arrastra para girar y usa la rueda para acercarte.');
+    updateCarryUI();
+  };
+  const showRobotView=()=>{CASE_VIEW.on=false;ROAMS.cp=null;updateCarryUI();};
+  caseModeHud.querySelector('#caseInspectBtn').onclick=showCaseView;
+  caseModeHud.querySelector('#caseRobotBtn').onclick=showRobotView;
   const carryButton = document.createElement('button');
   carryButton.id = 'unfireCarryCase';
   carryButton.type = 'button';
@@ -788,8 +809,14 @@
     const labelNode=carryButton.querySelector('span');
     if(labelNode && labelNode.textContent!==label)labelNode.textContent=label;
     if(show!==carryUIShown){carryUIShown=show;carryButton.style.display=show?'flex':'none';}
+    const deployed=ROAMS.on&&!carryingCase&&pTarget>0.5&&!CAPS.flying;
+    const hudDisplay=deployed?'flex':'none';
+    if(caseModeHud.style.display!==hudDisplay)caseModeHud.style.display=hudDisplay;
+    caseModeHud.querySelector('#caseInspectBtn').classList.toggle('active',deployed&&CASE_VIEW.on);
+    caseModeHud.querySelector('#caseRobotBtn').classList.toggle('active',deployed&&!CASE_VIEW.on);
   }
   function closeCaseInGame(){
+    if(CASE_VIEW.on)showRobotView();
     lidControlledByPlayer=true;
     pTarget=0;
     closeAll(false);
@@ -805,6 +832,7 @@
     if(parent!==window)parentPost({caseState:'closed'});
   }
   function openCaseInGame(landing){
+    CASE_VIEW.on=false;
     lidControlledByPlayer=true;
     if(carryingCase){
       carryingCase=false;
@@ -1046,7 +1074,7 @@
     cam.position.copy(REC.p); const c2 = Math.cos(REC.cpch); cam.lookAt(REC.p.x + Math.sin(REC.cy) * c2, REC.p.y + Math.sin(REC.cpch), REC.p.z - Math.cos(REC.cy) * c2); cam.near = 0.08; };
   function enterRoam() { if (ROAMS.on) return; ROAMS.on = true;  ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
   function exitRoam() { if (REC.on) REC.set(false); if (!ROAMS.on) return;
-    CAPS.cancel();carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
+    CASE_VIEW.on=false;CAPS.cancel();carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
  ROAMS.on = false; ROAMS.cp = null; ROAMS.mini = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
   roamB.onclick = (e) => { e.stopPropagation(); ROAMS.on ? exitRoam() : enterRoam(); };
   window.__roamAPI = { ROAMS, enterRoam, exitRoam, roamMove }; window.__OUT_OPEN = true;
@@ -1510,6 +1538,7 @@
   addEventListener('wheel', (e) => { if (CINE.on) CINE.on = false;
     const p = cursorPoint(e), k = e.deltaMode ? 30 : 1, dy = e.deltaY * k, dx = e.deltaX * k;
     e.preventDefault();
+    if (ROAMS.on && CASE_VIEW.on) { CASE_VIEW.dist=clamp(CASE_VIEW.dist+dy*0.013,5.4,14.5);return; }
     if (ROAMS.on) { ROAMS.tgt = null; const ms = ROAMS.mini ? 0.07 : 1; try { ROOM.R.userData.camTrack = null; } catch (e2) {} roamMove(-dy * 0.2 * ms, dx * 0.1 * ms); return; }
     if (lidOpen < 0.92) { parentPost({ scroll: dy, pass: 1 }); return; }
     ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const over = ray.intersectObject(caseG, true).length > 0;
@@ -1534,6 +1563,7 @@
   cv.addEventListener('contextmenu', (e) => e.preventDefault());
   cv.addEventListener('pointermove', (e) => { if (MV && MV.drag) { const p = cursorPoint(e); if (p) { MV.o.position.x = clamp(p.x, -CW / 2 + 0.25, CW / 2 - 0.25); MV.o.position.z = clamp(p.z, -CD / 2 + 0.25, CD / 2 - 0.25); } return; } if (knobDrag) { if (knobDrag.hwVol) { HWVOL = clamp(knobDrag.v + (knobDrag.y - e.clientY) / 160); try { if (knobDrag.hwVol.rot) knobDrag.hwVol.rot.rotation.y = -(Math.PI * 0.75 * 2 * (HWVOL - 0.5)); } catch (er) {} HW.lock = { t: performance.now() / 1000, label: '🔊 VOLUMEN', text: Math.round(HWVOL * 100) + ' %', v: 1 }; return; } if (!knobDrag.hw) onKnobMove(e); return; } if (!drag) { hover(e); return; } const dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.hypot(dx, dy) > 4) drag.moved = true; if (!drag.moved) return;
     if (drag.pan && zoomed()) { const s = view.dist / innerHeight * 1.1, ca = Math.cos(ORB.az), sa = Math.sin(ORB.az), px = -dx * s, pz = -dy * s * 1.2; view.gx = clamp(drag.gx + px * ca + pz * sa, -CW / 2, CW / 2); view.gz = clamp(drag.gz - px * sa + pz * ca, -CD / 2, CD / 2); }
+    else if (ROAMS.on && CASE_VIEW.on) { CASE_VIEW.angle-=(e.clientX-drag.lx)*0.006;CASE_VIEW.elevation=clamp(CASE_VIEW.elevation+(e.clientY-drag.ly)*0.003,0.35,1.1); }
     else if (ROAMS.on) { const O = REC.on ? REC : ROAMS; ROAMS.tgt = null; O.yaw += (e.clientX - drag.lx) * (REC.on ? 0.0035 : 0.005); O.pitch = clamp(O.pitch - (e.clientY - drag.ly) * (REC.on ? 0.003 : 0.004), -1.45, 1.45); }
     else { ORB.gaz = clamp(ORB.gaz - (e.clientX - drag.lx) * 0.006, -1.4, 1.4); if (e.pointerType === 'mouse' || zoomed()) ORB.gde = clamp(ORB.gde + (e.clientY - drag.ly) * 0.004, -0.85, 0.5); }
     drag.lx = e.clientX; drag.ly = e.clientY; });
@@ -1807,11 +1837,17 @@
     $('tb').querySelectorAll('button').forEach((b) => b.classList.toggle('on', !!MV && b.dataset.a === 'move')); }
   $('tb').addEventListener('pointerdown', (e) => e.stopPropagation()); $('tb').onclick = (e) => { const a = e.target.closest('[data-a]'); if (a) act(a.dataset.a); };
   function onClick(e) {
+    // A real click on the unfolded case switches to its usable overhead camera.
+    if(ROAMS.on&&!CASE_VIEW.on&&!carryingCase&&caseG.visible&&pTarget>0.5){
+      ndc.set((e.clientX/innerWidth)*2-1,-(e.clientY/innerHeight)*2+1);
+      ray.setFromCamera(ndc,cam);
+      if(ray.intersectObject(caseG,true).length){showCaseView();return;}
+    }
     { const pc = lidOpen > 0.5 ? pickCtl(e) : null; if (pc && !pc.c) { SEL = { type: 'cap', g: pc.g }; activate(pc.g); return; } }
     if (lidOpen < 0.5) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const hitD = ray.intersectObject(dragon, true).length; if (hitD || ray.intersectObject(caseG, true).length) { if (hitD) ALL = true;
         openCaseInGame();
         try { RADIO.chime && UA.ctx && RADIO.chime(UA.ctx.currentTime + 0.02); } catch (er) {} } return; }
-    if (lidOpen > 0.9) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); if (window.__fd && ray.intersectObject(window.__fd.parent, true).length) { hap(0.5); act('shut'); return; } if (ray.intersectObject(lidBtn, true).length) { toggleCaseInGame(); hap(0.25); return; } if (ROOM.pick(ray, ROAMS.on ? Infinity : ((ray.intersectObject(caseG, true)[0] || {}).distance || Infinity))) return; if (ray.intersectObject(pageBtn, true).length) { setCapPage(capPage + 1); return; } { const ph = ray.intersectObjects(PB.filter((b) => b.parent && b.parent.visible), true)[0]; if (ph) { let o = ph.object; while (o && !o.userData.btn) o = o.parent; if (o) { SEL = o.userData.btn.sel; hap(0.3); act(o.userData.btn.a); return; } } }
+    if (lidOpen > 0.9) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); if (window.__fd && ray.intersectObject(window.__fd.parent, true).length) { hap(0.5); act('shut'); return; } if (ray.intersectObject(lidBtn, true).length) { toggleCaseInGame(); hap(0.25); return; } if (!CASE_VIEW.on && ROOM.pick(ray, ROAMS.on ? Infinity : ((ray.intersectObject(caseG, true)[0] || {}).distance || Infinity))) return; if (ray.intersectObject(pageBtn, true).length) { setCapPage(capPage + 1); return; } { const ph = ray.intersectObjects(PB.filter((b) => b.parent && b.parent.visible), true)[0]; if (ph) { let o = ph.object; while (o && !o.userData.btn) o = o.parent; if (o) { SEL = o.userData.btn.sel; hap(0.3); act(o.userData.btn.a); return; } } }
     { const bh = ray.intersectObjects(btns.map((b) => b.g), true)[0]; if (bh) { const B = btns.find((b) => { let p = bh.object; while (p) { if (p === b.g) return true; p = p.parent; } return false; }); B.p = 1; hap(0.45); act(B.a); return; } } const gh = ray.intersectObjects(gates.flatMap((x) => x.list || [x.g]), true)[0]; if (gh) { const gk = gates.find((x) => { let p = gh.object; while (p) { if (p === x.g || (x.list && x.list.includes(p))) return true; p = p.parent; } return false; }); if (gk && !compG[gk.k].userData.open) { openComp(gk.k); if (gk.k === 'hw' && HW) { HW.tg = 0; SEL = { type: 'hw' }; } return; } } }
     if (pickCtl(e)) return;
     if (HW && compG.hw.userData.t > 0.9 && ray.intersectObject(HW.root, true).length) { SEL = { type: 'hw' }; return; }
@@ -1957,7 +1993,7 @@
     if (Math.abs(cam.fov - nextFov) > 0.005) {
       cam.fov = nextFov;
       cam.updateProjectionMatrix(); // FOV changes must reach the GPU, not only the property.
-    } window.__roam = ROAMS.on || view.gd > view.D0 * 1.2; if (ROAMS.on) { const K = ROAMS.k; if (K.ArrowUp || K.ArrowDown) ROAMS.tgt = null; const fw = REC.on ? 0 : (K.ArrowUp || K.w ? 1 : 0) - ((K.ArrowDown || K.s) && !ROAMS.fly ? 1 : 0), sd2 = REC.on ? 0 : (K.ArrowRight || K.d ? 1 : 0) - (K.ArrowLeft || K.a ? 1 : 0); if (ROAMS.cy == null) ROAMS.cy = ROAMS.yaw; const GTA = ((ROAMS.mode || '3p') === '3p' || ROAMS.mode === '3pl') && !ROAMS.mini; ROAMS.run = false;
+    } window.__roam = ROAMS.on || view.gd > view.D0 * 1.2; if (ROAMS.on) { const K = CASE_VIEW.on ? {} : ROAMS.k; if (K.ArrowUp || K.ArrowDown) ROAMS.tgt = null; const fw = REC.on ? 0 : (K.ArrowUp || K.w ? 1 : 0) - ((K.ArrowDown || K.s) && !ROAMS.fly ? 1 : 0), sd2 = REC.on ? 0 : (K.ArrowRight || K.d ? 1 : 0) - (K.ArrowLeft || K.a ? 1 : 0); if (ROAMS.cy == null) ROAMS.cy = ROAMS.yaw; const GTA = ((ROAMS.mode || '3p') === '3p' || ROAMS.mode === '3pl') && !ROAMS.mini; ROAMS.run = false;
       if (fw || sd2) { ROAMS.tgt = null; ROOM.R.userData.camTrack = null; const ms = ROAMS.mini ? 0.07 : 1; const SPD = (K.Shift ? 1.8 : K.Alt ? 0.5 : 1) * (window.ATM_OUT ? 1.55 : 0.78) * (ROAMS.perkV || 1);
         if (GTA) { const dir = ROAMS.yaw + Math.atan2(sd2, fw), y0 = ROAMS.yaw; ROAMS.cy = angL(ROAMS.cy, dir, Math.min(1, dt * 10)); ROAMS.yaw = ROAMS.cy; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; let sl = 1; if (wet && window.__WAVE) { const dx2 = Math.sin(dir) * 4, dz2 = -Math.cos(dir) * 4; sl = clamp(1 - (window.__WAVE(ROAMS.p.x + dx2, ROAMS.p.z + dz2, t) - window.__WAVE(ROAMS.p.x, ROAMS.p.z, t)) * 0.22, 0.7, 1.6); } ROAMS.surfV = (ROAMS.surfV || 1) + (sl - (ROAMS.surfV || 1)) * Math.min(1, dt * 2); const vv = 34 * SPD * (wet ? (ROAMS.board ? 1.9 * ROAMS.surfV : 1.15) : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 * (window.__PROP ? window.__PROP() : 1) : 1.4) : 1); ROAMS.run = vv > 18 && !wet; ROAMS.wet = wet; ROAMS.vvS = ROAMS.fly ? (ROAMS.vvS || vv) + (vv - (ROAMS.vvS || vv)) * Math.min(1, dt * 2.5) : vv; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(dt * ROAMS.vvS, 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.yaw = y0; if (fw >= 0) ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * (sd2 ? 1.2 : 2.6))); }
         else if (ROAMS.mode === '1p' && !ROAMS.mini) { ROAMS.yaw += sd2 * dt * 2.0; ROAMS.cy = ROAMS.yaw; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : true) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; const vv = 34 * SPD * (wet ? 2.0 : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 : 1.4) : 1); ROAMS.run = vv > 18 && !wet; ROAMS.wet = wet; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(fw * dt * vv * (fw < 0 ? 0.6 : 1), 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); } else { ROAMS.cy = ROAMS.yaw; roamMove(fw * dt * 44 * ms * SPD, sd2 * dt * 34 * ms * SPD); } } ROAMS.moving = !!(fw || sd2);
@@ -2112,6 +2148,14 @@
     // flickering/z-fighting indoors. Use deep view only while truly outside.
     const targetFar = ROAMS.on && window.ATM_OUT ? 90000 : 4000;
     if (cam.far !== targetFar) { cam.far = targetFar; cam.updateProjectionMatrix(); }
+    // Render case camera last, after player movement and third-person camera updates.
+    // All existing raycast controls therefore use the same case camera on the next input.
+    if(CASE_VIEW.on&&ROAMS.on&&!carryingCase&&caseG.visible){
+      const a=CASE_VIEW.angle,d=CASE_VIEW.dist,el=CASE_VIEW.elevation;
+      cam.position.set(caseG.position.x+Math.sin(a)*Math.cos(el)*d,caseG.position.y+Math.sin(el)*d,caseG.position.z+Math.cos(a)*Math.cos(el)*d);
+      cam.lookAt(caseG.position.x,caseG.position.y+0.4,caseG.position.z);
+      cam.near=0.05;cam.fov=48;cam.updateProjectionMatrix();
+    }
     S.renderer.render(S.scene, cam);
   }
   addEventListener('message', (e) => { const d = e.data || {}; if (d.unfire && d.p != null && !lidControlledByPlayer) pTarget = d.p; if (d.unfire && d.legacyCaseClose) closeCaseInGame(); if(d.unfire && d.releaseCaseControl){CAPS.cancel();lidControlledByPlayer=false;carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();} if (d.unfire && d.stop) { closeAll(true); stopAll(); ROOM.AMB.mute = true; } if (d.unfire && d.p > 0.5) ROOM.AMB.mute = false; if (d.unfire && 'vis' in d) { frameVisible = !!d.vis; if(frameVisible && ROOM.AMB)ROOM.AMB.mute=false; window.__gameVisible = frameVisible; ONLINE.voiceVisibility(frameVisible); } if (d.unfire && d.vis === false) { closeAll(true); setRobot(null); stopAll(); CINE.on = false; if (MEGA) megaOff(); CK.forEach((k) => { compG[k].userData.open = 0; compG[k].userData.t = 0; }); if (HW) { HW.T = 0; HW.u = 0; HW.tg = 0; } items.forEach((it) => { if (it.kind === 'mut') { it.tgt = 0; it.T = 0; } if (it.g) { it.on = 0; it.kk = 0; } if (it.W && it.home) { it.W.position.copy(it.home); it.W.rotation.set(0, 0, 0); it.retT = 0; } }); view.gd = view.D0; view.gx = 0; view.gz = 0.15; ORB.gaz = ORB.gde = 0; } if (d.unfire && d.audio) { try { UA.init(); } catch (er) {} } });
@@ -2120,6 +2164,7 @@
     get carrying(){return carryingCase},
     get capsuleFlying(){return CAPS.flying},
     get caseVisible(){return caseG.visible},
+    get inspecting(){return CASE_VIEW.on},
     get lid(){return lidOpen},
     get mission(){return typeof SIDE!=='undefined' && SIDE.cur ? SIDE.cur.t : null},
     get roam(){return ROAMS.on},
@@ -2129,7 +2174,7 @@
     get openControl(){return getComputedStyle(carryButton).display},
     get scrollLock(){return lidControlledByPlayer}
   };
-  window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), packCapsule: () => CAPS.pack(), throwCapsule: () => CAPS.throwIt(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
+  window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), showCaseView, showRobotView, packCapsule: () => CAPS.pack(), throwCapsule: () => CAPS.throwIt(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
   // A direct-link visitor can tap the button before the heavy 3D scene is initialized.
   if (parent === window && window.__unfireDirectOpenPending) {
     pTarget = 1;
