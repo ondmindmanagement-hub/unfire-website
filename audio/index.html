@@ -1,7 +1,8 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="robots" content="noindex,follow"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="Explora Unfire Audio: instrumentos, efectos, demostraciones interactivas y experiencias sonoras."><meta name="theme-color" content="#08090c"><link rel="canonical" href="https://unfire.technology/audio/"><title>Unfire Audio | Unfire Technology</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Cinzel:wght@700&family=IM+Fell+English+SC&family=Michroma&family=Pirata+One&family=Righteous&family=Cormorant+SC:wght@700&family=Playfair+Display+SC:ital,wght@1,900&family=Black+Ops+One&family=Comfortaa:wght@700&family=Audiowide&family=Poiret+One&family=Orbitron:wght@800&family=Marcellus+SC&family=Bodoni+Moda:ital,wght@1,700&family=Bungee&family=Fraunces:ital,wght@1,700&family=Silkscreen:wght@700&family=VT323&family=New+Rocker&family=Special+Elite&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=IM+Fell+English+SC&family=Michroma&family=Pirata+One&family=Righteous&family=Cormorant+SC:wght@700&family=Playfair+Display+SC:ital,wght@1,900&family=Black+Ops+One&family=Comfortaa:wght@700&family=Audiowide&family=Poiret+One&family=Orbitron:wght@800&family=Marcellus+SC&family=Bodoni+Moda:ital,wght@1,700&family=Bungee&family=Fraunces:ital,wght@1,700&family=Silkscreen:wght@700&family=VT323&family=New+Rocker&family=Special+Elite&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=IM+Fell+English+SC&family=Michroma&family=Pirata+One&family=Righteous&family=Cormorant+SC:wght@700&family=Playfair+Display+SC:ital,wght@1,900&family=Black+Ops+One&family=Comfortaa:wght@700&family=Audiowide&family=Poiret+One&family=Orbitron:wght@800&family=Marcellus+SC&family=Bodoni+Moda:ital,wght@1,700&family=Bungee&family=Fraunces:ital,wght@1,700&family=Silkscreen:wght@700&family=VT323&family=New+Rocker&family=Special+Elite&display=swap"></noscript>
 <style>
 /* UNFIRE AUDIO — "El equipaje".
    Cada categoría vive en su propio contenedor: maletín de vuelo (inicio), flight case (instrumentos),
@@ -78,6 +79,13 @@ p{margin:0}
 #malFrame{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;display:block}
 .hero-pin.imm{position:fixed!important;inset:0!important;top:0!important;height:100vh!important;height:100dvh!important;z-index:9999;background:#000}.hero-pin.imm #malFrame{clip-path:none!important;pointer-events:auto!important}body.immOn{overflow:hidden}body.immOn header,body.immOn .hero-copy{visibility:hidden}body.immOn #stopAll,body.immOn #sndBtn{display:none!important}
 .hero-pin{position:sticky;top:62px;height:calc(100vh - 62px);overflow:hidden;display:grid;place-items:center}
+/* Defer heavy WebGL startup until the document is interactive. Same full-resolution game. */
+.hero-pin:not(.scene-ready)::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 70%,#1c3353 0%,#08090c 65%)}
+.hero-pin:not(.scene-ready)::after{content:"";position:absolute;inset:16% 2% 0;pointer-events:none;z-index:0;background:url("img/hyperwave-open.webp") center 65%/min(84vw,1060px) auto no-repeat;opacity:.46}
+.hero-pin:not(.scene-ready) #malFrame{opacity:0}
+.hero-pin.scene-ready #malFrame{opacity:1;transition:opacity .3s ease}
+@media (prefers-reduced-motion:reduce){.hero-pin.scene-ready #malFrame{transition:none}}
+
 .hero-copy{position:absolute;top:clamp(18px,4vh,48px);left:16px;right:16px;text-align:center;z-index:5;pointer-events:none;text-shadow:0 2px 18px #000}
 .hero h1{font-size:clamp(30px,4.6vw,62px);line-height:.95;font-weight:900;letter-spacing:-.025em}
 .hero h1 em{font-style:normal;background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -164,6 +172,7 @@ p{margin:0}
 section{position:relative;padding-block:clamp(64px,9vw,120px)}
 .sechead{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:34px}
 .sechead .lede{margin-top:12px}
+@media(max-width:360px){#transformables .sechead h2{font-size:25px}}
 .num{font:600 12px/1 var(--mono);letter-spacing:.2em;color:var(--sec,#3d8bff);margin-bottom:12px;display:block}
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s,transform .8s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
@@ -392,7 +401,7 @@ footer a{color:var(--soft)}
 <!-- 0 · El maletín 3D con inmersión -->
 <div class="hero" id="hero" data-field="0">
   <div class="hero-pin" id="heroPin">
-    <iframe id="malFrame" src="maletin/index.html?v=39" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay"></iframe>
+    <iframe id="malFrame" data-src="maletin/index.html?v=40" loading="lazy" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay"></iframe>
     <a id="noWebglLink" href="#instrumentos">Explorar los instrumentos ↓</a>
     <div class="hero-copy" id="heroCopy">
       <img src="img/logo-unfire-256.webp" alt="" width="64" height="64" style="width:64px;height:64px;margin:0 auto 12px;filter:drop-shadow(0 0 18px rgba(61,139,255,.6))">
@@ -743,6 +752,42 @@ const CaseSfx=(()=>{let on=false,ctx=null;const btn=$('#sndBtn');
     if(k==='thud'){tone(t,70,.35,.4,'sine');noise(t,.12,600,200,1,.15)}
     if(k==='chime'){noise(t,1.1,3500,9000,3,.05)}
     if(k==='zoom'){noise(t,.4,300,3000,4,.08)}}};
+})();
+/* Prepare the full 3D scene after the first paint; start earlier when the visitor engages.
+   Keep the original scene and interaction code unchanged. */
+const UNFIRE_SCENE=(()=>{
+  const frame=document.getElementById('malFrame');
+  const pin=document.getElementById('heroPin');
+  let started=false,skipUntil=0;
+  addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href^="#"]');
+    if(a&&a.hash!=='#hero'&&a.hash!=='#top')skipUntil=performance.now()+1900;
+  },true);
+  function showWhenReady(){
+    let tries=0;
+    const test=()=>{
+      try{if(frame.contentWindow && frame.contentWindow.__mal && frame.contentWindow.__mal.S){pin.classList.add('scene-ready');return;}}catch(e){}
+      if(++tries<160)setTimeout(test,100);
+      else pin.classList.add('scene-ready');
+    };
+    test();
+  }
+  function start(){
+    if(started)return;
+    started=true;
+    frame.addEventListener('load',showWhenReady,{once:true});
+    frame.src=frame.dataset.src;
+  }
+  const hero=document.getElementById('hero');
+  const nearHero=()=>{const r=hero.getBoundingClientRect();return r.top<innerHeight*1.1 && r.bottom>0};
+  function engage(e){if(performance.now()<skipUntil)return;if(nearHero()&&(e.type!=='pointerdown'||hero.contains(e.target)))start()}
+  ['wheel','touchstart','pointerdown','keydown'].forEach(ev=>addEventListener(ev,engage,{passive:true}));
+  addEventListener('scroll',()=>{if(performance.now()>=skipUntil&&scrollY>20&&nearHero())start()},{passive:true});
+  addEventListener('pageshow',()=>{if(scrollY>20&&nearHero())start()},{once:true});
+  // Pages opened in background resume the full 3D when their tab becomes visible.
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&nearHero())start()});
+  addEventListener('focus',()=>{if(!document.hidden&&nearHero())start()});
+  setTimeout(()=>{if(!document.hidden&&nearHero())start()},matchMedia('(max-width:700px)').matches?3200:1900);
+  return{start};
 })();
 /* ================= Maletín 3D (iframe con inmersión) ================= */
 const Snd={mal:false,ui(){const open=[...document.querySelectorAll('#sheet,#hyper,#synth')].some(x=>x.open);const b=$('#stopAll');if(b)b.classList.toggle('on',this.mal||open)},
