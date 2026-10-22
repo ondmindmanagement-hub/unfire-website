@@ -13,20 +13,40 @@ const assert=require('node:assert/strict');
   await page.waitForFunction(()=>{try{return !!document.getElementById('malFrame').contentWindow.__mal?.S}catch{return false}},{timeout:80000});
   const f=page.frames().find(x=>x.url().includes('/audio/maletin/index.html'));
   assert(f,'Game iframe missing');
-  await f.evaluate(()=>{window.__mal.setP(1);window.__roamAPI.enterRoam();window.__SIDEM.offer('NIMBO')});
+  await f.evaluate(()=>{window.__mal.setP(1);window.__mal.requestOpen();window.__roamAPI.enterRoam();window.__SIDEM.offer('NIMBO')});
   const initial=await f.evaluate(()=>({mission:window.__UNFIRE_CASE_QA.mission,originalButterfly:window.__UNFIRE_CASE_QA.originalButterfly,roam:window.__UNFIRE_CASE_QA.roam}));
   assert(initial.mission&&initial.originalButterfly&&initial.roam,'Mission, roam or real 3D butterfly not initialized');
   await f.evaluate(()=>window.__mal.toggleCase());
   const closed=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,mission:window.__UNFIRE_CASE_QA.mission}));
+  console.log('CASE_STATE_DIAGNOSTIC',JSON.stringify({initial,closed}));
   assert(closed.closed&&closed.carrying&&closed.mission===initial.mission,'Closing case loses game or quest');
   const host=await page.evaluate(()=>({url:location.pathname,frameSrc:document.getElementById('malFrame').getAttribute('src'),immersive:document.body.classList.contains('immOn')}));
-  assert(host.immersive&&host.frameSrc.includes('v=50'),'Game returned to website after closing case');
+  assert(host.immersive&&host.frameSrc.includes('v=20261022c'),'Game returned to website after closing case');
   const control=await f.evaluate(()=>{const b=document.getElementById('unfireCarryCase');if(!b)return {exists:false};const q=b.getBoundingClientRect();return {exists:true,display:getComputedStyle(b).display,visibility:getComputedStyle(b).visibility,rect:[q.x,q.y,q.width,q.height],hidden:b.hidden,roam:window.__UNFIRE_CASE_QA.roam,carry:window.__UNFIRE_CASE_QA.carrying};});
   console.log('CARRY_BUTTON_DIAGNOSTIC',JSON.stringify(control));
   // Verify the handler independently of hit testing; a separate UI-hit test will follow.
   await f.evaluate(()=>{const b=document.getElementById('unfireCarryCase');if(!b)throw Error('Carry control was not created');b.click()});
   const opened=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,mission:window.__UNFIRE_CASE_QA.mission}));
   assert(!opened.closed&&!opened.carrying&&opened.mission===initial.mission,'Reopen does not work');
+  // In-game house computer: ? app, invalid code, then ULTIMATEROBOTS.
+  const secret=await f.evaluate(()=>{
+    const beforeQuest=window.__UNFIRE_CASE_QA.mission;
+    const beforeSave=localStorage.getItem('unfire_save_v1');
+    const tube=document.getElementById('tube');
+    assertExists(tube&&document.getElementById('pcMysteryApp'),'House computer missing mystery app');
+    tube.classList.add('on');
+    document.getElementById('pcMysteryApp').click();
+    const fld=document.getElementById('pcSecretCode');
+    fld.value='not-a-code';document.getElementById('pcSecretGo').click();
+    const rejected=+(localStorage.getItem('unfire_unlock')||0)===0;
+    fld.value='ULTIMATEROBOTS';document.getElementById('pcSecretGo').click();
+    const unlocked=+(localStorage.getItem('unfire_unlock')||0)>=20;
+    const confirmation=document.getElementById('pcResult').textContent;
+    document.getElementById('tubeX').click();
+    return {rejected,unlocked,confirmation,questStillActive:window.__UNFIRE_CASE_QA.mission===beforeQuest,storyUnchanged:localStorage.getItem('unfire_save_v1')===beforeSave};
+    function assertExists(v,msg){if(!v)throw Error(msg);}
+  });
+  assert(secret.rejected&&secret.unlocked&&secret.questStillActive&&secret.storyUnchanged&&secret.confirmation.includes('desbloqueados'),'Secret app unlock/persistence or mission isolation failed: '+JSON.stringify(secret));
   const states=await f.evaluate(()=>{const a=[];for(let i=0;i<4;i++){window.__mal.toggleCase();a.push(window.__UNFIRE_CASE_QA.closed)}return a});
   assert.deepEqual(states,[true,false,true,false],'Rapid click target-state toggle not alternating');
   const missions=await f.evaluate(()=>{

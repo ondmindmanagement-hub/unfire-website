@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261022b" as="script"></head><body><title>UNFIRE Maletín</title>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261022c" as="script"></head><body><title>UNFIRE Maletín</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
@@ -4346,6 +4346,12 @@ window.STORY_INIT = function (H) {
   const store = (s) => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} };
   let SAVE = load() || { name: '', level: 1, ch: 0, step: 0, done: [], met: false, ts: 0 };
   const FREE = 3;
+  // Validate older/corrupted saves without overwriting a valid current mission.
+  if (!SAVE || typeof SAVE !== 'object' || Array.isArray(SAVE)) SAVE = { name: '', level: 1, ch: 0, step: 0, done: [], met: false, ts: 0 };
+  SAVE.done = Array.isArray(SAVE.done) ? [...new Set(SAVE.done.filter(n => Number.isInteger(n) && n >= 0 && n < FREE))] : [];
+  SAVE.ch = Number.isInteger(SAVE.ch) ? Math.max(0, Math.min(FREE, SAVE.ch)) : 0;
+  SAVE.step = Number.isInteger(SAVE.step) ? Math.max(0, SAVE.step) : 0;
+  SAVE.level = [0,1,2].includes(SAVE.level) ? SAVE.level : 1;
   // ---------- reparto ----------
   const CAST = {
     NIMBO: { col: '#5fe0ff', pitch: 1.18, rate: 1.04, pref: ['Paulina', 'Mónica', 'Monica', 'Marisol', 'Helena', 'Google español', 'Elvira'] },
@@ -4420,16 +4426,22 @@ window.STORY_INIT = function (H) {
   function choices(list) { $('.ch').innerHTML = ''; list.forEach(([t, f, alt]) => { const b = document.createElement('button'); b.textContent = t; if (alt) b.className = 'alt'; b.onclick = () => { try { speechSynthesis.cancel(); } catch (e) {} f(); }; $('.ch').appendChild(b); }); }
   function save(msg) { SAVE.ts = Date.now(); store(SAVE); if (msg) H.say('💾 Partida guardada · capítulo ' + (SAVE.ch + 1)); }
   function setObj(t) { const ob = document.getElementById('stO'); ob.textContent = t ? '🎯 ' + t : ''; ob.style.display = t ? '' : 'none'; }
-  function runStep() { const C = CH[SAVE.ch]; if (!C || C.locked) { setObj(''); return; } inStory = true; const S0 = C.steps[SAVE.step]; if (!S0) return;
+  function runStep() {
+    const C = CH[SAVE.ch];
+    if (!C || C.locked || !Array.isArray(C.steps)) { waitEv = null; waitN = 0; show(false); setObj('Este capítulo todavía no está disponible. Puedes seguir explorando y completando misiones.'); return; }
+    if (SAVE.step >= C.steps.length || SAVE.step < 0) { SAVE.step = 0; save(); }
+    // Prevent stale mission triggers from advancing a different chapter.
+    waitEv = null; waitN = 0;
+    inStory = true; const S0 = C.steps[SAVE.step];
     play(S0.say, () => { if (S0.end) { SAVE.done.includes(SAVE.ch) || SAVE.done.push(SAVE.ch); SAVE.ch++; SAVE.step = 0; save(true); const nxt = CH[SAVE.ch]; if (nxt && !nxt.locked) choices([['▶ SIGUIENTE CAPÍTULO', () => runStep()], ['MÁS TARDE', () => { show(false); setObj('Capítulo ' + (SAVE.ch + 1) + ' esperando · 📖 HISTORIA'); }, 1]]); else choices([['🔓 VER EL MALETÍN COMPLETO', () => { H.buy(); show(false); }], ['CERRAR', () => { show(false); setObj(''); }, 1]]); return; }
       if (S0.wait) { waitEv = S0.wait.ev; waitN = S0.wait.n || 1; setObj(S0.hint); choices([['¡VAMOS!', () => show(false)]]); } else { SAVE.step++; save(); runStep(); } }); }
-  function ev(name) { if (!waitEv || name !== waitEv) return; waitN--; if (waitN > 0) { setObj(CH[SAVE.ch].steps[SAVE.step].hint + ' · faltan ' + waitN); return; } waitEv = null; SAVE.step++; save(); setTimeout(runStep, 700); }
+  function ev(name) { const currentStep = CH[SAVE.ch] && CH[SAVE.ch].steps && CH[SAVE.ch].steps[SAVE.step]; if (!waitEv || name !== waitEv || !currentStep || !currentStep.wait || currentStep.wait.ev !== name) return; waitN--; if (waitN > 0) { setObj(CH[SAVE.ch].steps[SAVE.step].hint + ' · faltan ' + waitN); return; } waitEv = null; SAVE.step++; save(); setTimeout(runStep, 700); }
   function intro() { if (hostShown) return; hostShown = true; H.showHost(true); hud.style.display = 'flex';
     if (SAVE.met && SAVE.name) { H.say('👋 ¡' + N() + '! Has vuelto · capítulo ' + (SAVE.ch + 1) + ' guardado · 📖 HISTORIA para seguir'); setObj('Cuando quieras: 📖 HISTORIA'); return; }
     play([['NIMBO', 'feliz', 'Ey. Psst. Aquí abajo, al lado del maletín. Soy Nimbo.'], ['NIMBO', 'duda', '¿Cómo te llamas? Así te podré llamar por tu nombre y no «oye tú», que queda feo.']], () => { $('.ch').innerHTML = '<input id="stN" maxlength="18" placeholder="Tu nombre"><button id="stOk">LISTO</button>'; const ok = () => { SAVE.name = ($('#stN').value || '').trim().slice(0, 18) || 'Viajero'; SAVE.met = true; save(); askLevel(); }; $('#stOk').onclick = ok; $('#stN').onkeydown = (e) => { e.stopPropagation(); if (e.key === 'Enter') ok(); }; setTimeout(() => $('#stN').focus(), 50); }); }
   function askLevel() { play([['NIMBO', 'feliz', () => 'Encantado, ' + N() + '. ¿Cuánto sabes de música y sintes? Así te explico a tu ritmo.']], () => choices([['NADA, SOY NUEVO', () => { SAVE.level = 0; offer(); }], ['ALGO SÉ', () => { SAVE.level = 1; offer(); }], ['SOY EXPERTO', () => { SAVE.level = 2; offer(); }]])); }
   function offer() { save(); play([['NIMBO', 'misterio', () => 'Perfecto. Aquí dentro pasa algo raro y necesito ayuda. ¿Empezamos la historia? Puedes dejarla cuando quieras y volver: yo te guardo la partida.']], () => choices([['▶ EMPEZAR LA HISTORIA', () => runStep()], ['PRIMERO QUIERO CURIOSEAR', () => { show(false); setObj('Cuando quieras: 📖 HISTORIA'); }, 1]])); }
-  function openMenu() { menu.style.display = 'block'; menu.innerHTML = '<h2>📖 EL SEGUNDO PERDIDO</h2><p>Partida de <b>' + (SAVE.name || '—') + '</b> · nivel ' + ['novato', 'medio', 'experto'][SAVE.level] + '</p>' + CH.map((c, i) => '<div class="c' + (i >= FREE ? ' lk' : '') + '"><span>' + (i + 1) + '. ' + c.t + (SAVE.done.includes(i) ? ' ✔' : '') + '</span>' + (i >= FREE ? '<span>🔒 maletín completo</span>' : '<button data-c="' + i + '">' + (i === SAVE.ch ? 'CONTINUAR' : 'JUGAR') + '</button>') + '</div>').join('') + '<div style="margin-top:12px;display:flex;gap:8px"><button id="mSv">💾 GUARDAR</button><button id="mMu">' + (mute ? '🔊 VOCES ON' : '🔇 SIN VOZ') + '</button><button id="mRs" class="alt">BORRAR PARTIDA</button><button id="mX" class="alt">CERRAR</button></div>';
+  function openMenu() { const safeName=String(SAVE.name||'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); menu.style.display = 'block'; menu.innerHTML = '<h2>📖 EL SEGUNDO PERDIDO</h2><p>Partida de <b>' + safeName + '</b> · nivel ' + ['novato', 'medio', 'experto'][SAVE.level] + '</p>' + CH.map((c, i) => '<div class="c' + (i >= FREE ? ' lk' : '') + '"><span>' + (i + 1) + '. ' + c.t + (SAVE.done.includes(i) ? ' ✔' : '') + '</span>' + (i >= FREE ? '<span>🔒 maletín completo</span>' : '<button data-c="' + i + '">' + (i === SAVE.ch ? 'CONTINUAR' : 'JUGAR') + '</button>') + '</div>').join('') + '<div style="margin-top:12px;display:flex;gap:8px"><button id="mSv">💾 GUARDAR</button><button id="mMu">' + (mute ? '🔊 VOCES ON' : '🔇 SIN VOZ') + '</button><button id="mRs" class="alt">BORRAR PARTIDA</button><button id="mX" class="alt">CERRAR</button></div>';
     menu.querySelectorAll('button[data-c]').forEach((b) => (b.onclick = () => { const c = +b.dataset.c; if (c !== SAVE.ch) { SAVE.ch = c; SAVE.step = 0; } menu.style.display = 'none'; runStep(); })); menu.querySelector('#mSv').onclick = () => save(true); menu.querySelector('#mMu').onclick = () => { mute = !mute; openMenu(); }; menu.querySelector('#mRs').onclick = () => { SAVE = { name: '', level: 1, ch: 0, step: 0, done: [], met: false, ts: 0 }; store(SAVE); menu.style.display = 'none'; hostShown = false; intro(); }; menu.querySelector('#mX').onclick = () => (menu.style.display = 'none'); }
   hud.querySelector('#stM').onclick = openMenu; hud.querySelector('#stR').onclick = () => { const on = H.robotMode(); hud.querySelector('#stR').textContent = on ? '🧍 TAMAÑO NORMAL' : '🤖 MODO ROBOT'; }; hud.querySelector('#stP').onclick = () => H.toggleMap(); hud.querySelector('#stS').onclick = () => save(true); setObj('');
   // ---------- charla: los robots hablan solos de vez en cuando (sin repetir) ----------
@@ -4449,5 +4461,5 @@ window.STORY_INIT = function (H) {
 };
 
 </script>
-<script src="game-engine-v50.js?v=20261022b"></script>
+<script src="game-engine-v50.js?v=20261022c"></script>
 </body></html>
