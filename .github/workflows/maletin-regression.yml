@@ -7,6 +7,7 @@ on:
       - 'audio/maletin/game-engine-v50.js'
       - 'tests/maletin-v50.test.cjs'
       - 'tests/maletin-v50-browser.cjs'
+      - 'tests/maletin-mobile-rotation.cjs'
       - '.github/workflows/maletin-regression.yml'
   workflow_dispatch:
 permissions:
@@ -14,7 +15,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
       - name: Check syntax, click routing, missions, audio and multiplayer preservation
@@ -28,3 +29,6 @@ jobs:
           python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/unfire-http.log 2>&1 &
           sleep 2
           node tests/maletin-v50-browser.cjs
+
+      - name: Check portrait, landscape, touch and online menu without losing story progress
+        run: node tests/maletin-mobile-rotation.cjs
