@@ -536,7 +536,7 @@ footer a{color:var(--soft)}
 </div>
 
 <footer><div class="wrap">
-  <div style="display:flex;gap:14px;align-items:center"><img src="img/logo-unfire-256.webp" alt="" width="44" height="44" style="width:44px;height:44px"><div>UNFIRE AUDIO es parte de <a href="https://unfire.technology" target="_blank" rel="noopener">Unfire</a> · Cardedeu, Barcelona<br>Contacto: <span class="sel">hello@unfire.technology</span></div></div>
+  <div style="display:flex;gap:14px;align-items:center"><img src="img/logo-unfire-256.webp" alt="" width="44" height="44" style="width:44px;height:44px"><div>UNFIRE AUDIO es parte de <a href="https://unfire.technology" target="_blank" rel="noopener">Unfire</a> · Cardedeu, Barcelona<br>Contacto: <span class="sel">hello@unfire.technology</span><br><a href="/terms.html">Términos</a> · <a href="/software-license.html">Licencia</a> · <a href="/refunds.html">Reembolsos</a> · <a href="legal/">Propiedad intelectual de UNFIRE AUDIO</a></div></div>
   <div style="max-width:56ch">Fotografías de los FX20: The Metropolitan Museum of Art, Open Access (dominio público). Sonidos de las demos: VCSL (CC0). Melodías de dominio público. Tipografías SIL OFL y Apache 2.0.</div>
 </div></footer>
 
@@ -647,6 +647,8 @@ const STARTER=['lofi','pulsebits','airflow'];
 /* Precios en euros. Referencias de mercado: efecto suelto 9 € (impulso), pack 49 € (ancla), insignia 59 €,
    todo 99 €, Club 6,99 €/mes (Output One cobra 14,99 $/mes y Arcade 12,99 $/mes). Editables aquí. */
 const PRICES={fx:9,fx20:49,hyper:59,synth:29,todo:99,clubM:6.99,clubY:59};
+/* PAGOS: pega aquí el enlace de pago de Stripe (Payment Link) de cada producto y los botones cobrarán directamente. Vacío = consulta por correo. */
+const PAY={fx:'',fx20:'',hyper:'',synth:'',todo:'',clubM:'',clubY:''};
 const eur=v=>v===0?'0 €':(Number.isInteger(v)?v:v.toFixed(2).replace('.',','))+' €';
 const ITEMS={hyper:['HYPERWAVE 2000',PRICES.hyper,0],synth:['Unfire Synthesizer (Mac)',PRICES.synth,PRICES.synth],todo:['Todo UNFIRE',PRICES.todo,PRICES.synth],starter:['Starter gratis (3 FX)',0,0],club:['UNFIRE Club · mensual',PRICES.clubM,PRICES.clubM],launch:['Aviso de lanzamiento',0,0]};
 FX.forEach(f=>ITEMS['fx-'+f[0]]=['UNFIRE '+f[1],STARTER.includes(f[0])?0:PRICES.fx,0]);
@@ -889,7 +891,7 @@ $('#bagGo').onclick=()=>{$('#bag').close();getLic('Tu bolsa')};
 const lic=$('#lic');
 function getLic(what){$('#licFor').textContent='Licencia · '+what;$('#agree').checked=false;$('#doGet').disabled=true;$('#getMsg').hidden=true;lic.showModal()}
 $('#agree').onchange=e=>$('#doGet').disabled=!e.target.checked;
-$('#doGet').onclick=()=>{const it=[...document.querySelectorAll('#bagList li')].map(li=>'- '+li.textContent.replace('✕','').trim()).join('\n')||'- '+$('#licFor').textContent.replace('Licencia · ','');const tot=$('#bagLaunch')?$('#bagLaunch').textContent:'';const body='Hola UNFIRE,\n\nMe interesa recibir informacion sobre los siguientes productos:\n'+it+(tot?'\n\nTotal (precio de lanzamiento): '+tot:'')+'\n\nAcepto la licencia de uso personal (sin reventa).\n\nMi nombre:\nMi país:\n';location.href='mailto:hello@unfire.technology?subject='+encodeURIComponent('Consulta de disponibilidad · UNFIRE AUDIO')+'&body='+encodeURIComponent(body);$('#getMsg').hidden=false};
+$('#doGet').onclick=()=>{try{const ks=store.get('unfire.bag',[]).filter(k=>ITEMS[k]&&ITEMS[k][1]>0);const map={club:'clubM'};const lk=ks.length===1?PAY[map[ks[0]]||ks[0]]:(ks.length>1&&PAY.todo&&ks.includes('todo')?PAY.todo:'');if(lk){location.href=lk;return}}catch(e){}const it=[...document.querySelectorAll('#bagList li')].map(li=>'- '+li.textContent.replace('✕','').trim()).join('\n')||'- '+$('#licFor').textContent.replace('Licencia · ','');const tot=$('#bagLaunch')?$('#bagLaunch').textContent:'';const body='Hola UNFIRE,\n\nMe interesa recibir informacion sobre los siguientes productos:\n'+it+(tot?'\n\nTotal (precio de lanzamiento): '+tot:'')+'\n\nAcepto la licencia de uso personal (sin reventa).\n\nMi nombre:\nMi país:\n';location.href='mailto:hello@unfire.technology?subject='+encodeURIComponent('Consulta de disponibilidad · UNFIRE AUDIO')+'&body='+encodeURIComponent(body);$('#getMsg').hidden=false};
 $('#readLic').onclick=()=>getLic('Lectura');
 
 /* ================= Lanzamiento (fecha real cuando se decida) ================= */
