@@ -17,6 +17,7 @@ chk('G keyboard handles pack and throw',engine.includes("(e.key==='g'||e.key==='
 chk('Exit from roam cancels capsule and restores case',engine.includes('CAPS.cancel();carryingCase=false;caseG.visible=true'));
 chk('Capsule never exits the game',!engine.slice(engine.indexOf('const CAPS=(()=>'),engine.indexOf('  // ===== SECRETOS:')).includes('exitRoam()'));
 
+chk('Workshop attaches to story HUD without timer polling',engine.includes('const mountWorkshopControls = () =>')&&engine.includes('new MutationObserver(')&&!engine.includes('setTimeout(function addT()'));
 chk('Case view stops walk shortcuts while allowing piano notes',engine.includes('if (CASE_VIEW.on) return; const k = e.key.length === 1'));
 chk('Case view G note does not pack capsule',engine.includes('&&ROAMS.on&&!CASE_VIEW.on&&portableUnlocked()'));
 chk('Case mobile pinch zooms inspection camera',engine.includes('CASE_VIEW.dist=clamp(CASE_VIEW.dist*f,5.4,14.5)'));
