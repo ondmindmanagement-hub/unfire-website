@@ -414,7 +414,7 @@ footer a{color:var(--soft)}
 <!-- 0 · El maletín 3D con inmersión -->
 <div class="hero" id="hero" data-field="0">
   <div class="hero-pin" id="heroPin">
-    <iframe id="malFrame" data-src="maletin/index.html?v=20261023b" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone"></iframe>
+    <iframe id="malFrame" data-src="maletin/index.html?v=20261023c" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone"></iframe>
     <a id="noWebglLink" href="#instrumentos">Explorar los instrumentos ↓</a>
     <div class="hero-copy" id="heroCopy">
       <img src="img/logo-unfire-256.webp" alt="" width="64" height="64" style="width:64px;height:64px;margin:0 auto 12px;filter:drop-shadow(0 0 18px rgba(61,139,255,.6))">
@@ -779,31 +779,55 @@ const CaseSfx=(()=>{let on=false,ctx=null;const btn=$('#sndBtn');
 const UNFIRE_SCENE=(()=>{
   const frame=document.getElementById('malFrame');
   const pin=document.getElementById('heroPin');
-  let started=false,skipUntil=0,ready=false,waiting=[];
+  let started=false,skipUntil=0,ready=false,waiting=[],generation=0;
+  const deviceProfile=()=>{
+    const width=Math.round(window.visualViewport?.width||innerWidth||360);
+    const height=Math.round(window.visualViewport?.height||innerHeight||640);
+    const touch=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    const mem=Number(navigator.deviceMemory||0),cores=Number(navigator.hardwareConcurrency||0);
+    const compact=touch&&(Math.min(width,height)<=390||(mem&&mem<=4)||(cores&&cores<=4));
+    return {width,height,touch,tier:compact?'compact':touch?'balanced':'desktop'};
+  };
+  let profile=deviceProfile();window.__UNFIRE_DEVICE_PROFILE=profile;
+  const recalibrate=()=>{profile=deviceProfile();window.__UNFIRE_DEVICE_PROFILE=profile;document.documentElement.dataset.gameTier=profile.tier;};
+  recalibrate();addEventListener('resize',recalibrate,{passive:true});
+  if(window.visualViewport)visualViewport.addEventListener('resize',recalibrate,{passive:true});
+  const help=document.createElement('div');help.id='unfireGameHelp';
+  help.style.cssText='display:none;position:absolute;z-index:30;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(91vw,330px);padding:13px;border:1px solid #83cfff;border-radius:16px;background:#081528f5;color:#eef7ff;text-align:center;font:600 12px/1.5 system-ui;box-shadow:0 12px 30px #000a';
+  help.innerHTML='Si el juego no aparece, prueba el modo compatible.<div style="display:flex;justify-content:center;gap:8px;margin-top:9px"><button id="unfireGameRetry" type="button" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;background:#174b80;color:white">REINTENTAR</button><a href="maletin/index.html?v=20261023c&quality=compact" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;color:white;text-decoration:none">JUGAR DIRECTO</a></div>';
+  pin.appendChild(help);
+  help.querySelector('#unfireGameRetry').onclick=()=>{help.style.display='none';start(true);};
+  const fail=()=>{pin.classList.add('scene-error');pin.classList.remove('scene-ready');help.style.display='block';
+    const btn=document.getElementById('openBtn');if(btn){btn.removeAttribute('aria-busy');const t=btn.querySelector('b');if(t)t.textContent='REINTENTAR';}
+    dispatchEvent(new Event('unfire:scene-error'));
+  };
   addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href^="#"]');
     if(a&&a.hash!=='#hero'&&a.hash!=='#top')skipUntil=performance.now()+1900;
   },true);
-  function showWhenReady(){
+  function showWhenReady(id){
     let tries=0;
     const test=()=>{
+      if(id!==generation||ready)return;
       try{if(frame.contentWindow && frame.contentWindow.__mal && frame.contentWindow.__mal.S){
-          ready=true;pin.classList.add('scene-ready');pin.classList.remove('scene-error');
+          ready=true;pin.classList.add('scene-ready');pin.classList.remove('scene-error');help.style.display='none';
           const callbacks=waiting.splice(0);callbacks.forEach(fn=>{try{fn()}catch(e){console.error('UNFIRE open:',e)}});
           return;
         }}catch(e){}
-      if(++tries<400)setTimeout(test,100);
-      else {pin.classList.add('scene-error');pin.classList.remove('scene-ready');
-        const btn=document.getElementById('openBtn');
-        if(btn){btn.removeAttribute('aria-busy');const text=btn.querySelector('b');if(text)text.textContent='REINTENTAR';}
-      }
+      if(++tries<500)setTimeout(test,100);
+      else fail();
     };
     test();
   }
-  function start(){
-    if(started)return;
-    started=true;
-    frame.addEventListener('load',showWhenReady,{once:true});
-    frame.src=frame.dataset.src;
+  function start(retry=false){
+    if(started&&!retry)return;
+    started=true;ready=false;const id=++generation;
+    const src=new URL(frame.dataset.src,location.href);
+    src.searchParams.set('quality',retry?'compact':profile.tier);
+    if(retry)src.searchParams.set('_reload',String(Date.now()));
+    frame.addEventListener('load',()=>showWhenReady(id),{once:true});
+    frame.src=src.href;
+    // Mobile Safari may not fire iframe load if WebGL initialization fails.
+    setTimeout(()=>{if(id===generation&&!ready)showWhenReady(id)},3000);
   }
   function onReady(fn){if(ready){fn();return;}waiting.push(fn);start();}
   const hero=document.getElementById('hero');
@@ -825,7 +849,8 @@ const Snd={mal:false,ui(){const open=[...document.querySelectorAll('#sheet,#hype
 (()=>{const sm=HTMLDialogElement.prototype.showModal;HTMLDialogElement.prototype.showModal=function(){if(['sheet','hyper','synth'].includes(this.id)){Snd.stopMal();document.querySelectorAll('#sheet,#hyper,#synth').forEach(x=>x!==this&&x.open&&x.close())}const r=sm.call(this);Snd.ui();return r};
   document.addEventListener('close',()=>setTimeout(()=>Snd.ui(),0),true);addEventListener('pagehide',()=>Snd.all());document.addEventListener('visibilitychange',()=>{if(document.hidden)Snd.all()})})();
 const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp=0,snap=0;let anim=0,passUntil=0,parked=0,loadingIntent=false,caseLocal=false;const open=(D=1100)=>{
-  UNFIRE_SCENE.start();
+  if($('#heroPin').classList.contains('scene-error')){loadingIntent=false;UNFIRE_SCENE.start(true);}
+  else UNFIRE_SCENE.start();
   if(anim||loadingIntent)return;
   if(!UNFIRE_SCENE.isReady()){
     loadingIntent=true;const btn=$('#openBtn'),txt=btn.querySelector('b');
@@ -861,6 +886,7 @@ if(d.lv!=null)document.documentElement.style.setProperty('--lv',d.lv);if(d.rect)
     if(d.open==='fx'){const f=FX.find(x=>x[0]===d.id);if(f)openFx(f)}if(d.open==='archer')document.querySelector('[data-archer]').click();if(d.open==='hyper')document.querySelector('[data-hyper]').click();if(d.open==='synth')document.querySelector('[data-synth]').click()});
   function rect(d){const pad=28;if(caseLocal){fr.style.clipPath='none';fr.style.pointerEvents='auto';return;}if(performance.now()<passUntil)return;fr.style.pointerEvents='auto';
     if(d.zoom||matchMedia('(pointer:fine)').matches){fr.style.clipPath='none';return}const W=fr.clientWidth,H=fr.clientHeight,[x0,y0,x1,y1]=d.rect;fr.style.clipPath=`inset(${Math.max(0,y0-pad)}px ${Math.max(0,W-x1-pad)}px ${Math.max(0,H-y1-pad)}px ${Math.max(0,x0-pad)}px round 24px)`}
+  addEventListener('unfire:scene-error',()=>{loadingIntent=false;});
   $('#openBtn').onclick=()=>open(1050);fr.style.pointerEvents='none';
   function shut(){caseLocal=true;$('#heroPin').classList.add('imm');document.body.classList.add('immOn');fr.style.pointerEvents='auto';fr.style.clipPath='none';}
   function exitGame(){$('#heroPin').classList.remove('imm');document.body.classList.remove('immOn');parked=1;tick();fr.style.pointerEvents='none';

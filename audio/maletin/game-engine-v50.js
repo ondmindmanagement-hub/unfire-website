@@ -54,8 +54,11 @@
     return L.filter((B) => !(0 > B.x0 && 0 < B.x1 && 24 > B.z0 && 24 < B.z1) && !(-30 > B.x0 - 3 && -30 < B.x1 + 3 && B.z1 > 84) && Math.abs(B.x1 - B.x0) < 70); };
   function HGT(o) { const b = new THREE.Box3().setFromObject(o); return Math.max(0.001, b.max.y - b.min.y); }
   const cv = $('cv'), parentPost = (m) => { try { parent.postMessage(Object.assign({ unfire: 1 }, m), '*'); } catch (e) {} };
-  const LOWDEV = (() => { try { return matchMedia('(pointer:coarse)').matches || innerWidth < 820 || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4; } catch (e) { return false; } })(); window.__LOWDEV = LOWDEV;
-  const S = Y2K.stage(cv, { reflect: false, zoom: false, exposure: 0.98, shadow: 0.38, maxDpr: LOWDEV ? 1 : 1.5, fov: 30 });
+  const DEVICE=window.__UNFIRE_AUTOCALIB||{tier:'desktop',maxDpr:1.5,antialias:true};
+  const LOWDEV = DEVICE.tier!=='desktop'||((navigator.hardwareConcurrency||8)<=4);
+  window.__LOWDEV=LOWDEV;window.__UNFIRE_ACTIVE_DEVICE=DEVICE;
+  const S = Y2K.stage(cv, { reflect: false, zoom: false, exposure: 0.98, shadow: 0.38,
+    maxDpr: DEVICE.maxDpr, antialias: DEVICE.antialias, shadowResolution: LOWDEV?512:2048, fov: 30 });
   if (LOWDEV) { S.renderer.shadowMap.enabled = false; }
   else { S.renderer.shadowMap.autoUpdate = false; S.renderer.shadowMap.needsUpdate = true; }
 
@@ -1646,7 +1649,10 @@
   addEventListener('keydown', (e) => { if (!ROAMS.on || (e.target && e.target.tagName === 'INPUT')) return; if (e.key === 'Escape') { if (CASE_VIEW.on) showRobotView(); else exitRoam(); return; } if (CASE_VIEW.on) return; const k = e.key.length === 1 ? e.key.toLowerCase() : e.key; if (k === 'Shift' || k === 'Alt') ROAMS.k[k] = 1; if (k === 'b' && !e.repeat && window.ATM_OUT) { window.__surfToggle && window.__surfToggle(); e.preventDefault(); e.stopImmediatePropagation(); return; } if (k === ' ' && !e.repeat && !ROAMS.mini && window.ATM_OUT && ROAMS.wet && !ROAMS.fly && ROAMS.board) { ROAMS.spDown = performance.now(); ROAMS.k[' '] = 1; if (!ROAMS.air && !ROAMS.trick) { const wv0 = window.__WAVE ? window.__WAVE(ROAMS.p.x, ROAMS.p.z, window.__T || 0) : 0; ROAMS.vy = Math.min(66, 30 + Math.max(0, wv0) * 3.4); try { window.__SPRAY && window.__SPRAY(ROAMS.p.x, -8.9 + (ROAMS.h || 0), ROAMS.p.z, 40, 8, 14); } catch (e2) {} const KD = ['360', 'FLIP', 'GRAB', 'SUPERMAN']; ROAMS.trick = { t: 0, k: KD[Math.floor(Math.random() * KD.length)], sd: Math.random() < 0.5 ? 1 : -1 }; } e.preventDefault(); e.stopImmediatePropagation(); return; } if (k === ' ' && !e.repeat && !ROAMS.mini) { const now = performance.now(); if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; say('🪽 Transformación · MANTÉN ESPACIO para subir · suéltalo y te quedas flotando · S o ↓ para bajar · F en picado · W hacia delante'); } ROAMS.lastSp = now; ROAMS.k[' '] = 1; } if (k === 'f') ROAMS.k.f = 1; if (k.startsWith('Arrow') || 'wasdqe'.includes(k) || k === ' ') { ROAMS.k[k] = 1; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
   addEventListener('keyup', (e) => { ROAMS.k[e.key.length === 1 ? e.key.toLowerCase() : e.key] = 0; });
   function fitD0() { const vf = (cam.fov * Math.PI) / 360, hf = Math.atan(Math.tan(vf) * cam.aspect); view.D0 = Math.max((CW / 2 + 0.5) / Math.tan(hf), (CD / 2 + 1.3) / Math.tan(vf)) * 1.02; if (view.gd > view.D0 || view.gd === view.dist && view.dist >= view.D0 - 0.01) { view.gd = view.D0; } }
-  function resize() { const w = innerWidth, h = innerHeight; S.renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); fitD0(); if (!zoomed()) { view.dist = view.gd = view.D0; } }
+  function resize() { const w = Math.max(1,innerWidth), h = Math.max(1,innerHeight);
+    const budget=window.__UNFIRE_AUTOCALIB;
+    if(budget&&S.renderer.getPixelRatio()>budget.maxDpr)S.renderer.setPixelRatio(budget.maxDpr);
+    S.renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); fitD0(); if (!zoomed()) { view.dist = view.gd = view.D0; } }
   addEventListener('resize', resize);
   const zoomed = () => view.gd < view.D0 * 0.985;
   const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), plane = new THREE.Plane(V(0, 1, 0), -HB), hitP = V(0, 0, 0);
@@ -2076,7 +2082,7 @@
     }
     requestAnimationFrame(frame);
     // Cap this heavy 3D scene to ~30-40fps; input events continue unthrottled.
-    if (previousRenderAt && now - previousRenderAt < (window.__LOWFPS ? 42 : window.ATM_OUT ? 33 : 28)) return;
+    if (previousRenderAt && now - previousRenderAt < (window.__LOWFPS||LOWDEV ? 40 : window.ATM_OUT ? 33 : 28)) return;
     const actualFrameTime = previousRenderAt ? Math.min(0.18, Math.max(0.008, (now - previousRenderAt) / 1000)) : 1 / 30;
     previousRenderAt = now;
     const dt = Math.min(0.05, clock.getDelta()) * (window.__dts || 1); t += dt;
