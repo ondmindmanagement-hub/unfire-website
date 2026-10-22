@@ -784,7 +784,7 @@
   function updateCarryUI(){
     const show=ROAMS.on;
     const far=ROAMS.on && Math.hypot(caseG.position.x-ROAMS.p.x,caseG.position.z-ROAMS.p.z)>12;
-    const label=carryingCase?'ABRIR MALETÍN':far?'RECUPERAR MALETÍN':pTarget>0.5?'GUARDAR MALETÍN':'ABRIR MALETÍN';
+    const label=carryingCase?'🎒 LANZAR CÁPSULA':far?'🎒 RECUPERAR EN CÁPSULA':'🎒 GUARDAR EN CÁPSULA';
     const labelNode=carryButton.querySelector('span');
     if(labelNode && labelNode.textContent!==label)labelNode.textContent=label;
     if(show!==carryUIShown){carryUIShown=show;carryButton.style.display=show?'flex':'none';}
@@ -795,23 +795,31 @@
     closeAll(false);
     // Leave story state, missions, friends, online rooms and audio intact.
     if(ROAMS.on){
+      // Case and everything inside are stored in one inventory capsule, not mounted
+      // in front of the camera. Hiding the group also saves WebGL draw calls.
       carryingCase=true;
-      caseG.scale.setScalar(0.32);
+      caseG.visible=false;
+      caseG.scale.setScalar(1);
     }
     updateCarryUI();
     if(parent!==window)parentPost({caseState:'closed'});
   }
-  function openCaseInGame(){
+  function openCaseInGame(landing){
     lidControlledByPlayer=true;
     if(carryingCase){
       carryingCase=false;
       caseG.scale.setScalar(1);
       if(ROAMS.on){
-        caseG.position.set(ROAMS.p.x+Math.sin(ROAMS.yaw)*3.5,ROAMS.p.y-4.5,
-                           ROAMS.p.z-Math.cos(ROAMS.yaw)*3.5);
-        caseG.rotation.y=ROAMS.yaw;
+        const angle=ROAMS.cy==null?ROAMS.yaw:ROAMS.cy;
+        caseG.position.set(
+          landing ? landing.x : ROAMS.p.x+Math.sin(angle)*7,
+          landing ? landing.y : -8.9+(ROAMS.h||0)+0.3,
+          landing ? landing.z : ROAMS.p.z-Math.cos(angle)*7
+        );
+        caseG.rotation.y=angle;
       } else {caseG.position.copy(originalCasePosition);caseG.rotation.y=0;}
     }
+    caseG.visible=true;
     pTarget=1;
     updateCarryUI();
     ROOM.AMB.mute=false;
@@ -826,10 +834,8 @@
   carryButton.addEventListener('click',e=>{
     e.preventDefault();e.stopPropagation();
     if(!ROAMS.on)return;
-    if(carryingCase){openCaseInGame();return;}
-    const far=Math.hypot(caseG.position.x-ROAMS.p.x,caseG.position.z-ROAMS.p.z)>12;
-    if(far){carryingCase=true;caseG.scale.setScalar(0.32);openCaseInGame();}
-    else toggleCaseInGame();
+    if(carryingCase){CAPS.throwIt();return;}
+    closeCaseInGame();
   }); const laser = mesh(new THREE.BoxGeometry(0.03, 0.012, CD - 0.2), Y2K.led('#3d8bff', 3)); caseG.add(laser);
   function setLid(p) { const lt = ease.smooth(clamp((p - 0.08) / 0.2)), op = ease.smooth(clamp((p - 0.25) / 0.7)); latches.forEach((l) => { l.rotation.x = -1.5 * lt; }); lidPivot.rotation.x = -1.92 * op; lidOpen = op; }
   plate.material.emissive = new THREE.Color(0x3d8bff); plate.material.emissiveMap = plate.material.map;
@@ -1040,7 +1046,7 @@
     cam.position.copy(REC.p); const c2 = Math.cos(REC.cpch); cam.lookAt(REC.p.x + Math.sin(REC.cy) * c2, REC.p.y + Math.sin(REC.cpch), REC.p.z - Math.cos(REC.cy) * c2); cam.near = 0.08; };
   function enterRoam() { if (ROAMS.on) return; ROAMS.on = true;  ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
   function exitRoam() { if (REC.on) REC.set(false); if (!ROAMS.on) return;
-    carryingCase=false;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
+    CAPS.cancel();carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
  ROAMS.on = false; ROAMS.cp = null; ROAMS.mini = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
   roamB.onclick = (e) => { e.stopPropagation(); ROAMS.on ? exitRoam() : enterRoam(); };
   window.__roamAPI = { ROAMS, enterRoam, exitRoam, roamMove }; window.__OUT_OPEN = true;
@@ -1324,11 +1330,67 @@
   { const g = (id) => document.getElementById(id); g('onNew').onclick = () => ONLINE.create(); g('onJoin').onclick = () => ONLINE.join(g('onCode').value); g('onX').onclick = () => { ONLINE.saveMe(); g('onl').classList.remove('on'); };
     g('onlQ').onclick = () => { ONLINE.leave(); say('🌐 Has salido de la sala'); };
     g('onlInv').onclick = async () => { const l = ONLINE.link(), txt = '¡Ven a jugar conmigo a UNFIRE AUDIO! Sala: '; try { if (navigator.share) { await navigator.share({ title: 'UNFIRE AUDIO', text: txt, url: l }); return; } } catch (e) {} try { await navigator.clipboard.writeText(l); say('📨 Enlace copiado: ' + l + ' · pégalo a tus amigos'); } catch (e) { say('📨 Envía este enlace a tus amigos: ' + l); } }; }
-  // ===== cápsula «hoi-poi»: tiras una cápsula, hace ¡POF! y aparece tu maletín (cada jugador tiene el suyo, también en el online) =====
-  const CAPS = (() => { let c = null, t0 = 0, from = null, dir = null; const throwIt = () => { if (c || !ROAMS.on) return; const g = new THREE.Group(); const top = new THREE.Mesh(new THREE.SphereGeometry(1.2, 20, 12, 0, TAU, 0, H2), new THREE.MeshPhysicalMaterial({ color: ROAMS.myCol || 0xff2fb0, roughness: 0.2, clearcoat: 1 })); const bot = new THREE.Mesh(new THREE.SphereGeometry(1.2, 20, 12, 0, TAU, H2, H2), new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.2, clearcoat: 1 })); g.add(top, bot); S.scene.add(g); c = g; t0 = 0; const cyy = ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy; dir = V(Math.sin(cyy), 0, -Math.cos(cyy)); from = V(ROAMS.p.x, -8.9 + (ROAMS.h || 0) + 7, ROAMS.p.z); say('🎒 ¡Cápsula lanzada!'); hap(0.4); };
-    addEventListener('keydown', (e) => { if (e.target && e.target.tagName === 'INPUT') return; if ((e.key === 'g' || e.key === 'G') && ROAMS.on && !e.repeat) throwIt(); });
-    setTimeout(function addB() { const h = document.getElementById('storyHud'); if (!h) { setTimeout(addB, 1000); return; } const b = document.createElement('button'); b.textContent = '🎒 SACAR MALETÍN (G)'; b.onclick = () => { if(carryingCase){openCaseInGame();}else if(Math.hypot(caseG.position.x-ROAMS.p.x,caseG.position.z-ROAMS.p.z)>12){carryingCase=true;caseG.scale.setScalar(0.32);openCaseInGame();}else throwIt(); }; h.insertBefore(b, h.firstChild); }, 1600);
-    return { throwIt, tick(dt) { if (!c) return; t0 += dt; const u = Math.min(1, t0 / 0.9); c.position.set(from.x + dir.x * 16 * u, from.y + Math.sin(u * Math.PI) * 6 - u * 7, from.z + dir.z * 16 * u); c.rotation.x += dt * 9; if (u >= 1) { const p = c.position.clone(); S.scene.remove(c); c = null; try { if (window.__SPRAY && window.ATM_OUT) window.__SPRAY(p.x, p.y, p.z, 160, 12, 16); } catch (e) {} const fl = document.createElement('div'); fl.style.cssText = 'position:fixed;inset:0;z-index:95;pointer-events:none;background:radial-gradient(circle,#fff 0%,rgba(255,255,255,.6) 40%,rgba(255,255,255,0) 75%);opacity:1;transition:opacity .9s'; document.body.appendChild(fl); setTimeout(() => { fl.style.opacity = '0'; setTimeout(() => fl.remove(), 1000); }, 60); say('💥 ¡POF! Aquí tienes tu maletín'); hap(1); setTimeout(() => { try { carryingCase=true;caseG.scale.setScalar(0.32);openCaseInGame(); } catch (e) {} }, 250); } } }; })();
+  // ===== Reusable capsule inventory: pack, throw, deploy and collect without leaving roam =====
+  const CAPS=(()=>{
+    let capsule=null, flight=0, start=null, target=null, spinning=0;
+    const build=()=>{
+      if(capsule)return;
+      capsule=new THREE.Group();
+      const geo=new THREE.SphereGeometry(0.63,12,8);
+      const upper=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xff2fb0,metalness:0.35,roughness:0.34}));
+      const lower=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xeaf2ff,metalness:0.2,roughness:0.37}));
+      // Two clipped hemispheres, low-poly and shared for repeated throws.
+      upper.geometry=new THREE.SphereGeometry(0.63,12,8,0,TAU,0,H2);
+      lower.geometry=new THREE.SphereGeometry(0.63,12,8,0,TAU,H2,H2);
+      capsule.add(upper,lower);capsule.visible=false;S.scene.add(capsule);
+    };
+    const cancel=()=>{flight=0;if(capsule)capsule.visible=false;};
+    const pack=()=>{if(!ROAMS.on)return false;cancel();closeCaseInGame();say('🎒 Maletín y objetos guardados en una cápsula. Pulsa G o LANZAR para desplegar.');return true;};
+    const throwIt=()=>{
+      if(!ROAMS.on)return false;
+      if(flight>0)return false;
+      if(!carryingCase)return pack();
+      build();
+      const yaw=ROAMS.cy==null?ROAMS.yaw:ROAMS.cy;
+      const dirX=Math.sin(yaw),dirZ=-Math.cos(yaw);
+      const floor=-8.9+(ROAMS.h||0);
+      start=V(ROAMS.p.x,floor+6.5,ROAMS.p.z);
+      target=V(ROAMS.p.x+dirX*7,floor+0.8,ROAMS.p.z+dirZ*7);
+      capsule.position.copy(start);capsule.rotation.set(0,0,0);
+      capsule.visible=true;flight=0.001;spinning=0;
+      say('🎒 ¡Cápsula lanzada!');hap(0.3);
+      return true;
+    };
+    const action=()=>carryingCase?throwIt():pack();
+    addEventListener('keydown',e=>{
+      const t=e.target;if(t && (t.isContentEditable||['INPUT','TEXTAREA','SELECT'].includes(t.tagName)))return;
+      if((e.key==='g'||e.key==='G')&&ROAMS.on&&!e.repeat){
+        if(!e.ctrlKey&&!e.altKey&&!e.metaKey){e.preventDefault();action();}
+      }
+    });
+    setTimeout(function addB(){
+      const h=document.getElementById('storyHud');
+      if(!h){setTimeout(addB,1000);return;}
+      const btn=document.createElement('button');btn.id='capsuleHudButton';
+      btn.textContent='🎒 CÁPSULA (G)';btn.onclick=action;h.insertBefore(btn,h.firstChild);
+    },1600);
+    return {throwIt,pack,cancel,get flying(){return flight>0;},tick(dt){
+      if(!flight||!capsule)return;
+      flight=Math.min(0.85,flight+Math.min(dt,0.06));
+      const u=flight/0.85;
+      capsule.position.set(
+        start.x+(target.x-start.x)*u,
+        start.y+(target.y-start.y)*u+3.2*Math.sin(Math.PI*u),
+        start.z+(target.z-start.z)*u
+      );
+      capsule.rotation.x+=dt*7;capsule.rotation.z+=dt*5;
+      if(u>=1){
+        cancel();openCaseInGame(target);
+        say('💥 Maletín desplegado. Recógelo desde GUARDAR EN CÁPSULA para lanzarlo otra vez.');
+        hap(0.4);
+      }
+    }};
+  })();
   // ===== SECRETOS: la pirámide se puede visitar por dentro y cada islita guarda un artilugio escondido (recompensa al encontrarlo) =====
   const SECRETS = (() => { const L = [['pyr', 600, -10, 'la cámara secreta de la pirámide', 0], ['isl1', -420, 120, 'la isla verde', 0], ['isl2', 300, 420, 'la isla blanca', 0], ['isl3', -360, -380, 'la isla violeta', 0], ['obel', 80, -470, 'el oasis del obelisco', 0], ['haiku', -730, -610, 'el camino de los torii de la isla Haiku', 0]]; let built = false; const items = [];
     const build = () => { built = true; const mk = window.__MKDEV; L.forEach(([id, x, z, name], k) => { try { const g = new THREE.Group(); const base = new THREE.Mesh(new THREE.CylinderGeometry(4.5, 5, 0.8, 32), new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0.8, roughness: 0.15, clearcoat: 1 })); g.add(base); const ring = new THREE.Mesh(new THREE.TorusGeometry(5.4, 0.25, 8, 48), new THREE.MeshBasicMaterial({ color: 0x5fe0ff, toneMapped: false })); ring.rotation.x = H2; ring.position.y = 0.6; g.add(ring); let dv = null; if (mk) { dv = mk(k * 5 + 3); dv.root.scale.setScalar(5); dv.root.position.y = 1.2; g.add(dv.root); } const isl = id.startsWith('isl'); g.position.set(x, id === 'pyr' ? FYO + 0.4 : isl ? -9.605 + ({ isl1: 10.5, isl2: 9, isl3: 12 })[id] + 0.4 : -9.005 + 0.4, z); S.scene.add(g); items.push({ id, g, dv, ring, name, found: (() => { try { return localStorage.getItem('unfire_sec_' + id) === '1'; } catch (e) { return false; } })() }); } catch (e) {} }); };
@@ -1842,13 +1904,7 @@
     const actualFrameTime = previousRenderAt ? Math.min(0.18, Math.max(0.008, (now - previousRenderAt) / 1000)) : 1 / 30;
     previousRenderAt = now;
     const dt = Math.min(0.05, clock.getDelta()) * (window.__dts || 1); t += dt;
-    if(carryingCase && ROAMS.on){
-      carryDest.set(ROAMS.p.x+Math.sin(ROAMS.yaw+0.85)*1.25,
-                    ROAMS.p.y-1.45,
-                    ROAMS.p.z-Math.cos(ROAMS.yaw+0.85)*1.25);
-      caseG.position.lerp(carryDest,0.23);
-      caseG.rotation.y=ROAMS.yaw;
-    }
+    // A packed case is inventory-only: no heavy model following or obscuring the camera.
     updateCarryUI();
     { const stowed = (!HW || ((HW.u || 0) < 0.03 && (HW.T || 0) < 0.05)) && CK.every((k) => compG[k].userData.t < 0.04) && !open.length && !items.some((it) => (it.kind === 'mut' && it.T > 0.05) || (it.kk || 0) > 0.05 || it.retT > 0) && !flyers.length; let pt = pTarget; if (pt < pNow && !lidControlledByPlayer && !stowed && pNow > 0.86) { pt = Math.max(pt, 0.9); STOW = true; } else if (stowed) STOW = false; pNow += (pt - pNow) * (lidControlledByPlayer ? 0.18 : 0.16); } setLid(pNow); oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
     const busy = (k) => open.some((g) => g.it.comp === k && g.m > 0.04) || items.some((it) => it.comp === k && ((it.kind === 'mut' && it.T > 0.04) || (it.g && (it.kk || 0) > 0.04))) || (k === 'hw' && HW && ((HW.T || 0) > 0.05 || (HW.u || 0) > 0.03));
@@ -2044,10 +2100,12 @@
     if (cam.far !== targetFar) { cam.far = targetFar; cam.updateProjectionMatrix(); }
     S.renderer.render(S.scene, cam);
   }
-  addEventListener('message', (e) => { const d = e.data || {}; if (d.unfire && d.p != null && !lidControlledByPlayer) pTarget = d.p; if (d.unfire && d.legacyCaseClose) closeCaseInGame(); if(d.unfire && d.releaseCaseControl){lidControlledByPlayer=false;carryingCase=false;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();} if (d.unfire && d.stop) { closeAll(true); stopAll(); ROOM.AMB.mute = true; } if (d.unfire && d.p > 0.5) ROOM.AMB.mute = false; if (d.unfire && 'vis' in d) { frameVisible = !!d.vis; if(frameVisible && ROOM.AMB)ROOM.AMB.mute=false; window.__gameVisible = frameVisible; ONLINE.voiceVisibility(frameVisible); } if (d.unfire && d.vis === false) { closeAll(true); setRobot(null); stopAll(); CINE.on = false; if (MEGA) megaOff(); CK.forEach((k) => { compG[k].userData.open = 0; compG[k].userData.t = 0; }); if (HW) { HW.T = 0; HW.u = 0; HW.tg = 0; } items.forEach((it) => { if (it.kind === 'mut') { it.tgt = 0; it.T = 0; } if (it.g) { it.on = 0; it.kk = 0; } if (it.W && it.home) { it.W.position.copy(it.home); it.W.rotation.set(0, 0, 0); it.retT = 0; } }); view.gd = view.D0; view.gx = 0; view.gz = 0.15; ORB.gaz = ORB.gde = 0; } if (d.unfire && d.audio) { try { UA.init(); } catch (er) {} } });
+  addEventListener('message', (e) => { const d = e.data || {}; if (d.unfire && d.p != null && !lidControlledByPlayer) pTarget = d.p; if (d.unfire && d.legacyCaseClose) closeCaseInGame(); if(d.unfire && d.releaseCaseControl){CAPS.cancel();lidControlledByPlayer=false;carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();} if (d.unfire && d.stop) { closeAll(true); stopAll(); ROOM.AMB.mute = true; } if (d.unfire && d.p > 0.5) ROOM.AMB.mute = false; if (d.unfire && 'vis' in d) { frameVisible = !!d.vis; if(frameVisible && ROOM.AMB)ROOM.AMB.mute=false; window.__gameVisible = frameVisible; ONLINE.voiceVisibility(frameVisible); } if (d.unfire && d.vis === false) { closeAll(true); setRobot(null); stopAll(); CINE.on = false; if (MEGA) megaOff(); CK.forEach((k) => { compG[k].userData.open = 0; compG[k].userData.t = 0; }); if (HW) { HW.T = 0; HW.u = 0; HW.tg = 0; } items.forEach((it) => { if (it.kind === 'mut') { it.tgt = 0; it.T = 0; } if (it.g) { it.on = 0; it.kk = 0; } if (it.W && it.home) { it.W.position.copy(it.home); it.W.rotation.set(0, 0, 0); it.retT = 0; } }); view.gd = view.D0; view.gx = 0; view.gz = 0.15; ORB.gaz = ORB.gde = 0; } if (d.unfire && d.audio) { try { UA.init(); } catch (er) {} } });
   window.__UNFIRE_CASE_QA = {
     get closed(){return pTarget<0.5},
     get carrying(){return carryingCase},
+    get capsuleFlying(){return CAPS.flying},
+    get caseVisible(){return caseG.visible},
     get lid(){return lidOpen},
     get mission(){return typeof SIDE!=='undefined' && SIDE.cur ? SIDE.cur.t : null},
     get roam(){return ROAMS.on},
@@ -2057,7 +2115,7 @@
     get openControl(){return getComputedStyle(carryButton).display},
     get scrollLock(){return lidControlledByPlayer}
   };
-  window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
+  window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), packCapsule: () => CAPS.pack(), throwCapsule: () => CAPS.throwIt(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
   // A direct-link visitor can tap the button before the heavy 3D scene is initialized.
   if (parent === window && window.__unfireDirectOpenPending) {
     pTarget = 1;
