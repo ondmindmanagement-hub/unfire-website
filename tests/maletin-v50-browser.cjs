@@ -36,6 +36,11 @@ const assert=require('node:assert/strict');
   await f.waitForFunction(()=>!window.__UNFIRE_CASE_QA.capsuleFlying&&window.__UNFIRE_CASE_QA.caseVisible,{timeout:30000});
   const opened=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,mission:window.__UNFIRE_CASE_QA.mission,visible:window.__UNFIRE_CASE_QA.caseVisible}));
   assert(!opened.closed&&!opened.carrying&&opened.visible&&opened.mission===initial.mission,'Capsule landing lost case or active mission');
+  await f.evaluate(()=>{window.__mal.showCaseView();});
+  const inspecting=await f.evaluate(()=>window.__UNFIRE_CASE_QA.inspecting);
+  assert(inspecting,'Case close-up camera did not enable');
+  await f.evaluate(()=>window.__mal.showRobotView());
+  assert(!(await f.evaluate(()=>window.__UNFIRE_CASE_QA.inspecting)),'Robot view did not restore');
   // Pack again; player stays walking with no case mesh in front of the camera.
   await f.evaluate(()=>document.getElementById('unfireCarryCase').click());
   const repacked=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,visible:window.__UNFIRE_CASE_QA.caseVisible,mission:window.__UNFIRE_CASE_QA.mission}));
@@ -59,11 +64,6 @@ const assert=require('node:assert/strict');
     function assertExists(v,msg){if(!v)throw Error(msg);}
   });
   assert(secret.rejected&&secret.unlocked&&secret.questStillActive&&secret.storyUnchanged&&secret.confirmation.includes('desbloqueados'),'Secret app unlock/persistence or mission isolation failed: '+JSON.stringify(secret));
-  await f.evaluate(()=>{window.__mal.showCaseView();});
-  const inspecting=await f.evaluate(()=>window.__UNFIRE_CASE_QA.inspecting);
-  assert(inspecting,'Case close-up camera did not enable');
-  await f.evaluate(()=>window.__mal.showRobotView());
-  assert(!(await f.evaluate(()=>window.__UNFIRE_CASE_QA.inspecting)),'Robot view did not restore');
   const states=await f.evaluate(()=>{const a=[];for(let i=0;i<4;i++){window.__mal.toggleCase();a.push(window.__UNFIRE_CASE_QA.closed)}return a});
   assert.deepEqual(states,[true,false,true,false],'Rapid click target-state toggle not alternating');
   const missions=await f.evaluate(()=>{
