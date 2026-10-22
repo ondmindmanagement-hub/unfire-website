@@ -773,6 +773,7 @@
   // The case is a game prop: toggling the lid never means exiting to the website.
   let lidControlledByPlayer = false, carryingCase = false, carryUIShown = false;
   const originalCasePosition = caseG.position.clone();
+  const portableUnlocked = () => { try { return typeof window.__unfireCasePortabilityUnlocked === 'function' && !!window.__unfireCasePortabilityUnlocked(); } catch(e) { return false; } };
   // Camera-choice state is separate from the player's roaming state: quests and online continue.
   const CASE_VIEW={on:false,dist:8.4,angle:0.25,elevation:0.78};
   const caseModeHud=document.createElement('div');
@@ -803,9 +804,11 @@
   document.body.appendChild(carryButton);
   function updateCarryUI(){
     const show=ROAMS.on;
+    const unlocked=portableUnlocked();
     const far=ROAMS.on && Math.hypot(caseG.position.x-ROAMS.p.x,caseG.position.z-ROAMS.p.z)>12;
-    const label=CAPS.flying?'🎒 DESPLEGANDO…':carryingCase?'🎒 LANZAR CÁPSULA':far?'🎒 RECUPERAR EN CÁPSULA':'🎒 GUARDAR EN CÁPSULA';
-    carryButton.disabled=CAPS.flying;
+    const label=!unlocked?'🔒 CÁPSULA · MISIÓN 3':CAPS.flying?'🎒 DESPLEGANDO…':carryingCase?'🎒 LANZAR CÁPSULA':far?'🎒 RECUPERAR EN CÁPSULA':'🎒 GUARDAR EN CÁPSULA';
+    carryButton.disabled=CAPS.flying||!unlocked;
+    carryButton.title=unlocked?'Guardar o lanzar el maletín con su cápsula':'Disponible desde la tercera misión de la historia';
     const labelNode=carryButton.querySelector('span');
     if(labelNode && labelNode.textContent!==label)labelNode.textContent=label;
     if(show!==carryUIShown){carryUIShown=show;carryButton.style.display=show?'flex':'none';}
@@ -821,7 +824,7 @@
     pTarget=0;
     closeAll(false);
     // Leave story state, missions, friends, online rooms and audio intact.
-    if(ROAMS.on){
+    if(ROAMS.on&&portableUnlocked()){
       // Case and everything inside are stored in one inventory capsule, not mounted
       // in front of the camera. Hiding the group also saves WebGL draw calls.
       carryingCase=true;
@@ -861,7 +864,7 @@
   carryButton.addEventListener('pointerdown',e=>e.stopPropagation());
   carryButton.addEventListener('click',e=>{
     e.preventDefault();e.stopPropagation();
-    if(!ROAMS.on)return;
+    if(!ROAMS.on||!portableUnlocked())return;
     if(carryingCase){CAPS.throwIt();return;}
     closeCaseInGame();
   }); const laser = mesh(new THREE.BoxGeometry(0.03, 0.012, CD - 0.2), Y2K.led('#3d8bff', 3)); caseG.add(laser);
@@ -1473,9 +1476,9 @@
       capsule.add(upper,lower);capsule.visible=false;S.scene.add(capsule);
     };
     const cancel=()=>{flight=0;if(capsule)capsule.visible=false;};
-    const pack=()=>{if(!ROAMS.on)return false;cancel();closeCaseInGame();say('🎒 Maletín y objetos guardados en una cápsula. Pulsa G o LANZAR para desplegar.');return true;};
+    const pack=()=>{if(!ROAMS.on||!portableUnlocked())return false;cancel();closeCaseInGame();say('🎒 Maletín y objetos guardados en una cápsula. Pulsa G o LANZAR para desplegar.');return true;};
     const throwIt=()=>{
-      if(!ROAMS.on)return false;
+      if(!ROAMS.on||!portableUnlocked())return false;
       if(flight>0)return false;
       if(!carryingCase)return pack();
       build();
@@ -1492,7 +1495,7 @@
     const action=()=>carryingCase?throwIt():pack();
     addEventListener('keydown',e=>{
       const t=e.target;if(t && (t.isContentEditable||['INPUT','TEXTAREA','SELECT'].includes(t.tagName)))return;
-      if((e.key==='g'||e.key==='G')&&ROAMS.on&&!e.repeat){
+      if((e.key==='g'||e.key==='G')&&ROAMS.on&&portableUnlocked()&&!e.repeat){
         if(!e.ctrlKey&&!e.altKey&&!e.metaKey){e.preventDefault();action();}
       }
     });
@@ -1500,7 +1503,8 @@
       const h=document.getElementById('storyHud');
       if(!h){setTimeout(addB,1000);return;}
       const btn=document.createElement('button');btn.id='capsuleHudButton';
-      btn.textContent='🎒 CÁPSULA (G)';btn.onclick=action;h.insertBefore(btn,h.firstChild);
+      btn.textContent='🎒 CÁPSULA (G)';btn.onclick=action;btn.title='Disponible desde la tercera misión';h.insertBefore(btn,h.firstChild);
+      setInterval(()=>{if(!btn.isConnected)return;btn.disabled=!portableUnlocked();btn.textContent=portableUnlocked()?'🎒 CÁPSULA (G)':'🔒 CÁPSULA · MISIÓN 3';},900);
     },1600);
     return {throwIt,pack,cancel,get flying(){return flight>0;},tick(dt){
       // Self-heal display mismatches without spawning more meshes or audio.
@@ -1944,7 +1948,7 @@
     if(ROAMS.on&&!CASE_VIEW.on&&!carryingCase&&caseG.visible&&pTarget>0.5){
       ndc.set((e.clientX/innerWidth)*2-1,-(e.clientY/innerHeight)*2+1);
       ray.setFromCamera(ndc,cam);
-      if(ray.intersectObject(caseG,true).length){showCaseView();return;}
+      if(ray.intersectObject(caseG,true).length){showCaseView();/* Continue handling the same click: gates and controls must still work first try. */}
     }
     { const pc = lidOpen > 0.5 ? pickCtl(e) : null; if (pc && !pc.c) { SEL = { type: 'cap', g: pc.g }; activate(pc.g); return; } }
     if (lidOpen < 0.5) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const hitD = ray.intersectObject(dragon, true).length; if (hitD || ray.intersectObject(caseG, true).length) { if (hitD) ALL = true;
@@ -2265,6 +2269,7 @@
   window.__UNFIRE_CASE_QA = {
     get closed(){return pTarget<0.5},
     get carrying(){return carryingCase},
+    get portableUnlocked(){return portableUnlocked()},
     get capsuleFlying(){return CAPS.flying},
     get caseVisible(){return caseG.visible},
     get inspecting(){return CASE_VIEW.on},
