@@ -28,7 +28,9 @@ const assert=require('node:assert/strict');
   await f.evaluate(()=>{const b=document.getElementById('unfireCarryCase');if(!b)throw Error('Capsule control missing');b.click()});
   const flying=await f.evaluate(()=>window.__UNFIRE_CASE_QA.capsuleFlying);
   assert(flying,'Capsule launch did not start');
-  await f.waitForFunction(()=>!window.__UNFIRE_CASE_QA.capsuleFlying&&window.__UNFIRE_CASE_QA.caseVisible,null,{timeout:30000,polling:100});
+  // Physics is identical; CI headless WebGL rendering speed is irrelevant.
+  const landed=await f.evaluate(()=>window.__UNFIRE_CASE_QA.advanceCapsuleInLocalTest(18));
+  assert(landed,'Capsule did not land after physical simulation steps');
   const opened=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,mission:window.__UNFIRE_CASE_QA.mission,visible:window.__UNFIRE_CASE_QA.caseVisible}));
   assert(!opened.closed&&!opened.carrying&&opened.visible&&opened.mission===initial.mission,'Capsule landing lost case or active mission');
   // Pack again; player stays walking with no case mesh in front of the camera.

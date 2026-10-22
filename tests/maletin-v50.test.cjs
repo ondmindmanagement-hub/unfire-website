@@ -11,6 +11,7 @@ chk('Case closure never sends parent closeCase',!engine.includes('parentPost({ c
 chk('Local action does not call exitGame',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame(')).includes('exitGame'));
 chk('Carry does not disconnect online',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame(')).includes('ONLINE.leave'));
 chk('Packed case invisible and saves GPU draws',engine.includes('caseG.visible=false;')&&engine.includes('inventory-only'));
+chk('Capsule simulation test limited to localhost',engine.includes('advanceCapsuleInLocalTest(steps=16)')&&engine.includes('location.hostname')&&engine.includes('CAPS.tick(0.06)'));
 chk('Capsule is reusable without spawning objects each click',engine.includes('if(capsule)return;')&&engine.includes('capsule.visible=true;flight=0.001;'));
 chk('G keyboard handles pack and throw',engine.includes("(e.key==='g'||e.key==='G')")&&engine.includes('action();'));
 chk('Exit from roam cancels capsule and restores case',engine.includes('CAPS.cancel();carryingCase=false;caseG.visible=true'));

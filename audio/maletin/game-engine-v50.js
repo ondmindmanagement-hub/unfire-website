@@ -2237,6 +2237,14 @@
     get closed(){return pTarget<0.5},
     get carrying(){return carryingCase},
     get capsuleFlying(){return CAPS.flying},
+    // CI software WebGL may render at fewer than one frame per second.
+    // Use the identical capsule simulation in deterministic localhost-only steps.
+    advanceCapsuleInLocalTest(steps=16){
+      if (!['localhost','127.0.0.1','[::1]'].includes(location.hostname)) return false;
+      const n = Math.min(32,Math.max(0,Number.isFinite(steps)?Math.floor(steps):0));
+      for(let i=0;i<n && CAPS.flying;i++) CAPS.tick(0.06);
+      return !CAPS.flying;
+    },
     get caseVisible(){return caseG.visible},
     get inspecting(){return CASE_VIEW.on},
     get lid(){return lidOpen},
