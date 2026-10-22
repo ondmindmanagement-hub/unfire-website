@@ -782,8 +782,13 @@
   carryButton.style.cssText='position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:53;display:none;align-items:center;gap:9px;padding:11px 14px;border:1px solid #81b9ff;border-radius:999px;background:linear-gradient(130deg,#172d50,#030815);box-shadow:0 8px 25px #0009;color:#fff;font:700 12px Arial,sans-serif;touch-action:manipulation;cursor:pointer';
   document.body.appendChild(carryButton);
   function updateCarryUI(){
-    const show=carryingCase && ROAMS.on;
-    if(show!==carryUIShown){ carryUIShown=show;carryButton.style.display=show?'flex':'none'; }
+    // A suitcase moved away from its original table can always be recovered;
+    // missions and multiplayer sessions continue without interruption.
+    const dx=caseG.position.x-ROAMS.p.x,dz=caseG.position.z-ROAMS.p.z;
+    const misplaced=ROAMS.on && !carryingCase && Math.hypot(dx,dz)>9;
+    const show=ROAMS.on && (carryingCase||misplaced);
+    if(show!==carryUIShown){carryUIShown=show;carryButton.style.display=show?'flex':'none';}
+    carryButton.querySelector('span').textContent=carryingCase?'ABRIR MALETÍN':'RECUPERAR MALETÍN';
   }
   function closeCaseInGame(){
     lidControlledByPlayer=true;
@@ -799,7 +804,7 @@
   }
   function openCaseInGame(){
     lidControlledByPlayer=true;
-    if(carryingCase){
+    if(carryingCase || (ROAMS.on && Math.hypot(caseG.position.x-ROAMS.p.x,caseG.position.z-ROAMS.p.z)>9)){
       carryingCase=false;
       caseG.scale.setScalar(1);
       if(ROAMS.on){
@@ -995,7 +1000,9 @@
     cam.position.copy(REC.p); const c2 = Math.cos(REC.cpch); cam.lookAt(REC.p.x + Math.sin(REC.cy) * c2, REC.p.y + Math.sin(REC.cpch), REC.p.z - Math.cos(REC.cy) * c2); cam.near = 0.08; };
   function enterRoam() { if (ROAMS.on) return; ROAMS.on = true;  ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
   function exitRoam() { if (REC.on) REC.set(false); if (!ROAMS.on) return;
-    if(carryingCase){carryingCase=false;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();}
+    // Leaving roam restores the table placement even after the suitcase was carried/opened elsewhere.
+    carryingCase=false;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);
+    caseG.rotation.y=0;updateCarryUI();
  ROAMS.on = false; ROAMS.cp = null; ROAMS.mini = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
   roamB.onclick = (e) => { e.stopPropagation(); ROAMS.on ? exitRoam() : enterRoam(); };
   window.__roamAPI = { ROAMS, enterRoam, exitRoam, roamMove }; window.__OUT_OPEN = true;
@@ -2016,7 +2023,8 @@
     get casePos(){return [caseG.position.x,caseG.position.y,caseG.position.z]},
     get playerPos(){return [ROAMS.p.x,ROAMS.p.y,ROAMS.p.z]},
     get openControl(){return getComputedStyle(carryButton).display},
-    get scrollLock(){return lidControlledByPlayer}
+    get scrollLock(){return lidControlledByPlayer},
+    get recoverVisible(){return getComputedStyle(carryButton).display!=='none'}
   };
   window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
   // A direct-link visitor can tap the button before the heavy 3D scene is initialized.
