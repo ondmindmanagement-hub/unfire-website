@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023b" as="script"></head><body><title>UNFIRE Maletín</title>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023c" as="script"></head><body><title>UNFIRE Maletín</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
@@ -67,6 +67,35 @@ body.cine::before, body.cine::after { height:9vh }
 })();
 </script>
 
+<script>
+/* Device-adaptive boot. Local-only settings; no external services or personal data. */
+(()=>{
+  const forced=new URLSearchParams(location.search).get('quality');
+  const detect=()=>{
+    const vw=Math.max(240,Math.round(window.visualViewport?.width||innerWidth||360));
+    const vh=Math.max(240,Math.round(window.visualViewport?.height||innerHeight||640));
+    const touch=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    const memory=Number(navigator.deviceMemory||0),cores=Number(navigator.hardwareConcurrency||0);
+    const constrained=touch&&(Math.min(vw,vh)<=390||(memory&&memory<=4)||(cores&&cores<=4));
+    const tier=forced==='compact'?'compact':constrained?'compact':touch?'balanced':'desktop';
+    return {tier,width:vw,height:vh,touch,maxDpr:tier==='compact'?0.8:tier==='balanced'?1:1.5,antialias:tier==='desktop'};
+  };
+  window.__UNFIRE_AUTOCALIB=detect();
+  const calibrate=()=>{window.__UNFIRE_AUTOCALIB=detect();document.documentElement.dataset.qualityTier=window.__UNFIRE_AUTOCALIB.tier;};
+  calibrate();addEventListener('resize',calibrate,{passive:true});
+  if(visualViewport)visualViewport.addEventListener('resize',calibrate,{passive:true});
+  const showRecovery=()=>{
+    if(document.getElementById('unfireRecover'))return;
+    const box=document.createElement('div');box.id='unfireRecover';
+    box.style.cssText='position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:9999;width:min(88vw,320px);padding:18px;border:1px solid #7bdcff;border-radius:18px;background:#08162ef7;color:white;text-align:center;font:600 13px system-ui;box-shadow:0 15px 50px #000a';
+    box.innerHTML='<p>El dispositivo ha interrumpido los gráficos 3D. Tu partida sigue guardada.</p><button type="button" style="padding:12px 18px;border:1px solid #bceeff;border-radius:12px;background:#164b84;color:#fff;font-weight:800">REINICIAR GRÁFICOS</button>';
+    box.querySelector('button').onclick=()=>{const url=new URL(location.href);url.searchParams.set('quality','compact');url.searchParams.set('_reload',String(Date.now()));location.replace(url.href);};
+    document.body.appendChild(box);
+    try{parent.postMessage({unfire:1,sceneFailure:'webglcontextlost'},'*');}catch(e){}
+  };
+  addEventListener('webglcontextlost',e=>{e.preventDefault();showRecovery();},true);
+})();
+</script>
 <script src="../vendor/three/three.min.js"></script>
 <script src="../vendor/three/RoomEnvironment.js"></script>
 <script src="../vendor/three/RoundedBoxGeometry.js"></script>
@@ -4509,5 +4538,5 @@ window.STORY_INIT = function (H) {
 };
 
 </script>
-<script src="game-engine-v50.js?v=20261023b"></script>
+<script src="game-engine-v50.js?v=20261023c"></script>
 </body></html>
