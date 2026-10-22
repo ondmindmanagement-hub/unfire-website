@@ -781,9 +781,22 @@
   carryButton.innerHTML = '<img src="../img/emblem-butterfly.webp" alt="" width="25" height="25"> <span>ABRIR MALETÍN</span>';
   carryButton.style.cssText='position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:53;display:none;align-items:center;gap:9px;padding:11px 14px;border:1px solid #81b9ff;border-radius:999px;background:linear-gradient(130deg,#172d50,#030815);box-shadow:0 8px 25px #0009;color:#fff;font:700 12px Arial,sans-serif;touch-action:manipulation;cursor:pointer';
   document.body.appendChild(carryButton);
+  function restoreCaseToTable(){
+    // One persistent object; on return it is always back on the table, never stranded outside.
+    carryingCase=false; caseG.scale.setScalar(1);
+    caseG.position.copy(originalCasePosition);caseG.rotation.y=0;
+    updateCarryUI();
+  }
   function updateCarryUI(){
-    const show=carryingCase && ROAMS.on;
-    if(show!==carryUIShown){ carryUIShown=show;carryButton.style.display=show?'flex':'none'; }
+    const distant=ROAMS.on&&Math.hypot(caseG.position.x-ROAMS.p.x,
+                                    caseG.position.z-ROAMS.p.z)>32;
+    const show=ROAMS.on&&(carryingCase||window.ATM_OUT||distant);
+    if(show!==carryUIShown){carryUIShown=show;carryButton.style.display=show?'flex':'none';}
+    if(show){
+      const lbl=carryButton.querySelector('span');
+      const target=carryingCase?'ABRIR MALETÍN':'TRAER MALETÍN';
+      if(lbl&&lbl.textContent!==target)lbl.textContent=target;
+    }
   }
   function closeCaseInGame(){
     lidControlledByPlayer=true;
@@ -799,10 +812,12 @@
   }
   function openCaseInGame(){
     lidControlledByPlayer=true;
-    if(carryingCase){
+    const far=ROAMS.on&&Math.hypot(caseG.position.x-ROAMS.p.x,
+                                       caseG.position.z-ROAMS.p.z)>22;
+    if(carryingCase||far||window.ATM_OUT){
       carryingCase=false;
       caseG.scale.setScalar(1);
-      if(ROAMS.on){
+      if(ROAMS.on&&window.ATM_OUT){
         caseG.position.set(ROAMS.p.x+Math.sin(ROAMS.yaw)*3.5,-8.9+(ROAMS.h||0)+4.5,
                            ROAMS.p.z-Math.cos(ROAMS.yaw)*3.5);
         caseG.rotation.y=ROAMS.yaw;
@@ -995,7 +1010,7 @@
     if(!ROAMS.fly&&a<5.4)return false;
     const foot=-8.9+a;
     for(const w of WINDOWS){
-      const depth=(x,z)=>w.wall==='L'?-x-74.5:w.wall==='R'?x-74.5:w.wall==='F'?z-90.8:-z-10.3;
+      const depth=(x,z)=>w.wall==='L'?-x-76.9:w.wall==='R'?x-76.9:w.wall==='F'?z-92.9:-z-13.4;
       const b=depth(px,pz),t=depth(nx,nz),offset=w.wall==='L'||w.wall==='R'?nz:nx;
       if(b<=0.5&&t>=0&&offset>w.at-w.w/2+1.1&&offset<w.at+w.w/2-1.1
          &&foot>w.y-w.h/2-4.2&&foot<w.y+w.h/2+6.5)
@@ -1030,7 +1045,7 @@
     const RN = 1500, rg = new THREE.BufferGeometry(), rp = new Float32Array(RN * 3); for (let i = 0; i < RN; i++) { rp[i * 3] = (Math.random() - 0.5) * 80; rp[i * 3 + 1] = Math.random() * 40; rp[i * 3 + 2] = (Math.random() - 0.5) * 80; } rg.setAttribute('position', new THREE.BufferAttribute(rp, 3)); const rainP = new THREE.Points(rg, new THREE.PointsMaterial({ color: 0xbfe6ff, size: 0.18, transparent: true, opacity: 0.7, depthWrite: false })); rainP.visible = false; S.scene.add(rainP); const fl = new THREE.HemisphereLight(0xdfe8ff, 0x223344, 0); S.scene.add(fl);
     const goOut = (v) => { if (!!v !== st.out) btn.onclick({ stopPropagation() {} }); }; btn.onclick = (e) => { e.stopPropagation(); st.out = !st.out; if (st.out && !st.on) { st.on = true; P.querySelector('#atmOn').classList.remove('off'); spatial(true); try { RADIO.start(); } catch (er) {} } if (st.out) { enterRoam(); ROAMS.p.set(-30, 4.5, 108); ROAMS.pitch = 0.02; ROAMS.yaw = Math.PI; window.__RBsave = window.__RBsave || window.__RB; window.__RB = { x: 12000, z0: -12000, z1: 12000 }; window.__WORLD_R = 16000; window.ATM_OUT = true; btn.textContent = '🏠 VOLVER DENTRO'; } else { window.__RB = window.__RBsave || window.__RB; window.__RBsave = null; window.ATM_OUT = false; ROAMS.p.set(-30, 4.5, 88); ROAMS.yaw = 0; btn.textContent = '🌍 SALIR FUERA'; } hap(0.5); };
     btn.addEventListener('pointerdown', (e) => e.stopPropagation());
-    const setOut = (v) => { st.out = v; window.ATM_OUT = v; if (v) { if(window.__warmOutsideObstacles)window.__warmOutsideObstacles(); if (!st.on) { st.on = true; P.querySelector('#atmOn').classList.remove('off'); setTimeout(()=>{if(st.out&&!document.hidden)spatial(true);},280); } window.__RBsave = window.__RBsave || window.__RB; window.__RB = { x: 12000, z0: -12000, z1: 12000 }; window.__WORLD_R = 16000; btn.textContent = '🏠 VOLVER DENTRO'; say('🌍 Estás fuera · la isla entera es tuya'); } else { window.__RB = window.__RBsave || window.__RB; window.__RBsave = null; btn.textContent = '🌍 SALIR FUERA'; } }; return { setOut, st, goOut, thunder, rain, tick(dt, t) { btn.style.display = ROAMS.on && window.__OUT_OPEN ? 'block' : 'none'; P.classList.toggle('on', st.out && ROAMS.on); if (pn) { const a = (+P.querySelector('#atmDir').value) * Math.PI / 180, d = +P.querySelector('#atmDist').value, L = ctx().listener, cp = cam.position; const x = cp.x + Math.sin(a) * Math.min(d, 400), z = cp.z - Math.cos(a) * Math.min(d, 400); if (pn.positionX) { pn.positionX.value = x; pn.positionY.value = cp.y + 2; pn.positionZ.value = z; } if (L.positionX) { L.positionX.value = cp.x; L.positionY.value = cp.y; L.positionZ.value = cp.z; const dir = new THREE.Vector3(); cam.getWorldDirection(dir); L.forwardX.value = dir.x; L.forwardY.value = dir.y; L.forwardZ.value = dir.z; } wet.gain.value = Math.min(0.8, 0.15 + d / 2000); }
+    const setOut = (v) => { st.out = v; window.ATM_OUT = v; if (v) { if(window.__warmOutsideObstacles)window.__warmOutsideObstacles(); if (!st.on) { st.on = true; P.querySelector('#atmOn').classList.remove('off'); setTimeout(()=>{if(st.out&&!document.hidden)spatial(true);},280); } window.__RBsave = window.__RBsave || window.__RB; window.__RB = { x: 12000, z0: -12000, z1: 12000 }; window.__WORLD_R = 16000; btn.textContent = '🏠 VOLVER DENTRO'; say('🌍 Estás fuera · la isla entera es tuya'); } else { window.__RB = window.__RBsave || window.__RB; window.__RBsave = null; restoreCaseToTable(); btn.textContent = '🌍 SALIR FUERA'; } }; return { setOut, st, goOut, thunder, rain, tick(dt, t) { btn.style.display = ROAMS.on && window.__OUT_OPEN ? 'block' : 'none'; P.classList.toggle('on', st.out && ROAMS.on); if (pn) { const a = (+P.querySelector('#atmDir').value) * Math.PI / 180, d = +P.querySelector('#atmDist').value, L = ctx().listener, cp = cam.position; const x = cp.x + Math.sin(a) * Math.min(d, 400), z = cp.z - Math.cos(a) * Math.min(d, 400); if (pn.positionX) { pn.positionX.value = x; pn.positionY.value = cp.y + 2; pn.positionZ.value = z; } if (L.positionX) { L.positionX.value = cp.x; L.positionY.value = cp.y; L.positionZ.value = cp.z; const dir = new THREE.Vector3(); cam.getWorldDirection(dir); L.forwardX.value = dir.x; L.forwardY.value = dir.y; L.forwardZ.value = dir.z; } wet.gain.value = Math.min(0.8, 0.15 + d / 2000); }
       rainP.visible = st.storm; if (st.storm) { const p = rg.attributes.position.array; for (let i = 0; i < RN; i++) { p[i * 3 + 1] -= dt * 40; if (p[i * 3 + 1] < -9) p[i * 3 + 1] = 35; } rg.attributes.position.needsUpdate = true; rainP.position.set(cam.position.x, 0, cam.position.z); st.next -= dt; if (st.next < 0) { st.next = 5 + Math.random() * 12; P.querySelector('#atmDist').value = 300 + Math.random() * 1700; thunder(); } }
       st.flash = Math.max(0, st.flash - dt * 3); fl.intensity = st.flash > 0 ? (Math.random() < 0.5 ? 2.5 : 0.4) * st.flash : 0; } }; })();
 
@@ -1069,7 +1084,7 @@
     if(window.ATM_OUT && lastPortalId)returnWindowBtn.style.display='block';  ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
   function exitRoam() { if (REC.on) REC.set(false); if (!ROAMS.on) return;
     returnWindowBtn.style.display='none';
-    if(carryingCase){carryingCase=false;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();}
+    restoreCaseToTable();
  ROAMS.on = false; ROAMS.cp = null; ROAMS.mini = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
   roamB.onclick = (e) => { e.stopPropagation(); ROAMS.on ? exitRoam() : enterRoam(); };
   window.__roamAPI = { ROAMS, enterRoam, exitRoam, roamMove }; window.__OUT_OPEN = true;
@@ -2084,7 +2099,7 @@
     get casePos(){return [caseG.position.x,caseG.position.y,caseG.position.z]},
     get playerPos(){return [ROAMS.p.x,ROAMS.p.y,ROAMS.p.z]},
     get openControl(){return getComputedStyle(carryButton).display},
-    get scrollLock(){return lidControlledByPlayer},get portal(){return lastPortalId},get location(){return window.ATM_OUT?'outside':'house'},get altitude(){return ROAMS.h||0},get worldCoords(){return [ROAMS.p.x,ROAMS.p.z]}
+    get scrollLock(){return lidControlledByPlayer},get portal(){return lastPortalId},get location(){return window.ATM_OUT?'outside':'house'},get altitude(){return ROAMS.h||0},get worldCoords(){return [ROAMS.p.x,ROAMS.p.z]},get caseOnTable(){return caseG.position.distanceTo(originalCasePosition)<0.03&&!carryingCase},get canRecallCase(){return ROAMS.on}
   };
   window.__UNFIRE_WINDOWS={definitions:WINDOWS,warp:warpWindow,cross:crossWindow,home:returnThroughWindow,get last(){return lastPortalId}};
   window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
