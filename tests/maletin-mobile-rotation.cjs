@@ -31,11 +31,11 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
     assert(state.pixelRatio <= state.maxDpr + .01,'WebGL pixel ratio must respect device GPU budget');
     assert.equal(state.orientation,width>=height?'landscape':'portrait');
     for(const name of ['unfireTouchPad','unfireFly','unfireTalk']){
-      const b=state.rect[name];assert(b&&b.w>0&&b.h>0,'missing touch control '+name);
+      const b=state.rect[name];assert(b,'missing touch control '+name);
       if(state.storyActive){
         assert(!b.visible,'Touch controls must not overlap a live Nimbo story dialogue '+name);
       }else{
-        assert(b.visible,'Touch controls must be visible during active free-roam '+name);
+        assert(b.visible&&b.w>0&&b.h>0,'Touch controls must be visible during active free-roam '+name);
         assert(b.x>=-1&&b.y>=-1&&b.x+b.w<=width+2&&b.y+b.h<=height+2,'Control outside mobile screen '+name+' '+JSON.stringify({b,width,height}));
       }
     }
