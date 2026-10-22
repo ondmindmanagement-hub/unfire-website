@@ -1454,7 +1454,7 @@
     const api = { get on() { return on; }, toggle() { on ? stop() : start(); }, start, stop,
       apply(dt) { if (!on || !shot) return; T += dt; const lv = window.__LVL || 0; beatT -= dt; if (lv - lastLv > 0.18 && T > dur * 0.6 && beatT <= 0) { beatT = 1; next(); } lastLv = lv * 0.9 + lastLv * 0.1; if (T >= dur) next(); const u = Math.min(1, T / dur), e = u * u * (3 - 2 * u); const s = shot(e); cam.position.copy(s.p); cam.lookAt(s.l); cam.near = 0.1; cam.fov += (54 - cam.fov) * 0.1; cam.updateProjectionMatrix(); fl.style.opacity = flash > 0 ? String(flash * 1.6) : '0'; flash = Math.max(0, flash - dt * 2); window.__roam = true; } };
     window.__VIEW = api; return api; })();
-  let STORY = null; try { STORY = window.STORY_INIT({ say, duck: (v) => { A.duck = v; }, buy: () => parentPost({ buy: 'todo' }), showHost: (v) => HOST.show(v), cinema: () => {},
+  let STORY = null; try { STORY = window.STORY_INIT({ say, duck: (v) => { A.duck = v; }, helpGoal: (ev) => window.__STORY_HELP && window.__STORY_HELP(ev), buy: () => parentPost({ buy: 'todo' }), showHost: (v) => HOST.show(v), cinema: () => {},
     robotMode: () => { ROAMS.mini = !ROAMS.mini; if (ROAMS.mini) { if (!ROAMS.on) enterRoam(); ROAMS.p.set(4.5, 0.3, 4.4); ROAMS.yaw = -0.6; ROAMS.pitch = -0.05; say('🤖 Modo robot: caminas a su altura por la mesa (WASD / flechas)'); } else { ROAMS.p.set(0, 4.5, 22); ROAMS.yaw = 0; } return ROAMS.mini; }, toggleMap: () => MAP.toggle(),
     focusHost: (who, soft) => { HOST.talk(); if (soft) { if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } return; } let p = HOST.pos; if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; p = it.W.getWorldPosition(V(0, 0, 0)); try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } if (ROAMS.on) { const d = V(cam.position.x - p.x, 0, cam.position.z - p.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const q = V(p.x + d.x * 10, p.y + 5.5, p.z + d.z * 10); const lx = p.x - q.x, lz = p.z - q.z; ROAMS.tgt = { p: q, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(p.y + 1.5 - q.y, Math.hypot(lx, lz)) }; } else { view.gx = clamp(p.x * 0.7, -CW / 2 - 1, CW / 2 + 1); view.gz = clamp(p.z * 0.7, -CD / 2 - 1, CD / 2 + 2); view.gd = view.D0 * 0.85; } } }); } catch (e) { console.warn('story', e); }
   roamB.addEventListener('pointerdown', (e) => e.stopPropagation());
@@ -2078,7 +2078,7 @@
     // Resolution is managed only by window.__perf above; avoid conflicting DPR changes.
     if (RADIO.st.on && !HVA) vaSync(); if (HVA && HVA.set && (A.vaT = (A.vaT || 0) - dt) <= 0) { A.vaT = 0.5; const busy2 = open.length + (A.using ? 1 : 0); try { HVA.set('volume', RADIO.st.on ? clamp(0.62 - busy2 * 0.04, 0.38, 0.62) : 0.78); LVA.set('volume', clamp(0.5 - busy2 * 0.04, 0.3, 0.5)); } catch (e) {} } if (RADIO.st.on && RADIO.pump) RADIO.pump();
     LAVA.draw(dt, LV || 0); window.__LVL = LV || 0; ROOM.tick(dt, t, LV || 0);
-    try { OUTTALK.tick(dt, t); SIDE.tick(); BANDS.tick(); SPEEDL.tick(dt); CAPS.tick(dt); SECRETS.tick(dt, t); SKYBOTS.tick(dt, t); ONLINE.tick(dt, t); SURFBOTS.tick(dt, t); TITANS.tick(dt, t); FAR.tick(dt, t); } catch (e) {} ROBOT_STEPS.tick(dt); GROW.tick(dt, t); if (ROAMS.on && ROAMS.fly) { try { (window.__GROW.list || []).forEach((g, i) => { if (g.w && g.st !== 'grow' && g.st !== 'shrink') { g.w.position.y += ((ROAMS.h || 0) - 8.9 + 2 + Math.sin(t * 1.3 + i) * 3 - g.w.position.y) * Math.min(1, dt * 1.5); } }); } catch (e) {} } try { HOST.tick(dt, t); MAP.tick(); if (STORY) STORY.chatter(dt, lidOpen > 0.95 && !CINE.on && (!ROAMS.on || (window.__idleT || 0) > 14)); if (STORY) STORY.tick({ open: lidOpen > 0.95 && !CINE.on, far: view.gd > view.D0 * 1.08 || ROAMS.on }); if (HW && (HW.T || 0) > 3) { if (!window.__hwEv) { window.__hwEv = 1; window.UEV('hwopen'); } } else window.__hwEv = 0; } catch (e) {} MEGALIT.tick(dt, t, LV || 0); try { HAND.tick(dt); } catch (e) {} if (HW && (HW.u || 0) > 0.3 && HW.root) { HWAUTO.bbT = (HWAUTO.bbT || 0) - dt; if (HWAUTO.bbT <= 0) { HWAUTO.bbT = 0.8; const bb = new THREE.Box3().setFromObject(HW.root), sz = bb.getSize(V(0, 0, 0)); HWAUTO.c = bb.getCenter(V(0, 0, 0)); HWAUTO.r = Math.max(sz.x, sz.z) * 0.55; }
+    try { OUTTALK.tick(dt, t); SIDE.tick(); BANDS.tick(); SPEEDL.tick(dt); CAPS.tick(dt); SECRETS.tick(dt, t); SKYBOTS.tick(dt, t); ONLINE.tick(dt, t); SURFBOTS.tick(dt, t); TITANS.tick(dt, t); FAR.tick(dt, t); } catch (e) {} ROBOT_STEPS.tick(dt); GROW.tick(dt, t); if (ROAMS.on && ROAMS.fly) { try { (window.__GROW.list || []).forEach((g, i) => { if (g.w && g.st !== 'grow' && g.st !== 'shrink') { g.w.position.y += ((ROAMS.h || 0) - 8.9 + 2 + Math.sin(t * 1.3 + i) * 3 - g.w.position.y) * Math.min(1, dt * 1.5); } }); } catch (e) {} } try { HOST.tick(dt, t); MAP.tick(); if (STORY) STORY.chatter(dt, lidOpen > 0.95 && !CINE.on && (!ROAMS.on || (window.__idleT || 0) > 14)); if (STORY) STORY.tick({ open: (lidOpen > 0.95 || ROAMS.on) && !CINE.on, roaming: ROAMS.on, far: view.gd > view.D0 * 1.08 || ROAMS.on }); if (HW && (HW.T || 0) > 3) { if (!window.__hwEv) { window.__hwEv = 1; window.UEV('hwopen'); } } else window.__hwEv = 0; } catch (e) {} MEGALIT.tick(dt, t, LV || 0); try { HAND.tick(dt); } catch (e) {} if (HW && (HW.u || 0) > 0.3 && HW.root) { HWAUTO.bbT = (HWAUTO.bbT || 0) - dt; if (HWAUTO.bbT <= 0) { HWAUTO.bbT = 0.8; const bb = new THREE.Box3().setFromObject(HW.root), sz = bb.getSize(V(0, 0, 0)); HWAUTO.c = bb.getCenter(V(0, 0, 0)); HWAUTO.r = Math.max(sz.x, sz.z) * 0.55; }
       bots().forEach((it) => { const par = it.W.parent; if (!par || !HWAUTO.c) return; const ws = par.getWorldScale(V(1, 1, 1)).x || 1, hl = par.worldToLocal(HWAUTO.c.clone()), R0 = HWAUTO.r / ws + 0.12, p = it.W.position, dx = p.x - hl.x, dz = p.z - hl.z, d = Math.hypot(dx, dz) || 0.01; if (d < R0) { const k = R0 / d; p.x = hl.x + dx * k; p.z = hl.z + dz * k; if (it.cn) { it.cn.x = p.x; it.cn.z = p.z; const tx = it.cn.tx - hl.x, tz = it.cn.tz - hl.z, td = Math.hypot(tx, tz) || 0.01; if (td < R0) { it.cn.tx = hl.x + tx / td * R0 * 1.2; it.cn.tz = hl.z + tz / td * R0 * 1.2; } } } }); }
     bots().forEach((it, i) => { const u = it.W.userData; if (u.s0 == null) u.s0 = it.W.scale.x; const tg = MEGA && i % 2 === 0 ? u.s0 * 1.9 : u.s0; if (Math.abs(it.W.scale.x - tg) > 1e-4) it.W.scale.setScalar(lerp(it.W.scale.x, tg, 0.04)); }); WRADIO.tick(dt, !!(RADIO.st.on || A.using || A.duck || (window.__kLast && performance.now() - window.__kLast < 4000))); try { XFX.tick(dt, t, MEGA, LV || 0); { const pl = performance.now() - (window.__kLast || 0) < 1600; if (pl !== HWAUTO.pl) { HWAUTO.pl = pl; try { const B = RADIO.buses; if (B && B.out) B.out.gain.setTargetAtTime(pl ? 0.5 : 0.85, UA.ctx.currentTime, pl ? 0.05 : 0.7); } catch (e) {} XFX.makeup(pl ? (MEGA ? 1.9 : 1.6) : 1.25); } } if (HVA && MEGA) { HWAUTO.pT = (HWAUTO.pT == null ? 20 : HWAUTO.pT) - dt; if (HWAUTO.pT <= 0) { HWAUTO.pT = 24 + Math.random() * 16; const pool = [0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15]; const pi = pool[Math.floor(Math.random() * pool.length)]; try { const pr = HVA.preset(pi); say('🎛️ HYPERWAVE · sonido: ' + pr.name); } catch (e) {} } } if (HVA) { HWAUTO.t -= dt; if (HWAUTO.t <= 0) { HWAUTO.t = 0.25; const sc = HVA.scope ? HVA.scope().level : 0; HWAUTO.k += ((sc > 0.8 ? 0.8 : sc < 0.25 && performance.now() - (window.__kLast || 0) < 2000 ? 1.12 : 1) * (RADIO.st.on ? 0.92 + 0.12 * (RADIO.st.energy || 0.5) : 1) - HWAUTO.k) * 0.3; const v = clamp(HWVOL * HWAUTO.k, 0, 1); if (Math.abs(v - HWAUTO.last) > 0.01) { HWAUTO.last = v; HVA.set('volume', v); } } { HWAUTO.fx = (HWAUTO.fx || 0) - dt; if (HWAUTO.fx <= 0) { HWAUTO.fx = 0.5; const sc2 = HVA.scope ? HVA.scope().level : 0, en = (RADIO.st && RADIO.st.energy) || 0.5, busy = performance.now() - (window.__kLast || 0) < 1500, tt = performance.now() / 1000; const P = { cutoff: clamp(0.5 + 0.2 * Math.sin(tt * 0.07) + (busy ? 0.08 : 0) - sc2 * 0.1, 0.35, 0.8), delay: clamp(0.16 + 0.1 * en - (busy ? 0.04 : 0), 0.1, 0.3), reverb: clamp(0.28 + 0.12 * (1 - sc2), 0.2, 0.42) }; HWAUTO.P = HWAUTO.P || {}; for (const k in P) { const o = HWAUTO.P[k] == null ? P[k] : HWAUTO.P[k], nv = o + (P[k] - o) * 0.35; HWAUTO.P[k] = nv; try { HVA.set(k, nv); } catch (e) {} } } } } } catch (e) {} lidArt.material.emissiveIntensity = 0.9 + (LV || 0) * 2.6 + 0.15 * Math.sin(t * 2); if (KEYC) KEYC(dt, t); hovLT += (( mouse.in && performance.now() - mouse.t < 1500 ? 1 : 0) - hovLT) * 0.15; HOVL.intensity = hovLT * 1.4;
     if (DOMEG) DOMEG.g.scale.y = 0.04 + 0.96 * ease.smooth(clamp((lidOpen - 0.35) / 0.6));
@@ -2102,6 +2102,50 @@
     get scrollLock(){return lidControlledByPlayer},get portal(){return lastPortalId},get location(){return window.ATM_OUT?'outside':'house'},get altitude(){return ROAMS.h||0},get worldCoords(){return [ROAMS.p.x,ROAMS.p.z]},get caseOnTable(){return caseG.position.distanceTo(originalCasePosition)<0.03&&!carryingCase},get canRecallCase(){return ROAMS.on}
   };
   window.__UNFIRE_WINDOWS={definitions:WINDOWS,warp:warpWindow,cross:crossWindow,home:returnThroughWindow,get last(){return lastPortalId}};
+  // Player-initiated, bounded objective rescue. Never resets an active quest or online session.
+  window.__STORY_HELP=(objective)=>{
+    const goal=String(objective||'');
+    if(!ROAMS.on && (goal.startsWith('portal')||goal==='side'||goal==='poster'||goal==='gacha'||goal==='radio'))enterRoam();
+    if(goal.startsWith('portal')){
+      if(window.ATM_OUT)returnThroughWindow();
+      portalUntil=0;
+      const id=goal.split(':')[1]||'reef',w=WINDOWS.find(x=>x.id===id);
+      if(!w)return false;
+      ROAMS.h=11;ROAMS.fly=true;ROAMS.flyH=11;ROAMS.vy=0;ROAMS.tgt=null;
+      if(w.wall==='L'){ROAMS.p.set(-72,4.5,w.at);ROAMS.yaw=-Math.PI/2}
+      else if(w.wall==='R'){ROAMS.p.set(72,4.5,w.at);ROAMS.yaw=Math.PI/2}
+      else if(w.wall==='F'){ROAMS.p.set(w.at,4.5,87);ROAMS.yaw=Math.PI}
+      else {ROAMS.p.set(w.at,4.5,-8);ROAMS.yaw=0}
+      ROAMS.cy=ROAMS.yaw;
+      say('🧭 Nimbo: te he situado ante '+w.label+'. Avanza hacia la ventana para saltar.');
+      return true;
+    }
+    if(goal==='case'){toggleCaseInGame();say('🦋 Nimbo te ayuda con la mariposa.');return true}
+    if(goal==='side'){
+      if(!window.ATM_OUT){portalUntil=0;warpWindow(WINDOWS.find(x=>x.id==='desert'))}
+      if(!SIDE.cur)SIDE.offer('NIMBO');
+      const m=SIDE.cur;
+      if(m){
+        ROAMS.p.set(m.x+46,4.5,m.z+8);ROAMS.h=Math.max(8,m.y+7);
+        ROAMS.fly=m.y>70;ROAMS.flyH=ROAMS.fly?ROAMS.h:null;
+        ROAMS.vy=0;ROAMS.tgt=null;ROAMS.yaw=-Math.PI/2;
+        say('🧭 Nimbo: tu misión está delante. Avanza un poco para completarla.');
+      }
+      return true;
+    }
+    if(window.ATM_OUT)returnThroughWindow();
+    if(goal==='radio'){ROAMS.p.set(4,4.5,7);say('📻 Nimbo: pulsa la radio o el tocadiscos.');return true}
+    if(goal==='poster'){ROAMS.p.set(-65,4.5,38);say('🖼️ Nimbo: toca tres carteles de la casa.');return true}
+    if(goal==='gacha'){ROAMS.p.set(44,4.5,8);say('🎰 Nimbo: pulsa la máquina de bolas.');return true}
+    if(goal==='hwopen'||goal==='hwkey'){
+      if(ROAMS.on)exitRoam();
+      if(pTarget<0.5)openCaseInGame();
+      say('🎹 Nimbo: utiliza HYPERWAVE, en el centro del maletín.');
+      return true;
+    }
+    say('🧭 Nimbo: sigue el objetivo marcado en el mapa.');
+    return false;
+  };
   window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
   // A direct-link visitor can tap the button before the heavy 3D scene is initialized.
   if (parent === window && window.__unfireDirectOpenPending) {
