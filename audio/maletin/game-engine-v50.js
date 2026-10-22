@@ -773,6 +773,7 @@
   // The case is a game prop: toggling the lid never means exiting to the website.
   let lidControlledByPlayer = false, carryingCase = false, carryUIShown = false;
   const originalCasePosition = caseG.position.clone();
+  const portableUnlocked = () => { try { return typeof window.__unfireCasePortabilityUnlocked === 'function' && !!window.__unfireCasePortabilityUnlocked(); } catch(e) { return false; } };
   // Camera-choice state is separate from the player's roaming state: quests and online continue.
   const CASE_VIEW={on:false,dist:8.4,angle:0.25,elevation:0.78};
   const caseModeHud=document.createElement('div');
@@ -803,9 +804,11 @@
   document.body.appendChild(carryButton);
   function updateCarryUI(){
     const show=ROAMS.on;
+    const unlocked=portableUnlocked();
     const far=ROAMS.on && Math.hypot(caseG.position.x-ROAMS.p.x,caseG.position.z-ROAMS.p.z)>12;
-    const label=CAPS.flying?'🎒 DESPLEGANDO…':carryingCase?'🎒 LANZAR CÁPSULA':far?'🎒 RECUPERAR EN CÁPSULA':'🎒 GUARDAR EN CÁPSULA';
-    carryButton.disabled=CAPS.flying;
+    const label=!unlocked?'🔒 CÁPSULA · MISIÓN 3':CAPS.flying?'🎒 DESPLEGANDO…':carryingCase?'🎒 LANZAR CÁPSULA':far?'🎒 RECUPERAR EN CÁPSULA':'🎒 GUARDAR EN CÁPSULA';
+    carryButton.disabled=CAPS.flying||!unlocked;
+    carryButton.title=unlocked?'Guardar o lanzar el maletín con su cápsula':'Disponible desde la tercera misión de la historia';
     const labelNode=carryButton.querySelector('span');
     if(labelNode && labelNode.textContent!==label)labelNode.textContent=label;
     if(show!==carryUIShown){carryUIShown=show;carryButton.style.display=show?'flex':'none';}
@@ -821,7 +824,7 @@
     pTarget=0;
     closeAll(false);
     // Leave story state, missions, friends, online rooms and audio intact.
-    if(ROAMS.on){
+    if(ROAMS.on&&portableUnlocked()){
       // Case and everything inside are stored in one inventory capsule, not mounted
       // in front of the camera. Hiding the group also saves WebGL draw calls.
       carryingCase=true;
@@ -861,7 +864,7 @@
   carryButton.addEventListener('pointerdown',e=>e.stopPropagation());
   carryButton.addEventListener('click',e=>{
     e.preventDefault();e.stopPropagation();
-    if(!ROAMS.on)return;
+    if(!ROAMS.on||!portableUnlocked())return;
     if(carryingCase){CAPS.throwIt();return;}
     closeCaseInGame();
   }); const laser = mesh(new THREE.BoxGeometry(0.03, 0.012, CD - 0.2), Y2K.led('#3d8bff', 3)); caseG.add(laser);
@@ -939,7 +942,7 @@
   items.forEach((it) => { const [w, d] = it.kind === 'hyper' ? [1.3, 1.2] : it.kind === 'cap' ? [0.4, 0.36] : it.kind === 'mut' ? [0.27, 0.34] : it.kind === 'fx' ? [0.44, 0.3] : it.laptop ? [0.95, 0.66] : [0.5, 0.42];
     const hg = new THREE.Group(); hg.position.set(it.kind === 'hyper' ? -1.95 : it.pos.x, 0.021, it.kind === 'hyper' ? -0.85 : it.pos.z); caseG.add(hg); const hole = mesh(new THREE.BoxGeometry(w, 0.004, d), HOLE); hg.add(hole);
     const pl = [-1, 1].map((sx) => { const p = new THREE.Group(); p.position.x = sx * w / 2; hg.add(p); const m = mesh(rbox(w / 2, 0.01, d, 0.004), HM); m.position.x = -sx * w / 4; p.add(m); const l = mesh(new THREE.BoxGeometry(0.004, 0.012, d - 0.02), Y2K.led('#3d8bff', 2)); l.position.x = -sx * (w / 2 - 0.004); p.add(l); return p; }); HATCH.push({ hole, pl, k: it.comp }); });
-  const openComp = (k) => { if (!compG[k].userData.open) hap(0.7); compG[k].userData.open = 1; if (k === 'hw' && HW) HW.autoT = 1; }, openAllComp = () => CK.filter((k) => k !== 'hw').forEach(openComp), allOpen = () => CK.every((k) => compG[k].userData.open);
+  const openComp = (k) => { if (!compG[k].userData.open) hap(0.7); compG[k].userData.open = 1; if (k === 'hw' && HW) HW.autoT = 1; }, openAllComp = () => CK.filter((k) => k !== 'hw').forEach(openComp), allOpen = () => CK.filter((k) => k !== 'hw').every((k) => compG[k].userData.open);
   // botón de mariposa dentro de la tapa (la parte "pantalla"): abre todas las compuertas
   const lidBtn = new THREE.Group(); lidBtn.position.set(0, -0.02, -0.66); lid.add(lidBtn);
   { const em = Y2K.cnv(256, 256); G3.drawEmblem(em.getContext('2d'), 256, '#7fd0ff'); lidBtn.add(mesh(new THREE.TorusGeometry(0.3, 0.05, 16, 64).rotateX(H2), CHROME));
@@ -1179,8 +1182,37 @@
       clear() { if (this.g) S.scene.remove(this.g); this.g = null; this.list = []; },
       take(i, mine) { const n = this.list[i]; if (!n || !n.on) return; n.on = false; n.sp.visible = false; if (mine) { this.sc++; hap(0.3); try { if (window.__SPRAY) window.__SPRAY(n.sp.position.x, n.sp.position.y, n.sp.position.z, 30, 6, 8); } catch (e) {} } if (this.list.every((q) => !q.on)) { this.round++; say('🏁 ¡Ronda de notas terminada! Empieza otra'); setTimeout(() => this.build(this.seed + 1), 2500); } } };
 
-    const ui = document.createElement('div'); ui.id = 'onl'; ui.innerHTML = '<style>#onl{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:rgba(0,10,30,.55);font:600 13px Arial;color:#0a1a3a}#onl.on{display:flex}#onl .b{background:linear-gradient(180deg,#eef6ff,#bcd9ff);border:3px solid #fff;border-radius:22px;padding:18px;width:min(380px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;box-shadow:0 20px 50px #000a}#onl h3{margin:0 0 10px;font:900 18px Orbitron,Arial;color:#1d4fd8}#onl input{width:100%;box-sizing:border-box;padding:9px 12px;border-radius:12px;border:2px solid #9fd0ff;font:700 14px Arial;margin:4px 0 10px}#onl .sw{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px}#onl .sw button{width:34px;height:34px;border-radius:50%;border:3px solid #fff;cursor:pointer;box-shadow:0 2px 6px #0004}#onl .sw button.on{outline:3px solid #1d4fd8}#onl .ty button{width:auto;height:auto;border-radius:12px;padding:7px 10px;background:#fff;color:#0a1a3a;font:700 11px Arial}#onl .ty button.on{background:#1d4fd8;color:#fff}#onl.workshop .b{width:min(790px,calc(100vw - 22px));background:linear-gradient(170deg,#152744,#08142d);color:#ecf4ff;padding:clamp(12px,3vw,22px)}#onl.workshop h3{color:#86ceff}#onl.workshop .ty{display:grid;grid-template-columns:repeat(auto-fill,minmax(107px,1fr));gap:10px;align-items:stretch}#onl.workshop .ty .robotCard{min-width:0;min-height:140px;width:100%;height:auto;display:flex;align-items:center;flex-direction:column;gap:4px;padding:7px 5px;border-radius:14px;border:1px solid #5b90c077;background:linear-gradient(145deg,#172e4e,#0b172c);color:#fff;cursor:pointer;touch-action:manipulation;box-shadow:0 5px 15px #0005}#onl.workshop .ty .robotCard.on{border-color:#55e2ff;background:linear-gradient(145deg,#225a84,#103759);outline:2px solid #52d4ff}#onl.workshop .ty .robotCard:disabled{opacity:1;cursor:default;border-style:dashed;background:linear-gradient(145deg,#151b30,#08101f)}#onl.workshop .robotPortrait{width:92px;height:92px;max-width:100%;object-fit:contain;border-radius:11px;background:radial-gradient(ellipse at 50% 38%,#245782,#080f24 78%);display:grid;place-items:center;overflow:hidden;color:#91b2d4}#onl.workshop .robotPortrait img{height:100%;width:100%;object-fit:contain}#onl.workshop .robotUnknown{font:900 56px Arial;text-shadow:0 3px 1px #000,0 0 16px #5198c7}#onl.workshop .robotName{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:800 10px Arial}#onl.workshop .robotPerk{display:block;font:600 9px Arial;color:#91d5fb}#onl.workshop #onT{max-height:min(47vh,460px);overflow:auto;padding:4px}#onl.workshop .sw:not(.ty) button{border-color:#cfebff}#onl.workshop #onMsg{color:#a8eaff}#onl .act{display:flex;gap:8px;margin-top:6px}#onl .act button,#onl .act input{flex:1}#onl .go{border:0;border-radius:999px;padding:10px 14px;font:800 13px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);cursor:pointer}#onl .x{background:#999}#onl p{min-height:16px;margin:8px 0 0;color:#c0302a}#onlHud{position:fixed;top:112px;left:50%;transform:translateX(-50%);z-index:61;display:none;gap:8px;align-items:center;padding:7px 10px;border-radius:999px;background:rgba(8,14,40,.85);border:2px solid #9fd0ff;color:#fff;font:700 12px Orbitron,Arial;white-space:nowrap}#onlHud button{border:0;border-radius:999px;padding:6px 10px;font:800 11px Arial;cursor:pointer;color:#fff;background:#1d4fd8}#onlHud .q{background:#c0302a}#onlMic[aria-pressed="true"]{background:#18824f!important}#onlHud{max-width:calc(100vw - 20px);flex-wrap:wrap;justify-content:center}#onlT{max-width:min(380px,80vw);overflow:hidden;text-overflow:ellipsis}@media(max-width:700px){#onlHud{top:74px;font-size:10px}#onlHud button{font-size:11px}}body.recOn #onlHud,body.storyOn #onlHud{visibility:hidden}</style><div class="b"><h3>🌐 MODO ONLINE</h3>Tu nombre<input id="onN" maxlength="14" placeholder="Escribe tu nombre">Tu número<input id="onNum" type="number" min="0" max="99" placeholder="27"><div>Color de tu robot</div><div class="sw" id="onC"></div><div>Tipo de robot transformable</div><div class="sw ty" id="onT"></div><div class="act"><button class="go" id="onNew">✨ CREAR SALA</button></div><div class="act"><input id="onCode" maxlength="5" placeholder="CÓDIGO"><button class="go" id="onJoin">➜ UNIRME</button></div><div class="act"><button class="go x" id="onX">CERRAR</button></div><p id="onMsg"></p></div>';
+    const ui = document.createElement('div'); ui.id = 'onl'; ui.innerHTML = '<style>#onl{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:rgba(0,10,30,.55);font:600 13px Arial;color:#0a1a3a}#onl.on{display:flex}#onl .b{background:linear-gradient(180deg,#eef6ff,#bcd9ff);border:3px solid #fff;border-radius:22px;padding:18px;width:min(380px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;box-shadow:0 20px 50px #000a}#onl h3{margin:0 0 10px;font:900 18px Orbitron,Arial;color:#1d4fd8}#onl input{width:100%;box-sizing:border-box;padding:9px 12px;border-radius:12px;border:2px solid #9fd0ff;font:700 14px Arial;margin:4px 0 10px}#onl .sw{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px}#onl .sw button{width:34px;height:34px;border-radius:50%;border:3px solid #fff;cursor:pointer;box-shadow:0 2px 6px #0004}#onl .sw button.on{outline:3px solid #1d4fd8}#onl .ty button{width:auto;height:auto;border-radius:12px;padding:7px 10px;background:#fff;color:#0a1a3a;font:700 11px Arial}#onl .ty button.on{background:#1d4fd8;color:#fff}#onl.workshop .b{width:min(790px,calc(100vw - 22px));background:linear-gradient(170deg,#152744,#08142d);color:#ecf4ff;padding:clamp(12px,3vw,22px)}#onl.workshop h3{color:#86ceff}#onl.workshop .ty{display:grid;grid-template-columns:repeat(auto-fill,minmax(107px,1fr));gap:10px;align-items:stretch}#onl.workshop .ty .robotCard{min-width:0;min-height:140px;width:100%;height:auto;display:flex;align-items:center;flex-direction:column;gap:4px;padding:7px 5px;border-radius:14px;border:1px solid #5b90c077;background:linear-gradient(145deg,#172e4e,#0b172c);color:#fff;cursor:pointer;touch-action:manipulation;box-shadow:0 5px 15px #0005}#onl.workshop .ty .robotCard.on{border-color:#55e2ff;background:linear-gradient(145deg,#225a84,#103759);outline:2px solid #52d4ff}#onl.workshop .ty .robotCard:disabled{opacity:1;cursor:default;border-style:dashed;background:linear-gradient(145deg,#151b30,#08101f)}#onl.workshop .robotPortrait{width:92px;height:92px;max-width:100%;object-fit:contain;border-radius:11px;background:radial-gradient(ellipse at 50% 38%,#245782,#080f24 78%);display:grid;place-items:center;overflow:hidden;color:#91b2d4}#onl.workshop .robotPortrait img{height:100%;width:100%;object-fit:contain}#onl.workshop .robotUnknown{font:900 56px Arial;text-shadow:0 3px 1px #000,0 0 16px #5198c7}#onl.workshop .robotName{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:800 10px Arial}#onl.workshop .robotPerk{display:block;font:600 9px Arial;color:#91d5fb}#onl.workshop #onT{max-height:min(47vh,460px);overflow:auto;padding:4px}#onl.workshop .sw:not(.ty) button{border-color:#cfebff}#onl.workshop #onMsg{color:#a8eaff}#onl .act{display:flex;gap:8px;margin-top:6px}#onl .act button,#onl .act input{flex:1}#onl .go{border:0;border-radius:999px;padding:10px 14px;font:800 13px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);cursor:pointer}#onl .x{background:#999}#onl p{min-height:16px;margin:8px 0 0;color:#c0302a}#onlHud{position:fixed;top:112px;left:50%;transform:translateX(-50%);z-index:61;display:none;gap:8px;align-items:center;padding:7px 10px;border-radius:999px;background:rgba(8,14,40,.85);border:2px solid #9fd0ff;color:#fff;font:700 12px Orbitron,Arial;white-space:nowrap}#onlHud button{border:0;border-radius:999px;padding:6px 10px;font:800 11px Arial;cursor:pointer;color:#fff;background:#1d4fd8}#onlHud .q{background:#c0302a}#onlMic[aria-pressed="true"]{background:#18824f!important}#onlHud{max-width:calc(100vw - 20px);flex-wrap:wrap;justify-content:center}#onlT{max-width:min(380px,80vw);overflow:hidden;text-overflow:ellipsis}@media(max-width:700px){#onlHud{top:74px;font-size:10px}#onlHud button{font-size:11px}}body.recOn #onlHud,body.storyOn #onlHud{visibility:hidden}</style><div class="b"><h3>🌐 MODO ONLINE</h3><div class="onlIdentity">Tu nombre<input id="onN" maxlength="14" placeholder="Escribe tu nombre">Tu número<input id="onNum" type="number" min="0" max="99" placeholder="27"></div><div>Color de tu robot</div><div class="sw" id="onC"></div><div>Tipo de robot transformable</div><div class="sw ty" id="onT"></div><div class="act"><button class="go" id="onNew">✨ CREAR SALA</button></div><div class="act"><input id="onCode" maxlength="5" placeholder="CÓDIGO"><button class="go" id="onJoin">➜ UNIRME</button></div><div class="act"><button class="go x" id="onX">CERRAR</button></div><p id="onMsg"></p></div>';
     document.body.appendChild(ui); ui.addEventListener('pointerdown', (e) => e.stopPropagation()); ui.addEventListener('keydown', (e) => e.stopPropagation(), true);
+    // Workshop does not obscure the player's 3D robot. Desktop uses a side dock;
+    // phones use a compact bottom sheet that leaves the avatar visible above it.
+    {const st=document.createElement('style');st.textContent=`
+      #onl.workshop{background:transparent;justify-content:flex-start;align-items:center;pointer-events:none}
+      #onl.workshop .b{pointer-events:auto;position:relative;margin-left:max(10px,env(safe-area-inset-left));width:min(414px,calc(40vw - 20px));min-width:244px;height:min(86dvh,820px);max-height:calc(100dvh - 30px);box-sizing:border-box;overflow-y:auto;overscroll-behavior:contain;box-shadow:0 12px 40px #000a}
+      #onl.workshop .onlIdentity{display:none}
+      #onl.workshop #onT{max-height:min(53dvh,490px)}
+      #onl.workshop .ty{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+      #onl.workshop .ty .robotCard{min-height:119px;padding:5px 3px}
+      #onl.workshop .robotPortrait{width:75px;height:75px}
+      #onl.workshop #onMsg{font-size:11px;min-height:12px}
+      #onl.workshop .act{margin-top:3px}
+      @media (max-width:800px) and (orientation:portrait){
+        #onl.workshop{align-items:flex-end;justify-content:center}
+        #onl.workshop .b{margin:0 0 max(8px,env(safe-area-inset-bottom));width:min(96vw,520px);min-width:0;height:min(37dvh,350px);max-height:37dvh;border-radius:18px;padding:10px 12px}
+        #onl.workshop h3{font-size:13px;margin-bottom:5px}
+        #onl.workshop .ty{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+        #onl.workshop #onT{max-height:20dvh}
+        #onl.workshop .ty .robotCard{min-height:100px}
+        #onl.workshop .robotPortrait{width:min(61px,15vw);height:min(61px,15vw)}
+        #onl.workshop .robotUnknown{font-size:38px}
+      }
+      @media (max-width:800px) and (orientation:landscape){
+        #onl.workshop .b{width:min(300px,41vw);min-width:190px;height:90dvh;padding:10px}
+        #onl.workshop .ty{grid-template-columns:repeat(2,minmax(0,1fr))}
+        #onl.workshop #onT{max-height:43dvh}
+      }`;
+      ui.appendChild(st);}
+
     const hud = document.createElement('div'); hud.id = 'onlHud'; hud.innerHTML = '<span id="onlT"></span><button id="onlInv">📨 INVITAR</button><button id="onlMic" type="button" aria-pressed="false" aria-label="Activar micrófono del chat de proximidad">🎤 ACTIVAR VOZ</button><button class="q" id="onlQ">✕</button>'; document.body.appendChild(hud); hud.addEventListener('pointerdown', (e) => e.stopPropagation());
     const $o = (id) => document.getElementById(id), msg = (t) => { $o('onMsg').textContent = window.T ? window.T(t) : t; };
     // Portraits are captured from actual 3D robot models, one per idle frame.
@@ -1424,7 +1456,7 @@
     let pending = null; try { pending = new URLSearchParams(parent.location.search).get('room'); } catch (e) {} if (!pending) try { pending = new URLSearchParams(location.search).get('room'); } catch (e) {}
     window.__REWARD = (why) => { let u = 0; try { u = (+localStorage.getItem('unfire_unlock') || 0) + 1; localStorage.setItem('unfire_unlock', String(u)); } catch (e) {} const k = Math.min(ALLT.length - 1, 1 + u), nm = (MUTANTS.list[ALLT[k]] || {}).name || 'ROBOT'; say('🏆 ' + why + ' · 🎁 ¡Nueva transformación desbloqueada: ' + nm + ' (' + PERK[k % PERK.length][0] + ')! Cámbiala en ⚙ › 🔧 TALLER'); hap(1); try { if (window.__SPRAY) window.__SPRAY(ROAMS.p.x, -8.9 + (ROAMS.h || 0) + 6, ROAMS.p.z, 120, 10, 20); } catch (e) {} };
     setTimeout(function addT() { const h = document.getElementById('storyHud'); if (!h) { setTimeout(addT, 1000); return; } const b = document.createElement('button'); b.textContent = '🔧 TALLER'; b.onclick = () => ONLINE.open(true); const b2 = document.createElement('button'); b2.textContent = '🌐 ONLINE'; b2.onclick = () => ONLINE.open(); h.insertBefore(b2, h.querySelector('.obj')); h.insertBefore(b, b2); }, 1500); applyMe();
-    return { open(taller) { ui.classList.toggle('workshop',!!taller);paint(); $o('onN').value = cfg.name || (window.__STORYNAME && window.__STORYNAME()) || ''; $o('onNum').value = cfg.num || 27; msg(''); ui.querySelector('h3').textContent = taller ? '🔧 TALLER · personaliza tu robot' : '🌐 MODO ONLINE'; ui.querySelectorAll('.act').forEach((a, i) => (a.style.display = taller && i < 2 ? 'none' : 'flex')); ui.classList.add('on'); }, get on() { return !!code; }, get audioPlayers() { return code ? Object.values(R) : []; }, voiceVisibility(v) { VOICE.visibility(v); },
+    return { open(taller) { ui.classList.toggle('workshop',!!taller);ui.classList.add('on');paint(); $o('onN').value = cfg.name || (window.__STORYNAME && window.__STORYNAME()) || ''; $o('onNum').value = cfg.num || 27; msg(''); ui.querySelector('h3').textContent = taller ? '🔧 TALLER · personaliza tu robot' : '🌐 MODO ONLINE'; ui.querySelectorAll('.act').forEach((a, i) => (a.style.display = taller && i < 2 ? 'none' : 'flex')); ui.classList.add('on'); }, get on() { return !!code; }, get audioPlayers() { return code ? Object.values(R) : []; }, voiceVisibility(v) { VOICE.visibility(v); },
       tick(dt, t) { if (pending && ROAMS.on) { this.open(); $o('onCode').value = pending; msg('Te han invitado a la sala ' + pending + ' · elige tu robot y pulsa UNIRME'); pending = null; }
         if (!code || !peer) return; sendT -= dt; if (sendT <= 0 && myId) { sendT = 0.1; const d = { id: myId, n: cfg.name, c: cfg.col, t: cfg.type, x: +ROAMS.p.x.toFixed(2), z: +ROAMS.p.z.toFixed(2), h: +(ROAMS.h || 0).toFixed(2), y: +((ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy)).toFixed(3), sc: NOTES.sc, f: ROAMS.fly ? 1 : 0, o: window.ATM_OUT ? 1 : 0, m: ROAMS.moving ? 1 : 0, v: VOICE.on ? 1 : 0, q: 1 }; conns.forEach((c) => { if (c.open) try { c.send(d); } catch (e) {} }); }
         if (NOTES.g) { NOTES.g.visible = !!window.ATM_OUT; const fy = -8.9 + (ROAMS.h || 0) + 5; NOTES.list.forEach((n, i) => { if (!n.on) return; n.sp.material.rotation = Math.sin(t * 2 + i) * 0.3; if (window.ATM_OUT && Math.abs(ROAMS.p.x - n.sp.position.x) < 7 && Math.abs(ROAMS.p.z - n.sp.position.z) < 7 && Math.abs(fy - n.sp.position.y) < 9) { NOTES.take(i, true); conns.forEach((c) => { if (c.open) try { c.send({ id: myId, nt: i }); } catch (e) {} }); upd(); } }); } NOTES.uT = (NOTES.uT || 0) - dt; if (NOTES.uT <= 0) { NOTES.uT = 1; upd(); } const now = performance.now(); Object.keys(R).forEach((id) => { const r = R[id], d = r.d; if (!d) return; if (now - r.last > 8000) { drop(id); return; } const vis = !!d.o === !!window.ATM_OUT; r.w.visible = r.tag.visible = vis; if (!vis) return; const tgt = V(d.x, -8.9 + d.h, d.z), mv = r.w.position.distanceTo(tgt); r.w.position.lerp(tgt, Math.min(1, dt * 8)); r.wd += Math.min(mv, 5); r.w.rotation.y = Math.atan2(Math.sin(d.y), -Math.cos(d.y)); r.tag.position.set(r.w.position.x, r.w.position.y + 13, r.w.position.z); r.r0.update(3.7, dt, { act: d.f ? 'fly' : d.m ? 'walk' : null, ph: d.m ? STEPPH(r.wd, 10.5, false) : t, mood: 'happy' }); }); VOICE.tick(dt); }, create, join, leave, link, saveMe() { save(); applyMe(); } };
@@ -1444,9 +1476,9 @@
       capsule.add(upper,lower);capsule.visible=false;S.scene.add(capsule);
     };
     const cancel=()=>{flight=0;if(capsule)capsule.visible=false;};
-    const pack=()=>{if(!ROAMS.on)return false;cancel();closeCaseInGame();say('🎒 Maletín y objetos guardados en una cápsula. Pulsa G o LANZAR para desplegar.');return true;};
+    const pack=()=>{if(!ROAMS.on||!portableUnlocked())return false;cancel();closeCaseInGame();say('🎒 Maletín y objetos guardados en una cápsula. Pulsa G o LANZAR para desplegar.');return true;};
     const throwIt=()=>{
-      if(!ROAMS.on)return false;
+      if(!ROAMS.on||!portableUnlocked())return false;
       if(flight>0)return false;
       if(!carryingCase)return pack();
       build();
@@ -1463,7 +1495,7 @@
     const action=()=>carryingCase?throwIt():pack();
     addEventListener('keydown',e=>{
       const t=e.target;if(t && (t.isContentEditable||['INPUT','TEXTAREA','SELECT'].includes(t.tagName)))return;
-      if((e.key==='g'||e.key==='G')&&ROAMS.on&&!e.repeat){
+      if((e.key==='g'||e.key==='G')&&ROAMS.on&&portableUnlocked()&&!e.repeat){
         if(!e.ctrlKey&&!e.altKey&&!e.metaKey){e.preventDefault();action();}
       }
     });
@@ -1471,7 +1503,8 @@
       const h=document.getElementById('storyHud');
       if(!h){setTimeout(addB,1000);return;}
       const btn=document.createElement('button');btn.id='capsuleHudButton';
-      btn.textContent='🎒 CÁPSULA (G)';btn.onclick=action;h.insertBefore(btn,h.firstChild);
+      btn.textContent='🎒 CÁPSULA (G)';btn.onclick=action;btn.title='Disponible desde la tercera misión';h.insertBefore(btn,h.firstChild);
+      setInterval(()=>{if(!btn.isConnected)return;btn.disabled=!portableUnlocked();btn.textContent=portableUnlocked()?'🎒 CÁPSULA (G)':'🔒 CÁPSULA · MISIÓN 3';},900);
     },1600);
     return {throwIt,pack,cancel,get flying(){return flight>0;},tick(dt){
       // Self-heal display mismatches without spawning more meshes or audio.
@@ -1915,7 +1948,7 @@
     if(ROAMS.on&&!CASE_VIEW.on&&!carryingCase&&caseG.visible&&pTarget>0.5){
       ndc.set((e.clientX/innerWidth)*2-1,-(e.clientY/innerHeight)*2+1);
       ray.setFromCamera(ndc,cam);
-      if(ray.intersectObject(caseG,true).length){showCaseView();return;}
+      if(ray.intersectObject(caseG,true).length){showCaseView();/* Continue handling the same click: gates and controls must still work first try. */}
     }
     { const pc = lidOpen > 0.5 ? pickCtl(e) : null; if (pc && !pc.c) { SEL = { type: 'cap', g: pc.g }; activate(pc.g); return; } }
     if (lidOpen < 0.5) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const hitD = ray.intersectObject(dragon, true).length; if (hitD || ray.intersectObject(caseG, true).length) { if (hitD) ALL = true;
@@ -2236,6 +2269,7 @@
   window.__UNFIRE_CASE_QA = {
     get closed(){return pTarget<0.5},
     get carrying(){return carryingCase},
+    get portableUnlocked(){return portableUnlocked()},
     get capsuleFlying(){return CAPS.flying},
     // CI software WebGL may render at fewer than one frame per second.
     // Use the identical capsule simulation in deterministic localhost-only steps.

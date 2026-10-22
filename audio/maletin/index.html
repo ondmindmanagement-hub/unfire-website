@@ -4346,6 +4346,9 @@ window.STORY_INIT = function (H) {
   const store = (s) => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} };
   let SAVE = load() || { name: '', level: 1, ch: 0, step: 0, done: [], met: false, ts: 0 };
   const FREE = 12;
+  // First-time players learn the case on the table before getting the portable capsule.
+  // Chapter index 2 is the third story mission; this does NOT block ordinary case use.
+  window.__unfireCasePortabilityUnlocked = () => SAVE.ch >= 2 || (Array.isArray(SAVE.done) && SAVE.done.includes(1));
   // Validate older/corrupted saves without overwriting a valid current mission.
   if (!SAVE || typeof SAVE !== 'object' || Array.isArray(SAVE)) SAVE = { name: '', level: 1, ch: 0, step: 0, done: [], met: false, ts: 0 };
   SAVE.done = Array.isArray(SAVE.done) ? [...new Set(SAVE.done.filter(n => Number.isInteger(n) && n >= 0 && n < FREE))] : [];
