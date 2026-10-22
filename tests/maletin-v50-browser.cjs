@@ -1,16 +1,15 @@
 const { chromium }=require('playwright');
 const assert=require('node:assert/strict');
 (async()=>{
- let browser;
+ let browser, page; const errors=[];
  try{
   browser=await chromium.launch({headless:true,args:['--enable-unsafe-swiftshader','--disable-dev-shm-usage','--no-sandbox','--autoplay-policy=no-user-gesture-required']});
-  const page=await browser.newPage({viewport:{width:1080,height:760},deviceScaleFactor:1});
-  const errors=[];page.on('pageerror',err=>errors.push(err.message.slice(0,180)));
+  page=await browser.newPage({viewport:{width:1080,height:760},deviceScaleFactor:1});page.on('pageerror',err=>errors.push(err.message.slice(0,180)));
   await page.goto('http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded',timeout:30000});
   await page.locator('#openBtn').evaluate(e=>e.click());
   const frame=page.frameLocator('#malFrame');
   await frame.locator('#directOpen').count();
-  await page.waitForFunction(()=>{try{return !!document.getElementById('malFrame').contentWindow.__mal?.S}catch{return false}},{timeout:80000});
+  await page.waitForFunction(()=>{try{return !!document.getElementById('malFrame')?.contentWindow?.__mal?.S}catch{return false}},null,{timeout:90000,polling:250});
   const f=page.frames().find(x=>x.url().includes('/audio/maletin/index.html'));
   assert(f,'Game iframe missing');
   await f.evaluate(()=>{window.__mal.setP(1);window.__mal.requestOpen();window.__roamAPI.enterRoam();window.__SIDEM.offer('NIMBO')});
@@ -29,7 +28,7 @@ const assert=require('node:assert/strict');
   await f.evaluate(()=>{const b=document.getElementById('unfireCarryCase');if(!b)throw Error('Capsule control missing');b.click()});
   const flying=await f.evaluate(()=>window.__UNFIRE_CASE_QA.capsuleFlying);
   assert(flying,'Capsule launch did not start');
-  await f.waitForFunction(()=>!window.__UNFIRE_CASE_QA.capsuleFlying&&window.__UNFIRE_CASE_QA.caseVisible,{timeout:30000});
+  await f.waitForFunction(()=>!window.__UNFIRE_CASE_QA.capsuleFlying&&window.__UNFIRE_CASE_QA.caseVisible,null,{timeout:30000,polling:100});
   const opened=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,mission:window.__UNFIRE_CASE_QA.mission,visible:window.__UNFIRE_CASE_QA.caseVisible}));
   assert(!opened.closed&&!opened.carrying&&opened.visible&&opened.mission===initial.mission,'Capsule landing lost case or active mission');
   // Pack again; player stays walking with no case mesh in front of the camera.
@@ -72,6 +71,6 @@ const assert=require('node:assert/strict');
   assert.equal(missions.filter(Boolean).length,11,'Some side mission completion rules failed');
   assert.equal(errors.length,0,'Browser JavaScript errors: '+errors.join(' | '));
   console.log('PASS desktop browser: portable capsule throw/repack, mystery code, preserved quest and game, 11 mission completion predicates, no JS errors');
- }catch(e){console.error('FAIL',e.stack?.slice(0,1200));process.exitCode=1}
+ }catch(e){console.error('FAIL',e.stack?.slice(0,1200));if(page){try{console.error('PAGE_DIAG',JSON.stringify(await page.evaluate(()=>({ready:document.readyState,frameSrc:document.getElementById('malFrame')?.getAttribute('src'),iframeReady:!!document.getElementById('malFrame')?.contentWindow?.__mal,hero:document.getElementById('heroPin')?.className,immersive:document.body.classList.contains('immOn')}))));console.error('JS_ERRORS',JSON.stringify(errors.slice(0,8)));}catch(err){console.error('DIAGNOSTIC_FAILED',err.message)}}process.exitCode=1}
  finally{if(browser)await browser.close()}
 })();
