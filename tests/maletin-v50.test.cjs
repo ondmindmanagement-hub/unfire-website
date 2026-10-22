@@ -8,8 +8,8 @@ chk('Original 3D butterfly artwork preserved',engine.includes("G3.drawEmblem(em.
 chk('Real 3D lid-button calls local toggle',engine.includes('ray.intersectObject(lidBtn, true).length) { toggleCaseInGame()'));
 chk('Rapid toggles use target state',engine.includes('if(pTarget>0.5)closeCaseInGame();else openCaseInGame();'));
 chk('Case closure never sends parent closeCase',!engine.includes('parentPost({ closeCase: 1 })'));
-chk('Local action does not call exitGame',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame()')).includes('exitGame'));
-chk('Carry does not disconnect online',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame()')).includes('ONLINE.leave'));
+chk('Local action does not call exitGame',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame(')).includes('exitGame'));
+chk('Carry does not disconnect online',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame(')).includes('ONLINE.leave'));
 chk('Packed case invisible and saves GPU draws',engine.includes('caseG.visible=false;')&&engine.includes('inventory-only'));
 chk('Capsule is reusable without spawning objects each click',engine.includes('if(capsule)return;')&&engine.includes('capsule.visible=true;flight=0.001;'));
 chk('G keyboard handles pack and throw',engine.includes("(e.key==='g'||e.key==='G')")&&engine.includes('action();'));
@@ -32,6 +32,9 @@ chk('In-house PC mystery application',engine.includes('id="pcMysteryApp"')&&engi
 chk('Correct unique unlock code',engine.includes("fld.value.trim().toUpperCase()!=='ULTIMATEROBOTS'"));
 chk('Only local avatar entitlements updated',engine.includes("localStorage.setItem('unfire_unlock',String(Math.max(current,20)))"));
 chk('Story saves protected from corrupted data',storySource.includes('Validate older/corrupted saves'));
+chk('Twelve playable story chapters', (storySource.match(/\{\s*t:\s*['\"][^'\"]+['\"],\s*steps:/g)||[]).length===12 && storySource.includes('const FREE = 12'));
+chk('Map chapter goals can be completed with Nimbo assistance',storySource.includes("w.ev==='reach'")&&engine.includes('navigateTo: (quest)'));
+chk('Completed story has no purchase gate',storySource.includes('HISTORIA COMPLETADA')&&!storySource.includes('VER EL MALETÍN COMPLETO'));
 chk('Mission events guarded against stale steps',storySource.includes('currentStep.wait.ev !== name'));
 chk('Persistent active side quest',engine.includes("'unfire_side_active'"));
 chk('PC screen shows mystery app icon',engine.includes("g.fillText('?', 14, 78)"));
