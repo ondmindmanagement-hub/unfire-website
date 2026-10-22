@@ -23,4 +23,21 @@ ok('Parent points to exact v51',host.includes('maletin/index.html?v=51'));
 ok('Existing story & quests survive',engine.includes('const SCENES =')&&engine.includes('const SIDE ='));
 ok('Existing online subsystem retained',engine.includes('const ONLINE ='));
 ok('Existing audio ambience retained',engine.includes('const AMB ='));
+// The release is a FREE complete adventure, not just the former three-chapter preview.
+const start=shell.indexOf('const CH = [');
+const end=shell.indexOf('// ---------- interfaz: barras de cine',start);
+assert(start>=0&&end>start,'Story chapter data not found');
+const storySource=shell.slice(start+'const CH = '.length,shell.lastIndexOf('];',end)+1);
+const chapters=Function('N','lv','return '+storySource)(()=> 'Jugador',(a,b,c)=>b);
+ok('All 12 chapters are playable, not locked',chapters.length===12&&chapters.every(x=>Array.isArray(x.steps)&&x.steps.length>0&&!x.locked));
+ok('Every chapter has a real ending',chapters.every(x=>x.steps.some(y=>y.end)));
+ok('Complete final epilogue exists',chapters[11].steps.some(x=>x.end&&x.say.length>=4));
+ok('No paywall after final chapter',shell.includes('🏆 HISTORIA COMPLETA · SEGUIR JUGANDO'));
+const allWaits=chapters.flatMap(c=>c.steps.filter(x=>x.wait).map(x=>x.wait.ev));
+ok('All chapter requirements can be fulfilled by gameplay systems',
+  allWaits.every(ev=>['hwopen','hwkey','case','radio','poster','gacha','portal','side',
+    'portal:sea','portal:sky','portal:reef','portal:desert','portal:space','portal:mountain','portal:jelly'].includes(ev)));
+ok('Portal, butterfly and quest completion emit story events',
+  engine.includes("window.UEV('portal:'+w.id)")&&engine.includes("window.UEV('case')")&&engine.includes("window.UEV('side')"));
+
 console.log('Static v51 assertions PASSED');
