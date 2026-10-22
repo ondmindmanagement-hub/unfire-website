@@ -26,10 +26,10 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
         const w=window.__UNFIRE_WINDOWS.definitions[index],r=window.__roamAPI.ROAMS;
         r.p.set(0,4.5,30);r.h=12;r.fly=true;r.flyH=12;r.vy=0;r.tgt=null;
         let px=0,pz=0,nx=0,nz=0;
-        if(w.wall==='L'){px=-73;pz=w.at;nx=-76;nz=w.at}
-        if(w.wall==='R'){px=73;pz=w.at;nx=76;nz=w.at}
-        if(w.wall==='F'){px=w.at;pz=89;nx=w.at;nz=92}
-        if(w.wall==='W'){px=w.at;pz=-9;nx=w.at;nz=-12}
+        if(w.wall==='L'){px=-76;pz=w.at;nx=-78;nz=w.at}
+        if(w.wall==='R'){px=76;pz=w.at;nx=78;nz=w.at}
+        if(w.wall==='F'){px=w.at;pz=92;nx=w.at;nz=94}
+        if(w.wall==='W'){px=w.at;pz=-12;nx=w.at;nz=-15}
         const hit=window.__UNFIRE_WINDOWS.cross(px,pz,nx,nz);
         return {id:w.id,hit,portal:window.__UNFIRE_WINDOWS.last,coords:window.__UNFIRE_CASE_QA.worldCoords,
           altitude:window.__UNFIRE_CASE_QA.altitude,area:window.__UNFIRE_CASE_QA.location,
@@ -53,6 +53,9 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
       await game.evaluate(()=>{const b=document.getElementById('unfireWindowHome');if(!b)throw Error('return button absent');b.click()});
       const home=await game.evaluate(()=>({area:window.__UNFIRE_CASE_QA.location,mission:window.__SIDEM.cur?.t,coords:window.__UNFIRE_CASE_QA.worldCoords}));
       assert(home.area==='house'&&home.mission===initial.mission,'Return broke storyline');
+      const recovered=await game.evaluate(()=>({onTable:window.__UNFIRE_CASE_QA.caseOnTable,
+        canRecall:window.__UNFIRE_CASE_QA.canRecallCase,casePos:window.__UNFIRE_CASE_QA.casePos}));
+      assert(recovered.onTable&&recovered.canRecall,'Maletín was left behind after returning to house '+result.id);
       results.push(result.id);
     }
     // Side missions are still completable after repeated world travel.
