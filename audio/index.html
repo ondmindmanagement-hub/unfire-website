@@ -741,7 +741,7 @@ const CaseSfx=(()=>{let on=false,ctx=null;const btn=$('#sndBtn');
     if(k==='latch'){noise(t,.06,3000,1800,3,.25);tone(t,2400,.05,.06,'square');tone(t+.02,180,.08,.2,'triangle')}
     if(k==='lid'){noise(t,.7,back?2600:400,back?400:2600,2,.12);tone(t,back?220:110,.5,.05,'sawtooth')}
     if(k==='thud'){tone(t,70,.35,.4,'sine');noise(t,.12,600,200,1,.15)}
-    if(k==='chime'){[0,4,7,11,14].forEach((s,i)=>tone(t+i*.07,523.25*Math.pow(2,s/12),1.1,.07,'sine'))}
+    if(k==='chime'){noise(t,1.1,3500,9000,3,.05)}
     if(k==='zoom'){noise(t,.4,300,3000,4,.08)}}};
 })();
 /* ================= Maletín 3D (iframe con inmersión) ================= */
