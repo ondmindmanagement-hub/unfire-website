@@ -83,7 +83,7 @@ body.cine::before, body.cine::after { height:9vh }
   window.__UNFIRE_AUTOCALIB=detect();
   const calibrate=()=>{window.__UNFIRE_AUTOCALIB=detect();document.documentElement.dataset.qualityTier=window.__UNFIRE_AUTOCALIB.tier;};
   calibrate();addEventListener('resize',calibrate,{passive:true});
-  if(visualViewport)visualViewport.addEventListener('resize',calibrate,{passive:true});
+  if(window.visualViewport)window.visualViewport.addEventListener('resize',calibrate,{passive:true});
   const showRecovery=()=>{
     if(document.getElementById('unfireRecover'))return;
     const box=document.createElement('div');box.id='unfireRecover';
