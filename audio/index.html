@@ -781,8 +781,8 @@ const UNFIRE_SCENE=(()=>{
   const pin=document.getElementById('heroPin');
   let started=false,skipUntil=0,ready=false,waiting=[],generation=0;
   const deviceProfile=()=>{
-    const width=Math.round(visualViewport?.width||innerWidth||360);
-    const height=Math.round(visualViewport?.height||innerHeight||640);
+    const width=Math.round(window.visualViewport?.width||innerWidth||360);
+    const height=Math.round(window.visualViewport?.height||innerHeight||640);
     const touch=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
     const mem=Number(navigator.deviceMemory||0),cores=Number(navigator.hardwareConcurrency||0);
     const compact=touch&&(Math.min(width,height)<=390||(mem&&mem<=4)||(cores&&cores<=4));
@@ -807,7 +807,7 @@ const UNFIRE_SCENE=(()=>{
   function showWhenReady(id){
     let tries=0;
     const test=()=>{
-      if(id!==generation)return;
+      if(id!==generation||ready)return;
       try{if(frame.contentWindow && frame.contentWindow.__mal && frame.contentWindow.__mal.S){
           ready=true;pin.classList.add('scene-ready');pin.classList.remove('scene-error');help.style.display='none';
           const callbacks=waiting.splice(0);callbacks.forEach(fn=>{try{fn()}catch(e){console.error('UNFIRE open:',e)}});
