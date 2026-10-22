@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js" as="script"></head><body><title>UNFIRE Maletín</title>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v51.js" as="script"></head><body><title>UNFIRE Maletín</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
@@ -3956,7 +3956,7 @@ window.ROOMC = function (D) {
         vec2 g = floor(vec2(lon, lat) * 160.0); float s = h(g); col += vec3(0.0 * s); }
       if (on2 > 0.5) { vec2 u2 = proj(d2, k2, 1.0) + off2; if (u2.x > 0.0 && u2.x < 1.0 && u2.y > 0.0 && u2.y < 1.0) { vec3 c2 = texture2D(map2, u2).rgb; col = max(col, c2 * 1.05); } }
       vec2 e = abs(vP / size * 2.0); float vig = 1.0 - 0.3 * pow(max(e.x, e.y), 5.0); gl_FragColor = vec4(col * vig * bright, 1.0); }`;
-  const portal = (wall, a, y, w, h, o) => { block(wall, a, y, w + 1.4, h + 1.4, 0.6); const g = G(wall, a, y, 0.02); const U = { map: { value: o.map }, map2: { value: o.map2 || o.map }, camL: { value: V(0, 0, 10) }, size: { value: new THREE.Vector2(w, h) }, depth: { value: o.depth || 12 }, k: { value: o.k || 1 + (o.depth || 12) / 13 }, vasp: { value: o.vasp || 16 / 9 }, mode: { value: o.mode || 0 }, t: { value: 0 }, bright: { value: o.bright || 1 }, d2: { value: o.d2 || 40 }, k2: { value: o.k2 || 1 }, on2: { value: o.map2 ? 1 : 0 }, off2: { value: o.off2 || new THREE.Vector2(0, 0) }, round: { value: o.round ? 1 : 0 } };
+  const portal = (wall, a, y, w, h, o) => { block(wall, a, y, w + 1.4, h + 1.4, 0.6); const g = G(wall, a, y, 0.02); g.userData.noCollide=true; const U = { map: { value: o.map }, map2: { value: o.map2 || o.map }, camL: { value: V(0, 0, 10) }, size: { value: new THREE.Vector2(w, h) }, depth: { value: o.depth || 12 }, k: { value: o.k || 1 + (o.depth || 12) / 13 }, vasp: { value: o.vasp || 16 / 9 }, mode: { value: o.mode || 0 }, t: { value: 0 }, bright: { value: o.bright || 1 }, d2: { value: o.d2 || 40 }, k2: { value: o.k2 || 1 }, on2: { value: o.map2 ? 1 : 0 }, off2: { value: o.off2 || new THREE.Vector2(0, 0) }, round: { value: o.round ? 1 : 0 } };
     const pl = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.ShaderMaterial({ uniforms: U, vertexShader: PVS, fragmentShader: PFS })); pl.position.z = -0.02; g.add(pl);
     const fm = new THREE.MeshPhysicalMaterial({ color: o.frame || 0xffffff, roughness: 0.22, clearcoat: 1, metalness: o.round ? 0.6 : 0 });
     if (o.round) { const ring = nm(mesh(new THREE.TorusGeometry(w / 2 + 0.35, 0.55, 20, 72), fm)); g.add(ring); for (let k = 0; k < 12; k++) { const b = nm(mesh(new THREE.SphereGeometry(0.22, 10, 8), M.chrome)); const an = k / 12 * TAU; b.position.set(Math.cos(an) * (w / 2 + 0.35), Math.sin(an) * (w / 2 + 0.35), 0.5); g.add(b); } }
@@ -3972,6 +3972,16 @@ window.ROOMC = function (D) {
   portal('L', 70, 7, 13, 13, { map: jelly.t, v: jelly, depth: 9, k: 1.9 });
   portal('R', 24, 6.5, 22, 12.4, { map: steens.t, v: steens, depth: 30, k: 2.6 });
   portal('R', 70, 7, 16, 9, { map: waves.t, v: waves, depth: 16 });
+  // Desert door-window: a single cached canvas, no extra video streams or animation loops.
+  const sandCanvas=Y2K.cnv(512,320),sandCtx=sandCanvas.getContext('2d');
+  {const grad=sandCtx.createLinearGradient(0,0,0,320);grad.addColorStop(0,'#237dc5');grad.addColorStop(.56,'#fbd194');grad.addColorStop(1,'#e5a45d');sandCtx.fillStyle=grad;sandCtx.fillRect(0,0,512,320);
+  sandCtx.fillStyle='#ffedc1';sandCtx.beginPath();sandCtx.arc(390,72,34,0,Math.PI*2);sandCtx.fill();
+  for(let j=0;j<5;j++){sandCtx.beginPath();sandCtx.moveTo(0,230+j*18);
+    for(let x=0;x<=512;x+=16)sandCtx.lineTo(x,227+j*18+Math.sin(x*.012+j)*13);
+    sandCtx.lineTo(512,320);sandCtx.lineTo(0,320);sandCtx.fillStyle=['#d78a4b','#e4a75b','#c87d46','#b66839','#a85d37'][j];sandCtx.fill();}
+  sandCtx.fillStyle='#663b2d';sandCtx.font='bold 23px Arial';sandCtx.fillText('DESIERTO · SALTA',19,38);}
+  const desertTexture=Y2K.toTex(sandCanvas,{color:true});
+  portal('F',-44,8,15,14,{map:desertTexture,depth:18,bright:1.05,frame:0xffd798});
   const milky = img('s_milky.jpg'), earthD = img('a_jupiter.jpg');
   const nomip = (t) => { t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.wrapS = THREE.RepeatWrapping; return t; }; const milkyW = nomip(img('s_milky_w.jpg')), earthW = nomip(img('a_jupiter_w.jpg')); portal('F', 44, 8, 15, 15, { map: milkyW, map2: earthW, mode: 1, round: true, d2: 55, k2: 1.6, off2: new THREE.Vector2(0.18, -0.12), spin: 0.004, frame: 0xc8d0e0 });
   { const pl = G('F', 44, -1.6, 0.05); const lb = new THREE.Mesh(new THREE.PlaneGeometry(7, 1), new THREE.MeshBasicMaterial({ map: cnv(512, 72, (c) => { c.fillStyle = '#0a1030'; c.fillRect(0, 0, 512, 72); c.fillStyle = '#9fd0ff'; c.font = '700 30px Orbitron, Arial'; c.textAlign = 'center'; c.fillText('ÓRBITA · CUBIERTA 7', 256, 46); }), toneMapped: false })); pl.add(lb); }
@@ -4345,7 +4355,7 @@ window.STORY_INIT = function (H) {
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } };
   const store = (s) => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} };
   let SAVE = load() || { name: '', level: 1, ch: 0, step: 0, done: [], met: false, ts: 0 };
-  const FREE = 3;
+  const FREE = 12; // All twelve chapters of the free game are playable.
   // ---------- reparto ----------
   const CAST = {
     NIMBO: { col: '#5fe0ff', pitch: 1.18, rate: 1.04, pref: ['Paulina', 'Mónica', 'Monica', 'Marisol', 'Helena', 'Google español', 'Elvira'] },
@@ -4385,17 +4395,53 @@ window.STORY_INIT = function (H) {
       { say: [['NIMBO', 'grito', () => '¡Eso! ¿Lo has oído? Ese brillo era el primer pedacito del segundo perdido: el de Piscis. Los de Piscis sueñan tan fuerte que a veces se les olvida despertarse.'], ['NIMBO', 'risa', () => 'Yo una vez me soñé a mí mismo soñando. Me desperté dos veces. Fue agotador.'], ['NIMBO', 'feliz', () => 'Capítulo uno, completado. Lo guardo para que no se nos escape otro segundo.']], end: true },
     ] },
     { t: 'Aries quiere ser DJ', steps: [
-      { say: [['ARI', 'grito', () => '¡Apartad, que viene el mejor DJ de la historia del maletín!'], ['LIBRA', 'serio', () => 'Ari, eres el único DJ de la historia del maletín.'], ['ARI', 'feliz', () => '¡Por eso soy el mejor! ' + N() + ', dale a MEGA y que tiemble la mesa.']], wait: { ev: 'mega' }, hint: 'Pulsa el botón MEGA de la tapa', at: [0, -1.6], mini: 1 },
+      { say: [['ARI', 'grito', () => '¡Apartad, que viene el mejor DJ de la historia del maletín!'], ['LIBRA', 'serio', () => 'Ari, eres el único DJ de la historia del maletín.'], ['ARI', 'feliz', () => '¡Por eso soy el mejor! ' + N() + ', pulsa la mariposa del maletín: abre o cierra la tapa, ¡pero que siga la música!']], wait: { ev: 'case' }, hint: 'Pulsa una vez la mariposa del maletín', at: [0, -1.6], mini: 1 },
       { say: [['LIBRA', 'duda', () => 'Demasiado ruido. Demasiada luz. Necesito equilibrio. ' + N() + ', ¿cambiarías la canción en la radio de la pared o en el tocadiscos?']], wait: { ev: 'radio' }, hint: 'Cambia la canción (botón ⏭ o el tocadiscos)', at: [-5, 92] },
       { say: [['ARI', 'triste', () => 'Vale… a lo mejor no hace falta que todo suene a la vez.'], ['LIBRA', 'feliz', () => 'Y a lo mejor un poco de caos no está tan mal.'], ['NIMBO', 'misterio', () => 'Fuego y balanza. Lo que arde y lo que mide. Cuando se dan la mano, aparece el pedacito de Aries. Lo tienes.']], end: true },
     ] },
     { t: 'Los cuadros que hablan', steps: [
       { say: [['NIMBO', 'susurro', () => 'Los cuadros de esta casa no son decoración. Son ventanas a sitios donde la música cambió de piel. Pasea y toca tres.']], wait: { ev: 'poster', n: 3 }, hint: 'Pasea (botón PASEAR) y toca 3 cuadros', at: [-70, 40] },
       { say: [['GEMI', 'risa', () => 'Nosotros somos los gemelos de Géminis. Yo empiezo las frases…'], ['GEMI', 'feliz', () => '…y yo me como el final. Oye, ' + N() + ', la máquina de bolas guarda un aparato para ti. Gira la manivela.']], wait: { ev: 'gacha' }, hint: 'Usa la máquina de bolas roja', at: [44, 8] },
-      { say: [['ESCORPIO', 'misterio', () => 'Todos creen que el segundo se perdió. Yo creo que alguien lo escondió a propósito.'], ['NIMBO', 'duda', () => 'Escorpio, no asustes a ' + N() + ' en su primer día.'], ['ESCORPIO', 'susurro', () => 'Detrás de la puerta azul hay más mundo del que parece. Cuando quieras saber la verdad, ya sabes dónde buscar.'], ['NIMBO', 'feliz', () => 'Tres pedacitos de doce. Lo que viene después necesita el maletín completo: islas, la ciudad, el skatepark y la verdad de Escorpio.']], end: true },
+      { say: [['ESCORPIO', 'misterio', () => 'Todos creen que el segundo se perdió. Yo creo que alguien lo escondió a propósito.'], ['NIMBO', 'duda', () => 'Escorpio, no asustes a ' + N() + ' en su primer día.'], ['ESCORPIO', 'susurro', () => 'Detrás de la puerta azul hay más mundo del que parece. Cuando quieras saber la verdad, ya sabes dónde buscar.'], ['NIMBO', 'feliz', () => 'Tres fragmentos de doce. ¡Ahora empieza la aventura! Las ventanas de la casa llevan a los otros mundos. La historia entera es gratis.']], end: true },
     ] },
-    { t: 'La puerta azul', locked: true }, { t: 'Tauro y la ballena que no sabía cantar', locked: true }, { t: 'El cerdo volador pide asilo', locked: true }, { t: 'Cáncer construye una ciudad en una caja', locked: true }, { t: 'Leo y el concurso de skate', locked: true }, { t: 'Virgo ordena el tiempo', locked: true }, { t: 'Sagitario dispara a la luna', locked: true }, { t: 'Capricornio y la montaña de nieve', locked: true }, { t: 'Acuario y el año que por fin llegó', locked: true },
+    { t: 'La puerta azul', steps: [
+  { say: [['ESCORPIO','misterio','Hay puertas que no tienen pomo. Son ventanas. El segundo perdido cayó en el mapa de fuera.'],['NIMBO','feliz','Salta hacia una ventana, no contra la pared: cruzarla te llevará al lugar que enseña. Puedes volver a casa cuando quieras.']], wait:{ev:'portal'}, hint:'Vuela o salta atravesando una de las ventanas de la casa' },
+  { say: [['ESCORPIO','susurro','Lo has conseguido. La puerta azul estaba en todas partes. Cuatro fragmentos recuperados.'],['NIMBO','risa','Y el maletín viene contigo. No hace falta guardarlo en el vestíbulo.']], end:true }
+]}, { t:'Tauro y la ballena que no sabía cantar', steps:[
+  {say:[['NIMBO','feliz','Tauro está junto al mar. Una ballena cree que cantar es enseñar sus facturas.'],['ARI','risa','Encuentra la ventana de las olas y cruza hacia el mar.']],wait:{ev:'portal:sea'},hint:'Salta por la ventana de las olas y llega al mar'},
+  {say:[['NIMBO','feliz','La ballena ha cantado una nota sin darse cuenta. ¡Es el quinto fragmento!'],['LIBRA','serio','Perfecta afinación. Aunque fuese un accidente.']],end:true}
+]}, {t:'El cerdo volador pide asilo',steps:[
+  {say:[['GEMI','risa','¡Hay un cerdo que pide vivir en una nube! Dice que su pasaporte se lo comió una impresora.'],['NIMBO','feliz','Salta por la ventana del cielo. Vamos a comprobar si realmente sabe volar.']],wait:{ev:'portal:sky'},hint:'Cruza la gran ventana del cielo de la casa'},
+  {say:[['ARI','risa','El cerdo ha aterrizado en una nube. Parece que la nube tiene alquiler.'],['NIMBO','feliz','Otro fragmento rescatado: el sexto. Los cerdos también pueden soñar.']],end:true}
+]}, {t:'Cáncer construye una ciudad en una caja',steps:[
+  {say:[['LIBRA','serio','Cáncer quiere construir una ciudad diminuta. Nos faltan las ventanas de colores.'],['NIMBO','feliz','Busca el acuario del arrecife y atraviesa su cristal. El coral parece una ciudad.']],wait:{ev:'portal:reef'},hint:'Salta por el acuario del arrecife'},
+  {say:[['GEMI','feliz','¡Edificios de coral y vecinos con aletas! ¿Pagan impuestos las medusas?'],['NIMBO','feliz','Séptimo fragmento. Esta ciudad se queda dentro de la historia.']],end:true}
+]}, {t:'Leo y el concurso de skate',steps:[
+  {say:[['ARI','grito','Leo ha organizado una competición de skate sobre arena. ¡Eso no rueda!'],['NIMBO','risa','Ve por la ventana del desierto y descubre el circuito.']],wait:{ev:'portal:desert'},hint:'Cruza la ventana del desierto'},
+  {say:[['NIMBO','serio','Para ganar tienes que completar una misión de exploración de Nimbo. Sigue la estrella del mapa.']],wait:{ev:'side'},hint:'Completa una misión secundaria en el mapa exterior'},
+  {say:[['ARI','feliz','¡Victoria! Leo ha descubierto que caminar también cuenta como estilo.'],['NIMBO','feliz','Octavo fragmento. Recompensa: permiso universal para bailar fatal.']],end:true}
+]}, {t:'Virgo ordena el tiempo',steps:[
+  {say:[['LIBRA','serio','Virgo ha ordenado todas las canciones por milisegundo. Ahora nadie encuentra la música.'],['NIMBO','duda','Regresa a la casa y cambia una canción de la radio o del tocadiscos.']],wait:{ev:'radio'},hint:'Vuelve a casa y cambia la canción en la radio o tocadiscos'},
+  {say:[['LIBRA','feliz','La música vuelve a respirar. Virgo ha prometido no ordenar los aplausos.'],['NIMBO','feliz','Noveno fragmento recuperado.']],end:true}
+]}, {t:'Sagitario dispara a la luna',steps:[
+  {say:[['GEMI','misterio','Sagitario ha enviado una flecha a la luna, pero alguien recibió un mensaje de voz.'],['NIMBO','feliz','El ojo de buey de la casa abre la órbita espacial. Salta por él para encontrar la señal.']],wait:{ev:'portal:space'},hint:'Salta por la ventana redonda que muestra el espacio'},
+  {say:[['ESCORPIO','susurro','La señal venía del futuro. No preguntes cómo, la respuesta tiene demasiadas ecuaciones.'],['NIMBO','feliz','Décimo fragmento, y un misterio más.']],end:true}
+]}, {t:'Capricornio y la montaña de nieve',steps:[
+  {say:[['ARI','grito','Capricornio está en lo alto de una montaña y dice que el frío da energía gratis.'],['NIMBO','feliz','Salta por la ventana de las montañas y las nubes. El mundo sigue siendo el mismo.']],wait:{ev:'portal:mountain'},hint:'Atraviesa la ventana de montañas y nubes'},
+  {say:[['LIBRA','serio','Hace tanto frío que el robot ha empezado a contar copos por número de serie.'],['NIMBO','feliz','Undécimo fragmento. Ya solo queda uno.']],end:true}
+]}, {t:'Acuario y el año que por fin llegó',steps:[
+  {say:[['ESCORPIO','misterio','El último fragmento está donde las medusas flotan como recuerdos.'],['NIMBO','feliz','Atraviesa el segundo acuario. El del mundo de las medusas. No cierres los ojos.']],wait:{ev:'portal:jelly'},hint:'Salta por la ventana del acuario de las medusas'},
+  {say:[['ESCORPIO','susurro','No robé el segundo. Lo guardé para que nadie tuviera miedo de que terminara una época.'],['GEMI','risa','Pero llevamos veintiséis años sin cambiar de calendario. ¡Eso es reciclar!'],['ARI','feliz','Que empiece el año dos mil. ¡Pon música!'],['LIBRA','feliz','Doce piezas. El tiempo vuelve a avanzar. Y por fin todo tiene sentido. Más o menos.'],['NIMBO','feliz',()=> '¡Lo has conseguido, '+N()+'! Has completado EL SEGUNDO PERDIDO. Los doce fragmentos están juntos, pero el universo de Unfire sigue abierto. Puedes explorar, crear música y jugar con tus amigos cuando quieras.']],end:true}
+]},
   ];
+  // Resume safely even when an older or partially saved game is loaded.
+  SAVE.done=Array.isArray(SAVE.done)?[...new Set(SAVE.done.filter(i=>Number.isInteger(i)&&i>=0&&i<CH.length))]:[];
+  SAVE.ch=Number.isInteger(SAVE.ch)?Math.max(0,Math.min(CH.length,SAVE.ch)):0;
+  SAVE.step=Number.isInteger(SAVE.step)?Math.max(0,SAVE.step):0;
+  if(SAVE.ch<CH.length)SAVE.step=Math.min(SAVE.step,CH[SAVE.ch].steps.length-1);
+  else SAVE.step=0;
+  SAVE.level=[0,1,2].includes(SAVE.level)?SAVE.level:1;
+  if(!SAVE.progress||SAVE.progress.ch!==SAVE.ch||SAVE.progress.step!==SAVE.step)SAVE.progress=null;
 
   // ---------- interfaz: barras de cine, nombre, subtítulos y opciones ----------
   const d = document.createElement('div'); d.id = 'story'; d.innerHTML = `<style>
@@ -4418,19 +4464,32 @@ window.STORY_INIT = function (H) {
     const go = () => { if (fin) return; fin = true; clearInterval(tw); tx.textContent = text; try { speechSynthesis.cancel(); } catch (e) {} H.duck(0); cb(); }; $('#stSkip').onclick = go; H.focusHost(who); voice(who, text, emo, () => setTimeout(go, 500)); }
   function play(lines, then) { show(true); let i = 0; const nx = () => { if (i >= lines.length) { then && then(); return; } const [w, e, f] = lines[i++]; line(w, e, typeof f === 'function' ? f() : f, nx); }; nx(); }
   function choices(list) { $('.ch').innerHTML = ''; list.forEach(([t, f, alt]) => { const b = document.createElement('button'); b.textContent = t; if (alt) b.className = 'alt'; b.onclick = () => { try { speechSynthesis.cancel(); } catch (e) {} f(); }; $('.ch').appendChild(b); }); }
-  function save(msg) { SAVE.ts = Date.now(); store(SAVE); if (msg) H.say('💾 Partida guardada · capítulo ' + (SAVE.ch + 1)); }
+  function save(msg) { SAVE.ts = Date.now(); store(SAVE); if (msg) H.say('💾 Partida guardada · capítulo ' + Math.min(SAVE.ch + 1, CH.length)); }
   function setObj(t) { const ob = document.getElementById('stO'); ob.textContent = t ? '🎯 ' + t : ''; ob.style.display = t ? '' : 'none'; }
-  function runStep() { const C = CH[SAVE.ch]; if (!C || C.locked) { setObj(''); return; } inStory = true; const S0 = C.steps[SAVE.step]; if (!S0) return;
-    play(S0.say, () => { if (S0.end) { SAVE.done.includes(SAVE.ch) || SAVE.done.push(SAVE.ch); SAVE.ch++; SAVE.step = 0; save(true); const nxt = CH[SAVE.ch]; if (nxt && !nxt.locked) choices([['▶ SIGUIENTE CAPÍTULO', () => runStep()], ['MÁS TARDE', () => { show(false); setObj('Capítulo ' + (SAVE.ch + 1) + ' esperando · 📖 HISTORIA'); }, 1]]); else choices([['🔓 VER EL MALETÍN COMPLETO', () => { H.buy(); show(false); }], ['CERRAR', () => { show(false); setObj(''); }, 1]]); return; }
-      if (S0.wait) { waitEv = S0.wait.ev; waitN = S0.wait.n || 1; setObj(S0.hint); choices([['¡VAMOS!', () => show(false)]]); } else { SAVE.step++; save(); runStep(); } }); }
-  function ev(name) { if (!waitEv || name !== waitEv) return; waitN--; if (waitN > 0) { setObj(CH[SAVE.ch].steps[SAVE.step].hint + ' · faltan ' + waitN); return; } waitEv = null; SAVE.step++; save(); setTimeout(runStep, 700); }
+  function runStep() { const C = CH[SAVE.ch]; if (!C || C.locked) { setObj(SAVE.ch >= CH.length ? '🏆 Historia completada; puedes seguir explorando' : '📖 Abre el menú de historia'); show(false); return; } inStory = true; const S0 = C.steps[SAVE.step]; if (!S0) return;
+    play(S0.say, () => { if (S0.end) { SAVE.done.includes(SAVE.ch) || SAVE.done.push(SAVE.ch); SAVE.ch++; SAVE.step = 0; SAVE.progress=null; save(true); const nxt = CH[SAVE.ch]; if (nxt && !nxt.locked) choices([['▶ SIGUIENTE CAPÍTULO', () => runStep()], ['MÁS TARDE', () => { show(false); setObj('Capítulo ' + (SAVE.ch + 1) + ' esperando · 📖 HISTORIA'); }, 1]]); else choices([['🏆 HISTORIA COMPLETA · SEGUIR JUGANDO', () => { show(false); setObj('🏆 Los doce fragmentos reunidos · el mundo sigue abierto'); }], ['📖 REVISAR CAPÍTULOS', () => { show(false); openMenu(); }, 1]]); return; }
+      if(S0.wait){
+      waitEv=S0.wait.ev;
+      waitN=SAVE.progress&&SAVE.progress.ch===SAVE.ch&&SAVE.progress.step===SAVE.step?
+        Math.max(1,Math.min(S0.wait.n||1,SAVE.progress.remaining)):(S0.wait.n||1);
+      SAVE.progress={ch:SAVE.ch,step:SAVE.step,remaining:waitN};save();setObj(S0.hint);
+      choices([['¡VAMOS!',()=>show(false)],['🧭 NIMBO: AYÚDAME',()=>{
+        show(false);try{H.helpGoal(waitEv)}catch(e){console.warn('help',e)}
+      }]]);
+    }else{SAVE.progress=null;SAVE.step++;save();runStep();} }); }
+  function ev(name) {
+    if(!waitEv||name!==waitEv)return;waitN--;
+    if(waitN>0){SAVE.progress={ch:SAVE.ch,step:SAVE.step,remaining:waitN};save();
+      setObj(CH[SAVE.ch].steps[SAVE.step].hint+' · faltan '+waitN);return;}
+    waitEv=null;SAVE.progress=null;SAVE.step++;save();setTimeout(runStep,700);
+  }
   function intro() { if (hostShown) return; hostShown = true; H.showHost(true); hud.style.display = 'flex';
-    if (SAVE.met && SAVE.name) { H.say('👋 ¡' + N() + '! Has vuelto · capítulo ' + (SAVE.ch + 1) + ' guardado · 📖 HISTORIA para seguir'); setObj('Cuando quieras: 📖 HISTORIA'); return; }
+    if (SAVE.met && SAVE.name) { H.say('👋 ¡' + N() + '! Has vuelto · capítulo ' + Math.min(SAVE.ch + 1, CH.length) + ' guardado · 📖 HISTORIA para seguir'); setObj('Cuando quieras: 📖 HISTORIA'); return; }
     play([['NIMBO', 'feliz', 'Ey. Psst. Aquí abajo, al lado del maletín. Soy Nimbo.'], ['NIMBO', 'duda', '¿Cómo te llamas? Así te podré llamar por tu nombre y no «oye tú», que queda feo.']], () => { $('.ch').innerHTML = '<input id="stN" maxlength="18" placeholder="Tu nombre"><button id="stOk">LISTO</button>'; const ok = () => { SAVE.name = ($('#stN').value || '').trim().slice(0, 18) || 'Viajero'; SAVE.met = true; save(); askLevel(); }; $('#stOk').onclick = ok; $('#stN').onkeydown = (e) => { e.stopPropagation(); if (e.key === 'Enter') ok(); }; setTimeout(() => $('#stN').focus(), 50); }); }
   function askLevel() { play([['NIMBO', 'feliz', () => 'Encantado, ' + N() + '. ¿Cuánto sabes de música y sintes? Así te explico a tu ritmo.']], () => choices([['NADA, SOY NUEVO', () => { SAVE.level = 0; offer(); }], ['ALGO SÉ', () => { SAVE.level = 1; offer(); }], ['SOY EXPERTO', () => { SAVE.level = 2; offer(); }]])); }
   function offer() { save(); play([['NIMBO', 'misterio', () => 'Perfecto. Aquí dentro pasa algo raro y necesito ayuda. ¿Empezamos la historia? Puedes dejarla cuando quieras y volver: yo te guardo la partida.']], () => choices([['▶ EMPEZAR LA HISTORIA', () => runStep()], ['PRIMERO QUIERO CURIOSEAR', () => { show(false); setObj('Cuando quieras: 📖 HISTORIA'); }, 1]])); }
   function openMenu() { menu.style.display = 'block'; menu.innerHTML = '<h2>📖 EL SEGUNDO PERDIDO</h2><p>Partida de <b>' + (SAVE.name || '—') + '</b> · nivel ' + ['novato', 'medio', 'experto'][SAVE.level] + '</p>' + CH.map((c, i) => '<div class="c' + (i >= FREE ? ' lk' : '') + '"><span>' + (i + 1) + '. ' + c.t + (SAVE.done.includes(i) ? ' ✔' : '') + '</span>' + (i >= FREE ? '<span>🔒 maletín completo</span>' : '<button data-c="' + i + '">' + (i === SAVE.ch ? 'CONTINUAR' : 'JUGAR') + '</button>') + '</div>').join('') + '<div style="margin-top:12px;display:flex;gap:8px"><button id="mSv">💾 GUARDAR</button><button id="mMu">' + (mute ? '🔊 VOCES ON' : '🔇 SIN VOZ') + '</button><button id="mRs" class="alt">BORRAR PARTIDA</button><button id="mX" class="alt">CERRAR</button></div>';
-    menu.querySelectorAll('button[data-c]').forEach((b) => (b.onclick = () => { const c = +b.dataset.c; if (c !== SAVE.ch) { SAVE.ch = c; SAVE.step = 0; } menu.style.display = 'none'; runStep(); })); menu.querySelector('#mSv').onclick = () => save(true); menu.querySelector('#mMu').onclick = () => { mute = !mute; openMenu(); }; menu.querySelector('#mRs').onclick = () => { SAVE = { name: '', level: 1, ch: 0, step: 0, done: [], met: false, ts: 0 }; store(SAVE); menu.style.display = 'none'; hostShown = false; intro(); }; menu.querySelector('#mX').onclick = () => (menu.style.display = 'none'); }
+    menu.querySelectorAll('button[data-c]').forEach((b) => (b.onclick = () => { const c = +b.dataset.c; if (c !== SAVE.ch) { SAVE.ch = c; SAVE.step = 0; SAVE.progress=null;waitEv=null;save(); } menu.style.display = 'none'; runStep(); })); menu.querySelector('#mSv').onclick = () => save(true); menu.querySelector('#mMu').onclick = () => { mute = !mute; openMenu(); }; menu.querySelector('#mRs').onclick = () => { SAVE = { name: '', level: 1, ch: 0, step: 0, done: [], met: false, ts: 0, progress:null }; store(SAVE); menu.style.display = 'none'; hostShown = false; intro(); }; menu.querySelector('#mX').onclick = () => (menu.style.display = 'none'); }
   hud.querySelector('#stM').onclick = openMenu; hud.querySelector('#stR').onclick = () => { const on = H.robotMode(); hud.querySelector('#stR').textContent = on ? '🧍 TAMAÑO NORMAL' : '🤖 MODO ROBOT'; }; hud.querySelector('#stP').onclick = () => H.toggleMap(); hud.querySelector('#stS').onclick = () => save(true); setObj('');
   // ---------- charla: los robots hablan solos de vez en cuando (sin repetir) ----------
   const CHAT = [['ARI', 'risa', '¿Alguien ha visto mis gafas de sol? Ah, vale, las llevo puestas.'], ['LIBRA', 'serio', 'Si todos bailamos hacia la izquierda, el maletín se inclina tres grados. Lo he calculado.'], ['GEMI', 'feliz', 'Yo creo que deberíamos…'], ['GEMI', 'risa', '…comer pilas. Sí. Eso iba a decir.'], ['ESCORPIO', 'misterio', 'Esa lámpara de lava me mira raro. Lleva mirándome desde mil novecientos noventa y nueve.'], ['NIMBO', 'duda', () => 'Dato inútil para ' + N() + ': aquí dentro el año dos mil todavía no ha llegado. Así que técnicamente sigues teniendo la misma edad.'], ['ARI', 'grito', '¡Quién ha tocado mi cable de auriculares! ¡Estaba perfectamente enredado!'], ['LIBRA', 'triste', 'A veces sueño que me ordenan por colores. Es mi sueño favorito.'], ['ESCORPIO', 'susurro', () => N() + '… ¿tú también oyes el zumbido de la ventana de los aparatos? No es una pregunta. Es una advertencia.'], ['NIMBO', 'feliz', 'Recuerda: si te pierdes, abre el mapa. Yo me perdí una vez dentro de un bolsillo.'], ['GEMI', 'duda', '¿Y si el segundo perdido está dentro de otro segundo?'], ['ARI', 'feliz', 'Mi canción favorita es la que suena. Siempre. Es un truco para ser feliz.'], ['LIBRA', 'feliz', () => 'Me cae bien ' + N() + '. Camina con una simetría excelente.'], ['ESCORPIO', 'misterio', 'Las ballenas de fuera no cantan. Escuchan. Que es peor.'], ['NIMBO', 'risa', 'Si ves un cerdo volando, no es una metáfora. Se llama Gustavo y paga alquiler.']];
@@ -4445,9 +4504,9 @@ window.STORY_INIT = function (H) {
   let chatT = 25, lastChat = -1;
   function chatter(dt, ok) { if (!SAVE.met || active || mute) return; chatT -= dt; if (chatT > 0 || !ok) return; chatT = 30 + Math.random() * 40; let w, e, tx; const usedC = (() => { try { return JSON.parse(localStorage.getItem('unfire_chat') || '[]'); } catch (er) { return []; } })(); const freeC = CHAT.map((_, j) => j).filter((j) => !usedC.includes(j)); if (freeC.length && Math.random() < 0.5) { const i = freeC[Math.floor(Math.random() * freeC.length)]; usedC.push(i); try { localStorage.setItem('unfire_chat', JSON.stringify(usedC)); } catch (er) {} const C0 = CHAT[i]; w = C0[0]; e = C0[1]; tx = typeof C0[2] === 'function' ? C0[2]() : C0[2]; } else { const ks = Object.keys(CAST); w = ks[Math.floor(Math.random() * ks.length)]; e = ['feliz', 'misterio', 'risa', 'duda', 'susurro', 'serio'][Math.floor(Math.random() * 6)]; tx = genLine(w); } H.say('💬 ' + w + ': ' + tx); H.focusHost(w, true); voice(w, tx, e, () => {}); }
   const curObj = () => { const C = CH[SAVE.ch]; const S0 = C && !C.locked && C.steps[SAVE.step]; return waitEv && S0 && S0.at ? { x: S0.at[0], z: S0.at[1], mini: !!S0.mini, t: S0.hint } : null; };
-  return { ev, intro, chatter, get obj() { return curObj(); }, get active() { return active; }, tick(st) { if (!hostShown && st.open && st.far) intro(); hud.style.display = hostShown && st.open ? 'flex' : 'none'; }, get save() { return SAVE; } };
+  return { ev, intro, chatter, get chapters(){return CH.map(c=>({title:c.t,steps:c.steps?.length||0,locked:!!c.locked,hasEnding:!!c.steps?.some(x=>x.end)}))}, get obj() { return curObj(); }, get active() { return active; }, tick(st) { if (!hostShown && st.open && st.far) intro(); hud.style.display = hostShown && (st.open || st.roaming) ? 'flex' : 'none'; }, get save() { return SAVE; }, get objective(){return waitEv}, resume(){runStep();} };
 };
 
 </script>
-<script src="game-engine-v50.js"></script>
+<script src="game-engine-v51.js"></script>
 </body></html>

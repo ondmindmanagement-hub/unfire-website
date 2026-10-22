@@ -1,12 +1,12 @@
-name: Maletin case regression
+name: Maletin portals and case regression
 on:
   pull_request:
     paths:
       - 'audio/index.html'
       - 'audio/maletin/index.html'
-      - 'audio/maletin/game-engine-v50.js'
-      - 'tests/maletin-v50.test.cjs'
-      - 'tests/maletin-v50-browser.cjs'
+      - 'audio/maletin/game-engine-v51.js'
+      - 'tests/maletin-v51.test.cjs'
+      - 'tests/maletin-v51-browser.cjs'
       - '.github/workflows/maletin-regression.yml'
   workflow_dispatch:
 permissions:
@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check syntax, click routing, missions, audio and multiplayer preservation
-        run: node tests/maletin-v50.test.cjs
+        run: node tests/maletin-v51.test.cjs
       - name: Install browser test runtime
         run: |
           npm install --no-save playwright@1.56.1
@@ -27,4 +27,4 @@ jobs:
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/unfire-http.log 2>&1 &
           sleep 2
-          node tests/maletin-v50-browser.cjs
+          node tests/maletin-v51-browser.cjs
