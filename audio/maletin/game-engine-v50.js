@@ -1473,6 +1473,20 @@
       apply(dt) { if (!on || !shot) return; T += dt; const lv = window.__LVL || 0; beatT -= dt; if (lv - lastLv > 0.18 && T > dur * 0.6 && beatT <= 0) { beatT = 1; next(); } lastLv = lv * 0.9 + lastLv * 0.1; if (T >= dur) next(); const u = Math.min(1, T / dur), e = u * u * (3 - 2 * u); const s = shot(e); cam.position.copy(s.p); cam.lookAt(s.l); cam.near = 0.1; cam.fov += (54 - cam.fov) * 0.1; cam.updateProjectionMatrix(); fl.style.opacity = flash > 0 ? String(flash * 1.6) : '0'; flash = Math.max(0, flash - dt * 2); window.__roam = true; } };
     window.__VIEW = api; return api; })();
   let STORY = null; try { STORY = window.STORY_INIT({ say, duck: (v) => { A.duck = v; }, buy: () => parentPost({ buy: 'todo' }), showHost: (v) => HOST.show(v), cinema: () => {},
+    getExplore: () => ({ x:ROAMS.p.x,z:ROAMS.p.z,h:ROAMS.h||0,walking:!!ROAMS.on,outside:!!window.ATM_OUT }),
+    navigateTo: (quest) => {
+      // Optional help, never destroys quest progress or rewrites player save.
+      if(!ROAMS.on)enterRoam();
+      if(!window.ATM_OUT)ATM.setOut(true);
+      ROAMS.mini=false;ROAMS.cp=null;
+      if(quest.ev==='outside'){ROAMS.p.set(-30,4.5,110);ROAMS.h=4;}
+      else{
+        ROAMS.p.set(quest.x+Math.min(35,(quest.r||125)*0.4),4.5,quest.z);
+        ROAMS.h=Math.max(5,(quest.h||0)+8);
+      }
+      ROAMS.fly=ROAMS.h>18;ROAMS.vy=0;
+      say('🧭 Nimbo: ¡Listo! Ya estás cerca del objetivo. Mira la estrella del mapa.');
+    },
     robotMode: () => { ROAMS.mini = !ROAMS.mini; if (ROAMS.mini) { if (!ROAMS.on) enterRoam(); ROAMS.p.set(4.5, 0.3, 4.4); ROAMS.yaw = -0.6; ROAMS.pitch = -0.05; say('🤖 Modo robot: caminas a su altura por la mesa (WASD / flechas)'); } else { ROAMS.p.set(0, 4.5, 22); ROAMS.yaw = 0; } return ROAMS.mini; }, toggleMap: () => MAP.toggle(),
     focusHost: (who, soft) => { HOST.talk(); if (soft) { if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } return; } let p = HOST.pos; if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; p = it.W.getWorldPosition(V(0, 0, 0)); try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } if (ROAMS.on) { const d = V(cam.position.x - p.x, 0, cam.position.z - p.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const q = V(p.x + d.x * 10, p.y + 5.5, p.z + d.z * 10); const lx = p.x - q.x, lz = p.z - q.z; ROAMS.tgt = { p: q, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(p.y + 1.5 - q.y, Math.hypot(lx, lz)) }; } else { view.gx = clamp(p.x * 0.7, -CW / 2 - 1, CW / 2 + 1); view.gz = clamp(p.z * 0.7, -CD / 2 - 1, CD / 2 + 2); view.gd = view.D0 * 0.85; } } }); } catch (e) { console.warn('story', e); }
   roamB.addEventListener('pointerdown', (e) => e.stopPropagation());
