@@ -782,8 +782,12 @@
   carryButton.style.cssText='position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:53;display:none;align-items:center;gap:9px;padding:11px 14px;border:1px solid #81b9ff;border-radius:999px;background:linear-gradient(130deg,#172d50,#030815);box-shadow:0 8px 25px #0009;color:#fff;font:700 12px Arial,sans-serif;touch-action:manipulation;cursor:pointer';
   document.body.appendChild(carryButton);
   function updateCarryUI(){
-    const show=carryingCase && ROAMS.on;
-    if(show!==carryUIShown){ carryUIShown=show;carryButton.style.display=show?'flex':'none'; }
+    const show=ROAMS.on;
+    const far=ROAMS.on && Math.hypot(caseG.position.x-ROAMS.p.x,caseG.position.z-ROAMS.p.z)>12;
+    const label=carryingCase?'ABRIR MALETÍN':far?'RECUPERAR MALETÍN':pTarget>0.5?'GUARDAR MALETÍN':'ABRIR MALETÍN';
+    const labelNode=carryButton.querySelector('span');
+    if(labelNode && labelNode.textContent!==label)labelNode.textContent=label;
+    if(show!==carryUIShown){carryUIShown=show;carryButton.style.display=show?'flex':'none';}
   }
   function closeCaseInGame(){
     lidControlledByPlayer=true;
@@ -803,7 +807,7 @@
       carryingCase=false;
       caseG.scale.setScalar(1);
       if(ROAMS.on){
-        caseG.position.set(ROAMS.p.x+Math.sin(ROAMS.yaw)*3.5,originalCasePosition.y,
+        caseG.position.set(ROAMS.p.x+Math.sin(ROAMS.yaw)*3.5,ROAMS.p.y-4.5,
                            ROAMS.p.z-Math.cos(ROAMS.yaw)*3.5);
         caseG.rotation.y=ROAMS.yaw;
       } else {caseG.position.copy(originalCasePosition);caseG.rotation.y=0;}
@@ -819,7 +823,14 @@
     if(pTarget>0.5)closeCaseInGame();else openCaseInGame();
   }
   carryButton.addEventListener('pointerdown',e=>e.stopPropagation());
-  carryButton.addEventListener('click',e=>{e.stopPropagation();openCaseInGame();}); const laser = mesh(new THREE.BoxGeometry(0.03, 0.012, CD - 0.2), Y2K.led('#3d8bff', 3)); caseG.add(laser);
+  carryButton.addEventListener('click',e=>{
+    e.preventDefault();e.stopPropagation();
+    if(!ROAMS.on)return;
+    if(carryingCase){openCaseInGame();return;}
+    const far=Math.hypot(caseG.position.x-ROAMS.p.x,caseG.position.z-ROAMS.p.z)>12;
+    if(far){carryingCase=true;caseG.scale.setScalar(0.32);openCaseInGame();}
+    else toggleCaseInGame();
+  }); const laser = mesh(new THREE.BoxGeometry(0.03, 0.012, CD - 0.2), Y2K.led('#3d8bff', 3)); caseG.add(laser);
   function setLid(p) { const lt = ease.smooth(clamp((p - 0.08) / 0.2)), op = ease.smooth(clamp((p - 0.25) / 0.7)); latches.forEach((l) => { l.rotation.x = -1.5 * lt; }); lidPivot.rotation.x = -1.92 * op; lidOpen = op; }
   plate.material.emissive = new THREE.Color(0x3d8bff); plate.material.emissiveMap = plate.material.map;
 
@@ -995,7 +1006,7 @@
     cam.position.copy(REC.p); const c2 = Math.cos(REC.cpch); cam.lookAt(REC.p.x + Math.sin(REC.cy) * c2, REC.p.y + Math.sin(REC.cpch), REC.p.z - Math.cos(REC.cy) * c2); cam.near = 0.08; };
   function enterRoam() { if (ROAMS.on) return; ROAMS.on = true;  ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
   function exitRoam() { if (REC.on) REC.set(false); if (!ROAMS.on) return;
-    if(carryingCase){carryingCase=false;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();}
+    carryingCase=false;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
  ROAMS.on = false; ROAMS.cp = null; ROAMS.mini = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
   roamB.onclick = (e) => { e.stopPropagation(); ROAMS.on ? exitRoam() : enterRoam(); };
   window.__roamAPI = { ROAMS, enterRoam, exitRoam, roamMove }; window.__OUT_OPEN = true;
@@ -1281,8 +1292,8 @@
   // ===== cápsula «hoi-poi»: tiras una cápsula, hace ¡POF! y aparece tu maletín (cada jugador tiene el suyo, también en el online) =====
   const CAPS = (() => { let c = null, t0 = 0, from = null, dir = null; const throwIt = () => { if (c || !ROAMS.on) return; const g = new THREE.Group(); const top = new THREE.Mesh(new THREE.SphereGeometry(1.2, 20, 12, 0, TAU, 0, H2), new THREE.MeshPhysicalMaterial({ color: ROAMS.myCol || 0xff2fb0, roughness: 0.2, clearcoat: 1 })); const bot = new THREE.Mesh(new THREE.SphereGeometry(1.2, 20, 12, 0, TAU, H2, H2), new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.2, clearcoat: 1 })); g.add(top, bot); S.scene.add(g); c = g; t0 = 0; const cyy = ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy; dir = V(Math.sin(cyy), 0, -Math.cos(cyy)); from = V(ROAMS.p.x, -8.9 + (ROAMS.h || 0) + 7, ROAMS.p.z); say('🎒 ¡Cápsula lanzada!'); hap(0.4); };
     addEventListener('keydown', (e) => { if (e.target && e.target.tagName === 'INPUT') return; if ((e.key === 'g' || e.key === 'G') && ROAMS.on && !e.repeat) throwIt(); });
-    setTimeout(function addB() { const h = document.getElementById('storyHud'); if (!h) { setTimeout(addB, 1000); return; } const b = document.createElement('button'); b.textContent = '🎒 SACAR MALETÍN (G)'; b.onclick = () => throwIt(); h.insertBefore(b, h.firstChild); }, 1600);
-    return { throwIt, tick(dt) { if (!c) return; t0 += dt; const u = Math.min(1, t0 / 0.9); c.position.set(from.x + dir.x * 16 * u, from.y + Math.sin(u * Math.PI) * 6 - u * 7, from.z + dir.z * 16 * u); c.rotation.x += dt * 9; if (u >= 1) { const p = c.position.clone(); S.scene.remove(c); c = null; try { if (window.__SPRAY && window.ATM_OUT) window.__SPRAY(p.x, p.y, p.z, 160, 12, 16); } catch (e) {} const fl = document.createElement('div'); fl.style.cssText = 'position:fixed;inset:0;z-index:95;pointer-events:none;background:radial-gradient(circle,#fff 0%,rgba(255,255,255,.6) 40%,rgba(255,255,255,0) 75%);opacity:1;transition:opacity .9s'; document.body.appendChild(fl); setTimeout(() => { fl.style.opacity = '0'; setTimeout(() => fl.remove(), 1000); }, 60); say('💥 ¡POF! Aquí tienes tu maletín'); hap(1); setTimeout(() => { try { exitRoam(); } catch (e) {} }, 250); } } }; })();
+    setTimeout(function addB() { const h = document.getElementById('storyHud'); if (!h) { setTimeout(addB, 1000); return; } const b = document.createElement('button'); b.textContent = '🎒 SACAR MALETÍN (G)'; b.onclick = () => { if(carryingCase){openCaseInGame();}else if(Math.hypot(caseG.position.x-ROAMS.p.x,caseG.position.z-ROAMS.p.z)>12){carryingCase=true;caseG.scale.setScalar(0.32);openCaseInGame();}else throwIt(); }; h.insertBefore(b, h.firstChild); }, 1600);
+    return { throwIt, tick(dt) { if (!c) return; t0 += dt; const u = Math.min(1, t0 / 0.9); c.position.set(from.x + dir.x * 16 * u, from.y + Math.sin(u * Math.PI) * 6 - u * 7, from.z + dir.z * 16 * u); c.rotation.x += dt * 9; if (u >= 1) { const p = c.position.clone(); S.scene.remove(c); c = null; try { if (window.__SPRAY && window.ATM_OUT) window.__SPRAY(p.x, p.y, p.z, 160, 12, 16); } catch (e) {} const fl = document.createElement('div'); fl.style.cssText = 'position:fixed;inset:0;z-index:95;pointer-events:none;background:radial-gradient(circle,#fff 0%,rgba(255,255,255,.6) 40%,rgba(255,255,255,0) 75%);opacity:1;transition:opacity .9s'; document.body.appendChild(fl); setTimeout(() => { fl.style.opacity = '0'; setTimeout(() => fl.remove(), 1000); }, 60); say('💥 ¡POF! Aquí tienes tu maletín'); hap(1); setTimeout(() => { try { carryingCase=true;caseG.scale.setScalar(0.32);openCaseInGame(); } catch (e) {} }, 250); } } }; })();
   // ===== SECRETOS: la pirámide se puede visitar por dentro y cada islita guarda un artilugio escondido (recompensa al encontrarlo) =====
   const SECRETS = (() => { const L = [['pyr', 600, -10, 'la cámara secreta de la pirámide', 0], ['isl1', -420, 120, 'la isla verde', 0], ['isl2', 300, 420, 'la isla blanca', 0], ['isl3', -360, -380, 'la isla violeta', 0], ['obel', 80, -470, 'el oasis del obelisco', 0], ['haiku', -730, -610, 'el camino de los torii de la isla Haiku', 0]]; let built = false; const items = [];
     const build = () => { built = true; const mk = window.__MKDEV; L.forEach(([id, x, z, name], k) => { try { const g = new THREE.Group(); const base = new THREE.Mesh(new THREE.CylinderGeometry(4.5, 5, 0.8, 32), new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0.8, roughness: 0.15, clearcoat: 1 })); g.add(base); const ring = new THREE.Mesh(new THREE.TorusGeometry(5.4, 0.25, 8, 48), new THREE.MeshBasicMaterial({ color: 0x5fe0ff, toneMapped: false })); ring.rotation.x = H2; ring.position.y = 0.6; g.add(ring); let dv = null; if (mk) { dv = mk(k * 5 + 3); dv.root.scale.setScalar(5); dv.root.position.y = 1.2; g.add(dv.root); } const isl = id.startsWith('isl'); g.position.set(x, id === 'pyr' ? FYO + 0.4 : isl ? -9.605 + ({ isl1: 10.5, isl2: 9, isl3: 12 })[id] + 0.4 : -9.005 + 0.4, z); S.scene.add(g); items.push({ id, g, dv, ring, name, found: (() => { try { return localStorage.getItem('unfire_sec_' + id) === '1'; } catch (e) { return false; } })() }); } catch (e) {} }); };
