@@ -44,13 +44,13 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
         await game.evaluate(()=>window.__mal.toggleCase());
         const carried=await game.evaluate(()=>({carry:window.__UNFIRE_CASE_QA.carrying,mission:window.__SIDEM.cur?.t}));
         assert(carried.carry,'Case could not be carried after teleport');
-        await game.locator('#unfireCarryCase').evaluate(b=>b.click());
+        await game.evaluate(()=>{const b=document.getElementById('unfireCarryCase');if(!b)throw Error('carry button absent');b.click()});
         const opened=await game.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,
           carry:window.__UNFIRE_CASE_QA.carrying,
           caseY:window.__UNFIRE_CASE_QA.casePos[1],alt:window.__UNFIRE_CASE_QA.altitude}));
         assert(!opened.closed&&!opened.carry&&Math.abs(opened.caseY-opened.alt)<15,'Case did not open at destination');
       }
-      await game.locator('#unfireWindowHome').evaluate(b=>b.click());
+      await game.evaluate(()=>{const b=document.getElementById('unfireWindowHome');if(!b)throw Error('return button absent');b.click()});
       const home=await game.evaluate(()=>({area:window.__UNFIRE_CASE_QA.location,mission:window.__SIDEM.cur?.t,coords:window.__UNFIRE_CASE_QA.worldCoords}));
       assert(home.area==='house'&&home.mission===initial.mission,'Return broke storyline');
       results.push(result.id);
