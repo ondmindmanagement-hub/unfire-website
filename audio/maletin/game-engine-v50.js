@@ -2094,7 +2094,7 @@
     }
     requestAnimationFrame(frame);
     // Cap this heavy 3D scene to ~30-40fps; input events continue unthrottled.
-    if (previousRenderAt && now - previousRenderAt < (window.__LOWFPS||LOWDEV ? 40 : window.ATM_OUT ? 33 : 28)) return;
+    if (previousRenderAt && now - previousRenderAt < (LOWDEV ? (DEVICE.tier==='compact' ? 42 : 33) : window.ATM_OUT ? 33 : 28)) return;
     const actualFrameTime = previousRenderAt ? Math.min(0.18, Math.max(0.008, (now - previousRenderAt) / 1000)) : 1 / 30;
     previousRenderAt = now;
     const dt = Math.min(0.05, clock.getDelta()) * (window.__dts || 1); t += dt;
@@ -2211,9 +2211,23 @@
           for (const B of (q.out ? window.__OBSTO : window.__OBST) || []) { const x0 = B.x0 + 1.1 - q.r, x1 = B.x1 - 1.1 + q.r, z0 = B.z0 + 1.1 - q.r, z1 = B.z1 - 1.1 + q.r; if (P.x > x0 && P.x < x1 && P.z > z0 && P.z < z1 && P.y - q.r < B.y1) { const dl = P.x - x0, dr = x1 - P.x, db = P.z - z0, df = z1 - P.z, mn = Math.min(dl, dr, db, df); if (mn === dl) { P.x = x0; q.v.x = -Math.abs(q.v.x) * 0.6; } else if (mn === dr) { P.x = x1; q.v.x = Math.abs(q.v.x) * 0.6; } else if (mn === db) { P.z = z0; q.v.z = -Math.abs(q.v.z) * 0.6; } else { P.z = z1; q.v.z = Math.abs(q.v.z) * 0.6; } } }
           const sp = Math.hypot(q.v.x, q.v.z); if (sp > 0.01) { const ax = V(q.v.z, 0, -q.v.x).normalize(); q.b.rotateOnWorldAxis(ax, sp * dt / q.r); } }
         for (let i = 0; i < BL.length; i++) for (let j = i + 1; j < BL.length; j++) { const a = BL[i], b = BL[j]; if (a.out !== b.out) continue; const d = a.b.position.distanceTo(b.b.position), R0 = a.r + b.r; if (d < R0 && d > 0.001) { const n = b.b.position.clone().sub(a.b.position).divideScalar(d), o = (R0 - d) / 2; a.b.position.addScaledVector(n, -o); b.b.position.addScaledVector(n, o); const rv = b.v.clone().sub(a.v).dot(n); if (rv < 0) { a.v.addScaledVector(n, rv * 0.9); b.v.addScaledVector(n, -rv * 0.9); } } } } catch (e) {} }
-    // fluidez garantizada: si el ordenador va justo, bajamos resolución sola (y la subimos si sobra)
-    { const Q = window.__perf || (window.__perf = { a: 1 / 60, t: 0, dpr: S.renderer.getPixelRatio(), max: S.renderer.getPixelRatio() }); Q.a = Q.a * 0.88 + actualFrameTime * 0.12; Q.t += dt; Q.f = (Q.f || 0) + 1; window.__LOWFPS = Q.a > 1 / 24; if (S.renderer.shadowMap.enabled) S.renderer.shadowMap.needsUpdate = Q.f % (window.ATM_OUT ? 7 : 4) === 0; if (Q.t > 3) { Q.t = 0; let nd = Q.dpr; if (Q.a > 1 / 25) nd = Math.max(0.70, Q.dpr - 0.12);
-        else if (Q.a < 1 / 32) nd = Math.min(window.ATM_OUT ? 1 : Q.max, Q.dpr + 0.08); if (window.ATM_OUT) nd = Math.min(nd, 1); if (Math.abs(nd - Q.dpr) > 0.01) { Q.dpr = nd; S.renderer.setPixelRatio(nd); const c0 = S.renderer.domElement; S.renderer.setSize(c0.clientWidth, c0.clientHeight, false); } S.renderer.shadowMap.autoUpdate = false; } }
+    // Adaptive resolution compares actual frame time with the device's intended frame
+    // interval. The old 25/32-fps thresholds treated a healthy 25-fps mobile cap as
+    // overload; preserve sharpness and avoid repeated GPU allocations on phones.
+    { const Q = window.__perf || (window.__perf = { a: LOWDEV ? 1/25 : 1/33, t: 0, dpr: S.renderer.getPixelRatio(), max: Math.min(S.renderer.getPixelRatio(),DEVICE.maxDpr) });
+      Q.a=Q.a*0.88+actualFrameTime*0.12;Q.t+=dt;Q.f=(Q.f||0)+1;
+      const target=LOWDEV?(DEVICE.tier==='compact'?1/24:1/30):(window.ATM_OUT?1/30:1/35);
+      window.__LOWFPS=Q.a>target*1.5;
+      if(S.renderer.shadowMap.enabled)S.renderer.shadowMap.needsUpdate=Q.f%(window.ATM_OUT?7:4)===0;
+      if(Q.t>3){Q.t=0;let next=Q.dpr;
+        if(Q.a>target*1.32)next=Math.max(LOWDEV?0.60:0.70,Q.dpr-0.10);
+        else if(Q.a<target*1.08)next=Math.min(window.ATM_OUT?1:Q.max,Q.dpr+0.06);
+        next=Math.min(next,Q.max,DEVICE.maxDpr);
+        if(Math.abs(next-Q.dpr)>0.015){Q.dpr=next;S.renderer.setPixelRatio(next);
+          S.renderer.setSize(renderWidth||innerWidth,renderHeight||innerHeight,false);}
+        S.renderer.shadowMap.autoUpdate=false;
+      }
+    }
     window.__idleT = ROAMS.moving || ROAMS.fly ? 0 : (window.__idleT || 0) + dt;
     if (window.__DOME) { const DM2 = window.__DOME; const near = ROAMS.on && window.ATM_OUT && (ROAMS.h || 0) > 20 && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 90; DM2.open += ((near ? 1 : 0) - DM2.open) * Math.min(1, dt * 2); DM2.PET.forEach((p, i) => { p.rotation.z = -DM2.open * (1.75 + Math.sin(i) * 0.05); }); if (DM2.open > 0.6 && window.ATM_OUT && ROAMS.on && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 36 && -9 + (ROAMS.h || 0) < DM2.c.y - 1) { try { ATM.setOut(false); ROAMS.h = Math.min(ROAMS.h, 13); ROAMS.flyH = 12; say('🏠 Has entrado por la cúpula'); } catch (e) {} } }
     // sonido de mar y viento fuera (más fuerte en la orilla y en el agua, viento al volar alto)
