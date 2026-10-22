@@ -6,7 +6,7 @@ const assert=require('node:assert/strict');
   browser=await chromium.launch({headless:true,executablePath:process.env.UNFIRE_CHROME||undefined,args:['--enable-unsafe-swiftshader','--disable-dev-shm-usage','--no-sandbox','--autoplay-policy=no-user-gesture-required']});
   const page=await browser.newPage({viewport:{width:1080,height:760},deviceScaleFactor:1});
   const errors=[];page.on('pageerror',err=>errors.push(err.message.slice(0,180)));
-  await page.goto('http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded',timeout:30000});
+  await page.goto(process.env.UNFIRE_TEST_URL||'http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded',timeout:30000});
   await page.locator('#openBtn').evaluate(e=>e.click());
   const frame=page.frameLocator('#malFrame');
   await frame.locator('#directOpen').count();
