@@ -32,7 +32,7 @@ const assert=require('node:assert/strict');
   console.log('CASE_STATE_DIAGNOSTIC',JSON.stringify({initial,closed}));
   assert(closed.closed&&closed.carrying&&closed.mission===initial.mission,'Closing case loses game or quest');
   const host=await page.evaluate(()=>({url:location.pathname,frameSrc:document.getElementById('malFrame').getAttribute('src'),immersive:document.body.classList.contains('immOn')}));
-  assert(host.immersive&&host.frameSrc.includes('v=20261023a'),'Game returned to website after closing case');
+  assert(host.immersive&&host.frameSrc.includes('v=20261023b'),'Game returned to website after closing case');
   const control=await f.evaluate(()=>{const b=document.getElementById('unfireCarryCase');if(!b)return {exists:false};const q=b.getBoundingClientRect();return {exists:true,display:getComputedStyle(b).display,visibility:getComputedStyle(b).visibility,rect:[q.x,q.y,q.width,q.height],hidden:b.hidden,roam:window.__UNFIRE_CASE_QA.roam,carry:window.__UNFIRE_CASE_QA.carrying};});
   console.log('CARRY_BUTTON_DIAGNOSTIC',JSON.stringify(control));
   assert.equal(await f.evaluate(()=>window.__UNFIRE_CASE_QA.caseVisible),false,'Case must not obstruct player camera when packed');
@@ -48,6 +48,14 @@ const assert=require('node:assert/strict');
   await f.evaluate(()=>{window.__mal.showCaseView();});
   const inspecting=await f.evaluate(()=>window.__UNFIRE_CASE_QA.inspecting);
   assert(inspecting,'Case close-up camera did not enable');
+  const inspectorKeys=await f.evaluate(()=>{
+    window.__roamAPI.ROAMS.k.w=0;
+    dispatchEvent(new KeyboardEvent('keydown',{key:'w',bubbles:true,cancelable:true}));
+    const walkKeyCaptured=!!window.__roamAPI.ROAMS.k.w;
+    dispatchEvent(new KeyboardEvent('keydown',{key:'g',bubbles:true,cancelable:true}));
+    return {walkKeyCaptured,packed:window.__UNFIRE_CASE_QA.carrying};
+  });
+  assert(!inspectorKeys.walkKeyCaptured&&!inspectorKeys.packed,'Case inspection should prioritize playing W/G keys over walking or capsule controls: '+JSON.stringify(inspectorKeys));
   await f.evaluate(()=>window.__mal.showRobotView());
   assert(!(await f.evaluate(()=>window.__UNFIRE_CASE_QA.inspecting)),'Robot view did not restore');
   // Pack again; player stays walking with no case mesh in front of the camera.
@@ -89,7 +97,11 @@ const assert=require('node:assert/strict');
   });
   assert.equal(missions.filter(Boolean).length,11,'Some side mission completion rules failed');
   // Workshop must display actual cached 3D robot portraits and leave room for player.
-  await f.evaluate(()=>{const b=[...document.querySelectorAll('button')].find(x=>x.textContent.trim()==='🔧 TALLER');if(!b)throw Error('Workshop action missing');b.click()});
+  // Localized UI may label this control TALLER or WORKSHOP: its stable ID is language-independent.
+  const workshopDiag=await f.evaluate(()=>({lang:window.__LANG||navigator.language,hud:!!document.getElementById('storyHud'),button:!!document.getElementById('unfireWorkshopHud')}));
+  console.log('WORKSHOP_UI_DIAGNOSTIC',JSON.stringify(workshopDiag));
+  await f.waitForFunction(()=>!!document.getElementById('unfireWorkshopHud'),null,{timeout:25000,polling:150});
+  await f.evaluate(()=>{const b=document.getElementById('unfireWorkshopHud');if(!b)throw Error('Workshop action missing');b.click()});
   await f.waitForFunction(()=>document.querySelectorAll("#onT .robotCard img").length>=2,{timeout:20000}).catch(()=>{});
   const studio=await f.evaluate(()=>{const panel=document.querySelector('#onl .b').getBoundingClientRect();return {cards:document.querySelectorAll('#onT .robotCard').length,locked:document.querySelectorAll('#onT .robotCard:disabled').length,portraits:document.querySelectorAll('#onT .robotCard img').length,width:panel.width,viewport:innerWidth}});
   assert(studio.cards===20&&studio.locked===0&&studio.portraits>=2&&studio.width<studio.viewport*0.5,'Workshop obstructs player or 3D portraits missing: '+JSON.stringify(studio));
