@@ -12,6 +12,13 @@ const assert=require('node:assert/strict');
   await page.waitForFunction(()=>{try{return !!document.getElementById('malFrame')?.contentWindow?.__mal?.S}catch{return false}},null,{timeout:90000,polling:250});
   const f=page.frames().find(x=>x.url().includes('/audio/maletin/index.html'));
   assert(f,'Game iframe missing');
+  // CI runs WebGL in CPU software, causing >1min stalls on animation frames.
+  // Pause only its render scheduler, preserving all actual gameplay actions and
+  // testing capsule physics through real deterministic simulation ticks below.
+  await f.evaluate(()=>{
+    if(location.hostname==='127.0.0.1')
+      Object.defineProperty(document,'hidden',{configurable:true,get:()=>true});
+  });
   await f.evaluate(()=>{window.__mal.setP(1);window.__mal.requestOpen();window.__roamAPI.enterRoam();window.__SIDEM.offer('NIMBO')});
   const initial=await f.evaluate(()=>({mission:window.__UNFIRE_CASE_QA.mission,originalButterfly:window.__UNFIRE_CASE_QA.originalButterfly,roam:window.__UNFIRE_CASE_QA.roam}));
   assert(initial.mission&&initial.originalButterfly&&initial.roam,'Mission, roam or real 3D butterfly not initialized');
