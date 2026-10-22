@@ -10,7 +10,12 @@ chk('Rapid toggles use target state',engine.includes('if(pTarget>0.5)closeCaseIn
 chk('Case closure never sends parent closeCase',!engine.includes('parentPost({ closeCase: 1 })'));
 chk('Local action does not call exitGame',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame()')).includes('exitGame'));
 chk('Carry does not disconnect online',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame()')).includes('ONLINE.leave'));
-chk('Case follows player position',engine.includes('caseG.position.lerp(carryDest,0.23)'));
+chk('Packed case invisible and saves GPU draws',engine.includes('caseG.visible=false;')&&engine.includes('inventory-only'));
+chk('Capsule is reusable without spawning objects each click',engine.includes('if(capsule)return;')&&engine.includes('capsule.visible=true;flight=0.001;'));
+chk('G keyboard handles pack and throw',engine.includes("(e.key==='g'||e.key==='G')")&&engine.includes('action();'));
+chk('Exit from roam cancels capsule and restores case',engine.includes('CAPS.cancel();carryingCase=false;caseG.visible=true'));
+chk('Capsule never exits the game',!engine.slice(engine.indexOf('const CAPS=(()=>'),engine.indexOf('  // ===== SECRETOS:')).includes('exitRoam()'));
+
 chk('Mission logic retained',engine.includes("localStorage.setItem('unfire_side'")&&engine.includes('const SIDE ='));
 chk('Multiplayer logic retained',engine.includes('const ONLINE ='));
 chk('Room audio implementation retained',engine.includes('const AMB ='));
