@@ -1,0 +1,20 @@
+name: Maletin case regression
+on:
+  pull_request:
+    paths:
+      - 'audio/index.html'
+      - 'audio/maletin/index.html'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/maletin-v50.test.cjs'
+      - '.github/workflows/maletin-regression.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check syntax, click routing, missions, audio and multiplayer preservation
+        run: node tests/maletin-v50.test.cjs
