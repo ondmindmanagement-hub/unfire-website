@@ -10,7 +10,7 @@ chk('Rapid toggles use target state',engine.includes('if(pTarget>0.5)closeCaseIn
 chk('Case closure never sends parent closeCase',!engine.includes('parentPost({ closeCase: 1 })'));
 chk('Local action does not call exitGame',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame()')).includes('exitGame'));
 chk('Carry does not disconnect online',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame()')).includes('ONLINE.leave'));
-chk('Case carries via player's position',engine.includes('caseG.position.lerp(carryDest,0.23)'));
+chk('Case follows player position',engine.includes('caseG.position.lerp(carryDest,0.23)'));
 chk('Mission logic retained',engine.includes("localStorage.setItem('unfire_side'")&&engine.includes('const SIDE ='));
 chk('Multiplayer logic retained',engine.includes('const ONLINE ='));
 chk('Room audio implementation retained',engine.includes('const AMB ='));
