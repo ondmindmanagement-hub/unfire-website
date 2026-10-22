@@ -817,6 +817,7 @@
   function toggleCaseInGame(){
     // Target state, not the delayed animation amount: rapid presses still alternate.
     if(pTarget>0.5)closeCaseInGame();else openCaseInGame();
+    try{window.UEV('case')}catch(_){}
   }
   carryButton.addEventListener('pointerdown',e=>e.stopPropagation());
   carryButton.addEventListener('click',e=>{e.stopPropagation();openCaseInGame();}); const laser = mesh(new THREE.BoxGeometry(0.03, 0.012, CD - 0.2), Y2K.led('#3d8bff', 3)); caseG.add(laser);
@@ -985,6 +986,7 @@
     portalFadeTimer=setTimeout(()=>{portalFlash.style.opacity='0'},480);
     try{hap(0.35)}catch(_){}
     say('✨ Teletransportación: '+w.label);
+    try{window.UEV('portal');window.UEV('portal:'+w.id)}catch(_){}
     return true;
   }
   function crossWindow(px,pz,nx,nz){
@@ -1112,7 +1114,7 @@
   // ===== MISIONES SECUNDARIAS: te las ofrecen los robots de fuera =====
   const SIDE = (() => { const L = [['Vuela hasta la punta dorada de la gran pirámide de Atlantis', 600, 0, 120], ['Llega al templo más lejano de Atlantis', 900, 0, 0], ['Sube hasta la copa del árbol rosa gigante', 150, -120, 380], ['Busca el obelisco del desierto', 80, -500, 0], ['Cruza los torii de la isla Haiku hasta la pagoda', -690, -700, 0], ['Sube a la cima nevada del monte de la isla Haiku', -850, -860, 150], ['Surfea una ola grande en mar abierto', 0, 650, 0], ['Deslízate por el agua hasta el moái más grande', 470, -560, 0], ['Toca la cúpula de la casa desde el cielo', 0, 40, 40], ['Vuela entre las torres de plugins gigantes', 2200, -1800, 400], ['Atraviesa el bosque del mar', -640, 80, 0]]; let cur = null, idx = (() => { try { return +(localStorage.getItem('unfire_side') || 0); } catch (e) { return 0; } })();
     return { get cur() { return cur; }, offer(who) { if (cur) return null; const q = L[idx % L.length]; idx++; try { localStorage.setItem('unfire_side', String(idx)); } catch (e) {} cur = { t: q[0], x: q[1], z: q[2], y: q[3], who }; say('🎯 Misión de ' + who + ': ' + q[0] + ' (mira la estrella del mapa)'); return q[0]; },
-      tick() { if (!cur || !ROAMS.on) return; const d = Math.hypot(ROAMS.p.x - cur.x, ROAMS.p.z - cur.z), hy = -9 + (ROAMS.h || 0); if (d < (cur.y > 150 ? 90 : 34) && hy >= cur.y - 30) { const t0 = cur.t; cur = null; try { window.__REWARD('Misión cumplida: «' + t0 + '»'); } catch (e) { say('🏆 ¡Misión cumplida!'); } } } }; })(); setInterval(() => { try { if (!SIDE.cur && ROAMS.on && window.ATM_OUT && !ROAMS.mini) { SIDE.nT = (SIDE.nT || 0) + 1; if (SIDE.nT >= 5) { SIDE.nT = 0; SIDE.offer('NIMBO'); } } } catch (e) {} }, 5000); window.__SIDEM = SIDE;
+      tick() { if (!cur || !ROAMS.on) return; const d = Math.hypot(ROAMS.p.x - cur.x, ROAMS.p.z - cur.z), hy = -9 + (ROAMS.h || 0); if (d < (cur.y > 150 ? 90 : 34) && hy >= cur.y - 30) { const t0 = cur.t; cur = null; try { window.UEV('side'); } catch (_) {} try { window.__REWARD('Misión cumplida: «' + t0 + '»'); } catch (e) { say('🏆 ¡Misión cumplida!'); } } } }; })(); setInterval(() => { try { if (!SIDE.cur && ROAMS.on && window.ATM_OUT && !ROAMS.mini) { SIDE.nT = (SIDE.nT || 0) + 1; if (SIDE.nT >= 5) { SIDE.nT = 0; SIDE.offer('NIMBO'); } } } catch (e) {} }, 5000); window.__SIDEM = SIDE;
   // ===== FUERA: grupos de artilugios charlando entre ellos; si te acercas te hablan a ti =====
   // robots que viven en el cielo: vuelan de un plugin gigante a otro, aterrizan encima, bailan y lo hacen transformarse
   const SKYBOTS = (() => { let B = null; const build = () => { B = []; for (let k = 0; k < (LOWDEV ? 2 : 4); k++) { try { const r0 = ROBOT.build(MUTANTS.list[(k * 5 + 2) % MUTANTS.list.length]); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(12 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; w.position.set(Math.cos(k * 1.6) * 400, 300 + k * 200, Math.sin(k * 1.6) * 400); w.visible = false; S.scene.add(w); B.push({ w, r0, st: 'fly', tg: null, t: 0, v: V(0, 0, 0) }); } catch (e) {} } };
@@ -1131,6 +1133,7 @@
     return { tick(dt, t) { const out = !!window.ATM_OUT && ROAMS.on; if (!B) { if (!out || ((ROAMS.h || 0) < 650 && Math.hypot(ROAMS.p.x, ROAMS.p.z) < 1200)) return; build(); } B.forEach((b) => (b.w.visible = out)); if (!out) return; const cx = cam.position.x, cz = cam.position.z;
       B.forEach((b, i) => { b.a += b.sp * dt; const x = cx * 0.3 + Math.cos(b.a) * b.R, z = cz * 0.3 + Math.sin(b.a) * b.R; b.w.position.set(x, -10, z); b.w.rotation.y = Math.atan2(-Math.sin(b.a) * Math.sign(b.sp), Math.cos(b.a) * Math.sign(b.sp)); b.wd += Math.abs(b.sp) * b.R * dt; if ((i + Math.floor(t * 20)) % 3 === 0) b.r0.update(3.7, dt * 3, { act: 'walk', ph: STEPPH(b.wd / b.w.scale.x, 3.7, false), mood: 'happy' }); }); } }; })();
   window.__STORYNAME = () => (STORY && STORY.save && STORY.save.name) || '';
+  window.__UNFIRE_STORY_STATUS=()=>STORY?{chapters:STORY.chapters,chapter:STORY.save.ch,step:STORY.save.step,completed:STORY.save.done.length}:null;
   // MUNDO DE FONDO (solo paisaje, inalcanzable): titanes de varias alturas, megatitanes que tocan el espacio, dragones procedurales volando
   // y pantallas-collage con vídeos reales; todo se oscurece de noche y se aclara de día con la luz del cielo
   const FAR = (() => { let G = null, DR = [], SCR = [], MATS = []; const self = {};
