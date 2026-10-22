@@ -392,7 +392,7 @@ footer a{color:var(--soft)}
 <!-- 0 · El maletín 3D con inmersión -->
 <div class="hero" id="hero" data-field="0">
   <div class="hero-pin" id="heroPin">
-    <iframe id="malFrame" src="maletin/index.html" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay"></iframe>
+    <iframe id="malFrame" src="maletin/index.html?v=28" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay"></iframe>
     <a id="noWebglLink" href="#instrumentos">Explorar los instrumentos ↓</a>
     <div class="hero-copy" id="heroCopy">
       <img src="img/logo-unfire-256.webp" alt="" width="64" height="64" style="width:64px;height:64px;margin:0 auto 12px;filter:drop-shadow(0 0 18px rgba(61,139,255,.6))">
@@ -952,4 +952,5 @@ section{position:relative}
 section::before{content:"";position:absolute;left:8px;top:-14px;width:120px;height:14px;background:repeating-linear-gradient(90deg,#9fb0d0 0 8px,transparent 8px 14px);opacity:.25;transform:rotate(-1deg)}
 h1,h2{text-shadow:0 0 18px rgba(61,139,255,.35)}
 </style>
+<script>/* música: baja al salir del maletín a la web, vuelve al entrar */(()=>{const f=document.getElementById('malFrame'),h=document.getElementById('hero');if(!f||!h||!('IntersectionObserver' in window))return;let last=null;const send=(d)=>{if(d===last)return;last=d;try{f.contentWindow.postMessage({unfireDuck:d},'*')}catch(e){}};new IntersectionObserver((es)=>{es.forEach((e)=>send(e.intersectionRatio<0.35&&!document.body.classList.contains('immOn')))},{threshold:[0,0.35,0.6,1]}).observe(h)})();</script>
 </body></html>
