@@ -79,8 +79,26 @@ const assert=require('node:assert/strict');
     return result;
   });
   assert.equal(missions.filter(Boolean).length,11,'Some side mission completion rules failed');
+  // Workshop must display actual cached 3D robot portraits and leave room for player.
+  await f.evaluate(()=>{const b=[...document.querySelectorAll('button')].find(x=>x.textContent.trim()==='🔧 TALLER');if(!b)throw Error('Workshop action missing');b.click()});
+  await f.waitForTimeout(1100);
+  const studio=await f.evaluate(()=>{const panel=document.querySelector('#onl .b').getBoundingClientRect();return {cards:document.querySelectorAll('#onT .robotCard').length,locked:document.querySelectorAll('#onT .robotCard:disabled').length,portraits:document.querySelectorAll('#onT .robotCard img').length,width:panel.width,viewport:innerWidth}});
+  assert(studio.cards===20&&studio.locked===0&&studio.portraits>=2&&studio.width<studio.viewport*0.5,'Workshop obstructs player or 3D portraits missing: '+JSON.stringify(studio));
+  // First-time players use the case on the table; carrying is locked until chapter 3.
+  const firstPage=await browser.newPage({viewport:{width:960,height:700}});
+  const firstErrors=[];firstPage.on('pageerror',e=>firstErrors.push(e.message));
+  await firstPage.addInitScript(()=>{try{localStorage.setItem('unfire_save_v1',JSON.stringify({name:'New',level:1,ch:0,step:0,done:[],met:true,ts:Date.now()}))}catch(e){}});
+  await firstPage.goto(process.env.UNFIRE_TEST_URL||'http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded'});
+  await firstPage.locator('#openBtn').evaluate(e=>e.click());
+  await firstPage.waitForFunction(()=>!!document.getElementById('malFrame')?.contentWindow?.__mal?.S,{timeout:80000});
+  const newcomer=firstPage.frames().find(x=>x.url().includes('/audio/maletin/index.html'));
+  await newcomer.evaluate(()=>{window.__mal.setP(1);window.__mal.requestOpen();window.__roamAPI.enterRoam();window.__mal.toggleCase()});
+  const newbie=await newcomer.evaluate(()=>({unlocked:window.__UNFIRE_CASE_QA.portableUnlocked,carrying:window.__UNFIRE_CASE_QA.carrying,visible:window.__UNFIRE_CASE_QA.caseVisible,roam:window.__UNFIRE_CASE_QA.roam,disabled:document.getElementById('unfireCarryCase').disabled}));
+  assert(!newbie.unlocked&&!newbie.carrying&&newbie.visible&&newbie.roam&&newbie.disabled,'Newcomer portable case should stay locked but normal gameplay continue: '+JSON.stringify(newbie));
+  assert.equal(firstErrors.length,0,'Newcomer browser errors: '+firstErrors.join(' | '));
+  await firstPage.close();
   assert.equal(errors.length,0,'Browser JavaScript errors: '+errors.join(' | '));
-  console.log('PASS desktop browser: portable capsule throw/repack, mystery code, preserved quest and game, 11 mission completion predicates, no JS errors');
+  console.log('PASS Chrome: capsule/repack, case camera, 20 3D workshop slots, 11 side missions, first-time chapter gate, no JS errors');
  }catch(e){console.error('FAIL',e.stack?.slice(0,1200));process.exitCode=1}
  finally{if(browser)await browser.close()}
 })();
