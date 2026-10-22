@@ -773,7 +773,27 @@
   // The case is a game prop: toggling the lid never means exiting to the website.
   let lidControlledByPlayer = false, carryingCase = false, carryUIShown = false;
   const originalCasePosition = caseG.position.clone();
-  const carryDest = new THREE.Vector3();
+  // Camera-choice state is separate from the player's roaming state: quests and online continue.
+  const CASE_VIEW={on:false,dist:8.4,angle:0.25,elevation:0.78};
+  const caseModeHud=document.createElement('div');
+  caseModeHud.id='caseModeHud';
+  caseModeHud.innerHTML='<button type="button" id="caseInspectBtn">🎥 CÁMARA MALETÍN</button><button type="button" id="caseRobotBtn">🤖 DESDE PERSONAJE</button>';
+  caseModeHud.style.cssText='position:fixed;left:50%;bottom:max(17px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:54;display:none;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;max-width:calc(100vw - 36px);padding:5px;border:1px solid #81b9ff99;border-radius:15px;background:#09142bdc;box-shadow:0 8px 25px #0008';
+  {const st=document.createElement('style');st.textContent='#caseModeHud button{border:1px solid #819fc9;border-radius:11px;background:#172845;color:#eef6ff;padding:9px 11px;font:700 11px Arial;cursor:pointer;touch-action:manipulation}#caseModeHud button.active{background:#236b9b;border-color:#8ed9ff}body.recOn #caseModeHud{display:none!important}@media(max-width:680px){#caseModeHud{bottom:74px;max-width:calc(100vw - 18px)}#caseModeHud button{font-size:10px;padding:7px 9px}}';document.head.appendChild(st);}
+  document.body.appendChild(caseModeHud);
+  caseModeHud.addEventListener('pointerdown',e=>e.stopPropagation());
+  const showCaseView=()=>{
+    if(!ROAMS.on||carryingCase||CAPS.flying||!caseG.visible)return;
+    try{if(REC.on)REC.set(false);}catch(e){}
+    try{if(window.__VIEW?.on)window.__VIEW.stop();}catch(e){}
+    CASE_VIEW.on=true;CASE_VIEW.dist=8.4;CASE_VIEW.angle=caseG.rotation.y+0.25;
+    ROAMS.tgt=null;for(const k in ROAMS.k)ROAMS.k[k]=0;
+    say('🎥 Cámara del maletín: toca sus controles, arrastra para girar y usa la rueda para acercarte.');
+    updateCarryUI();
+  };
+  const showRobotView=()=>{CASE_VIEW.on=false;ROAMS.cp=null;updateCarryUI();};
+  caseModeHud.querySelector('#caseInspectBtn').onclick=showCaseView;
+  caseModeHud.querySelector('#caseRobotBtn').onclick=showRobotView;
   const carryButton = document.createElement('button');
   carryButton.id = 'unfireCarryCase';
   carryButton.type = 'button';
@@ -784,34 +804,50 @@
   function updateCarryUI(){
     const show=ROAMS.on;
     const far=ROAMS.on && Math.hypot(caseG.position.x-ROAMS.p.x,caseG.position.z-ROAMS.p.z)>12;
-    const label=carryingCase?'ABRIR MALETÍN':far?'RECUPERAR MALETÍN':pTarget>0.5?'GUARDAR MALETÍN':'ABRIR MALETÍN';
+    const label=CAPS.flying?'🎒 DESPLEGANDO…':carryingCase?'🎒 LANZAR CÁPSULA':far?'🎒 RECUPERAR EN CÁPSULA':'🎒 GUARDAR EN CÁPSULA';
+    carryButton.disabled=CAPS.flying;
     const labelNode=carryButton.querySelector('span');
     if(labelNode && labelNode.textContent!==label)labelNode.textContent=label;
     if(show!==carryUIShown){carryUIShown=show;carryButton.style.display=show?'flex':'none';}
+    const deployed=ROAMS.on&&!carryingCase&&pTarget>0.5&&!CAPS.flying;
+    const hudDisplay=deployed?'flex':'none';
+    if(caseModeHud.style.display!==hudDisplay)caseModeHud.style.display=hudDisplay;
+    caseModeHud.querySelector('#caseInspectBtn').classList.toggle('active',deployed&&CASE_VIEW.on);
+    caseModeHud.querySelector('#caseRobotBtn').classList.toggle('active',deployed&&!CASE_VIEW.on);
   }
   function closeCaseInGame(){
+    if(CASE_VIEW.on)showRobotView();
     lidControlledByPlayer=true;
     pTarget=0;
     closeAll(false);
     // Leave story state, missions, friends, online rooms and audio intact.
     if(ROAMS.on){
+      // Case and everything inside are stored in one inventory capsule, not mounted
+      // in front of the camera. Hiding the group also saves WebGL draw calls.
       carryingCase=true;
-      caseG.scale.setScalar(0.32);
+      caseG.visible=false;
+      caseG.scale.setScalar(1);
     }
     updateCarryUI();
     if(parent!==window)parentPost({caseState:'closed'});
   }
-  function openCaseInGame(){
+  function openCaseInGame(landing){
+    CASE_VIEW.on=false;
     lidControlledByPlayer=true;
     if(carryingCase){
       carryingCase=false;
       caseG.scale.setScalar(1);
       if(ROAMS.on){
-        caseG.position.set(ROAMS.p.x+Math.sin(ROAMS.yaw)*3.5,ROAMS.p.y-4.5,
-                           ROAMS.p.z-Math.cos(ROAMS.yaw)*3.5);
-        caseG.rotation.y=ROAMS.yaw;
+        const angle=ROAMS.cy==null?ROAMS.yaw:ROAMS.cy;
+        caseG.position.set(
+          landing ? landing.x : ROAMS.p.x+Math.sin(angle)*7,
+          landing ? landing.y : -8.9+(ROAMS.h||0)+0.3,
+          landing ? landing.z : ROAMS.p.z-Math.cos(angle)*7
+        );
+        caseG.rotation.y=angle;
       } else {caseG.position.copy(originalCasePosition);caseG.rotation.y=0;}
     }
+    caseG.visible=true;
     pTarget=1;
     updateCarryUI();
     ROOM.AMB.mute=false;
@@ -826,10 +862,8 @@
   carryButton.addEventListener('click',e=>{
     e.preventDefault();e.stopPropagation();
     if(!ROAMS.on)return;
-    if(carryingCase){openCaseInGame();return;}
-    const far=Math.hypot(caseG.position.x-ROAMS.p.x,caseG.position.z-ROAMS.p.z)>12;
-    if(far){carryingCase=true;caseG.scale.setScalar(0.32);openCaseInGame();}
-    else toggleCaseInGame();
+    if(carryingCase){CAPS.throwIt();return;}
+    closeCaseInGame();
   }); const laser = mesh(new THREE.BoxGeometry(0.03, 0.012, CD - 0.2), Y2K.led('#3d8bff', 3)); caseG.add(laser);
   function setLid(p) { const lt = ease.smooth(clamp((p - 0.08) / 0.2)), op = ease.smooth(clamp((p - 0.25) / 0.7)); latches.forEach((l) => { l.rotation.x = -1.5 * lt; }); lidPivot.rotation.x = -1.92 * op; lidOpen = op; }
   plate.material.emissive = new THREE.Color(0x3d8bff); plate.material.emissiveMap = plate.material.map;
@@ -1040,7 +1074,7 @@
     cam.position.copy(REC.p); const c2 = Math.cos(REC.cpch); cam.lookAt(REC.p.x + Math.sin(REC.cy) * c2, REC.p.y + Math.sin(REC.cpch), REC.p.z - Math.cos(REC.cy) * c2); cam.near = 0.08; };
   function enterRoam() { if (ROAMS.on) return; ROAMS.on = true;  ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
   function exitRoam() { if (REC.on) REC.set(false); if (!ROAMS.on) return;
-    carryingCase=false;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
+    CASE_VIEW.on=false;CAPS.cancel();carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
  ROAMS.on = false; ROAMS.cp = null; ROAMS.mini = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
   roamB.onclick = (e) => { e.stopPropagation(); ROAMS.on ? exitRoam() : enterRoam(); };
   window.__roamAPI = { ROAMS, enterRoam, exitRoam, roamMove }; window.__OUT_OPEN = true;
@@ -1145,12 +1179,86 @@
       clear() { if (this.g) S.scene.remove(this.g); this.g = null; this.list = []; },
       take(i, mine) { const n = this.list[i]; if (!n || !n.on) return; n.on = false; n.sp.visible = false; if (mine) { this.sc++; hap(0.3); try { if (window.__SPRAY) window.__SPRAY(n.sp.position.x, n.sp.position.y, n.sp.position.z, 30, 6, 8); } catch (e) {} } if (this.list.every((q) => !q.on)) { this.round++; say('🏁 ¡Ronda de notas terminada! Empieza otra'); setTimeout(() => this.build(this.seed + 1), 2500); } } };
 
-    const ui = document.createElement('div'); ui.id = 'onl'; ui.innerHTML = '<style>#onl{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:rgba(0,10,30,.55);font:600 13px Arial;color:#0a1a3a}#onl.on{display:flex}#onl .b{background:linear-gradient(180deg,#eef6ff,#bcd9ff);border:3px solid #fff;border-radius:22px;padding:18px;width:min(380px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;box-shadow:0 20px 50px #000a}#onl h3{margin:0 0 10px;font:900 18px Orbitron,Arial;color:#1d4fd8}#onl input{width:100%;box-sizing:border-box;padding:9px 12px;border-radius:12px;border:2px solid #9fd0ff;font:700 14px Arial;margin:4px 0 10px}#onl .sw{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px}#onl .sw button{width:34px;height:34px;border-radius:50%;border:3px solid #fff;cursor:pointer;box-shadow:0 2px 6px #0004}#onl .sw button.on{outline:3px solid #1d4fd8}#onl .ty button{width:auto;height:auto;border-radius:12px;padding:7px 10px;background:#fff;color:#0a1a3a;font:700 11px Arial}#onl .ty button.on{background:#1d4fd8;color:#fff}#onl .act{display:flex;gap:8px;margin-top:6px}#onl .act button,#onl .act input{flex:1}#onl .go{border:0;border-radius:999px;padding:10px 14px;font:800 13px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);cursor:pointer}#onl .x{background:#999}#onl p{min-height:16px;margin:8px 0 0;color:#c0302a}#onlHud{position:fixed;top:112px;left:50%;transform:translateX(-50%);z-index:61;display:none;gap:8px;align-items:center;padding:7px 10px;border-radius:999px;background:rgba(8,14,40,.85);border:2px solid #9fd0ff;color:#fff;font:700 12px Orbitron,Arial;white-space:nowrap}#onlHud button{border:0;border-radius:999px;padding:6px 10px;font:800 11px Arial;cursor:pointer;color:#fff;background:#1d4fd8}#onlHud .q{background:#c0302a}#onlMic[aria-pressed="true"]{background:#18824f!important}#onlHud{max-width:calc(100vw - 20px);flex-wrap:wrap;justify-content:center}#onlT{max-width:min(380px,80vw);overflow:hidden;text-overflow:ellipsis}@media(max-width:700px){#onlHud{top:74px;font-size:10px}#onlHud button{font-size:11px}}body.recOn #onlHud,body.storyOn #onlHud{visibility:hidden}</style><div class="b"><h3>🌐 MODO ONLINE</h3>Tu nombre<input id="onN" maxlength="14" placeholder="Escribe tu nombre">Tu número<input id="onNum" type="number" min="0" max="99" placeholder="27"><div>Color de tu robot</div><div class="sw" id="onC"></div><div>Tipo de robot transformable</div><div class="sw ty" id="onT"></div><div class="act"><button class="go" id="onNew">✨ CREAR SALA</button></div><div class="act"><input id="onCode" maxlength="5" placeholder="CÓDIGO"><button class="go" id="onJoin">➜ UNIRME</button></div><div class="act"><button class="go x" id="onX">CERRAR</button></div><p id="onMsg"></p></div>';
+    const ui = document.createElement('div'); ui.id = 'onl'; ui.innerHTML = '<style>#onl{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:rgba(0,10,30,.55);font:600 13px Arial;color:#0a1a3a}#onl.on{display:flex}#onl .b{background:linear-gradient(180deg,#eef6ff,#bcd9ff);border:3px solid #fff;border-radius:22px;padding:18px;width:min(380px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;box-shadow:0 20px 50px #000a}#onl h3{margin:0 0 10px;font:900 18px Orbitron,Arial;color:#1d4fd8}#onl input{width:100%;box-sizing:border-box;padding:9px 12px;border-radius:12px;border:2px solid #9fd0ff;font:700 14px Arial;margin:4px 0 10px}#onl .sw{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px}#onl .sw button{width:34px;height:34px;border-radius:50%;border:3px solid #fff;cursor:pointer;box-shadow:0 2px 6px #0004}#onl .sw button.on{outline:3px solid #1d4fd8}#onl .ty button{width:auto;height:auto;border-radius:12px;padding:7px 10px;background:#fff;color:#0a1a3a;font:700 11px Arial}#onl .ty button.on{background:#1d4fd8;color:#fff}#onl.workshop .b{width:min(790px,calc(100vw - 22px));background:linear-gradient(170deg,#152744,#08142d);color:#ecf4ff;padding:clamp(12px,3vw,22px)}#onl.workshop h3{color:#86ceff}#onl.workshop .ty{display:grid;grid-template-columns:repeat(auto-fill,minmax(107px,1fr));gap:10px;align-items:stretch}#onl.workshop .ty .robotCard{min-width:0;min-height:140px;width:100%;height:auto;display:flex;align-items:center;flex-direction:column;gap:4px;padding:7px 5px;border-radius:14px;border:1px solid #5b90c077;background:linear-gradient(145deg,#172e4e,#0b172c);color:#fff;cursor:pointer;touch-action:manipulation;box-shadow:0 5px 15px #0005}#onl.workshop .ty .robotCard.on{border-color:#55e2ff;background:linear-gradient(145deg,#225a84,#103759);outline:2px solid #52d4ff}#onl.workshop .ty .robotCard:disabled{opacity:1;cursor:default;border-style:dashed;background:linear-gradient(145deg,#151b30,#08101f)}#onl.workshop .robotPortrait{width:92px;height:92px;max-width:100%;object-fit:contain;border-radius:11px;background:radial-gradient(ellipse at 50% 38%,#245782,#080f24 78%);display:grid;place-items:center;overflow:hidden;color:#91b2d4}#onl.workshop .robotPortrait img{height:100%;width:100%;object-fit:contain}#onl.workshop .robotUnknown{font:900 56px Arial;text-shadow:0 3px 1px #000,0 0 16px #5198c7}#onl.workshop .robotName{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:800 10px Arial}#onl.workshop .robotPerk{display:block;font:600 9px Arial;color:#91d5fb}#onl.workshop #onT{max-height:min(47vh,460px);overflow:auto;padding:4px}#onl.workshop .sw:not(.ty) button{border-color:#cfebff}#onl.workshop #onMsg{color:#a8eaff}#onl .act{display:flex;gap:8px;margin-top:6px}#onl .act button,#onl .act input{flex:1}#onl .go{border:0;border-radius:999px;padding:10px 14px;font:800 13px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);cursor:pointer}#onl .x{background:#999}#onl p{min-height:16px;margin:8px 0 0;color:#c0302a}#onlHud{position:fixed;top:112px;left:50%;transform:translateX(-50%);z-index:61;display:none;gap:8px;align-items:center;padding:7px 10px;border-radius:999px;background:rgba(8,14,40,.85);border:2px solid #9fd0ff;color:#fff;font:700 12px Orbitron,Arial;white-space:nowrap}#onlHud button{border:0;border-radius:999px;padding:6px 10px;font:800 11px Arial;cursor:pointer;color:#fff;background:#1d4fd8}#onlHud .q{background:#c0302a}#onlMic[aria-pressed="true"]{background:#18824f!important}#onlHud{max-width:calc(100vw - 20px);flex-wrap:wrap;justify-content:center}#onlT{max-width:min(380px,80vw);overflow:hidden;text-overflow:ellipsis}@media(max-width:700px){#onlHud{top:74px;font-size:10px}#onlHud button{font-size:11px}}body.recOn #onlHud,body.storyOn #onlHud{visibility:hidden}</style><div class="b"><h3>🌐 MODO ONLINE</h3>Tu nombre<input id="onN" maxlength="14" placeholder="Escribe tu nombre">Tu número<input id="onNum" type="number" min="0" max="99" placeholder="27"><div>Color de tu robot</div><div class="sw" id="onC"></div><div>Tipo de robot transformable</div><div class="sw ty" id="onT"></div><div class="act"><button class="go" id="onNew">✨ CREAR SALA</button></div><div class="act"><input id="onCode" maxlength="5" placeholder="CÓDIGO"><button class="go" id="onJoin">➜ UNIRME</button></div><div class="act"><button class="go x" id="onX">CERRAR</button></div><p id="onMsg"></p></div>';
     document.body.appendChild(ui); ui.addEventListener('pointerdown', (e) => e.stopPropagation()); ui.addEventListener('keydown', (e) => e.stopPropagation(), true);
     const hud = document.createElement('div'); hud.id = 'onlHud'; hud.innerHTML = '<span id="onlT"></span><button id="onlInv">📨 INVITAR</button><button id="onlMic" type="button" aria-pressed="false" aria-label="Activar micrófono del chat de proximidad">🎤 ACTIVAR VOZ</button><button class="q" id="onlQ">✕</button>'; document.body.appendChild(hud); hud.addEventListener('pointerdown', (e) => e.stopPropagation());
     const $o = (id) => document.getElementById(id), msg = (t) => { $o('onMsg').textContent = window.T ? window.T(t) : t; };
-    const paint = () => { $o('onC').innerHTML = COLS.map((c) => '<button data-c="' + c + '" style="background:' + c + '" class="' + (c === cfg.col ? 'on' : '') + '"></button>').join(''); const U = unl(); $o('onT').innerHTML = ALLT.map((i, k) => k < U ? '<button data-t="' + i + '" class="' + (i === cfg.type ? 'on' : '') + '">' + (MUTANTS.list[i].name || 'ROBOT ' + i) + '<br><small>' + PERK[k % PERK.length][0] + '</small></button>' : '<button disabled style="opacity:.45">🔒 misión ' + (k - 1) + '</button>').join(''); };
-    $o('onC').onclick = (e) => { const c = e.target.dataset.c; if (c) { cfg.col = c; paint(); applyMe(); } }; $o('onT').onclick = (e) => { const t = e.target.dataset.t; if (t != null) { cfg.type = +t; paint(); applyMe(); } };
+    // Portraits are captured from actual 3D robot models, one per idle frame.
+    // Reuse the game's WebGL renderer/one tiny render target; no additional WebGL context.
+    const portraitCache=new Map();let portraitQueue=[],portraitBusy=false;
+    const previewScene=new THREE.Scene(),previewCam=new THREE.PerspectiveCamera(34,1,0.1,70);
+    previewScene.background=new THREE.Color(0x0d1a35);
+    previewScene.add(new THREE.HemisphereLight(0xe9f4ff,0x2e4366,2));
+    const keyLight=new THREE.DirectionalLight(0xffffff,1.7);keyLight.position.set(3,7,6);previewScene.add(keyLight);
+    previewCam.position.set(0,2.8,4.8);previewCam.lookAt(0,1.85,0);
+    const portraitTarget=new THREE.WebGLRenderTarget(128,128,{depthBuffer:true,stencilBuffer:false});
+    const portraitPixels=new Uint8Array(128*128*4);
+    const portraitCanvas=document.createElement('canvas');portraitCanvas.width=portraitCanvas.height=128;
+    const portraitCtx=portraitCanvas.getContext('2d',{willReadFrequently:true});
+    const previewWrap=new THREE.Group();previewScene.add(previewWrap);
+    const safeName=(v)=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    function renderRobotPortrait(i){
+      let r0=null;const prevTarget=S.renderer.getRenderTarget();
+      const previousViewport=new THREE.Vector4(),previousScissor=new THREE.Vector4();
+      S.renderer.getViewport(previousViewport);S.renderer.getScissor(previousScissor);
+      const previousScissorTest=S.renderer.getScissorTest(),previousClear=S.renderer.getClearColor(new THREE.Color()).clone();
+      const previousAlpha=S.renderer.getClearAlpha();
+      try{
+        r0=ROBOT.build(MUTANTS.list[i]);r0.update(3.7,0.016,{act:'look',mood:'happy'});
+        const bb=new THREE.Box3().setFromObject(r0.root),height=Math.max(0.001,bb.getSize(V(0,0,0)).y);
+        previewWrap.add(r0.root);
+        r0.root.scale.multiplyScalar(3.5/height);
+        const bb2=new THREE.Box3().setFromObject(r0.root);
+        const center=bb2.getCenter(V(0,0,0));
+        r0.root.position.sub(center);
+        r0.root.position.y+=1.8;
+        r0.root.rotation.y=-0.25;
+        S.renderer.setScissorTest(false);
+        S.renderer.setRenderTarget(portraitTarget);
+        S.renderer.setViewport(0,0,128,128);
+        S.renderer.clear(true,true,true);
+        S.renderer.render(previewScene,previewCam);
+        S.renderer.readRenderTargetPixels(portraitTarget,0,0,128,128,portraitPixels);
+        const img=portraitCtx.createImageData(128,128);
+        for(let y=0;y<128;y++)img.data.set(portraitPixels.subarray((127-y)*512,(128-y)*512),y*512);
+        portraitCtx.putImageData(img,0,0);
+        return portraitCanvas.toDataURL('image/png');
+      }finally{
+        if(r0)previewWrap.remove(r0.root);
+        S.renderer.setRenderTarget(prevTarget);S.renderer.setViewport(previousViewport);
+        S.renderer.setScissor(previousScissor);S.renderer.setScissorTest(previousScissorTest);
+        S.renderer.setClearColor(previousClear,previousAlpha);
+      }
+    }
+    function pumpPortraits(){
+      if(!portraitQueue.length||!ui.classList.contains('on')){portraitBusy=false;return;}
+      portraitBusy=true;
+      const i=portraitQueue.shift();
+      const slot=$o('onT').querySelector('[data-avatar="'+i+'"]');
+      if(slot&&!portraitCache.has(i)){
+        try{
+          portraitCache.set(i,renderRobotPortrait(i));
+          slot.innerHTML='<img src="'+portraitCache.get(i)+'" alt="Robot 3D" loading="lazy">';
+        }catch(e){portraitCache.set(i,null);console.warn('Robot portrait failed',i,e);}
+      }
+      setTimeout(pumpPortraits,55);
+    }
+    const paint = () => {
+      $o('onC').innerHTML = COLS.map(c=>'<button data-c="'+c+'" aria-label="Color '+c+'" style="background:'+c+'" class="'+(c===cfg.col?'on':'')+'"></button>').join('');
+      const U=unl();portraitQueue=[];
+      const workshop=ui.classList.contains('workshop');
+      $o('onT').innerHTML=ALLT.map((i,k)=>{
+        const available=k<U;
+        const cached=portraitCache.get(i);
+        const portrait=available&&cached?'<img src="'+cached+'" alt="Robot 3D" loading="lazy">':available?'<span class="robotUnknown" aria-hidden="true">◌</span>':'<span class="robotUnknown" aria-hidden="true">?</span>';
+        const name=available?safeName(MUTANTS.list[i].name||'ROBOT '+i):'???';
+        const perk=available?PERK[k%PERK.length][0]:'🔒 POR DESBLOQUEAR';
+        if(available&&!cached&&!portraitCache.has(i)&&workshop)portraitQueue.push(i);
+        return '<button type="button" class="robotCard '+(i===cfg.type&&available?'on':'')+'" '+(available?'data-t="'+i+'"':'disabled')+' title="'+(available?'Seleccionar '+name:'Robot misterioso bloqueado')+'"><span class="robotPortrait" data-avatar="'+i+'">'+portrait+'</span><span class="robotName">'+name+'</span><small class="robotPerk">'+perk+'</small></button>';
+      }).join('');
+      if(workshop&&portraitQueue.length&&!portraitBusy){portraitBusy=true;setTimeout(pumpPortraits,80);}
+    };
+    $o('onC').onclick = (e) => { const c = e.target.dataset.c; if (c) { cfg.col = c; paint(); applyMe(); } }; $o('onT').onclick = (e) => { const btn=e.target.closest('button[data-t]');if(!btn)return;const t=Number(btn.dataset.t);if(!ALLT.includes(t)||ALLT.indexOf(t)>=unl())return;cfg.type=t;paint();applyMe(); };
     addEventListener('unfire:avatars-unlocked',()=>{if(ui.classList.contains('on'))paint();});
     const save = () => { cfg.name = ($o('onN').value || '').trim().slice(0, 14) || 'Jugador'; cfg.num = Math.max(0, Math.min(99, parseInt($o('onNum').value, 10) || 27)); try { localStorage.setItem('unfire_onl', JSON.stringify(cfg)); } catch (e) {} };
     function applyMe() { ROAMS.myType = cfg.type; ROAMS.myCol = cfg.col; ROAMS.myNum = cfg.num || 27; const pk = PERK[Math.max(0, ALLT.indexOf(cfg.type)) % PERK.length]; ROAMS.perkV = pk[1]; ROAMS.perkF = pk[2]; if (ROAMS.av && ROAMS.av.w) { S.scene.remove(ROAMS.av.w); } ROAMS.av = null; }
@@ -1316,7 +1424,7 @@
     let pending = null; try { pending = new URLSearchParams(parent.location.search).get('room'); } catch (e) {} if (!pending) try { pending = new URLSearchParams(location.search).get('room'); } catch (e) {}
     window.__REWARD = (why) => { let u = 0; try { u = (+localStorage.getItem('unfire_unlock') || 0) + 1; localStorage.setItem('unfire_unlock', String(u)); } catch (e) {} const k = Math.min(ALLT.length - 1, 1 + u), nm = (MUTANTS.list[ALLT[k]] || {}).name || 'ROBOT'; say('🏆 ' + why + ' · 🎁 ¡Nueva transformación desbloqueada: ' + nm + ' (' + PERK[k % PERK.length][0] + ')! Cámbiala en ⚙ › 🔧 TALLER'); hap(1); try { if (window.__SPRAY) window.__SPRAY(ROAMS.p.x, -8.9 + (ROAMS.h || 0) + 6, ROAMS.p.z, 120, 10, 20); } catch (e) {} };
     setTimeout(function addT() { const h = document.getElementById('storyHud'); if (!h) { setTimeout(addT, 1000); return; } const b = document.createElement('button'); b.textContent = '🔧 TALLER'; b.onclick = () => ONLINE.open(true); const b2 = document.createElement('button'); b2.textContent = '🌐 ONLINE'; b2.onclick = () => ONLINE.open(); h.insertBefore(b2, h.querySelector('.obj')); h.insertBefore(b, b2); }, 1500); applyMe();
-    return { open(taller) { paint(); $o('onN').value = cfg.name || (window.__STORYNAME && window.__STORYNAME()) || ''; $o('onNum').value = cfg.num || 27; msg(''); ui.querySelector('h3').textContent = taller ? '🔧 TALLER · personaliza tu robot' : '🌐 MODO ONLINE'; ui.querySelectorAll('.act').forEach((a, i) => (a.style.display = taller && i < 2 ? 'none' : 'flex')); ui.classList.add('on'); }, get on() { return !!code; }, get audioPlayers() { return code ? Object.values(R) : []; }, voiceVisibility(v) { VOICE.visibility(v); },
+    return { open(taller) { ui.classList.toggle('workshop',!!taller);paint(); $o('onN').value = cfg.name || (window.__STORYNAME && window.__STORYNAME()) || ''; $o('onNum').value = cfg.num || 27; msg(''); ui.querySelector('h3').textContent = taller ? '🔧 TALLER · personaliza tu robot' : '🌐 MODO ONLINE'; ui.querySelectorAll('.act').forEach((a, i) => (a.style.display = taller && i < 2 ? 'none' : 'flex')); ui.classList.add('on'); }, get on() { return !!code; }, get audioPlayers() { return code ? Object.values(R) : []; }, voiceVisibility(v) { VOICE.visibility(v); },
       tick(dt, t) { if (pending && ROAMS.on) { this.open(); $o('onCode').value = pending; msg('Te han invitado a la sala ' + pending + ' · elige tu robot y pulsa UNIRME'); pending = null; }
         if (!code || !peer) return; sendT -= dt; if (sendT <= 0 && myId) { sendT = 0.1; const d = { id: myId, n: cfg.name, c: cfg.col, t: cfg.type, x: +ROAMS.p.x.toFixed(2), z: +ROAMS.p.z.toFixed(2), h: +(ROAMS.h || 0).toFixed(2), y: +((ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy)).toFixed(3), sc: NOTES.sc, f: ROAMS.fly ? 1 : 0, o: window.ATM_OUT ? 1 : 0, m: ROAMS.moving ? 1 : 0, v: VOICE.on ? 1 : 0, q: 1 }; conns.forEach((c) => { if (c.open) try { c.send(d); } catch (e) {} }); }
         if (NOTES.g) { NOTES.g.visible = !!window.ATM_OUT; const fy = -8.9 + (ROAMS.h || 0) + 5; NOTES.list.forEach((n, i) => { if (!n.on) return; n.sp.material.rotation = Math.sin(t * 2 + i) * 0.3; if (window.ATM_OUT && Math.abs(ROAMS.p.x - n.sp.position.x) < 7 && Math.abs(ROAMS.p.z - n.sp.position.z) < 7 && Math.abs(fy - n.sp.position.y) < 9) { NOTES.take(i, true); conns.forEach((c) => { if (c.open) try { c.send({ id: myId, nt: i }); } catch (e) {} }); upd(); } }); } NOTES.uT = (NOTES.uT || 0) - dt; if (NOTES.uT <= 0) { NOTES.uT = 1; upd(); } const now = performance.now(); Object.keys(R).forEach((id) => { const r = R[id], d = r.d; if (!d) return; if (now - r.last > 8000) { drop(id); return; } const vis = !!d.o === !!window.ATM_OUT; r.w.visible = r.tag.visible = vis; if (!vis) return; const tgt = V(d.x, -8.9 + d.h, d.z), mv = r.w.position.distanceTo(tgt); r.w.position.lerp(tgt, Math.min(1, dt * 8)); r.wd += Math.min(mv, 5); r.w.rotation.y = Math.atan2(Math.sin(d.y), -Math.cos(d.y)); r.tag.position.set(r.w.position.x, r.w.position.y + 13, r.w.position.z); r.r0.update(3.7, dt, { act: d.f ? 'fly' : d.m ? 'walk' : null, ph: d.m ? STEPPH(r.wd, 10.5, false) : t, mood: 'happy' }); }); VOICE.tick(dt); }, create, join, leave, link, saveMe() { save(); applyMe(); } };
@@ -1324,11 +1432,67 @@
   { const g = (id) => document.getElementById(id); g('onNew').onclick = () => ONLINE.create(); g('onJoin').onclick = () => ONLINE.join(g('onCode').value); g('onX').onclick = () => { ONLINE.saveMe(); g('onl').classList.remove('on'); };
     g('onlQ').onclick = () => { ONLINE.leave(); say('🌐 Has salido de la sala'); };
     g('onlInv').onclick = async () => { const l = ONLINE.link(), txt = '¡Ven a jugar conmigo a UNFIRE AUDIO! Sala: '; try { if (navigator.share) { await navigator.share({ title: 'UNFIRE AUDIO', text: txt, url: l }); return; } } catch (e) {} try { await navigator.clipboard.writeText(l); say('📨 Enlace copiado: ' + l + ' · pégalo a tus amigos'); } catch (e) { say('📨 Envía este enlace a tus amigos: ' + l); } }; }
-  // ===== cápsula «hoi-poi»: tiras una cápsula, hace ¡POF! y aparece tu maletín (cada jugador tiene el suyo, también en el online) =====
-  const CAPS = (() => { let c = null, t0 = 0, from = null, dir = null; const throwIt = () => { if (c || !ROAMS.on) return; const g = new THREE.Group(); const top = new THREE.Mesh(new THREE.SphereGeometry(1.2, 20, 12, 0, TAU, 0, H2), new THREE.MeshPhysicalMaterial({ color: ROAMS.myCol || 0xff2fb0, roughness: 0.2, clearcoat: 1 })); const bot = new THREE.Mesh(new THREE.SphereGeometry(1.2, 20, 12, 0, TAU, H2, H2), new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.2, clearcoat: 1 })); g.add(top, bot); S.scene.add(g); c = g; t0 = 0; const cyy = ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy; dir = V(Math.sin(cyy), 0, -Math.cos(cyy)); from = V(ROAMS.p.x, -8.9 + (ROAMS.h || 0) + 7, ROAMS.p.z); say('🎒 ¡Cápsula lanzada!'); hap(0.4); };
-    addEventListener('keydown', (e) => { if (e.target && e.target.tagName === 'INPUT') return; if ((e.key === 'g' || e.key === 'G') && ROAMS.on && !e.repeat) throwIt(); });
-    setTimeout(function addB() { const h = document.getElementById('storyHud'); if (!h) { setTimeout(addB, 1000); return; } const b = document.createElement('button'); b.textContent = '🎒 SACAR MALETÍN (G)'; b.onclick = () => { if(carryingCase){openCaseInGame();}else if(Math.hypot(caseG.position.x-ROAMS.p.x,caseG.position.z-ROAMS.p.z)>12){carryingCase=true;caseG.scale.setScalar(0.32);openCaseInGame();}else throwIt(); }; h.insertBefore(b, h.firstChild); }, 1600);
-    return { throwIt, tick(dt) { if (!c) return; t0 += dt; const u = Math.min(1, t0 / 0.9); c.position.set(from.x + dir.x * 16 * u, from.y + Math.sin(u * Math.PI) * 6 - u * 7, from.z + dir.z * 16 * u); c.rotation.x += dt * 9; if (u >= 1) { const p = c.position.clone(); S.scene.remove(c); c = null; try { if (window.__SPRAY && window.ATM_OUT) window.__SPRAY(p.x, p.y, p.z, 160, 12, 16); } catch (e) {} const fl = document.createElement('div'); fl.style.cssText = 'position:fixed;inset:0;z-index:95;pointer-events:none;background:radial-gradient(circle,#fff 0%,rgba(255,255,255,.6) 40%,rgba(255,255,255,0) 75%);opacity:1;transition:opacity .9s'; document.body.appendChild(fl); setTimeout(() => { fl.style.opacity = '0'; setTimeout(() => fl.remove(), 1000); }, 60); say('💥 ¡POF! Aquí tienes tu maletín'); hap(1); setTimeout(() => { try { carryingCase=true;caseG.scale.setScalar(0.32);openCaseInGame(); } catch (e) {} }, 250); } } }; })();
+  // ===== Reusable capsule inventory: pack, throw, deploy and collect without leaving roam =====
+  const CAPS=(()=>{
+    let capsule=null, flight=0, start=null, target=null;
+    const build=()=>{
+      if(capsule)return;
+      capsule=new THREE.Group();
+      // Two low-poly hemispheres, created once and reused for every throw.
+      const upper=new THREE.Mesh(new THREE.SphereGeometry(0.63,12,8,0,TAU,0,H2),new THREE.MeshStandardMaterial({color:0xff2fb0,metalness:0.35,roughness:0.34}));
+      const lower=new THREE.Mesh(new THREE.SphereGeometry(0.63,12,8,0,TAU,H2,H2),new THREE.MeshStandardMaterial({color:0xeaf2ff,metalness:0.2,roughness:0.37}));
+      capsule.add(upper,lower);capsule.visible=false;S.scene.add(capsule);
+    };
+    const cancel=()=>{flight=0;if(capsule)capsule.visible=false;};
+    const pack=()=>{if(!ROAMS.on)return false;cancel();closeCaseInGame();say('🎒 Maletín y objetos guardados en una cápsula. Pulsa G o LANZAR para desplegar.');return true;};
+    const throwIt=()=>{
+      if(!ROAMS.on)return false;
+      if(flight>0)return false;
+      if(!carryingCase)return pack();
+      build();
+      const yaw=ROAMS.cy==null?ROAMS.yaw:ROAMS.cy;
+      const dirX=Math.sin(yaw),dirZ=-Math.cos(yaw);
+      const floor=-8.9+(ROAMS.h||0);
+      start=V(ROAMS.p.x,floor+6.5,ROAMS.p.z);
+      target=V(ROAMS.p.x+dirX*7,floor+0.8,ROAMS.p.z+dirZ*7);
+      capsule.position.copy(start);capsule.rotation.set(0,0,0);
+      capsule.visible=true;flight=0.001;
+      say('🎒 ¡Cápsula lanzada!');hap(0.3);
+      return true;
+    };
+    const action=()=>carryingCase?throwIt():pack();
+    addEventListener('keydown',e=>{
+      const t=e.target;if(t && (t.isContentEditable||['INPUT','TEXTAREA','SELECT'].includes(t.tagName)))return;
+      if((e.key==='g'||e.key==='G')&&ROAMS.on&&!e.repeat){
+        if(!e.ctrlKey&&!e.altKey&&!e.metaKey){e.preventDefault();action();}
+      }
+    });
+    setTimeout(function addB(){
+      const h=document.getElementById('storyHud');
+      if(!h){setTimeout(addB,1000);return;}
+      const btn=document.createElement('button');btn.id='capsuleHudButton';
+      btn.textContent='🎒 CÁPSULA (G)';btn.onclick=action;h.insertBefore(btn,h.firstChild);
+    },1600);
+    return {throwIt,pack,cancel,get flying(){return flight>0;},tick(dt){
+      // Self-heal display mismatches without spawning more meshes or audio.
+      if(ROAMS.on && carryingCase && caseG.visible)caseG.visible=false;
+      if(ROAMS.on && !carryingCase && !caseG.visible)caseG.visible=true;
+      if(!flight||!capsule)return;
+      flight=Math.min(0.85,flight+Math.min(dt,0.06));
+      const u=flight/0.85;
+      capsule.position.set(
+        start.x+(target.x-start.x)*u,
+        start.y+(target.y-start.y)*u+3.2*Math.sin(Math.PI*u),
+        start.z+(target.z-start.z)*u
+      );
+      capsule.rotation.x+=dt*7;capsule.rotation.z+=dt*5;
+      if(u>=1){
+        cancel();openCaseInGame(target);
+        say('💥 Maletín desplegado. Recógelo desde GUARDAR EN CÁPSULA para lanzarlo otra vez.');
+        hap(0.4);
+      }
+    }};
+  })();
   // ===== SECRETOS: la pirámide se puede visitar por dentro y cada islita guarda un artilugio escondido (recompensa al encontrarlo) =====
   const SECRETS = (() => { const L = [['pyr', 600, -10, 'la cámara secreta de la pirámide', 0], ['isl1', -420, 120, 'la isla verde', 0], ['isl2', 300, 420, 'la isla blanca', 0], ['isl3', -360, -380, 'la isla violeta', 0], ['obel', 80, -470, 'el oasis del obelisco', 0], ['haiku', -730, -610, 'el camino de los torii de la isla Haiku', 0]]; let built = false; const items = [];
     const build = () => { built = true; const mk = window.__MKDEV; L.forEach(([id, x, z, name], k) => { try { const g = new THREE.Group(); const base = new THREE.Mesh(new THREE.CylinderGeometry(4.5, 5, 0.8, 32), new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0.8, roughness: 0.15, clearcoat: 1 })); g.add(base); const ring = new THREE.Mesh(new THREE.TorusGeometry(5.4, 0.25, 8, 48), new THREE.MeshBasicMaterial({ color: 0x5fe0ff, toneMapped: false })); ring.rotation.x = H2; ring.position.y = 0.6; g.add(ring); let dv = null; if (mk) { dv = mk(k * 5 + 3); dv.root.scale.setScalar(5); dv.root.position.y = 1.2; g.add(dv.root); } const isl = id.startsWith('isl'); g.position.set(x, id === 'pyr' ? FYO + 0.4 : isl ? -9.605 + ({ isl1: 10.5, isl2: 9, isl3: 12 })[id] + 0.4 : -9.005 + 0.4, z); S.scene.add(g); items.push({ id, g, dv, ring, name, found: (() => { try { return localStorage.getItem('unfire_sec_' + id) === '1'; } catch (e) { return false; } })() }); } catch (e) {} }); };
@@ -1411,6 +1575,20 @@
       apply(dt) { if (!on || !shot) return; T += dt; const lv = window.__LVL || 0; beatT -= dt; if (lv - lastLv > 0.18 && T > dur * 0.6 && beatT <= 0) { beatT = 1; next(); } lastLv = lv * 0.9 + lastLv * 0.1; if (T >= dur) next(); const u = Math.min(1, T / dur), e = u * u * (3 - 2 * u); const s = shot(e); cam.position.copy(s.p); cam.lookAt(s.l); cam.near = 0.1; cam.fov += (54 - cam.fov) * 0.1; cam.updateProjectionMatrix(); fl.style.opacity = flash > 0 ? String(flash * 1.6) : '0'; flash = Math.max(0, flash - dt * 2); window.__roam = true; } };
     window.__VIEW = api; return api; })();
   let STORY = null; try { STORY = window.STORY_INIT({ say, duck: (v) => { A.duck = v; }, buy: () => parentPost({ buy: 'todo' }), showHost: (v) => HOST.show(v), cinema: () => {},
+    getExplore: () => ({ x:ROAMS.p.x,z:ROAMS.p.z,h:ROAMS.h||0,walking:!!ROAMS.on,outside:!!window.ATM_OUT }),
+    navigateTo: (quest) => {
+      // Optional help, never destroys quest progress or rewrites player save.
+      if(!ROAMS.on)enterRoam();
+      if(!window.ATM_OUT)ATM.setOut(true);
+      ROAMS.mini=false;ROAMS.cp=null;
+      if(quest.ev==='outside'){ROAMS.p.set(-30,4.5,110);ROAMS.h=4;}
+      else{
+        ROAMS.p.set(quest.x+Math.min(35,(quest.r||125)*0.4),4.5,quest.z);
+        ROAMS.h=Math.max(5,(quest.h||0)+8);
+      }
+      ROAMS.fly=ROAMS.h>18;ROAMS.vy=0;
+      say('🧭 Nimbo: ¡Listo! Ya estás cerca del objetivo. Mira la estrella del mapa.');
+    },
     robotMode: () => { ROAMS.mini = !ROAMS.mini; if (ROAMS.mini) { if (!ROAMS.on) enterRoam(); ROAMS.p.set(4.5, 0.3, 4.4); ROAMS.yaw = -0.6; ROAMS.pitch = -0.05; say('🤖 Modo robot: caminas a su altura por la mesa (WASD / flechas)'); } else { ROAMS.p.set(0, 4.5, 22); ROAMS.yaw = 0; } return ROAMS.mini; }, toggleMap: () => MAP.toggle(),
     focusHost: (who, soft) => { HOST.talk(); if (soft) { if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } return; } let p = HOST.pos; if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; p = it.W.getWorldPosition(V(0, 0, 0)); try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } if (ROAMS.on) { const d = V(cam.position.x - p.x, 0, cam.position.z - p.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const q = V(p.x + d.x * 10, p.y + 5.5, p.z + d.z * 10); const lx = p.x - q.x, lz = p.z - q.z; ROAMS.tgt = { p: q, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(p.y + 1.5 - q.y, Math.hypot(lx, lz)) }; } else { view.gx = clamp(p.x * 0.7, -CW / 2 - 1, CW / 2 + 1); view.gz = clamp(p.z * 0.7, -CD / 2 - 1, CD / 2 + 2); view.gd = view.D0 * 0.85; } } }); } catch (e) { console.warn('story', e); }
   roamB.addEventListener('pointerdown', (e) => e.stopPropagation());
@@ -1434,6 +1612,7 @@
   addEventListener('wheel', (e) => { if (CINE.on) CINE.on = false;
     const p = cursorPoint(e), k = e.deltaMode ? 30 : 1, dy = e.deltaY * k, dx = e.deltaX * k;
     e.preventDefault();
+    if (ROAMS.on && CASE_VIEW.on) { CASE_VIEW.dist=clamp(CASE_VIEW.dist+dy*0.013,5.4,14.5);return; }
     if (ROAMS.on) { ROAMS.tgt = null; const ms = ROAMS.mini ? 0.07 : 1; try { ROOM.R.userData.camTrack = null; } catch (e2) {} roamMove(-dy * 0.2 * ms, dx * 0.1 * ms); return; }
     if (lidOpen < 0.92) { parentPost({ scroll: dy, pass: 1 }); return; }
     ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const over = ray.intersectObject(caseG, true).length > 0;
@@ -1458,6 +1637,7 @@
   cv.addEventListener('contextmenu', (e) => e.preventDefault());
   cv.addEventListener('pointermove', (e) => { if (MV && MV.drag) { const p = cursorPoint(e); if (p) { MV.o.position.x = clamp(p.x, -CW / 2 + 0.25, CW / 2 - 0.25); MV.o.position.z = clamp(p.z, -CD / 2 + 0.25, CD / 2 - 0.25); } return; } if (knobDrag) { if (knobDrag.hwVol) { HWVOL = clamp(knobDrag.v + (knobDrag.y - e.clientY) / 160); try { if (knobDrag.hwVol.rot) knobDrag.hwVol.rot.rotation.y = -(Math.PI * 0.75 * 2 * (HWVOL - 0.5)); } catch (er) {} HW.lock = { t: performance.now() / 1000, label: '🔊 VOLUMEN', text: Math.round(HWVOL * 100) + ' %', v: 1 }; return; } if (!knobDrag.hw) onKnobMove(e); return; } if (!drag) { hover(e); return; } const dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.hypot(dx, dy) > 4) drag.moved = true; if (!drag.moved) return;
     if (drag.pan && zoomed()) { const s = view.dist / innerHeight * 1.1, ca = Math.cos(ORB.az), sa = Math.sin(ORB.az), px = -dx * s, pz = -dy * s * 1.2; view.gx = clamp(drag.gx + px * ca + pz * sa, -CW / 2, CW / 2); view.gz = clamp(drag.gz - px * sa + pz * ca, -CD / 2, CD / 2); }
+    else if (ROAMS.on && CASE_VIEW.on) { CASE_VIEW.angle-=(e.clientX-drag.lx)*0.006;CASE_VIEW.elevation=clamp(CASE_VIEW.elevation+(e.clientY-drag.ly)*0.003,0.35,1.1); }
     else if (ROAMS.on) { const O = REC.on ? REC : ROAMS; ROAMS.tgt = null; O.yaw += (e.clientX - drag.lx) * (REC.on ? 0.0035 : 0.005); O.pitch = clamp(O.pitch - (e.clientY - drag.ly) * (REC.on ? 0.003 : 0.004), -1.45, 1.45); }
     else { ORB.gaz = clamp(ORB.gaz - (e.clientX - drag.lx) * 0.006, -1.4, 1.4); if (e.pointerType === 'mouse' || zoomed()) ORB.gde = clamp(ORB.gde + (e.clientY - drag.ly) * 0.004, -0.85, 0.5); }
     drag.lx = e.clientX; drag.ly = e.clientY; });
@@ -1731,11 +1911,17 @@
     $('tb').querySelectorAll('button').forEach((b) => b.classList.toggle('on', !!MV && b.dataset.a === 'move')); }
   $('tb').addEventListener('pointerdown', (e) => e.stopPropagation()); $('tb').onclick = (e) => { const a = e.target.closest('[data-a]'); if (a) act(a.dataset.a); };
   function onClick(e) {
+    // A real click on the unfolded case switches to its usable overhead camera.
+    if(ROAMS.on&&!CASE_VIEW.on&&!carryingCase&&caseG.visible&&pTarget>0.5){
+      ndc.set((e.clientX/innerWidth)*2-1,-(e.clientY/innerHeight)*2+1);
+      ray.setFromCamera(ndc,cam);
+      if(ray.intersectObject(caseG,true).length){showCaseView();return;}
+    }
     { const pc = lidOpen > 0.5 ? pickCtl(e) : null; if (pc && !pc.c) { SEL = { type: 'cap', g: pc.g }; activate(pc.g); return; } }
     if (lidOpen < 0.5) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const hitD = ray.intersectObject(dragon, true).length; if (hitD || ray.intersectObject(caseG, true).length) { if (hitD) ALL = true;
         openCaseInGame();
         try { RADIO.chime && UA.ctx && RADIO.chime(UA.ctx.currentTime + 0.02); } catch (er) {} } return; }
-    if (lidOpen > 0.9) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); if (window.__fd && ray.intersectObject(window.__fd.parent, true).length) { hap(0.5); act('shut'); return; } if (ray.intersectObject(lidBtn, true).length) { toggleCaseInGame(); hap(0.25); return; } if (ROOM.pick(ray, ROAMS.on ? Infinity : ((ray.intersectObject(caseG, true)[0] || {}).distance || Infinity))) return; if (ray.intersectObject(pageBtn, true).length) { setCapPage(capPage + 1); return; } { const ph = ray.intersectObjects(PB.filter((b) => b.parent && b.parent.visible), true)[0]; if (ph) { let o = ph.object; while (o && !o.userData.btn) o = o.parent; if (o) { SEL = o.userData.btn.sel; hap(0.3); act(o.userData.btn.a); return; } } }
+    if (lidOpen > 0.9) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); if (window.__fd && ray.intersectObject(window.__fd.parent, true).length) { hap(0.5); act('shut'); return; } if (ray.intersectObject(lidBtn, true).length) { toggleCaseInGame(); hap(0.25); return; } if (!CASE_VIEW.on && ROOM.pick(ray, ROAMS.on ? Infinity : ((ray.intersectObject(caseG, true)[0] || {}).distance || Infinity))) return; if (ray.intersectObject(pageBtn, true).length) { setCapPage(capPage + 1); return; } { const ph = ray.intersectObjects(PB.filter((b) => b.parent && b.parent.visible), true)[0]; if (ph) { let o = ph.object; while (o && !o.userData.btn) o = o.parent; if (o) { SEL = o.userData.btn.sel; hap(0.3); act(o.userData.btn.a); return; } } }
     { const bh = ray.intersectObjects(btns.map((b) => b.g), true)[0]; if (bh) { const B = btns.find((b) => { let p = bh.object; while (p) { if (p === b.g) return true; p = p.parent; } return false; }); B.p = 1; hap(0.45); act(B.a); return; } } const gh = ray.intersectObjects(gates.flatMap((x) => x.list || [x.g]), true)[0]; if (gh) { const gk = gates.find((x) => { let p = gh.object; while (p) { if (p === x.g || (x.list && x.list.includes(p))) return true; p = p.parent; } return false; }); if (gk && !compG[gk.k].userData.open) { openComp(gk.k); if (gk.k === 'hw' && HW) { HW.tg = 0; SEL = { type: 'hw' }; } return; } } }
     if (pickCtl(e)) return;
     if (HW && compG.hw.userData.t > 0.9 && ray.intersectObject(HW.root, true).length) { SEL = { type: 'hw' }; return; }
@@ -1842,13 +2028,7 @@
     const actualFrameTime = previousRenderAt ? Math.min(0.18, Math.max(0.008, (now - previousRenderAt) / 1000)) : 1 / 30;
     previousRenderAt = now;
     const dt = Math.min(0.05, clock.getDelta()) * (window.__dts || 1); t += dt;
-    if(carryingCase && ROAMS.on){
-      carryDest.set(ROAMS.p.x+Math.sin(ROAMS.yaw+0.85)*1.25,
-                    ROAMS.p.y-1.45,
-                    ROAMS.p.z-Math.cos(ROAMS.yaw+0.85)*1.25);
-      caseG.position.lerp(carryDest,0.23);
-      caseG.rotation.y=ROAMS.yaw;
-    }
+    // A packed case is inventory-only: no heavy model following or obscuring the camera.
     updateCarryUI();
     { const stowed = (!HW || ((HW.u || 0) < 0.03 && (HW.T || 0) < 0.05)) && CK.every((k) => compG[k].userData.t < 0.04) && !open.length && !items.some((it) => (it.kind === 'mut' && it.T > 0.05) || (it.kk || 0) > 0.05 || it.retT > 0) && !flyers.length; let pt = pTarget; if (pt < pNow && !lidControlledByPlayer && !stowed && pNow > 0.86) { pt = Math.max(pt, 0.9); STOW = true; } else if (stowed) STOW = false; pNow += (pt - pNow) * (lidControlledByPlayer ? 0.18 : 0.16); } setLid(pNow); oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
     const busy = (k) => open.some((g) => g.it.comp === k && g.m > 0.04) || items.some((it) => it.comp === k && ((it.kind === 'mut' && it.T > 0.04) || (it.g && (it.kk || 0) > 0.04))) || (k === 'hw' && HW && ((HW.T || 0) > 0.05 || (HW.u || 0) > 0.03));
@@ -1887,7 +2067,7 @@
     if (Math.abs(cam.fov - nextFov) > 0.005) {
       cam.fov = nextFov;
       cam.updateProjectionMatrix(); // FOV changes must reach the GPU, not only the property.
-    } window.__roam = ROAMS.on || view.gd > view.D0 * 1.2; if (ROAMS.on) { const K = ROAMS.k; if (K.ArrowUp || K.ArrowDown) ROAMS.tgt = null; const fw = REC.on ? 0 : (K.ArrowUp || K.w ? 1 : 0) - ((K.ArrowDown || K.s) && !ROAMS.fly ? 1 : 0), sd2 = REC.on ? 0 : (K.ArrowRight || K.d ? 1 : 0) - (K.ArrowLeft || K.a ? 1 : 0); if (ROAMS.cy == null) ROAMS.cy = ROAMS.yaw; const GTA = ((ROAMS.mode || '3p') === '3p' || ROAMS.mode === '3pl') && !ROAMS.mini; ROAMS.run = false;
+    } window.__roam = ROAMS.on || view.gd > view.D0 * 1.2; if (ROAMS.on) { const K = CASE_VIEW.on ? {} : ROAMS.k; if (K.ArrowUp || K.ArrowDown) ROAMS.tgt = null; const fw = REC.on ? 0 : (K.ArrowUp || K.w ? 1 : 0) - ((K.ArrowDown || K.s) && !ROAMS.fly ? 1 : 0), sd2 = REC.on ? 0 : (K.ArrowRight || K.d ? 1 : 0) - (K.ArrowLeft || K.a ? 1 : 0); if (ROAMS.cy == null) ROAMS.cy = ROAMS.yaw; const GTA = ((ROAMS.mode || '3p') === '3p' || ROAMS.mode === '3pl') && !ROAMS.mini; ROAMS.run = false;
       if (fw || sd2) { ROAMS.tgt = null; ROOM.R.userData.camTrack = null; const ms = ROAMS.mini ? 0.07 : 1; const SPD = (K.Shift ? 1.8 : K.Alt ? 0.5 : 1) * (window.ATM_OUT ? 1.55 : 0.78) * (ROAMS.perkV || 1);
         if (GTA) { const dir = ROAMS.yaw + Math.atan2(sd2, fw), y0 = ROAMS.yaw; ROAMS.cy = angL(ROAMS.cy, dir, Math.min(1, dt * 10)); ROAMS.yaw = ROAMS.cy; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; let sl = 1; if (wet && window.__WAVE) { const dx2 = Math.sin(dir) * 4, dz2 = -Math.cos(dir) * 4; sl = clamp(1 - (window.__WAVE(ROAMS.p.x + dx2, ROAMS.p.z + dz2, t) - window.__WAVE(ROAMS.p.x, ROAMS.p.z, t)) * 0.22, 0.7, 1.6); } ROAMS.surfV = (ROAMS.surfV || 1) + (sl - (ROAMS.surfV || 1)) * Math.min(1, dt * 2); const vv = 34 * SPD * (wet ? (ROAMS.board ? 1.9 * ROAMS.surfV : 1.15) : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 * (window.__PROP ? window.__PROP() : 1) : 1.4) : 1); ROAMS.run = vv > 18 && !wet; ROAMS.wet = wet; ROAMS.vvS = ROAMS.fly ? (ROAMS.vvS || vv) + (vv - (ROAMS.vvS || vv)) * Math.min(1, dt * 2.5) : vv; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(dt * ROAMS.vvS, 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.yaw = y0; if (fw >= 0) ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * (sd2 ? 1.2 : 2.6))); }
         else if (ROAMS.mode === '1p' && !ROAMS.mini) { ROAMS.yaw += sd2 * dt * 2.0; ROAMS.cy = ROAMS.yaw; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : true) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; const vv = 34 * SPD * (wet ? 2.0 : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 : 1.4) : 1); ROAMS.run = vv > 18 && !wet; ROAMS.wet = wet; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(fw * dt * vv * (fw < 0 ? 0.6 : 1), 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); } else { ROAMS.cy = ROAMS.yaw; roamMove(fw * dt * 44 * ms * SPD, sd2 * dt * 34 * ms * SPD); } } ROAMS.moving = !!(fw || sd2);
@@ -2042,12 +2222,31 @@
     // flickering/z-fighting indoors. Use deep view only while truly outside.
     const targetFar = ROAMS.on && window.ATM_OUT ? 90000 : 4000;
     if (cam.far !== targetFar) { cam.far = targetFar; cam.updateProjectionMatrix(); }
+    // Render case camera last, after player movement and third-person camera updates.
+    // All existing raycast controls therefore use the same case camera on the next input.
+    if(CASE_VIEW.on&&ROAMS.on&&!carryingCase&&caseG.visible){
+      const a=CASE_VIEW.angle,d=CASE_VIEW.dist,el=CASE_VIEW.elevation;
+      cam.position.set(caseG.position.x+Math.sin(a)*Math.cos(el)*d,caseG.position.y+Math.sin(el)*d,caseG.position.z+Math.cos(a)*Math.cos(el)*d);
+      cam.lookAt(caseG.position.x,caseG.position.y+0.4,caseG.position.z);
+      cam.near=0.05;cam.fov=48;cam.updateProjectionMatrix();
+    }
     S.renderer.render(S.scene, cam);
   }
-  addEventListener('message', (e) => { const d = e.data || {}; if (d.unfire && d.p != null && !lidControlledByPlayer) pTarget = d.p; if (d.unfire && d.legacyCaseClose) closeCaseInGame(); if(d.unfire && d.releaseCaseControl){lidControlledByPlayer=false;carryingCase=false;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();} if (d.unfire && d.stop) { closeAll(true); stopAll(); ROOM.AMB.mute = true; } if (d.unfire && d.p > 0.5) ROOM.AMB.mute = false; if (d.unfire && 'vis' in d) { frameVisible = !!d.vis; if(frameVisible && ROOM.AMB)ROOM.AMB.mute=false; window.__gameVisible = frameVisible; ONLINE.voiceVisibility(frameVisible); } if (d.unfire && d.vis === false) { closeAll(true); setRobot(null); stopAll(); CINE.on = false; if (MEGA) megaOff(); CK.forEach((k) => { compG[k].userData.open = 0; compG[k].userData.t = 0; }); if (HW) { HW.T = 0; HW.u = 0; HW.tg = 0; } items.forEach((it) => { if (it.kind === 'mut') { it.tgt = 0; it.T = 0; } if (it.g) { it.on = 0; it.kk = 0; } if (it.W && it.home) { it.W.position.copy(it.home); it.W.rotation.set(0, 0, 0); it.retT = 0; } }); view.gd = view.D0; view.gx = 0; view.gz = 0.15; ORB.gaz = ORB.gde = 0; } if (d.unfire && d.audio) { try { UA.init(); } catch (er) {} } });
+  addEventListener('message', (e) => { const d = e.data || {}; if (d.unfire && d.p != null && !lidControlledByPlayer) pTarget = d.p; if (d.unfire && d.legacyCaseClose) closeCaseInGame(); if(d.unfire && d.releaseCaseControl){CAPS.cancel();lidControlledByPlayer=false;carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();} if (d.unfire && d.stop) { closeAll(true); stopAll(); ROOM.AMB.mute = true; } if (d.unfire && d.p > 0.5) ROOM.AMB.mute = false; if (d.unfire && 'vis' in d) { frameVisible = !!d.vis; if(frameVisible && ROOM.AMB)ROOM.AMB.mute=false; window.__gameVisible = frameVisible; ONLINE.voiceVisibility(frameVisible); } if (d.unfire && d.vis === false) { closeAll(true); setRobot(null); stopAll(); CINE.on = false; if (MEGA) megaOff(); CK.forEach((k) => { compG[k].userData.open = 0; compG[k].userData.t = 0; }); if (HW) { HW.T = 0; HW.u = 0; HW.tg = 0; } items.forEach((it) => { if (it.kind === 'mut') { it.tgt = 0; it.T = 0; } if (it.g) { it.on = 0; it.kk = 0; } if (it.W && it.home) { it.W.position.copy(it.home); it.W.rotation.set(0, 0, 0); it.retT = 0; } }); view.gd = view.D0; view.gx = 0; view.gz = 0.15; ORB.gaz = ORB.gde = 0; } if (d.unfire && d.audio) { try { UA.init(); } catch (er) {} } });
   window.__UNFIRE_CASE_QA = {
     get closed(){return pTarget<0.5},
     get carrying(){return carryingCase},
+    get capsuleFlying(){return CAPS.flying},
+    // CI software WebGL may render at fewer than one frame per second.
+    // Use the identical capsule simulation in deterministic localhost-only steps.
+    advanceCapsuleInLocalTest(steps=16){
+      if (!['localhost','127.0.0.1','[::1]'].includes(location.hostname)) return false;
+      const n = Math.min(32,Math.max(0,Number.isFinite(steps)?Math.floor(steps):0));
+      for(let i=0;i<n && CAPS.flying;i++) CAPS.tick(0.06);
+      return !CAPS.flying;
+    },
+    get caseVisible(){return caseG.visible},
+    get inspecting(){return CASE_VIEW.on},
     get lid(){return lidOpen},
     get mission(){return typeof SIDE!=='undefined' && SIDE.cur ? SIDE.cur.t : null},
     get roam(){return ROAMS.on},
@@ -2057,7 +2256,7 @@
     get openControl(){return getComputedStyle(carryButton).display},
     get scrollLock(){return lidControlledByPlayer}
   };
-  window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
+  window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), showCaseView, showRobotView, packCapsule: () => CAPS.pack(), throwCapsule: () => CAPS.throwIt(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
   // A direct-link visitor can tap the button before the heavy 3D scene is initialized.
   if (parent === window && window.__unfireDirectOpenPending) {
     pTarget = 1;

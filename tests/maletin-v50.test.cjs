@@ -8,17 +8,23 @@ chk('Original 3D butterfly artwork preserved',engine.includes("G3.drawEmblem(em.
 chk('Real 3D lid-button calls local toggle',engine.includes('ray.intersectObject(lidBtn, true).length) { toggleCaseInGame()'));
 chk('Rapid toggles use target state',engine.includes('if(pTarget>0.5)closeCaseInGame();else openCaseInGame();'));
 chk('Case closure never sends parent closeCase',!engine.includes('parentPost({ closeCase: 1 })'));
-chk('Local action does not call exitGame',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame()')).includes('exitGame'));
-chk('Carry does not disconnect online',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame()')).includes('ONLINE.leave'));
-chk('Case follows player position',engine.includes('caseG.position.lerp(carryDest,0.23)'));
+chk('Local action does not call exitGame',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame(')).includes('exitGame'));
+chk('Carry does not disconnect online',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame(')).includes('ONLINE.leave'));
+chk('Packed case invisible and saves GPU draws',engine.includes('caseG.visible=false;')&&engine.includes('inventory-only'));
+chk('Capsule simulation test limited to localhost',engine.includes('advanceCapsuleInLocalTest(steps=16)')&&engine.includes('location.hostname')&&engine.includes('CAPS.tick(0.06)'));
+chk('Capsule is reusable without spawning objects each click',engine.includes('if(capsule)return;')&&engine.includes('capsule.visible=true;flight=0.001;'));
+chk('G keyboard handles pack and throw',engine.includes("(e.key==='g'||e.key==='G')")&&engine.includes('action();'));
+chk('Exit from roam cancels capsule and restores case',engine.includes('CAPS.cancel();carryingCase=false;caseG.visible=true'));
+chk('Capsule never exits the game',!engine.slice(engine.indexOf('const CAPS=(()=>'),engine.indexOf('  // ===== SECRETOS:')).includes('exitRoam()'));
+
 chk('Mission logic retained',engine.includes("localStorage.setItem('unfire_side'")&&engine.includes('const SIDE ='));
 chk('Multiplayer logic retained',engine.includes('const ONLINE ='));
 chk('Room audio implementation retained',engine.includes('const AMB ='));
 chk('Parent scroll no longer overrides manual open/close',engine.includes('!lidControlledByPlayer) pTarget = d.p;'));
 chk('Host keeps iframe active when case is local',html.includes('vis:caseLocal||rb.bottom>90'));
 chk('Host does not scroll when closing case',!html.includes('if(d.closeCase)Mal.shut();'));
-chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v=20261022c'));
-chk('Host loads exact matching game',/maletin\/index\.html\?v=20261022c/.test(html));
+chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v=20261023a'));
+chk('Host loads exact matching game',/maletin\/index\.html\?v=20261023a/.test(html));
 chk('User can explicitly exit if desired',engine.includes('window.__exitGame'));
 chk('3D original scene size intact',engine.length>500000);
 const storySource=game.slice(game.indexOf('window.STORY_INIT = function (H) {'),game.indexOf('</script>',game.indexOf('window.STORY_INIT = function (H) {')));
@@ -27,6 +33,9 @@ chk('In-house PC mystery application',engine.includes('id="pcMysteryApp"')&&engi
 chk('Correct unique unlock code',engine.includes("fld.value.trim().toUpperCase()!=='ULTIMATEROBOTS'"));
 chk('Only local avatar entitlements updated',engine.includes("localStorage.setItem('unfire_unlock',String(Math.max(current,20)))"));
 chk('Story saves protected from corrupted data',storySource.includes('Validate older/corrupted saves'));
+chk('Twelve playable story chapters', (storySource.match(/\{\s*t:\s*['\"][^'\"]+['\"],\s*steps:/g)||[]).length===12 && storySource.includes('const FREE = 12'));
+chk('Map chapter goals can be completed with Nimbo assistance',storySource.includes("w.ev==='reach'")&&engine.includes('navigateTo: (quest)'));
+chk('Completed story has no purchase gate',storySource.includes('HISTORIA COMPLETADA')&&!storySource.includes('VER EL MALETÍN COMPLETO'));
 chk('Mission events guarded against stale steps',storySource.includes('currentStep.wait.ev !== name'));
 chk('Persistent active side quest',engine.includes("'unfire_side_active'"));
 chk('PC screen shows mystery app icon',engine.includes("g.fillText('?', 14, 78)"));

@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261022c" as="script"></head><body><title>UNFIRE Maletín</title>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023a" as="script"></head><body><title>UNFIRE Maletín</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
@@ -4339,13 +4339,13 @@ window.ROOMC = function (D) {
 /* UNFIRE · MODO HISTORIA «El Segundo Perdido».
    Un anfitrión (NIMBO) aparece cuando abres el maletín y te alejas un poco; te pone en contexto y te ofrece empezar.
    Partida guardada en este navegador, capítulos con misiones que puedes dejar y retomar, 3 capítulos gratis,
-   tres niveles (novato · sabe · experto), voces distintas por personaje con emoción (voces del sistema). */
+   doce capítulos jugables gratis, tres niveles de ayuda y voces del sistema por personaje. */
 window.STORY_INIT = function (H) {
   const KEY = 'unfire_save_v1';
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } };
   const store = (s) => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} };
   let SAVE = load() || { name: '', level: 1, ch: 0, step: 0, done: [], met: false, ts: 0 };
-  const FREE = 3;
+  const FREE = 12;
   // Validate older/corrupted saves without overwriting a valid current mission.
   if (!SAVE || typeof SAVE !== 'object' || Array.isArray(SAVE)) SAVE = { name: '', level: 1, ch: 0, step: 0, done: [], met: false, ts: 0 };
   SAVE.done = Array.isArray(SAVE.done) ? [...new Set(SAVE.done.filter(n => Number.isInteger(n) && n >= 0 && n < FREE))] : [];
@@ -4400,7 +4400,42 @@ window.STORY_INIT = function (H) {
       { say: [['GEMI', 'risa', () => 'Nosotros somos los gemelos de Géminis. Yo empiezo las frases…'], ['GEMI', 'feliz', () => '…y yo me como el final. Oye, ' + N() + ', la máquina de bolas guarda un aparato para ti. Gira la manivela.']], wait: { ev: 'gacha' }, hint: 'Usa la máquina de bolas roja', at: [44, 8] },
       { say: [['ESCORPIO', 'misterio', () => 'Todos creen que el segundo se perdió. Yo creo que alguien lo escondió a propósito.'], ['NIMBO', 'duda', () => 'Escorpio, no asustes a ' + N() + ' en su primer día.'], ['ESCORPIO', 'susurro', () => 'Detrás de la puerta azul hay más mundo del que parece. Cuando quieras saber la verdad, ya sabes dónde buscar.'], ['NIMBO', 'feliz', () => 'Tres pedacitos de doce. Lo que viene después necesita el maletín completo: islas, la ciudad, el skatepark y la verdad de Escorpio.']], end: true },
     ] },
-    { t: 'La puerta azul', locked: true }, { t: 'Tauro y la ballena que no sabía cantar', locked: true }, { t: 'El cerdo volador pide asilo', locked: true }, { t: 'Cáncer construye una ciudad en una caja', locked: true }, { t: 'Leo y el concurso de skate', locked: true }, { t: 'Virgo ordena el tiempo', locked: true }, { t: 'Sagitario dispara a la luna', locked: true }, { t: 'Capricornio y la montaña de nieve', locked: true }, { t: 'Acuario y el año que por fin llegó', locked: true },
+    { t: "La puerta azul", steps: [
+      { say: [["ESCORPIO", 'misterio', "Tras esa puerta está el primer fragmento que cayó fuera del maletín. Atraviésala y sal al mundo."]], wait: { ev: 'outside' }, hint: "Sal de la casa por la puerta azul, o pide ayuda a Nimbo.", at: [-30, 92] },
+      { say: [["NIMBO", 'feliz', "Ahora sabes el secreto: hay un mundo completo más allá de la casa. Y sigue siendo tuyo."]], end: true }
+    ] },
+    { t: "Tauro y la ballena que no sabía cantar", steps: [
+      { say: [["NIMBO", 'misterio', "Tauro ha oído una ballena cerca del mar abierto. Encuéntrala y escucha el paisaje."]], wait: { ev: 'reach', x: 0, z: 650, r: 125, h: 0 }, hint: "Ve hacia el mar abierto y busca las ballenas.", at: [0, 650] },
+      { say: [["LIBRA", 'feliz', "No todas las canciones necesitan palabras. Has encontrado el canto del océano."]], end: true }
+    ] },
+    { t: "El cerdo volador pide asilo", steps: [
+      { say: [["ARI", 'misterio', "El cerdo Gustavo ha perdido su ruta de vuelo. La isla verde puede darle refugio."]], wait: { ev: 'reach', x: -420, z: 120, r: 125, h: 0 }, hint: "Explora la isla verde al oeste.", at: [-420, 120] },
+      { say: [["NIMBO", 'feliz', "Gustavo puede descansar. La amistad también mueve este mundo."]], end: true }
+    ] },
+    { t: "Cáncer construye una ciudad en una caja", steps: [
+      { say: [["GEMI", 'misterio', "Cáncer guarda planos de una ciudad diminuta en el gran templo. Vamos a buscarlos."]], wait: { ev: 'reach', x: 900, z: 0, r: 125, h: 0 }, hint: "Dirígete hacia el templo de Atlantis.", at: [900, 0] },
+      { say: [["NIMBO", 'feliz', "Los planos eran una miniatura de nuestra casa. Cada objeto puede esconder un universo."]], end: true }
+    ] },
+    { t: "Leo y el concurso de skate", steps: [
+      { say: [["ARI", 'misterio', "Leo organiza una competición junto al mar. Elige tu robot y llega a las olas."]], wait: { ev: 'reach', x: 150, z: 650, r: 125, h: 0 }, hint: "Alcanza la zona de surf.", at: [150, 650] },
+      { say: [["ARI", 'feliz', "El mejor truco es seguir probando, aunque alguna caída termine en chapuzón."]], end: true }
+    ] },
+    { t: "Virgo ordena el tiempo", steps: [
+      { say: [["LIBRA", 'misterio', "Virgo cree que el obelisco guarda las horas que faltan. Encuentra el desierto."]], wait: { ev: 'reach', x: 80, z: -500, r: 125, h: 0 }, hint: "Busca el obelisco entre las dunas.", at: [80, -500] },
+      { say: [["ESCORPIO", 'feliz', "El reloj se ha movido. Antes de cada segundo hay una decisión."]], end: true }
+    ] },
+    { t: "Sagitario dispara a la luna", steps: [
+      { say: [["ESCORPIO", 'misterio', "Las torres gigantes miran hacia arriba. Desde allí veremos dónde cayó el siguiente fragmento."]], wait: { ev: 'reach', x: 2200, z: -1800, r: 210, h: 150 }, hint: "Llega a las torres de plugins gigantes.", at: [2200, -1800] },
+      { say: [["GEMI", 'feliz', "¡Las torres estaban señalando al cielo! Ya tenemos la dirección del último viaje."]], end: true }
+    ] },
+    { t: "Capricornio y la montaña de nieve", steps: [
+      { say: [["NIMBO", 'misterio', "Capricornio espera sobre el monte nevado de Haiku. Hay que alcanzar su cima."]], wait: { ev: 'reach', x: -850, z: -860, r: 125, h: 100 }, hint: "Visita la montaña nevada de Haiku.", at: [-850, -860] },
+      { say: [["LIBRA", 'feliz', "Has subido a la cima sin perder el camino. El tiempo empieza a encajar."]], end: true }
+    ] },
+    { t: "Acuario y el año que por fin llegó", steps: [
+      { say: [["NIMBO", 'misterio', "Ya casi está. Sube a la gran pirámide de Atlantis y reúne los fragmentos del segundo perdido."]], wait: { ev: 'reach', x: 600, z: 0, r: 125, h: 90 }, hint: "Vuelve a Atlantis para completar la historia.", at: [600, 0] },
+      { say: [["ESCORPIO", 'feliz', "El segundo perdido ha vuelto. La música continúa y ahora el tiempo también. Enhorabuena."]], end: true }
+    ] },
   ];
 
   // ---------- interfaz: barras de cine, nombre, subtítulos y opciones ----------
@@ -4428,13 +4463,13 @@ window.STORY_INIT = function (H) {
   function setObj(t) { const ob = document.getElementById('stO'); ob.textContent = t ? '🎯 ' + t : ''; ob.style.display = t ? '' : 'none'; }
   function runStep() {
     const C = CH[SAVE.ch];
-    if (!C || C.locked || !Array.isArray(C.steps)) { waitEv = null; waitN = 0; show(false); setObj('Este capítulo todavía no está disponible. Puedes seguir explorando y completando misiones.'); return; }
+    if (!C || C.locked || !Array.isArray(C.steps)) { waitEv = null; waitN = 0; show(false); setObj(SAVE.ch>=CH.length?'🏆 Historia completada. Puedes volver a jugar capítulos desde 📖 HISTORIA.':'Capítulo no disponible.'); return; }
     if (SAVE.step >= C.steps.length || SAVE.step < 0) { SAVE.step = 0; save(); }
     // Prevent stale mission triggers from advancing a different chapter.
     waitEv = null; waitN = 0;
     inStory = true; const S0 = C.steps[SAVE.step];
-    play(S0.say, () => { if (S0.end) { SAVE.done.includes(SAVE.ch) || SAVE.done.push(SAVE.ch); SAVE.ch++; SAVE.step = 0; save(true); const nxt = CH[SAVE.ch]; if (nxt && !nxt.locked) choices([['▶ SIGUIENTE CAPÍTULO', () => runStep()], ['MÁS TARDE', () => { show(false); setObj('Capítulo ' + (SAVE.ch + 1) + ' esperando · 📖 HISTORIA'); }, 1]]); else choices([['🔓 VER EL MALETÍN COMPLETO', () => { H.buy(); show(false); }], ['CERRAR', () => { show(false); setObj(''); }, 1]]); return; }
-      if (S0.wait) { waitEv = S0.wait.ev; waitN = S0.wait.n || 1; setObj(S0.hint); choices([['¡VAMOS!', () => show(false)]]); } else { SAVE.step++; save(); runStep(); } }); }
+    play(S0.say, () => { if (S0.end) { SAVE.done.includes(SAVE.ch) || SAVE.done.push(SAVE.ch); SAVE.ch++; SAVE.step = 0; save(true); const nxt = CH[SAVE.ch]; if (nxt && !nxt.locked) choices([['▶ SIGUIENTE CAPÍTULO', () => runStep()], ['MÁS TARDE', () => { show(false); setObj('Capítulo ' + (SAVE.ch + 1) + ' esperando · 📖 HISTORIA'); }, 1]]); else choices([['🏆 HISTORIA COMPLETADA', () => { show(false); setObj('🏆 El Segundo Perdido: historia terminada'); }], ['SEGUIR EXPLORANDO', () => { show(false); setObj(''); }, 1]]); return; }
+      if (S0.wait) { waitEv = S0.wait.ev; waitN = S0.wait.n || 1; setObj(S0.hint); const opts=[['¡VAMOS!', () => show(false)]]; if (S0.wait.ev==='reach'||S0.wait.ev==='outside')opts.push(['🧭 NIMBO: LLEVARME',()=>{show(false);try{H.navigateTo&&H.navigateTo(S0.wait);}catch(e){H.say('🧭 Sigue la estrella del mapa.');}},true]); choices(opts); } else { SAVE.step++; save(); runStep(); } }); }
   function ev(name) { const currentStep = CH[SAVE.ch] && CH[SAVE.ch].steps && CH[SAVE.ch].steps[SAVE.step]; if (!waitEv || name !== waitEv || !currentStep || !currentStep.wait || currentStep.wait.ev !== name) return; waitN--; if (waitN > 0) { setObj(CH[SAVE.ch].steps[SAVE.step].hint + ' · faltan ' + waitN); return; } waitEv = null; SAVE.step++; save(); setTimeout(runStep, 700); }
   function intro() { if (hostShown) return; hostShown = true; H.showHost(true); hud.style.display = 'flex';
     if (SAVE.met && SAVE.name) { H.say('👋 ¡' + N() + '! Has vuelto · capítulo ' + (SAVE.ch + 1) + ' guardado · 📖 HISTORIA para seguir'); setObj('Cuando quieras: 📖 HISTORIA'); return; }
@@ -4457,9 +4492,19 @@ window.STORY_INIT = function (H) {
   let chatT = 25, lastChat = -1;
   function chatter(dt, ok) { if (!SAVE.met || active || mute) return; chatT -= dt; if (chatT > 0 || !ok) return; chatT = 30 + Math.random() * 40; let w, e, tx; const usedC = (() => { try { return JSON.parse(localStorage.getItem('unfire_chat') || '[]'); } catch (er) { return []; } })(); const freeC = CHAT.map((_, j) => j).filter((j) => !usedC.includes(j)); if (freeC.length && Math.random() < 0.5) { const i = freeC[Math.floor(Math.random() * freeC.length)]; usedC.push(i); try { localStorage.setItem('unfire_chat', JSON.stringify(usedC)); } catch (er) {} const C0 = CHAT[i]; w = C0[0]; e = C0[1]; tx = typeof C0[2] === 'function' ? C0[2]() : C0[2]; } else { const ks = Object.keys(CAST); w = ks[Math.floor(Math.random() * ks.length)]; e = ['feliz', 'misterio', 'risa', 'duda', 'susurro', 'serio'][Math.floor(Math.random() * 6)]; tx = genLine(w); } H.say('💬 ' + w + ': ' + tx); H.focusHost(w, true); voice(w, tx, e, () => {}); }
   const curObj = () => { const C = CH[SAVE.ch]; const S0 = C && !C.locked && C.steps[SAVE.step]; return waitEv && S0 && S0.at ? { x: S0.at[0], z: S0.at[1], mini: !!S0.mini, t: S0.hint } : null; };
-  return { ev, intro, chatter, get obj() { return curObj(); }, get active() { return active; }, tick(st) { if (!hostShown && st.open && st.far) intro(); hud.style.display = hostShown && st.open ? 'flex' : 'none'; }, get save() { return SAVE; } };
+  let missionPollAt=0;
+  return { ev, intro, chatter, get obj() { return curObj(); }, get active() { return active; }, tick(st) {
+      if (!hostShown && st.open && st.far) intro();
+      hud.style.display = hostShown && st.open ? 'flex' : 'none';
+      const now=Date.now();if(now-missionPollAt<550)return;missionPollAt=now;
+      if(!waitEv||typeof H.getExplore!=='function')return;
+      const p=H.getExplore(), step=CH[SAVE.ch]?.steps?.[SAVE.step], w=step?.wait;
+      if(!w||!p.walking)return;
+      if(w.ev==='outside'&&p.outside)ev('outside');
+      else if(w.ev==='reach'&&p.outside&&Math.hypot(p.x-w.x,p.z-w.z)<=(w.r||125)&&p.h>=(w.h||0)-25)ev('reach');
+    }, get save() { return SAVE; } };
 };
 
 </script>
-<script src="game-engine-v50.js?v=20261022c"></script>
+<script src="game-engine-v50.js?v=20261023a"></script>
 </body></html>
