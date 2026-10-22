@@ -1,0 +1,24 @@
+const fs=require('node:fs'),assert=require('node:assert/strict'),vm=require('node:vm');
+const engine=fs.readFileSync('audio/maletin/game-engine-v50.js','utf8');
+const html=fs.readFileSync('audio/index.html','utf8');
+const game=fs.readFileSync('audio/maletin/index.html','utf8');
+new vm.Script(engine,{filename:'game-engine-v50.js'});
+function chk(label,condition){assert.ok(condition,label);console.log('PASS',label)}
+chk('Original 3D butterfly artwork preserved',engine.includes("G3.drawEmblem(em.getContext('2d'), 256, '#7fd0ff')"));
+chk('Real 3D lid-button calls local toggle',engine.includes('ray.intersectObject(lidBtn, true).length) { toggleCaseInGame()'));
+chk('Rapid toggles use target state',engine.includes('if(pTarget>0.5)closeCaseInGame();else openCaseInGame();'));
+chk('Case closure never sends parent closeCase',!engine.includes('parentPost({ closeCase: 1 })'));
+chk('Local action does not call exitGame',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame()')).includes('exitGame'));
+chk('Carry does not disconnect online',!engine.slice(engine.indexOf('function closeCaseInGame()'),engine.indexOf('function openCaseInGame()')).includes('ONLINE.leave'));
+chk('Case carries via player's position',engine.includes('caseG.position.lerp(carryDest,0.23)'));
+chk('Mission logic retained',engine.includes("localStorage.setItem('unfire_side'")&&engine.includes('const SIDE ='));
+chk('Multiplayer logic retained',engine.includes('const ONLINE ='));
+chk('Room audio implementation retained',engine.includes('const AMB ='));
+chk('Parent scroll no longer overrides manual open/close',engine.includes('!lidControlledByPlayer) pTarget = d.p;'));
+chk('Host keeps iframe active when case is local',html.includes('vis:caseLocal||rb.bottom>90'));
+chk('Host does not scroll when closing case',!html.includes('if(d.closeCase)Mal.shut();'));
+chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js'));
+chk('Host loads exact matching game',html.includes('maletin/index.html?v=50'));
+chk('User can explicitly exit if desired',engine.includes('window.__exitGame'));
+chk('3D original scene size intact',engine.length>500000);
+console.log('All staged structural tests PASSED; full gameplay and device performance still require browser QA.');
