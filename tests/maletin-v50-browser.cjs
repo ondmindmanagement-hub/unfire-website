@@ -97,8 +97,11 @@ const assert=require('node:assert/strict');
   });
   assert.equal(missions.filter(Boolean).length,11,'Some side mission completion rules failed');
   // Workshop must display actual cached 3D robot portraits and leave room for player.
-  await f.waitForFunction(()=>[...document.querySelectorAll('button')].some(x=>x.textContent.trim()==='🔧 TALLER'),null,{timeout:25000,polling:150});
-  await f.evaluate(()=>{const b=[...document.querySelectorAll('button')].find(x=>x.textContent.trim()==='🔧 TALLER');if(!b)throw Error('Workshop action missing');b.click()});
+  // Localized UI may label this control TALLER or WORKSHOP: its stable ID is language-independent.
+  const workshopDiag=await f.evaluate(()=>({lang:window.__LANG||navigator.language,hud:!!document.getElementById('storyHud'),button:!!document.getElementById('unfireWorkshopHud')}));
+  console.log('WORKSHOP_UI_DIAGNOSTIC',JSON.stringify(workshopDiag));
+  await f.waitForFunction(()=>!!document.getElementById('unfireWorkshopHud'),null,{timeout:25000,polling:150});
+  await f.evaluate(()=>{const b=document.getElementById('unfireWorkshopHud');if(!b)throw Error('Workshop action missing');b.click()});
   await f.waitForFunction(()=>document.querySelectorAll("#onT .robotCard img").length>=2,{timeout:20000}).catch(()=>{});
   const studio=await f.evaluate(()=>{const panel=document.querySelector('#onl .b').getBoundingClientRect();return {cards:document.querySelectorAll('#onT .robotCard').length,locked:document.querySelectorAll('#onT .robotCard:disabled').length,portraits:document.querySelectorAll('#onT .robotCard img').length,width:panel.width,viewport:innerWidth}});
   assert(studio.cards===20&&studio.locked===0&&studio.portraits>=2&&studio.width<studio.viewport*0.5,'Workshop obstructs player or 3D portraits missing: '+JSON.stringify(studio));
