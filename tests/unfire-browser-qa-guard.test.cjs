@@ -33,3 +33,19 @@ test('missing executable reports distinct failure', () => {
     { encoding: 'utf8', timeout: 5000 });
   assert.equal(r.status, 127, r.stderr);
 });
+
+test('timeout kills a stubborn descendant in the owned Unix process group', { skip: process.platform === 'win32' }, () => {
+  const script = [
+    'const {spawn}=require("node:child_process")',
+    `const g=spawn(process.execPath,["-e",${JSON.stringify("process.on('SIGTERM',()=>{});setInterval(()=>{},1000)")}],{stdio:"ignore"})`,
+    'console.log("GRANDCHILD="+g.pid)',
+    'setInterval(()=>{},1000)',
+  ].join(';');
+  const r = launch(450, script);
+  assert.equal(r.status, 124, r.stderr);
+  const pid = Number(r.stdout.match(/GRANDCHILD=(\d+)/)?.[1]);
+  assert(pid > 0, 'Expected a spawned descendant PID: ' + r.stdout);
+  const check = spawnSync('ps', ['-o', 'stat=', '-p', String(pid)], { encoding: 'utf8' });
+  assert(check.status !== 0 || !check.stdout.trim() || check.stdout.trim().startsWith('Z'),
+    'A browser descendant remained alive after timeout: ' + pid);
+});
