@@ -61,6 +61,36 @@ const assert=require('node:assert/strict');
   await f.evaluate(()=>{window.__mal.setP(1);window.__mal.requestOpen();window.__roamAPI.enterRoam();window.__SIDEM.offer('NIMBO')});
   const initial=await f.evaluate(()=>({mission:window.__UNFIRE_CASE_QA.mission,originalButterfly:window.__UNFIRE_CASE_QA.originalButterfly,roam:window.__UNFIRE_CASE_QA.roam}));
   assert(initial.mission&&initial.originalButterfly&&initial.roam,'Mission, roam or real 3D butterfly not initialized');
+
+  // Real browser input reaches the live engine; settings guide is attached after STORY_INIT.
+  const comboBrowser=await f.evaluate(()=>{
+    const R=window.__roamAPI.ROAMS, original={h:R.h,fly:R.fly,fl:R.fl,boostT:R.boostT,slam:R.slam};
+    const send=(key)=>dispatchEvent(new KeyboardEvent('keydown',{key,bubbles:true,cancelable:true}));
+    try{
+      R.h=160;R.fl=0;R.fly=true;R.mini=false;
+      send('ArrowDown');send('ArrowDown');
+      const slam=!!R.slam;
+      send('ArrowUp');send('ArrowUp');send('ArrowUp');
+      const boost=R.boostT>0&&!R.slam;
+      const button=document.getElementById('unfireControlsButton');
+      const guide=document.getElementById('unfireControlGuide');
+      const settings=document.getElementById('storyHud');
+      if(!button||!guide||!settings)return {slam,boost,mounted:false};
+      button.click();
+      const opened=guide.classList.contains('on')&&getComputedStyle(guide).display==='flex';
+      const clearGuide=guide.textContent.includes('Aterrizaje de impacto')&&guide.textContent.includes('Impulso turbo');
+      guide.querySelector('#unfireGuideClose').click();
+      const closed=getComputedStyle(guide).display==='none';
+      return {slam,boost,mounted:settings.contains(button),opened,closed,clearGuide};
+    }finally{
+      R.h=original.h;R.fly=original.fly;R.fl=original.fl;
+      R.boostT=original.boostT||0;R.slam=original.slam||false;
+      R.k.ArrowDown=0;R.k.ArrowUp=0;
+    }
+  });
+  assert(Object.values(comboBrowser).every(Boolean),'In-game arrow combos or settings guide not functional: '+JSON.stringify(comboBrowser));
+  console.log('PASS HERO_FLIGHT_COMBOS_SETTINGS_BROWSER',JSON.stringify(comboBrowser));
+
   assert(await f.evaluate(()=>window.__UNFIRE_CASE_QA.portableUnlocked),'Capsule should unlock at third mission');
   await f.evaluate(()=>window.__mal.toggleCase());
   const closed=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,mission:window.__UNFIRE_CASE_QA.mission}));
