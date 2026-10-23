@@ -118,10 +118,19 @@ body.unfire-roaming #cv{touch-action:none}
   #story .nm{margin-bottom:2px!important}
   #story .ch{margin-top:3px!important}
 }
-  /* The existing PASEAR is the only button in an open maletin view. */
-  body:not(.unfire-roaming) #roamB{left:50%!important;right:auto!important;bottom:max(13px,env(safe-area-inset-bottom))!important;
-    transform:translateX(-50%)!important;min-height:42px;max-width:calc(100vw - 210px);
-    box-sizing:border-box;white-space:nowrap;font-size:clamp(9px,1.6vw,12px)!important}
+  /* Case-only PASEAR: left top action slot. Never cover center-bottom
+     instructions or the maletin. The SAME button moves to #ctlDock when walking. */
+  body:not(.unfire-roaming) #roamB{
+    position:fixed!important;
+    left:max(12px,env(safe-area-inset-left))!important;
+    top:calc(env(safe-area-inset-top) + 12px)!important;
+    right:auto!important;bottom:auto!important;transform:none!important;
+    box-sizing:border-box;max-width:min(38vw,182px)!important;
+    min-height:40px!important;padding:8px 12px!important;
+    white-space:normal!important;overflow-wrap:normal!important;
+    font-size:clamp(10px,1.3vw,12px)!important;line-height:1.2!important;
+    text-align:center!important;z-index:71!important;
+  }
   #roamB.unfire-intro-blink{animation:unfire-pasear-blink 2s steps(1,end) 1}
   @keyframes unfire-pasear-blink{
     0%,20%,40%,60%,80%{visibility:visible;filter:brightness(1.65)}
@@ -129,9 +138,13 @@ body.unfire-roaming #cv{touch-action:none}
     100%{visibility:visible;filter:brightness(1)}}
   body.storyOn #roamB{display:none!important}
   @media(pointer:coarse) and (orientation:landscape){
-    body:not(.unfire-roaming) #roamB{bottom:max(5px,env(safe-area-inset-bottom))!important;
-      min-height:32px!important;padding:5px 11px!important;
-      max-width:calc(100vw - 250px);font-size:9px!important}}
+    body:not(.unfire-roaming) #roamB{
+      left:calc(env(safe-area-inset-left) + 8px)!important;
+      top:calc(env(safe-area-inset-top) + 6px)!important;
+      max-width:min(24vw,150px)!important;min-height:34px!important;
+      padding:6px 9px!important;font-size:10px!important
+    }
+  }
   /* Case/robot controls: never place a second floating CTA in the main view. */
   #ctlDock{box-sizing:border-box;max-width:min(42vw,230px);gap:7px!important;overflow-x:visible;overscroll-behavior:contain}
   #ctlDock button{box-sizing:border-box;max-width:100%;white-space:normal!important;text-align:center;line-height:1.18!important}
@@ -155,13 +168,16 @@ body.unfire-roaming #cv{touch-action:none}
       max-height:calc(100dvh - 285px)!important}
     body.unfire-roaming #unfireCarryCase{top:calc(env(safe-area-inset-top) + 195px)!important}
   }
-  /* Leave an entire bottom navigation row for + / − / home / breadcrumbs.
-     The centered PASEAR action belongs to its own row on small screens. */
-  @media(max-width:850px){
-    body:not(.unfire-roaming) #roamB{bottom:calc(env(safe-area-inset-bottom) + 63px)!important}
-  }
-  @media(pointer:coarse) and (orientation:landscape){
-    body:not(.unfire-roaming) #roamB{bottom:calc(env(safe-area-inset-bottom) + 50px)!important}
+  /* Mobile safe area keeps PASEAR between the side edge and the status
+     bar, above the minimap lane; landscape has a shorter native button. */
+  @media(pointer:coarse) and (orientation:portrait){
+    body:not(.unfire-roaming) #roamB{
+      left:calc(env(safe-area-inset-left) + 8px)!important;
+      top:calc(env(safe-area-inset-top) + 7px)!important;
+      max-width:min(37vw,146px)!important;
+      min-height:38px!important;padding:7px 9px!important;
+      font-size:clamp(9px,2.6vw,11px)!important
+    }
   }
 
 </style>
