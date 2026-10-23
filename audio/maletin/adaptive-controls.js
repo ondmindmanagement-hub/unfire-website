@@ -6,6 +6,7 @@
   if (root) root.UnfireAdaptiveControls = api;
 })(typeof window !== 'undefined' ? window : null, function () {
   'use strict';
+  const host = typeof window === 'undefined' ? null : window;
 
   const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
   const deadzone = (n, threshold = 0.16) => {
@@ -237,13 +238,13 @@
     }
     function startEdit() {
       if (editing) return;
-      editing=true;root.__unfireLayoutEditing=true;
+      editing=true;host.__unfireLayoutEditing=true;
       ROAMS.k[' ']=0;ROAMS.k.s=0;
       if (guide) {guide.classList.remove('on');guide.style.display='none';}
       bar.style.display='flex';layout();
     }
     function endEdit(store) {
-      editing=false;root.__unfireLayoutEditing=false;
+      editing=false;host.__unfireLayoutEditing=false;
       dragged=null;bar.style.display='none';
       if (store) save();
       layout();
@@ -310,7 +311,7 @@
       resizeToken=setTimeout(layout,80);
     };
     addEventListener('resize',recalc,{passive:true});
-    if (root.visualViewport) root.visualViewport.addEventListener('resize',recalc,{passive:true});
+    if (host.visualViewport) host.visualViewport.addEventListener('resize',recalc,{passive:true});
     addEventListener('orientationchange',recalc,{passive:true});
     layout();
     return {tick,stop,layout,startEdit,endEdit};
