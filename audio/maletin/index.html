@@ -307,6 +307,8 @@ body.unfire-roaming #cv{touch-action:none}
     font:700 10px/1.2 system-ui,sans-serif!important;letter-spacing:0!important;
     border-radius:11px!important;border-width:1px!important;box-shadow:0 3px 10px #0006!important;
     overflow-wrap:anywhere!important;text-align:center!important}
+  /* PASEAR keeps an accessible 70px hit target without enlarging other controls. */
+  body #ctlDock #roamB{min-width:70px!important}
   body #unfireCarryCase{max-width:min(106px,30vw)!important;min-height:34px!important;
     left:max(8px,env(safe-area-inset-left))!important;top:calc(env(safe-area-inset-top) + 143px)!important;
     padding:5px 7px!important;font:700 9px/1.2 system-ui,sans-serif!important;border-radius:10px!important}
