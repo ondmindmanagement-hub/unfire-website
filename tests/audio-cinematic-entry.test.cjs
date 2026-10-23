@@ -161,3 +161,33 @@ test('mobile loading hint stays visible until the WebGL scene is ready',()=>{
   assert(!html.includes('.hero-pin.imm #unfireMobileTapHint'),
     'Entering CSS immersion alone must not hide the first-tap/loading guide');
 });
+
+
+test('slow renderer still requests native fullscreen synchronously on the actual tap',()=>{
+  const h=fixture({loaded:false});
+  assert(!h.trace.some(x=>x.type==='native-fullscreen'),'loading page cannot request fullscreen itself');
+  h.tap();
+  assert.equal(h.trace.filter(x=>x.type==='native-fullscreen').length,1,
+    'Delayed WebGL must not consume native fullscreen user activation');
+  h.tap();
+  assert.equal(h.trace.filter(x=>x.type==='native-fullscreen').length,1,
+    'Repeated taps while loading cannot request duplicate fullscreen');
+  assert(!h.messages().some(m=>m.entryStart),'Wait for actual renderer, never open empty scene');
+  h.ready();
+  assert.equal(h.messages().filter(m=>m.entryStart).length,1);
+});
+
+test('exiting while WebGL loads cancels pending cinematic entry permanently',()=>{
+  const h=fixture({loaded:false});
+  h.tap();
+  assert.equal(h.animations('heroPin').length,0);
+  h.context.__cinematicMal.exitGame();
+  assert(h.elements.get('heroPin').classList.contains('web-return'));
+  h.ready();
+  assert.equal(h.messages().filter(m=>m.entryStart).length,0,
+    'Stale ready callback must not reopen the closed game');
+  assert.equal(h.animations('heroPin').length,0,
+    'Stale ready callback must not animate after exit');
+  assert(!h.document.body.classList.contains('immOn'));
+  assert(h.elements.get('heroPin').classList.contains('web-return'));
+});
