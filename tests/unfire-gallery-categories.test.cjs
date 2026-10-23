@@ -46,6 +46,7 @@ const viewports = [
             emptyAlt: images.filter(i=>!i.alt.trim()).length,
             categoryHeadersWithin: groups.every(g=>within(g.querySelector('.uf-gallery-category-head'))),
             cardsWithin: allCards.every(within),
+            outside: allCards.filter(x=>!within(x)).map(x=>({name:x.querySelector('h4')?.textContent, left:x.getBoundingClientRect().left, right:x.getBoundingClientRect().right, width:x.getBoundingClientRect().width, grid:x.parentElement.getBoundingClientRect().width, columns:getComputedStyle(x.parentElement).gridTemplateColumns})),
             bodyOverflow: document.documentElement.scrollWidth > innerWidth + 2,
             footnote: root.querySelector('.uf-gallery-footnote')?.textContent || '',
           };
@@ -54,7 +55,7 @@ const viewports = [
         assert.equal(summary.images, 8); // KeyBridge intentionally uses a private, text-only research cover
         assert.equal(summary.emptyAlt, 0);
         assert.equal(summary.bodyOverflow, false, 'Horizontal overflow at ' + viewport.width);
-        assert.equal(summary.cardsWithin, true, 'Cards spill out at ' + viewport.width);
+        assert.equal(summary.cardsWithin, true, 'Cards spill out at ' + viewport.width + ': ' + JSON.stringify(summary.outside));
         assert.equal(summary.categoryHeadersWithin, true, 'Category headings spill out at ' + viewport.width);
         assert.deepEqual(summary.nav, Object.keys(expected).map(x => '#' + x));
         assert.deepEqual(summary.groups, Object.entries(expected).map(([id,headings])=>({ id,headings })));
