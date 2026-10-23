@@ -1006,12 +1006,12 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
     if(pin.classList.contains('scene-error')){loadingIntent=false;UNFIRE_SCENE.start(true);}
     else UNFIRE_SCENE.start();
     entryTransition=true;
-    // Native fullscreen must be requested synchronously from a real tap.
-    // If WebGL is still loading, retain the preview instead of going fullscreen
-    // with a black frame; Safari on iPhone uses CSS viewport immersion.
-    if(UNFIRE_SCENE.isReady())fullscreenFromGesture();
+    // Request native fullscreen synchronously while the real tap is active.
+    // The genuine first-paint cover remains visible until WebGL is ready.
+    // Safari on iPhone continues to use the existing CSS viewport fallback.
+    fullscreenFromGesture();
     const begin=()=>{
-      if(!entryTransition)return;
+      if(!entryTransition||webReturn)return;
       if(!UNFIRE_SCENE.isReady()){
         if(!loadingIntent){
           loadingIntent=true;
@@ -1162,6 +1162,10 @@ if(d.lv!=null)document.documentElement.style.setProperty('--lv',d.lv);if(d.rect)
   firstFrame.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(!document.documentElement.classList.contains('no-webgl'))open(1050);}});
   function shut(){caseLocal=true;$('#heroPin').classList.add('imm');document.body.classList.add('immOn');document.documentElement.classList.add('immOn');fr.style.pointerEvents='auto';fr.style.clipPath='none';}
   function exitGame(){
+    // An onReady callback from slow WebGL must never reopen a game after
+    // the player explicitly chose to return to the website.
+    entryTransition=false;loadingIntent=false;
+    if(entryAnimation){try{entryAnimation.cancel()}catch(_){}entryAnimation=null;}
     caseLocal=false;webReturn=true;parked=1;
     restoreFullscreen.hidden=true;
     let exited=Promise.resolve();
