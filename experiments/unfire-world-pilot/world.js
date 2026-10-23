@@ -341,5 +341,5 @@
   // Let the browser commit an HTML/2D frame before entering WebGL setup.
   // Software-based WebGL can block the main thread; a tiny deferred start
   // keeps the storefront legible instead of trapping first paint behind GPU init.
-  requestAnimationFrame(() => window.setTimeout(initialize, 180));
+  requestAnimationFrame(() => requestAnimationFrame(() => window.setTimeout(initialize, 180)));
 })();
