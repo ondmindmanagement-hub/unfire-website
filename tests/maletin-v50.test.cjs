@@ -39,16 +39,23 @@ chk('Clicking maletin from avatar returns to identical case view',
   engine.includes('if(ray.intersectObject(caseG,true).length){')&&
   engine.includes('if(window.ATM_OUT)showCaseView();else exitRoam();')&&
   engine.includes("roamB.textContent = '🚶 PASEAR'"));
-chk('PASEAR sits in its own upper-left case-view slot, never over the lower central instructions',
-  game.includes('body:not(.unfire-roaming) #roamB{')&&
-  game.includes('top:calc(env(safe-area-inset-top) + 12px)!important')&&
-  game.includes('left:max(12px,env(safe-area-inset-left))!important')&&
-  game.includes('top:calc(env(safe-area-inset-top) + 7px)!important')&&
-  game.includes('top:calc(env(safe-area-inset-top) + 6px)!important')&&
-  !game.includes('#roamB{left:50%!important')&&
-  !game.includes('The centered PASEAR action')&&
-  engine.includes("const container=ROAMS.on?dock:document.body;")&&
-  engine.includes("roamB.style.position=ROAMS.on?'static':'fixed';"));
+chk('Same PASEAR button stays in the safe right dock in both case and roam',
+  engine.includes("if(roamB.parentElement!==dock)dock.appendChild(roamB);")&&
+  engine.includes("if(roamB.style.position!=='static')roamB.style.position='static';")&&
+  game.includes('body:not(.unfire-roaming) #ctlDock{')&&
+  game.includes('#ctlDock #roamB{')&&
+  game.includes('body:has(#storyHud.cfgOn) #ctlDock')&&
+  !game.includes('body:not(.unfire-roaming) #roamB{')&&
+  !engine.includes('const container=ROAMS.on?dock:document.body;'));
+chk('Gacha procedural FX reveal uses a side-on avatar approach, never central occlusion',
+  engine.includes('const side = V(-d.z, 0, d.x); const p = V(CT.x + d.x * 12 + side.x * 9')&&
+  engine.includes('const q = V(p.x + d.x * 11 + side.x * 7')&&
+  engine.includes('const side=V(-d.z,0,d.x);const p = V(c.x + d.x * dist + side.x * Math.min(7,dist*.45)'));
+chk('First-tap 3D case opens in the existing web document, without a new tab',
+  html.includes('window.__UNFIRE_ENTER_CASE=()=>open(1050)')&&
+  html.includes('immersive();\n    fullscreenFromGesture();')&&
+  html.includes('fr.contentWindow.postMessage({unfire:1,entryStart:true,vis:true},location.origin)')&&
+  !html.slice(html.indexOf('const Mal=(()=>'),html.indexOf('/* ================= Precios')).includes("window.open("));
 chk('First visit PASEAR blinks exactly two seconds after opening',
   engine.includes("'unfire_pasear_intro_v1'")&&
   engine.includes('},2000);')&&
@@ -77,14 +84,13 @@ chk('Workshop attaches to story HUD without timer polling',engine.includes('cons
 chk('Case view stops walk shortcuts while allowing piano notes',engine.includes('if (CASE_VIEW.on) return; const k = e.key.length === 1'));
 chk('Case view G note does not pack capsule',engine.includes('&&ROAMS.on&&!CASE_VIEW.on&&portableUnlocked()'));
 chk('Case mobile pinch zooms inspection camera',engine.includes('CASE_VIEW.dist=clamp(CASE_VIEW.dist*f,window.ATM_OUT?6.8:5.4,window.ATM_OUT?17:14.5)'));
-chk('Existing PASEAR moves from upper-left case corner into the dock only when roaming',
-  engine.includes("const container=ROAMS.on?dock:document.body;")&&
-  engine.includes("roamB.style.position=ROAMS.on?'static':'fixed';")&&
-  game.includes('top:calc(env(safe-area-inset-top) + 12px)!important')&&
-  game.includes('top:calc(env(safe-area-inset-top) + 7px)!important')&&
-  game.includes('top:calc(env(safe-area-inset-top) + 6px)!important')&&
-  !game.includes('body:not(.unfire-roaming) #roamB{left:50%')&&
-  !game.includes('body:not(.unfire-roaming) #roamB{bottom:calc(env(safe-area-inset-bottom) + 63px)'));
+chk('PASEAR never overlaps center captions and stays accessible without duplicates',
+  game.includes('top:calc(env(safe-area-inset-top) + 135px)!important')&&
+  game.includes('top:calc(env(safe-area-inset-top) + 112px)!important')&&
+  game.includes('top:calc(env(safe-area-inset-top) + 110px)!important')&&
+  game.includes('#ctlDock #roamB{min-height:34px!important')&&
+  engine.includes("roamB.textContent=CASE_VIEW.on?'↩ VOLVER AL PERSONAJE'")&&
+  !engine.includes('characterEntryButton'));
 chk('No blue artificial case illustration in any initial viewport or compatibility fallback',
   !html.includes('unfire-case-preview.svg') && !html.includes('background:url("img/hyperwave-open.webp")'));
 chk('First landing loads actual live WebGL maletin, not synth ad or fake image',
