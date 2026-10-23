@@ -312,16 +312,37 @@
       const bTop = mesh(new THREE.SphereGeometry(1.6, 28, 14, 0, TAU, 0, H2), topM), bBot = mesh(new THREE.SphereGeometry(1.6, 28, 14, 0, TAU, H2, H2), botM); const hinge0 = new THREE.Group(); hinge0.position.set(0, 0, -1.6); ball.add(hinge0); bTop.position.set(0, 0, 1.6); hinge0.add(bTop); ball.add(bBot);
       const PED = V(0, 2.1, 10); let dev = null, devT = 0, devTg = 0, devS = 0, phase = 'idle', ph = 0, queued = false, ped = mesh(new THREE.CylinderGeometry(3, 3.4, 2, 64), [new THREE.MeshPhysicalMaterial({ color: 0xd8dee8, metalness: 1, roughness: 0.18, clearcoat: 1 }), new THREE.MeshPhysicalMaterial({ map: cnv(512, 512, (g) => { const gr = g.createRadialGradient(256, 256, 20, 256, 256, 256); gr.addColorStop(0, '#ffffff'); gr.addColorStop(0.55, '#dff3ff'); gr.addColorStop(1, '#8fd0ff'); g.fillStyle = gr; g.fillRect(0, 0, 512, 512); g.strokeStyle = '#1d4fd8'; g.lineWidth = 10; for (const r of [230, 200]) { g.beginPath(); g.arc(256, 256, r, 0, TAU); g.stroke(); } g.lineWidth = 3; for (let i = 0; i < 48; i++) { const a = i / 48 * TAU; g.beginPath(); g.moveTo(256 + Math.cos(a) * 200, 256 + Math.sin(a) * 200); g.lineTo(256 + Math.cos(a) * 230, 256 + Math.sin(a) * 230); g.stroke(); } g.fillStyle = '#1d4fd8'; g.font = '900 54px Orbitron, Arial'; g.textAlign = 'center'; g.fillText('UNFIRE', 256, 120); g.font = '700 24px Michroma, Arial'; g.fillText('PLATAFORMA DE PREMIO', 256, 420); }), roughness: 0.15, clearcoat: 1 }), new THREE.MeshPhysicalMaterial({ color: 0x1a1d26, roughness: 0.3 })]); ped.position.set(0, 1, 10); gm.add(ped); ped.geometry.groups.forEach((gp, i) => (gp.materialIndex = i));
       const ring = new THREE.Mesh(new THREE.TorusGeometry(2.6, 0.12, 10, 64), new THREE.MeshBasicMaterial({ color: 0x5fe0ff, toneMapped: false, transparent: true, opacity: 0.0 })); ring.rotation.x = H2; ring.position.set(0, 2.05, 10); gm.add(ring);
-      const wp = new THREE.Vector3(); const track = (p) => { gm.localToWorld(wp.copy(p)); R.userData.camTrack = wp.clone(); };
+      const wp = new THREE.Vector3(); const track = (p) => {
+        gm.localToWorld(wp.copy(p)); R.userData.camTrack = wp.clone();
+        const shot = R.userData.gachaFocus;
+        // Smooth only the prize target, never move the player's body toward the glass.
+        if (shot) { if (!shot.ready) shot.target.copy(wp); else shot.target.lerp(wp, 0.22); shot.ready = true; }
+      };
       const spawn = () => { try { const i = Math.floor(Math.random() * PLUGINS.list.length), spec = PLUGINS.list[i]; dev = (spec.g3 ? GEAR3 : GEAR4).build(spec, kindOf(spec), Object.keys(ENGINES.PARAMS[spec.engine]).slice(0, 4).map((k) => k.toUpperCase())); dev.root.position.copy(PED); dev.root.scale.setScalar(0.01); gm.add(dev.root); R.userData.camTrackDir = gm.localToWorld(V(0, 0, 1)).sub(gm.localToWorld(V(0, 0, 0))).normalize(); dev.spec = spec; devT = 0; devTg = 2.2; devS = 0; try { window.UEV('gacha'); } catch (e) {} dev.root.rotation.y = 0.5; say('🎰 ¡Te ha tocado ' + (spec.name || 'un aparato') + '! · tócalo para verlo otra vez'); hap(0.4); } catch (e) { console.warn(e); } };
-      const go = () => { if (phase !== 'idle' && phase !== 'show') { queued = true; return; } hap(0.6); R.userData.camTrackDir = gm.localToWorld(V(0, 0, 1)).sub(gm.localToWorld(V(0, 0, 0))).normalize(); if (dev) { phase = 'close'; ph = 0; } else { phase = 'spin'; ph = 0; } };
-      picks.push({ o: gm, f: go }); R.userData.gacha = go; picks.push({ o: ped, f: () => { if (dev && phase === 'show') { devTg = 0; setTimeout(() => (devTg = 2.2), 1400); hap(0.3); } } });
+      const go = () => {
+        if (phase !== 'idle' && phase !== 'show') { queued = true; return; }
+        hap(0.6);
+        R.userData.camTrackDir = gm.localToWorld(V(0, 0, 1)).sub(gm.localToWorld(V(0, 0, 0))).normalize();
+        // A single, unobstructed presentation angle for 1p and 3p. The robot stays put.
+        // The tall framing is more distant to avoid cropping the prize on phones.
+        if (ROAMS.on && !window.ATM_OUT) {
+          ROAMS.tgt = null;
+          R.userData.gachaFocus = {
+            camWide: gm.localToWorld(V(0, 10, 30)),
+            camTall: gm.localToWorld(V(0, 12, 37)),
+            target: gm.localToWorld(V(0, 6, 8)),
+            yaw: ROAMS.yaw, pitch: ROAMS.pitch, ready: false
+          };
+        }
+        if (dev) { phase = 'close'; ph = 0; } else { phase = 'spin'; ph = 0; }
+      };
+      picks.push({ o: gm, f: go, noFocus: true }); R.userData.gacha = go; picks.push({ o: ped, noFocus: true, f: () => { if (dev && phase === 'show') { devTg = 0; setTimeout(() => (devTg = 2.2), 1400); hap(0.3); } } });
       anim.push((dt, t) => { ph += dt;
         if (phase === 'close') { devTg = 0; track(PED); if (devT < 0.05) { devS = Math.max(0, devS - dt * 1.4); dev.root.position.y = PED.y - (1 - devS) * 2; dev.root.scale.setScalar(Math.max(0.01, devS) * 1.1); if (devS <= 0) { gm.remove(dev.root); dev = null; phase = 'spin'; ph = 0; } } }
         else if (phase === 'spin') { crank.rotation.z -= dt * 8; track(V(0, 6, 3.6)); if (ph > 1.4) { phase = 'roll'; ph = 0; ball.visible = true; ball.userData.popped = 0; ball.scale.setScalar(1); hinge0.rotation.x = 0; topM.color.setHSL(Math.random(), 0.85, 0.55); } }
         else if (phase === 'roll') { const k = Math.min(1, ph / 1.35); const z = 4.3 + k * 5.7, y = 1.0 + (PED.y + 1.6 - 1.0) * k + Math.sin(k * Math.PI) * 7.5; ball.position.set(0, y, z); ball.rotation.x += dt * 12 * (1 - k); track(V(0, 4.5, 8)); if (k > 0.62 && !ball.userData.popped) { ball.userData.popped = 1; ring.material.opacity = 1; ring.position.set(0, y - 1, z); ring.scale.setScalar(0.4); hap(0.7); try { if (audioOk()) { const c = UA.ctx, n = c.currentTime, o = c.createOscillator(), gg = c.createGain(), f = c.createBiquadFilter(); o.type = 'triangle'; o.frequency.setValueAtTime(220, n); o.frequency.exponentialRampToValueAtTime(880, n + 0.18); f.type = 'lowpass'; f.frequency.value = 2500; gg.gain.setValueAtTime(0.0001, n); gg.gain.exponentialRampToValueAtTime(0.05, n + 0.02); gg.gain.exponentialRampToValueAtTime(0.0001, n + 0.35); o.connect(f).connect(gg).connect(UA.bus.master); o.start(n); o.stop(n + 0.4); } } catch (e) {} if (!dev) spawn(); } if (ball.userData.popped) { hinge0.rotation.x = -Math.min(1, (k - 0.62) / 0.2) * 2.3; ring.scale.setScalar(ring.scale.x + dt * 6); if (dev) dev.root.position.set(0, Math.max(PED.y, y - 0.4), z); } if (k >= 1) { phase = 'open'; ph = 0; ring.position.set(0, 2.05, 10); ring.scale.setScalar(1); } }
         else if (phase === 'open') { track(V(0, 4.2, 9)); ball.position.y -= dt * 7; ball.scale.setScalar(Math.max(0.01, 1 - ph * 1.4)); if (ph > 0.75) { ball.visible = false; ball.scale.setScalar(1); ball.userData.popped = 0; phase = 'show'; ph = 0; } }
-        else if (phase === 'show') { if (ph > 6) R.userData.camTrack = null; if (queued) { queued = false; go(); } }
+        else if (phase === 'show') { if (ph <= 6) track(V(0, 5.2, 9.8)); else { R.userData.camTrack = null; R.userData.gachaFocus = null; } if (queued) { queued = false; go(); } }
         if (phase !== 'show' && phase !== 'close' && phase !== 'spin' && phase !== 'roll' && phase !== 'open') R.userData.camTrack = null;
         ring.material.opacity *= 0.985;
         bp.forEach((b, i) => { b.v.add(V(Math.sin(t * 1.3 + i) * 9 * dt, (Math.random() < 0.02 ? 30 : 0) * dt * 10, Math.cos(t * 1.1 + i) * 9 * dt)); if (phase === 'spin') b.v.add(V((Math.random() - 0.5) * 30 * dt, Math.random() * 40 * dt, (Math.random() - 0.5) * 30 * dt)); b.v.y -= 25 * dt; b.p.addScaledVector(b.v, dt); const c = V(0, 12, 0), d0 = b.p.clone().sub(c), L0 = d0.length(); if (L0 > 3.7) { d0.normalize(); b.p.copy(c).addScaledVector(d0, 3.7); const vn = b.v.dot(d0); if (vn > 0) b.v.addScaledVector(d0, -1.5 * vn); b.v.multiplyScalar(0.9); } BI.setMatrixAt(i, new THREE.Matrix4().makeTranslation(b.p.x, b.p.y, b.p.z)); }); BI.instanceMatrix.needsUpdate = true;
@@ -2705,6 +2726,27 @@
       cam.position.set(caseG.position.x+Math.sin(a)*Math.cos(el)*d,caseG.position.y+Math.sin(el)*d,caseG.position.z+Math.cos(a)*Math.cos(el)*d);
       cam.lookAt(caseG.position.x,caseG.position.y+0.4,caseG.position.z);
       cam.near=0.05;const panoramic=window.ATM_OUT;cam.fov=panoramic?(cam.aspect<1?Math.min(70,56+(1-cam.aspect)*18):56):(cam.aspect<1?Math.min(62,48+(1-cam.aspect)*24):48);cam.updateProjectionMatrix();
+    }
+    // Apply AFTER the standard 1p/3p/flight camera and after case view, but BEFORE
+    // the actual render. No avatar teleport, no forced approach or lens inside glass.
+    const gachaShot = ROOM.R.userData.gachaFocus;
+    if (gachaShot && ROAMS.on && !ROAMS.fly && !CASE_VIEW.on && !REC.on && !VIEW.on && !window.ATM_OUT) {
+      const keys = ROAMS.k || {};
+      const yawDelta = Math.atan2(Math.sin(ROAMS.yaw - gachaShot.yaw), Math.cos(ROAMS.yaw - gachaShot.yaw));
+      if (keys.w || keys.a || keys.s || keys.d || keys.q || keys.e ||
+          keys.ArrowUp || keys.ArrowDown || keys.ArrowLeft || keys.ArrowRight ||
+          Math.abs(yawDelta) > 0.045 || Math.abs(ROAMS.pitch - gachaShot.pitch) > 0.045) {
+        ROOM.R.userData.gachaFocus = null; ROOM.R.userData.camTrack = null;
+      } else {
+        const portrait = cam.aspect < 0.72;
+        cam.position.copy(portrait ? gachaShot.camTall : gachaShot.camWide);
+        cam.lookAt(gachaShot.target);
+        cam.near = 0.12;
+        cam.fov = portrait ? 64 : 56;
+        cam.updateProjectionMatrix();
+      }
+    } else if (gachaShot) {
+      ROOM.R.userData.gachaFocus = null;
     }
     S.renderer.render(S.scene, cam);
   }
