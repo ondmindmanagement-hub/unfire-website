@@ -96,8 +96,11 @@ const assert=require('node:assert/strict');
   const closed=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,mission:window.__UNFIRE_CASE_QA.mission}));
   console.log('CASE_STATE_DIAGNOSTIC',JSON.stringify({initial,closed}));
   assert(closed.closed&&closed.carrying&&closed.mission===initial.mission,'Closing case loses game or quest');
-  const host=await page.evaluate(()=>({url:location.pathname,frameSrc:document.getElementById('malFrame').getAttribute('src'),expectedFrameSrc:document.getElementById('malFrame').dataset.src,immersive:document.body.classList.contains('immOn')}));
-  assert(host.immersive&&host.frameSrc===host.expectedFrameSrc&&/\?v=[a-zA-Z0-9_-]+/.test(host.frameSrc),'Game returned to website after closing case, with synchronized cache URL');
+  const host=await page.evaluate(()=>({url:location.pathname,origin:location.origin,frameSrc:document.getElementById('malFrame').getAttribute('src'),expectedFrameSrc:document.getElementById('malFrame').dataset.src,immersive:document.body.classList.contains('immOn')}));
+  // Runtime adds ?quality=... (and a retry token) to the iframe URL. Compare the
+  // canonical path and release token rather than the entire absolute URL.
+  const activeCase=new URL(host.frameSrc,host.origin),declaredCase=new URL(host.expectedFrameSrc,host.origin);
+  assert(host.immersive&&activeCase.pathname===declaredCase.pathname&&activeCase.searchParams.get('v')===declaredCase.searchParams.get('v')&&!!activeCase.searchParams.get('quality'),'Game returned to website after closing case, with synchronized cache URL');
   const control=await f.evaluate(()=>{const b=document.getElementById('unfireCarryCase');if(!b)return {exists:false};const q=b.getBoundingClientRect();return {exists:true,display:getComputedStyle(b).display,visibility:getComputedStyle(b).visibility,rect:[q.x,q.y,q.width,q.height],hidden:b.hidden,roam:window.__UNFIRE_CASE_QA.roam,carry:window.__UNFIRE_CASE_QA.carrying};});
   console.log('CARRY_BUTTON_DIAGNOSTIC',JSON.stringify(control));
   assert.equal(await f.evaluate(()=>window.__UNFIRE_CASE_QA.caseVisible),false,'Case must not obstruct player camera when packed');
