@@ -96,17 +96,7 @@ p{margin:0}
 #heroPin:fullscreen,#heroPin:-webkit-full-screen{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;background:#000!important}
 #heroPin:fullscreen #malFrame,#heroPin:-webkit-full-screen #malFrame{inset:0!important;width:100%!important;height:100%!important;clip-path:none!important}
 html.immOn,body.immOn{overflow:hidden!important;overscroll-behavior:none}body.immOn header,body.immOn .hero-copy{visibility:hidden}body.immOn #stopAll,body.immOn #sndBtn{display:none!important}
-/* Preview remains on the same page. First deliberate tap enlarges the
-   already-loaded WebGL viewport while its physical lid begins opening. */
-.hero-pin.imm.unfire-case-preview{
-  transform:scale(.88);transform-origin:center center;border-radius:24px;
-}
-@media(max-width:700px){
-  .hero-pin.imm.unfire-case-preview{transform:scale(.92);border-radius:18px}
-}
-@media(prefers-reduced-motion:reduce){
-  .hero-pin.imm.unfire-case-preview{transform:none;border-radius:0}
-}
+/* Keep the authentic first-paint image edge-to-edge; the zoom runs on tap. */
 /* The physical 3D butterfly on the case is the only entry surface. */
 .hero-pin.scene-ready #malFrame{pointer-events:auto;touch-action:manipulation}
 /* When leaving the game, keep it parked behind an intentional Y2K re-entry
@@ -1031,12 +1021,16 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
       }
       const before=pin.getBoundingClientRect();
       immersive();
-      pin.classList.remove('unfire-case-preview');
       const after=pin.getBoundingClientRect();
       const dx=before.left+before.width/2-after.left-after.width/2;
       const dy=before.top+before.height/2-after.top-after.height/2;
-      const sx=Math.max(.5,Math.min(1,before.width/Math.max(1,after.width)));
-      const sy=Math.max(.5,Math.min(1,before.height/Math.max(1,after.height)));
+      // If the site was already viewport immersive at first paint (#84),
+      // give the deliberate case tap a gentle cinematic zoom without
+      // shrinking or cropping the image while it is loading.
+      const ratioX=Math.max(.5,Math.min(1,before.width/Math.max(1,after.width)));
+      const ratioY=Math.max(.5,Math.min(1,before.height/Math.max(1,after.height)));
+      const sx=ratioX>.985?.92:ratioX;
+      const sy=ratioY>.985?.92:ratioY;
       const duration=Math.max(900,Math.min(1150,D));
       if(entryAnimation){try{entryAnimation.cancel()}catch(_){}entryAnimation=null;}
       if(pin.animate&&!reducedMotion()){
@@ -1120,9 +1114,7 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
     // Native browser fullscreen requires user activation, so boot in CSS mode.
     if(document.documentElement.classList.contains('no-webgl'))return;
     immersive();
-    // On the first case tap, scale the actual viewport up instead of opening a
-    // tab or replacing the 3D scene with a second splash-screen.
-    if(!entryStarted)$('#heroPin').classList.add('unfire-case-preview');
+    // Keep the true first-paint 3D image edge-to-edge; only animate on tap.
     UNFIRE_SCENE.start();
     preserveGameViewport();
   };
