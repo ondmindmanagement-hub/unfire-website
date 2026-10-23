@@ -1,0 +1,27 @@
+name: Audio visible render budget
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/audio-visible-render-budget.test.cjs'
+      - '.github/workflows/audio-visible-render-budget.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  visible-budget:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and visibility budget behavior
+        run: |
+          node --check audio/maletin/game-engine-v50.js
+          node --test tests/audio-visible-render-budget.test.cjs
+      - name: Existing engine structural checks
+        run: |
+          node tests/maletin-v50.test.cjs
+          node tests/maletin-flight-combos.test.cjs
