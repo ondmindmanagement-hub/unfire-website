@@ -6,8 +6,8 @@ function check(name,pass){assert.ok(pass,name);console.log('PASS',name);}
 check('Actual real WebGL first-frame on initial DOM',html.includes('<picture id="unfireCaseFirstFrame"') &&
  html.includes('<iframe id="malFrame"') && html.indexOf('id="unfireCaseFirstFrame"')<html.indexOf('id="malFrame"'));
 check('Real game capture is immediately prioritized for both layouts',html.includes('as="image" href="img/maletin-real-first-frame-desktop.webp"') &&
- html.includes('as="image" href="img/maletin-real-first-frame-mobile.webp"') &&
- html.includes('<source media="(max-width:600px)" srcset="img/maletin-real-first-frame-mobile.webp">') &&
+ /as="image" href="img\/maletin-real-first-frame-mobile\.webp(?:\?v=[^"]+)?"/.test(html) &&
+ /<source media="\(max-width:600px\)" srcset="img\/maletin-real-first-frame-mobile\.webp(?:\?v=[^"]+)?">/.test(html) &&
  html.includes('loading="eager" decoding="sync"'));
 check('Loading cover hides while SAME WebGL scene becomes ready',html.includes('.hero-pin.scene-ready #unfireCaseFirstFrame')&&
  html.includes('pointer-events:none')&&html.includes('.hero-pin:not(.scene-ready) .hero-copy{opacity:0!important;visibility:hidden!important}'));
