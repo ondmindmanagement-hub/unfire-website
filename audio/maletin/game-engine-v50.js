@@ -1227,13 +1227,15 @@
     function next(auto) { if (!auto) try { window.UEV('radio'); } catch (e) {} if (st.user && auto) st.user = null; else if (st.user) st.user = null; else st.i++; if (st.on) play(); }
     function toggle() { try { window.UEV('radio'); } catch (e) {} st.on = !st.on; st.on ? play() : stopR(); hap(0.3); }
     function loadFile(f) { if (!f) return; st.user = { url: URL.createObjectURL(f), name: f.name.replace(/\.[^.]+$/, '') }; st.on = true; play(); }
-    const bar = document.createElement('div'); bar.id = 'wradio'; bar.innerHTML = '<style>#wradio{position:fixed;left:14px;bottom:calc(9vh + 14px);z-index:40;display:none;gap:6px;font:700 12px Orbitron,Arial}@media (pointer:coarse){#wradio{left:50%;transform:translateX(-50%);top:62px;bottom:auto}}body.storyOn #wradio,body.storyOn #chat,body.storyOn #camB,body.storyOn #roamB,body.storyOn #minimap,body.storyOn #howto{visibility:hidden!important}#wradio button{border:2px solid #fff;border-radius:999px;padding:7px 11px;background:linear-gradient(#5fc8ff,#1d4fd8);color:#fff;font:inherit;cursor:pointer;box-shadow:0 4px 14px rgba(0,30,90,.35)}#wradio button.off{background:linear-gradient(#9aa3b2,#5a6070)}#wradio span{color:#fff;text-shadow:0 1px 3px #000;align-self:center;max-width:180px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}</style><button id="wrOn">📻 RADIO</button><button id="wrNx">⏭</button><button id="wrUp">📂 TU MÚSICA</button><input id="wrV" type="range" min="0" max="1" step="0.01" value="0.27" title="Volumen de la radio" style="width:90px;accent-color:#5fc8ff"><span id="wrT"></span><input id="wrF" type="file" accept="audio/*" style="display:none">'; document.body.appendChild(bar);
+    const bar = document.createElement('div'); bar.id = 'wradio'; bar.innerHTML = '<style>#wradio{position:fixed;left:14px;bottom:calc(9vh + 14px);z-index:40;display:none;gap:6px;font:700 12px Orbitron,Arial}@media (pointer:coarse){#wradio{box-sizing:border-box;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top) + 112px);bottom:auto;max-width:calc(100vw - 20px);padding:5px;gap:4px;border-radius:14px;background:#090e1bdb;box-shadow:0 4px 18px #0009}#wradio button{box-sizing:border-box;min-width:38px;min-height:38px;padding:6px!important;font-size:13px!important}#wradio #wrOn{font-size:0!important;width:42px;min-width:42px}#wrOn::after{content:\"📻\";font-size:19px}#wrMore{display:inline-flex!important;align-items:center;justify-content:center}#wradio:not(.expanded) #wrUp,#wradio:not(.expanded) #wrV,#wradio:not(.expanded) #wrT{display:none!important}#wradio.expanded{width:min(94vw,340px);flex-wrap:wrap;justify-content:center;padding:9px}#wradio.expanded #wrUp{display:inline-block}#wradio.expanded #wrV{display:block;min-width:100px;flex:1}#wradio.expanded #wrT{display:block;box-sizing:border-box;width:100%;max-width:none;text-align:center;font-size:10px}}@media (pointer:coarse) and (orientation:landscape){#wradio{top:calc(env(safe-area-inset-top) + 52px);left:50%;max-width:calc(100vw - 350px)}#wradio.expanded{max-width:min(70vw,340px)} }@media (pointer:coarse) and (max-width:440px) and (orientation:landscape){#wradio{top:calc(env(safe-area-inset-top) + 55px);max-width:calc(100vw - 20px)}}body.storyOn #wradio,body.storyOn #chat,body.storyOn #camB,body.storyOn #roamB,body.storyOn #minimap,body.storyOn #howto{visibility:hidden!important}#wradio button{border:2px solid #fff;border-radius:999px;padding:7px 11px;background:linear-gradient(#5fc8ff,#1d4fd8);color:#fff;font:inherit;cursor:pointer;box-shadow:0 4px 14px rgba(0,30,90,.35)}#wradio button.off{background:linear-gradient(#9aa3b2,#5a6070)}#wradio span{color:#fff;text-shadow:0 1px 3px #000;align-self:center;max-width:180px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}</style><button id="wrOn">📻 RADIO</button><button id="wrNx">⏭</button><button id="wrMore" type="button" aria-label="Mostrar más controles de radio" aria-expanded="false" style="display:none">⚙</button><button id="wrUp">📂 TU MÚSICA</button><input id="wrV" type="range" min="0" max="1" step="0.01" value="0.27" title="Volumen de la radio" style="width:90px;accent-color:#5fc8ff"><span id="wrT"></span><input id="wrF" type="file" accept="audio/*" style="display:none">'; document.body.appendChild(bar);
     // The slider must reflect both the 27% default and a persisted player preference.
     bar.querySelector('#wrV').value = String(st.vol);
+    const more=bar.querySelector('#wrMore');
+    more.onclick=(e)=>{e.stopPropagation();const open=bar.classList.toggle('expanded');more.setAttribute('aria-expanded',String(open));more.setAttribute('aria-label',open?'Ocultar controles de radio':'Mostrar más controles de radio');};
     const upd = () => { bar.querySelector('#wrOn').classList.toggle('off', !st.on); const c0 = cur(); bar.querySelector('#wrT').textContent = st.on ? (c0 ? '♪ ' + (c0.t || c0.name) : (st.list.length ? '' : 'sin canciones aún')) : ''; };
     bar.addEventListener('pointerdown', (e) => e.stopPropagation()); bar.querySelector('#wrOn').onclick = () => toggle(); bar.querySelector('#wrNx').onclick = () => { next(); hap(0.3); }; bar.querySelector('#wrUp').onclick = () => bar.querySelector('#wrF').click(); bar.querySelector('#wrF').onchange = (e) => loadFile(e.target.files[0]); bar.querySelector('#wrV').oninput = (e) => { st.vol = Math.min(1, Math.max(0, +e.target.value)); try { localStorage.setItem(radioVolumeKey, String(st.vol)); } catch (_) {} e.stopPropagation(); }; bar.querySelector('#wrV').addEventListener('keydown', (e) => e.stopPropagation());
     const api = { get cur() { return cur(); }, get on() { return st.on && !!el && !el.paused; }, get level() { return st.level; }, toggle, next, loadFile, pick: () => bar.querySelector('#wrF').click(), st,
-      tick(dt, busy) { bar.style.display = lidOpen > 0.95 && !CINE.on ? 'flex' : 'none'; if (!started && st.on && audioOk() && cur() && ROAMS.on && window.ATM_OUT) { started = true; play(); } if (!el || !UA.ctx) return; const c = UA.ctx, L = c.listener, cp = cam.position; if (L.positionX) { L.positionX.value = cp.x; L.positionY.value = cp.y; L.positionZ.value = cp.z; const d = new THREE.Vector3(); cam.getWorldDirection(d); L.forwardX.value = d.x; L.forwardY.value = d.y; L.forwardZ.value = d.z; L.upX.value = 0; L.upY.value = 1; L.upZ.value = 0; }
+      tick(dt, busy) { bar.style.display = (lidOpen > 0.08 || ROAMS.on) && !CINE.on ? 'flex' : 'none'; if (!started && st.on && audioOk() && cur() && ROAMS.on && window.ATM_OUT) { started = true; play(); } if (!el || !UA.ctx) return; const c = UA.ctx, L = c.listener, cp = cam.position; if (L.positionX) { L.positionX.value = cp.x; L.positionY.value = cp.y; L.positionZ.value = cp.z; const d = new THREE.Vector3(); cam.getWorldDirection(d); L.forwardX.value = d.x; L.forwardY.value = d.y; L.forwardZ.value = d.z; L.upX.value = 0; L.upY.value = 1; L.upZ.value = 0; }
         st.idle = busy ? 0 : st.idle + dt; const quiet = busy || st.idle < 1.5; if (st.on && !el.paused) gIn.gain.setTargetAtTime(quiet ? 0 : st.vol * 1.1, c.currentTime, quiet ? 0.15 : 1.2); if (dryG) dryG.gain.setTargetAtTime(window.ATM_OUT ? 0.9 : 0.35, c.currentTime, 0.5); an.getByteTimeDomainData(buf); let s2 = 0; for (let i = 0; i < 256; i += 4) { const x = (buf[i] - 128) / 128; s2 += x * x; } st.level = Math.min(1, Math.sqrt(s2 / 64) * 3); } };
     window.__WRADIO = api; upd(); return api; })();
   // ===== NIMBO, el guía de la historia (pequeño, al lado del maletín; te acompaña al pasear) + MODO HISTORIA =====
@@ -2276,13 +2278,33 @@
   const clock = new THREE.Clock(); let t = 0; const pend = { it: null, t: 0 }; let MEMO = null, LV = 0; let frameN = 0; let idleT = 0, lastPlaying = false, liftY = 0;
   const tb = new Uint8Array(1024), fb = new Uint8Array(512); let level = 0;
   let frameVisible = true, previousRenderAt = 0;
+  // Lower the drawing resolution ONCE only after sustained poor foreground FPS.
+  // UI, gameplay, audio, timings and scene composition remain untouched.
+  // Avoid oscillating pixel-ratio allocations that can themselves stall mobile GPUs.
+  const adaptivePerf={since:0,frames:0,reduced:false};
+  function protectSlowGPU(now){
+    if(!adaptivePerf.since){adaptivePerf.since=now;adaptivePerf.frames=0;return;}
+    adaptivePerf.frames++;
+    const elapsed=now-adaptivePerf.since;
+    if(elapsed<6000)return;
+    if(!adaptivePerf.reduced&&adaptivePerf.frames>=12&&elapsed/adaptivePerf.frames>48){
+      const current=S.renderer.getPixelRatio();
+      const safer=Math.max(0.65,Math.min(current,DEVICE.maxDpr)*0.78);
+      if(safer<current-0.08){
+        S.renderer.setPixelRatio(safer);
+        adaptivePerf.reduced=true;
+        document.documentElement.dataset.unfireAdaptiveQuality='on';
+      }
+    }
+    adaptivePerf.since=now;adaptivePerf.frames=0;
+  }
   // Opening the website/direct-link case keeps the camera on the physical
   // maletín. Exploring as the robot is an explicit separate player choice.
   // The lid animation and all equipment remain available in this view.
   function frame(now) {
     // Park the heavy animation loop when hidden/out of the hero: never spend 60 callbacks/sec there.
     if (document.hidden || !frameVisible) {
-      previousRenderAt = 0; clock.getDelta();
+      previousRenderAt = 0; adaptivePerf.since=0; adaptivePerf.frames=0; clock.getDelta();
       setTimeout(() => requestAnimationFrame(frame), 180);
       return;
     }
@@ -2291,6 +2313,7 @@
     if (previousRenderAt && now - previousRenderAt < (LOWDEV ? (DEVICE.tier==='compact' ? 42 : 33) : window.ATM_OUT ? 33 : 28)) return;
     const actualFrameTime = previousRenderAt ? Math.min(0.18, Math.max(0.008, (now - previousRenderAt) / 1000)) : 1 / 30;
     previousRenderAt = now;
+    protectSlowGPU(now);
     const dt = Math.min(0.05, clock.getDelta()) * (window.__dts || 1); t += dt;
     // A packed case is inventory-only: no heavy model following or obscuring the camera.
     updateCarryUI();
@@ -2322,7 +2345,7 @@
     lidBtn.userData.dome.material.emissiveIntensity = allOpen() ? 0.15 : 0.45 + 0.35 * Math.sin(t * 3); if(window.__ringB)window.__ringB.scale.setScalar(1.45*(1+0.1*Math.sin(t*3)));
     const lk = clamp(gateK * 1.25); laser.visible = false; laser.position.set(-CW / 2 + 0.1 + lk * (CW - 0.2), 0.14, 0); 
     if (lidOpen < 0.5 && ALL) { ALL = false; } if(window.__hexPan)window.__hexPan.material.emissiveIntensity=0.25+0.2*Math.max(0,Math.sin(t*1.5+1))+0.5*clamp(lidOpen*3); if (window.__fd) window.__fd.material.emissiveIntensity = lidOpen < 0.3 ? 0.6 + 0.5 * Math.sin(t * 4) : 0.2; plate.material.emissiveIntensity = lidOpen < 0.3 ? 0.12 + 0.12 * Math.sin(t * 3) : 0;
-    ELEV.a += (lerp(0.42, view.gd > view.D0 * 1.25 ? 0.32 : zoomed() || CINE.on ? 0.98 : 0.6, ease.smooth(clamp(lidOpen * 1.15))) - ELEV.a) * 0.2; ORB.az += (ORB.gaz - ORB.az) * 0.15; ORB.de += (ORB.gde - ORB.de) * 0.15; const el = clamp(ELEV.a + ORB.de, 0.12, 1.5); DIR.set(Math.sin(ORB.az) * Math.cos(el), Math.sin(el), Math.cos(ORB.az) * Math.cos(el));
+    ELEV.a += (lerp(0.55, view.gd > view.D0 * 1.25 ? 0.32 : zoomed() || CINE.on ? 0.98 : 0.6, ease.smooth(clamp(lidOpen * 1.15))) - ELEV.a) * 0.2; ORB.az += (ORB.gaz - ORB.az) * 0.15; ORB.de += (ORB.gde - ORB.de) * 0.15; const el = clamp(ELEV.a + ORB.de, 0.12, 1.5); DIR.set(Math.sin(ORB.az) * Math.cos(el), Math.sin(el), Math.cos(ORB.az) * Math.cos(el));
     if (zoomed() && mouse.in && !drag && !knobDrag && performance.now() - mouse.t < 4000) { const ez = (v) => (Math.abs(v) > 0.6 ? (v - Math.sign(v) * 0.6) / 0.4 : 0), a = ez(mouse.nx), b = ez(mouse.ny), ca = Math.cos(ORB.az), sa = Math.sin(ORB.az); view.gx = clamp(view.gx + (a * ca + b * sa) * view.dist * 0.8 * dt, -CW / 2, CW / 2); view.gz = clamp(view.gz + (-a * sa + b * ca) * view.dist * 0.8 * dt, -CD / 2, CD / 2); }
     cv.classList.toggle('dive', zoomed());
     if (lidOpen < 0.98 && !MEMO && (open.length || items.some((it) => it.T > 0.5 || it.on) || (HW && HW.tg > 0) || CK.some((k) => compG[k].userData.open))) MEMO = { comps: CK.filter((k) => compG[k].userData.open && k !== 'hw'), caps: open.filter((g) => !g.closing).map((g) => g.it), muts: items.filter((it) => it.kind === 'mut' && it.tgt > 0), devs: items.filter((it) => it.on), hw: false };
