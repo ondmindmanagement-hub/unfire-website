@@ -155,7 +155,15 @@ body.unfire-roaming #cv{touch-action:none}
       max-height:calc(100dvh - 285px)!important}
     body.unfire-roaming #unfireCarryCase{top:calc(env(safe-area-inset-top) + 195px)!important}
   }
-  /* Hidden page UI must not consume taps on the active 3D lid. */
+  /* Leave an entire bottom navigation row for + / − / home / breadcrumbs.
+     The centered PASEAR action belongs to its own row on small screens. */
+  @media(max-width:850px){
+    body:not(.unfire-roaming) #roamB{bottom:calc(env(safe-area-inset-bottom) + 63px)!important}
+  }
+  @media(pointer:coarse) and (orientation:landscape){
+    body:not(.unfire-roaming) #roamB{bottom:calc(env(safe-area-inset-bottom) + 50px)!important}
+  }
+
 </style>
 <canvas id="cv" aria-label="Maletín UNFIRE en 3D. Acerca la vista con la rueda para entrar"></canvas>
 <div class="hud" id="hud"><button id="zin" aria-label="Acercar">+</button><button id="zout" aria-label="Alejar">−</button><button id="home" aria-label="Volver al maletín">⟲</button><div class="crumb" id="crumb">MALETÍN</div></div>

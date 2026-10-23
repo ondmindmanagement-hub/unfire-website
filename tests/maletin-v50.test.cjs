@@ -67,6 +67,11 @@ chk('Workshop attaches to story HUD without timer polling',engine.includes('cons
 chk('Case view stops walk shortcuts while allowing piano notes',engine.includes('if (CASE_VIEW.on) return; const k = e.key.length === 1'));
 chk('Case view G note does not pack capsule',engine.includes('&&ROAMS.on&&!CASE_VIEW.on&&portableUnlocked()'));
 chk('Case mobile pinch zooms inspection camera',engine.includes('CASE_VIEW.dist=clamp(CASE_VIEW.dist*f,window.ATM_OUT?6.8:5.4,window.ATM_OUT?17:14.5)'));
+chk('PASEAR leaves the right dock when maletin is viewed and gets its own mobile row',
+  engine.includes("const container=ROAMS.on?dock:document.body;")&&
+  engine.includes("roamB.style.position=ROAMS.on?'static':'fixed';")&&
+  game.includes('body:not(.unfire-roaming) #roamB{bottom:calc(env(safe-area-inset-bottom) + 63px)!important}')&&
+  game.includes('body:not(.unfire-roaming) #roamB{bottom:calc(env(safe-area-inset-bottom) + 50px)!important}'));
 chk('First landing focuses maletin and never flashes synthesizer advert',
   html.includes('unfire-case-preview.svg')&&
   !html.includes('background:url("img/hyperwave-open.webp")')&&
