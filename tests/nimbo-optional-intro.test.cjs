@@ -16,8 +16,9 @@ assert.match(story, /if \(!hostShown && st\.open && st\.far\) \{ hostShown = tru
 assert.doesNotMatch(story, /if \(!hostShown && st\.open && st\.far\) intro\(\)/,
   'automatic onboarding is forbidden');
 assert.match(story, /id="mMeet"/, 'on-demand meeting must be available in History');
-assert.match(story, /if \(!SAVE\.met\) \{ intro\(\); return; \}/,
-  'opening a mission without meeting the guide first must offer the introduction');
+assert.doesNotMatch(story, /if \(!SAVE\.met\) \{ intro\(\); return; \}/,
+  'starting a mission must never force the optional introduction');
+assert.match(story, /id=\"mPlay\"/, 'History must offer a direct Start Story button');
 assert.match(story, /const KEY = 'unfire_save_v1'/, 'save key must remain backward compatible');
 
 class MockElement {
@@ -79,6 +80,17 @@ function simulate(saved) {
 const fresh = simulate();
 assert.match(fresh.menu.innerHTML, /CONOCER A NIMBO/, 'new players can choose introduction later');
 assert.equal(fresh.data.has('unfire_save_v1'), false, 'entry must not write a save');
+const firstStory = simulate();
+firstStory.menu.querySelector('#mPlay').onclick();
+assert.equal(firstStory.guide.active, true, 'one tap in Missions starts story without onboarding');
+assert.equal(firstStory.guide.save.met, false, 'story should not force guide introduction');
+assert.equal(firstStory.guide.save.name, '', 'story should not force entering a player name');
+assert.equal(firstStory.guide.save.ch, 0, 'new story begins at chapter 1');
+assert.equal(firstStory.menu.style.display, 'none', 'missions menu closes when story starts');
+const resumedStory = simulate({ name: '', level: 1, ch: 2, step: 1, done: [0, 1], met: false, ts: 123 });
+resumedStory.menu.querySelector('#mPlay').onclick();
+assert.equal(resumedStory.guide.save.ch, 2, 'continuing without meeting Nimbo preserves chapter');
+assert.equal(resumedStory.guide.save.step, 1, 'continuing without meeting Nimbo preserves step');
 fresh.menu.querySelector('#mMeet').onclick();
 assert.equal(fresh.guide.active, true, 'manual action launches introduction');
 assert.equal(fresh.menu.style.display, 'none', 'History menu closes for the dialogue');
@@ -88,4 +100,4 @@ assert.doesNotMatch(returning.menu.innerHTML, /id="mMeet"/, 'completed onboardin
 assert.equal(returning.guide.save.ch, 3, 'chapter is preserved');
 assert.equal(returning.guide.save.step, 1, 'step is preserved');
 assert.equal(returning.guide.active, false, 'returning players enter without a modal');
-console.log('NIMBO_OPTIONAL_INTRO_PASS: clean entry, optional guide, save compatibility');
+console.log('NIMBO_OPTIONAL_INTRO_PASS: clean entry, direct story, optional guide, save compatibility');
