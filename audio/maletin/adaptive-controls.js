@@ -22,23 +22,31 @@
     if (w > limits.right - limits.left || h > limits.bottom - limits.top) return null;
     const x0 = clamp(target.x - w / 2, limits.left, limits.right - w);
     const y0 = clamp(target.y - h / 2, limits.top, limits.bottom - h);
-    const grid = [[0, 0]];
-    for (let ring = 1; ring <= Math.ceil(Math.max(limits.right-limits.left,
-        limits.bottom-limits.top) / step); ring++) {
-      for (let x = -ring; x <= ring; x++) for (let y = -ring; y <= ring; y++) {
-        if (Math.max(Math.abs(x), Math.abs(y)) === ring) grid.push([x, y]);
-      }
-    }
-    grid.sort((a, b) => a[0]*a[0]+a[1]*a[1]-b[0]*b[0]-b[1]*b[1]);
+    // Spiral short-circuits on the first valid place; no per-drag grid sorting.
     const seen = new Set();
-    for (const [dx, dy] of grid) {
+    const valid = (dx, dy) => {
       const left = clamp(x0 + dx * step, limits.left, limits.right - w);
       const top = clamp(y0 + dy * step, limits.top, limits.bottom - h);
       const key = left.toFixed(1) + '/' + top.toFixed(1);
-      if (seen.has(key)) continue;
+      if (seen.has(key)) return null;
       seen.add(key);
       const rect = {left, top, right:left+w, bottom:top+h};
-      if (!occupied.some(o => intersects(rect, o))) return rect;
+      return occupied.some(o => intersects(rect, o)) ? null : rect;
+    };
+    const first = valid(0, 0);
+    if (first) return first;
+    const rings = Math.ceil(Math.max(limits.right-limits.left,
+      limits.bottom-limits.top) / step);
+    for (let ring = 1; ring <= rings; ring++) {
+      // Prioritize horizontal/vertical candidates, then diagonals.
+      for (const [x, y] of [[0,-ring],[0,ring],[-ring,0],[ring,0]]) {
+        const hit = valid(x,y); if (hit) return hit;
+      }
+      for (let n = -ring; n <= ring; n++) {
+        for (const [x,y] of [[n,-ring],[n,ring],[-ring,n],[ring,n]]) {
+          const hit = valid(x,y); if (hit) return hit;
+        }
+      }
     }
     return null;
   }
