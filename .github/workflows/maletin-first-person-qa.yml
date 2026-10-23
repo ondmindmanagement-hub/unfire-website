@@ -1,0 +1,37 @@
+name: Maletin first person movement QA
+
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/maletin-first-person.test.cjs'
+      - 'tests/maletin-first-person-browser.cjs'
+      - '.github/workflows/maletin-first-person-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: maletin-first-person-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  first-person:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify first-person movement and camera math
+        run: |
+          node --check audio/maletin/game-engine-v50.js
+          node tests/maletin-first-person.test.cjs
+          node tests/maletin-flight-combos.test.cjs
+          node tests/maletin-indoor-outdoor-perf.test.cjs
+          node tests/maletin-v50.test.cjs
+      - name: Install browser runtime
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Test real first-person flight and strafe in desktop and portrait
+        run: node tests/maletin-first-person-browser.cjs
