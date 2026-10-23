@@ -105,13 +105,14 @@ const baseUrl = (process.env.UNFIRE_WORLD_TEST_URL || "http://127.0.0.1:48763").
       const context = document.querySelector("canvas").getContext("webgl");
       const extension = context.getExtension("WEBGL_lose_context");
       if(!extension) return false;
+      window.__worldLossExt = extension;
       extension.loseContext();
       return true;
     });
     if (extension) {
       await contextPage.waitForFunction(() => document.querySelector("#scene-mode").textContent === "MODO 2D",{timeout:10000});
       await contextPage.evaluate(() => {
-        document.querySelector("canvas").getContext("webgl").getExtension("WEBGL_lose_context").restoreContext();
+        window.__worldLossExt.restoreContext();
       });
       await contextPage.waitForFunction(() => document.querySelector("#scene-mode").textContent === "WEBGL ACTIVO",{timeout:15000});
       assert.equal(await contextPage.$eval("canvas",el=>el.hidden),false);
