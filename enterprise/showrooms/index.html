@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07080b">
+<meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'">
+<meta name="description" content="Custom interactive 3D product cases, digital showrooms and white-label product experiences by Unfire. Explore bespoke development, partner spaces and connected software.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Unfire Showrooms — Products worth exploring">
+<meta property="og:description" content="3D product presentations, dedicated brand spaces and bespoke interactive systems. Scope a focused pilot, grow when it works.">
+<meta property="og:url" content="https://unfire.technology/enterprise/showrooms/">
+<link rel="canonical" href="https://unfire.technology/enterprise/showrooms/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title translate="no">Unfire Showrooms — Custom 3D Experiences for Business</title>
+<style>
+:root{color-scheme:dark;--bg:#07080b;--surface:#101115;--raised:#171920;--line:#30323a;--text:#f5f5f7;--muted:#b8bac4;--dim:#8b909b;--accent:#b8d6ff;--max:1080px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.65 -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}a:hover{text-decoration-color:currentColor}
+.skip{position:absolute;left:16px;top:-90px;background:#fff;color:#111;padding:9px 15px;z-index:1000}.skip:focus{top:12px}
+.wrap{width:min(var(--max),calc(100% - 44px));margin-inline:auto}.notranslate{unicode-bidi:isolate}
+header{border-bottom:1px solid var(--line);background:var(--bg)}.nav{display:flex;align-items:center;justify-content:space-between;gap:22px;min-height:68px}
+.brand{font-size:18px;letter-spacing:-.03em;font-weight:700;white-space:nowrap}.brand span{color:var(--dim);font-size:12px;font-weight:500;letter-spacing:0;margin-left:8px}
+nav{display:flex;align-items:center;flex-wrap:wrap;gap:clamp(13px,2.5vw,27px)}nav a{font-size:12px;font-weight:560;color:var(--muted)}nav a:hover{color:var(--text)}
+.hero{padding:clamp(68px,11vw,125px) 0 87px;max-width:880px}
+.kicker{color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin:0 0 20px}
+h1{font-size:clamp(42px,6.8vw,79px);line-height:1.08;letter-spacing:-.063em;font-weight:650;margin:0;max-width:850px}
+.lead{font-size:clamp(16px,2vw,20px);line-height:1.6;color:var(--muted);max-width:700px;margin:28px 0 0}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:11px 20px;border-radius:999px;font-size:13px;font-weight:650;transition:background .15s ease,border-color .15s ease}
+.btn.primary{background:#f5f5f7;color:#0d0e13}.btn.primary:hover{background:#d7e4fa}.btn.secondary{border:1px solid #5c5f6b;color:var(--text)}.btn.secondary:hover{border-color:#b0b7c5}
+.micro{color:var(--dim);font-size:12px;max-width:710px;margin-top:19px}
+.section{border-top:1px solid var(--line);padding:clamp(58px,8vw,95px) 0}
+.section-head{max-width:750px;margin-bottom:33px}h2{font-size:clamp(29px,4vw,46px);line-height:1.14;letter-spacing:-.047em;font-weight:640;margin:0 0 16px}
+.section-head p:last-child{color:var(--muted);font-size:16px;line-height:1.67;margin:0}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{border:1px solid var(--line);background:var(--surface);border-radius:17px;padding:25px;min-width:0}
+.card .step{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:700}
+.card h3{font-size:20px;letter-spacing:-.025em;line-height:1.25;margin:16px 0 11px}
+.card p{color:var(--muted);font-size:13px;line-height:1.7;margin:0}
+.card .detail{display:block;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:#d9dce6}
+.model{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:start}
+.model ol{list-style:none;padding:0;margin:0;counter-reset:phase}
+.model li{padding:18px 0 18px 42px;border-top:1px solid var(--line);position:relative;counter-increment:phase}
+.model li::before{content:counter(phase,decimal-leading-zero);position:absolute;top:20px;left:0;color:var(--accent);font-size:12px;font-weight:700}
+.model strong{display:block;font-size:15px;line-height:1.5}.model li span{display:block;color:var(--muted);font-size:13px;margin-top:3px}
+.note-panel{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:25px}
+.note-panel h3{font-size:17px;margin:0 0 12px;letter-spacing:-.02em}
+.note-panel p{color:var(--muted);font-size:13px;margin:0 0 14px}.note-panel p:last-child{margin-bottom:0}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.step-card{padding:18px 0;border-top:1px solid #454854}.step-card b{display:block;font-size:13px;line-height:1.4;margin-bottom:8px}.step-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.65}
+details{border-top:1px solid var(--line);padding:18px 0}details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-weight:600;font-size:14px;padding:2px 0}summary::marker{color:var(--accent)}
+details p{color:var(--muted);font-size:13px;max-width:790px;margin:11px 0 0}
+.closing{padding:74px 0 94px}.closing h2{max-width:760px}.closing .lead{margin-top:16px}
+footer{border-top:1px solid var(--line);padding:28px 0 48px;color:var(--dim);font-size:12px}
+.footer-inner{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:18px}
+.footer-links{display:flex;flex-wrap:wrap;gap:17px}.footer-links a:hover{text-decoration:underline}
+@media(max-width:800px){.cards{grid-template-columns:1fr 1fr}.model{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.wrap{width:calc(100% - 34px)}.nav{padding:16px 0;align-items:flex-start;flex-direction:column;gap:10px}.brand{font-size:17px}nav{gap:10px 18px}nav a{font-size:11.5px}.hero{padding:69px 0}h1{font-size:clamp(39px,10vw,55px)}.lead{font-size:16px}.cards,.steps{grid-template-columns:1fr}.card{padding:22px}.step-card{padding:12px 0}.section{padding:59px 0}.closing{padding:60px 0 79px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><div class="wrap nav">
+<a class="brand notranslate" translate="no" href="/?site=1" aria-label="Unfire corporate website">Unfire <span>FOR BUSINESS</span></a>
+<nav aria-label="Business navigation"><a href="#solutions">Solutions</a><a href="#partnerships">Partners</a><a href="#process">Process</a><a href="/enterprise/">Technology licensing</a></nav>
+</div></header>
+<main id="main">
+<div class="wrap"><section class="hero" aria-labelledby="hero-title">
+<p class="kicker"><span class="notranslate" translate="no">Unfire</span> / Interactive experiences</p>
+<h1 id="hero-title">Give your products a world of their own.</h1>
+<p class="lead">Interactive 3D product cases, dedicated digital showrooms and connected software. Designed to turn product discovery into an experience—and make the next collaboration possible.</p>
+<div class="actions"><a class="btn primary" href="mailto:hello@unfire.technology?subject=Unfire%20Showroom%20Project%20Enquiry">Discuss a project ↗</a><a class="btn secondary" href="/audio/">Explore our live 3D work ↗</a></div>
+<p class="micro">The linked experience is an existing <span class="notranslate" translate="no">Unfire</span> game and technology demonstration, not a ready-made business catalogue. Each commercial solution requires its own design, rights review, implementation and testing.</p>
+</section></div>
+<section class="section" id="solutions" aria-labelledby="solutions-title"><div class="wrap">
+<div class="section-head"><p class="kicker">What we offer</p><h2 id="solutions-title">Beyond a product page.</h2><p>We can scope a distinct product experience for manufacturers, retailers, technology companies, creative agencies and organisations with something meaningful to demonstrate.</p></div>
+<div class="cards">
+<article class="card"><span class="step">01 / PERSONALISE</span><h3>Interactive product cases</h3><p>A custom-branded 3D case or catalogue for a company's own products. Inspired by the approach behind our interactive work, built as a separate experience—not a direct commercial resale of game assets.</p><span class="detail">Custom production · Web-first · Optional license</span></article>
+<article class="card"><span class="step">02 / PRESENT</span><h3>Digital showrooms &amp; launches</h3><p>Give a product story its own interactive space, with images, specifications, demonstrations and a clear enquiry path. Design for measured performance, usable controls and mobile-friendly fallbacks.</p><span class="detail">Product launches · Exhibitions · Campaigns</span></article>
+<article class="card"><span class="step">03 / CONNECT</span><h3>Agency &amp; custom software work</h3><p>Subcontracted 3D presentations, white-label experiences and integrations with permitted systems. Software connections are evaluated for compatibility, confidentiality, permissions and maintainability.</p><span class="detail">White-label work · Integrations · Ongoing support</span></article>
+</div>
+</div></section>
+<section class="section" id="partnerships" aria-labelledby="partners-title"><div class="wrap">
+<div class="section-head"><p class="kicker">A network, built responsibly</p><h2 id="partners-title">One project can open more possibilities.</h2><p>We are exploring a curated model in which businesses can commission their own environments and, when appropriate, participate in a shared discovery space or a clearly agreed partner campaign.</p></div>
+<div class="model">
+<ol>
+<li><strong>Own your branded space.</strong><span>A dedicated experience under the client's identity, with approved assets and separately agreed usage and intellectual-property terms.</span></li>
+<li><strong>Explore a shared showcase.</strong><span>A proposed multi-brand digital destination for selected products. This is not yet a verified operational marketplace or a claim of existing tenants.</span></li>
+<li><strong>Work with agencies and partners.</strong><span>White-label interactive production, contracted referrals and co-marketing only where permission, deliverables and disclosure are clear.</span></li>
+<li><strong>Evolve with connected technology.</strong><span>Additional software, supported integrations and optional maintenance through agreed scopes and release milestones.</span></li>
+</ol>
+<aside class="note-panel">
+<h3>More than a one-off sale</h3>
+<p><strong>Build:</strong> an initial scoped design or development fee.</p>
+<p><strong>Operate:</strong> optional recurring support, licensing or maintenance where useful.</p>
+<p><strong>Distribute:</strong> potential partner placement, referral or campaign fees by written agreement.</p>
+<p>There are no guaranteed leads, payments, conversions or current third-party brand partnerships implied here. Sponsored placements and affiliate links, if introduced, must be visibly disclosed.</p>
+</aside>
+</div></div></section>
+<section class="section" id="process" aria-labelledby="process-title"><div class="wrap">
+<div class="section-head"><p class="kicker">How we work</p><h2 id="process-title">Move quickly. Build carefully.</h2><p>Rapid iteration matters—but not at the expense of security, interoperability, clarity or customer experience. Every project starts with realistic milestones and explicit criteria.</p></div>
+<div class="steps">
+<div class="step-card"><b>01 — Share a brief</b><p>Explain the products, target audience and devices by email. No call is needed to begin.</p></div>
+<div class="step-card"><b>02 — Agree a pilot</b><p>Define scope, required assets, rights, budget, deadlines and an outcome to verify.</p></div>
+<div class="step-card"><b>03 — Review the experience</b><p>Test performance, accessibility and functionality on agreed target devices.</p></div>
+<div class="step-card"><b>04 — Scale selectively</b><p>Extend the system, licence components or maintain it only when there is real value.</p></div>
+</div></div></section>
+<section class="section" id="questions" aria-labelledby="faq-title"><div class="wrap">
+<div class="section-head"><p class="kicker">Practical details</p><h2 id="faq-title">Commercial clarity matters.</h2></div>
+<details><summary>Can our own brand and products appear in the 3D case?</summary><p>Yes, subject to verifying the rights to the supplied assets. Branding, source-code access, white-label terms and any licence are agreed per project.</p></details>
+<details><summary>Can another agency subcontract this work to Unfire?</summary><p>We are open to contracted agency delivery, including confidential or white-label work. Confidentiality, intellectual-property rights, acceptance criteria and support must be documented.</p></details>
+<details><summary>Will a complex 3D experience run on every device?</summary><p>We cannot promise universal performance. We define target browsers and devices, performance budgets, useful fallback experiences and checks before a production commitment.</p></details>
+<details><summary>Does a shared multi-brand shopping centre exist already?</summary><p>The shared commercial venue is a proposed initiative, not a currently verified hosted marketplace. The live Unfire game is a separate demonstration.</p></details>
+<details><summary>Must we pay an ongoing subscription?</summary><p>No. Retainers, maintenance, distribution fees and technology licences are optional, scoped and contracted separately. A bespoke project can also be standalone.</p></details>
+</div></section>
+<section class="closing"><div class="wrap">
+<p class="kicker">Start with a meaningful opportunity</p>
+<h2>Make the first experience remarkable. Make the next one possible.</h2>
+<p class="lead">Describe a 3D product presentation, branded digital space, agency commission or custom technology challenge. We will assess the fit and a practical first step.</p>
+<div class="actions"><a class="btn primary" href="mailto:hello@unfire.technology?subject=Unfire%20Custom%203D%20Presentation%20or%20Partner%20Enquiry">Start by email ↗</a><a class="btn secondary" href="/enterprise/">Explore engineering &amp; licensing</a></div>
+<p class="micro">Unfire is an independent, founder-led technology initiative. Paid projects and partnerships require written agreement, availability, rights clearance and any applicable legal or tax formalities.</p>
+</div></section>
+</main>
+<footer><div class="wrap footer-inner">
+<div>© 2026 <span translate="no" class="notranslate">Unfire</span> · Independent technology initiative</div>
+<div class="footer-links"><a href="/?site=1">Website</a><a href="/enterprise/">Business</a><a href="/contact/">Contact</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a></div>
+</div></footer>
+</body></html>
