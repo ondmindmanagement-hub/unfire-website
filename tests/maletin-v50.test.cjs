@@ -8,6 +8,11 @@ chk('No standalone 2D opener on website',!html.includes('id="openBtn"')&&!html.i
 chk('Only the real 3D butterfly opens the case',engine.includes('parent.__UNFIRE_ENTER_CASE()')&&engine.includes('ray.intersectObject(caseG, true)'));
 chk('Fullscreen transition completes before the case lid opens',html.includes('movement.finished.then(finish,()=>{})')&&html.includes('entryTransition=false;enterGame()'));
 chk('Lid uses >5s real-time procedural animation',engine.includes('5.6*Math.abs(pt-pNow)')&&engine.includes('actualFrameTime')&&!engine.includes('lidControlledByPlayer ? 0.18 : 0.16'));
+chk('Original case opening SFX follow the actual procedural 3D hinge timeline',
+  engine.includes('const CASE_SOUND=(()=>')&&engine.includes('CASE_SOUND.sync(pNow,pTarget,lidControlledByPlayer);')&&
+  ['latch','hinge','thud','reveal'].every(x=>engine.includes("play('"+x+"'"))&&
+  engine.includes("!manual||document.hidden")&&engine.includes("v.connect(UA.bus.master)"));
+
 chk('Giant exterior 3D ABRIR circle removed',!engine.includes('const ringB = mesh(new THREE.TorusGeometry(0.42, 0.02')&&engine.includes('const lidBtn = new THREE.Group()'));
 chk('Web exit parks WebGL behind a themed, manual return-to-play screen',
   html.includes('id="unfireReturnPortal"')&&html.includes('id="unfireReturnPlay"')&&
@@ -56,8 +61,8 @@ chk('Room audio implementation retained',engine.includes('const AMB ='));
 chk('Parent scroll no longer overrides manual open/close',engine.includes('!lidControlledByPlayer) pTarget = d.p;'));
 chk('Host keeps iframe active when case is local',html.includes('vis:caseLocal||rb.bottom>90'));
 chk('Host does not scroll when closing case',!html.includes('if(d.closeCase)Mal.shut();'));
-chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v=20261023clean1'));
-chk('Host loads exact matching game',/maletin\/index\.html\?v=20261023clean1/.test(html));
+chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v=20261023sound1'));
+chk('Host loads exact matching game',/maletin\/index\.html\?v=20261023sound1/.test(html));
 chk('User can explicitly exit if desired',engine.includes('window.__exitGame'));
 chk('3D original scene size intact',engine.length>500000);
 const storySource=game.slice(game.indexOf('window.STORY_INIT = function (H) {'),game.indexOf('</script>',game.indexOf('window.STORY_INIT = function (H) {')));

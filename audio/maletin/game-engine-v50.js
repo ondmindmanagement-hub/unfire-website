@@ -778,6 +778,80 @@
   // Time-based mechanical lid animation: stable on 30/60Hz or slower devices.
   // Reversing direction begins from the current pose, without jumping.
   const lidMotion={from:0,to:0,elapsed:0,duration:5.6};
+  // Restored UNFIRE/Claude-era case sound palette (original 3D metal
+  // latches, hinge sweep, bass thud and shimmer). Follow actual hinge motion,
+  // never website scroll or arbitrary timers. All voices use existing master
+  // EQ/compression/limiter; no new audio files, downloads or persistent loops.
+  const CASE_SOUND=(()=>{
+    let last=0,cycle=0;
+    const context=()=>UA.ctx&&UA.ctx.state==='running'&&!document.hidden?UA.ctx:null;
+    const output=(c)=>{const v=c.createGain();v.gain.value=.48;v.connect(UA.bus.master);return v};
+    const noise=(c,dest,t,duration,start,end,q,gain)=>{
+      const count=Math.max(1,Math.round(c.sampleRate*duration));
+      const buffer=c.createBuffer(1,count,c.sampleRate),d=buffer.getChannelData(0);
+      for(let i=0;i<count;i++)d[i]=(Math.random()*2-1)*(.8+.2*Math.sin(i*.31));
+      const src=c.createBufferSource(),f=c.createBiquadFilter(),env=c.createGain();
+      src.buffer=buffer;f.type='bandpass';f.Q.value=q;
+      f.frequency.setValueAtTime(Math.max(20,start),t);
+      f.frequency.exponentialRampToValueAtTime(Math.max(20,end),t+duration);
+      env.gain.setValueAtTime(.0005,t);
+      env.gain.linearRampToValueAtTime(gain,t+Math.min(.025,duration*.16));
+      env.gain.exponentialRampToValueAtTime(.0005,t+duration);
+      src.connect(f);f.connect(env);env.connect(dest);
+      src.start(t);src.stop(t+duration+.008);
+    };
+    const tone=(c,dest,t,freq,duration,gain,wave='sine',to=freq)=>{
+      const osc=c.createOscillator(),env=c.createGain();
+      osc.type=wave;osc.frequency.setValueAtTime(freq,t);
+      osc.frequency.exponentialRampToValueAtTime(Math.max(20,to),t+duration);
+      env.gain.setValueAtTime(.0005,t);
+      env.gain.linearRampToValueAtTime(gain,t+Math.min(.018,duration*.2));
+      env.gain.exponentialRampToValueAtTime(.0005,t+duration);
+      osc.connect(env);env.connect(dest);osc.start(t);osc.stop(t+duration+.008);
+    };
+    function play(which,reverse=false){
+      const c=context();if(!c||!UA.bus?.master)return;
+      try{
+        const out=output(c),t=c.currentTime+.006;
+        // These four sound signatures reproduce the earlier CaseSfx timbres.
+        if(which==='latch'){
+          noise(c,out,t,.075,3100,1700,3,.17);
+          tone(c,out,t,2350,.052,.042,'square',1250);
+          tone(c,out,t+.018,185,.105,.12,'triangle',126);
+        }else if(which==='hinge'){
+          noise(c,out,t,.94,reverse?2500:380,reverse?420:2350,2,.073);
+          tone(c,out,t,reverse?220:108,.72,.04,'sawtooth',reverse?110:220);
+          tone(c,out,t+.1,430,.66,.018,'sine',reverse?290:560);
+        }else if(which==='thud'){
+          tone(c,out,t,84,.37,.27,'sine',42);
+          noise(c,out,t,.15,720,170,1,.10);
+        }else if(which==='reveal'){
+          noise(c,out,t,1.05,3600,9000,3,.025);
+          tone(c,out,t+.02,880,.95,.075,'sine',1320);
+          tone(c,out,t+.15,1318,.7,.041,'sine',1760);
+        }
+      }catch(e){if(!window.__caseSoundWarned){window.__caseSoundWarned=true;console.warn('Case sound:',e);}}
+    }
+    function sync(p,target,manual){
+      // Only sound transitions controlled by the player, never scroll-driven
+      // preview while browsing the website.
+      if(!manual||document.hidden){last=p;return;}
+      if(target>last+.00005){
+        if(last<.055&&p>=.055){cycle++;play('latch');}
+        if(last<.15&&p>=.15)play('latch');
+        if(last<.295&&p>=.295)play('hinge');
+        if(last<.93&&p>=.93)play('thud');
+        if(last<.997&&p>=.997)play('reveal');
+      }else if(target<last-.00005){
+        if(last>.72&&p<=.72)play('hinge',true);
+        if(last>.16&&p<=.16)play('latch');
+        if(last>.01&&p<=.01)play('thud');
+      }
+      last=p;
+    }
+    return {sync};
+  })();
+
   // One uninterrupted dolly toward the flight case once the host fills the viewport.
   const entryDolly={active:false,from:0,to:0,elapsed:0,duration:1.55};
   const originalCasePosition = caseG.position.clone();
@@ -2227,7 +2301,7 @@
         pNow+=(pt-pNow)*(1-Math.exp(-5.2*Math.min(0.12,actualFrameTime)));
         lidMotion.to=pNow;lidMotion.from=pNow;lidMotion.elapsed=0;
       }
-    } setLid(pNow); updateCharacterEntry(); oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
+    } CASE_SOUND.sync(pNow,pTarget,lidControlledByPlayer); setLid(pNow); updateCharacterEntry(); oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
     const busy = (k) => open.some((g) => g.it.comp === k && g.m > 0.04) || items.some((it) => it.comp === k && ((it.kind === 'mut' && it.T > 0.04) || (it.g && (it.kk || 0) > 0.04))) || (k === 'hw' && HW && ((HW.T || 0) > 0.05 || (HW.u || 0) > 0.03));
     CK.forEach((k) => { if (compG[k].userData.open && lidOpen > 0.95) return; open.forEach((g) => { if (g.it.comp === k && !g.closing) { g.it.was = 1; g.closing = true; g.pin = false; g.manual = 0; } }); items.forEach((it) => { if (it.comp !== k) return; if (it.kind === 'mut' && it.tgt) { it.was = it.tgt; it.tgt = 0; } if (it.g && it.on) { it.was = 1; it.on = 0; } }); if (k === 'hw' && HW) HW.tg = 0; if (SEL && ((SEL.type === 'cap' && SEL.g.it.comp === k) || (SEL.it && SEL.it.comp === k) || (SEL.type === 'hw' && k === 'hw'))) SEL = null; });
     CK.forEach((k) => { if (!(compG[k].userData.open && compG[k].userData.t > 0.97)) return; items.forEach((it, i) => { if (it.comp !== k || !it.was) return; const w = it.was; it.was = 0; setTimeout(() => { if (it.kind === 'cap') openGear(it, true); else if (it.kind === 'mut') it.tgt = w; else if (it.g) it.on = 1; }, 200 + (i % 8) * 180); }); });
