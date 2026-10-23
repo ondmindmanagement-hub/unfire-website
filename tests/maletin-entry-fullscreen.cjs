@@ -49,13 +49,15 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        roaming:game.__UNFIRE_CASE_QA.roam,
        caseVisible:game.__UNFIRE_CASE_QA.caseVisible,
        caseCamera:!game.__UNFIRE_CASE_QA.roam&&!game.__UNFIRE_CASE_QA.inspecting,
-       exploreButtonVisible:getComputedStyle(game.document.getElementById('roamB')).display!=='none',
+       walkButtonExists:!!game.document.getElementById('roamB'),
+       oldDoubleHudMissing:!game.document.getElementById('caseModeHud'),
+       exteriorCircleMissing:!game.__ringB,
        lid:game.__UNFIRE_CASE_QA.lid,
        exit:!!game.document.getElementById('unfireExitGame'),
        gameSource:frame.getAttribute('src')
      };
    });
-   assert(first.immersive&&first.fullViewport&&first.fullscreenAllowed&&!first.roaming&&first.caseVisible&&first.caseCamera&&first.exploreButtonVisible&&first.lid>0.94&&first.exit,
+   assert(first.immersive&&first.fullViewport&&first.fullscreenAllowed&&!first.roaming&&first.caseVisible&&first.caseCamera&&first.walkButtonExists&&first.oldDoubleHudMissing&&first.exteriorCircleMissing&&first.lid>0.94&&first.exit,
      'Single tap did not enter immersive playable world '+JSON.stringify(first));
    for(const [width,height] of [[390,844],[844,390]]){
      await page.setViewportSize({width,height});
@@ -71,7 +73,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        d.body.classList.add('storyOn');story.classList.add('on');
        const rect=(el)=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}};
        const box=rect(story.querySelector('.box'));
-       const touch=['unfireTouchPad','unfireFly','unfireTalk','unfireDown','caseModeHud']
+       const touch=['unfireTouchPad','unfireFly','unfireTalk','unfireDown']
          .map(id=>({id,hidden:getComputedStyle(d.getElementById(id)).display==='none'}));
        const exit=rect(d.getElementById('unfireExitGame'));
        return {box,touch,exit};
@@ -85,19 +87,47 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
      assert(state.exit.x>=-1&&state.exit.y>=-1&&state.exit.x+state.exit.w<=width+1,
        'Game exit clipped by small viewport');
    }
+   // Carry/throw capsule action stays on the left rail, beyond the central
+   // avatar, and between minimap and thumbstick across rotations.
+   for(const [width,height] of [[390,844],[844,390]]){
+     await page.setViewportSize({width,height});
+     const layout=await page.evaluate(()=>{
+       const d=document.getElementById('malFrame').contentDocument;
+       d.body.classList.remove('storyOn');
+       const b=d.getElementById('unfireCarryCase');
+       b.style.display='flex';
+       const r=b.getBoundingClientRect();
+       const mini=d.getElementById('minimap').getBoundingClientRect();
+       b.style.display='none';
+       return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,
+         minimapBottom:mini.bottom,width:d.defaultView.innerWidth,height:d.defaultView.innerHeight};
+     });
+     assert(layout.x>=0&&layout.right<width*.5&&layout.bottom<height-58&&
+       layout.y>=layout.minimapBottom-4,
+       'Capsule carry action obscures avatar/minimap/joystick '+JSON.stringify(layout));
+   }
+   // Return to web must not reactivate the scene when the page scrolls.
    // Walking is a separate voluntary action. The player can freely enter and
    // return to the case without restarting the mission or collapsing the lid.
+   await page.waitForFunction(()=>{const g=document.getElementById('malFrame')?.contentWindow;
+     return g?.document.getElementById('roamB')?.style.display==='block'&&!g.__UNFIRE_CASE_QA.roam;
+   },null,{timeout:120000,polling:250});
    const choice=await page.evaluate(()=>{
      const game=document.getElementById('malFrame').contentWindow;
      const before=game.__UNFIRE_CASE_QA;
      if(before.roam||before.lid<.94)throw Error('Opened case jumped to avatar');
-     game.document.getElementById('roamB').click();
+     game.document.body.classList.remove('storyOn');
+     game.document.getElementById('story').classList.remove('on');
+     const button=game.document.getElementById('roamB');
+     if(button.style.display==='none') throw Error('PASEAR missing after lid opened');
+     button.click();
      const exploring=game.__UNFIRE_CASE_QA.roam;
+     const hiddenOnWalking=!button.textContent.includes('PASEAR');
      game.document.getElementById('roamB').click();
-     return {exploring,returned:!game.__UNFIRE_CASE_QA.roam,
+     return {exploring,hiddenOnWalking,returned:!game.__UNFIRE_CASE_QA.roam,
        lid:game.__UNFIRE_CASE_QA.lid,caseVisible:game.__UNFIRE_CASE_QA.caseVisible};
    });
-   assert(choice.exploring&&choice.returned&&choice.caseVisible&&choice.lid>.94,
+   assert(choice.exploring&&choice.hiddenOnWalking&&choice.returned&&choice.caseVisible&&choice.lid>.94,
      'Case-to-avatar must be optional and reversible '+JSON.stringify(choice));
    // MODO CINE: spectator camera must pass through the entire house, walls,
    // ceilings, windows and furnishings without constraining the player robot.
@@ -115,6 +145,27 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    });
    assert(cinematic.camera[0]>78&&cinematic.camera[1]>24&&cinematic.camera[2]>95&&cinematic.playerUnchanged,
      'Cinematic spectator must traverse physical and architectural bounds without moving robot '+JSON.stringify(cinematic));
+   const savedLid=await page.evaluate(()=>document.getElementById('malFrame').contentWindow.__UNFIRE_CASE_QA.lid);
+   await page.evaluate(()=>document.getElementById('malFrame').contentWindow.__exitGame());
+   await page.waitForFunction(()=>document.getElementById('heroPin').classList.contains('web-return'),null,{timeout:10000});
+   const afterExit=await page.evaluate(()=>{
+     dispatchEvent(new WheelEvent('wheel',{deltaY:380,cancelable:true,bubbles:true}));
+     return {portal:!!document.getElementById('unfireReturnPortal'),
+       returnLabel:document.getElementById('unfireReturnPlay')?.textContent,
+       gamePaused:!document.body.classList.contains('immOn'),
+       persistent:document.getElementById('heroPin').classList.contains('web-return')};
+   });
+   assert(afterExit.portal&&/VOLVER A JUGAR/.test(afterExit.returnLabel)&&afterExit.gamePaused&&afterExit.persistent,
+     'Exit to website did not leave game parked with manual return portal '+JSON.stringify(afterExit));
+   await page.evaluate(()=>document.getElementById('unfireReturnPlay').click());
+   await page.waitForFunction(()=>document.body.classList.contains('immOn'),null,{timeout:10000});
+   const afterResume=await page.evaluate(()=>({
+     portalClosed:!document.getElementById('heroPin').classList.contains('web-return'),
+     lid:document.getElementById('malFrame').contentWindow.__UNFIRE_CASE_QA.lid
+   }));
+   assert(afterResume.portalClosed&&Math.abs(afterResume.lid-savedLid)<.06,
+     'VOLVER A JUGAR must resume original maletin scene, not restart '+JSON.stringify({savedLid,afterResume}));
+   console.log('PASS exit directly to web, no scroll auto-reopen, Y2K portal, resumable game and responsive capsule HUD');
    // The first game has already been validated; release its expensive software
    // WebGL context before starting a second game in a CI worker.
    await page.close();
