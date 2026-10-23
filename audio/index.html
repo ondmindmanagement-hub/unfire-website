@@ -1001,7 +1001,8 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
   let entryTransition=false,entryAnimation=null;
   const reducedMotion=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
   const open=(D=1100)=>{
-    if(entryTransition||(caseLocal&&entryStarted))return;
+    // After voluntary exit, only the explicit "Volver a jugar" button may resume.
+    if(webReturn||entryTransition||(caseLocal&&entryStarted))return;
     const pin=$('#heroPin');
     if(pin.classList.contains('scene-error')){loadingIntent=false;UNFIRE_SCENE.start(true);}
     else UNFIRE_SCENE.start();
