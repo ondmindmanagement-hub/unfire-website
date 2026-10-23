@@ -16,6 +16,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=IM+Fell+English+SC&family=Michroma&family=Pirata+One&family=Righteous&family=Cormorant+SC:wght@700&family=Playfair+Display+SC:ital,wght@1,900&family=Black+Ops+One&family=Comfortaa:wght@700&family=Audiowide&family=Poiret+One&family=Orbitron:wght@800&family=Marcellus+SC&family=Bodoni+Moda:ital,wght@1,700&family=Bungee&family=Fraunces:ital,wght@1,700&family=Silkscreen:wght@700&family=VT323&family=New+Rocker&family=Special+Elite&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=IM+Fell+English+SC&family=Michroma&family=Pirata+One&family=Righteous&family=Cormorant+SC:wght@700&family=Playfair+Display+SC:ital,wght@1,900&family=Black+Ops+One&family=Comfortaa:wght@700&family=Audiowide&family=Poiret+One&family=Orbitron:wght@800&family=Marcellus+SC&family=Bodoni+Moda:ital,wght@1,700&family=Bungee&family=Fraunces:ital,wght@1,700&family=Silkscreen:wght@700&family=VT323&family=New+Rocker&family=Special+Elite&display=swap"></noscript>
+<link rel="preload" as="image" href="img/maletin-real-first-frame-desktop.webp" media="(min-width:601px)" fetchpriority="high">
+<link rel="preload" as="image" href="img/maletin-real-first-frame-mobile.webp" media="(max-width:600px)" fetchpriority="high">
 <style>
 /* UNFIRE AUDIO — "El equipaje".
    Cada categoría vive en su propio contenedor: maletín de vuelo (inicio), flight case (instrumentos),
@@ -121,7 +123,16 @@ html.immOn,body.immOn{overflow:hidden!important;overscroll-behavior:none}body.im
 @media(prefers-reduced-motion:reduce){#unfireReturnPlay{transition:none}}
 .hero-pin{position:sticky;top:62px;height:calc(100vh - 62px);overflow:hidden;display:grid;place-items:center}
 /* Defer heavy WebGL startup until the document is interactive. Same full-resolution game. */
-.hero-pin:not(.scene-ready)::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 70%,#1c3353 0%,#08090c 65%)}
+/* Instant first paint shows THE REAL CASE: 13–31 KB screenshots from actual WebGL.
+   They disappear as soon as the identical live interactive case is available. */
+#unfireCaseFirstFrame{position:absolute;inset:0;z-index:3;overflow:hidden;display:block;background:#060a12;cursor:pointer;touch-action:manipulation;transition:opacity .38s ease}
+#unfireCaseFirstFrame img{display:block;width:100%;height:100%;object-fit:fill;user-select:none;-webkit-user-drag:none}
+.hero-pin.scene-ready #unfireCaseFirstFrame{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .38s ease,visibility 0s .38s}
+.hero-pin.web-return #unfireCaseFirstFrame{display:none!important}
+.no-webgl #unfireCaseFirstFrame{pointer-events:none;cursor:default}
+.hero-pin:not(.scene-ready) .hero-copy{opacity:0!important;visibility:hidden!important}
+.hero-pin:not(.scene-ready)::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:#060a12}
+@media(prefers-reduced-motion:reduce){#unfireCaseFirstFrame,.hero-pin.scene-ready #unfireCaseFirstFrame{transition:none}}
 /* First interactive impression is the live 3D case, never a product advertisement. */
 .hero-pin:not(.scene-ready)::after{content:"PREPARANDO MALETÍN 3D";position:absolute;inset:auto 0 10%;pointer-events:none;z-index:1;text-align:center;font:700 11px/1.5 Michroma,Arial,sans-serif;letter-spacing:.2em;color:#86c9ff;text-shadow:0 0 14px #3d8bff}
 .hero-pin:not(.scene-ready) #malFrame{opacity:0}
@@ -444,6 +455,11 @@ footer a{color:var(--soft)}
 <!-- 0 · El maletín 3D con inmersión -->
 <div class="hero" id="hero" data-field="0">
   <div class="hero-pin" id="heroPin">
+    <!-- Actual gameplay captured from the live WebGL case; available before WebGL boots. -->
+    <picture id="unfireCaseFirstFrame" role="button" tabindex="0" aria-label="Entrar al mundo Unfire Audio desde el maletín real">
+      <source media="(max-width:600px)" srcset="img/maletin-real-first-frame-mobile.webp">
+      <img src="img/maletin-real-first-frame-desktop.webp" width="1100" height="635" alt="Maletín 3D auténtico de Unfire Audio, cerrado sobre la mesa, con su mariposa" fetchpriority="high" loading="eager" decoding="sync">
+    </picture>
     <iframe id="malFrame" data-src="maletin/index.html?v=20261023radio27v1" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone; fullscreen" allowfullscreen></iframe>
     <a id="noWebglLink" href="#instrumentos">Explorar los instrumentos ↓</a>
     <div class="hero-copy" id="heroCopy">
@@ -810,7 +826,9 @@ const Field=(()=>{
     }
     const g=c.createLinearGradient(0,0,0,H*.5);g.addColorStop(0,'rgba(8,9,12,1)');g.addColorStop(1,'rgba(8,9,12,0)');c.fillStyle=g;c.fillRect(0,0,W,H*.5);
   }
-  function loop(){if(visible)draw();raf=requestAnimationFrame(loop)}
+  // The decorative field is not visible behind the case on the first screen;
+  // do not waste canvas GPU/CPU budget while the playable 3D scene is loading.
+  function loop(){if(visible&&scrollY>innerHeight*0.9&&!document.body.classList.contains('immOn'))draw();raf=requestAnimationFrame(loop)}
   size();addEventListener('resize',()=>{size();if(RM)draw()});
   addEventListener('scroll',()=>{vel+=Math.abs(scrollY-lastY)*.15;lastY=scrollY},{passive:true});
   addEventListener('pointermove',e=>{mx=e.clientX/innerWidth;my=1-e.clientY/innerHeight},{passive:true});
@@ -1021,6 +1039,11 @@ if(d.lv!=null)document.documentElement.style.setProperty('--lv',d.lv);if(d.rect)
   });
   // Same-origin 3D case click calls this function directly (keeps user gesture).
   window.__UNFIRE_ENTER_CASE=()=>open(1050);fr.style.pointerEvents='auto';
+  // First tap on the real-case captured frame keeps the same immersive flow.
+  // The real WebGL lid waits for readiness; no separate 2D ABRIR button.
+  const firstFrame=document.getElementById('unfireCaseFirstFrame');
+  firstFrame.addEventListener('click',e=>{e.preventDefault();if(!document.documentElement.classList.contains('no-webgl'))open(1050);});
+  firstFrame.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(!document.documentElement.classList.contains('no-webgl'))open(1050);}});
   function shut(){caseLocal=true;$('#heroPin').classList.add('imm');document.body.classList.add('immOn');document.documentElement.classList.add('immOn');fr.style.pointerEvents='auto';fr.style.clipPath='none';}
   function exitGame(){
     caseLocal=false;webReturn=true;parked=1;
