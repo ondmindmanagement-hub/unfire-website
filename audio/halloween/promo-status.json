@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "review_date": "2026-10-23",
+  "free_midi_gift": {"enabled": true, "requires_purchase": false, "files": 4},
+  "temporary_discount": {"enabled": false, "proposed_percent": 60, "requested_window": ["2026-10-23", "2026-10-31"], "app_store_prices_verified": false, "approved_products": []},
+  "archer_unique_buyer_code": {"enabled": false, "purchase_verification_backend_ready": false, "valid_redeemable_codes_issued": 0},
+  "halloween_plugin_prize_wheel": {"enabled": false, "proposed_date": "2026-10-31", "local_promotional_filing_verified": false, "prize_plugins_fulfillable": false, "rules_published": false, "approved_prize_skus": []}
+}
