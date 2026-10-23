@@ -1,0 +1,26 @@
+name: Unfire gacha camera framing QA
+
+on:
+  pull_request:
+    paths:
+      - audio/maletin/game-engine-v50.js
+      - tests/maletin-gacha-camera.test.cjs
+      - .github/workflows/maletin-gacha-camera-qa.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gacha-camera:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Syntax
+        run: node --check audio/maletin/game-engine-v50.js
+      - name: Camera, first person and flight regressions
+        run: node --test tests/maletin-gacha-camera.test.cjs tests/maletin-first-person.test.cjs tests/maletin-flight-combos.test.cjs tests/maletin-indoor-outdoor-perf.test.cjs
