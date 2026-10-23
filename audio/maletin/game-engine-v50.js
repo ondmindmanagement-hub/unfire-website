@@ -2312,7 +2312,11 @@
     requestAnimationFrame(frame);
     // Cap this heavy 3D scene to ~30-40fps; input events continue unthrottled.
     if (previousRenderAt && now - previousRenderAt < (LOWDEV ? (DEVICE.tier==='compact' ? 42 : 33) : window.ATM_OUT ? 33 : 28)) return;
-    const actualFrameTime = previousRenderAt ? Math.min(0.18, Math.max(0.008, (now - previousRenderAt) / 1000)) : 1 / 30;
+    // Case/camera animations must use real foreground elapsed time even if
+    // WebGL renders only a few frames per second. Physics keeps its bounded
+    // delta, and the hidden-tab branch resets previousRenderAt for safe resume.
+    const foregroundFrameTime = previousRenderAt ? Math.min(6, Math.max(0.008, (now - previousRenderAt) / 1000)) : 1 / 30;
+    const actualFrameTime = Math.min(0.18, foregroundFrameTime);
     previousRenderAt = now;
     protectSlowGPU(now);
     const dt = Math.min(0.05, clock.getDelta()) * (window.__dts || 1); t += dt;
@@ -2324,10 +2328,10 @@
       if (lidControlledByPlayer) {
         if (Math.abs(lidMotion.to-pt)>0.0001) {
           lidMotion.from=pNow;lidMotion.to=pt;lidMotion.elapsed=0;
-          lidMotion.duration=pt>pNow?Math.max(0.85,5.6*Math.abs(pt-pNow)):Math.max(0.42,2.1*Math.abs(pt-pNow));
+          lidMotion.duration=pt>pNow?Math.max(0.85,3.0*Math.abs(pt-pNow)):Math.max(0.42,1.6*Math.abs(pt-pNow));
         }
         // Use real elapsed frame time for consistent physical timing.
-        lidMotion.elapsed=Math.min(lidMotion.duration,lidMotion.elapsed+Math.min(0.12,actualFrameTime));
+        lidMotion.elapsed=Math.min(lidMotion.duration,lidMotion.elapsed+foregroundFrameTime);
         const alpha=ease.smooth(clamp(lidMotion.elapsed/lidMotion.duration));
         pNow=lidMotion.from+(lidMotion.to-lidMotion.from)*alpha;
       } else {
@@ -2355,7 +2359,7 @@
     if (lidOpen < 0.9) { CK.forEach((k) => { const u = compG[k].userData; u.open = 0; u.t = Math.min(u.t, Math.max(0, (lidOpen - 0.2) / 0.7)); }); if (HW) { HW.T = Math.max(0, (HW.T || 0) - dt * 4); HW.u = Math.min(HW.u || 0, Math.max(0, (lidOpen - 0.3) / 0.6)); } items.forEach((it) => { if (it.W && it.home && !it.retT) { it.W.position.lerp(it.home, 0.2); it.W.rotation.set(0, 0, 0); } }); }
     if (lidOpen < 0.98 || STOW) { if (HW) HW.equip = false; CK.forEach((k) => { compG[k].userData.open = 0; }); if (CINE.on) CINE.on = false; open.forEach((g) => { g.closing = true; g.pin = false; }); items.forEach((it) => { if (it.kind === 'mut') it.tgt = 0; if (it.g) it.on = 0; }); if (HW) { HW.tg = 0; HW.closeGate = 1; } SEL = null; MV = null; } if (lidOpen < 0.85 && (open.length || A.using)) { closeAll(true); stopAll(); }
     if(entryDolly.active&&!ROAMS.on){
-      entryDolly.elapsed=Math.min(entryDolly.duration,entryDolly.elapsed+Math.min(.12,actualFrameTime));
+      entryDolly.elapsed=Math.min(entryDolly.duration,entryDolly.elapsed+foregroundFrameTime);
       const u=ease.smooth(clamp(entryDolly.elapsed/entryDolly.duration));
       view.dist=entryDolly.from+(entryDolly.to-entryDolly.from)*u;
       if(u>=1){entryDolly.active=false;if(entryDolly.openAfter){entryDolly.openAfter=false;pTarget=1;}}
