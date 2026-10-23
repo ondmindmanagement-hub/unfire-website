@@ -55,7 +55,7 @@
     bottom:calc(var(--uf-thumb-safe-b) + var(--uf-thumb-rise) + var(--uf-thumb-action-h) + var(--uf-thumb-action-gap))!important;
   }
   body.unfire-roaming #unfireDown {
-    bottom:calc(var(--uf-thumb-safe-b) + var(--uf-thumb-rise) + (var(--uf-thumb-action-h) + var(--uf-thumb-action-gap))*2)!important;
+    bottom:calc(var(--uf-thumb-safe-b) + var(--uf-thumb-rise) + var(--uf-thumb-action-h) + var(--uf-thumb-action-gap) + var(--uf-thumb-action-h) + var(--uf-thumb-action-gap))!important;
   }
   /* Secondary rail is intentionally left near the top; scroll rather than covering gameplay. */
   body.unfire-roaming #ctlDock {
