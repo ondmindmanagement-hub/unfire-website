@@ -54,7 +54,7 @@ async function compare(spec) {
       r.p.set(-35, 4.5, 130); r.h = 25; r.flyH = 25; r.vy = 0; r.fly = true; r.k = {};
       const renderer = window.__mal.S.renderer;
       const original = renderer.render;
-      let recording = false, before = 0, started = 0;
+      let recording = false, before = 0, started = 0, startingEngineFrames = 0;
       let gaps = [], renderCpu = [];
       renderer.render = function(...args) {
         const enter = performance.now();
@@ -69,7 +69,7 @@ async function compare(spec) {
         }
       };
       window.__UNFIRE_AB_BENCH = {
-        start() { recording = true; started = performance.now(); before = 0; gaps = []; renderCpu = []; },
+        start() { recording = true; started = performance.now(); startingEngineFrames = window.__perf?.f || 0; before = 0; gaps = []; renderCpu = []; },
         stop() {
           recording = false;
           const elapsed = performance.now() - started;
@@ -78,7 +78,9 @@ async function compare(spec) {
             compact: window.__UNFIRE_AUTOCALIB?.tier,
             measuredMs: Math.round(elapsed),
             primaryRenderCalls: renderCpu.length,
-            primaryRenderFps: +(renderCpu.length * 1000 / elapsed).toFixed(2),
+            engineFrames: Math.max(0, (window.__perf?.f || 0) - startingEngineFrames),
+            renderCallsPerSecond: +(renderCpu.length * 1000 / elapsed).toFixed(2),
+            engineFps: +((Math.max(0, (window.__perf?.f || 0) - startingEngineFrames) * 1000) / elapsed).toFixed(2),
             renderGapP50Ms: null, renderGapP95Ms: null, renderGapP99Ms: null,
             renderCpuP95Ms: null, longGapsOver100Ms: gaps.filter(n => n > 100).length,
             engineBudget: Object.assign({}, window.__perf || {}),
@@ -101,7 +103,9 @@ async function compare(spec) {
       loadAndPrepareMs: Date.now() - since - raw.measuredMs,
       sampleMs: raw.measuredMs,
       frames: raw.primaryRenderCalls,
-      primaryRenderFps: raw.primaryRenderFps,
+      engineFrames: raw.engineFrames,
+      engineFps: raw.engineFps,
+      renderCallsPerSecond: raw.renderCallsPerSecond,
       gapP50Ms: percentile(raw.gaps, .50),
       gapP95Ms: percentile(raw.gaps, .95),
       gapP99Ms: percentile(raw.gaps, .99),
@@ -135,9 +139,9 @@ async function compare(spec) {
         '--no-sandbox', '--autoplay-policy=no-user-gesture-required']
     });
     for (const item of cases) await compare(item);
-    const baselineFps = (samples[0].primaryRenderFps + samples[2].primaryRenderFps) / 2;
-    const candidateFps = samples[1].primaryRenderFps;
-    const drift = Math.abs(samples[0].primaryRenderFps - samples[2].primaryRenderFps) / Math.max(baselineFps, 0.001);
+    const baselineFps = (samples[0].engineFps + samples[2].engineFps) / 2;
+    const candidateFps = samples[1].engineFps;
+    const drift = Math.abs(samples[0].engineFps - samples[2].engineFps) / Math.max(baselineFps, 0.001);
     const result = {
       interpretation: 'Comparison is DESCRIPTIVE in Linux CI software WebGL; not physical iPhone FPS or a release gate.',
       baselineCommit: 'b122143a3d3533c7e6f68579c5361681d9fe3ccd',
@@ -146,7 +150,7 @@ async function compare(spec) {
       candidateRenderFps: candidateFps,
       estimatedRelativeChangePercent: +((candidateFps / baselineFps - 1) * 100).toFixed(1),
       baselineDriftPercent: +(drift * 100).toFixed(1),
-      comparisonStable: drift <= .25 && samples.every(s => s.frames >= 20),
+      comparisonStable: drift <= .25 && samples.every(s => s.engineFrames >= 20),
       results: samples
     };
     fs.writeFileSync(outFile, JSON.stringify(result, null, 2) + '\n');
