@@ -1891,7 +1891,7 @@
   cv.addEventListener('touchstart', (e) => { if (e.touches.length === 2 && lidOpen > 0.9) { const [a, b] = e.touches; pinch = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); } }, { passive: true });
   cv.addEventListener('touchmove', (e) => { if (pinch && e.touches.length === 2) { const [a, b] = e.touches, d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); zoomBy(pinch / d, cursorPoint({ clientX: (a.clientX + b.clientX) / 2, clientY: (a.clientY + b.clientY) / 2 })); pinch = d; } }, { passive: true });
   cv.addEventListener('touchend', (e) => { pinch = null; if (e.changedTouches.length === 1 && lidOpen > 0.9) { const now = performance.now(), tch = e.changedTouches[0]; if (now - lastTap < 300) zoomBy(zoomed() && view.gd < 1.2 ? 9 : 0.45, cursorPoint(tch)); lastTap = now; } });
-  $('zin').onclick = () => zoomBy(0.6, V(view.gx, HB, view.gz)); $('zout').onclick = () => zoomBy(1.6, null); $('home').onclick = () => { exitRoam(); view.gd = view.D0; view.gx = 0; view.gz = 0.15; ORB.gaz = ORB.gde = 0; ALL = false; closeAll(); };
+  $('zin').onclick = () => zoomBy(0.6, V(view.gx, HB, view.gz)); $('zout').onclick = () => zoomBy(1.6, null); $('home').onclick = () => { if (CASE_VIEW.on) CASE_VIEW.on = false; if (REC.on) REC.set(false); exitRoam(); CAPS.cancel(); carryingCase = false; caseG.visible = true; caseG.scale.setScalar(1); caseG.position.copy(originalCasePosition); caseG.rotation.y = 0; updateCarryUI(); view.gd = view.D0; view.gx = 0; view.gz = 0.15; ORB.gaz = ORB.gde = 0; ALL = false; closeAll(); };
 
   // ---------- cosas activas (se construyen al acercarte) ----------
   let gear = null, robot = null, nearItem = null;
