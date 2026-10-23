@@ -13,7 +13,8 @@
     "consumer_terms_and_digital_withdrawal_confirmed": false,
     "individual_builds_signed_and_compatibility_tested": false,
     "paid_order_webhook_and_secure_fulfillment_tested": false,
-    "receipts_refunds_support_and_cancellations_ready": false
+    "receipts_refunds_support_and_cancellations_ready": false,
+    "framework_and_third_party_licenses_verified": false
   },
   "approved_skus": {}
 }
