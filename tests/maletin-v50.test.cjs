@@ -85,6 +85,8 @@ chk('Existing PASEAR moves from upper-left case corner into the dock only when r
   game.includes('top:calc(env(safe-area-inset-top) + 6px)!important')&&
   !game.includes('body:not(.unfire-roaming) #roamB{left:50%')&&
   !game.includes('body:not(.unfire-roaming) #roamB{bottom:calc(env(safe-area-inset-bottom) + 63px)'));
+chk('No blue artificial case illustration in any initial viewport or compatibility fallback',
+  !html.includes('unfire-case-preview.svg') && !html.includes('background:url("img/hyperwave-open.webp")'));
 chk('First landing loads actual live WebGL maletin, not synth ad or fake image',
   html.includes('requestAnimationFrame(()=>{if(!document.hidden&&nearHero())start()})')&&
   html.includes('PREPARANDO MALETÍN 3D')&&
