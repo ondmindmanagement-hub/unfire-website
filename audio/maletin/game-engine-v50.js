@@ -174,7 +174,7 @@
     const ht = Y2K.toTex(hc, { color: true }); const pan = mesh(rbox(CW - 0.9, 0.03, CD - 0.9, 0.12), new THREE.MeshPhysicalMaterial({ color: 0x0b0e15, metalness: 0.6, roughness: 0.15, clearcoat: 1, emissive: 0xffffff, emissiveMap: ht, emissiveIntensity: 0.35 })); pan.position.set(0, HL + 0.005, 0); lid.add(pan); window.__hexPan = pan;
     for (const [w, d, x, z] of [[CW - 0.5, 0.02, 0, CD / 2 - 0.25], [CW - 0.5, 0.02, 0, -CD / 2 + 0.25], [0.02, CD - 0.5, CW / 2 - 0.25, 0], [0.02, CD - 0.5, -CW / 2 + 0.25, 0]]) { const st = mesh(new THREE.BoxGeometry(w, 0.012, d), Y2K.led('#3d8bff', 2.6)); st.position.set(x, HL + 0.012, z); lid.add(st); }
     const seam = mesh(new THREE.BoxGeometry(CW + 0.06, 0.012, 0.012), Y2K.led('#3d8bff', 3)); seam.position.set(0, 0.02, CD / 2 + 0.06); caseG.add(seam);
-    const ringB = mesh(new THREE.TorusGeometry(0.42, 0.02, 10, 64).rotateX(H2), Y2K.led('#7fd0ff', 3)); ringB.position.set(0, HL + 0.05, 0.3); ringB.scale.setScalar(1.45); { const bz = mesh(new THREE.TorusGeometry(0.54, 0.08, 18, 64).rotateX(H2), CHROME); bz.position.set(0, HL + 0.03, 0.3); lid.add(bz); const dm = mesh(new THREE.SphereGeometry(0.5, 48, 20, 0, TAU, 0, 1.0), new THREE.MeshPhysicalMaterial({ color: 0x2a6dff, emissive: 0x2a6dff, emissiveIntensity: 0.6, roughness: 0.05, clearcoat: 1, transparent: true, opacity: 0.88 })); dm.scale.y = 0.42; dm.position.set(0, HL + 0.02, 0.3); lid.add(dm); const ec = Y2K.cnv(256, 256); G3.drawEmblem(ec.getContext('2d'), 256, '#ffffff'); const fc = new THREE.Mesh(new THREE.CircleGeometry(0.38, 40), new THREE.MeshBasicMaterial({ map: Y2K.toTex(ec, { color: true }), transparent: true, toneMapped: false })); fc.rotation.x = -H2; fc.position.set(0, HL + 0.235, 0.3); lid.add(fc); } lid.add(ringB); window.__ringB = ringB; }
+  } // Exterior round ABRIR button deliberately removed.
   // interior de la tapa: espuma de huevera + bolsillo de malla
   const lidFoam = mesh(new THREE.BoxGeometry(CW - 0.18, 0.05, CD - 0.18), CARB); lidFoam.position.y = 0.02; lid.add(lidFoam);
   const LX = (x) => (x + 2.65) / 5.3 * 2048, LY = (z) => (1.7 - z) / 3.4 * 1314, LK = 2048 / 5.3;
@@ -777,20 +777,87 @@
   let lidControlledByPlayer = false, carryingCase = false, carryUIShown = false;
   // Time-based mechanical lid animation: stable on 30/60Hz or slower devices.
   // Reversing direction begins from the current pose, without jumping.
-  const lidMotion={from:0,to:0,elapsed:0,duration:4.6};
+  const lidMotion={from:0,to:0,elapsed:0,duration:5.6};
+  // Restored UNFIRE/Claude-era case sound palette (original 3D metal
+  // latches, hinge sweep, bass thud and shimmer). Follow actual hinge motion,
+  // never website scroll or arbitrary timers. All voices use existing master
+  // EQ/compression/limiter; no new audio files, downloads or persistent loops.
+  const CASE_SOUND=(()=>{
+    let last=0,cycle=0;
+    const context=()=>UA.ctx&&UA.ctx.state==='running'&&!document.hidden?UA.ctx:null;
+    const output=(c)=>{const v=c.createGain();v.gain.value=.48;v.connect(UA.bus.master);return v};
+    const noise=(c,dest,t,duration,start,end,q,gain)=>{
+      const count=Math.max(1,Math.round(c.sampleRate*duration));
+      const buffer=c.createBuffer(1,count,c.sampleRate),d=buffer.getChannelData(0);
+      for(let i=0;i<count;i++)d[i]=(Math.random()*2-1)*(.8+.2*Math.sin(i*.31));
+      const src=c.createBufferSource(),f=c.createBiquadFilter(),env=c.createGain();
+      src.buffer=buffer;f.type='bandpass';f.Q.value=q;
+      f.frequency.setValueAtTime(Math.max(20,start),t);
+      f.frequency.exponentialRampToValueAtTime(Math.max(20,end),t+duration);
+      env.gain.setValueAtTime(.0005,t);
+      env.gain.linearRampToValueAtTime(gain,t+Math.min(.025,duration*.16));
+      env.gain.exponentialRampToValueAtTime(.0005,t+duration);
+      src.connect(f);f.connect(env);env.connect(dest);
+      src.start(t);src.stop(t+duration+.008);
+    };
+    const tone=(c,dest,t,freq,duration,gain,wave='sine',to=freq)=>{
+      const osc=c.createOscillator(),env=c.createGain();
+      osc.type=wave;osc.frequency.setValueAtTime(freq,t);
+      osc.frequency.exponentialRampToValueAtTime(Math.max(20,to),t+duration);
+      env.gain.setValueAtTime(.0005,t);
+      env.gain.linearRampToValueAtTime(gain,t+Math.min(.018,duration*.2));
+      env.gain.exponentialRampToValueAtTime(.0005,t+duration);
+      osc.connect(env);env.connect(dest);osc.start(t);osc.stop(t+duration+.008);
+    };
+    function play(which,reverse=false){
+      const c=context();if(!c||!UA.bus?.master)return;
+      try{
+        const out=output(c),t=c.currentTime+.006;
+        // These four sound signatures reproduce the earlier CaseSfx timbres.
+        if(which==='latch'){
+          noise(c,out,t,.075,3100,1700,3,.17);
+          tone(c,out,t,2350,.052,.042,'square',1250);
+          tone(c,out,t+.018,185,.105,.12,'triangle',126);
+        }else if(which==='hinge'){
+          noise(c,out,t,.94,reverse?2500:380,reverse?420:2350,2,.073);
+          tone(c,out,t,reverse?220:108,.72,.04,'sawtooth',reverse?110:220);
+          tone(c,out,t+.1,430,.66,.018,'sine',reverse?290:560);
+        }else if(which==='thud'){
+          tone(c,out,t,84,.37,.27,'sine',42);
+          noise(c,out,t,.15,720,170,1,.10);
+        }else if(which==='reveal'){
+          noise(c,out,t,1.05,3600,9000,3,.025);
+          tone(c,out,t+.02,880,.95,.075,'sine',1320);
+          tone(c,out,t+.15,1318,.7,.041,'sine',1760);
+        }
+      }catch(e){if(!window.__caseSoundWarned){window.__caseSoundWarned=true;console.warn('Case sound:',e);}}
+    }
+    function sync(p,target,manual){
+      // Only sound transitions controlled by the player, never scroll-driven
+      // preview while browsing the website.
+      if(!manual||document.hidden){last=p;return;}
+      if(target>last+.00005){
+        if(last<.055&&p>=.055){cycle++;play('latch');}
+        if(last<.15&&p>=.15)play('latch');
+        if(last<.295&&p>=.295)play('hinge');
+        if(last<.93&&p>=.93)play('thud');
+        if(last<.997&&p>=.997)play('reveal');
+      }else if(target<last-.00005){
+        if(last>.72&&p<=.72)play('hinge',true);
+        if(last>.16&&p<=.16)play('latch');
+        if(last>.01&&p<=.01)play('thud');
+      }
+      last=p;
+    }
+    return {sync};
+  })();
+
   // One uninterrupted dolly toward the flight case once the host fills the viewport.
   const entryDolly={active:false,from:0,to:0,elapsed:0,duration:1.55};
   const originalCasePosition = caseG.position.clone();
   const portableUnlocked = () => { try { return typeof window.__unfireCasePortabilityUnlocked === 'function' && !!window.__unfireCasePortabilityUnlocked(); } catch(e) { return false; } };
   // Camera-choice state is separate from the player's roaming state: quests and online continue.
   const CASE_VIEW={on:false,dist:8.4,angle:0.25,elevation:0.78};
-  const caseModeHud=document.createElement('div');
-  caseModeHud.id='caseModeHud';
-  caseModeHud.innerHTML='<button type="button" id="caseInspectBtn">🎥 CÁMARA MALETÍN</button><button type="button" id="caseRobotBtn">🤖 DESDE PERSONAJE</button>';
-  caseModeHud.style.cssText='position:fixed;left:50%;bottom:max(17px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:54;display:none;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;max-width:calc(100vw - 36px);padding:5px;border:1px solid #81b9ff99;border-radius:15px;background:#09142bdc;box-shadow:0 8px 25px #0008';
-  {const st=document.createElement('style');st.textContent='#caseModeHud button{border:1px solid #819fc9;border-radius:11px;background:#172845;color:#eef6ff;padding:9px 11px;font:700 11px Arial;cursor:pointer;touch-action:manipulation}#caseModeHud button.active{background:#236b9b;border-color:#8ed9ff}body.recOn #caseModeHud{display:none!important}@media(max-width:680px){#caseModeHud{bottom:74px;max-width:calc(100vw - 18px)}#caseModeHud button{font-size:10px;padding:7px 9px}}';document.head.appendChild(st);}
-  document.body.appendChild(caseModeHud);
-  caseModeHud.addEventListener('pointerdown',e=>e.stopPropagation());
   const showCaseView=()=>{
     if(!ROAMS.on||carryingCase||CAPS.flying||!caseG.visible)return;
     try{if(REC.on)REC.set(false);}catch(e){}
@@ -801,14 +868,13 @@
     updateCarryUI();
   };
   const showRobotView=()=>{CASE_VIEW.on=false;ROAMS.cp=null;updateCarryUI();};
-  caseModeHud.querySelector('#caseInspectBtn').onclick=showCaseView;
-  caseModeHud.querySelector('#caseRobotBtn').onclick=showRobotView;
+  // No duplicate 2D character action: use the original PASEAR button.
   const carryButton = document.createElement('button');
   carryButton.id = 'unfireCarryCase';
   carryButton.type = 'button';
   carryButton.setAttribute('aria-label','Abrir el maletín que llevas');
   carryButton.innerHTML = '<img src="../img/emblem-butterfly.webp" alt="" width="25" height="25"> <span>ABRIR MALETÍN</span>';
-  carryButton.style.cssText='position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:53;display:none;align-items:center;gap:9px;padding:11px 14px;border:1px solid #81b9ff;border-radius:999px;background:linear-gradient(130deg,#172d50,#030815);box-shadow:0 8px 25px #0009;color:#fff;font:700 12px Arial,sans-serif;touch-action:manipulation;cursor:pointer';
+  carryButton.style.cssText='position:fixed;left:max(12px,env(safe-area-inset-left));top:clamp(190px,40dvh,420px);right:auto;bottom:auto;max-width:195px;box-sizing:border-box;z-index:53;display:none;align-items:center;gap:9px;padding:11px 14px;border:1px solid #81b9ff;border-radius:999px;background:linear-gradient(130deg,#172d50,#030815);box-shadow:0 8px 25px #0009;color:#fff;font:700 12px Arial,sans-serif;touch-action:manipulation;cursor:pointer';
   document.body.appendChild(carryButton);
   function updateCarryUI(){
     const show=ROAMS.on;
@@ -820,11 +886,6 @@
     const labelNode=carryButton.querySelector('span');
     if(labelNode && labelNode.textContent!==label)labelNode.textContent=label;
     if(show!==carryUIShown){carryUIShown=show;carryButton.style.display=show?'flex':'none';}
-    const deployed=ROAMS.on&&!carryingCase&&pTarget>0.5&&!CAPS.flying;
-    const hudDisplay=deployed?'flex':'none';
-    if(caseModeHud.style.display!==hudDisplay)caseModeHud.style.display=hudDisplay;
-    caseModeHud.querySelector('#caseInspectBtn').classList.toggle('active',deployed&&CASE_VIEW.on);
-    caseModeHud.querySelector('#caseRobotBtn').classList.toggle('active',deployed&&!CASE_VIEW.on);
   }
   function closeCaseInGame(){
     if(CASE_VIEW.on)showRobotView();
@@ -1103,7 +1164,39 @@
   function exitRoam() { if (REC.on) REC.set(false); if (!ROAMS.on) return;
     CASE_VIEW.on=false;CAPS.cancel();carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
  ROAMS.on = false; document.body.classList.remove('unfire-roaming'); ROAMS.cp = null; ROAMS.mini = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
-  roamB.onclick = (e) => { e.stopPropagation(); ROAMS.on ? exitRoam() : enterRoam(); };
+  // First visit: the EXISTING PASEAR control blinks for exactly two seconds
+  // once the physical lid has completely opened, then stays visible.
+  let firstCaseWalkHint=false;
+  try{firstCaseWalkHint=localStorage.getItem('unfire_pasear_intro_v1')==='1';}catch(e){}
+  let caseWalkHintTimer=0;
+  function updateRoamButtonHint(){
+    const ready=!ROAMS.on&&!CASE_VIEW.on&&caseG.visible&&!carryingCase&&!CINE.on
+      &&pTarget>.99&&lidOpen>=.998;
+    const show=ready||(ROAMS.on&&!CASE_VIEW.on&&lidOpen>.95&&!CINE.on);
+    if(roamB.style.display!==(show?'block':'none'))roamB.style.display=show?'block':'none';
+    if(ready&&!firstCaseWalkHint){
+      firstCaseWalkHint=true;
+      try{localStorage.setItem('unfire_pasear_intro_v1','1');}catch(e){}
+      roamB.classList.add('unfire-intro-blink');
+      clearTimeout(caseWalkHintTimer);
+      caseWalkHintTimer=setTimeout(()=>{
+        roamB.classList.remove('unfire-intro-blink');caseWalkHintTimer=0;
+      },2000);
+    }
+    if(!ready&&roamB.classList.contains('unfire-intro-blink')){
+      clearTimeout(caseWalkHintTimer);
+      roamB.classList.remove('unfire-intro-blink');
+      caseWalkHintTimer=0;
+    }
+  }
+  roamB.addEventListener('pointerdown',e=>e.stopPropagation());
+  roamB.onclick=(e)=>{
+    e.stopPropagation();
+    roamB.classList.remove('unfire-intro-blink');
+    if(ROAMS.on)exitRoam();
+    else if(pTarget>.99&&lidOpen>=.998)enterRoam();
+    updateRoamButtonHint();
+  };
   window.__roamAPI = { ROAMS, enterRoam, exitRoam, roamMove }; window.__OUT_OPEN = true;
   { const spB = document.createElement('button'); const SP = [['🐢 LENTO', 0.45], ['🚶 NORMAL', 1], ['🏃 RÁPIDO', 1.8]]; let si = 1; window.__walkK = 1; spB.textContent = SP[si][0]; spB.style.cssText = camB.style.cssText.replace('bottom:calc(9vh + 106px)', 'bottom:calc(9vh + 152px)'); document.body.appendChild(spB); spB.addEventListener('pointerdown', (e) => e.stopPropagation()); spB.onclick = () => { si = (si + 1) % 3; window.__walkK = SP[si][1]; spB.textContent = SP[si][0]; hap(0.2); say('Velocidad: ' + SP[si][0] + ' · también Shift = correr, Alt = despacio'); }; spB.style.setProperty('display', 'none', 'important'); }
   // ===== RADIO DE PARED: tus canciones por los altavoces de la casa (sonido espacial). Suena sola, se apaga/enciende/cambia; tus archivos en los tocadiscos =====
@@ -2049,7 +2142,11 @@
     if(ROAMS.on&&!CASE_VIEW.on&&!carryingCase&&caseG.visible&&pTarget>0.5){
       ndc.set((e.clientX/innerWidth)*2-1,-(e.clientY/innerHeight)*2+1);
       ray.setFromCamera(ndc,cam);
-      if(ray.intersectObject(caseG,true).length){showCaseView();/* Continue handling the same click: gates and controls must still work first try. */}
+      if(ray.intersectObject(caseG,true).length){
+        // Identical to the established 'VOLVER AL MALETÍN' camera.
+        exitRoam();
+        return;
+      }
     }
     { const pc = lidOpen > 0.5 ? pickCtl(e) : null; if (pc && !pc.c) { SEL = { type: 'cap', g: pc.g }; activate(pc.g); return; } }
     if (lidOpen < 0.5) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const hitD = ray.intersectObject(dragon, true).length; if (hitD || ray.intersectObject(caseG, true).length) {
@@ -2186,7 +2283,7 @@
       if (lidControlledByPlayer) {
         if (Math.abs(lidMotion.to-pt)>0.0001) {
           lidMotion.from=pNow;lidMotion.to=pt;lidMotion.elapsed=0;
-          lidMotion.duration=Math.max(0.85,4.6*Math.abs(pt-pNow));
+          lidMotion.duration=pt>pNow?Math.max(0.85,5.6*Math.abs(pt-pNow)):Math.max(0.42,2.1*Math.abs(pt-pNow));
         }
         // Use real elapsed frame time for consistent physical timing.
         lidMotion.elapsed=Math.min(lidMotion.duration,lidMotion.elapsed+Math.min(0.12,actualFrameTime));
@@ -2196,7 +2293,7 @@
         pNow+=(pt-pNow)*(1-Math.exp(-5.2*Math.min(0.12,actualFrameTime)));
         lidMotion.to=pNow;lidMotion.from=pNow;lidMotion.elapsed=0;
       }
-    } setLid(pNow); oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
+    } CASE_SOUND.sync(pNow,pTarget,lidControlledByPlayer); setLid(pNow); updateRoamButtonHint(); oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
     const busy = (k) => open.some((g) => g.it.comp === k && g.m > 0.04) || items.some((it) => it.comp === k && ((it.kind === 'mut' && it.T > 0.04) || (it.g && (it.kk || 0) > 0.04))) || (k === 'hw' && HW && ((HW.T || 0) > 0.05 || (HW.u || 0) > 0.03));
     CK.forEach((k) => { if (compG[k].userData.open && lidOpen > 0.95) return; open.forEach((g) => { if (g.it.comp === k && !g.closing) { g.it.was = 1; g.closing = true; g.pin = false; g.manual = 0; } }); items.forEach((it) => { if (it.comp !== k) return; if (it.kind === 'mut' && it.tgt) { it.was = it.tgt; it.tgt = 0; } if (it.g && it.on) { it.was = 1; it.on = 0; } }); if (k === 'hw' && HW) HW.tg = 0; if (SEL && ((SEL.type === 'cap' && SEL.g.it.comp === k) || (SEL.it && SEL.it.comp === k) || (SEL.type === 'hw' && k === 'hw'))) SEL = null; });
     CK.forEach((k) => { if (!(compG[k].userData.open && compG[k].userData.t > 0.97)) return; items.forEach((it, i) => { if (it.comp !== k || !it.was) return; const w = it.was; it.was = 0; setTimeout(() => { if (it.kind === 'cap') openGear(it, true); else if (it.kind === 'mut') it.tgt = w; else if (it.g) it.on = 1; }, 200 + (i % 8) * 180); }); });
@@ -2207,7 +2304,7 @@
       const s2 = ease.smooth(clamp(e * 1.6)) * (G.d + 0.06); G.list.forEach((g) => { let z = g.userData.z - s2, y = 0.115, r = 0; if (z < G.c.z0) { const ex = G.c.z0 - z; z = G.c.z0 - 0.012; y = 0.115 - ex; r = -H2 * Math.min(1, ex / 0.05); } g.position.set(g.position.x, y, z); g.rotation.x = r; g.visible = y > -0.45; }); });
     lidBtn.userData.dome.material.emissiveIntensity = allOpen() ? 0.15 : 0.45 + 0.35 * Math.sin(t * 3);
     const lk = clamp(gateK * 1.25); laser.visible = false; laser.position.set(-CW / 2 + 0.1 + lk * (CW - 0.2), 0.14, 0); 
-    if (lidOpen < 0.5 && ALL) { ALL = false; } if (window.__ringB) { window.__ringB.scale.setScalar(1.45 * (1 + 0.1 * Math.sin(t * 3))); window.__hexPan.material.emissiveIntensity = 0.25 + 0.2 * Math.max(0, Math.sin(t * 1.5 + 1)) + 0.5 * clamp(lidOpen * 3); } if (window.__fd) window.__fd.material.emissiveIntensity = lidOpen < 0.3 ? 0.6 + 0.5 * Math.sin(t * 4) : 0.2; plate.material.emissiveIntensity = lidOpen < 0.3 ? 0.12 + 0.12 * Math.sin(t * 3) : 0;
+    if (lidOpen < 0.5 && ALL) { ALL = false; } if(window.__hexPan)window.__hexPan.material.emissiveIntensity=0.25+0.2*Math.max(0,Math.sin(t*1.5+1))+0.5*clamp(lidOpen*3); if (window.__fd) window.__fd.material.emissiveIntensity = lidOpen < 0.3 ? 0.6 + 0.5 * Math.sin(t * 4) : 0.2; plate.material.emissiveIntensity = lidOpen < 0.3 ? 0.12 + 0.12 * Math.sin(t * 3) : 0;
     ELEV.a += (lerp(0.42, view.gd > view.D0 * 1.25 ? 0.32 : zoomed() || CINE.on ? 0.98 : 0.6, ease.smooth(clamp(lidOpen * 1.15))) - ELEV.a) * 0.2; ORB.az += (ORB.gaz - ORB.az) * 0.15; ORB.de += (ORB.gde - ORB.de) * 0.15; const el = clamp(ELEV.a + ORB.de, 0.12, 1.5); DIR.set(Math.sin(ORB.az) * Math.cos(el), Math.sin(el), Math.cos(ORB.az) * Math.cos(el));
     if (zoomed() && mouse.in && !drag && !knobDrag && performance.now() - mouse.t < 4000) { const ez = (v) => (Math.abs(v) > 0.6 ? (v - Math.sign(v) * 0.6) / 0.4 : 0), a = ez(mouse.nx), b = ez(mouse.ny), ca = Math.cos(ORB.az), sa = Math.sin(ORB.az); view.gx = clamp(view.gx + (a * ca + b * sa) * view.dist * 0.8 * dt, -CW / 2, CW / 2); view.gz = clamp(view.gz + (-a * sa + b * ca) * view.dist * 0.8 * dt, -CD / 2, CD / 2); }
     cv.classList.toggle('dive', zoomed());
@@ -2285,7 +2382,7 @@
       // 1ª persona de verdad: la cámara va en los ojos del 27; ves tus brazos, tu cuerpo y tus alas al mirar abajo
       if (FP) { AV.w.updateMatrixWorld(true); const hp = hd ? hd.getWorldPosition(V(0, 0, 0)) : V(ROAMS.p.x, -8.9 + 9.6 + (ROAMS.h || 0), ROAMS.p.z); const fx2 = Math.sin(ROAMS.yaw), fz2 = -Math.cos(ROAMS.yaw); const eye = V(hp.x + fx2 * 1.25, hp.y + 0.25, hp.z + fz2 * 1.25); if (!ROAMS.ep || ROAMS.ep.distanceTo(eye) > 6) ROAMS.ep = eye.clone(); ROAMS.ep.lerp(eye, Math.min(1, dt * 22)); cam.position.copy(ROAMS.ep); const pc = Math.cos(ROAMS.pitch); cam.lookAt(cam.position.x + fx2 * pc, cam.position.y + Math.sin(ROAMS.pitch), cam.position.z + fz2 * pc); cam.near = window.ATM_OUT ? 0.12 : 0.07; ROAMS.cp = cam.position.clone(); }
       if (REC.on) REC.tick(dt); }
-    roamB.style.display = lidOpen > 0.95 && !CINE.on ? 'block' : 'none'; camB.style.display = ROAMS.on ? 'block' : 'none'; recB.style.display = ROAMS.on && !ROAMS.mini ? 'block' : 'none'; if (window.__onlB) window.__onlB.style.display = ROAMS.on && !ROAMS.mini && !(window.ONLINE_ON && window.ONLINE_ON()) ? 'block' : 'none'; if (window.__surfB) { const SB = window.__surfB; SB.k = (SB.k || 0) + 1; if (SB.k % 8 === 0) { let nw = false; if (ROAMS.on && window.ATM_OUT && !ROAMS.mini && window.__LAND && (ROAMS.h || 0) < (ROAMS.fl || 0) + 18) { const px = ROAMS.p.x, pz = ROAMS.p.z; nw = !window.__LAND(px, pz) || [0, 1, 2, 3, 4, 5].some((i) => !window.__LAND(px + Math.cos(i * 1.047) * 9, pz + Math.sin(i * 1.047) * 9)); } if (nw && !SB.shown) { SB.style.animation = 'none'; void SB.offsetWidth; SB.style.animation = 'surfPop .45s cubic-bezier(.3,1.6,.5,1)'; if (!SB.told) { SB.told = 1; say('🏄 ¡Estás en el agua! Pulsa TABLA (o B) para surfear'); } } SB.shown = nw; SB.style.display = nw ? 'block' : 'none'; } } MIX.tick(); ATM.tick(dt, t); $('tip').style.visibility = ROAMS.on ? 'hidden' : ''; cam.updateProjectionMatrix();
+    camB.style.display = ROAMS.on ? 'block' : 'none'; recB.style.display = ROAMS.on && !ROAMS.mini ? 'block' : 'none'; if (window.__onlB) window.__onlB.style.display = ROAMS.on && !ROAMS.mini && !(window.ONLINE_ON && window.ONLINE_ON()) ? 'block' : 'none'; if (window.__surfB) { const SB = window.__surfB; SB.k = (SB.k || 0) + 1; if (SB.k % 8 === 0) { let nw = false; if (ROAMS.on && window.ATM_OUT && !ROAMS.mini && window.__LAND && (ROAMS.h || 0) < (ROAMS.fl || 0) + 18) { const px = ROAMS.p.x, pz = ROAMS.p.z; nw = !window.__LAND(px, pz) || [0, 1, 2, 3, 4, 5].some((i) => !window.__LAND(px + Math.cos(i * 1.047) * 9, pz + Math.sin(i * 1.047) * 9)); } if (nw && !SB.shown) { SB.style.animation = 'none'; void SB.offsetWidth; SB.style.animation = 'surfPop .45s cubic-bezier(.3,1.6,.5,1)'; if (!SB.told) { SB.told = 1; say('🏄 ¡Estás en el agua! Pulsa TABLA (o B) para surfear'); } } SB.shown = nw; SB.style.display = nw ? 'block' : 'none'; } } MIX.tick(); ATM.tick(dt, t); $('tip').style.visibility = ROAMS.on ? 'hidden' : ''; cam.updateProjectionMatrix();
     // colisiones: tu robot no atraviesa muebles ni máquinas (cajas de colisión de lo que está en el suelo)
     if (ROAMS.on && !ROAMS.mini && !window.ATM_OUT) { try { if (!window.__OBST && window.__PROPS) { window.__OBST = window.__buildObst(); }
       const p = ROAMS.p, ft = -8.9 + (ROAMS.h || 0); for (const B of window.__OBST || []) { if (p.x > B.x0 && p.x < B.x1 && p.z > B.z0 && p.z < B.z1 && ft < B.y1 - 0.4) { const dl = p.x - B.x0, dr = B.x1 - p.x, db = p.z - B.z0, df = B.z1 - p.z, mn = Math.min(dl, dr, db, df); if (mn === dl) p.x = B.x0; else if (mn === dr) p.x = B.x1; else if (mn === db) p.z = B.z0; else p.z = B.z1; } }
