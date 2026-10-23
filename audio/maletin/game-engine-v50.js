@@ -829,9 +829,18 @@
           tone(c,out,t,84,.37,.27,'sine',42);
           noise(c,out,t,.15,720,170,1,.10);
         }else if(which==='reveal'){
-          noise(c,out,t,1.05,3600,9000,3,.025);
-          tone(c,out,t+.02,880,.95,.075,'sine',1320);
-          tone(c,out,t+.15,1318,.7,.041,'sine',1760);
+          noise(c,out,t,.82,2900,6200,1.4,.017);
+          // The reveal chime must belong to the CURRENT soundtrack chord.
+          // Unknown-key recorded songs: neutral shimmer only, no random notes.
+          const unknownSong = !!(window.__WRADIO && window.__WRADIO.on) && !RADIO.st.on;
+          if(!unknownSong){
+            const chord = RADIO.st.on ? RADIO.chordAt() : [57,60,64];
+            const hz = m => 440*Math.pow(2,(m-69)/12);
+            if(chord.length >= 3){
+              tone(c,out,t+.02,hz(chord[0]+24),.58,.047,'sine',hz(chord[0]+24));
+              tone(c,out,t+.12,hz(chord[2]+24),.53,.026,'sine',hz(chord[2]+24));
+            }
+          }
         }
       }catch(e){if(!window.__caseSoundWarned){window.__caseSoundWarned=true;console.warn('Case sound:',e);}}
     }
@@ -1964,23 +1973,44 @@
     const MODES = { clean: [], ring: ['ring'], phase: ['ph'], crush: ['cr'], dub: ['dl'], sweep: ['sw'], stutter: ['st'], ringdub: ['ring', 'dl'], crushsweep: ['cr', 'sw'], phasedub: ['ph', 'dl'] };
     function setMode(m) { if (!built) return; const c = UA.ctx; try { inp.disconnect(); } catch (e) {} inp.connect(dry); [N.ring, N.ph[3], N.cr, N.dlLP, N.sw, N.st].forEach((n) => { try { n.disconnect(); } catch (e) {} }); if (N.dlLP) N.dlLP.connect(N.dlF); const chain = MODES[m] || []; let last = inp;
       chain.forEach((k) => { if (k === 'ring') { last.connect(N.ring); last = N.ring; } else if (k === 'ph') { last.connect(N.ph[0]); last = N.ph[3]; } else if (k === 'cr') { last.connect(N.cr); last = N.cr; } else if (k === 'dl') { last.connect(N.dl); last = N.dlLP; } else if (k === 'sw') { last.connect(N.sw); last = N.sw; } else if (k === 'st') { last.connect(N.st); last = N.st; } }); if (chain.length) last.connect(N.mix); cur = m; }
-    return { get node() { return build() ? inp : null; }, get mode() { return cur; }, makeup(v) { if (built) out.gain.setTargetAtTime(v, UA.ctx.currentTime, v > 1.2 ? 0.04 : 0.5); },
+    return { get node() { return build() ? inp : null; }, get mode() { return cur; }, makeup(v) { if (built) out.gain.setTargetAtTime(Math.min(0.90, Math.max(0.48, v * 0.48)), UA.ctx.currentTime, 0.25); },
       note(m) { const now = performance.now(); dens = Math.min(1, dens + 0.12); reg = reg * 0.8 + m * 0.2; lastN = now; },
       tick(dt, t, mega, lv) { if (!built) return; const c = UA.ctx, n = c.currentTime; dens = Math.max(0, dens - dt * 0.35); const playing = performance.now() - lastN < 2500;
-        nextT -= dt; if (nextT <= 0) { const pool = mega ? ['ring', 'phase', 'crush', 'dub', 'sweep', 'stutter', 'ringdub', 'crushsweep', 'phasedub'] : playing ? ['phase', 'dub', 'sweep', 'clean', 'phasedub'] : ['clean', 'dub', 'phase']; setMode(pool[Math.floor(Math.random() * pool.length)]); nextT = (60 / (RADIO.bpm || 120)) * 4 * (mega ? 4 : 8); }
-        const w = cur === 'clean' ? 0 : (mega ? 0.55 : 0.32) * (0.5 + dens * 0.6); wet.gain.setTargetAtTime(w, n, 0.3); dry.gain.setTargetAtTime(1 - w * 0.35, n, 0.3);
+        nextT -= dt; if (nextT <= 0) { const pool = mega ? ['clean', 'phase', 'dub', 'phasedub'] : playing ? ['clean', 'phase', 'dub', 'phasedub'] : ['clean', 'phase', 'dub']; /* Excludes ring modulation, crushing and resonant sweeps. */ setMode(pool[Math.floor(Math.random() * pool.length)]); nextT = (60 / (RADIO.bpm || 120)) * 4 * (mega ? 4 : 8); }
+        const w = cur === 'clean' ? 0 : (mega ? 0.20 : 0.15) * (0.55 + dens * 0.4); wet.gain.setTargetAtTime(w, n, 0.3); dry.gain.setTargetAtTime(1 - w * 0.35, n, 0.3);
         if (N.ringO) N.ringO.frequency.setTargetAtTime(110 * Math.pow(2, Math.round((reg - 48) / 12)) * (1 + Math.round(dens * 2) * 0.5), n, 0.2);
-        if (N.dl) N.dl.delayTime.setTargetAtTime((60 / (RADIO.bpm || 120)) * (dens > 0.6 ? 0.25 : 0.75), n, 0.1); if (N.dlF) N.dlF.gain.setTargetAtTime(dens > 0.6 ? 0.35 : 0.58, n, 0.3);
+        if (N.dl) N.dl.delayTime.setTargetAtTime((60 / (RADIO.bpm || 120)) * (dens > 0.6 ? 0.25 : 0.75), n, 0.1); if (N.dlF) N.dlF.gain.setTargetAtTime(dens > 0.6 ? 0.24 : 0.31, n, 0.3);
         if (N.swL) N.swL.frequency.setTargetAtTime(0.1 + dens * 0.6, n, 0.5); if (N.phL) N.phL.frequency.setTargetAtTime(0.2 + dens * 1.2, n, 0.5);
         if (cur === 'stutter' && RADIO.st.on) { const sd = 60 / (RADIO.bpm || 120) / 4, ph = (n / sd) % 2; N.st.gain.setTargetAtTime(ph < 1 ? 1 : 0.05, n, 0.004); } } }; })();
   function pickCtl(e) { if (!open.length) return null; ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam);
     for (const h of ray.intersectObjects(open.map((g) => g.dev.root), true)) { let o = h.object, vis = true; while (o) { if (!o.visible) { vis = false; break; } o = o.parent; } if (!vis) continue;
       const g = open.find((x) => { let p = h.object; while (p) { if (p === x.dev.root) return true; p = p.parent; } return false; }); return { c: h.object.userData.ctl || null, g }; } return null; }
   const HV = new Map();
+  // A gentle non-pitched real-time click lets players tap along to uploaded or
+  // pre-recorded music whose key is unknown. Never invent its harmony.
+  let hwTapBuffer = null;
+  function hwNeutralTap() {
+    if (!audioOk()) return;
+    const c = UA.ctx, t = c.currentTime + 0.003;
+    if (!hwTapBuffer || hwTapBuffer.sampleRate !== c.sampleRate) {
+      const b = c.createBuffer(1, Math.round(c.sampleRate * 0.025), c.sampleRate);
+      const data = b.getChannelData(0);
+      for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 3);
+      hwTapBuffer = b;
+    }
+    const src = c.createBufferSource(), bp = c.createBiquadFilter(), g = c.createGain();
+    src.buffer = hwTapBuffer; bp.type = 'bandpass'; bp.frequency.value = 1300; bp.Q.value = 0.7;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(0.028, t + 0.004);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.038);
+    src.connect(bp).connect(g).connect(UA.bus.master);
+    src.start(t); src.stop(t + 0.041);
+    src.onended = () => { src.disconnect(); bp.disconnect(); g.disconnect(); };
+  }
   let HVA = null, LVA = null, vaSty = -1; const VMAP = [0, 4, 5, 5, 5, 0, 4, 1, 5, 4], LMAP = [4, 5, 4, 5, 5, 4, 5, 5, 4, 4], KV = new Map();
   function vaSync() { try { if (!HVA && audioOk() && typeof VA !== 'undefined') { HVA = VA.create(); LVA = VA.create(); RADIO.st.leadVA = LVA; try { const xn = XFX.node; if (xn) HVA.route(xn); } catch (e) {} } if (!HVA) return null; const st = RADIO.st.style || 0; if (st !== vaSty) { vaSty = st; const SY = RADIO.STYLES[st] || {}; HVA.preset(SY.va != null ? SY.va : VMAP[st % VMAP.length]); LVA.preset(SY.lva != null ? SY.lva : LMAP[st % LMAP.length]); try { HVA.set('bpm', RADIO.bpm); LVA.set('bpm', RADIO.bpm); } catch (e) {} } return HVA; } catch (e) { return null; } }
-  function hwNote(m, on) { if (on) try { window.UEV('hwkey'); } catch (e) {} if (!audioOk()) return; if (on) try { XFX.note(m); } catch (e) {} { const v = vaSync(); if (v) { if (on) { window.__kLast = performance.now(); const sm = SNAP(m); KV.set(m, sm); v.noteOn(sm, 0.85, undefined, 'k'); } else { const sm = KV.get(m); if (sm != null) { v.noteOff(sm, undefined, 'k'); KV.delete(m); } } return; } } const c = UA.ctx, now = c.currentTime; if (on) { const sty = RADIO.st.style || 0; const P = [{ w: ['sawtooth', 'sawtooth', 'sawtooth', 'sawtooth', 'sawtooth'], d: [-14, -6, 0, 6, 14], cut: 3800, end: 1800, q: 1.2, a: 0.02, g: 0.06 }, { w: ['square', 'sawtooth'], d: [-5, 5], cut: 3000, end: 1200, q: 3, a: 0.005, g: 0.07 }, { w: ['sawtooth', 'sawtooth'], d: [-8, 8], cut: 900, end: 2600, q: 6, a: 0.01, g: 0.08 }, { w: ['sine', 'triangle'], d: [0, 1200], cut: 4000, end: 2500, q: 0.7, a: 0.008, g: 0.12 }, { w: ['triangle', 'sine'], d: [0, 1900], cut: 5000, end: 3000, q: 0.5, a: 0.004, g: 0.12 }, { w: ['square', 'square'], d: [-4, 1204], cut: 2600, end: 900, q: 4, a: 0.003, g: 0.06 }][sty % 6];
-      const g = c.createGain(), f = c.createBiquadFilter(); f.type = 'lowpass'; f.Q.value = P.q; f.frequency.setValueAtTime(P.cut, now); f.frequency.exponentialRampToValueAtTime(P.end, now + 0.5); g.gain.setValueAtTime(0, now); g.gain.linearRampToValueAtTime(P.g, now + P.a); g.gain.setTargetAtTime(P.g * 0.7, now + 0.15, 0.3); const hz = 440 * 2 ** ((SNAP(m) - 69) / 12);
+  function hwNote(m, on) { if (on) { window.__kLast = performance.now(); try { window.UEV('hwkey'); } catch (e) {} } if (!audioOk()) return; if (on) try { XFX.note(m); } catch (e) {} { const v = vaSync(); if (v) { if (on) { window.__kLast = performance.now(); const sm = SNAP(m); if (sm === null) { hwNeutralTap(); return; } KV.set(m, sm); v.noteOn(sm, 0.66, undefined, 'k' + m); } else { const sm = KV.get(m); if (sm != null) { v.noteOff(sm, undefined, 'k' + m); KV.delete(m); } } return; } } const c = UA.ctx, now = c.currentTime; if (on && SNAP(m) === null) { hwNeutralTap(); return; } if (on) { const sty = RADIO.st.style || 0; const P = [{ w: ['sawtooth', 'sawtooth', 'sawtooth', 'sawtooth', 'sawtooth'], d: [-14, -6, 0, 6, 14], cut: 3800, end: 1800, q: 1.2, a: 0.02, g: 0.06 }, { w: ['square', 'sawtooth'], d: [-5, 5], cut: 3000, end: 1200, q: 3, a: 0.005, g: 0.07 }, { w: ['sawtooth', 'sawtooth'], d: [-8, 8], cut: 900, end: 2600, q: 6, a: 0.01, g: 0.08 }, { w: ['sine', 'triangle'], d: [0, 1200], cut: 4000, end: 2500, q: 0.7, a: 0.008, g: 0.12 }, { w: ['triangle', 'sine'], d: [0, 1900], cut: 5000, end: 3000, q: 0.5, a: 0.004, g: 0.12 }, { w: ['square', 'square'], d: [-4, 1204], cut: 2600, end: 900, q: 4, a: 0.003, g: 0.06 }][sty % 6];
+      const g = c.createGain(), f = c.createBiquadFilter(); f.type = 'lowpass'; f.Q.value = P.q; f.frequency.setValueAtTime(P.cut, now); f.frequency.exponentialRampToValueAtTime(P.end, now + 0.5); g.gain.setValueAtTime(0, now); g.gain.linearRampToValueAtTime(P.g * 0.50, now + P.a); g.gain.setTargetAtTime(P.g * 0.24, now + 0.15, 0.3); const hz = 440 * 2 ** ((SNAP(m) - 69) / 12);
       if (HV.size > 10) { const [k0, v0] = HV.entries().next().value; v0.g.gain.setTargetAtTime(0, now, 0.05); v0.os.forEach((o) => o.stop(now + 0.3)); HV.delete(k0); } const os = P.w.map((w, k) => { const o = c.createOscillator(); o.type = w; o.frequency.value = hz; o.detune.value = P.d[k]; o.connect(f); o.start(now); return o; }); f.connect(g).connect(UA.bus.master); HV.set(m, { g, os }); }
     else { const v = HV.get(m); if (!v) return; v.g.gain.cancelScheduledValues(now); v.g.gain.setTargetAtTime(0, now, 0.15); v.os.forEach((o) => o.stop(now + 0.9)); HV.delete(m); } }
   function hwPick(e) { if (!HW || (HW.u || 0) < 0.5) return null; ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const h = ray.intersectObjects(HW.hits, false)[0]; return h ? h.object.userData.ctl : null; }
@@ -2006,16 +2036,49 @@
     setTimeout(() => { items.filter((x) => x.kind === 'cap').forEach((it, i) => setTimeout(() => { const g = openGear(it, true); g.manual = 2; }, 300 + i * 260)); items.forEach((it) => { if (it.kind === 'mut') it.tgt = 3; if (it.kind === 'fx') it.on = 1; }); if (HW) HW.tg = 3.6;
       [1, 2].forEach((pg) => CAPPAGES[pg].slice(0, 3).forEach((spec, i) => setTimeout(() => { if (!MEGA) return; const dev = (spec.g3 ? GEAR3 : GEAR4).build(spec, kindOf(spec), Object.keys(ENGINES.PARAMS[spec.engine]).slice(0, 4).map((k) => k.toUpperCase())); dev.root.scale.setScalar(0.07); caseG.add(dev.root); flyers.push({ dev, a: ((pg - 1) * 6 + i) / 12 * TAU, m: 0 }); }, 5600 + (pg * 3 + i) * 450)));
       say('▶ Pulsa CINE para verlo como una peli'); }, 1800); }
-  let hwSub = null; function hwPlay(m, t0, dur) { if (!audioOk()) return; if (KV.size || performance.now() - (window.__kLast || 0) < 1800) return; { const v = vaSync(); if (v) { v.noteOn(m, 0.75, t0, 'm'); v.noteOff(m, t0 + dur, 'm'); return; } } const c = UA.ctx, g = c.createGain(), f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.setValueAtTime(4200, t0); f.frequency.exponentialRampToValueAtTime(1200, t0 + dur); g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.07, t0 + 0.02); g.gain.setTargetAtTime(0, t0 + dur * 0.7, 0.15); [-6, 6].forEach((d) => { const o = c.createOscillator(); o.type = 'sawtooth'; o.frequency.value = 440 * 2 ** ((m - 69) / 12); o.detune.value = d; o.connect(f); o.start(t0); o.stop(t0 + dur + 0.8); }); f.connect(g).connect(UA.bus.master); }
+  let hwSub = null; function hwPlay(m, t0, dur, velocity = 0.34) { if (!audioOk() || !Number.isFinite(m)) return; if (KV.size || performance.now() - (window.__kLast || 0) < 1800) return; { const v = vaSync(); if (v) { v.noteOn(m, Math.min(0.52, Math.max(0.15, velocity)), t0, 'm'); v.noteOff(m, t0 + dur, 'm'); return; } } const c = UA.ctx, g = c.createGain(), f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.setValueAtTime(4200, t0); f.frequency.exponentialRampToValueAtTime(1200, t0 + dur); g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(Math.min(0.032, velocity * 0.075), t0 + 0.02); g.gain.setTargetAtTime(0, t0 + dur * 0.7, 0.15); [-6, 6].forEach((d) => { const o = c.createOscillator(); o.type = 'sawtooth'; o.frequency.value = 440 * 2 ** ((m - 69) / 12); o.detune.value = d; o.connect(f); o.start(t0); o.stop(t0 + dur + 0.8); }); f.connect(g).connect(UA.bus.master); }
   function megaOff() { window.__mega = false; try { HAND.show(false); } catch (e) {} if (hwSub) { hwSub(); hwSub = null; } MEGA = false; flyers.forEach((f) => { f.out = 1; }); items.forEach((it) => { if (it.W && it.home) { it.fly = 0; it.retT = 2.2; } }); open.forEach((g) => { const h = g.it.tok.position; g.dev.root.position.x = h.x; g.dev.root.position.z = h.z; g.dev.root.rotation.y = 0; }); say('Mega apagado'); }
   function superAll() { open.forEach((g) => { g.manual = 2; g.boost = 4; }); items.forEach((it) => { if (it.kind === 'mut') it.tgt = 3; }); if (HW && compG.hw.userData.open) HW.tg = 3.6; if (audioOk()) { RADIO.start(); RADIO.next(); } say('★ SÚPER TRANSFORMACIÓN'); }
   // ===== DIRECTOR DE CINE: escenas en grupo, emociones, voces y piano para ti =====
   const DRC = { sc: -1, t: 0, shot: 0, shT: 0, warm: 0, focus: new THREE.Object3D(), B: [], n: 0, step: null };
   caseG.add(DRC.focus); window.__drc = DRC; window.__bots = () => bots(); window.__cine = CINE;
   let LASTCH = null;
-  if (RADIO.onStep) RADIO.onStep((st, tt, sd, bar, ch) => { if (ch) LASTCH = ch; if (CINE.on && DRC.step) try { DRC.step(st, tt, sd, ch); } catch (e) {} });
+  const HW_CHORD_CLOCK = [];
+  if (RADIO.onStep) RADIO.onStep((st, tt, sd, bar, ch) => {
+    if (ch) LASTCH = ch;
+    if (st === 0 && ch) {
+      HW_CHORD_CLOCK.push({ t: tt, chord: ch.slice(0, 4) });
+      if (HW_CHORD_CLOCK.length > 6) HW_CHORD_CLOCK.shift();
+    }
+    if (CINE.on && DRC.step) try { DRC.step(st, tt, sd, ch); } catch (e) {}
+  });
+  // Uses the RADIO audio clock itself: no extra timer/worker or per-frame
+  // scheduling, avoids phasing, and produces occasional chord-tone arpeggios.
+  if (RADIO.onStep && window.UNFIRE_HARMONY) RADIO.onStep((st, tt, sd, bar, ch) => {
+    if (!HW || (HW.T || 0) < 2.5 || !RADIO.st.on || MEGA || !audioOk()) return;
+    const note = window.UNFIRE_HARMONY.phrase(bar, st, ch, {
+      generatedPlaying: true, externalPlaying: false, mega: MEGA,
+      heldKeys: KV.size > 0 || performance.now() - (window.__kLast || 0) < 2400,
+      section: RADIO.st.sec, style: RADIO.st.style
+    });
+    if (note) hwPlay(note.midi, tt, sd * note.durationSteps * 0.80, note.velocity);
+  });
   const TON = { key: -1, mode: 'auto' }; const MODES = { mayor: [0, 2, 4, 5, 7, 9, 11], menor: [0, 2, 3, 5, 7, 8, 10], dorico: [0, 2, 3, 5, 7, 9, 10], penta: [0, 3, 5, 7, 10], blues: [0, 3, 5, 6, 7, 10] };
-  function SNAP(m) { const ch = LASTCH, md = (n) => ((n % 12) + 12) % 12; const set = TON.mode !== 'auto' && TON.key >= 0 ? MODES[TON.mode].map((x) => md(x + TON.key)) : ch ? [...ch.map(md), md(ch[0] + 2)] : [0, 2, 4, 7, 9]; const fold = (x) => { while (x > 81) x -= 12; while (x < 33) x += 12; return x; }; for (let d = 0; d < 7; d++) { if (set.includes(md(m - d))) return fold(m - d); if (set.includes(md(m + d))) return fold(m + d); } return fold(m); }
+  function SNAP(m) {
+    const H = window.UNFIRE_HARMONY;
+    if (!H) return null; // Fail-safe neutral tap if the harmony script cannot load.
+    const generatedPlaying = !!RADIO.st.on;
+    const externalPlaying = !!(window.__WRADIO && window.__WRADIO.on) && !generatedPlaying;
+    const now = UA.ctx ? UA.ctx.currentTime : 0;
+    let current = null;
+    for (const e of HW_CHORD_CLOCK) if (e.t <= now + 0.016) current = e.chord;
+    const chord = current || (generatedPlaying ? RADIO.chordAt() : null);
+    const style = RADIO.STYLES[RADIO.st.style] || {};
+    return H.snap(m, { generatedPlaying, externalPlaying, chord,
+      mode: TON.mode, key: TON.key,
+      root: RADIO.st.root, fallbackMode: style.scale === 'major' ? 'mayor' :
+        style.scale === 'dorian' ? 'dorico' : 'menor' });
+  }
   const bots = () => items.filter((it) => it.kind === 'mut' && it.W && it.R);
   // ===== ROBOTS GIGANTES: crecen desde el maletín (≈2× el maletín), saltan al suelo y corren por la casa sin atravesar nada =====
   const GROW = (() => { let on = false; const G = []; const HT = 11.5, FL = -8.905;
@@ -2090,9 +2153,13 @@
   document.getElementById('chatq').addEventListener('keydown', (e) => { e.stopPropagation(); if (e.key === 'Enter') { ask(e.target.value); e.target.value = ''; } });
   // ---- piano con el teclado del ordenador (con transposer) ----
   const KMAP = 'asdfghjklñ', KSEMI = { a: 0, w: 1, s: 2, e: 3, d: 4, f: 5, t: 6, g: 7, y: 8, h: 9, u: 10, j: 11, k: 12, o: 13, l: 14, p: 15, 'ñ': 16, ';': 16 }, KDOWN = new Map(); let OCT = -1;
-  function pianoKey(key, down) { const kl = (key || '').toLowerCase(); if (down && (kl === 'z' || kl === 'x') && HW && (HW.T || 0) >= 2.5) { OCT = clamp(OCT + (kl === 'x' ? 1 : -1), -3, 2); say('🎹 Octava ' + (OCT >= 0 ? '+' : '') + OCT + ' (Z baja · X sube)'); hap(0.2); return true; } const i = KSEMI[(key || '').toLowerCase()]; if (i == null || !HW || (HW.T || 0) < 2.5) return false; const m = 60 + OCT * 12 + i; if (down) { if (KDOWN.has(i)) return true; try { UA.init(); } catch (er) {} KDOWN.set(i, m); hwNote(m, true); hwKey(SNAP(m), 0.25); hap(0.12); } else { const mm = KDOWN.get(i); if (mm != null) { hwNote(mm, false); KDOWN.delete(i); } } return true; }
+  function pianoKey(key, down) { const kl = (key || '').toLowerCase(); if (down && (kl === 'z' || kl === 'x') && HW && (HW.T || 0) >= 2.5) { OCT = clamp(OCT + (kl === 'x' ? 1 : -1), -3, 2); say('🎹 Octava ' + (OCT >= 0 ? '+' : '') + OCT + ' (Z baja · X sube)'); hap(0.2); return true; } const i = KSEMI[(key || '').toLowerCase()]; if (i == null || !HW || (HW.T || 0) < 2.5) return false; const m = 60 + OCT * 12 + i; if (down) { if (KDOWN.has(i)) return true; try { UA.init(); } catch (er) {} KDOWN.set(i, m); hwNote(m, true); { const n = SNAP(m); if (n !== null) hwKey(n, 0.25); } hap(0.12); } else { const mm = KDOWN.get(i); if (mm != null) { hwNote(mm, false); KDOWN.delete(i); } } return true; }
   addEventListener('keydown', (e) => { if (e.target && e.target.tagName === 'INPUT') return; if (pianoKey(e.key, true)) e.preventDefault(); });
   addEventListener('keyup', (e) => { pianoKey(e.key, false); });
+  // Release every active key if focus is lost mid-performance (including touch cancel).
+  const HW_RELEASE_ALL = () => { for (const midi of KDOWN.values()) hwNote(midi, false); KDOWN.clear(); if (knobDrag && knobDrag.hw) endKnob(); };
+  addEventListener('blur', HW_RELEASE_ALL);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) HW_RELEASE_ALL(); });
   addEventListener('message', (e) => { const d = e.data || {}; if (!d.unfire) return; if (d.kd) pianoKey(d.kd, true); if (d.ku) pianoKey(d.ku, false); });
   // ---- golpes de batalla (energía de pelea en forma de drums) ----
   function hitDrum(kind, tt) { if (!audioOk() || REC_GUARD()) return; const c = UA.ctx, n = tt || c.currentTime; if (kind === 'kick') { const o = c.createOscillator(), g = c.createGain(); o.frequency.setValueAtTime(150, n); o.frequency.exponentialRampToValueAtTime(40, n + 0.18); g.gain.setValueAtTime(0.5, n); g.gain.exponentialRampToValueAtTime(0.001, n + 0.3); o.connect(g).connect(UA.bus.master); o.start(n); o.stop(n + 0.32); return; }
@@ -2546,7 +2613,7 @@
     LAVA.draw(dt, LV || 0); window.__LVL = LV || 0; ROOM.tick(dt, t, LV || 0);
     try { OUTTALK.tick(dt, t); SIDE.tick(); BANDS.tick(); SPEEDL.tick(dt); CAPS.tick(dt); SECRETS.tick(dt, t); SKYBOTS.tick(dt, t); ONLINE.tick(dt, t); SURFBOTS.tick(dt, t); TITANS.tick(dt, t); FAR.tick(dt, t); } catch (e) {} ROBOT_STEPS.tick(dt); GROW.tick(dt, t); if (ROAMS.on && ROAMS.fly) { try { (window.__GROW.list || []).forEach((g, i) => { if (g.w && g.st !== 'grow' && g.st !== 'shrink') { g.w.position.y += ((ROAMS.h || 0) - 8.9 + 2 + Math.sin(t * 1.3 + i) * 3 - g.w.position.y) * Math.min(1, dt * 1.5); } }); } catch (e) {} } try { HOST.tick(dt, t); MAP.tick(); if (STORY) STORY.chatter(dt, lidOpen > 0.95 && !CINE.on && (!ROAMS.on || (window.__idleT || 0) > 14)); if (STORY) STORY.tick({ open: lidOpen > 0.95 && !CINE.on, far: view.gd > view.D0 * 1.08 || ROAMS.on }); if (HW && (HW.T || 0) > 3) { if (!window.__hwEv) { window.__hwEv = 1; window.UEV('hwopen'); } } else window.__hwEv = 0; } catch (e) {} MEGALIT.tick(dt, t, LV || 0); try { HAND.tick(dt); } catch (e) {} if (HW && (HW.u || 0) > 0.3 && HW.root) { HWAUTO.bbT = (HWAUTO.bbT || 0) - dt; if (HWAUTO.bbT <= 0) { HWAUTO.bbT = 0.8; const bb = new THREE.Box3().setFromObject(HW.root), sz = bb.getSize(V(0, 0, 0)); HWAUTO.c = bb.getCenter(V(0, 0, 0)); HWAUTO.r = Math.max(sz.x, sz.z) * 0.55; }
       bots().forEach((it) => { const par = it.W.parent; if (!par || !HWAUTO.c) return; const ws = par.getWorldScale(V(1, 1, 1)).x || 1, hl = par.worldToLocal(HWAUTO.c.clone()), R0 = HWAUTO.r / ws + 0.12, p = it.W.position, dx = p.x - hl.x, dz = p.z - hl.z, d = Math.hypot(dx, dz) || 0.01; if (d < R0) { const k = R0 / d; p.x = hl.x + dx * k; p.z = hl.z + dz * k; if (it.cn) { it.cn.x = p.x; it.cn.z = p.z; const tx = it.cn.tx - hl.x, tz = it.cn.tz - hl.z, td = Math.hypot(tx, tz) || 0.01; if (td < R0) { it.cn.tx = hl.x + tx / td * R0 * 1.2; it.cn.tz = hl.z + tz / td * R0 * 1.2; } } } }); }
-    bots().forEach((it, i) => { const u = it.W.userData; if (u.s0 == null) u.s0 = it.W.scale.x; const tg = MEGA && i % 2 === 0 ? u.s0 * 1.9 : u.s0; if (Math.abs(it.W.scale.x - tg) > 1e-4) it.W.scale.setScalar(lerp(it.W.scale.x, tg, 0.04)); }); WRADIO.tick(dt, !!(RADIO.st.on || A.using || A.duck || (window.__kLast && performance.now() - window.__kLast < 4000))); try { XFX.tick(dt, t, MEGA, LV || 0); { const pl = performance.now() - (window.__kLast || 0) < 1600; if (pl !== HWAUTO.pl) { HWAUTO.pl = pl; try { const B = RADIO.buses; if (B && B.out) B.out.gain.setTargetAtTime(pl ? 0.5 : 0.85, UA.ctx.currentTime, pl ? 0.05 : 0.7); } catch (e) {} XFX.makeup(pl ? (MEGA ? 1.9 : 1.6) : 1.25); } } if (HVA && MEGA) { HWAUTO.pT = (HWAUTO.pT == null ? 20 : HWAUTO.pT) - dt; if (HWAUTO.pT <= 0) { HWAUTO.pT = 24 + Math.random() * 16; const pool = [0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15]; const pi = pool[Math.floor(Math.random() * pool.length)]; try { const pr = HVA.preset(pi); say('🎛️ HYPERWAVE · sonido: ' + pr.name); } catch (e) {} } } if (HVA) { HWAUTO.t -= dt; if (HWAUTO.t <= 0) { HWAUTO.t = 0.25; const sc = HVA.scope ? HVA.scope().level : 0; HWAUTO.k += ((sc > 0.8 ? 0.8 : sc < 0.25 && performance.now() - (window.__kLast || 0) < 2000 ? 1.12 : 1) * (RADIO.st.on ? 0.92 + 0.12 * (RADIO.st.energy || 0.5) : 1) - HWAUTO.k) * 0.3; const v = clamp(HWVOL * HWAUTO.k, 0, 1); if (Math.abs(v - HWAUTO.last) > 0.01) { HWAUTO.last = v; HVA.set('volume', v); } } { HWAUTO.fx = (HWAUTO.fx || 0) - dt; if (HWAUTO.fx <= 0) { HWAUTO.fx = 0.5; const sc2 = HVA.scope ? HVA.scope().level : 0, en = (RADIO.st && RADIO.st.energy) || 0.5, busy = performance.now() - (window.__kLast || 0) < 1500, tt = performance.now() / 1000; const P = { cutoff: clamp(0.5 + 0.2 * Math.sin(tt * 0.07) + (busy ? 0.08 : 0) - sc2 * 0.1, 0.35, 0.8), delay: clamp(0.16 + 0.1 * en - (busy ? 0.04 : 0), 0.1, 0.3), reverb: clamp(0.28 + 0.12 * (1 - sc2), 0.2, 0.42) }; HWAUTO.P = HWAUTO.P || {}; for (const k in P) { const o = HWAUTO.P[k] == null ? P[k] : HWAUTO.P[k], nv = o + (P[k] - o) * 0.35; HWAUTO.P[k] = nv; try { HVA.set(k, nv); } catch (e) {} } } } } } catch (e) {} lidArt.material.emissiveIntensity = 0.9 + (LV || 0) * 2.6 + 0.15 * Math.sin(t * 2); if (KEYC) KEYC(dt, t); hovLT += (( mouse.in && performance.now() - mouse.t < 1500 ? 1 : 0) - hovLT) * 0.15; HOVL.intensity = hovLT * 1.4;
+    bots().forEach((it, i) => { const u = it.W.userData; if (u.s0 == null) u.s0 = it.W.scale.x; const tg = MEGA && i % 2 === 0 ? u.s0 * 1.9 : u.s0; if (Math.abs(it.W.scale.x - tg) > 1e-4) it.W.scale.setScalar(lerp(it.W.scale.x, tg, 0.04)); }); WRADIO.tick(dt, !!(RADIO.st.on || A.using || A.duck || (window.__kLast && performance.now() - window.__kLast < 4000))); try { XFX.tick(dt, t, MEGA, LV || 0); { const pl = performance.now() - (window.__kLast || 0) < 1600; if (pl !== HWAUTO.pl) { HWAUTO.pl = pl; try { const B = RADIO.buses; if (B && B.out) B.out.gain.setTargetAtTime(pl ? 0.5 : 0.85, UA.ctx.currentTime, pl ? 0.05 : 0.7); } catch (e) {} XFX.makeup(pl ? (MEGA ? 1.9 : 1.6) : 1.25); } } if (HVA && MEGA) { HWAUTO.pT = (HWAUTO.pT == null ? 20 : HWAUTO.pT) - dt; if (HWAUTO.pT <= 0) { HWAUTO.pT = 24 + Math.random() * 16; const pool = [0, 3, 4, 5, 7, 8, 9, 10, 12, 14, 15]; /* Excludes harsh bass patches. */ const pi = pool[Math.floor(Math.random() * pool.length)]; try { const pr = HVA.preset(pi); say('🎛️ HYPERWAVE · sonido: ' + pr.name); } catch (e) {} } } if (HVA) { HWAUTO.t -= dt; if (HWAUTO.t <= 0) { HWAUTO.t = 0.25; const sc = HVA.scope ? HVA.scope().level : 0; HWAUTO.k += ((sc > 0.8 ? 0.8 : sc < 0.25 && performance.now() - (window.__kLast || 0) < 2000 ? 1.12 : 1) * (RADIO.st.on ? 0.92 + 0.12 * (RADIO.st.energy || 0.5) : 1) - HWAUTO.k) * 0.3; const v = clamp(HWVOL * HWAUTO.k, 0, 0.69); if (Math.abs(v - HWAUTO.last) > 0.01) { HWAUTO.last = v; HVA.set('volume', v); } } { HWAUTO.fx = (HWAUTO.fx || 0) - dt; if (HWAUTO.fx <= 0) { HWAUTO.fx = 0.5; const sc2 = HVA.scope ? HVA.scope().level : 0, en = (RADIO.st && RADIO.st.energy) || 0.5, busy = performance.now() - (window.__kLast || 0) < 1500, tt = performance.now() / 1000; const P = { cutoff: clamp(0.5 + 0.2 * Math.sin(tt * 0.07) + (busy ? 0.08 : 0) - sc2 * 0.1, 0.35, 0.8), delay: clamp(0.16 + 0.1 * en - (busy ? 0.04 : 0), 0.1, 0.3), reverb: clamp(0.28 + 0.12 * (1 - sc2), 0.2, 0.42) }; HWAUTO.P = HWAUTO.P || {}; for (const k in P) { const o = HWAUTO.P[k] == null ? P[k] : HWAUTO.P[k], nv = o + (P[k] - o) * 0.35; HWAUTO.P[k] = nv; try { HVA.set(k, nv); } catch (e) {} } } } } } catch (e) {} lidArt.material.emissiveIntensity = 0.9 + (LV || 0) * 2.6 + 0.15 * Math.sin(t * 2); if (KEYC) KEYC(dt, t); hovLT += (( mouse.in && performance.now() - mouse.t < 1500 ? 1 : 0) - hovLT) * 0.15; HOVL.intensity = hovLT * 1.4;
     if (DOMEG) DOMEG.g.scale.y = 0.04 + 0.96 * ease.smooth(clamp((lidOpen - 0.35) / 0.6));
     // A 90 km depth range combined with sub-centimetre near planes causes
     // flickering/z-fighting indoors. Use deep view only while truly outside.
