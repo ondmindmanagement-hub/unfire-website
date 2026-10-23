@@ -15,6 +15,11 @@ const specs = [
   { label: 'desktop', width: 1280, height: 800, mobile: false }
 ];
 let server, browser;
+// Bound only our test's Chromium contexts; no app or browser session of another agent is touched.
+const bounded = (action, ms=3500) => Promise.race([
+  Promise.resolve().then(action).then(() => true, () => false),
+  new Promise(resolve => setTimeout(() => resolve(false), ms))
+]);
 async function exercise(spec) {
   const context = await browser.newContext({ viewport: { width: spec.width, height: spec.height },
     isMobile: spec.mobile, hasTouch: spec.mobile, deviceScaleFactor: 1 });
@@ -57,9 +62,21 @@ async function exercise(spec) {
       caseVisible: document.getElementById('malFrame').contentWindow.__UNFIRE_CASE_QA.caseVisible
     }));
     assert(state.immersive && state.lidTargetOpen && state.caseVisible, 'One press really opens case');
+    if(spec.label === 'phone-portrait' || spec.label === 'tablet-portrait') {
+      // Rotate with the same running 3D scene: do not lose the already accepted tap.
+      await page.setViewportSize({width:spec.height,height:spec.width});
+      await page.evaluate(() => dispatchEvent(new Event('orientationchange')));
+      await page.waitForFunction(() => {
+        const f=document.getElementById('malFrame'), w=f?.contentWindow;
+        return !!(w?.__unfireViewport?.orientation === 'landscape'
+          && w.__UNFIRE_CASE_QA && !w.__UNFIRE_CASE_QA.closed
+          && w.__UNFIRE_CASE_QA.caseVisible && document.body.classList.contains('immOn'));
+      },null,{timeout:12000,polling:200});
+      console.log('CASE_ROTATION_PASS', spec.label);
+    }
     assert.equal(errors.length, 0, 'No uncaught errors: ' + errors.join('; '));
     console.log('CASE_TAP_PASS', JSON.stringify({label: spec.label, ms: Date.now() - started, pos, state}));
-  } finally { await context.close(); }
+  } finally { await bounded(() => context.close()); }
 }
 async function earlyLoadingTap(spec) {
   const context = await browser.newContext({ viewport: {width: spec.width, height: spec.height},
@@ -88,7 +105,7 @@ async function earlyLoadingTap(spec) {
     }, null, { timeout: 85000, polling: 150 });
     assert.equal(errors.length, 0, 'Early touch produced no JS exception: ' + errors.join('; '));
     console.log('CASE_LOADING_TAP_PASS', spec.label);
-  } finally { await context.close(); }
+  } finally { await bounded(() => context.close()); }
 }
 async function standaloneTouch() {
   const context = await browser.newContext({viewport:{width:390,height:844},
@@ -112,7 +129,7 @@ async function standaloneTouch() {
       null,{timeout:15000,polling:100});
     assert.equal(errors.length,0,'Standalone direct game has no errors: '+errors.join('; '));
     console.log('CASE_STANDALONE_TOUCH_PASS',p);
-  } finally { await context.close(); }
+  } finally { await bounded(() => context.close()); }
 }
 (async () => {
   try {
@@ -127,7 +144,12 @@ async function standaloneTouch() {
     await earlyLoadingTap({label:'ipad-loading',width:820,height:1180});
     await standaloneTouch();
   } catch(e) {console.error('CASE_TAP_FAIL', e.stack || e);process.exitCode=1;}
-  finally {try {if(browser) await browser.close();}catch(_){}
+  finally {
+    if(browser) {
+      const child = typeof browser.process === 'function' ? browser.process() : null;
+      const closed = await bounded(() => browser.close(), 4000);
+      if(!closed && child && !child.killed) try { child.kill('SIGTERM'); } catch (_) {}
+    }
     if(server) {
       if(server.exitCode === null) server.kill('SIGTERM');
       await Promise.race([

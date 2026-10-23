@@ -87,6 +87,10 @@ t.reset('orientationchange');
 t.down(t.pointer('touch', 12, 110, 150));
 t.up(t.pointer('touch', 12, 110, 150));
 assert.equal(t.clicks(), 4, 'Rotating mid-gesture clears stale IDs so the next tap works');
+t.down(t.pointer('touch', 13, 110, 150, {timeStamp:4000}));
+t.advance(6000); // A slow frame must not make a physically short 170ms tap expire.
+t.up(t.pointer('touch', 13, 110, 150, {timeStamp:4170}));
+assert.equal(t.clicks(), 5, 'Delayed mobile dispatch uses true event timestamps');
 t = harness(true);
 const T = (x, y) => ({ clientX: x, clientY: y });
 t.touch('touchstart', { touches: [T(100, 100)] });

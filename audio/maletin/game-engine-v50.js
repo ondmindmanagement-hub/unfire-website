@@ -1954,17 +1954,20 @@
   let drag = null;
   // Touch taps tolerate natural finger jitter; multi-touch cannot fire an accidental case click.
   const activeTouchPointers = new Set();
+  // Prefer the event timestamp: on a loaded mobile GPU, dispatch may be delayed
+  // while the user has already released their finger.
+  const tapMoment = (e) => Number.isFinite(e.timeStamp) && e.timeStamp > 0 ? e.timeStamp : performance.now();
   cv.addEventListener('pointerdown', (e) => {
     if (e.pointerType === 'touch') {
       activeTouchPointers.add(e.pointerId);
-      if (!e.isPrimary || activeTouchPointers.size !== 1) { drag = null; return; }
+      if (e.isPrimary === false || activeTouchPointers.size !== 1) { drag = null; return; }
     }
     if (CINE.on && e.isTrusted) { CINE.on = false; say('Control manual'); }
     if (MV) { MV.drag = true; try { cv.setPointerCapture(e.pointerId); } catch (er) {} return; }
     drag = { x: e.clientX, y: e.clientY, lx: e.clientX, ly: e.clientY,
       gx: view.gx, gz: view.gz, moved: false, id: e.pointerId,
       slop: e.pointerType === 'touch' ? 16 : e.pointerType === 'pen' ? 9 : 4,
-      since: performance.now(), pan: e.button === 2 || e.shiftKey };
+      since: tapMoment(e), pan: e.button === 2 || e.shiftKey };
     try { cv.setPointerCapture(e.pointerId); } catch (er) {}
     onDown(e);
   });
@@ -1980,7 +1983,7 @@
     if (MV && MV.drag) { MV = null; drag = null; $('tb').querySelectorAll('button').forEach((b) => b.classList.remove('on')); endKnob(e); return; }
     // Up must belong to the original pointer, remain within touch slop and not be a long hold.
     if (drag && drag.id === e.pointerId) {
-      if (!drag.moved && performance.now() - drag.since <= 1100) onClick(e);
+      if (!drag.moved && tapMoment(e) - drag.since <= 1100) onClick(e);
       drag = null;
     }
     endKnob(e);
@@ -2000,7 +2003,7 @@
     let legacyTap = null;
     cv.addEventListener('touchstart', (e) => {
       legacyTap = e.touches.length === 1 ? {
-        x: e.touches[0].clientX, y: e.touches[0].clientY, since: performance.now()
+        x: e.touches[0].clientX, y: e.touches[0].clientY, since: tapMoment(e)
       } : null;
     }, { passive: true });
     cv.addEventListener('touchmove', (e) => {
@@ -2010,7 +2013,7 @@
     cv.addEventListener('touchend', (e) => {
       const tap = legacyTap; legacyTap = null;
       if (tap && e.touches.length === 0 && e.changedTouches.length === 1 &&
-          performance.now() - tap.since <= 1100) {
+          tapMoment(e) - tap.since <= 1100) {
         const t = e.changedTouches[0];
         if (Math.hypot(t.clientX - tap.x, t.clientY - tap.y) <= 16)
           onClick({ clientX: t.clientX, clientY: t.clientY });
