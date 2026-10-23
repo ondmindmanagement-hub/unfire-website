@@ -1,5 +1,20 @@
 <!doctype html>
 <html lang="es"><head>
+<!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
+<script id="ufAdaptiveBoot">(function(){
+  try {
+    var coarse=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    var memory=Number(navigator.deviceMemory||0), cores=Number(navigator.hardwareConcurrency||0);
+    var unknown=!memory&&!cores&&Math.min(innerWidth,innerHeight)<400;
+    if(coarse&&((memory>0&&memory<=4)||(cores>0&&cores<=4)||unknown))
+      document.documentElement.classList.add('uf-load-pending');
+    // A network failure must never leave a permanent overlay.
+    setTimeout(function(){document.documentElement.classList.remove('uf-load-pending');},9000);
+  } catch(e) {}
+})();</script>
+<link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261023adaptive1">
+<script defer src="/assets/js/unfire-adaptive-loading.js?v=20261023adaptive1"></script>
+
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080b12"><meta name="color-scheme" content="dark"><meta name="robots" content="index,follow">
 <meta name="description" content="Unfire Control: propuestas de pruebas con docentes, pantallas de aula y presentaciones asistidas por gestos y voz. Pilotaje condicionado a revisión técnica y permisos.">
@@ -25,7 +40,15 @@ footer{padding:29px 0 39px;border-top:1px solid var(--line);font-size:11px;color
 @media(max-width:530px){.wrap{width:calc(100% - 36px)}.nav{gap:10px}.nav a{font-size:11px}.hero{padding:55px 0 50px}h1{font-size:46px}.display{padding:13px}.screen{height:215px}.steps,.columns{grid-template-columns:1fr}.contact{padding:25px}.actions .btn{width:100%}.band{padding:23px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style></head>
-<body><header><div class="wrap"><a href="/" class="brand" aria-label="Unfire inicio"><span translate="no" class="notranslate">UNFIRE</span></a><nav class="nav" aria-label="Navegación"><a href="#usos">Aulas</a><a href="#piloto">Pilotos</a><a href="#requisitos">Requisitos</a><a href="#contacto">Contacto</a></nav></div></header>
+<body>
+<div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
+  <div class="uf-load-card">
+    <span class="uf-load-emblem" aria-hidden="true"></span>
+    <strong class="uf-load-brand" translate="no">UNFIRE</strong>
+    <span class="uf-load-label" id="ufAdaptiveLabel">Preparando la experiencia…</span>
+  </div>
+</div>
+<header><div class="wrap"><a href="/" class="brand" aria-label="Unfire inicio"><span translate="no" class="notranslate">UNFIRE</span></a><nav class="nav" aria-label="Navegación"><a href="#usos">Aulas</a><a href="#piloto">Pilotos</a><a href="#requisitos">Requisitos</a><a href="#contacto">Contacto</a></nav></div></header>
 <main><div class="wrap"><div class="hero">
 <div><p class="kicker">Unfire Control · Educación e instituciones</p>
 <h1>Presenta ideas.<br>Sin volver al teclado.</h1>
