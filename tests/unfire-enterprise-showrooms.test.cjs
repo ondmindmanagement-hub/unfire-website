@@ -41,7 +41,8 @@ check('no fake marketplace, company, endorsement or device guarantees', () => {
   assert.match(page, /cannot promise universal performance/);
   assert.match(page, /Sponsored placements and affiliate links/);
   assert.doesNotMatch(page, /\bVirgin\b/i);
-  assert.doesNotMatch(page, /guaranteed (revenue|leads|growth)/i);
+  assert.match(page, /no guaranteed leads/);
+  assert.doesNotMatch(page, /we guarantee (revenue|leads|growth)/i);
 });
 check('the CTAs use email and a working canonical demonstration path', () => {
   assert.match(page, /mailto:hello@unfire\.technology\?subject=/);
