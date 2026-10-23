@@ -70,6 +70,9 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
      const state=await page.evaluate(()=>{
        const d=document.getElementById('malFrame').contentWindow.document;
        const story=d.getElementById('story');assertExists(story);
+       // Reset the previous orientation's artificial story overlay before
+       // measuring the case-view-only PASEAR button: storyOn hides it by design.
+       d.body.classList.remove('storyOn');story.classList.remove('on');
        const rect=(el)=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}};
        // The existing PASEAR is a case-view-only action, not part of the
        // central bottom captions. Probe its real CSS before the story hides it.
