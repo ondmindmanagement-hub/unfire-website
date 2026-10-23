@@ -1,0 +1,30 @@
+name: Audio GPU Texture Guard
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/unfire-performance-guard.js'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'tests/audio-performance-guard.test.cjs'
+      - '.github/workflows/audio-performance-guard.yml'
+  push:
+    paths:
+      - 'audio/maletin/unfire-performance-guard.js'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'tests/audio-performance-guard.test.cjs'
+      - '.github/workflows/audio-performance-guard.yml'
+permissions:
+  contents: read
+jobs:
+  gpu-sampler-budget:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check audio/maletin/unfire-performance-guard.js
+      - run: node --check audio/maletin/game-engine-v50.js
+      - run: node --test tests/audio-performance-guard.test.cjs
