@@ -131,3 +131,89 @@ test('scheduled retention removes IDs and aggregates after 35 days', async () =>
   assert.match(db.statements[0].sql, /DELETE FROM daily_sessions/);
   assert.match(db.statements[1].sql, /DELETE FROM daily_counts/);
 });
+
+function bridgePage() {
+  const { root, logs, setConsent, emitMessage, event, setClass } = (() => {
+    let consent = 'rejected';
+    const logs = [];
+    const listeners = new Map();
+    const frameWindow = {};
+    const classNames = new Set();
+    const classes = {
+      contains: (name) => classNames.has(name)
+    };
+    const docListeners = new Map();
+    const frame = { contentWindow: frameWindow };
+    const pin = { classList: classes };
+    const body = { classList: classes };
+    const doc = {
+      readyState: 'complete',
+      body,
+      getElementById(id) { return ({ malFrame: frame, heroPin: pin })[id] || null; },
+      addEventListener(name, cb) { docListeners.set(name, cb); }
+    };
+    class FakeObserver {
+      constructor(cb) { this.cb = cb; root._mutation = cb; }
+      observe() {}
+    }
+    const root = {
+      document: doc,
+      crypto: { randomUUID: () => SESSION_ID },
+      location: { origin: 'https://unfire.technology' },
+      localStorage: { getItem: () => consent },
+      fetch: (url, opts) => { logs.push(JSON.parse(opts.body)); return Promise.resolve({ ok: true }); },
+      MutationObserver: FakeObserver,
+      __UNFIRE_AUDIO_METRICS_ENDPOINT: ENDPOINT,
+      addEventListener(name, cb) { listeners.set(name, cb); }
+    };
+    const run = name => vm.runInNewContext(
+      fs.readFileSync(new URL(name, import.meta.url), 'utf8'),
+      { window: root, URL }
+    );
+    run('../assets/js/unfire-audio-metrics.js');
+    run('../assets/js/unfire-audio-metrics-bridge.js');
+    return {
+      root, logs,
+      setConsent(v) { consent = v; },
+      setClass(name, on) { if (on) classNames.add(name); else classNames.delete(name); root._mutation(); },
+      emitMessage(data, overrides = {}) { listeners.get('message')({
+        origin: 'https://unfire.technology', source: frameWindow, data, ...overrides
+      }); },
+      event(name, detail) { listeners.get(name)({ detail }); }
+    };
+  })();
+  return { root, logs, setConsent, emitMessage, event, setClass };
+}
+
+test('bridge is inert until visitor consents', () => {
+  const p = bridgePage();
+  p.setClass('immOn', true);
+  p.setClass('scene-ready', true);
+  p.emitMessage({ unfire: 1, caseState: 'open' });
+  assert.equal(p.logs.length, 0);
+  p.setConsent('accepted');
+  p.event('unfire:consent-updated');
+  assert.deepEqual(p.logs.map(x => x.event), ['page_view', 'game_enter']);
+});
+
+test('bridge counts actual case-open signal only once, rejects forged frames', () => {
+  const p = bridgePage();
+  p.setConsent('accepted');
+  p.event('unfire:consent-updated');
+  p.emitMessage({ unfire: 1, caseState: 'open' }, { source: {} });
+  p.emitMessage({ unfire: 1, caseState: 'open' }, { origin: 'https://malicious.example' });
+  p.emitMessage({ unfire: 1, caseState: 'open' });
+  p.emitMessage({ unfire: 1, caseState: 'open' });
+  p.emitMessage({ unfire: 1, caseState: 'closed' });
+  p.emitMessage({ unfire: 1, caseState: 'open' });
+  assert.deepEqual(p.logs.map(x => x.event), ['page_view', 'briefcase_open', 'briefcase_open']);
+});
+
+test('bridge only accepts explicitly emitted confirmed actions (never payments)', () => {
+  const p = bridgePage();
+  p.setConsent('accepted');
+  p.event('unfire:metrics', { event: 'match_start' });
+  p.event('unfire:metrics', { event: 'checkout_click' });
+  p.event('unfire:metrics', { event: 'purchase_completed' });
+  assert.deepEqual(p.logs.map(x => x.event), ['match_start', 'checkout_click']);
+});

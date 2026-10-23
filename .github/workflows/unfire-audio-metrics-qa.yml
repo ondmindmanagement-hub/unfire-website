@@ -1,0 +1,45 @@
+name: Unfire Audio metrics QA
+on:
+  pull_request:
+    paths:
+      - 'assets/js/unfire-audio-metrics*.js'
+      - 'analytics/unfire-audio/**'
+      - 'tests/unfire-audio-metrics*.test.mjs'
+      - 'scripts/unfire-audio-metrics-report.mjs'
+      - '.github/workflows/unfire-audio-metrics-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  metric-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate JavaScript syntax
+        run: |
+          node --check assets/js/unfire-audio-metrics.js
+          node --check assets/js/unfire-audio-metrics-bridge.js
+          node --check analytics/unfire-audio/worker.mjs
+          node --check scripts/unfire-audio-metrics-report.mjs
+      - name: Run metrics tests without browser or network
+        run: node --test tests/unfire-audio-metrics*.test.mjs
+      - name: Verify SQLite schema
+        run: |
+          python3 - <<'PY'
+          import sqlite3
+          with open('analytics/unfire-audio/schema.sql') as f: sql=f.read()
+          db=sqlite3.connect(':memory:')
+          db.executescript(sql)
+          for _ in range(2):
+              db.execute('INSERT INTO daily_counts(day,event,total) VALUES (?,?,1) ON CONFLICT(day,event) DO UPDATE SET total=total+1', ('2026-10-23','game_enter'))
+              db.execute('INSERT OR IGNORE INTO daily_sessions(day,event,session) VALUES (?,?,?)', ('2026-10-23','game_enter','example-tab'))
+          assert db.execute('SELECT total FROM daily_counts').fetchone()[0] == 2
+          assert db.execute('SELECT COUNT(*) FROM daily_sessions').fetchone()[0] == 1
+          print('SQLite schema PASS')
+          PY

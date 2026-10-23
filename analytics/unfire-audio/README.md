@@ -36,8 +36,51 @@ No incorporar compra confirmada como evento de JavaScript público: solo el prov
 ## Ficheros
 
 - assets/js/unfire-audio-metrics.js — módulo cliente sin dependencia ni efecto al cargarse.
+- assets/js/unfire-audio-metrics-bridge.js — conexión segura con escena del anfitrión y estado del maletín.
+- scripts/unfire-audio-metrics-report.mjs — lectura privada de conteos diarios, sin credenciales persistidas.
 - analytics/unfire-audio/worker.mjs + schema.sql — colector opcional de agregados sin nombres ni IP.
 - analytics/unfire-audio/wrangler.toml.example — configuración incompleta, NO desplegar sin provisión.
 - tests/unfire-audio-metrics.test.mjs — QA ligero sin navegador.
 
 Coordinación de reservas en https://github.com/ondmindmanagement-hub/unfire-website/issues/13 y registro global #78.
+
+## Bridge funcional e informe (pendientes del host y backend)
+
+El cliente se complementa con assets/js/unfire-audio-metrics-bridge.js (15 pruebas).
+El puente escucha la clase inmersiva real del anfitrión y confirma escena lista
+para game_enter, y exige message de ventana iframe + origen idéntico para contar
+caseState=open como briefcase_open. No interpone WebGL, no hace polling ni crea
+cookies. Los eventos match_start y checkout_click requieren que su propietario
+despache un CustomEvent explícito tras cada acto confirmado:
+
+    window.dispatchEvent(new CustomEvent('unfire:metrics',
+      {detail:{event:'match_start'}}));
+
+checkout_click debe enviarse SOLO antes de redirigir a un checkout habilitado.
+Nunca notificar purchase_completed desde código cliente. Cuando el usuario
+acepte analíticas en audio/, el consentimiento necesita notificación explícita:
+
+    window.dispatchEvent(new Event('unfire:consent-updated'));
+
+Tras configurar servicio y verificar cookies, el propietario de audio/index.html
+incorpora en el host, en orden y con URL HTTPS aprobada:
+
+    <script>window.__UNFIRE_AUDIO_METRICS_ENDPOINT='https://<ENDPOINT_REAL>/v1/event';</script>
+    <script defer src="/assets/js/unfire-audio-metrics.js"></script>
+    <script defer src="/assets/js/unfire-audio-metrics-bridge.js"></script>
+
+No insertar endpoint ficticio. El host está RESERVADO por otros equipos y esta
+PR solo añade archivos independientes. El endpoint vive fuera de GitHub Pages.
+El bridge no se activa por sí solo. El cliente sigue sin enviar eventos mientras
+no exista consentimiento o endpoint válido.
+
+Al existir backend real se pueden consultar agregados desde terminal sin pegar
+secreto en el chat ni en un enlace:
+
+    UNFIRE_METRICS_ADMIN_URL="https://<ENDPOINT_REAL>/admin/summary" \
+    UNFIRE_METRICS_ADMIN_TOKEN="<SECRET_SÓLO_EN_EL_ENTORNO>" \
+    node scripts/unfire-audio-metrics-report.mjs
+
+El informe distingue expresamente entradas (eventos) y sesiones de pestaña
+(consentidas) de PERSONAS ÚNICAS y VENTAS PAGADAS. No colocar tokens reales
+en comandos visibles, repositorios, tickets ni capturas.
