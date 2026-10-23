@@ -3993,6 +3993,10 @@ main .uf-hero-title {
 #apps .uf-gallery-availability{display:block;margin-top:16px;color:#9da7ba;font-size:11px;line-height:1.5;letter-spacing:.025em}
 #apps .uf-gallery-card--icon .uf-gallery-media{background:radial-gradient(circle at 50% 50%,#1e2636 0%,#0b1019 64%,#090c13 100%)}
 #apps .uf-gallery-card--icon .uf-gallery-media img{width:min(57%,200px);height:auto;max-height:200px;border-radius:22%;box-shadow:0 12px 30px rgba(0,0,0,.38)}
+#apps .uf-gallery-media--private{background:radial-gradient(circle at 50% 43%,#1b2941,#0a101c 68%);padding:32px!important}
+#apps .uf-keybridge-wordmark{display:flex;flex-direction:column;gap:9px;align-items:center;text-align:center;font-size:clamp(20px,2.5vw,30px);font-weight:750;letter-spacing:.09em;line-height:1.25;color:#f4f8ff;overflow-wrap:anywhere}
+#apps .uf-keybridge-wordmark b{font:inherit;color:#a7c9ff}
+#apps .uf-keybridge-wordmark small{font-size:10px;font-weight:600;letter-spacing:.18em;color:#8da1bb}
 @media(min-width:901px){#apps .uf-gallery-card--mobile:last-child{grid-column:3 / span 2}}
 @media(max-width:900px){#apps .uf-gallery-card--mobile .uf-gallery-media{height:350px}}
 @media(max-width:620px){#apps .uf-gallery-card--mobile .uf-gallery-media{height:min(390px,110vw);padding:18px 12px 0}#apps .uf-gallery-card--mobile:last-child{grid-column:1/-1}}
@@ -4210,7 +4214,7 @@ main .uf-hero-title {
 <div class="uf-gallery-copy"><p class="uf-gallery-type">Gestures &amp; voice / Mac</p><h3><span translate="no" class="notranslate">Unfire</span> Control</h3><p>Hands-free desktop navigation through camera gestures and assisted voice commands.</p><span class="uf-gallery-availability">App preview · original app icon</span></div>
 </article>
 <article class="uf-gallery-card uf-gallery-card--mobile">
-<a class="uf-gallery-media" href="assets/products/keybridge-iphone.webp" target="_blank" rel="noopener noreferrer" aria-label="View the real Unfire KeyBridge prototype interface at full size"><img src="assets/products/keybridge-iphone.webp" width="736" height="1600" alt="Unfire KeyBridge early iPhone prototype for reviewing approval requests" loading="lazy" decoding="async"></a>
+<div class="uf-gallery-media uf-gallery-media--private" role="img" aria-label="Unfire KeyBridge security research preview, without device identifiers"><span class="uf-keybridge-wordmark" translate="no">UNFIRE <b>KEYBRIDGE</b><small>PRIVATE BY DESIGN</small></span></div>
 <div class="uf-gallery-copy"><p class="uf-gallery-type">Device security / iPhone</p><h3><span translate="no" class="notranslate">Unfire</span> KeyBridge</h3><p>A research prototype for reviewing specific workstation requests on a trusted phone.</p><span class="uf-gallery-availability">Lab prototype · not a production sign-in system</span></div>
 </article>
 </div>
