@@ -1,0 +1,110 @@
+/* UNFIRE / Thumb Reach — touch ergonomics only. No new controls or JS loops.
+   Scoped to actual walking gameplay; preserves the entire center of the scene. */
+@media (pointer:coarse) {
+  body.unfire-roaming {
+    --uf-thumb-safe-l: env(safe-area-inset-left, 0px);
+    --uf-thumb-safe-r: env(safe-area-inset-right, 0px);
+    --uf-thumb-safe-b: env(safe-area-inset-bottom, 0px);
+    --uf-thumb-pad: clamp(104px, 21vw, 140px);
+    --uf-thumb-side: clamp(12px, 4vw, 66px);
+    --uf-thumb-rise: clamp(42px, 9dvh, 115px);
+    --uf-thumb-action-w: clamp(88px, 13vw, 120px);
+    --uf-thumb-action-h: clamp(45px, 6dvh, 58px);
+    --uf-thumb-action-gap: clamp(7px, 1dvh, 12px);
+  }
+  /* Lower 1/3 reach of the left hand, shifted inward from the bezel. */
+  body.unfire-roaming #unfireTouchPad {
+    position:fixed!important;
+    left:calc(var(--uf-thumb-safe-l) + var(--uf-thumb-side))!important;
+    bottom:calc(var(--uf-thumb-safe-b) + var(--uf-thumb-rise))!important;
+    width:var(--uf-thumb-pad)!important;
+    height:var(--uf-thumb-pad)!important;
+    max-width:30vw!important;
+    max-height:30dvh!important;
+    touch-action:none!important;
+    box-sizing:border-box!important;
+  }
+  body.unfire-roaming #unfireTouchKnob {
+    width:clamp(42px, 7vw, 54px)!important;
+    height:clamp(42px, 7vw, 54px)!important;
+    pointer-events:none!important;
+  }
+  /* Right thumb: compact, equally tall buttons with dependable hit areas. */
+  body.unfire-roaming #unfireFly,
+  body.unfire-roaming #unfireTalk,
+  body.unfire-roaming #unfireDown {
+    position:fixed!important;
+    box-sizing:border-box!important;
+    right:calc(var(--uf-thumb-safe-r) + var(--uf-thumb-side))!important;
+    width:var(--uf-thumb-action-w)!important;
+    min-width:var(--uf-thumb-action-w)!important;
+    max-width:var(--uf-thumb-action-w)!important;
+    height:var(--uf-thumb-action-h)!important;
+    min-height:var(--uf-thumb-action-h)!important;
+    padding:6px 9px!important;
+    border-radius:15px!important;
+    font:750 clamp(10px, 1.25vw, 13px)/1.15 system-ui,sans-serif!important;
+    text-align:center!important;
+    white-space:normal!important;
+    touch-action:manipulation!important;
+  }
+  body.unfire-roaming #unfireFly {
+    bottom:calc(var(--uf-thumb-safe-b) + var(--uf-thumb-rise))!important;
+  }
+  body.unfire-roaming #unfireTalk {
+    bottom:calc(var(--uf-thumb-safe-b) + var(--uf-thumb-rise) + var(--uf-thumb-action-h) + var(--uf-thumb-action-gap))!important;
+  }
+  body.unfire-roaming #unfireDown {
+    bottom:calc(var(--uf-thumb-safe-b) + var(--uf-thumb-rise) + (var(--uf-thumb-action-h) + var(--uf-thumb-action-gap))*2)!important;
+  }
+  /* Secondary rail is intentionally left near the top; scroll rather than covering gameplay. */
+  body.unfire-roaming #ctlDock {
+    max-height:min(32dvh, 270px)!important;
+    overflow-y:auto!important;
+    overscroll-behavior:contain!important;
+  }
+}
+@media (pointer:coarse) and (orientation:landscape) {
+  body.unfire-roaming {
+    --uf-thumb-pad:clamp(94px, 13dvh, 140px);
+    --uf-thumb-side:clamp(14px, 6.5vw, 108px);
+    --uf-thumb-rise:clamp(18px, 9dvh, 96px);
+    --uf-thumb-action-w:clamp(78px, 10vw, 116px);
+    --uf-thumb-action-h:clamp(44px, 6dvh, 57px);
+  }
+  body.unfire-roaming #unfireTouchPad {
+    max-width:19vw!important;max-height:36dvh!important;
+  }
+  body.unfire-roaming #unfireTouchKnob {width:clamp(40px, 5dvh, 52px)!important;height:clamp(40px, 5dvh, 52px)!important}
+  /* Third action only appears while flying. Side-by-side prevents a 3-high tower. */
+  body.unfire-roaming #unfireDown {
+    right:calc(var(--uf-thumb-safe-r) + var(--uf-thumb-side) + var(--uf-thumb-action-w) + 8px)!important;
+    bottom:calc(var(--uf-thumb-safe-b) + var(--uf-thumb-rise))!important;
+  }
+  body.unfire-roaming #ctlDock {
+    max-height:min(33dvh, 230px)!important;
+  }
+}
+@media (pointer:coarse) and (orientation:portrait) and (max-width:420px) {
+  body.unfire-roaming {
+    --uf-thumb-side:clamp(10px, 3vw, 17px);
+    --uf-thumb-rise:clamp(40px, 8.7dvh, 86px);
+    --uf-thumb-action-w:clamp(84px, 24vw, 105px);
+    --uf-thumb-action-h:48px;
+  }
+  body.unfire-roaming #unfireTouchPad {max-width:29vw!important;max-height:21dvh!important}
+  body.unfire-roaming #unfireTouchKnob {width:43px!important;height:43px!important}
+}
+@media (pointer:coarse) and (orientation:landscape) and (max-height:430px) {
+  body.unfire-roaming {
+    --uf-thumb-rise:clamp(11px, 6dvh, 29px);
+    --uf-thumb-action-w:clamp(76px, 10vw, 96px);
+    --uf-thumb-action-h:44px;
+  }
+  body.unfire-roaming #unfireTouchPad{max-height:29dvh!important}
+  body.unfire-roaming #ctlDock{max-height:29dvh!important}
+}
+@media (pointer:coarse) and (prefers-reduced-motion:reduce) {
+  body.unfire-roaming #unfireTouchPad,body.unfire-roaming #unfireFly,
+  body.unfire-roaming #unfireTalk,body.unfire-roaming #unfireDown {transition:none!important}
+}
