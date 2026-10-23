@@ -52,6 +52,7 @@ const overlap=(a,b)=>Math.min(a.r,b.r)-Math.max(a.l,b.l)>2 && Math.min(a.b,b.b)-
  for(const [width,height] of dims){
   const context=await browser.newContext({viewport:{width,height},isMobile:true,hasTouch:true,deviceScaleFactor:1,reducedMotion:'reduce'});
   const page=await context.newPage(),errs=[];
+  page.setDefaultTimeout(8000);
   page.on('pageerror',e=>errs.push(e.message));
   await page.setContent('<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>'+originalStyles+'</style>'+markup);
   await page.evaluate(()=>{document.getElementById('wrMore').onclick=e=>{e.stopPropagation();const el=document.getElementById('wradio');const v=el.classList.toggle('expanded');document.getElementById('wrMore').setAttribute('aria-expanded',String(v))}});
@@ -75,12 +76,19 @@ const overlap=(a,b)=>Math.min(a.r,b.r)-Math.max(a.l,b.l)>2 && Math.min(a.b,b.b)-
     'music drawer clipped '+JSON.stringify({width,height,open}));
   assert.equal(open.radio,'hidden');assert.equal(open.rail,'hidden');
   await page.locator('#unfireMixToggle').click();
-  await page.locator('#wrMore').click();
+  await page.locator('#wrMore').click({timeout:6000});
   const radio=await page.evaluate(()=>{const e=document.getElementById('wradio'),r=e.getBoundingClientRect();return{left:r.left,right:r.right,top:r.top,bottom:r.bottom,mix:getComputedStyle(document.getElementById('mix')).visibility,rail:getComputedStyle(document.getElementById('ctlDock')).visibility}});
   assert(radio.left>=-2&&radio.right<=width+2&&radio.top>=-2&&radio.bottom<=height+2,
     'radio expanded clipped '+JSON.stringify({width,height,radio}));
   assert.equal(radio.mix,'hidden');assert.equal(radio.rail,'hidden');
-  await page.locator('#wrMore').click();
+  // The expanded radio must still be directly hittable to close it.
+  const canClose=await page.evaluate(()=>{
+    const e=document.getElementById('wrMore'),r=e.getBoundingClientRect(),
+      hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);
+    return !!hit&&(hit===e||e.contains(hit));
+  });
+  assert(canClose,'Radio expansion blocks its own close button '+JSON.stringify({width,height}));
+  await page.locator('#wrMore').click({timeout:6000});
   await page.evaluate(()=>document.body.classList.add('storyOn'));
   assert.equal(await page.locator('#mix').evaluate(e=>getComputedStyle(e).display),'none');
   assert.deepEqual(errs,[]);

@@ -6,8 +6,10 @@
   let mix;
   const close=()=>{
     if(!mix)return;
-    mix.classList.remove('unfire-expanded');
-    document.body.classList.remove('unfire-mix-open');
+    // Do not write unchanged observed class attributes: on story/dialogue mode
+    // a redundant classList.remove() can retrigger MutationObserver forever.
+    if(mix.classList.contains('unfire-expanded'))mix.classList.remove('unfire-expanded');
+    if(document.body.classList.contains('unfire-mix-open'))document.body.classList.remove('unfire-mix-open');
     const b=document.getElementById(id);
     if(b){b.setAttribute('aria-expanded','false');b.textContent='♫ MÚSICA · AJUSTES';}
   };
