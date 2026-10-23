@@ -2465,6 +2465,14 @@
       return;
     }
     requestAnimationFrame(frame);
+    // GTA-style pause: when the 2D map covers the world, suspend expensive 3D
+    // updates, physics and GPU draws. Keep the frame clock warm for a safe resume.
+    if (MAP.expandedOpen) {
+      clock.getDelta();
+      previousRenderAt = 0;
+      MAP.tick();
+      return;
+    }
     // Cap this heavy 3D scene to ~30-40fps; input events continue unthrottled.
     if (previousRenderAt && now - previousRenderAt < (LOWDEV ? (DEVICE.tier==='compact' ? 42 : 33) : window.ATM_OUT ? 33 : 28)) return;
     // Case/camera animations must use real foreground elapsed time even if
