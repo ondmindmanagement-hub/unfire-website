@@ -4005,8 +4005,35 @@ main .uf-hero-title {
 </style>
 </head>
 <body>
-<div id="unfire-clean-header-v2"><div class="unfire-clean-mainbar"><div class="unfire-clean-inner"><a class="unfire-clean-brand notranslate" data-unfire-move="header-brand" href="#top" translate="no"><img translate="no" alt="Unfire" class="unfire-header-logo" src="assets/logo/unfire-logo-white.png"/><span class="unfire-header-name notranslate" translate="no"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no">Unfire</span></span></a><nav id="unfire-mobile-site-nav" aria-label="Main navigation" class="unfire-clean-nav" data-unfire-move="header-navigation"><a href="#company">Company</a><a href="#work">Work</a><a href="/apps/">Apps</a><a href="/audio/" class="notranslate" translate="no">Audio</a><a href="#system">System</a><a href="#scale">Scale</a><a href="#funding">Funding</a><a href="/contact/">Contact</a>
+<div id="unfire-clean-header-v2"><div class="unfire-clean-mainbar"><div class="unfire-clean-inner"><a class="unfire-clean-brand notranslate" data-unfire-move="header-brand" href="#top" translate="no"><img translate="no" alt="Unfire" class="unfire-header-logo" src="assets/logo/unfire-logo-white.png"/><span class="unfire-header-name notranslate" translate="no"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no">Unfire</span></span></a><button id="unfire-mobile-menu-toggle" class="unfire-mobile-menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="unfire-mobile-site-nav" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 8h16M4 16h16"/></svg></button><nav id="unfire-mobile-site-nav" aria-label="Main navigation" class="unfire-clean-nav" data-unfire-move="header-navigation"><a href="#company">Company</a><a href="#work">Work</a><a href="/apps/">Apps</a><a href="/audio/" class="notranslate" translate="no">Audio</a><a href="#system">System</a><a href="#scale">Scale</a><a href="#funding">Funding</a><a href="/contact/">Contact</a>
 </nav></div></div></div>
+<script id="unfire-mobile-nav-controller">
+(function(){
+  "use strict";
+  const header=document.getElementById("unfire-clean-header-v2");
+  const toggle=document.getElementById("unfire-mobile-menu-toggle");
+  const nav=document.getElementById("unfire-mobile-site-nav");
+  if(!header||!toggle||!nav)return;
+  const compact=window.matchMedia("(max-width: 920px)");
+  function setOpen(open,restoreFocus){
+    const expanded=!!open&&compact.matches;
+    header.classList.toggle("is-menu-open",expanded);
+    toggle.setAttribute("aria-expanded",String(expanded));
+    toggle.setAttribute("aria-label",expanded?"Close navigation menu":"Open navigation menu");
+    if(restoreFocus)toggle.focus();
+  }
+  toggle.addEventListener("click",function(){setOpen(!header.classList.contains("is-menu-open"));});
+  nav.addEventListener("click",function(event){if(event.target.closest("a"))setOpen(false);});
+  document.addEventListener("keydown",function(event){
+    if(event.key==="Escape"&&header.classList.contains("is-menu-open"))setOpen(false,true);
+  });
+  document.addEventListener("click",function(event){
+    if(header.classList.contains("is-menu-open")&&!header.contains(event.target))setOpen(false);
+  });
+  window.addEventListener("resize",function(){if(!compact.matches)setOpen(false);},{passive:true});
+  document.documentElement.classList.add("unfire-nav-ready");
+})();
+</script>
 <header data-unfire-old-header="true">
 <div class="wrap nav">
 <div id="unfire-brand-stack"><a class="brand notranslate" data-unfire-move="brand" href="#top" translate="no"><span class="notranslate unfire-brand-lock" translate="no">Unfire</span></a></div>
@@ -4033,7 +4060,7 @@ main .uf-hero-title {
       Turn it into products.
     </h1>
 <p data-unfire-move="hero-copy">
-      <span class="notranslate" translate="no">Unfire</span> is an independent technology initiative creating software, AI systems and digital tools for real-world use across multiple industries.
+      <span class="notranslate" translate="no">Unfire</span>&nbsp;is an independent technology initiative creating software, AI systems and digital tools for real-world use across multiple industries.
     </p>
 <div class="hero-actions">
 <a class="button primary unfire-lava-primary" data-unfire-move="hero-button-1" href="#work">Explore <span class="notranslate" translate="no">Unfire</span></a>
