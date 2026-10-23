@@ -165,6 +165,63 @@ body.unfire-roaming #cv{touch-action:none}
   }
 
 </style>
+<style id="unfireMobileNoOverlap20261023">
+/* Phone-safe HUD lanes. Preserve the same controls; reposition, never duplicate. */
+@media (pointer:coarse) {
+ .hud{box-sizing:border-box;left:max(8px,env(safe-area-inset-left))!important;bottom:calc(env(safe-area-inset-bottom) + 7px)!important;max-width:min(60vw,275px);gap:5px!important}
+ .hud button{flex:0 0 34px;width:34px;height:34px}
+ .hud .crumb{box-sizing:border-box;min-width:0;max-width:27vw;padding:8px 9px;font-size:10px;overflow:hidden;text-overflow:ellipsis}
+ /* Tips, notifications and short 'recuerda...' captions cannot cover bottom controls. */
+ #tip{left:50%!important;top:calc(env(safe-area-inset-top) + 10px)!important;
+   bottom:auto!important;box-sizing:border-box;width:max-content;max-width:min(40vw,235px)!important;
+   white-space:normal!important;overflow-wrap:anywhere!important;text-align:center;line-height:1.3!important;
+   font-size:clamp(9px,2.3vw,11px)!important;padding:7px 9px!important;z-index:35;pointer-events:none}
+ #buy.enter{box-sizing:border-box;right:max(7px,env(safe-area-inset-right))!important;
+   bottom:calc(env(safe-area-inset-bottom) + 64px)!important;
+   max-width:min(40vw,210px)!important;white-space:normal!important;overflow-wrap:anywhere!important;
+   text-align:center;line-height:1.2}
+ /* Dialogue is one unobstructed layer; all gameplay controls return when it closes. */
+ #story.on .box{box-sizing:border-box;overflow-y:auto!important;overscroll-behavior:contain;
+   max-height:min(57dvh,375px)!important;max-width:calc(100vw - 2*max(10px,env(safe-area-inset-left)))!important}
+ #story .ch{max-height:22dvh;overflow-y:auto;overscroll-behavior:contain}
+ #story .ch input{box-sizing:border-box;min-width:0;max-width:min(65vw,270px);font-size:16px!important}
+ body.storyOn .hud,body.storyOn #tip,body.storyOn #buy.enter,
+ body.storyOn #ctlDock,body.storyOn #cfgB,body.storyOn #storyHud,
+ body.storyOn #onlHud,body.storyOn #roamB{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+ body:has(#storyHud.cfgOn) #ctlDock,body:has(#storyHud.cfgOn) #tip{opacity:0!important;pointer-events:none!important}
+ /* The case-view toolbar and movement pad must never compete for the same corner. */
+ body.unfire-roaming .hud{opacity:0!important;pointer-events:none!important}
+ body.unfire-roaming #tip{max-width:36vw!important}
+}
+@media (pointer:coarse) and (orientation:portrait){
+  #tip{max-width:min(41vw,162px)!important}
+  #story.on .box{left:50%!important;right:auto!important;bottom:calc(env(safe-area-inset-bottom) + 12px)!important;
+    transform:translateX(-50%)!important;width:min(94vw,510px)!important}
+  #story .tx{max-height:25dvh!important}
+  #story .ch{max-height:19dvh}
+}
+@media (pointer:coarse) and (orientation:landscape){
+ .hud{left:max(6px,env(safe-area-inset-left))!important;bottom:calc(env(safe-area-inset-bottom) + 5px)!important}
+ .hud .crumb{max-width:15vw;font-size:9px}
+ #tip{top:calc(env(safe-area-inset-top) + 6px)!important;max-width:min(35vw,250px)!important;font-size:9px!important}
+ #buy.enter{bottom:calc(env(safe-area-inset-bottom) + 44px)!important;max-width:29vw!important;font-size:10px!important}
+ #story.on .box{box-sizing:border-box;left:max(8px,env(safe-area-inset-left))!important;right:auto!important;
+   transform:none!important;bottom:calc(env(safe-area-inset-bottom) + 6px)!important;
+   width:min(60vw,570px)!important;max-height:calc(100dvh - 2*max(8px,env(safe-area-inset-top)))!important}
+ #story .tx{max-height:28dvh!important}
+ #story .ch{max-height:19dvh}
+ #storyMenu{inset:calc(env(safe-area-inset-top) + 5px) calc(env(safe-area-inset-right) + 8px) calc(env(safe-area-inset-bottom) + 5px) calc(env(safe-area-inset-left) + 8px)!important}
+}
+@media (pointer:coarse) and (max-height:420px){
+ #story .nm{padding:2px 7px!important;font-size:9px!important}
+ #story .tx{padding:5px 8px!important;min-height:0!important}
+ #story .ch{gap:3px!important;margin-top:3px!important}
+ #story .ch button{font-size:9px!important;min-height:30px!important;padding:4px 7px!important}
+}
+@media (prefers-reduced-motion:reduce){
+ .hud,#tip,#buy.enter,#story .box{transition:none!important}
+}
+</style>
 <canvas id="cv" aria-label="Maletín UNFIRE en 3D. Acerca la vista con la rueda para entrar"></canvas>
 <div class="hud" id="hud"><button id="zin" aria-label="Acercar">+</button><button id="zout" aria-label="Alejar">−</button><button id="home" aria-label="Volver al maletín">⟲</button><div class="crumb" id="crumb">MALETÍN</div></div>
 <div class="tip" id="tip"></div>
