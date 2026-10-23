@@ -22,12 +22,26 @@
           credentials: 'omit',
           cache: 'no-store',
           keepalive: true,
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
           body: JSON.stringify(payload)
         });
-    const id = root.crypto && typeof root.crypto.randomUUID === 'function'
-      ? root.crypto.randomUUID()
-      : '';
+    // Use only a cryptographically secure random source. Some older iOS Safari
+    // versions provide getRandomValues but not crypto.randomUUID.
+    const id = (() => {
+      if (!root.crypto) return '';
+      if (typeof root.crypto.randomUUID === 'function') return root.crypto.randomUUID();
+      if (typeof root.crypto.getRandomValues !== 'function') return '';
+      try {
+        const bytes = root.crypto.getRandomValues(new Uint8Array(16));
+        bytes[6] = (bytes[6] & 15) | 64;
+        bytes[8] = (bytes[8] & 63) | 128;
+        const hex = Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('');
+        return [hex.slice(0, 8), hex.slice(8, 12), hex.slice(12, 16),
+          hex.slice(16, 20), hex.slice(20)].join('-');
+      } catch (_) {
+        return '';
+      }
+    })();
     const once = new Set();
     let validURL = false;
     try {

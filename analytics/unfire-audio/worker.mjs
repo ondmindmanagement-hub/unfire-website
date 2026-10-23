@@ -50,7 +50,10 @@ async function ingest(request, env) {
   if (request.headers.get('Origin') !== ORIGIN) return respond({ error: 'origin_denied' }, 403);
   if (!env.DB || !env.EVENT_RATE_LIMITER || !env.SESSION_RATE_LIMITER)
     return respond({ error: 'not_configured' }, 503, cors);
-  if ((request.headers.get('Content-Type') || '').split(';')[0].trim().toLowerCase() !== 'application/json')
+  const contentType = (request.headers.get('Content-Type') || '').split(';')[0].trim().toLowerCase();
+  // Client sends JSON as simple text/plain: avoids one CORS preflight for
+  // every event, reducing mobile latency and the Workers Free request budget.
+  if (contentType !== 'text/plain' && contentType !== 'application/json')
     return respond({ error: 'invalid_content_type' }, 415, cors);
   let body;
   try { body = await readBoundedBody(request); }

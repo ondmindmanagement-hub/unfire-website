@@ -91,3 +91,15 @@ test('request fails closed if rate limiting service errors',async()=>{
   assert.equal((await collector.fetch(request(),f.env)).status,503);
   assert.ok(!f.recorded.some(x=>typeof x==='string'));
 });
+
+test('simple text/plain browser POST works without application/json CORS preflight',async()=>{
+  const f=fixtures();
+  const req=new Request('https://metrics.example/v1/event',{
+    method:'POST',
+    headers:{Origin:allowed,'Content-Type':'text/plain;charset=UTF-8'},
+    body:JSON.stringify(payload)
+  });
+  const res=await collector.fetch(req,f.env);
+  assert.equal(res.status,202);
+  assert.equal(f.recorded.filter(x=>typeof x==='string').length,2);
+});

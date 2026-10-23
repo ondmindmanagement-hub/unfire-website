@@ -7,11 +7,11 @@ import collector from '../analytics/unfire-audio/worker.mjs';
 const SESSION_ID = '0c8a7b17-c826-42f8-8c6e-b3ff897f9b34';
 const ENDPOINT = 'https://metrics.example.workers.dev/v1/event';
 
-function page(endpoint = ENDPOINT) {
+function page(endpoint = ENDPOINT, random = { randomUUID: () => SESSION_ID }) {
   let consent = 'rejected';
   const calls = [];
   const window = {
-    crypto: { randomUUID: () => SESSION_ID },
+    crypto: random,
     localStorage: { getItem: () => consent },
     fetch: (url, options) => { calls.push({ url, options }); return Promise.resolve({ status: 202 }); }
   };
@@ -37,7 +37,22 @@ test('allowlisted event only after consent, no PII or cookies', () => {
   assert.equal(p.calls.length, 1);
   assert.deepEqual(JSON.parse(p.calls[0].options.body), { event: 'game_enter', session: SESSION_ID });
   assert.equal(p.calls[0].options.credentials, 'omit');
+  assert.equal(p.calls[0].options.headers['Content-Type'], 'text/plain;charset=UTF-8');
   assert.equal(p.calls[0].options.keepalive, true);
+});
+
+test('older Safari secure RNG fallback produces a valid v4 session ID', () => {
+  const p = page(ENDPOINT, { getRandomValues(bytes) {
+    for (let i=0; i<bytes.length; i++) bytes[i] = i * 19 + 3;
+    return bytes;
+  } });
+  p.consent('accepted');
+  assert.equal(p.client.track('page_view'), true);
+  assert.match(JSON.parse(p.calls[0].options.body).session,
+    /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+  const blocked = page(ENDPOINT, {});
+  blocked.consent('accepted');
+  assert.equal(blocked.client.track('page_view'), false);
 });
 
 test('missing, insecure or embedded-credentials endpoints never send', () => {

@@ -125,3 +125,11 @@ antes de publicar. No editar host ni motor reservados en la PR de analíticas.
 En la configuración real, asignar namespace_id únicos en tu cuenta para
 ambos limitadores, sin reutilizar los de otras apps. Valores 1101/1102 del
 ejemplo son orientativos y deben validarse antes del despliegue.
+
+Rendimiento de red: el cliente envía JSON codificado en un cuerpo text/plain
+(CORS simple) para reducir peticiones OPTIONS preflight. El Worker valida
+estrictamente el JSON, el origen y los campos antes de escribir. No se envían
+datos si hay rechazo del consentimiento, ni se bloquea el render/WebGL.
+Compatibilidad móvil: el identificador efímero usa crypto.randomUUID cuando
+está disponible y crypto.getRandomValues como fallback criptográfico en
+Safari más antiguo. Sin RNG seguro, se desactiva analítica sin afectar juego.
