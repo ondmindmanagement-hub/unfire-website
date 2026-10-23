@@ -71,3 +71,13 @@ test('desktop background video retains original behavior rather than applying mo
   assert.equal(a.v.plays,1);
   assert.equal(a.m.visible,true);assert.equal(b.m.visible,true);
 });
+test('HUD is changed only when its text actually changes, not in every render frame',()=>{
+  assert.match(engine, /const hudCopy = \{ buyKey: null, buyText: null, crumb: null, tip: null \}/);
+  assert.match(engine, /if \(hudCopy\.buyText !== buyText\) \{ \$\('buy'\)\.textContent = buyText;/);
+  assert.match(engine, /if \(hudCopy\.crumb !== crumbText\) \{ \$\('crumb'\)\.innerHTML = crumbText;/);
+  assert.match(engine, /if \(hudCopy\.tip !== mobileTip\) \{[\s\S]{0,110}\$\('tip'\)\.classList\.toggle/);
+});
+test('offscreen and closed case screens do not consume repeated 2D rasterization/upload work',()=>{
+  assert.match(engine, /if \(caseG\.visible && lidOpen > 0\.05\) drawScr\(t, A\.song, CINE\.on\);/);
+  assert.match(engine, /scrT = 0\.25;/);
+});

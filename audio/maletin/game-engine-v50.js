@@ -2436,6 +2436,9 @@
   // ---------- bucle ----------
   const clock = new THREE.Clock(); let t = 0; const pend = { it: null, t: 0 }; let MEMO = null, LV = 0; let frameN = 0; let idleT = 0, lastPlaying = false, liftY = 0;
   const tb = new Uint8Array(1024), fb = new Uint8Array(512); let level = 0;
+  // HUD captions are state labels, not animated sprites. Avoid rewriting the
+  // DOM 24–35 times a second when the string did not actually change.
+  const hudCopy = { buyKey: null, buyText: null, crumb: null, tip: null };
   let frameVisible = true, previousRenderAt = 0;
   // One shared renderer budget for the house AND the outdoor world.
   // Do not run two independent DPR controllers: each GPU realloc can stall a mobile frame.
@@ -2733,17 +2736,27 @@
       if (it.laptop) { it.laptop.rotation.x = -1.85 * ease.smooth(it.kk); it.g.rotation.x = lerp(0, 0.35, k); it.g.position.y = 0.03 + k * 0.1; return; }
       it.g.rotation.x = lerp(0, it.kind === 'fx' ? 0.42 : H2 - 0.45, k); const cy = it.comp && compG[it.comp] ? compG[it.comp].position.y : 0; it.g.position.y = (it.kind === 'fx' ? 0.05 : 0.02) + cy + k * (it.kind === 'fx' ? 0.07 : 0.42); it.g.visible = cy > -0.3; });
     // HUD
-    const zoomK = 1 - view.dist / view.D0; $('hud').classList.toggle('on', zoomK > 0.05); const bi = zoomK > 0.55 ? items.reduce((b, it) => (planar(it) < (b ? planar(b) : 0.45) ? it : b), null) : null; const bk = bi ? ({ fx: 'fx-' + bi.id, hyper: 'hyper', synth: 'synth', cap: 'club', mut: 'club', archer: 'archer' })[bi.kind] : null; $('buy').classList.toggle('on', !!bk); if (bk) { $('buy').dataset.k = bk; $('buy').textContent = (bk === 'archer' ? 'VER EN APP STORE · ' : 'AÑADIR A LA BOLSA · ') + bi.name; }
+    const zoomK = 1 - view.dist / view.D0; $('hud').classList.toggle('on', zoomK > 0.05); const bi = zoomK > 0.55 ? items.reduce((b, it) => (planar(it) < (b ? planar(b) : 0.45) ? it : b), null) : null; const bk = bi ? ({ fx: 'fx-' + bi.id, hyper: 'hyper', synth: 'synth', cap: 'club', mut: 'club', archer: 'archer' })[bi.kind] : null; $('buy').classList.toggle('on', !!bk);
+    if (bk) {
+      const buyText = (bk === 'archer' ? 'VER EN APP STORE · ' : 'AÑADIR A LA BOLSA · ') + bi.name;
+      if (hudCopy.buyKey !== bk) { $('buy').dataset.k = bk; hudCopy.buyKey = bk; }
+      if (hudCopy.buyText !== buyText) { $('buy').textContent = buyText; hudCopy.buyText = buyText; }
+    }
     let near = null, nd = 1e9; for (const it of items) { const d = Math.hypot(it.pos.x - view.tx, it.pos.z - view.tz); if (d < nd) { nd = d; near = it; } }
     const comp = Object.values(COMP).find((c) => view.tx >= c.x0 - 0.1 && view.tx <= c.x1 + 0.1 && view.tz >= c.z0 - 0.1 && view.tz <= c.z1 + 0.1);
-    $('crumb').innerHTML = 'MALETÍN' + (comp && zoomK > 0.25 ? ' › ' + comp.name.toUpperCase() : '') + (near && zoomK > 0.6 ? ' › <b>' + near.name + '</b>' : '');
+    const crumbText = 'MALETÍN' + (comp && zoomK > 0.25 ? ' › ' + comp.name.toUpperCase() : '') + (near && zoomK > 0.6 ? ' › <b>' + near.name + '</b>' : '');
+    if (hudCopy.crumb !== crumbText) { $('crumb').innerHTML = crumbText; hudCopy.crumb = crumbText; }
     const tip = lidOpen < 0.05 ? 'Pulsa el botón de la mariposa · o baja un poco' : lidOpen < 0.9 ? '' : zoomK < 0.05 ? (allOpen() ? 'Rueda sobre el maletín = acercarte · fuera = bajar la página' : 'Baja sobre una compuerta para abrirla · fuera = todas · o pulsa ABRIR TODO') : open.some((g) => g.m > 0.9) ? 'Pulsa la mariposa para cambiar de forma · arrastra los mandos' : near && ['fx', 'archer', 'hyper', 'synth'].includes(near.kind) && zoomK > 0.6 ? 'Clic para probarlo' : 'Arrastra para girar · cursor al borde para moverte · acércate para abrir';
     // Touch-first HUD: no long translucent instruction banners over the avatar,
     // the suitcase, or the mobile action controls. Desktop keeps full hints.
     const mobileTip = window.__UNFIRE_AUTOCALIB && window.__UNFIRE_AUTOCALIB.touch
       ? (!ROAMS.on && lidOpen < 0.05 ? 'PULSA LA MARIPOSA' : '')
       : tip;
-    $('tip').textContent = mobileTip; $('tip').classList.toggle('on', !!mobileTip);
+    if (hudCopy.tip !== mobileTip) {
+      $('tip').textContent = mobileTip;
+      $('tip').classList.toggle('on', !!mobileTip);
+      hudCopy.tip = mobileTip;
+    }
     if (!(frameN++ % 6)) { const pts = []; for (const x of [-CW / 2 - 0.1, CW / 2 + 0.1]) for (const z of [-CD / 2 - 0.1, CD / 2 + 0.25]) { pts.push(V(x, 0, z), V(x, HB + 0.1, z)); pts.push(lid.localToWorld(V(x, HL, z))); } let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
       for (const p of pts) { p.project(cam); const sx = (p.x + 1) / 2 * innerWidth, sy = (1 - p.y) / 2 * innerHeight; x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy); }
       parentPost({ rect: [Math.round(x0), Math.round(y0), Math.round(x1), Math.round(y1)], lv: Math.round(LV * 100) / 100, open: lidOpen > 0.9, zoom: zoomed() || !!drag || !!knobDrag }); }
@@ -2757,7 +2770,13 @@
       if (!CINE.on) separate(items.filter((it) => it.W && it.R), 0.2, false);
       flyers.forEach((f, i) => { f.m = Math.min(2, f.m + dt * 0.5); f.a += dt * 0.22; f.dev.root.position.set(Math.cos(f.a) * (CW / 2 - 0.4), 0.8 + 0.12 * Math.sin(bt + i), Math.sin(f.a) * (CD / 2 - 0.35)); f.dev.root.rotation.y = -f.a; f.dev.update(f.m, dt, { level: 0.3 }); }); }
     document.body.classList.toggle('cine', CINE.on && lidOpen > 0.95);
-    scrT -= dt; if (scrT <= 0) { scrT = 0.25; drawScr(t, A.song, CINE.on); }
+    scrT -= dt;
+    if (scrT <= 0) {
+      scrT = 0.25;
+      // Do not rasterize/upload the interior screen while the case is closed
+      // or stowed. Its next visible update still happens within 250 ms.
+      if (caseG.visible && lidOpen > 0.05) drawScr(t, A.song, CINE.on);
+    }
     if (CINE.on !== DRC.was) { DRC.was = CINE.on; try { CINE.on ? cineStart() : cineStop(); } catch (er) { console.warn(er); } }
     if (CINE.on && lidOpen > 0.95) DIRECTOR(dt, t);
     rings.forEach((r) => { r.m.rotation.y += dt * (0.4 + r.i * 0.3 + LV * 3) * r.sx * (r.i % 2 ? -1 : 1); r.m.scale.setScalar(1 + LV * 0.12 * (3 - r.i)); r.m.material.emissiveIntensity = 1 + LV * 4; });
