@@ -199,3 +199,113 @@ html body #unfire-clean-header-v2 #ask-unfire-host {
 }
 /* Keep the compact Ask panel above website content only when open. */
 #unfire-clean-header-v2:has(#ask-unfire-host.is-open) {z-index:2147483000!important}
+
+/* 2026-10-23: Safe, predictable navigation for translated mobile labels.
+   Tablet widths get a dedicated navigation row; narrow phones get two
+   four-link rows so nothing bleeds into the viewport edges or overlaps. */
+@media (max-width:920px) {
+  html body #unfire-clean-header-v2 .unfire-clean-inner {
+    box-sizing:border-box!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 44px!important;
+    grid-template-rows:56px minmax(48px,auto)!important;
+    width:calc(100% - 40px)!important;
+    max-width:none!important;
+    min-height:104px!important;
+    height:auto!important;
+    margin:0 auto!important;
+    padding:0!important;
+    gap:0!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-brand {
+    grid-column:1!important;
+    grid-row:1!important;
+    height:56px!important;
+    margin-left:0!important;
+    min-width:0!important;
+  }
+  html body #unfire-clean-header-v2 #ask-unfire-host {
+    grid-column:2!important;
+    grid-row:1!important;
+    width:44px!important;
+    min-width:44px!important;
+    max-width:44px!important;
+    height:44px!important;
+    min-height:44px!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-nav {
+    box-sizing:border-box!important;
+    grid-column:1/-1!important;
+    grid-row:2!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    justify-self:stretch!important;
+    align-self:stretch!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    min-height:48px!important;
+    height:auto!important;
+    margin:0!important;
+    padding:4px 6px 8px!important;
+    gap:clamp(6px,1.3vw,15px)!important;
+    overflow:hidden!important;
+    transform:none!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-nav a {
+    box-sizing:border-box!important;
+    flex:0 1 auto!important;
+    width:auto!important;
+    max-width:100%!important;
+    min-width:0!important;
+    height:auto!important;
+    min-height:40px!important;
+    padding:4px 1px!important;
+    font-size:clamp(10px,1.35vw,12px)!important;
+    line-height:1.25!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+    text-align:center!important;
+  }
+  #company,#work,#audio,#system,#scale,#funding {scroll-margin-top:112px!important}
+}
+@media (max-width:700px) {
+  html body #unfire-clean-header-v2 .unfire-clean-inner {
+    grid-template-rows:56px minmax(92px,auto)!important;
+    width:calc(100% - 40px)!important;
+    min-height:148px!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-nav {
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    grid-template-rows:repeat(2,minmax(42px,auto))!important;
+    align-content:center!important;
+    justify-content:stretch!important;
+    justify-items:stretch!important;
+    gap:4px 6px!important;
+    padding:4px 6px 10px!important;
+    min-height:92px!important;
+    overflow:visible!important;
+  }
+  html body #unfire-clean-header-v2 .unfire-clean-nav a {
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    flex:none!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:42px!important;
+    padding:5px 2px!important;
+    margin:0!important;
+    font-size:clamp(10px,2.85vw,12px)!important;
+    line-height:1.25!important;
+    font-weight:450!important;
+    letter-spacing:0!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+    hyphens:auto;
+  }
+  #company,#work,#audio,#system,#scale,#funding {scroll-margin-top:154px!important}
+}
