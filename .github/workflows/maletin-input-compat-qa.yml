@@ -1,0 +1,35 @@
+name: Audio first-person + adaptive input integration
+on:
+  pull_request:
+    paths:
+      - "audio/maletin/game-engine-v50.js"
+      - "audio/maletin/adaptive-controls.js"
+      - "audio/maletin/index.html"
+      - "tests/maletin-first-person-gamepad-compat.test.cjs"
+      - "tests/maletin-first-person.test.cjs"
+      - ".github/workflows/maletin-input-compat-qa.yml"
+  workflow_dispatch:
+jobs:
+  movement-input-compat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Syntax
+        run: |
+          node --check audio/maletin/game-engine-v50.js
+          node --check audio/maletin/adaptive-controls.js
+          node --check tests/maletin-first-person-gamepad-compat.test.cjs
+      - name: Both input systems, flight, missions and cache
+        run: |
+          node tests/maletin-first-person-gamepad-compat.test.cjs
+          node tests/maletin-first-person.test.cjs
+          node --test tests/maletin-adaptive-controls.test.cjs tests/maletin-door-transition.test.cjs
+          node tests/maletin-flight-combos.test.cjs
+          node tests/maletin-cache-sync.test.cjs
+          node tests/maletin-v50.test.cjs

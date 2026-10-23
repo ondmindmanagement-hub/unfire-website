@@ -43,7 +43,7 @@ check(Math.hypot(p.p.x, p.p.z) <= speed + 0.001, 'diagonal movement does not gai
 p = move({ d: 1 }, 0, true);
 check(p.p.x > 0, 'strafe works while flying');
 check(code.includes("(ROAMS.mode === '1p' && (K.q || K.e))"), 'turn-only input executes 1p motion path');
-check(code.includes("ROAMS.mode === '1p' ? K.a || K.d : sd2"), 'strafe motion updates walk animation');
+check(code.includes("ROAMS.moving = !!(fw || sd2 || (ROAMS.mode === '1p' && (K.a || K.d)))"), 'strafe, analog controls and keyboard continue walk animation');
 
 class Vec {
   constructor(x, y, z) { this.x = x; this.y = y; this.z = z; }
