@@ -75,8 +75,13 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        const box=rect(story.querySelector('.box'));
        const touch=['unfireTouchPad','unfireFly','unfireTalk','unfireDown']
          .map(id=>({id,hidden:getComputedStyle(d.getElementById(id)).display==='none'}));
-       const exit=rect(d.getElementById('unfireExitGame'));
-       return {box,touch,exit};
+       const exitButton=d.getElementById('unfireExitGame');
+       const exit=rect(exitButton),style=getComputedStyle(exitButton);
+       const label={text:exitButton.textContent.trim(),scrollWidth:exitButton.scrollWidth,
+         clientWidth:exitButton.clientWidth,whiteSpace:style.whiteSpace};
+       const tipEl=d.getElementById('tip'),tip=rect(tipEl);
+       return {box,touch,exit,label,tip};
+
        function assertExists(x){if(!x)throw Error('Story overlay missing');}
      });
      const b=state.box;
@@ -86,6 +91,13 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        'Buttons overlap active story dialogue '+JSON.stringify(state.touch));
      assert(state.exit.x>=-1&&state.exit.y>=-1&&state.exit.x+state.exit.w<=width+1,
        'Game exit clipped by small viewport');
+     assert(state.label.text.includes('SALIR A LA WEB')&&state.label.whiteSpace!=='nowrap'&&
+       state.label.scrollWidth<=state.label.clientWidth+2,
+       'Game exit label visibly truncated or missing '+JSON.stringify({width,height,label:state.label}));
+     const overlaps=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+     assert(!overlaps(state.exit,state.box),
+       'Story dialogue overlaps the exit on rotated phone '+JSON.stringify({width,height,exit:state.exit,box:state.box}));
+
    }
    // Carry/throw capsule action stays on the left rail, beyond the central
    // avatar, and between minimap and thumbstick across rotations.
