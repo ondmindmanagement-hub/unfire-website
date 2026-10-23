@@ -16,7 +16,7 @@ not an independent legal opinion.
 ## Apple and other brands
 - Product names remain **Unfire**, **ARCHER**, **BOLT**, etc. Refer to third-party product names only to accurately describe verified compatibility.
 - Accurate phrases in descriptive copy: “ARCHER for Mac”, “ARCHER for iPad”, “ARCHER for iPhone”, “Compatible with macOS” where actually tested. Distinguish compatibility labels from the product name, title, app store metadata and legal affiliation.
-- Do not use “Built for Apple”, “Apple-certified”, “official Apple partner”, Apple-owned logos, screenshots, badges or photography without the applicable permission/brand guidelines. No claims of endorsement, and no compatibility promises for unfinished products.
+- Never use unlicensed claims suggesting an Apple-built product, Apple certification or official Apple partnership; do not use Apple-owned logos, screenshots, badges or photography without the applicable permission/brand guidelines. No claims of endorsement, and no compatibility promises for unfinished products.
 - Spell marks as prescribed (for example **iPad**, **iPhone**, **Mac**, **macOS**; do not pluralize a trademark as “iPads” in formal marketing).
 - Accurate references to Windows and Android are generally descriptive; still follow the respective owners' branding guidelines and verify compatibility.
 - Legal notices should credit third-party mark ownership and state clearly that Unfire is independent; no affiliation implied. For App Store badges or official device representations, consult the separate official marketing terms before use.
