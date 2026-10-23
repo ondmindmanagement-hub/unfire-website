@@ -1,0 +1,26 @@
+name: Maletin lid low-FPS clock QA
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/maletin-lid-lowfps-clock.test.cjs'
+      - '.github/workflows/maletin-lid-lowfps-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/maletin-lid-lowfps-clock.test.cjs'
+      - '.github/workflows/maletin-lid-lowfps-qa.yml'
+jobs:
+  lid-animation-clock:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check audio/maletin/game-engine-v50.js
+      - run: node --test tests/maletin-lid-lowfps-clock.test.cjs
