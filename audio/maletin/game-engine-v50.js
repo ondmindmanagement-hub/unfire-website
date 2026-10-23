@@ -57,6 +57,9 @@
   const DEVICE=window.__UNFIRE_AUTOCALIB||{tier:'desktop',maxDpr:1.5,antialias:true};
   const LOWDEV = DEVICE.tier!=='desktop'||((navigator.hardwareConcurrency||8)<=4);
   window.__LOWDEV=LOWDEV;window.__UNFIRE_ACTIVE_DEVICE=DEVICE;
+  // Broadphase returns candidate boxes only; the original exact response remains unchanged.
+  const COLLISION = (boxes,x,z,pad) => window.UnfireCollisionNearby
+    ? window.UnfireCollisionNearby.nearby(boxes,x,z,pad) : (boxes || []);
   const S = Y2K.stage(cv, { reflect: false, zoom: false, exposure: 0.98, shadow: 0.38,
     maxDpr: DEVICE.maxDpr, antialias: DEVICE.antialias, shadowResolution: LOWDEV?512:2048, fov: 30 });
   if (LOWDEV) { S.renderer.shadowMap.enabled = false; }
@@ -1124,7 +1127,10 @@
     const RN = 1500, rg = new THREE.BufferGeometry(), rp = new Float32Array(RN * 3); for (let i = 0; i < RN; i++) { rp[i * 3] = (Math.random() - 0.5) * 80; rp[i * 3 + 1] = Math.random() * 40; rp[i * 3 + 2] = (Math.random() - 0.5) * 80; } rg.setAttribute('position', new THREE.BufferAttribute(rp, 3)); const rainP = new THREE.Points(rg, new THREE.PointsMaterial({ color: 0xbfe6ff, size: 0.18, transparent: true, opacity: 0.7, depthWrite: false })); rainP.visible = false; S.scene.add(rainP); const fl = new THREE.HemisphereLight(0xdfe8ff, 0x223344, 0); S.scene.add(fl);
     const goOut = (v) => { if (!!v !== st.out) btn.onclick({ stopPropagation() {} }); }; btn.onclick = (e) => { e.stopPropagation(); st.out = !st.out; if (st.out && !st.on) { st.on = true; P.querySelector('#atmOn').classList.remove('off'); spatial(true); try { RADIO.start(); } catch (er) {} } if (st.out) { enterRoam(); ROAMS.p.set(-30, 4.5, 108); ROAMS.pitch = 0.02; ROAMS.yaw = Math.PI; window.__RBsave = window.__RBsave || window.__RB; window.__RB = { x: 12000, z0: -12000, z1: 12000 }; window.__WORLD_R = 16000; window.ATM_OUT = true; btn.textContent = '🏠 VOLVER DENTRO'; } else { window.__RB = window.__RBsave || window.__RB; window.__RBsave = null; window.ATM_OUT = false; ROAMS.p.set(-30, 4.5, 88); ROAMS.yaw = 0; btn.textContent = '🌍 SALIR FUERA'; } hap(0.5); };
     btn.addEventListener('pointerdown', (e) => e.stopPropagation());
-    const setOut = (v) => { st.out = v; window.ATM_OUT = v; if (v) { if(window.__warmOutsideObstacles)window.__warmOutsideObstacles(); if (!st.on) { st.on = true; P.querySelector('#atmOn').classList.remove('off'); setTimeout(()=>{if(st.out&&!document.hidden)spatial(true);},280); } window.__RBsave = window.__RBsave || window.__RB; window.__RB = { x: 12000, z0: -12000, z1: 12000 }; window.__WORLD_R = 16000; btn.textContent = '🏠 VOLVER DENTRO'; say('🌍 Estás fuera · la isla entera es tuya'); } else { window.__RB = window.__RBsave || window.__RB; window.__RBsave = null; btn.textContent = '🌍 SALIR FUERA'; } }; return { setOut, st, goOut, thunder, rain, tick(dt, t) { btn.style.display = ROAMS.on && window.__OUT_OPEN ? 'block' : 'none'; P.classList.toggle('on', st.out && ROAMS.on); if (pn) { const a = (+P.querySelector('#atmDir').value) * Math.PI / 180, d = +P.querySelector('#atmDist').value, L = ctx().listener, cp = cam.position; const x = cp.x + Math.sin(a) * Math.min(d, 400), z = cp.z - Math.cos(a) * Math.min(d, 400); if (pn.positionX) { pn.positionX.value = x; pn.positionY.value = cp.y + 2; pn.positionZ.value = z; } if (L.positionX) { L.positionX.value = cp.x; L.positionY.value = cp.y; L.positionZ.value = cp.z; const dir = new THREE.Vector3(); cam.getWorldDirection(dir); L.forwardX.value = dir.x; L.forwardY.value = dir.y; L.forwardZ.value = dir.z; } wet.gain.value = Math.min(0.8, 0.15 + d / 2000); }
+    const setOut = (v) => { // Animate only real house-door walking crossings; never block the physics path.
+      try { window.UNFIRE_DOOR_CINEMA?.cross({ next:v, previous:st.out,
+        x:ROAMS.p.x, z:ROAMS.p.z, on:ROAMS.on, mini:ROAMS.mini, fly:ROAMS.fly }); } catch (_) {}
+      st.out = v; window.ATM_OUT = v; if (v) { if(window.__warmOutsideObstacles)window.__warmOutsideObstacles(); if (!st.on) { st.on = true; P.querySelector('#atmOn').classList.remove('off'); setTimeout(()=>{if(st.out&&!document.hidden)spatial(true);},280); } window.__RBsave = window.__RBsave || window.__RB; window.__RB = { x: 12000, z0: -12000, z1: 12000 }; window.__WORLD_R = 16000; btn.textContent = '🏠 VOLVER DENTRO'; say('🌍 Estás fuera · la isla entera es tuya'); } else { window.__RB = window.__RBsave || window.__RB; window.__RBsave = null; btn.textContent = '🌍 SALIR FUERA'; } }; return { setOut, st, goOut, thunder, rain, tick(dt, t) { btn.style.display = ROAMS.on && window.__OUT_OPEN ? 'block' : 'none'; P.classList.toggle('on', st.out && ROAMS.on); if (pn) { const a = (+P.querySelector('#atmDir').value) * Math.PI / 180, d = +P.querySelector('#atmDist').value, L = ctx().listener, cp = cam.position; const x = cp.x + Math.sin(a) * Math.min(d, 400), z = cp.z - Math.cos(a) * Math.min(d, 400); if (pn.positionX) { pn.positionX.value = x; pn.positionY.value = cp.y + 2; pn.positionZ.value = z; } if (L.positionX) { L.positionX.value = cp.x; L.positionY.value = cp.y; L.positionZ.value = cp.z; const dir = new THREE.Vector3(); cam.getWorldDirection(dir); L.forwardX.value = dir.x; L.forwardY.value = dir.y; L.forwardZ.value = dir.z; } wet.gain.value = Math.min(0.8, 0.15 + d / 2000); }
       rainP.visible = st.storm; if (st.storm) { const p = rg.attributes.position.array; for (let i = 0; i < RN; i++) { p[i * 3 + 1] -= dt * 40; if (p[i * 3 + 1] < -9) p[i * 3 + 1] = 35; } rg.attributes.position.needsUpdate = true; rainP.position.set(cam.position.x, 0, cam.position.z); st.next -= dt; if (st.next < 0) { st.next = 5 + Math.random() * 12; P.querySelector('#atmDist').value = 300 + Math.random() * 1700; thunder(); } }
       st.flash = Math.max(0, st.flash - dt * 3); fl.intensity = st.flash > 0 ? (Math.random() < 0.5 ? 2.5 : 0.4) * st.flash : 0; } }; })();
 
@@ -2362,6 +2368,77 @@
   // Opening the website/direct-link case keeps the camera on the physical
   // maletín. Exploring as the robot is an explicit separate player choice.
   // The lid animation and all equipment remain available in this view.
+  let seaBuild = null, seaBuildFailed = false;
+  function ensureSeaAmbience() {
+    if (window.__SEA || seaBuild || seaBuildFailed || !ROAMS.on) return;
+    const nearDoor = !window.ATM_OUT && ROAMS.p.z > 66 && Math.abs(ROAMS.p.x + 30) < 25;
+    const nearDome = !window.ATM_OUT && ROAMS.fly && ROAMS.h > 7 &&
+      Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 95;
+    if (!window.ATM_OUT && !nearDoor && !nearDome) return;
+    if (!audioOk()) return;
+    const c = UA.ctx;
+    if (!c || c.state === 'closed') return;
+    const state = seaBuild = { channel: 0, offset: 0, prev: 0, scheduled: false,
+      buffer: null, channels: null, frames: 0 };
+    const schedule = () => {
+      if (!state.scheduled) {
+        state.scheduled = true;
+        setTimeout(fillSlice, 24);
+      }
+    };
+    function fillSlice() {
+      state.scheduled = false;
+      if (seaBuild !== state || window.__SEA) return;
+      if (document.hidden) {
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden && seaBuild === state) schedule();
+        }, { once: true });
+        return;
+      }
+      try {
+        if (c.state === 'closed') { seaBuild = null; return; }
+        if (!state.buffer) {
+          state.frames = Math.max(1024, Math.floor(c.sampleRate * 4));
+          state.buffer = c.createBuffer(2, state.frames, c.sampleRate);
+          state.channels = [state.buffer.getChannelData(0), state.buffer.getChannelData(1)];
+        }
+        const deadline = performance.now() + 2;
+        let completed = 0;
+        while (state.channel < 2 && completed < 3072 && performance.now() < deadline) {
+          const samples = state.channels[state.channel];
+          const end = Math.min(state.frames, state.offset + 512,
+            state.offset + 3072 - completed);
+          for (; state.offset < end; state.offset++) {
+            state.prev = state.prev * 0.985 + (Math.random() * 2 - 1) * 0.12;
+            samples[state.offset] = state.prev;
+            completed++;
+          }
+          if (state.offset === state.frames) {
+            state.channel++; state.offset = 0; state.prev = 0;
+          }
+        }
+        if (state.channel < 2) { schedule(); return; }
+        const src = c.createBufferSource(); src.buffer = state.buffer; src.loop = true;
+        const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900;
+        const g = c.createGain(); g.gain.value = 0;
+        src.connect(lp).connect(g).connect(UA.bus.master);
+        const src2 = c.createBufferSource(); src2.buffer = state.buffer;
+        src2.loop = true; src2.playbackRate.value = 1.7;
+        const bp = c.createBiquadFilter(); bp.type = 'bandpass';
+        bp.frequency.value = 1600; bp.Q.value = 0.6;
+        const g2 = c.createGain(); g2.gain.value = 0;
+        const wl = c.createBiquadFilter(); wl.type = 'lowpass'; wl.frequency.value = 2000;
+        src2.connect(bp).connect(wl).connect(g2).connect(UA.bus.master);
+        src.start(); src2.start();
+        window.__SEA = { g, g2, lp, bp, wl };
+        seaBuild = null;
+      } catch (error) {
+        seaBuild = null; seaBuildFailed = true;
+        console.warn('Unfire outdoor ambience initialization skipped', error);
+      }
+    }
+    schedule();
+  }
   function frame(now) {
     // Park the heavy animation loop when hidden/out of the hero: never spend 60 callbacks/sec there.
     if (document.hidden || !frameVisible) {
@@ -2398,7 +2475,13 @@
         pNow+=(pt-pNow)*(1-Math.exp(-5.2*Math.min(0.12,actualFrameTime)));
         lidMotion.to=pNow;lidMotion.from=pNow;lidMotion.elapsed=0;
       }
-    } CASE_SOUND.sync(pNow,pTarget,lidControlledByPlayer); setLid(pNow); updateRoamButtonHint(); oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
+    } CASE_SOUND.sync(pNow,pTarget,lidControlledByPlayer); setLid(pNow); updateRoamButtonHint();
+    // Only prewarm after the physical lid has finished opening and WebGL is ready.
+    if (LOWDEV && !roomPrewarmRequested && !ROAMS.on && !document.hidden &&
+        frameVisible && lidOpen > 0.985 && !entryDolly.active) {
+      roomPrewarmRequested = true;
+      setTimeout(prewarmRoamingProps, 500);
+    } oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
     const busy = (k) => open.some((g) => g.it.comp === k && g.m > 0.04) || items.some((it) => it.comp === k && ((it.kind === 'mut' && it.T > 0.04) || (it.g && (it.kk || 0) > 0.04))) || (k === 'hw' && HW && ((HW.T || 0) > 0.05 || (HW.u || 0) > 0.03));
     CK.forEach((k) => { if (compG[k].userData.open && lidOpen > 0.95) return; open.forEach((g) => { if (g.it.comp === k && !g.closing) { g.it.was = 1; g.closing = true; g.pin = false; g.manual = 0; } }); items.forEach((it) => { if (it.comp !== k) return; if (it.kind === 'mut' && it.tgt) { it.was = it.tgt; it.tgt = 0; } if (it.g && it.on) { it.was = 1; it.on = 0; } }); if (k === 'hw' && HW) HW.tg = 0; if (SEL && ((SEL.type === 'cap' && SEL.g.it.comp === k) || (SEL.it && SEL.it.comp === k) || (SEL.type === 'hw' && k === 'hw'))) SEL = null; });
     CK.forEach((k) => { if (!(compG[k].userData.open && compG[k].userData.t > 0.97)) return; items.forEach((it, i) => { if (it.comp !== k || !it.was) return; const w = it.was; it.was = 0; setTimeout(() => { if (it.kind === 'cap') openGear(it, true); else if (it.kind === 'mut') it.tgt = w; else if (it.g) it.on = 1; }, 200 + (i % 8) * 180); }); });
@@ -2447,7 +2530,7 @@
       if (fw || sd2) { ROAMS.tgt = null; ROOM.R.userData.camTrack = null; const ms = ROAMS.mini ? 0.07 : 1; const SPD = (K.Shift ? 1.8 : K.Alt ? 0.5 : 1) * (window.ATM_OUT ? 1.55 : 0.78) * (ROAMS.perkV || 1);
         if (GTA) { const dir = ROAMS.yaw + Math.atan2(sd2, fw), y0 = ROAMS.yaw; ROAMS.cy = angL(ROAMS.cy, dir, Math.min(1, dt * 10)); ROAMS.yaw = ROAMS.cy; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; let sl = 1; if (wet && window.__WAVE) { const dx2 = Math.sin(dir) * 4, dz2 = -Math.cos(dir) * 4; sl = clamp(1 - (window.__WAVE(ROAMS.p.x + dx2, ROAMS.p.z + dz2, t) - window.__WAVE(ROAMS.p.x, ROAMS.p.z, t)) * 0.22, 0.7, 1.6); } ROAMS.surfV = (ROAMS.surfV || 1) + (sl - (ROAMS.surfV || 1)) * Math.min(1, dt * 2); const vv = 34 * SPD * (wet ? (ROAMS.board ? 1.9 * ROAMS.surfV : 1.15) : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 * (window.__PROP ? window.__PROP() : 1) : 1.4) : 1); ROAMS.run = vv > 18 && !wet; ROAMS.wet = wet; ROAMS.vvS = ROAMS.fly ? (ROAMS.vvS || vv) + (vv - (ROAMS.vvS || vv)) * Math.min(1, dt * 2.5) : vv; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(dt * ROAMS.vvS, 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.yaw = y0; if (fw >= 0) ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * (sd2 ? 1.2 : 2.6))); }
         else if (ROAMS.mode === '1p' && !ROAMS.mini) { ROAMS.yaw += sd2 * dt * 2.0; ROAMS.cy = ROAMS.yaw; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : true) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; const vv = 34 * SPD * (wet ? 2.0 : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 : 1.4) : 1); ROAMS.run = vv > 18 && !wet; ROAMS.wet = wet; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(fw * dt * vv * (fw < 0 ? 0.6 : 1), 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); } else { ROAMS.cy = ROAMS.yaw; roamMove(fw * dt * 44 * ms * SPD, sd2 * dt * 34 * ms * SPD); } } ROAMS.moving = !!(fw || sd2);
-      { if (ROAMS.h == null) { ROAMS.h = 0; ROAMS.vy = 0; } const fl = (() => { if (window.ATM_OUT) { if (Math.abs(ROAMS.p.x) < 82 && ROAMS.p.z > -18 && ROAMS.p.z < 98 && -8.9 + (ROAMS.h || 0) > 25) { const inDome = Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 37 && window.__DOME && window.__DOME.open > 0.6; if (!inDome) return 26.6 + 8.9 + 0.2; return 0; } if (window.__SKYDEV && (ROAMS.h || 0) > 40) { for (const o of window.__SKYDEV()) { if (!o.visible) continue; const s = o.scale.x, top = o.position.y + s * 0.45; if (Math.hypot(ROAMS.p.x - o.position.x, ROAMS.p.z - o.position.z) < s * 0.7 && top + 9 <= ROAMS.h + 2 && top + 9 > ROAMS.h - 60) { ROAMS.onDevN = o; return top + 9; } } } if (window.__WAVE && window.__LAND && !window.__LAND(ROAMS.p.x, ROAMS.p.z)) { return window.__WAVE(ROAMS.p.x, ROAMS.p.z, t) - (ROAMS.board ? -1.1 : 0.85); } let g = 0; for (const B of window.__OBSTO || []) if (B.y1 != null && ROAMS.p.x > B.x0 + 0.9 && ROAMS.p.x < B.x1 - 0.9 && ROAMS.p.z > B.z0 + 0.9 && ROAMS.p.z < B.z1 - 0.9 && B.y1 + 9 <= ROAMS.h + 0.6) g = Math.max(g, B.y1 + 9); return g; } if (ROAMS.mini || !window.__OBST) return 0; let g = 0; const p = ROAMS.p; for (const B of window.__OBST) if (B.y1 != null && p.x > B.x0 + 0.9 && p.x < B.x1 - 0.9 && p.z > B.z0 + 0.9 && p.z < B.z1 - 0.9 && B.y1 + 8.9 <= ROAMS.h + 0.6) g = Math.max(g, B.y1 + 8.9); return g; })(); ROAMS.fl = fl; { const o = ROAMS.onDevN; ROAMS.onDevN = null; const onTop = o && (ROAMS.h || 0) <= fl + 1.5; if (onTop) { if (ROAMS.devObj === o && ROAMS.devPrev) { ROAMS.p.x += o.position.x - ROAMS.devPrev.x; ROAMS.p.z += o.position.z - ROAMS.devPrev.z; } ROAMS.devObj = o; ROAMS.devPrev = o.position.clone(); if (ROAMS.landedOn !== o) { ROAMS.landedOn = o; let n = 0; try { n = (+localStorage.getItem('unfire_skyland') || 0) + 1; localStorage.setItem('unfire_skyland', String(n)); } catch (e) {} if (n % 3 === 0) { try { window.__REWARD('Has aterrizado en ' + n + ' plugins gigantes'); } catch (e) {} } else say(n % 3 === 0 ? '' : '🛬 ¡Aterrizaje en un plugin gigante! (' + n + ') · aterriza en 3 para completar la misión · mantén ESPACIO para despegar'); hap(0.5); } } else { ROAMS.devObj = null; if (!o) ROAMS.landedOn = (ROAMS.h || 0) > 60 ? ROAMS.landedOn : null; } } if (ROAMS.board && ROAMS.wet && K[' '] && ROAMS.spDown && performance.now() - ROAMS.spDown > 450 && !ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; ROAMS.trick = null; }
+      { if (ROAMS.h == null) { ROAMS.h = 0; ROAMS.vy = 0; } const fl = (() => { if (window.ATM_OUT) { if (Math.abs(ROAMS.p.x) < 82 && ROAMS.p.z > -18 && ROAMS.p.z < 98 && -8.9 + (ROAMS.h || 0) > 25) { const inDome = Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 37 && window.__DOME && window.__DOME.open > 0.6; if (!inDome) return 26.6 + 8.9 + 0.2; return 0; } if (window.__SKYDEV && (ROAMS.h || 0) > 40) { for (const o of window.__SKYDEV()) { if (!o.visible) continue; const s = o.scale.x, top = o.position.y + s * 0.45; if (Math.hypot(ROAMS.p.x - o.position.x, ROAMS.p.z - o.position.z) < s * 0.7 && top + 9 <= ROAMS.h + 2 && top + 9 > ROAMS.h - 60) { ROAMS.onDevN = o; return top + 9; } } } if (window.__WAVE && window.__LAND && !window.__LAND(ROAMS.p.x, ROAMS.p.z)) { return window.__WAVE(ROAMS.p.x, ROAMS.p.z, t) - (ROAMS.board ? -1.1 : 0.85); } let g = 0; for (const B of COLLISION(window.__OBSTO, ROAMS.p.x, ROAMS.p.z, 1)) if (B.y1 != null && ROAMS.p.x > B.x0 + 0.9 && ROAMS.p.x < B.x1 - 0.9 && ROAMS.p.z > B.z0 + 0.9 && ROAMS.p.z < B.z1 - 0.9 && B.y1 + 9 <= ROAMS.h + 0.6) g = Math.max(g, B.y1 + 9); return g; } if (ROAMS.mini || !window.__OBST) return 0; let g = 0; const p = ROAMS.p; for (const B of COLLISION(window.__OBST, ROAMS.p.x, ROAMS.p.z, 1)) if (B.y1 != null && p.x > B.x0 + 0.9 && p.x < B.x1 - 0.9 && p.z > B.z0 + 0.9 && p.z < B.z1 - 0.9 && B.y1 + 8.9 <= ROAMS.h + 0.6) g = Math.max(g, B.y1 + 8.9); return g; })(); ROAMS.fl = fl; { const o = ROAMS.onDevN; ROAMS.onDevN = null; const onTop = o && (ROAMS.h || 0) <= fl + 1.5; if (onTop) { if (ROAMS.devObj === o && ROAMS.devPrev) { ROAMS.p.x += o.position.x - ROAMS.devPrev.x; ROAMS.p.z += o.position.z - ROAMS.devPrev.z; } ROAMS.devObj = o; ROAMS.devPrev = o.position.clone(); if (ROAMS.landedOn !== o) { ROAMS.landedOn = o; let n = 0; try { n = (+localStorage.getItem('unfire_skyland') || 0) + 1; localStorage.setItem('unfire_skyland', String(n)); } catch (e) {} if (n % 3 === 0) { try { window.__REWARD('Has aterrizado en ' + n + ' plugins gigantes'); } catch (e) {} } else say(n % 3 === 0 ? '' : '🛬 ¡Aterrizaje en un plugin gigante! (' + n + ') · aterriza en 3 para completar la misión · mantén ESPACIO para despegar'); hap(0.5); } } else { ROAMS.devObj = null; if (!o) ROAMS.landedOn = (ROAMS.h || 0) > 60 ? ROAMS.landedOn : null; } } if (ROAMS.board && ROAMS.wet && K[' '] && ROAMS.spDown && performance.now() - ROAMS.spDown > 450 && !ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; ROAMS.trick = null; }
         ROAMS.wet = !!window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !ROAMS.fly; ROAMS.wk = (ROAMS.wk || 0) + ((ROAMS.fly ? 1 : 0) - (ROAMS.wk || 0)) * Math.min(1, dt * 3); if (ROAMS.fly && !ROAMS.mini) { const hov = Math.max(fl, window.ATM_OUT ? 22 : 9); ROAMS.flyT = (ROAMS.flyT || 0) + dt; const sink = window.ATM_OUT ? Math.min(420, 10 + (ROAMS.h || 0) * 0.14) : 5; ROAMS.climbV = K[' '] ? Math.min(Math.max(ROAMS.climbV || 0, 0) + dt * (window.ATM_OUT ? 150 : 22) * (ROAMS.perkF || 1), (window.ATM_OUT ? 380 : 12) * (ROAMS.perkF || 1)) : K.f ? -Math.min(window.ATM_OUT ? 1200 : 18, Math.abs(ROAMS.climbV || 0) + dt * 1500) : (K.s || K.ArrowDown) ? (ROAMS.climbV || 0) + (-Math.max(window.ATM_OUT ? 60 : 8, sink * 1.6) - (ROAMS.climbV || 0)) * Math.min(1, dt * 3) : (ROAMS.climbV || 0) * Math.max(0, 1 - dt * 4); const up = (fw ? Math.sin(ROAMS.pitch) * (window.ATM_OUT ? 260 : 30) * fw * (K.Shift ? 2 : 1) : 0) * (window.__PROP ? Math.sqrt(window.__PROP()) : 1) + ROAMS.climbV; const inDomeI = !window.ATM_OUT && Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 36; ROAMS.flyH = Math.max(fl, Math.min(window.ATM_OUT ? 8000 : inDomeI ? 60 : 14, (ROAMS.flyH == null ? hov : ROAMS.flyH) + up * dt)); ROAMS.vy = (ROAMS.flyH + Math.sin(t * 2) * 0.4 - ROAMS.h) * 6; if (ROAMS.flyT > 1.2 && !K[' '] && ROAMS.flyH <= fl + 0.3 && ROAMS.h <= fl + 0.6) { ROAMS.fly = false; ROAMS.climbV = 0; say('🦶 Aterrizado'); } } else { ROAMS.flyH = null; ROAMS.vy -= dt * (ROAMS.h > fl + 40 ? 300 : 38); if (ROAMS.vy < -700) ROAMS.vy = -700; if (ROAMS.h < fl + 30 && ROAMS.vy < -40) ROAMS.vy += (-40 - ROAMS.vy) * Math.min(1, dt * 4); } ROAMS.h += ROAMS.vy * dt; const inDomeT = !window.ATM_OUT && Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 36; const top = window.ATM_OUT ? 8000 : inDomeT ? 60 : 14; if (inDomeT && -8.9 + (ROAMS.h || 0) > 30 && ROAMS.fly) { try { ATM.setOut(true); if (window.__DOME) window.__DOME.open = 1; ROAMS.flyH = ROAMS.h; say('🪽 ¡Has salido volando por la cúpula!'); } catch (e) {} } if (ROAMS.h > top) { ROAMS.h = top; ROAMS.vy = Math.min(ROAMS.vy, 0); } if (ROAMS.h < fl) { ROAMS.h = ROAMS.wet ? ROAMS.h + (fl - ROAMS.h) * Math.min(1, dt * 10) : fl; ROAMS.vy = 0; } ROAMS.air = ROAMS.h > fl + 0.3; } { const CT = ROOM.R.userData.camTrack; if (CT && !(fw || sd2)) { const CD0 = ROOM.R.userData.camTrackDir; const d = CD0 ? V(CD0.x, 0, CD0.z) : V(cam.position.x - CT.x, 0, cam.position.z - CT.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const side = V(-d.z, 0, d.x); const p = V(CT.x + d.x * 12 + side.x * 9, CT.y + 2.2, CT.z + d.z * 12 + side.z * 9); const lx = CT.x - p.x, lz = CT.z - p.z; ROAMS.tgt = { p, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(CT.y - p.y, Math.hypot(lx, lz)) }; } } if (ROAMS.tgt) { const T0 = ROAMS.tgt; const dx = T0.p.x - ROAMS.p.x, dz = T0.p.z - ROAMS.p.z, d = Math.hypot(dx, dz); if (d > 1.2) { let dir = Math.atan2(dx, -dz); if ((ROAMS.stkN || 0) > 6) { if (!ROAMS.avoidS) ROAMS.avoidS = Math.random() < 0.5 ? 1 : -1; dir += ROAMS.avoidS * 1.2; } else if ((ROAMS.stkN || 0) === 0) ROAMS.avoidS = 0; ROAMS.cy = angL(ROAMS.cy == null ? dir : ROAMS.cy, dir, Math.min(1, dt * 8)); const sp = Math.min(d, (d > 25 ? 42 : 24) * dt * (window.ATM_OUT ? 1.6 : 1)); const y0 = ROAMS.yaw; ROAMS.yaw = ROAMS.cy; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(sp, 0); ROAMS.yaw = y0; ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.moving = true; ROAMS.run = d > 25; ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * 4)); } else { ROAMS.avoidS = 0; ROAMS.p.y += (T0.p.y - ROAMS.p.y) * 0.1; ROAMS.yaw = angL(ROAMS.yaw, T0.yaw, 0.1); } ROAMS.pitch += (T0.pitch - ROAMS.pitch) * 0.1; } if (K.q) ROAMS.yaw -= dt * 1.9; if (K.e) ROAMS.yaw += dt * 1.9; const cp = Math.cos(ROAMS.pitch); if (!ROAMS.av) { try { const r0 = ROBOT.build(Object.assign({}, MUTANTS.list[(ROAMS.myType == null ? 4 : ROAMS.myType) % MUTANTS.list.length], { n: ROAMS.myNum || 27 })); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); if (ROAMS.myCol && window.__tintAvatar) window.__tintAvatar(r0.root, ROAMS.myCol); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(10.5 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; S.scene.add(w); const WG = new THREE.Group(); const s0 = w.scale.x || 1; w.rotation.order = 'YXZ'; WG.position.set(0, 10.5 * 0.62 / s0, -1.0 / s0); let bodyMat = null; r0.root.traverse((o) => { if (!bodyMat && o.isMesh && o.material && o.material.color && (o.material.metalness || 0) > 0.3) bodyMat = o.material; }); const bladeM = bodyMat ? bodyMat : new THREE.MeshPhysicalMaterial({ color: 0xd8dde6, metalness: 0.9, roughness: 0.18, clearcoat: 1 }); const acc = new THREE.Color((MUTANTS.list[4 % MUTANTS.list.length].accent) || '#ff2a4a'); const tipM = new THREE.MeshStandardMaterial({ color: acc, emissive: acc, emissiveIntensity: 1.1, toneMapped: false });
           const wingM = new THREE.MeshPhysicalMaterial({ color: 0x3fd65a, metalness: 0.55, roughness: 0.22, clearcoat: 1, clearcoatRoughness: 0.1 }); const stripeM = new THREE.MeshPhysicalMaterial({ color: 0xf4f6fa, metalness: 0.7, roughness: 0.2, clearcoat: 1 });
           const side = (sg) => { const root = new THREE.Group(); const pod = mesh(new THREE.CylinderGeometry(0.42, 0.55, 1.5, 16), bodyMat || stripeM); pod.rotation.z = Math.PI / 2; pod.position.x = sg * 0.55; root.add(pod);
@@ -2490,14 +2573,14 @@
     camB.style.display = ROAMS.on ? 'block' : 'none'; recB.style.display = ROAMS.on && !ROAMS.mini ? 'block' : 'none'; if (window.__onlB) window.__onlB.style.display = ROAMS.on && !ROAMS.mini && !(window.ONLINE_ON && window.ONLINE_ON()) ? 'block' : 'none'; if (window.__surfB) { const SB = window.__surfB; SB.k = (SB.k || 0) + 1; if (SB.k % 8 === 0) { let nw = false; if (ROAMS.on && window.ATM_OUT && !ROAMS.mini && window.__LAND && (ROAMS.h || 0) < (ROAMS.fl || 0) + 18) { const px = ROAMS.p.x, pz = ROAMS.p.z; nw = !window.__LAND(px, pz) || [0, 1, 2, 3, 4, 5].some((i) => !window.__LAND(px + Math.cos(i * 1.047) * 9, pz + Math.sin(i * 1.047) * 9)); } if (nw && !SB.shown) { SB.style.animation = 'none'; void SB.offsetWidth; SB.style.animation = 'surfPop .45s cubic-bezier(.3,1.6,.5,1)'; if (!SB.told) { SB.told = 1; say('🏄 ¡Estás en el agua! Pulsa TABLA (o B) para surfear'); } } SB.shown = nw; SB.style.display = nw ? 'block' : 'none'; } } MIX.tick(); ATM.tick(dt, t); $('tip').style.visibility = ROAMS.on ? 'hidden' : ''; cam.updateProjectionMatrix();
     // colisiones: tu robot no atraviesa muebles ni máquinas (cajas de colisión de lo que está en el suelo)
     if (ROAMS.on && !ROAMS.mini && !window.ATM_OUT) { try { if (!window.__OBST && window.__PROPS) { window.__OBST = window.__buildObst(); }
-      const p = ROAMS.p, ft = -8.9 + (ROAMS.h || 0); for (const B of window.__OBST || []) { if (p.x > B.x0 && p.x < B.x1 && p.z > B.z0 && p.z < B.z1 && ft < B.y1 - 0.4) { const dl = p.x - B.x0, dr = B.x1 - p.x, db = p.z - B.z0, df = B.z1 - p.z, mn = Math.min(dl, dr, db, df); if (mn === dl) p.x = B.x0; else if (mn === dr) p.x = B.x1; else if (mn === db) p.z = B.z0; else p.z = B.z1; } }
+      const p = ROAMS.p, ft = -8.9 + (ROAMS.h || 0); for (const B of COLLISION(window.__OBST, p.x, p.z, 1)) { if (p.x > B.x0 && p.x < B.x1 && p.z > B.z0 && p.z < B.z1 && ft < B.y1 - 0.4) { const dl = p.x - B.x0, dr = B.x1 - p.x, db = p.z - B.z0, df = B.z1 - p.z, mn = Math.min(dl, dr, db, df); if (mn === dl) p.x = B.x0; else if (mn === dr) p.x = B.x1; else if (mn === db) p.z = B.z0; else p.z = B.z1; } }
       const GL = window.__GROW && window.__GROW.list; if (GL) GL.forEach((g) => { if (!g.w || !g.w.visible) return; const dx = p.x - g.w.position.x, dz = p.z - g.w.position.z, d = Math.hypot(dx, dz), R0 = 4.5; if (d < R0 && d > 0.01) { p.x += dx / d * (R0 - d); p.z += dz / d * (R0 - d); } }); } catch (e) {} }
     { const GL = window.__GROW && window.__GROW.list; if (GL && GL.length > 1) for (let i = 0; i < GL.length; i++) for (let j = i + 1; j < GL.length; j++) { const a = GL[i].w, b = GL[j].w; if (!a || !b || !a.visible || !b.visible) continue; const dx = b.position.x - a.position.x, dz = b.position.z - a.position.z, d = Math.hypot(dx, dz), R0 = 7; if (d < R0 && d > 0.01) { const o = (R0 - d) / 2; a.position.x -= dx / d * o; a.position.z -= dz / d * o; b.position.x += dx / d * o; b.position.z += dz / d * o; } } }
     // nada atraviesa nada: objetos entre sí, objetos contra muebles, Nimbo contra muebles y contra ti
     if (ROAMS.on && !ROAMS.mini && !window.ATM_OUT && window.__PROPS) { try { const PR = window.__PROPS, OB = window.__OBST || []; const cen = (q) => [q.o.position.x + q.off.x, q.o.position.z + q.off.z];
       for (let i = 0; i < PR.length; i++) for (let j = i + 1; j < PR.length; j++) { const a = PR[i], b = PR[j], [ax, az] = cen(a), [bx, bz] = cen(b), dx = bx - ax, dz = bz - az, d = Math.hypot(dx, dz), R0 = a.r + b.r; if (d < R0 && d > 0.001) { const o = (R0 - d) / 2, nx = dx / d, nz = dz / d; a.o.position.x -= nx * o; a.o.position.z -= nz * o; b.o.position.x += nx * o; b.o.position.z += nz * o; const rv = (b.vx - a.vx) * nx + (b.vz - a.vz) * nz; if (rv < 0) { a.vx += rv * nx * 0.8; a.vz += rv * nz * 0.8; b.vx -= rv * nx * 0.8; b.vz -= rv * nz * 0.8; } } }
-      for (const q of PR) { const [cx, cz] = cen(q); for (const B of OB) { const x0 = B.x0 + 1.6 - q.r, x1 = B.x1 - 1.6 + q.r, z0 = B.z0 + 1.6 - q.r, z1 = B.z1 - 1.6 + q.r; if (cx > x0 && cx < x1 && cz > z0 && cz < z1) { const dl = cx - x0, dr = x1 - cx, db = cz - z0, df = z1 - cz, mn = Math.min(dl, dr, db, df); if (mn === dl) { q.o.position.x -= dl; q.vx = -Math.abs(q.vx) * 0.5; } else if (mn === dr) { q.o.position.x += dr; q.vx = Math.abs(q.vx) * 0.5; } else if (mn === db) { q.o.position.z -= db; q.vz = -Math.abs(q.vz) * 0.5; } else { q.o.position.z += df; q.vz = Math.abs(q.vz) * 0.5; } } } }
-      const hp = HOST.pos; if (hp) { for (const B of OB) { if (hp.x > B.x0 && hp.x < B.x1 && hp.z > B.z0 && hp.z < B.z1) { const dl = hp.x - B.x0, dr = B.x1 - hp.x, db = hp.z - B.z0, df = B.z1 - hp.z, mn = Math.min(dl, dr, db, df); if (mn === dl) hp.x = B.x0; else if (mn === dr) hp.x = B.x1; else if (mn === db) hp.z = B.z0; else hp.z = B.z1; } } const dx = hp.x - ROAMS.p.x, dz = hp.z - ROAMS.p.z, d = Math.hypot(dx, dz); if (d < 4.5 && d > 0.01) { hp.x += dx / d * (4.5 - d); hp.z += dz / d * (4.5 - d); } } } catch (e) {} }
+      for (const q of PR) { const [cx, cz] = cen(q); for (const B of COLLISION(OB, cx, cz, q.r + 2)) { const x0 = B.x0 + 1.6 - q.r, x1 = B.x1 - 1.6 + q.r, z0 = B.z0 + 1.6 - q.r, z1 = B.z1 - 1.6 + q.r; if (cx > x0 && cx < x1 && cz > z0 && cz < z1) { const dl = cx - x0, dr = x1 - cx, db = cz - z0, df = z1 - cz, mn = Math.min(dl, dr, db, df); if (mn === dl) { q.o.position.x -= dl; q.vx = -Math.abs(q.vx) * 0.5; } else if (mn === dr) { q.o.position.x += dr; q.vx = Math.abs(q.vx) * 0.5; } else if (mn === db) { q.o.position.z -= db; q.vz = -Math.abs(q.vz) * 0.5; } else { q.o.position.z += df; q.vz = Math.abs(q.vz) * 0.5; } } } }
+      const hp = HOST.pos; if (hp) { for (const B of COLLISION(OB, hp.x, hp.z, 1)) { if (hp.x > B.x0 && hp.x < B.x1 && hp.z > B.z0 && hp.z < B.z1) { const dl = hp.x - B.x0, dr = B.x1 - hp.x, db = hp.z - B.z0, df = B.z1 - hp.z, mn = Math.min(dl, dr, db, df); if (mn === dl) hp.x = B.x0; else if (mn === dr) hp.x = B.x1; else if (mn === db) hp.z = B.z0; else hp.z = B.z1; } } const dx = hp.x - ROAMS.p.x, dz = hp.z - ROAMS.p.z, d = Math.hypot(dx, dz); if (d < 4.5 && d > 0.01) { hp.x += dx / d * (4.5 - d); hp.z += dz / d * (4.5 - d); } } } catch (e) {} }
     // física: los objetos pequeños del suelo se empujan al pasar (cubos, pufs, macetas…)
     if (ROAMS.on && !ROAMS.mini && !window.ATM_OUT) { try { if (!window.__PROPS) { const L = []; const bb = new THREE.Box3(), sz = new THREE.Vector3(), c0 = new THREE.Vector3(); ROOM.R.children.forEach((o) => { if (!o.visible || o.isLight || o.userData.noPush) return; bb.setFromObject(o); if (bb.isEmpty()) return; bb.getSize(sz); bb.getCenter(c0); if (sz.y < 5.8 && Math.max(sz.x, sz.z) < 6.5 && bb.min.y < -7.6 && Math.hypot(c0.x, c0.z) > 9 && Math.abs(c0.x) < 76 && c0.z < 93) L.push({ o, r: Math.max(sz.x, sz.z) * 0.5, off: V(c0.x - o.position.x, 0, c0.z - o.position.z), vx: 0, vz: 0, sp: 0 }); }); window.__PROPS = L; }
       const pr = window.__PROPS, px = ROAMS.p.x, pz = ROAMS.p.z; for (const q of pr) { const cx = q.o.position.x + q.off.x, cz = q.o.position.z + q.off.z, dx = cx - px, dz = cz - pz, d = Math.hypot(dx, dz), R0 = q.r + 2.2; if (d < R0 && d > 0.01) { const push = (R0 - d); q.vx += dx / d * push * 9; q.vz += dz / d * push * 9; q.sp += (Math.random() - 0.5) * push * 3; } if (q.vx || q.vz) { q.o.position.x += q.vx * dt; q.o.position.z += q.vz * dt; q.o.rotation.y += q.sp * dt; const f = Math.exp(-dt * 3.2); q.vx *= f; q.vz *= f; q.sp *= f; if (Math.abs(q.vx) + Math.abs(q.vz) < 0.02) { q.vx = q.vz = 0; } const nx = q.o.position.x + q.off.x, nz = q.o.position.z + q.off.z; if (Math.abs(nx) > 76) { q.o.position.x -= (nx - Math.sign(nx) * 76); q.vx *= -0.5; } if (nz > 93 || nz < -13) { q.o.position.z -= nz - clamp(nz, -13, 93); q.vz *= -0.5; } if (Math.hypot(nx, nz) < 9) { const s = 9 / Math.max(0.01, Math.hypot(nx, nz)); q.o.position.x += nx * (s - 1); q.o.position.z += nz * (s - 1); } } } } catch (e) {} }
@@ -2514,7 +2597,7 @@
           q.v.y -= 40 * dt; P.addScaledVector(q.v, dt); if (P.y < fy) { P.y = fy; if (q.v.y < -3) q.v.y *= -0.62; else q.v.y = 0; q.v.x *= Math.pow(0.35, dt); q.v.z *= Math.pow(0.35, dt); }
           if (!q.out) { const lim = (v, a, b, ax) => { if (P[ax] < a) { P[ax] = a; q.v[ax] = Math.abs(q.v[ax]) * 0.7; } else if (P[ax] > b) { P[ax] = b; q.v[ax] = -Math.abs(q.v[ax]) * 0.7; } }; lim(0, -78 + q.r, 78 - q.r, 'x'); lim(0, -14.5 + q.r, 94.5 - q.r, 'z'); if (Math.hypot(P.x, P.z - 1) < 8.5 + q.r) { const dx = P.x, dz = P.z - 1, d = Math.hypot(dx, dz) || 1, s = (8.5 + q.r) / d; P.x = dx * s; P.z = dz * s + 1; const vn = (q.v.x * dx + q.v.z * dz) / d; if (vn < 0) { q.v.x -= 1.7 * vn * dx / d; q.v.z -= 1.7 * vn * dz / d; } } }
           else { if (inH(P.x, P.z)) { const dl = P.x + 81, dr = 81 - P.x, db = P.z + 17.5, df = 97.5 - P.z, mn = Math.min(dl, dr, db, df); if (mn === dl) { P.x = -81 - q.r; q.v.x = -Math.abs(q.v.x) * 0.7; } else if (mn === dr) { P.x = 81 + q.r; q.v.x = Math.abs(q.v.x) * 0.7; } else if (mn === db) { P.z = -17.5 - q.r; q.v.z = -Math.abs(q.v.z) * 0.7; } else { P.z = 97.5 + q.r; q.v.z = Math.abs(q.v.z) * 0.7; } } const rr = Math.hypot(P.x, P.z); if (rr > 228) { P.x *= 228 / rr; P.z *= 228 / rr; q.v.x *= -0.6; q.v.z *= -0.6; } }
-          for (const B of (q.out ? window.__OBSTO : window.__OBST) || []) { const x0 = B.x0 + 1.1 - q.r, x1 = B.x1 - 1.1 + q.r, z0 = B.z0 + 1.1 - q.r, z1 = B.z1 - 1.1 + q.r; if (P.x > x0 && P.x < x1 && P.z > z0 && P.z < z1 && P.y - q.r < B.y1) { const dl = P.x - x0, dr = x1 - P.x, db = P.z - z0, df = z1 - P.z, mn = Math.min(dl, dr, db, df); if (mn === dl) { P.x = x0; q.v.x = -Math.abs(q.v.x) * 0.6; } else if (mn === dr) { P.x = x1; q.v.x = Math.abs(q.v.x) * 0.6; } else if (mn === db) { P.z = z0; q.v.z = -Math.abs(q.v.z) * 0.6; } else { P.z = z1; q.v.z = Math.abs(q.v.z) * 0.6; } } }
+          for (const B of COLLISION(q.out ? window.__OBSTO : window.__OBST, P.x, P.z, q.r + 2)) { const x0 = B.x0 + 1.1 - q.r, x1 = B.x1 - 1.1 + q.r, z0 = B.z0 + 1.1 - q.r, z1 = B.z1 - 1.1 + q.r; if (P.x > x0 && P.x < x1 && P.z > z0 && P.z < z1 && P.y - q.r < B.y1) { const dl = P.x - x0, dr = x1 - P.x, db = P.z - z0, df = z1 - P.z, mn = Math.min(dl, dr, db, df); if (mn === dl) { P.x = x0; q.v.x = -Math.abs(q.v.x) * 0.6; } else if (mn === dr) { P.x = x1; q.v.x = Math.abs(q.v.x) * 0.6; } else if (mn === db) { P.z = z0; q.v.z = -Math.abs(q.v.z) * 0.6; } else { P.z = z1; q.v.z = Math.abs(q.v.z) * 0.6; } } }
           const sp = Math.hypot(q.v.x, q.v.z); if (sp > 0.01) { const ax = V(q.v.z, 0, -q.v.x).normalize(); q.b.rotateOnWorldAxis(ax, sp * dt / q.r); } }
         for (let i = 0; i < BL.length; i++) for (let j = i + 1; j < BL.length; j++) { const a = BL[i], b = BL[j]; if (a.out !== b.out) continue; const d = a.b.position.distanceTo(b.b.position), R0 = a.r + b.r; if (d < R0 && d > 0.001) { const n = b.b.position.clone().sub(a.b.position).divideScalar(d), o = (R0 - d) / 2; a.b.position.addScaledVector(n, -o); b.b.position.addScaledVector(n, o); const rv = b.v.clone().sub(a.v).dot(n); if (rv < 0) { a.v.addScaledVector(n, rv * 0.9); b.v.addScaledVector(n, -rv * 0.9); } } } } catch (e) {} }
     // Adaptive resolution compares actual frame time with the device's intended frame
@@ -2537,7 +2620,7 @@
     window.__idleT = ROAMS.moving || ROAMS.fly ? 0 : (window.__idleT || 0) + dt;
     if (window.__DOME) { const DM2 = window.__DOME; const near = ROAMS.on && window.ATM_OUT && (ROAMS.h || 0) > 20 && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 90; DM2.open += ((near ? 1 : 0) - DM2.open) * Math.min(1, dt * 2); DM2.PET.forEach((p, i) => { p.rotation.z = -DM2.open * (1.75 + Math.sin(i) * 0.05); }); if (DM2.open > 0.6 && window.ATM_OUT && ROAMS.on && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 36 && -9 + (ROAMS.h || 0) < DM2.c.y - 1) { try { ATM.setOut(false); ROAMS.h = Math.min(ROAMS.h, 13); ROAMS.flyH = 12; say('🏠 Has entrado por la cúpula'); } catch (e) {} } }
     // sonido de mar y viento fuera (más fuerte en la orilla y en el agua, viento al volar alto)
-    try { if (ROAMS.on && window.ATM_OUT && audioOk() && !window.__SEA) { const c = UA.ctx, N = c.sampleRate * 4, bf = c.createBuffer(2, N, c.sampleRate); for (let ch = 0; ch < 2; ch++) { const d = bf.getChannelData(ch); let b = 0; for (let i = 0; i < N; i++) { b = b * 0.985 + (Math.random() * 2 - 1) * 0.12; d[i] = b; } } const src = c.createBufferSource(); src.buffer = bf; src.loop = true; const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; const g = c.createGain(); g.gain.value = 0; src.connect(lp).connect(g).connect(UA.bus.master); src.start(); const src2 = c.createBufferSource(); src2.buffer = bf; src2.loop = true; src2.playbackRate.value = 1.7; const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1600; bp.Q.value = 0.6; const g2 = c.createGain(); g2.gain.value = 0; const wl = c.createBiquadFilter(); wl.type = 'lowpass'; wl.frequency.value = 2000; src2.connect(bp).connect(wl).connect(g2).connect(UA.bus.master); src2.start(); window.__SEA = { g, g2, lp, bp, wl }; }
+    try { ensureSeaAmbience();
       if (window.__SEA) { const S0 = window.__SEA, out = ROAMS.on && window.ATM_OUT, r = Math.hypot(ROAMS.p.x, ROAMS.p.z); const shore = out ? (ROAMS.wet ? 1 : Math.max(0.25, 1 - Math.abs(r - 256) / 160)) : 0; const hi = out ? Math.min(1, (ROAMS.h || 0) / 400) : 0; const mus = ((window.__WRADIO && window.__WRADIO.on) || (RADIO.st && RADIO.st.on) ? 0.4 : 1) * (window.speechSynthesis && speechSynthesis.speaking ? 0.3 : 1); const wave = 0.55 + 0.45 * Math.sin(t * 0.55) * Math.sin(t * 0.21 + 1); S0.g.gain.value += ((out ? 0.13 * shore * wave * (1 - hi * 0.8) * mus : 0) - S0.g.gain.value) * Math.min(1, dt * 2); if (window.__RAING) window.__RAING.gain.value = 0.012 * mus * (window.ATM_OUT ? 1 - hi * 0.7 : 0.6); S0.lp.frequency.value = (mus < 1 ? 380 : 500) + wave * (mus < 1 ? 500 : 900);  const wz = Math.tanh((ROAMS.spd || 0) / 500); S0.g2.gain.value += ((out ? Math.min(0.085, 0.015 + hi * 0.03 + (ROAMS.fly ? wz * 0.055 : 0)) * mus : 0) - S0.g2.gain.value) * Math.min(1, dt * 1.5); if (S0.bp) { S0.bp.frequency.value = 650 + 1300 * wz; } if (S0.wl) S0.wl.frequency.value = 1800 + 2200 * wz; } } catch (e) {}
     // lo que no se ve no existe: dentro de la casa, el mundo de fuera (Atlantis, desierto, moáis, pirámide) se apaga
     if (window.__EXT) { const c = cam.position, inside = !window.ATM_OUT && Math.abs(c.x) < 81 && c.z > -17.5 && c.z < 97.5 && c.y < 27; if (inside !== window.__EXTin) { window.__EXTin = inside; window.__EXT.forEach((o) => { if (!o.userData.tall) o.visible = !inside; }); } }
@@ -2692,6 +2775,85 @@
   $('buy').onclick = () => { const k = $('buy').dataset.k; if (k === 'archer') parentPost({ open: 'archer' }); else if (k) parentPost({ buy: k }); };
   Y2K.fonts().then(() => {}); resize(); view.dist = view.gd = view.D0;
   S.fit(new THREE.Box3(V(-CW / 2, 0, -CD / 2), V(CW / 2, HB + 2, CD / 2)));
+  // Prime movable indoor props during the already-interactive case view, NOT
+  // on the first walking frame. Work is bounded and never hides collision data:
+  // if the player starts early, the original synchronous fallback still runs.
+  let roomPrewarmRequested = false;
+  function prewarmRoamingObstacles() {
+    if (ROAMS.on || !window.__PROPS || window.__OBST || document.hidden) return;
+    const roots = ROOM.R.children.slice(), excluded = new Set(window.__PROPS.map(q => q.o));
+    const pending = [], found = [];
+    const bounds = new THREE.Box3(), size = new THREE.Vector3();
+    let rootIndex = 0;
+    const scanSlice = () => {
+      if (ROAMS.on || window.__OBST || document.hidden ||
+          ROOM.R.children.length !== roots.length) return;
+      const end = performance.now() + 2.5;
+      let processed = 0;
+      while (processed < 32 && performance.now() < end &&
+             (pending.length || rootIndex < roots.length)) {
+        if (!pending.length) {
+          const top = roots[rootIndex++];
+          if (!top.visible || top.isLight || excluded.has(top) || top.userData.noCollide) continue;
+          top.updateMatrixWorld(true);
+          pending.push(top);
+        }
+        const o = pending.pop(); processed++;
+        if (!o.visible) continue;
+        if (o.children) for (let i = o.children.length - 1; i >= 0; i--) pending.push(o.children[i]);
+        if (!o.isMesh || o.isSprite || o.isPoints || (o.material &&
+            ((o.material.transparent && o.material.opacity < 0.5) ||
+             o.material.blending === THREE.AdditiveBlending))) continue;
+        bounds.setFromObject(o);
+        if (bounds.isEmpty()) continue;
+        bounds.getSize(size);
+        if (bounds.min.y > -1.4 || bounds.max.y < -8.2) continue;
+        if (Math.max(size.x, size.z) > 60 || (size.x > 30 && size.z > 30)) continue;
+        if (Math.min(size.x, size.z) < 0.05 && Math.max(size.x, size.z) < 0.5) continue;
+        found.push({x0: bounds.min.x-1.1, x1: bounds.max.x+1.1,
+          z0: bounds.min.z-1.1, z1: bounds.max.z+1.1, y1: bounds.max.y});
+      }
+      if (pending.length || rootIndex < roots.length) setTimeout(scanSlice, 26);
+      else if (!ROAMS.on && !window.__OBST && !document.hidden)
+        window.__OBST = found.filter(B =>
+          !(0 > B.x0 && 0 < B.x1 && 24 > B.z0 && 24 < B.z1) &&
+          !(-30 > B.x0 - 3 && -30 < B.x1 + 3 && B.z1 > 84) &&
+          Math.abs(B.x1 - B.x0) < 70);
+    };
+    setTimeout(scanSlice, 26);
+  }
+  function prewarmRoamingProps() {
+    if (!LOWDEV || ROAMS.on || window.__PROPS || document.hidden) return;
+    const roots = ROOM.R.children.slice(), found = [];
+    const bounds = new THREE.Box3(), size = new THREE.Vector3(), center = new THREE.Vector3();
+    let index = 0;
+    const scanSlice = () => {
+      if (ROAMS.on || window.__PROPS || document.hidden) return;
+      const end = performance.now() + 2.5;
+      let processed = 0;
+      while (index < roots.length && processed < 6 && performance.now() < end) {
+        const o = roots[index++]; processed++;
+        if (!o.visible || o.isLight || o.userData.noPush) continue;
+        bounds.setFromObject(o);
+        if (bounds.isEmpty()) continue;
+        bounds.getSize(size); bounds.getCenter(center);
+        if (size.y < 5.8 && Math.max(size.x, size.z) < 6.5 &&
+            bounds.min.y < -7.6 && Math.hypot(center.x, center.z) > 9 &&
+            Math.abs(center.x) < 76 && center.z < 93) {
+          found.push({ o, r: Math.max(size.x, size.z) * 0.5,
+            off: V(center.x - o.position.x, 0, center.z - o.position.z),
+            vx: 0, vz: 0, sp: 0 });
+        }
+      }
+      if (index < roots.length) setTimeout(scanSlice, 26);
+      else if (!ROAMS.on && !window.__PROPS && !document.hidden &&
+               ROOM.R.children.length === roots.length) {
+        window.__PROPS = found;
+        prewarmRoamingObstacles();
+      }
+    };
+    setTimeout(scanSlice, 26);
+  }
   const VER = /ver=(\d+)/.exec(location.search + location.hash);
   if (VER) { caseG.visible = false; ROOM.R.visible = false; ['hud', 'tip', 'buy', 'tb'].forEach((id) => { const el = $(id); if (el) el.style.display = 'none'; });
     const spec = PLUGINS.list[+VER[1] % PLUGINS.list.length], dev = GEAR4.build(spec, kindOf(spec), Object.keys(ENGINES.PARAMS[spec.engine]).slice(0, 4).map((k) => k.toUpperCase())); dev.root.scale.setScalar(0.42); S.scene.add(dev.root);
@@ -2703,6 +2865,7 @@
     cv.addEventListener('pointerdown', (e) => { vd = e.clientX; }); addEventListener('pointermove', (e) => { if (vd != null) { a -= (e.clientX - vd) * 0.01; vd = e.clientX; } }); addEventListener('pointerup', () => { vd = null; });
     S.renderer.setSize(innerWidth, innerHeight, false); requestAnimationFrame(vloop); }
   else { requestAnimationFrame(frame);
+    // Do not prewarm during boot or the first case tap: GPU/CPU first paint wins.
     // No hidden-scene precompile: compiling every hidden model and all cached gadgets
     // in the same frame caused large GPU memory spikes and a freeze on room exit.
     // Devices already load lazily as their compartments are opened.
