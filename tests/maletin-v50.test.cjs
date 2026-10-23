@@ -50,7 +50,9 @@ chk('Same PASEAR button stays in the safe right dock in both case and roam',
 chk('Gacha procedural FX reveal uses a side-on avatar approach, never central occlusion',
   engine.includes('const side = V(-d.z, 0, d.x); const p = V(CT.x + d.x * 12 + side.x * 9')&&
   engine.includes('const q = V(p.x + d.x * 11 + side.x * 7')&&
-  engine.includes('const side=V(-d.z,0,d.x);const p = V(c.x + d.x * dist + side.x * Math.min(7,dist*.45)'));
+  engine.includes('const side = V(-d.z, 0, d.x), shift = ')&&
+  engine.includes('P.focusPrize ? 6.5 : 7')&&
+  engine.includes('focusDistanceForView(frameWidth, frameHeight, cam.fov, cam.aspect, minDist, maxDist)'));
 chk('First-tap 3D case opens in the existing web document, without a new tab',
   html.includes('window.__UNFIRE_ENTER_CASE=()=>open(1050)')&&
   html.includes('immersive();\n    fullscreenFromGesture();')&&

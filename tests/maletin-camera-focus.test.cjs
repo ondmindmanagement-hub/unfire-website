@@ -1,0 +1,27 @@
+// Camera focus framing: narrow mobile FOV, prize visibility, and safe fallback.
+'use strict';
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const code = fs.readFileSync(path.resolve(__dirname, '../audio/maletin/game-engine-v50.js'), 'utf8');
+new vm.Script(code, {filename:'game-engine-v50.js'});
+const from=code.indexOf('  function focusDistanceForView(');
+const to=code.indexOf('  const ROOM =',from);
+assert(from>=0&&to>from,'Camera focus helper should be single and independent');
+const scope={};
+vm.runInNewContext(code.slice(from,to)+'\nthis.fit=focusDistanceForView;',scope);
+const fit=scope.fit;
+const mobile=fit(8,7,30,390/844,19,42);
+const tablet=fit(8,7,30,768/1024,19,42);
+const desktop=fit(8,7,30,960/640,19,42);
+assert(mobile>tablet&&tablet>=desktop,'Portrait mobile must give prize more breathing room');
+assert(mobile<=42&&mobile>=19,'Prizes must stay within safe approach bounds');
+assert.equal(fit(0,0,30,0,7,26),7,'Zero-size items remain finite, with a safe minimum');
+assert.equal(fit(300,250,30,1,7,26),26,'Huge objects respect limits');
+assert(Number.isFinite(fit(8,7,NaN,NaN,19,42)),'Camera unavailable still uses finite defaults');
+assert(code.includes('focusPrize: true, focusTarget: () => gm.localToWorld(V(0, 5.5, 9.5))'),'Capsule machine targets prize pedestal instead of covering entire machine');
+assert(code.includes('const d = V(cam.position.x - c.x, 0, cam.position.z - c.z); if (d.lengthSq() < 0.001) d.set(0, 0, 1)'),'Degenerate camera offset protected');
+assert(code.includes('P.focusPrize ? 6.5 : 7'),'Side offset keeps avatar away from prize reveal');
+assert(!code.slice(from,to).includes('requestAnimationFrame')&&!code.slice(from,to).includes('setInterval'),'No extra frame loop or timer');
+console.log('PASS camera framing: mobile/tablet/desktop, bounds, fallback, capsule prize, no new frame loop.');
