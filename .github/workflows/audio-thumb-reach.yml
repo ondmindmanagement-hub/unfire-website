@@ -1,0 +1,27 @@
+name: Audio thumb reach UI contracts
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/thumb-reach.css'
+      - 'audio/maletin/index.html'
+      - 'tests/maletin-thumb-reach.test.cjs'
+      - '.github/workflows/audio-thumb-reach.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  thumb-reach-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate touch control geometry contract
+        run: |
+          node --check tests/maletin-thumb-reach.test.cjs
+          node tests/maletin-thumb-reach.test.cjs
+      - name: Install isolated CSS-only browser runtime
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify six phone/tablet hand-reach geometries without WebGL
+        run: node tests/maletin-thumb-reach-browser.cjs
