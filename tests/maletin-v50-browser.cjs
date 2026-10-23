@@ -15,6 +15,26 @@ const assert=require('node:assert/strict');
   await page.waitForFunction(()=>{try{return !!document.getElementById('malFrame')?.contentWindow?.__mal?.S}catch{return false}},null,{timeout:90000,polling:250});
   const f=page.frames().find(x=>x.url().includes('/audio/maletin/index.html'));
   assert(f,'Game iframe missing');
+  // Validate the real in-game slider, not only the static source strings.
+  const radioUi=await f.evaluate(()=>{
+    const radio=window.__WRADIO,slider=document.querySelector('#wrV');
+    if(!radio||!slider)return {ready:false};
+    const initial={vol:radio.st.vol,slider:Number(slider.value)};
+    const storedBefore=localStorage.getItem('unfire_radio_volume_v1');
+    slider.value='0.62';slider.dispatchEvent(new Event('input',{bubbles:true}));
+    const changed={vol:radio.st.vol,slider:Number(slider.value),stored:localStorage.getItem('unfire_radio_volume_v1')};
+    // Restore test data so this synthetic gesture does not alter gameplay.
+    slider.value=String(initial.vol);radio.st.vol=initial.vol;
+    if(storedBefore===null)localStorage.removeItem('unfire_radio_volume_v1');
+    else localStorage.setItem('unfire_radio_volume_v1',storedBefore);
+    return {ready:true,initial,changed};
+  });
+  assert(radioUi.ready&&Math.abs(radioUi.initial.vol-.27)<.001&&
+    Math.abs(radioUi.initial.slider-.27)<.001&&
+    Math.abs(radioUi.changed.vol-.62)<.001&&
+    Math.abs(radioUi.changed.slider-.62)<.001&&radioUi.changed.stored==='0.62',
+    'World radio volume must start at 27% while slider remains user-adjustable '+JSON.stringify(radioUi));
+  console.log('RADIO_VOLUME_27_UI_PASS',JSON.stringify(radioUi));
   assert.equal(await page.locator('#openBtn').count(),0,'2D opener must not exist');
   // In software WebGL CI, Playwright boundingBox() can stall despite canvas
   // readiness. Synthesize the *same* pointerdown/up on the 3D case instead;
@@ -47,7 +67,7 @@ const assert=require('node:assert/strict');
   console.log('CASE_STATE_DIAGNOSTIC',JSON.stringify({initial,closed}));
   assert(closed.closed&&closed.carrying&&closed.mission===initial.mission,'Closing case loses game or quest');
   const host=await page.evaluate(()=>({url:location.pathname,frameSrc:document.getElementById('malFrame').getAttribute('src'),immersive:document.body.classList.contains('immOn')}));
-  assert(host.immersive&&host.frameSrc.includes('v=20261023claudebtn1'),'Game returned to website after closing case');
+  assert(host.immersive&&host.frameSrc.includes('v=20261023radio27v1'),'Game returned to website after closing case');
   const control=await f.evaluate(()=>{const b=document.getElementById('unfireCarryCase');if(!b)return {exists:false};const q=b.getBoundingClientRect();return {exists:true,display:getComputedStyle(b).display,visibility:getComputedStyle(b).visibility,rect:[q.x,q.y,q.width,q.height],hidden:b.hidden,roam:window.__UNFIRE_CASE_QA.roam,carry:window.__UNFIRE_CASE_QA.carrying};});
   console.log('CARRY_BUTTON_DIAGNOSTIC',JSON.stringify(control));
   assert.equal(await f.evaluate(()=>window.__UNFIRE_CASE_QA.caseVisible),false,'Case must not obstruct player camera when packed');
