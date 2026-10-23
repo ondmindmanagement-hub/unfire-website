@@ -54,6 +54,8 @@ test('ready product by itself is insufficient without a real link',()=>{
 test('checkout UI keeps not-yet-launched products as enquiries',()=>{
   assert.match(page, /id="bagUnreleased"/);
   assert.match(page, /id="bagPayMethods" hidden/);
+  assert.match(page, /id="bagOfferLabel"/);
+  assert.match(page, /express\?items.reduce\(\(sum,k\)=>sum\+ITEMS\[k\]\[1\],0\)/);
   assert.match(page, /checkoutLinkFor\(items\)/);
   assert.match(page, /getLic\(ITEMS\[k\]\[0\],\[k\]\)/);
   assert.match(page, /mailto:hello@unfire\.technology/);

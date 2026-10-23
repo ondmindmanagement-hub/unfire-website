@@ -618,7 +618,7 @@ document.getElementById('shareGame').addEventListener('click',async function(){
   <p class="lede" id="bagEmpty">Tu bolsa está vacía. Añade algo desde el catálogo.</p>
   <div class="sum">
     <div><span>Precio normal</span><span id="bagNormal">0 €</span></div>
-    <div style="color:var(--ok)"><span>Semana de lanzamiento</span><span id="bagLaunch">0 €</span></div>
+    <div style="color:var(--ok)"><span id="bagOfferLabel">Semana de lanzamiento</span><span id="bagLaunch">0 €</span></div>
     <button class="btn btn-gel" type="button" id="bagGo">Consultar disponibilidad</button>
     <p id="bagPayMethods" hidden style="font:500 12px/1.6 Arial,sans-serif;color:#254161;margin:12px 0 0">Pago seguro gestionado por Stripe. Tarjeta, Apple Pay (Face ID o Touch ID), Google Pay y Link, cuando estén disponibles para tu dispositivo y región. UNFIRE no almacena tus datos bancarios. El importe final se confirmará en Stripe.</p>
     <p id="bagUnreleased" style="font:500 12px/1.6 Arial,sans-serif;color:#254161;margin:12px 0 0">Catálogo en preparación para macOS y Windows. Esta consulta por correo no supone compra, cargo, reserva confirmada ni entrega de instaladores. <a href="compatibilidad/" style="color:#254161;text-decoration:underline;text-underline-offset:3px">Ver compatibilidad y estado de lanzamiento</a>.</p>
@@ -1060,8 +1060,12 @@ sy.addEventListener('close',()=>{[...held.keys()].forEach(up);sStop&&sStop()});
 const Bag=(()=>{let items=store.get('unfire.bag',[]).filter(k=>ITEMS[k]);const btn=$('#bagBtn');
   function render(){$('#bagCount').textContent=items.length;const ul=$('#bagList');ul.innerHTML='';
     items.forEach(k=>{const [n,p,l]=ITEMS[k];const li=document.createElement('li');li.innerHTML=`<span>${n}</span><span style="display:flex;gap:10px;align-items:center"><span class="sel" style="user-select:none">${eur(p)}</span><button type="button" aria-label="Quitar ${n}">✕</button></span>`;li.querySelector('button').onclick=()=>{items=items.filter(x=>x!==k);save()};ul.append(li)});
-    $('#bagEmpty').hidden=items.length>0;$('#bagNormal').textContent=eur(items.reduce((s,k)=>s+ITEMS[k][1],0));$('#bagLaunch').textContent=eur(items.reduce((s,k)=>s+ITEMS[k][2],0));
+    $('#bagEmpty').hidden=items.length>0;$('#bagNormal').textContent=eur(items.reduce((s,k)=>s+ITEMS[k][1],0));
     const express=checkoutLinkFor(items);
+    // An enabled checkout must never display the demo/promo estimate (possibly 0 EUR)
+    // as the payment total. The provider's final price must match this reviewed catalog price.
+    $('#bagOfferLabel').textContent=express?'Total del producto':'Semana de lanzamiento';
+    $('#bagLaunch').textContent=eur(express?items.reduce((sum,k)=>sum+ITEMS[k][1],0):items.reduce((sum,k)=>sum+ITEMS[k][2],0));
     $('#bagGo').disabled=!items.length;
     $('#bagGo').textContent=express?'Pagar rápido de forma segura':'Consultar disponibilidad';
     $('#bagPayMethods').hidden=!express;$('#bagUnreleased').hidden=!!express}
