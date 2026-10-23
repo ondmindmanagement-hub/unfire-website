@@ -13,7 +13,7 @@ chk('Original case opening SFX follow the actual procedural 3D hinge timeline',
   ['latch','hinge','thud','reveal'].every(x=>engine.includes("play('"+x+"'"))&&
   engine.includes("!manual||document.hidden")&&engine.includes("v.connect(UA.bus.master)"));
 
-chk('Original glossy UNFIRE butterfly button restored on lid',engine.includes('const originalUnfireLidButton=new THREE.Group();')&&engine.includes('lid.add(originalUnfireLidButton);')&&engine.includes('G3.drawEmblem(originalUnfireCanvas.getContext')&&engine.includes('originalUnfireLidButton.userData.isUnfireOpen=true;'));
+chk('Claude procedural 3D butterfly lid switch restored without a second button',engine.includes('const ringB = mesh(new THREE.TorusGeometry(0.42, 0.02, 10, 64)')&&engine.includes('window.__ringB = ringB;')&&engine.includes('lid.add(ringB);')&&engine.includes("G3.drawEmblem(ec.getContext('2d'), 256, '#ffffff')")&&!engine.includes('originalUnfireLidButton'));
 chk('Still no standalone 2D ABRIR button',!html.includes('id="openBtn"')&&!game.includes('id="directOpen"'));
 chk('Web exit parks WebGL behind a themed, manual return-to-play screen',
   html.includes('id="unfireReturnPortal"')&&html.includes('id="unfireReturnPlay"')&&
@@ -91,8 +91,8 @@ chk('Room audio implementation retained',engine.includes('const AMB ='));
 chk('Parent scroll no longer overrides manual open/close',engine.includes('!lidControlledByPlayer) pTarget = d.p;'));
 chk('Host keeps iframe active when case is local',html.includes('vis:caseLocal||rb.bottom>90'));
 chk('Host does not scroll when closing case',!html.includes('if(d.closeCase)Mal.shut();'));
-chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v=20261023case3'));
-chk('Host loads exact matching game',/maletin\/index\.html\?v=20261023case3/.test(html));
+chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v=20261023claudebtn1'));
+chk('Host loads exact matching game',/maletin\/index\.html\?v=20261023claudebtn1/.test(html));
 chk('User can explicitly exit if desired',engine.includes('window.__exitGame'));
 chk('3D original scene size intact',engine.length>500000);
 const storySource=game.slice(game.indexOf('window.STORY_INIT = function (H) {'),game.indexOf('</script>',game.indexOf('window.STORY_INIT = function (H) {')));
