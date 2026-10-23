@@ -1806,13 +1806,23 @@
     document.body.appendChild(controlsGuide);
     const guideClose = controlsGuide.querySelector('#unfireGuideClose');
     const closeGuide = () => { controlsGuide.classList.remove('on'); controlsGuide.style.display = 'none'; };
-    const settingsHud = document.getElementById('storyHud');
-    if (settingsHud && !document.getElementById('unfireControlsButton')) {
-      const guideButton = document.createElement('button');
-      guideButton.id = 'unfireControlsButton'; guideButton.type = 'button';
-      guideButton.textContent = '🎮 CONTROLES'; guideButton.setAttribute('aria-haspopup', 'dialog');
-      guideButton.onclick = (ev) => { ev.stopPropagation(); ROAMS.k[' '] = 0; ROAMS.k.s = 0; controlsGuide.style.display = 'flex'; controlsGuide.classList.add('on'); guideClose.focus(); };
-      settingsHud.insertBefore(guideButton, settingsHud.querySelector('.obj'));
+    // STORY_INIT builds the HUD later in the boot sequence; attach when it exists.
+    const attachControlsToSettings = () => {
+      const settingsHud = document.getElementById('storyHud');
+      if (!settingsHud) return false;
+      if (!document.getElementById('unfireControlsButton')) {
+        const guideButton = document.createElement('button');
+        guideButton.id = 'unfireControlsButton'; guideButton.type = 'button';
+        guideButton.textContent = '🎮 CONTROLES'; guideButton.setAttribute('aria-haspopup', 'dialog');
+        guideButton.onclick = (ev) => { ev.stopPropagation(); ROAMS.k[' '] = 0; ROAMS.k.s = 0; controlsGuide.style.display = 'flex'; controlsGuide.classList.add('on'); guideClose.focus(); };
+        settingsHud.insertBefore(guideButton, settingsHud.querySelector('.obj'));
+      }
+      return true;
+    };
+    if (!attachControlsToSettings()) {
+      const guideWatcher = new MutationObserver(() => { if (attachControlsToSettings()) guideWatcher.disconnect(); });
+      guideWatcher.observe(document.body, { childList: true, subtree: true });
+      addEventListener('pagehide', () => guideWatcher.disconnect(), { once: true });
     }
     guideClose.onclick = closeGuide;
     controlsGuide.addEventListener('pointerdown', (ev) => ev.stopPropagation());
