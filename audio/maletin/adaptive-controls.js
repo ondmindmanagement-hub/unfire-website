@@ -69,7 +69,8 @@
     let editing = false, dragged = null, bar = null, resizeToken = 0;
     const isTouch = !!controls[0];
     const hasButton = (p, i) => !!(p && p.buttons && p.buttons[i] && p.buttons[i].pressed);
-    const padEnabled = () => ROAMS.on && !doc.hidden && !(ctx.blocked && ctx.blocked());
+    const padEnabled = () => ROAMS.on && !doc.hidden &&
+      !host.__unfireLayoutEditing && !(ctx.blocked && ctx.blocked());
 
     function tick(dt) {
       let p = null;
@@ -140,6 +141,7 @@
       if (ROAMS.touchStick) ROAMS.touchStick = null;
     }
     addEventListener('blur', stop, {passive:true});
+    addEventListener('gamepaddisconnected', stop, {passive:true});
     doc.addEventListener('visibilitychange', () => { if (doc.hidden) stop(); });
 
     if (!isTouch) return {tick, stop};
@@ -268,7 +270,9 @@
     function startEdit() {
       if (editing) return;
       editing=true;host.__unfireLayoutEditing=true;
-      ROAMS.k[' ']=0;ROAMS.k.s=0;
+      // Customizing the layout is a non-gameplay mode: no retained stick
+      // or held gamepad movement may drift the avatar while controls move.
+      stop();ROAMS.k[' ']=0;ROAMS.k.s=0;
       if (guide) {guide.classList.remove('on');guide.style.display='none';}
       bar.style.display='flex';layout();
     }
