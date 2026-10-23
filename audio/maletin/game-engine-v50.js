@@ -1953,7 +1953,74 @@
     robotMode: () => { ROAMS.mini = !ROAMS.mini; if (ROAMS.mini) { if (!ROAMS.on) enterRoam(); ROAMS.p.set(4.5, 0.3, 4.4); ROAMS.yaw = -0.6; ROAMS.pitch = -0.05; say('🤖 Modo robot: caminas a su altura por la mesa (WASD / flechas)'); } else { ROAMS.p.set(0, 4.5, 22); ROAMS.yaw = 0; } return ROAMS.mini; }, toggleMap: () => MAP.toggle(),
     focusHost: (who, soft) => { HOST.talk(); if (soft) { if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } return; } let p = HOST.pos; if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; p = it.W.getWorldPosition(V(0, 0, 0)); try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } if (ROAMS.on) { const d = V(cam.position.x - p.x, 0, cam.position.z - p.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const side = V(-d.z, 0, d.x); const q = V(p.x + d.x * 11 + side.x * 7, p.y + 5.5, p.z + d.z * 11 + side.z * 7); const lx = p.x - q.x, lz = p.z - q.z; ROAMS.tgt = { p: q, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(p.y + 1.5 - q.y, Math.hypot(lx, lz)) }; } else { view.gx = clamp(p.x * 0.7, -CW / 2 - 1, CW / 2 + 1); view.gz = clamp(p.z * 0.7, -CD / 2 - 1, CD / 2 + 2); view.gd = view.D0 * 0.85; } } }); } catch (e) { console.warn('story', e); }
   roamB.addEventListener('pointerdown', (e) => e.stopPropagation());
-  function roamMove(f, side = 0) { const y = ROAMS.yaw, px0 = ROAMS.p.x, pz0 = ROAMS.p.z; ROAMS.p.x += Math.sin(y) * f + Math.cos(y) * side; ROAMS.p.z -= Math.cos(y) * f - Math.sin(y) * side; if (!ROAMS.mini && (window.ATM_OUT ? (window.__OBSTO = window.__OBSTO || window.__buildObstOut()) : window.__OBST)) { const OB = window.ATM_OUT ? window.__OBSTO : window.__OBST, feet = -8.9 + (ROAMS.h || 0), hit = (x, z) => { for (const B of OB) if (x > B.x0 && x < B.x1 && z > B.z0 && z < B.z1 && feet < B.y1 - 0.4) return true; return false; }; { const nx = ROAMS.p.x, nz = ROAMS.p.z; if (!hit(px0, pz0)) { ROAMS.p.x = px0; ROAMS.p.z = pz0; if (!hit(nx, pz0)) ROAMS.p.x = nx; if (!hit(ROAMS.p.x, nz)) ROAMS.p.z = nz; } const want = Math.hypot(nx - px0, nz - pz0), got = Math.hypot(ROAMS.p.x - px0, ROAMS.p.z - pz0); if (want > 0.01 && got < want * 0.15) { ROAMS.stkN = (ROAMS.stkN || 0) + 1; if (ROAMS.stkN > 40) { ROAMS.p.x = nx; ROAMS.p.z = nz; ROAMS.stkN = 30; } } else ROAMS.stkN = 0; } } if (window.ATM_OUT) { const HX = 82, Z0 = -18, Z1 = 98; if (Math.abs(ROAMS.p.x) < HX && ROAMS.p.z > Z0 && ROAMS.p.z < Z1 && -8.9 + (ROAMS.h || 0) < 26.6) { if (Math.abs(ROAMS.p.x + 30) < 4) { ROAMS.p.x += (-30 - ROAMS.p.x) * 0.25; if (ROAMS.p.z < 93) { try { ATM.setOut(false); } catch (e) {} } } else { ROAMS.p.x = px0; ROAMS.p.z = pz0; } } } if (ROAMS.mini) { ROAMS.p.x = clamp(ROAMS.p.x, -12.6, 12.6); ROAMS.p.z = clamp(ROAMS.p.z, -7.2, 4.9); if (Math.abs(ROAMS.p.x) < 3.15 && Math.abs(ROAMS.p.z) < 2.25) { ROAMS.p.x = px0; ROAMS.p.z = pz0; } ROAMS.p.y = 0.3; return; } const B = window.__RB || { x: 19.5, z0: -14, z1: 18.5 }; ROAMS.p.x = clamp(ROAMS.p.x, -B.x, B.x); ROAMS.p.z = clamp(ROAMS.p.z, B.z0, B.z1); if (!window.ATM_OUT && Math.abs(ROAMS.p.x + 30) < 5 && ROAMS.p.z > 89) { ROAMS.p.x += (-30 - ROAMS.p.x) * 0.25; if (ROAMS.p.z > 93) { try { ATM.setOut(true); } catch (e) { console.warn(e); } } } { const hx = ROAMS.p.x, hz = ROAMS.p.z - 1, hd = Math.hypot(hx, hz); if (!window.ATM_OUT && hd < 8.5) { const s = 8.5 / Math.max(hd, 0.01); ROAMS.p.x = hx * s; ROAMS.p.z = hz * s + 1; } } }
+  function roamMove(f, side = 0) {
+    const y = ROAMS.yaw, px0 = ROAMS.p.x, pz0 = ROAMS.p.z;
+    const dx = Math.sin(y) * f + Math.cos(y) * side;
+    const dz = -Math.cos(y) * f + Math.sin(y) * side;
+    ROAMS.p.x = px0 + dx;
+    ROAMS.p.z = pz0 + dz;
+    if (!ROAMS.mini) {
+      const boxes = window.ATM_OUT
+        ? (window.__OBSTO || (typeof window.__buildObstOut === 'function' ? window.__buildObstOut() : []))
+        : window.__OBST;
+      if (boxes && boxes.length) {
+        const feet = -8.9 + (ROAMS.h || 0);
+        if (window.UnfireSweptMotion) {
+          const hit = window.UnfireSweptMotion.sweep(px0, pz0, dx, dz, boxes, feet);
+          ROAMS.p.x = hit.x; ROAMS.p.z = hit.z;
+        } else {
+          // Safe fallback for an old cached document: keep collision, never
+          // force a stalled player through a wall after repeated key presses.
+          const hit = (x, z) => boxes.some((b) => x > b.x0 && x < b.x1 &&
+            z > b.z0 && z < b.z1 && feet < b.y1 - 0.4);
+          if (!hit(px0, pz0)) {
+            const nx = ROAMS.p.x, nz = ROAMS.p.z;
+            ROAMS.p.x = px0; ROAMS.p.z = pz0;
+            if (!hit(nx, pz0)) ROAMS.p.x = nx;
+            if (!hit(ROAMS.p.x, nz)) ROAMS.p.z = nz;
+          }
+        }
+      }
+    }
+    // Respect the original physical house/door entry, map limits and
+    // miniature mode. No scene reload, camera jump or forced teleport.
+    if (window.ATM_OUT) {
+      const HX = 82, Z0 = -18, Z1 = 98;
+      if (Math.abs(ROAMS.p.x) < HX && ROAMS.p.z > Z0 && ROAMS.p.z < Z1 &&
+          -8.9 + (ROAMS.h || 0) < 26.6) {
+        if (Math.abs(ROAMS.p.x + 30) < 4) {
+          ROAMS.p.x += (-30 - ROAMS.p.x) * 0.25;
+          if (ROAMS.p.z < 93) { try { ATM.setOut(false); } catch (e) {} }
+        } else {
+          ROAMS.p.x = px0; ROAMS.p.z = pz0;
+        }
+      }
+    }
+    if (ROAMS.mini) {
+      ROAMS.p.x = clamp(ROAMS.p.x, -12.6, 12.6);
+      ROAMS.p.z = clamp(ROAMS.p.z, -7.2, 4.9);
+      if (Math.abs(ROAMS.p.x) < 3.15 && Math.abs(ROAMS.p.z) < 2.25) {
+        ROAMS.p.x = px0; ROAMS.p.z = pz0;
+      }
+      ROAMS.p.y = 0.3;
+      return;
+    }
+    const B = window.__RB || { x: 19.5, z0: -14, z1: 18.5 };
+    ROAMS.p.x = clamp(ROAMS.p.x, -B.x, B.x);
+    ROAMS.p.z = clamp(ROAMS.p.z, B.z0, B.z1);
+    if (!window.ATM_OUT && Math.abs(ROAMS.p.x + 30) < 5 && ROAMS.p.z > 89) {
+      ROAMS.p.x += (-30 - ROAMS.p.x) * 0.25;
+      if (ROAMS.p.z > 93) {
+        try { ATM.setOut(true); } catch (e) { console.warn(e); }
+      }
+    }
+    const hx = ROAMS.p.x, hz = ROAMS.p.z - 1, hd = Math.hypot(hx, hz);
+    if (!window.ATM_OUT && hd < 8.5) {
+      const s = 8.5 / Math.max(hd, 0.01);
+      ROAMS.p.x = hx * s;
+      ROAMS.p.z = hz * s + 1;
+    }
+  }
   addEventListener('keydown', (e) => { if (!ROAMS.on || (e.target && e.target.tagName === 'INPUT')) return; if (e.key === 'Escape') { if (CASE_VIEW.on) showRobotView(); else exitRoam(); return; } if (CASE_VIEW.on) return; const k = e.key.length === 1 ? e.key.toLowerCase() : e.key; if (k === 'Shift' || k === 'Alt') ROAMS.k[k] = 1; if (k === 'b' && !e.repeat && window.ATM_OUT) { window.__surfToggle && window.__surfToggle(); e.preventDefault(); e.stopImmediatePropagation(); return; } if (k === ' ' && !e.repeat && !ROAMS.mini && window.ATM_OUT && ROAMS.wet && !ROAMS.fly && ROAMS.board) { ROAMS.spDown = performance.now(); ROAMS.k[' '] = 1; if (!ROAMS.air && !ROAMS.trick) { const wv0 = window.__WAVE ? window.__WAVE(ROAMS.p.x, ROAMS.p.z, window.__T || 0) : 0; ROAMS.vy = Math.min(66, 30 + Math.max(0, wv0) * 3.4); try { window.__SPRAY && window.__SPRAY(ROAMS.p.x, -8.9 + (ROAMS.h || 0), ROAMS.p.z, 40, 8, 14); } catch (e2) {} const KD = ['360', 'FLIP', 'GRAB', 'SUPERMAN']; ROAMS.trick = { t: 0, k: KD[Math.floor(Math.random() * KD.length)], sd: Math.random() < 0.5 ? 1 : -1 }; } e.preventDefault(); e.stopImmediatePropagation(); return; } if (!e.repeat && (k === 'ArrowDown' || k === 'ArrowUp')) flightTap(k === 'ArrowDown' ? 'down' : 'up'); if (k === ' ' && !e.repeat && !ROAMS.mini) { const now = performance.now(); if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; say('🪽 Transformación · MANTÉN ESPACIO para subir · suéltalo y te quedas flotando · S o ↓ para bajar · F en picado · W hacia delante'); } ROAMS.lastSp = now; ROAMS.k[' '] = 1; } if (k === 'f') ROAMS.k.f = 1; if (k.startsWith('Arrow') || 'wasdqe'.includes(k) || k === ' ') { ROAMS.k[k] = 1; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
   addEventListener('keyup', (e) => { ROAMS.k[e.key.length === 1 ? e.key.toLowerCase() : e.key] = 0; });
   function fitD0() { const vf = (cam.fov * Math.PI) / 360, hf = Math.atan(Math.tan(vf) * cam.aspect); view.D0 = Math.max((CW / 2 + 0.5) / Math.tan(hf), (CD / 2 + 1.3) / Math.tan(vf)) * 1.02; if (view.gd > view.D0 || view.gd === view.dist && view.dist >= view.D0 - 0.01) { view.gd = view.D0; } }

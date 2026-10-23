@@ -1,0 +1,37 @@
+name: Maletin swept movement and door safety
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/swept-roaming.js'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'tests/maletin-swept-roaming.test.cjs'
+      - '.github/workflows/maletin-swept-roaming.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'audio/maletin/swept-roaming.js'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'tests/maletin-swept-roaming.test.cjs'
+      - '.github/workflows/maletin-swept-roaming.yml'
+permissions:
+  contents: read
+jobs:
+  movement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and swept collision regression
+        run: |
+          node --check audio/maletin/swept-roaming.js
+          node --check audio/maletin/game-engine-v50.js
+          node --test tests/maletin-swept-roaming.test.cjs
+      - name: Preserve flight, door, controls and cache
+        run: |
+          node --test tests/maletin-flight-combos.test.cjs tests/maletin-door-transition.test.cjs tests/maletin-first-person-gamepad-compat.test.cjs
+          node tests/maletin-cache-sync.test.cjs
