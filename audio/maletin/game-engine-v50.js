@@ -2554,7 +2554,7 @@
       if(parts&&parts[2]&&parts[2].material){
         const prompt=!ROAMS.on&&lidOpen<0.08&&!lidControlledByPlayer&&!document.hidden;
         
-        const beat=prompt?(reduce?0.42:Math.pow(Math.max(0,Math.sin(t*3.4)),4)):0;
+        const beat=prompt?(REDUCED_MOTION_CASE_CUE?0.42:Math.pow(Math.max(0,Math.sin(t*3.4)),4)):0;
         const dome=parts[2].material;
         dome.emissiveIntensity=prompt?0.55+1.4*beat:0.6;
         const ring=parts[0]&&parts[0].material;
