@@ -5,6 +5,7 @@ on:
     paths:
       - 'audio/index.html'
       - 'tests/audio-cinematic-entry.test.cjs'
+      - 'tests/audio-cinematic-entry-browser.cjs'
       - '.github/workflows/audio-cinematic-entry.yml'
   workflow_dispatch:
 
@@ -17,3 +18,20 @@ jobs:
       - name: Check same-page entry and responsive orientation
         run: |
           node --test tests/audio-cinematic-entry.test.cjs tests/audio-immersive-entry-recovery.test.cjs
+
+  chromium-host:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install test browser
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium
+      - name: Host QA, same tab and orientation without WebGL GPU load
+        run: |
+          python3 -m http.server 8767 --bind 127.0.0.1 >/tmp/unfire-cinematic-host-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          sleep 2
+          timeout --signal=TERM --kill-after=5s 115s node tests/audio-cinematic-entry-browser.cjs
