@@ -1,0 +1,53 @@
+name: Audio exterior A/B render benchmark
+
+on:
+  pull_request:
+    paths:
+      - 'tests/maletin-exterior-ab-benchmark.cjs'
+      - '.github/workflows/maletin-exterior-ab-benchmark.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: audio-exterior-ab-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compare-exterior:
+    runs-on: ubuntu-latest
+    timeout-minutes: 11
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate benchmark script and immutable baseline
+        run: |
+          node --check tests/maletin-exterior-ab-benchmark.cjs
+          git cat-file -e b122143a3d3533c7e6f68579c5361681d9fe3ccd^{commit}
+      - name: Install temporary browser runtime on GitHub runner only
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Prepare staging baseline outside the current worktree
+        run: |
+          mkdir -p "$RUNNER_TEMP/unfire-exterior-baseline"
+          git archive b122143a3d3533c7e6f68579c5361681d9fe3ccd | tar -xf - -C "$RUNNER_TEMP/unfire-exterior-baseline"
+      - name: Run A-B-A exterior frame diagnostics (software WebGL, mobile-sized viewport)
+        env:
+          UNFIRE_BENCH_BASELINE: ${{ runner.temp }}/unfire-exterior-baseline
+          UNFIRE_BENCH_CANDIDATE: ${{ github.workspace }}
+          UNFIRE_BENCH_OUT: ${{ github.workspace }}/exterior-benchmark.json
+        run: timeout --signal=TERM --kill-after=10s 420s node tests/maletin-exterior-ab-benchmark.cjs
+      - name: Upload metrics and diagnostics for integrator
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unfire-exterior-ab-${{ github.run_id }}
+          path: exterior-benchmark.json
+          if-no-files-found: warn
+          retention-days: 7
