@@ -265,6 +265,87 @@ body.unfire-roaming #cv{touch-action:none}
  .hud,#tip,#buy.enter,#story .box{transition:none!important}
 }
 </style>
+
+<style id="unfireCompactTouchHud20261023">
+/* Mobile game controls: a quiet, reachable perimeter; never cover the case center. */
+@media (pointer:coarse){
+  body #wradio{z-index:74!important;left:max(8px,env(safe-area-inset-left))!important;top:calc(env(safe-area-inset-top) + 8px)!important;
+    bottom:auto!important;transform:none!important;max-width:calc(100vw - 104px)!important;
+    box-sizing:border-box!important;gap:3px!important;padding:3px 4px!important;border-radius:13px!important;
+    border:1px solid #8eadd052!important;background:rgba(8,14,25,.91)!important;
+    box-shadow:0 4px 14px #0007!important;align-items:center!important}
+  body #wradio button{box-sizing:border-box!important;flex:0 0 34px!important;width:34px!important;min-width:34px!important;
+    height:34px!important;min-height:34px!important;padding:0!important;border-radius:9px!important;
+    border:1px solid #789abb7d!important;background:linear-gradient(160deg,#253a57,#14233b)!important;
+    box-shadow:none!important;color:#eaf5ff!important;font-size:14px!important;line-height:1!important}
+  body #wradio #wrOn{width:34px!important;min-width:34px!important;font-size:0!important}
+  body #wradio #wrOn::after{font-size:17px!important}
+  body #wradio.expanded{width:min(87vw,284px)!important;max-width:calc(100vw - 16px)!important;gap:5px!important;
+    flex-wrap:wrap!important;justify-content:center!important}
+  body #wradio.expanded #wrUp{width:auto!important;min-width:88px!important;flex:0 1 auto!important;
+    padding:0 8px!important;font-size:9px!important}
+  body #wradio.expanded #wrV{min-width:90px!important;flex:1 1 90px!important;max-width:135px!important}
+  body #wradio.expanded #wrT{font-size:9px!important}
+  body #unfireExitGame{top:calc(env(safe-area-inset-top) + 8px)!important;
+    right:max(8px,env(safe-area-inset-right))!important;box-sizing:border-box!important;
+    min-width:0!important;width:76px!important;max-width:76px!important;height:36px!important;min-height:36px!important;
+    padding:0!important;border:1px solid #ffb4bb99!important;border-radius:12px!important;
+    background:rgba(98,22,41,.92)!important;box-shadow:0 3px 11px #0006!important;
+    color:#fff!important;font-size:0!important;line-height:1!important;white-space:nowrap!important}
+  body #unfireExitGame::after{content:"↩ SALIR";font:700 10px/1 system-ui,sans-serif;letter-spacing:.02em}
+  body #minimap{width:72px!important;height:72px!important;left:max(7px,env(safe-area-inset-left))!important;
+    top:calc(env(safe-area-inset-top) + 59px)!important}
+  body #ctlDock,body:not(.unfire-roaming) #ctlDock{
+    right:max(8px,env(safe-area-inset-right))!important;left:auto!important;
+    top:calc(env(safe-area-inset-top) + 119px)!important;bottom:auto!important;
+    max-width:min(100px,28vw)!important;max-height:calc(100dvh - 175px)!important;
+    gap:4px!important;overflow-y:auto!important;overflow-x:hidden!important;padding:0 2px 2px!important;
+    align-items:stretch!important;flex-direction:column-reverse!important}
+  body #ctlDock button,body #ctlDock #roamB{
+    box-sizing:border-box!important;width:100%!important;max-width:100%!important;
+    min-width:0!important;min-height:35px!important;padding:5px 7px!important;
+    font:700 10px/1.2 system-ui,sans-serif!important;letter-spacing:0!important;
+    border-radius:11px!important;border-width:1px!important;box-shadow:0 3px 10px #0006!important;
+    overflow-wrap:anywhere!important;text-align:center!important}
+  body #unfireCarryCase{max-width:min(106px,30vw)!important;min-height:34px!important;
+    left:max(8px,env(safe-area-inset-left))!important;top:calc(env(safe-area-inset-top) + 143px)!important;
+    padding:5px 7px!important;font:700 9px/1.2 system-ui,sans-serif!important;border-radius:10px!important}
+  body #unfireTouchPad{width:92px!important;height:92px!important;left:max(8px,env(safe-area-inset-left))!important;
+    bottom:calc(env(safe-area-inset-bottom) + 9px)!important;border-width:1px!important}
+  body #unfireTouchKnob{width:36px!important;height:36px!important}
+  body #unfireFly,body #unfireTalk,body #unfireDown{
+    right:max(8px,env(safe-area-inset-right))!important;box-sizing:border-box!important;
+    min-width:74px!important;min-height:38px!important;max-width:94px!important;
+    padding:5px 8px!important;font:700 10px/1.15 system-ui,sans-serif!important;
+    border-width:1px!important;border-radius:11px!important;box-shadow:0 3px 12px #0006!important}
+  body #unfireFly{bottom:calc(env(safe-area-inset-bottom) + 9px)!important}
+  body #unfireTalk{bottom:calc(env(safe-area-inset-bottom) + 52px)!important}
+  body #unfireDown{bottom:calc(env(safe-area-inset-bottom) + 95px)!important}
+  body .hud{max-width:min(62vw,234px)!important;gap:4px!important}
+  body .hud button{width:32px!important;height:34px!important;flex-basis:32px!important}
+  body .hud .crumb{max-width:19vw!important;font-size:9px!important}
+}
+@media (pointer:coarse) and (orientation:landscape){
+  body #wradio{top:calc(env(safe-area-inset-top) + 8px)!important}
+  body #minimap{width:61px!important;height:61px!important;top:calc(env(safe-area-inset-top) + 51px)!important}
+  body #ctlDock,body:not(.unfire-roaming) #ctlDock{
+    top:calc(env(safe-area-inset-top) + 58px)!important;
+    max-width:91px!important;max-height:calc(100dvh - env(safe-area-inset-top) - 73px)!important}
+  body #ctlDock button,body #ctlDock #roamB{min-height:31px!important;padding:4px 6px!important;font-size:9px!important}
+  body #unfireCarryCase{top:calc(env(safe-area-inset-top) + 120px)!important}
+  body #unfireTouchPad{width:76px!important;height:76px!important}
+  body #unfireTouchKnob{width:30px!important;height:30px!important}
+  body #unfireFly,body #unfireTalk,body #unfireDown{min-width:69px!important;min-height:33px!important;padding:4px 6px!important}
+  body #unfireTalk{bottom:calc(env(safe-area-inset-bottom) + 47px)!important}
+  body #unfireDown{right:calc(env(safe-area-inset-right) + 80px)!important;
+    bottom:calc(env(safe-area-inset-bottom) + 9px)!important}
+}
+@media (pointer:coarse) and (max-width:340px) and (orientation:portrait){
+  body #minimap{width:62px!important;height:62px!important}
+  body #wradio{left:max(8px,env(safe-area-inset-left))!important;max-width:125px!important}
+  body #ctlDock,body:not(.unfire-roaming) #ctlDock{max-width:85px!important}
+}
+</style>
 <canvas id="cv" aria-label="Maletín UNFIRE en 3D. Acerca la vista con la rueda para entrar"></canvas>
 <div class="hud" id="hud"><button id="zin" aria-label="Acercar">+</button><button id="zout" aria-label="Alejar">−</button><button id="home" aria-label="Volver al maletín">⟲</button><div class="crumb" id="crumb">MALETÍN</div></div>
 <div class="tip" id="tip"></div>

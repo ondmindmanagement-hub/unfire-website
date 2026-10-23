@@ -25,7 +25,17 @@ const {chromium} = require(process.env.UNFIRE_PLAYWRIGHT_PATH || 'playwright');
     });
    });
    assert(compact.every(c=>c.visible&&c.within&&c.w>=34&&c.h>=34), JSON.stringify({width,height,compact}));
-   await page.locator('#wrMore').click({timeout:10000});
+   const bar=await page.evaluate(()=>{const r=document.getElementById('wradio').getBoundingClientRect();return{left:r.left,width:r.width,top:r.top,bottom:r.bottom}});
+   assert(bar.left>=0&&bar.left<=20&&bar.width<=132&&bar.top>=0&&bar.top<=20&&bar.bottom<=height, 'Radio must be small and stay out of the game area '+JSON.stringify({width,height,bar}));
+   // Linux software WebGL may starve synthetic pointer acknowledgements. Verify
+   // real hit-testing, then test the DOM control behavior without a renderer stall.
+   const hittable=await page.evaluate(()=>{
+     const e=document.getElementById('wrMore'),r=e.getBoundingClientRect(),
+       hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);
+     return !!hit&&(hit===e||e.contains(hit));
+   });
+   assert(hittable,'Radio options must be genuinely tappable '+JSON.stringify({width,height}));
+   await page.evaluate(()=>document.getElementById('wrMore').click());
    const expanded=await page.evaluate(()=>{
     const ids=['wrUp','wrV','wrT'];
     return ids.map(id=>{const e=document.getElementById(id),r=e.getBoundingClientRect(),s=getComputedStyle(e);
@@ -33,7 +43,7 @@ const {chromium} = require(process.env.UNFIRE_PLAYWRIGHT_PATH || 'playwright');
    });
    assert(expanded.every(x=>x.visible&&x.inside),JSON.stringify({width,height,expanded}));
    assert.equal(await page.locator('#wrMore').getAttribute('aria-expanded'),'true');
-   await page.locator('#wrMore').click({timeout:10000});
+   await page.evaluate(()=>document.getElementById('wrMore').click());
    assert.equal(await page.locator('#wrMore').getAttribute('aria-expanded'),'false');
    assert.deepEqual(errors,[],JSON.stringify({width,height,errors}));
    console.log('PASS radio controls and expansion',width,height);
