@@ -191,3 +191,21 @@ test('exiting while WebGL loads cancels pending cinematic entry permanently',()=
   assert(!h.document.body.classList.contains('immOn'));
   assert(h.elements.get('heroPin').classList.contains('web-return'));
 });
+
+
+test('only the return-to-play portal can resume after a voluntary exit',()=>{
+  const h=fixture();
+  h.tap();
+  const before=h.messages().filter(m=>m.entryStart).length;
+  assert.equal(before,1);
+  h.context.__cinematicMal.exitGame();
+  h.tap(); // delayed/stale 3D callback must not restart the closed game
+  assert.equal(h.messages().filter(m=>m.entryStart).length,1);
+  assert(h.elements.get('heroPin').classList.contains('web-return'));
+  assert(!h.document.body.classList.contains('immOn'));
+  h.elements.get('unfireReturnPlay').click();
+  assert(h.document.body.classList.contains('immOn'));
+  assert(!h.elements.get('heroPin').classList.contains('web-return'));
+  assert.equal(h.messages().filter(m=>m.entryStart).length,1,'Resume must not reopen lid');
+  assert(h.messages().some(m=>m.entryResume),'Resume must preserve existing session');
+});
