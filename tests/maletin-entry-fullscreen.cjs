@@ -12,10 +12,15 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    const errors=[];
    page.on('pageerror',e=>errors.push(e.message));
    await page.goto(process.env.UNFIRE_ENTRY_URL||'http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded',timeout:45000});
+   assert.match(await page.locator('#openBtn').innerText(),/PULSAR AQUÍ/,'Landing button must guide first-time players');
    await page.locator('#openBtn').click({timeout:12000});
+   // Loading never shows a blank enlarged canvas. Expand only after the 3D is ready.
+   await page.waitForFunction(()=>document.body.classList.contains('immOn'),null,{timeout:120000,polling:200});
    const instant=await page.evaluate(()=>({visible:document.body.classList.contains('immOn'),
-     fullWidth:document.getElementById('malFrame').getBoundingClientRect().width>=innerWidth-1}));
-   assert(instant.visible&&instant.fullWidth,'Fullscreen viewport must activate immediately on ABRIR, not after the lid opens');
+     fullWidth:document.getElementById('malFrame').getBoundingClientRect().width>=innerWidth-1,
+     butterflyHidden:getComputedStyle(document.getElementById('openBtn')).display==='none'}));
+   assert(instant.visible&&instant.fullWidth&&instant.butterflyHidden,
+     'Fullscreen viewport must grow without showing the old 2D butterfly '+JSON.stringify(instant));
    await page.waitForFunction(()=>{
      const g=document.getElementById('malFrame')?.contentWindow;
      return !!g?.__UNFIRE_CASE_QA && g.__UNFIRE_CASE_QA.lid>0.94;
@@ -32,13 +37,36 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        caseVisible:game.__UNFIRE_CASE_QA.caseVisible,
        caseCamera:!game.__UNFIRE_CASE_QA.roam&&!game.__UNFIRE_CASE_QA.inspecting,
        exploreButtonVisible:getComputedStyle(game.document.getElementById('roamB')).display!=='none',
+       characterButtonExists:!!game.document.getElementById('unfireCharacterEntry'),
+       obsoleteCameraButtonsMissing:!game.document.getElementById('caseInspectBtn')
+         &&!game.document.getElementById('caseRobotBtn')&&!game.document.getElementById('caseModeHud'),
        lid:game.__UNFIRE_CASE_QA.lid,
        exit:!!game.document.getElementById('unfireExitGame'),
        gameSource:frame.getAttribute('src')
      };
    });
-   assert(first.immersive&&first.fullViewport&&first.fullscreenAllowed&&!first.roaming&&first.caseVisible&&first.caseCamera&&first.exploreButtonVisible&&first.lid>0.94&&first.exit,
+   assert(first.immersive&&first.fullViewport&&first.fullscreenAllowed&&!first.roaming&&first.caseVisible&&first.caseCamera&&first.exploreButtonVisible&&first.characterButtonExists&&first.obsoleteCameraButtonsMissing&&first.lid>0.94&&first.exit,
      'Single tap did not enter immersive playable world '+JSON.stringify(first));
+   // First-time visitor: button starts blinking only after the case finishes
+   // its deliberate 5.6s procedural opening. The flash runs for exactly 2s.
+   await page.waitForFunction(()=>{
+     const g=document.getElementById('malFrame')?.contentWindow;
+     return g?.document.getElementById('unfireCharacterEntry')?.classList.contains('unfire-intro-blink');
+   },null,{timeout:22000,polling:100});
+   const hint=await page.evaluate(()=>{
+     const g=document.getElementById('malFrame').contentWindow;
+     const b=g.document.getElementById('unfireCharacterEntry');
+     return {lid:g.__UNFIRE_CASE_QA.lid,visible:!b.hidden,
+       duration:g.getComputedStyle(b).animationDuration,
+       firstTimeStored:g.localStorage.getItem('unfire_character_entry_hint_v1')==='1'};
+   });
+   assert(hint.lid>.998&&hint.visible&&hint.duration==='2s'&&hint.firstTimeStored,
+     'First-visit guidance was not two seconds AFTER case opens '+JSON.stringify(hint));
+   await page.waitForFunction(()=>{
+     const g=document.getElementById('malFrame')?.contentWindow;
+     const b=g?.document.getElementById('unfireCharacterEntry');
+     return !!b&&!b.hidden&&!b.classList.contains('unfire-intro-blink');
+   },null,{timeout:12000,polling:100});
    for(const [width,height] of [[390,844],[844,390]]){
      await page.setViewportSize({width,height});
      await page.waitForFunction(()=>{
@@ -53,7 +81,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        d.body.classList.add('storyOn');story.classList.add('on');
        const rect=(el)=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}};
        const box=rect(story.querySelector('.box'));
-       const touch=['unfireTouchPad','unfireFly','unfireTalk','unfireDown','caseModeHud']
+       const touch=['unfireTouchPad','unfireFly','unfireTalk','unfireDown']
          .map(id=>({id,hidden:getComputedStyle(d.getElementById(id)).display==='none'}));
        const exit=rect(d.getElementById('unfireExitGame'));
        return {box,touch,exit};
@@ -73,14 +101,35 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
      const game=document.getElementById('malFrame').contentWindow;
      const before=game.__UNFIRE_CASE_QA;
      if(before.roam||before.lid<.94)throw Error('Opened case jumped to avatar');
-     game.document.getElementById('roamB').click();
+     game.document.body.classList.remove('storyOn');
+     game.document.getElementById('story').classList.remove('on');
+     const button=game.document.getElementById('unfireCharacterEntry');
+     const visible=!!button&&!button.hidden;
+     button.click();
      const exploring=game.__UNFIRE_CASE_QA.roam;
+     const hiddenOnLeaving=button.hidden;
      game.document.getElementById('roamB').click();
-     return {exploring,returned:!game.__UNFIRE_CASE_QA.roam,
+     return {visible,exploring,hiddenOnLeaving,returned:!game.__UNFIRE_CASE_QA.roam,
        lid:game.__UNFIRE_CASE_QA.lid,caseVisible:game.__UNFIRE_CASE_QA.caseVisible};
    });
-   assert(choice.exploring&&choice.returned&&choice.caseVisible&&choice.lid>.94,
+   assert(choice.visible&&choice.exploring&&choice.hiddenOnLeaving&&choice.returned&&choice.caseVisible&&choice.lid>.94,
      'Case-to-avatar must be optional and reversible '+JSON.stringify(choice));
+   // MODO CINE: spectator camera must pass through the entire house, walls,
+   // ceilings, windows and furnishings without constraining the player robot.
+   const cinematic=await page.evaluate(()=>{
+     const g=document.getElementById('malFrame').contentWindow;
+     g.__roamAPI.enterRoam();
+     const rec=g.__REC;rec.set(true);
+     if(!rec.on)throw Error('Cinematic spectator mode did not start');
+     rec.p.set(76,24,93);rec.v.set(35,12,35);
+     const player=g.__roamAPI.ROAMS.p.clone();
+     rec.tick(.8);
+     const result={camera:[rec.p.x,rec.p.y,rec.p.z],playerUnchanged:player.distanceTo(g.__roamAPI.ROAMS.p)<.01};
+     rec.set(false);g.__roamAPI.exitRoam();
+     return result;
+   });
+   assert(cinematic.camera[0]>78&&cinematic.camera[1]>24&&cinematic.camera[2]>95&&cinematic.playerUnchanged,
+     'Cinematic spectator must traverse physical and architectural bounds without moving robot '+JSON.stringify(cinematic));
    // The first game has already been validated; release its expensive software
    // WebGL context before starting a second game in a CI worker.
    await page.close();

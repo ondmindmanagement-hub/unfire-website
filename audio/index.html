@@ -94,6 +94,8 @@ p{margin:0}
 #heroPin:fullscreen,#heroPin:-webkit-full-screen{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;background:#000!important}
 #heroPin:fullscreen #malFrame,#heroPin:-webkit-full-screen #malFrame{inset:0!important;width:100%!important;height:100%!important;clip-path:none!important}
 html.immOn,body.immOn{overflow:hidden!important;overscroll-behavior:none}body.immOn header,body.immOn .hero-copy{visibility:hidden}body.immOn #stopAll,body.immOn #sndBtn{display:none!important}
+/* The 2D butterfly belongs to the landing page, never to active gameplay. */
+body.immOn #openBtn,#heroPin.imm #openBtn,#heroPin:fullscreen #openBtn,#heroPin:-webkit-full-screen #openBtn{display:none!important;visibility:hidden!important;pointer-events:none!important}
 .hero-pin{position:sticky;top:62px;height:calc(100vh - 62px);overflow:hidden;display:grid;place-items:center}
 /* Defer heavy WebGL startup until the document is interactive. Same full-resolution game. */
 .hero-pin:not(.scene-ready)::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 70%,#1c3353 0%,#08090c 65%)}
@@ -417,14 +419,14 @@ footer a{color:var(--soft)}
 <!-- 0 · El maletín 3D con inmersión -->
 <div class="hero" id="hero" data-field="0">
   <div class="hero-pin" id="heroPin">
-    <iframe id="malFrame" data-src="maletin/index.html?v=20261023fs2" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone; fullscreen" allowfullscreen></iframe>
+    <iframe id="malFrame" data-src="maletin/index.html?v=20261023hud3" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone; fullscreen" allowfullscreen></iframe>
     <a id="noWebglLink" href="#instrumentos">Explorar los instrumentos ↓</a>
     <div class="hero-copy" id="heroCopy">
       <img src="img/logo-unfire-256.webp" alt="" width="64" height="64" style="width:64px;height:64px;margin:0 auto 12px;filter:drop-shadow(0 0 18px rgba(61,139,255,.6))">
       <h1>Todo el sonido de <em>UNFIRE</em><br>en un solo maletín.</h1>
       <p class="lede">Baja o pulsa la mariposa para abrirlo. Con el cursor dentro, la rueda te mete; fuera, la página baja normal.</p><a class="byu" href="https://unfire.technology" target="_blank" rel="noopener"><img src="img/dragon.webp" alt="">UNFIRE<img src="img/emblem-butterfly.webp" alt=""></a>
     </div>
-    <button class="openbtn" id="openBtn" type="button" aria-label="Abrir el maletín"><span class="ob-ring"></span><span class="ob-cap"><img src="img/emblem-butterfly.webp" alt=""></span><b>ABRIR</b></button>
+    <button class="openbtn" id="openBtn" type="button" aria-label="Pulsar aquí para ampliar la vista y abrir el maletín"><span class="ob-ring"></span><span class="ob-cap"><img src="img/emblem-butterfly.webp" alt=""></span><b>PULSAR AQUÍ</b></button>
     <button class="sndbtn" id="sndBtn" type="button" aria-pressed="false">🔈 Sonido</button>
   </div>
 </div>
@@ -797,7 +799,7 @@ const UNFIRE_SCENE=(()=>{
   if(window.visualViewport)visualViewport.addEventListener('resize',recalibrate,{passive:true});
   const help=document.createElement('div');help.id='unfireGameHelp';
   help.style.cssText='display:none;position:absolute;z-index:30;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(91vw,330px);padding:13px;border:1px solid #83cfff;border-radius:16px;background:#081528f5;color:#eef7ff;text-align:center;font:600 12px/1.5 system-ui;box-shadow:0 12px 30px #000a';
-  help.innerHTML='Si el juego no aparece, prueba el modo compatible.<div style="display:flex;justify-content:center;gap:8px;margin-top:9px"><button id="unfireGameRetry" type="button" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;background:#174b80;color:white">REINTENTAR</button><a href="maletin/index.html?v=20261023fs2&quality=compact" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;color:white;text-decoration:none">JUGAR DIRECTO</a></div>';
+  help.innerHTML='Si el juego no aparece, prueba el modo compatible.<div style="display:flex;justify-content:center;gap:8px;margin-top:9px"><button id="unfireGameRetry" type="button" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;background:#174b80;color:white">REINTENTAR</button><a href="maletin/index.html?v=20261023hud3&quality=compact" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;color:white;text-decoration:none">JUGAR DIRECTO</a></div>';
   pin.appendChild(help);
   help.querySelector('#unfireGameRetry').onclick=()=>{help.style.display='none';start(true);};
   const fail=()=>{pin.classList.add('scene-error');pin.classList.remove('scene-ready');help.style.display='block';
@@ -871,29 +873,54 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
     try{const p=fn.call(pin,{navigationUI:'hide'});p?.catch?.(()=>{});}catch(_){}
   };
   const enterGame=()=>{
+    // Start the actual lid motion only after the fullscreen enlargement is complete.
     immersive();
     try{fr.contentWindow.postMessage({unfire:1,entryStart:true,vis:true},location.origin);}catch(_){}
   };
+  let entryTransition=false;
   const open=(D=1100)=>{
-  immersive();
-  fullscreenFromGesture();
-  if($('#heroPin').classList.contains('scene-error')){loadingIntent=false;UNFIRE_SCENE.start(true);}
-  else UNFIRE_SCENE.start();
-  if(anim||loadingIntent)return;
-  if(!UNFIRE_SCENE.isReady()){
-    loadingIntent=true;const btn=$('#openBtn'),txt=btn.querySelector('b');
-    btn.classList.add('press');btn.setAttribute('aria-busy','true');if(txt)txt.textContent='CARGANDO';
-    UNFIRE_SCENE.onReady(()=>{
-      loadingIntent=false;btn.removeAttribute('aria-busy');if(txt)txt.textContent='ABRIR';
-      open(D);
-    });
-    return;
-  }
-  // Do not scroll back into the website after the 3D scene has loaded.
-  enterGame();loadingIntent=false;anim=0;parked=0;
-  const btn=$('#openBtn');btn.classList.remove('press');btn.removeAttribute('aria-busy');
-  const title=btn.querySelector('b');if(title)title.textContent='ABRIR';
-};
+    if(entryTransition||caseLocal)return;
+    if($('#heroPin').classList.contains('scene-error')){loadingIntent=false;UNFIRE_SCENE.start(true);}
+    else UNFIRE_SCENE.start();
+    if(!UNFIRE_SCENE.isReady()){
+      if(loadingIntent)return;
+      loadingIntent=true;
+      const btn=$('#openBtn'),txt=btn.querySelector('b');
+      btn.classList.add('press');btn.setAttribute('aria-busy','true');if(txt)txt.textContent='CARGANDO…';
+      UNFIRE_SCENE.onReady(()=>{
+        loadingIntent=false;btn.removeAttribute('aria-busy');
+        if(txt)txt.textContent='PULSAR AQUÍ';
+        open(D);
+      });
+      return;
+    }
+    entryTransition=true;
+    const pin=$('#heroPin'),before=pin.getBoundingClientRect();
+    immersive();
+    fullscreenFromGesture();
+    const after=pin.getBoundingClientRect();
+    const finish=()=>{
+      if(!entryTransition)return;
+      entryTransition=false;enterGame();parked=0;
+      const btn=$('#openBtn');btn.classList.remove('press');btn.removeAttribute('aria-busy');
+      const label=btn.querySelector('b');if(label)label.textContent='PULSAR AQUÍ';
+    };
+    if(pin.animate&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+      const dx=before.left+before.width/2-after.left-after.width/2;
+      const dy=before.top+before.height/2-after.top-after.height/2;
+      const sx=Math.min(.90,Math.max(.2,before.width/Math.max(1,after.width)));
+      const sy=Math.min(.84,Math.max(.2,before.height/Math.max(1,after.height)));
+      try{
+        const movement=pin.animate([
+          {transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`,borderRadius:'22px'},
+          {transform:'translate(0px,0px) scale(1)',borderRadius:'0px'}
+        ],{duration:1150,easing:'cubic-bezier(.2,.76,.16,1)',fill:'both'});
+        movement.finished.then(finish,()=>{});
+        // A browser may cancel a fullscreen animation: never strand the player.
+        setTimeout(finish,1250);
+      }catch(_){setTimeout(finish,0);}
+    }else setTimeout(finish,0);
+  };
   const y1o=()=>hero.offsetTop+(hero.offsetHeight-innerHeight)*.62;const gate=(dy)=>{if(anim)return true;const y=scrollY,Y=y1o();if(dy>0&&y<Y-6&&y>hero.offsetTop-120){open(1300);return true}return false};addEventListener('wheel',e=>{if(gate(e.deltaY))e.preventDefault()},{passive:false});
   const prog=()=>{const r=hero.getBoundingClientRect();return Math.min(1,Math.max(0,-r.top/Math.max(1,r.height-innerHeight)))};
   function tick(){if(caseLocal)return;if(parked&&scrollY<=hero.offsetTop+8)parked=0;const v=parked?0:prog();try{const rb=hero.getBoundingClientRect();fr.contentWindow.postMessage({unfire:1,vis:caseLocal||rb.bottom>90,...(caseLocal?{}:{p:Math.min(1,v*1.5)})},'*')}catch(e){}hc.style.opacity=1-Math.min(1,v*3.2);$('#openBtn').classList.toggle('gone',v>.18);

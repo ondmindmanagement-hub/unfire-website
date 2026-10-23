@@ -4,6 +4,20 @@ const html=fs.readFileSync('audio/index.html','utf8');
 const game=fs.readFileSync('audio/maletin/index.html','utf8');
 new vm.Script(engine,{filename:'game-engine-v50.js'});
 function chk(label,condition){assert.ok(condition,label);console.log('PASS',label)}
+chk('Landing says PULSAR AQUÍ on the original butterfly',html.includes('<b>PULSAR AQUÍ</b>'));
+chk('2D landing butterfly hidden after entering game',html.includes('#heroPin.imm #openBtn')&&html.includes('display:none!important;visibility:hidden!important;pointer-events:none!important'));
+chk('Fullscreen transition completes before the case lid opens',html.includes('movement.finished.then(finish,()=>{})')&&html.includes('entryTransition=false;enterGame()'));
+chk('Lid uses stable time-based animation',engine.includes('lidMotion.elapsed=Math.min')&&engine.includes('actualFrameTime')&&!engine.includes('lidControlledByPlayer ? 0.18 : 0.16'));
+chk('Obsolete lower camera controls removed',!engine.includes('caseModeHud')&&!engine.includes('caseInspectBtn')&&!engine.includes('caseRobotBtn')&&!game.includes('#caseModeHud'));
+chk('Single contextual player button is available after full procedural case opening',
+  engine.includes("characterEntryButton.id='unfireCharacterEntry'")&&engine.includes('lidOpen>=0.998')&&engine.includes("if(!ROAMS.on)enterRoam();")&&game.includes('#unfireCharacterEntry[hidden]'));
+chk('One-time player hint blinks for exactly two seconds',engine.includes("'unfire_character_entry_hint_v1'")&&engine.includes('},2000);')&&game.includes('animation:unfire-character-2s 2s steps(1,end) 1'));
+chk('Procedural physical case opening is intentionally slow',engine.includes('Math.max(0.85,5.6*Math.abs(pt-pNow))')&&engine.includes('latches.forEach((l) =>')&&engine.includes('lidPivot.rotation.x'));
+
+chk('Entry always forces 3D case, never the roaming robot',engine.includes('if(ROAMS.on)exitRoam();CASE_VIEW.on=false'));
+chk('Cinematic noclip traverses house, walls, doors and windows',engine.includes('Cinematic camera is a spectator')&&engine.includes('REC.p.x=clamp(REC.p.x,-90000,90000)')&&!engine.includes('REC.p.z = clamp(REC.p.z, -13.5, 93.5)'));
+chk('Case camera approaches using a smooth timed dolly',engine.includes('entryDolly.elapsed=Math.min')&&engine.includes('entryDolly.to=view.D0*.96'));
+chk('No floating 2D showcase return button',!game.includes('✕ DEVOLVER A LA VITRINA'));
 chk('Original 3D butterfly artwork preserved',engine.includes("G3.drawEmblem(em.getContext('2d'), 256, '#7fd0ff')"));
 chk('Real 3D lid-button calls local toggle',engine.includes('ray.intersectObject(lidBtn, true).length) { toggleCaseInGame()'));
 chk('Rapid toggles use target state',engine.includes('if(pTarget>0.5)closeCaseInGame();else openCaseInGame();'));
@@ -28,8 +42,8 @@ chk('Room audio implementation retained',engine.includes('const AMB ='));
 chk('Parent scroll no longer overrides manual open/close',engine.includes('!lidControlledByPlayer) pTarget = d.p;'));
 chk('Host keeps iframe active when case is local',html.includes('vis:caseLocal||rb.bottom>90'));
 chk('Host does not scroll when closing case',!html.includes('if(d.closeCase)Mal.shut();'));
-chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v=20261023fs2'));
-chk('Host loads exact matching game',/maletin\/index\.html\?v=20261023fs2/.test(html));
+chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v=20261023hud3'));
+chk('Host loads exact matching game',/maletin\/index\.html\?v=20261023hud3/.test(html));
 chk('User can explicitly exit if desired',engine.includes('window.__exitGame'));
 chk('3D original scene size intact',engine.length>500000);
 const storySource=game.slice(game.indexOf('window.STORY_INIT = function (H) {'),game.indexOf('</script>',game.indexOf('window.STORY_INIT = function (H) {')));
