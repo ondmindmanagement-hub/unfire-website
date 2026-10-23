@@ -68,6 +68,11 @@ async function exercise(spec) {
     await page.waitForFunction(()=>!!window.__roamAPI&&!!window.UnfireAdaptiveControls &&
       !!document.getElementById('unfireEditTouchLayout'),null,{timeout:90000,polling:250});
     await page.evaluate(()=>{
+      // DOM/layout test only. Park the expensive software-WebGL render loop
+      // after the real game boot; control timers + DOM remain live. Physical
+      // GPU smoothness is measured by separate frame-time QA, not this probe.
+      if(location.hostname==='127.0.0.1')
+        Object.defineProperty(document,'hidden',{configurable:true,get:()=>true});
       window.__roamAPI.enterRoam();
       window.__roamAPI.ROAMS.fly=true;
     });
