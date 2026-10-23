@@ -30,4 +30,29 @@ changeCb();
 assert.equal(events, 2);
 assert.equal(last.assetPolicy, 'on-demand');
 dispose();
-console.log('PASS 16 passive client-quality policy assertions');
+
+assert.equal(Q.network({}, 0.7).kind, 'constrained');
+assert.equal(Q.network({}, 2.7).kind, 'moderate');
+assert.equal(Q.network({}, 9).kind, 'good');
+assert.equal(Q.network({ connection: { effectiveType: '4g' } }, 0.8).kind, 'constrained');
+assert.equal(Q.network({ connection: { effectiveType: '2g' } }, 30).kind, 'constrained');
+assert.equal(Q.network({ connection: { saveData: true } }, 80).kind, 'constrained');
+assert.equal(make({ hardwareConcurrency: 12, deviceMemory: 8 }, { observedMbps: 0.9 }).render, 'high'); // network != GPU
+assert.equal(make({}, { observedMbps: 0.9 }).assetPolicy, 'on-demand');
+const item = (i, bytes = 100000, interval = 300) => ({
+  name: 'https://unfire.technology/audio/img/frame' + i + '.webp',
+  transferSize: bytes, responseStart: 5000 + i * 500,
+  responseEnd: 5000 + i * 500 + interval
+});
+const sample = (items) => ({ location: { origin: 'https://unfire.technology' },
+  performance: { now: () => 30000, getEntriesByType: () => items } });
+assert.equal(Q.estimateResourceMbps(sample([item(1), item(2)])), null); // too few samples
+assert.ok(Q.estimateResourceMbps(sample([item(1), item(2), item(3)])) > 2);
+assert.equal(Q.capture({ ...sample([item(1), item(2), item(3)]), navigator: {} }).network, 'moderate');
+assert.equal(Q.estimateResourceMbps(sample([item(1, 0), item(2, 0), item(3, 0)])), null); // cached data ignored
+assert.equal(Q.estimateResourceMbps(sample([item(1), { ...item(2), name: 'https://evil.test/asset' }, item(3)])), null); // origin isolation
+assert.equal(Q.estimateResourceMbps(sample([item(1), { ...item(2), responseEnd: 1000 }, item(3)])), null); // invalid timing
+assert.equal(Q.estimateResourceMbps(sample([item(1), item(2), item(3)].map(e=>({ ...e, responseEnd:e.responseStart+100000 })))), null); // invalid durations
+assert.equal(Q.estimateResourceMbps({}), null); // APIs missing
+console.log('PASS 32 passive client-quality policy assertions');
+
