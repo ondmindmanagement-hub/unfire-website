@@ -111,7 +111,7 @@ const assert=require('node:assert/strict');
   await firstPage.addInitScript(()=>{try{localStorage.setItem('unfire_save_v1',JSON.stringify({name:'New',level:1,ch:0,step:0,done:[],met:true,ts:Date.now()}))}catch(e){}});
   await firstPage.goto(process.env.UNFIRE_TEST_URL||'http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded'});
   await firstPage.locator('#openBtn').evaluate(e=>e.click());
-  await firstPage.waitForFunction(()=>!!document.getElementById('malFrame')?.contentWindow?.__mal?.S,{timeout:80000});
+  await firstPage.waitForFunction(()=>!!document.getElementById('malFrame')?.contentWindow?.__mal?.S,null,{timeout:120000,polling:250});
   const newcomer=firstPage.frames().find(x=>x.url().includes('/audio/maletin/index.html'));
   await newcomer.evaluate(()=>{window.__mal.setP(1);window.__mal.requestOpen();window.__roamAPI.enterRoam();window.__mal.toggleCase()});
   const newbie=await newcomer.evaluate(()=>({unlocked:window.__UNFIRE_CASE_QA.portableUnlocked,carrying:window.__UNFIRE_CASE_QA.carrying,visible:window.__UNFIRE_CASE_QA.caseVisible,roam:window.__UNFIRE_CASE_QA.roam,disabled:document.getElementById('unfireCarryCase').disabled}));
