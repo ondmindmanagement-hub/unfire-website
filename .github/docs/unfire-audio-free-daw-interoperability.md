@@ -63,7 +63,7 @@ Verificar URLs y precios por país con el catálogo de Apple antes de campañas.
 - Componentes del mundo mapean a `deviceId`/`parameterId` estables; los instrumentos reales indican si son demo, gratis o comprados. Estado de escena y preset recuperable incluso sin conexión.
 - Importación/exportación de presets, patrones MIDI y parámetros autorizados (sin prometer audio stems o control directo de otras apps hasta implementarlos).
 - Futuro entitlement portátil entre plugin desktop y web, con firma servidor y cache local limitada; si el servicio cae, se mantienen funciones gratuitas y contenidos ya permitidos por su licencia.
-- Los contenidos de terceros (samples, fotos, vídeo, marcas, modelos 3D) requieren permisos de explotación comercial verificables.
+- Los contenidos de terceros (samples, fotos, vídeo, marcas, modelos 3D) requieren permisos de explotación comercial verificables. Los frameworks de audio, JUCE cuando se use, y cualquier librería de código deben tener licencias de distribución apropiadas para cada SKU antes de venderlo.
 
 ## Puertas de publicación y riesgos
 
