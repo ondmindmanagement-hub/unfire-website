@@ -338,6 +338,8 @@
   });
 
   updateControl();
-  // Paint the HTML/fallback first; WebGL is non-essential progressive enhancement.
-  requestAnimationFrame(() => window.setTimeout(initialize, 0));
+  // Let the browser commit an HTML/2D frame before entering WebGL setup.
+  // Software-based WebGL can block the main thread; a tiny deferred start
+  // keeps the storefront legible instead of trapping first paint behind GPU init.
+  requestAnimationFrame(() => window.setTimeout(initialize, 180));
 })();
