@@ -14,19 +14,66 @@ const cors = {
   'Vary': 'Origin'
 };
 
+// Refuse unbounded bodies before doing expensive D1 writes; chunked transfers
+// are also capped even if Content-Length is absent or incorrect.
+async function readBoundedBody(request) {
+  const declared = Number(request.headers.get('Content-Length') || 0);
+  if (declared > 512) return null;
+  if (!request.body) return '';
+  const reader = request.body.getReader();
+  const chunks = [];
+  let total = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > 512) {
+        await reader.cancel();
+        return null;
+      }
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  const bytes = new Uint8Array(total);
+  let position = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, position);
+    position += chunk.byteLength;
+  }
+  return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+}
+
 async function ingest(request, env) {
   if (request.headers.get('Origin') !== ORIGIN) return respond({ error: 'origin_denied' }, 403);
-  if (!env.DB) return respond({ error: 'not_configured' }, 503, cors);
+  if (!env.DB || !env.EVENT_RATE_LIMITER || !env.SESSION_RATE_LIMITER)
+    return respond({ error: 'not_configured' }, 503, cors);
   if ((request.headers.get('Content-Type') || '').split(';')[0].trim().toLowerCase() !== 'application/json')
     return respond({ error: 'invalid_content_type' }, 415, cors);
-  const body = await request.text();
-  if (body.length > 512) return respond({ error: 'too_large' }, 413, cors);
+  let body;
+  try { body = await readBoundedBody(request); }
+  catch (_) { return respond({ error: 'invalid_body' }, 400, cors); }
+  if (body === null) return respond({ error: 'too_large' }, 413, cors);
   let value;
   try { value = JSON.parse(body); } catch (_) { return respond({ error: 'invalid_json' }, 400, cors); }
   if (!value || typeof value !== 'object' || Array.isArray(value) ||
       Object.keys(value).sort().join(',') !== 'event,session' ||
       !EVENTS.has(value.event) || typeof value.session !== 'string' || !SESSION.test(value.session)) {
     return respond({ error: 'invalid_event' }, 400, cors);
+  }
+  // Cloudflare's rate-limiter is approximate and scoped to an edge location.
+  // Both bindings are REQUIRED, otherwise fail closed (no unlimited D1 writes).
+  try {
+    const [globalLimit, sessionLimit] = await Promise.all([
+      env.EVENT_RATE_LIMITER.limit({ key: 'audio-events' }),
+      env.SESSION_RATE_LIMITER.limit({ key: value.session })
+    ]);
+    if (!globalLimit.success || !sessionLimit.success)
+      return respond({ error: 'rate_limited' }, 429, cors);
+  } catch (_) {
+    return respond({ error: 'collector_unavailable' }, 503, cors);
   }
   const day = new Date().toISOString().slice(0, 10);
   try {
@@ -48,12 +95,12 @@ async function summary(request, env) {
   const from = new Date(Date.now() - 29 * 86400000).toISOString().slice(0, 10);
   const [totals, sessions] = await env.DB.batch([
     env.DB.prepare('SELECT day,event,total FROM daily_counts WHERE day >= ? ORDER BY day,event').bind(from),
-    env.DB.prepare('SELECT day,event,COUNT(*) AS tabs FROM daily_sessions WHERE day >= ? GROUP BY day,event ORDER BY day,event').bind(from)
+    env.DB.prepare('SELECT day,event,COUNT(*) AS loads FROM daily_sessions WHERE day >= ? GROUP BY day,event ORDER BY day,event').bind(from)
   ]);
-  // "tabs" means nonpersistent consenting browser-tab sessions; NOT people/MAU.
+  // "loads" are random nonpersistent consenting page-load sessions; NOT people/MAU.
   return respond({ period_days: 30, timezone: 'UTC', counts: totals.results || [],
-    consenting_tab_sessions: sessions.results || [],
-    note: 'Not unique humans or verified purchases. No historical data before integration.' });
+    consenting_page_loads: sessions.results || [],
+    note: 'Consented page loads, not unique humans/players, MAU or verified purchases. No historical data before integration.' });
 }
 
 export default {

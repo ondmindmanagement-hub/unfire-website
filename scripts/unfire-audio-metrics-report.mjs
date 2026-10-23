@@ -11,15 +11,15 @@ const LABELS = Object.freeze({
 });
 export function formatSummary(report) {
   if (!report || !Array.isArray(report.counts) ||
-      !Array.isArray(report.consenting_tab_sessions)) throw Error('Invalid report schema');
+      !Array.isArray(report.consenting_page_loads)) throw Error('Invalid report schema');
   const lines = ['UNFIRE AUDIO — últimos ' + report.period_days + ' días, UTC'];
   for (const [event, label] of Object.entries(LABELS)) {
     const total = report.counts.filter(x => x.event === event).reduce((v, x) => v + Number(x.total || 0), 0);
-    const dailyTabs = report.consenting_tab_sessions.filter(x => x.event === event)
-      .reduce((v, x) => v + Number(x.tabs || 0), 0);
-    lines.push(label + ': ' + total + ' eventos / ' + dailyTabs + ' sesiones de pestaña por día');
+    const dailyLoads = report.consenting_page_loads.filter(x => x.event === event)
+      .reduce((v, x) => v + Number(x.loads || 0), 0);
+    lines.push(label + ': ' + total + ' eventos / ' + dailyLoads + ' cargas consentidas por día');
   }
-  lines.push('ATENCIÓN: las sesiones de pestaña no son personas únicas ni usuarios mensuales activos.');
+  lines.push('ATENCIÓN: las cargas consentidas no son personas únicas, jugadores reales ni usuarios mensuales activos.');
   lines.push('Las ventas pagadas deben comprobarse en la tienda/proveedor financiero.');
   return lines.join('\n');
 }

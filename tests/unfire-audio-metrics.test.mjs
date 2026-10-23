@@ -58,6 +58,16 @@ test('revoking consent immediately stops event transmission', () => {
   assert.equal(p.calls.length, 1);
 });
 
+function env(db = mockDB(), opts = {}) {
+  const limiter = { limit: async () => ({ success: true }) };
+  return {
+    DB: db,
+    EVENT_RATE_LIMITER: opts.EVENT_RATE_LIMITER || limiter,
+    SESSION_RATE_LIMITER: opts.SESSION_RATE_LIMITER || limiter,
+    ADMIN_TOKEN: 'secret-local-test'
+  };
+}
+
 function mockDB() {
   const statements = [];
   return {
@@ -70,7 +80,7 @@ function mockDB() {
     async batch(items) {
       return items.map((_, i) => ({
         results: i === 0 ? [{ day: '2026-10-23', event: 'game_enter', total: 1 }] :
-          [{ day: '2026-10-23', event: 'game_enter', tabs: 1 }]
+          [{ day: '2026-10-23', event: 'game_enter', loads: 1 }]
       }));
     }
   };
@@ -84,16 +94,16 @@ function eventReq(origin, body) {
 
 test('denies off-origin requests and prevents exposed counters', async () => {
   const db = mockDB();
-  const rejected = await collector.fetch(eventReq('https://evil.example', { event: 'game_enter', session: SESSION_ID }), { DB: db });
+  const rejected = await collector.fetch(eventReq('https://evil.example', { event: 'game_enter', session: SESSION_ID }), env(db));
   assert.equal(rejected.status, 403);
-  const stats = await collector.fetch(new Request('https://collector.example/admin/summary'), { DB: db, ADMIN_TOKEN: 'secret-local-test' });
+  const stats = await collector.fetch(new Request('https://collector.example/admin/summary'), env(db));
   assert.equal(stats.status, 401);
   assert.equal(db.statements.length, 0);
 });
 
 test('valid events insert daily totals and tab dedupe', async () => {
   const db = mockDB();
-  const response = await collector.fetch(eventReq('https://unfire.technology', { event: 'briefcase_open', session: SESSION_ID }), { DB: db });
+  const response = await collector.fetch(eventReq('https://unfire.technology', { event: 'briefcase_open', session: SESSION_ID }), env(db));
   assert.equal(response.status, 202);
   assert.equal(response.headers.get('Access-Control-Allow-Origin'), 'https://unfire.technology');
   assert.equal(db.statements.length, 2);
@@ -107,7 +117,7 @@ test('rejects unknown fields, payment events and invalid sessions', async () => 
     { event: 'game_enter', session: 'john@example.com' },
     { event: 'game_enter', session: SESSION_ID, email: 'john@example.com' }
   ]) {
-    const response = await collector.fetch(eventReq('https://unfire.technology', bad), { DB: mockDB() });
+    const response = await collector.fetch(eventReq('https://unfire.technology', bad), env());
     assert.equal(response.status, 400);
   }
 });
@@ -116,17 +126,17 @@ test('admin report requires a private token, labels tabs precisely', async () =>
   const db = mockDB();
   const response = await collector.fetch(new Request('https://collector.example/admin/summary', {
     headers: { 'Authorization': 'Bearer secret-local-test' }
-  }), { DB: db, ADMIN_TOKEN: 'secret-local-test' });
+  }), env(db));
   assert.equal(response.status, 200);
   const body = await response.json();
   assert.equal(body.period_days, 30);
-  assert.match(body.note, /Not unique humans/);
+  assert.match(body.note, /not unique humans/);
   assert.equal(db.statements.length, 2);
 });
 
 test('scheduled retention removes IDs and aggregates after 35 days', async () => {
   const db = mockDB();
-  await collector.scheduled({}, { DB: db });
+  await collector.scheduled({}, env(db));
   assert.equal(db.statements.length, 2);
   assert.match(db.statements[0].sql, /DELETE FROM daily_sessions/);
   assert.match(db.statements[1].sql, /DELETE FROM daily_counts/);

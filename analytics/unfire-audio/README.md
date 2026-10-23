@@ -12,14 +12,14 @@
 | briefcase_open | Maletín realmente abierto | Compra |
 | checkout_click | Clic hacia el checkout del proveedor | Pago realizado |
 
-GET /admin/summary, protegido con secreto, devolverá contadores diarios y **sesiones de pestaña anónimas**, no personas únicas, usuarios registrados ni MAU verificados. Facturación/ventas requieren fuentes oficiales de la plataforma de cobro y ajustes por devoluciones.
+GET /admin/summary, protegido con secreto, devolverá contadores diarios y **cargas de página anónimas**, no personas únicas, usuarios registrados ni MAU verificados. Facturación/ventas requieren fuentes oficiales de la plataforma de cobro y ajustes por devoluciones.
 
 ## Privacidad
 
 - Envío solo después de 'unfire-cookie-consent=accepted'. Rechazo o error de almacenamiento o endpoint ausente => ningún evento.
-- UUID aleatorio en memoria por pestaña; no persiste al recargar. Nada de IP, email, identidad, cookies, fingerprint, URLs, parámetros, checkout ni pedidos en D1.
+- UUID aleatorio en memoria por carga de página; no persiste al recargar. Nada de IP, email, identidad, cookies, fingerprint, URLs, parámetros, checkout ni pedidos en D1.
 - El Worker ve la conexión HTTPS pero no persiste la IP. Auditoría independiente de logs/retención Cloudflare necesaria antes de publicar.
-- Se conservan resúmenes diarios y UUIDs de pestaña hasta 35 días, con purga programada. No interpretar sesiones como usuarios únicos.
+- Se conservan resúmenes diarios y UUIDs de carga hasta 35 días, con purga programada. No interpretar sesiones como usuarios únicos.
 - Medición aproximada: bloqueadores, bots, red y límites gratuitos afectan resultados. Origin/CORS no evitan tráfico falsificado; esto NO certifica una venta.
 
 ## Pasos para habilitarla, solo por el integrador
@@ -81,6 +81,47 @@ secreto en el chat ni en un enlace:
     UNFIRE_METRICS_ADMIN_TOKEN="<SECRET_SÓLO_EN_EL_ENTORNO>" \
     node scripts/unfire-audio-metrics-report.mjs
 
-El informe distingue expresamente entradas (eventos) y sesiones de pestaña
+El informe distingue expresamente entradas (eventos) y cargas de página
 (consentidas) de PERSONAS ÚNICAS y VENTAS PAGADAS. No colocar tokens reales
 en comandos visibles, repositorios, tickets ni capturas.
+
+## Seguridad de cuotas gratuitas (revisión 23/10/2026)
+
+Cloudflare Workers Free incluye 100.000 solicitudes/día. Cloudflare D1 Free
+incluye 100.000 filas escritas/día, 5 millones leídas/día y 5 GB de datos
+(documentación oficial revisada el 23/10/2026). Al agotar el cupo, Cloudflare
+interrumpe las operaciones hasta que se renueva. El juego no debe depender de
+la disponibilidad de métricas.
+
+NO desplegar la API sin ambos rate-limit bindings de wrangler.toml.example.
+El Worker falla cerrado (503) si alguno falta o falla. Límites aproximados:
+150 eventos/minuto por centro de datos y 20/minuto por UUID de carga de
+página; los atacantes pueden forjar Origin y UUIDs, así que no equivale a
+autenticación, prevención completa de bots ni conteo fiable de personas.
+La API de limitación es aproximada por región. La API descarta cuerpos
+de más de 512 bytes antes de escribir D1, también en chunked.
+
+No instalar este Worker en rutas de WebGL ni usar métricas como registros de
+pagos o premios. Cloudflare Wrangler requiere versión >=4.36 para el binding.
+Antes de publicar, verificar cuotas, seguridad, logs, roles y costes reales.
+
+## Controles visibles de consentimiento de audio
+
+El módulo opcional assets/js/unfire-audio-metrics-consent.js muestra en
+/audio/ un cuadro ES/EN con Aceptar estadísticas y Rechazar, enlace a
+política y botón discreto Privacidad para cambiarlo posteriormente.
+Utiliza la misma preferencia unfire-cookie-consent que la web corporativa
+y despacha unfire:consent-updated al decidir. Si localStorage está bloqueado,
+no se activa el seguimiento. No usar cookies para este módulo ni forzar
+aceptación para jugar.
+
+En integración host única, cargar además del cliente y del bridge:
+
+    <script defer src="/assets/js/unfire-audio-metrics-consent.js"></script>
+
+Revisar superposición del cuadro con HUD, orientación y accesibilidad real
+antes de publicar. No editar host ni motor reservados en la PR de analíticas.
+
+En la configuración real, asignar namespace_id únicos en tu cuenta para
+ambos limitadores, sin reutilizar los de otras apps. Valores 1101/1102 del
+ejemplo son orientativos y deben validarse antes del despliegue.

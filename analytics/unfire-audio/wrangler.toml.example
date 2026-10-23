@@ -10,3 +10,20 @@ database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
 
 [triggers]
 crons = ["0 3 * * *"]
+
+# REQUIRED. Both rate-limit bindings must be configured to accept events.
+# Keys: one per Cloudflare data center, one per ephemeral page-load session.
+# Cloudflare's approximate limiter is not a fraud-proof event authenticator.
+[[ratelimits]]
+name = "EVENT_RATE_LIMITER"
+namespace_id = "1101"
+[ratelimits.simple]
+limit = 150
+period = 60
+
+[[ratelimits]]
+name = "SESSION_RATE_LIMITER"
+namespace_id = "1102"
+[ratelimits.simple]
+limit = 20
+period = 60
