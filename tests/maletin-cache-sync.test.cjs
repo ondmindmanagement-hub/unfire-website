@@ -1,0 +1,21 @@
+// One immutable release cache token across host -> iframe -> game engine.
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const host=read('audio/index.html');
+const frame=read('audio/maletin/index.html');
+const hostLinks=[...host.matchAll(/maletin\/index\.html\?v=([a-zA-Z0-9_-]+)/g)].map(x=>x[1]);
+const engineLinks=[...frame.matchAll(/game-engine-v50\.js\?v=([a-zA-Z0-9_-]+)/g)].map(x=>x[1]);
+assert(hostLinks.length>=2,'Host should version both case iframe and emergency standalone link');
+assert(engineLinks.length>=2,'Iframe should version both engine preload and active script');
+const unique=a=>[...new Set(a)];
+assert.equal(unique(hostLinks).length,1,'Host must never ship mixed case versions');
+assert.equal(unique(engineLinks).length,1,'Preloaded script and executable script must have same version');
+const version=hostLinks[0];
+assert.equal(version,engineLinks[0],'Host, iframe and 3D engine cache IDs must match');
+assert(/^20\d{6}[a-z0-9-]+$/.test(version),'Release cache version must be descriptive, not an unversioned URL');
+assert(host.includes('id="malFrame" data-src="maletin/index.html?v='+version+'"'), 'Visible iframe must use the synchronized release key');
+assert(frame.includes('<script src="game-engine-v50.js?v='+version+'"></script>'), 'Actually executed engine must use synchronized release key');
+console.log('PASS: host/iframe/engine cache coherence on release '+version);
+module.exports={version};
