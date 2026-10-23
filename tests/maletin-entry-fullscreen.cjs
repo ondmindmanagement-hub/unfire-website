@@ -49,13 +49,15 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        roaming:game.__UNFIRE_CASE_QA.roam,
        caseVisible:game.__UNFIRE_CASE_QA.caseVisible,
        caseCamera:!game.__UNFIRE_CASE_QA.roam&&!game.__UNFIRE_CASE_QA.inspecting,
-       exploreButtonVisible:getComputedStyle(game.document.getElementById('roamB')).display!=='none',
+       characterButtonExists:!!game.document.getElementById('unfireCharacterEntry'),
+       oldDoubleHudMissing:!game.document.getElementById('caseModeHud'),
+       exteriorCircleMissing:!game.__ringB,
        lid:game.__UNFIRE_CASE_QA.lid,
        exit:!!game.document.getElementById('unfireExitGame'),
        gameSource:frame.getAttribute('src')
      };
    });
-   assert(first.immersive&&first.fullViewport&&first.fullscreenAllowed&&!first.roaming&&first.caseVisible&&first.caseCamera&&first.exploreButtonVisible&&first.lid>0.94&&first.exit,
+   assert(first.immersive&&first.fullViewport&&first.fullscreenAllowed&&!first.roaming&&first.caseVisible&&first.caseCamera&&first.characterButtonExists&&first.oldDoubleHudMissing&&first.exteriorCircleMissing&&first.lid>0.94&&first.exit,
      'Single tap did not enter immersive playable world '+JSON.stringify(first));
    for(const [width,height] of [[390,844],[844,390]]){
      await page.setViewportSize({width,height});
@@ -71,7 +73,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        d.body.classList.add('storyOn');story.classList.add('on');
        const rect=(el)=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}};
        const box=rect(story.querySelector('.box'));
-       const touch=['unfireTouchPad','unfireFly','unfireTalk','unfireDown','caseModeHud']
+       const touch=['unfireTouchPad','unfireFly','unfireTalk','unfireDown']
          .map(id=>({id,hidden:getComputedStyle(d.getElementById(id)).display==='none'}));
        const exit=rect(d.getElementById('unfireExitGame'));
        return {box,touch,exit};
@@ -87,17 +89,25 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    }
    // Walking is a separate voluntary action. The player can freely enter and
    // return to the case without restarting the mission or collapsing the lid.
+   await page.waitForFunction(()=>{const g=document.getElementById('malFrame')?.contentWindow;
+     return !!g?.document.getElementById('unfireCharacterEntry')&&!g.document.getElementById('unfireCharacterEntry').hidden;
+   },null,{timeout:120000,polling:250});
    const choice=await page.evaluate(()=>{
      const game=document.getElementById('malFrame').contentWindow;
      const before=game.__UNFIRE_CASE_QA;
      if(before.roam||before.lid<.94)throw Error('Opened case jumped to avatar');
-     game.document.getElementById('roamB').click();
+     game.document.body.classList.remove('storyOn');
+     game.document.getElementById('story').classList.remove('on');
+     const button=game.document.getElementById('unfireCharacterEntry');
+     if(button.hidden) throw Error('Contextual player button did not appear after lid opened');
+     button.click();
      const exploring=game.__UNFIRE_CASE_QA.roam;
+     const hiddenOnWalking=button.hidden;
      game.document.getElementById('roamB').click();
-     return {exploring,returned:!game.__UNFIRE_CASE_QA.roam,
+     return {exploring,hiddenOnWalking,returned:!game.__UNFIRE_CASE_QA.roam,
        lid:game.__UNFIRE_CASE_QA.lid,caseVisible:game.__UNFIRE_CASE_QA.caseVisible};
    });
-   assert(choice.exploring&&choice.returned&&choice.caseVisible&&choice.lid>.94,
+   assert(choice.exploring&&choice.hiddenOnWalking&&choice.returned&&choice.caseVisible&&choice.lid>.94,
      'Case-to-avatar must be optional and reversible '+JSON.stringify(choice));
    // MODO CINE: spectator camera must pass through the entire house, walls,
    // ceilings, windows and furnishings without constraining the player robot.
