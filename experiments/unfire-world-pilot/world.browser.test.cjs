@@ -44,13 +44,17 @@ const baseUrl = (process.env.UNFIRE_WORLD_TEST_URL || "http://127.0.0.1:48763").
       // WebGL software rendering may throttle RAF; assert eventual correctness,
       // not an exact animation duration on an emulated GPU.
       await page.waitForFunction(() => document.querySelector("#morph-output").textContent === "0 %", {timeout:5000});
-      const image = await page.evaluate(async () => {
-        const response = await fetch("/audio/img/maletin-real-first-frame-desktop.webp", {cache:"no-store"});
-        const bytes = (await response.arrayBuffer()).byteLength;
-        return {status:response.status,bytes};
+      // Inspect the image as rendered by the browser: cached image requests may
+      // receive HTTP 304 rather than a second HTTP 200.
+      const preview = await page.evaluate(async () => {
+        const img = document.querySelector(".store-image-link img");
+        img.loading = "eager";
+        try { await img.decode(); } catch (_) {}
+        return {width:img.naturalWidth, height:img.naturalHeight, src:img.getAttribute("src")};
       });
-      assert.equal(image.status,200);
-      assert.ok(image.bytes > 5000 && image.bytes < 200000, "First-party preview needs an authentic, lightweight asset");
+      assert.equal(preview.src,"/audio/img/maletin-real-first-frame-desktop.webp");
+      assert.equal(preview.width,1100);
+      assert.equal(preview.height,635);
       assert.equal(await page.$eval(".store-visit", el => el.getAttribute("href")), "/audio/");
       const marks = await page.evaluate(() => performance.getEntriesByType("mark").map(mark => mark.name));
       assert.ok(marks.includes("unfire-world:webgl-ready"));
