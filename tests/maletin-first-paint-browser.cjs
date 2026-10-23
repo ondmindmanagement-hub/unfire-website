@@ -32,6 +32,11 @@ const assert=require('node:assert/strict');
    assert(first.image.includes('maletin-real-first-frame-'+(label==='desktop'?'desktop':'mobile')+'.webp')&&
      rendered.width>=width-2&&rendered.height>=height*.65&&rendered.photoIsClickable,
      'Correct actual image must cover the loading viewport '+JSON.stringify({label,first,rendered}));
+   if(label!=='desktop'){
+    const hint=await page.evaluate(()=>{const e=document.getElementById('unfireMobileTapHint'),r=e.getBoundingClientRect();return{visible:getComputedStyle(e).display!=='none',top:r.top,bottom:r.bottom,height:innerHeight}});
+    assert(hint.visible&&hint.top>=0&&hint.bottom<=hint.height-4,
+      'Mobile opening hint must be visible without scrolling '+JSON.stringify({label,hint}));
+   }
    const priorPageCount=context.pages().length;
    await page.locator('#unfireCaseFirstFrame').click({timeout:10000});
    await page.waitForFunction(()=>document.body.classList.contains('immOn'),null,{timeout:2000,polling:50});

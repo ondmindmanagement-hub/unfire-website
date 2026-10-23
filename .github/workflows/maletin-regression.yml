@@ -14,6 +14,7 @@ on:
       - 'tests/maletin-radio-volume.test.cjs'
       - 'tests/maletin-v50-browser.cjs'
       - 'tests/maletin-mobile-rotation.cjs'
+      - 'tests/maletin-responsive-radio-qa.cjs'
       - 'tests/maletin-entry-fullscreen.cjs'
       - 'audio/game.webmanifest'
       - '.github/workflows/maletin-regression.yml'
@@ -72,6 +73,7 @@ jobs:
           python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/unfire-mobile-http.log 2>&1 &
           sleep 2
           node tests/maletin-mobile-rotation.cjs
+          UNFIRE_RADIO_URL=http://127.0.0.1:8765/audio/maletin/index.html?quality=compact node tests/maletin-responsive-radio-qa.cjs
 
   browser:
     needs: mobile

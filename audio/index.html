@@ -132,6 +132,19 @@ html.immOn,body.immOn{overflow:hidden!important;overscroll-behavior:none}body.im
 .no-webgl #unfireCaseFirstFrame{pointer-events:none;cursor:default}
 .hero-pin:not(.scene-ready) .hero-copy{opacity:0!important;visibility:hidden!important}
 .hero-pin:not(.scene-ready)::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:#060a12}
+/* Mobile first frame: fill the entrance without changing the authentic capture,
+   preserve the butterfly, and avoid a moving browser-toolbar layout. */
+#unfireMobileTapHint{display:none}
+@media (max-width:600px) and (orientation:portrait){
+  .hero-pin:not(.imm){height:calc(100svh - 62px)}
+  #unfireCaseFirstFrame img{transform:scale(1.08) translateY(-13%);transform-origin:center}
+  #unfireMobileTapHint{display:block;position:absolute;left:50%;bottom:max(18svh,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:4;
+    width:max-content;max-width:calc(100vw - 26px);box-sizing:border-box;padding:10px 14px;
+    border-radius:999px;background:rgba(8,15,28,.84);border:1px solid rgba(175,201,235,.3);
+    color:#f4f7fe;font:600 12px/1.3 "Instrument Sans",system-ui,sans-serif;
+    text-align:center;pointer-events:none;box-shadow:0 8px 22px rgba(0,0,0,.32)}
+  .hero-pin.scene-ready #unfireMobileTapHint,.hero-pin.web-return #unfireMobileTapHint,.hero-pin.imm #unfireMobileTapHint{display:none}
+}
 @media(prefers-reduced-motion:reduce){#unfireCaseFirstFrame,.hero-pin.scene-ready #unfireCaseFirstFrame{transition:none}}
 /* First interactive impression is the live 3D case, never a product advertisement. */
 .hero-pin:not(.scene-ready)::after{content:"PREPARANDO MALETÍN 3D";position:absolute;inset:auto 0 10%;pointer-events:none;z-index:1;text-align:center;font:700 11px/1.5 Michroma,Arial,sans-serif;letter-spacing:.2em;color:#86c9ff;text-shadow:0 0 14px #3d8bff}
@@ -460,7 +473,8 @@ footer a{color:var(--soft)}
       <source media="(max-width:600px)" srcset="img/maletin-real-first-frame-mobile.webp">
       <img src="img/maletin-real-first-frame-desktop.webp" width="1100" height="635" alt="Maletín 3D auténtico de Unfire Audio, cerrado sobre la mesa, con su mariposa" fetchpriority="high" loading="eager" decoding="sync">
     </picture>
-    <iframe id="malFrame" data-src="maletin/index.html?v=20261023radio27v1" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone; fullscreen" allowfullscreen></iframe>
+    <span id="unfireMobileTapHint" aria-hidden="true">Pulsa el botón central para abrir</span>
+    <iframe id="malFrame" data-src="maletin/index.html?v=20261023crossdevicev1" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone; fullscreen" allowfullscreen></iframe>
     <a id="noWebglLink" href="#instrumentos">Explorar los instrumentos ↓</a>
     <div class="hero-copy" id="heroCopy">
       <img src="img/logo-unfire-256.webp" alt="" width="64" height="64" style="width:64px;height:64px;margin:0 auto 12px;filter:drop-shadow(0 0 18px rgba(61,139,255,.6))">
@@ -878,7 +892,7 @@ const UNFIRE_SCENE=(()=>{
   if(window.visualViewport)visualViewport.addEventListener('resize',recalibrate,{passive:true});
   const help=document.createElement('div');help.id='unfireGameHelp';
   help.style.cssText='display:none;position:absolute;z-index:30;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(91vw,330px);padding:13px;border:1px solid #83cfff;border-radius:16px;background:#081528f5;color:#eef7ff;text-align:center;font:600 12px/1.5 system-ui;box-shadow:0 12px 30px #000a';
-  help.innerHTML='Si el juego no aparece, prueba el modo compatible.<div style="display:flex;justify-content:center;gap:8px;margin-top:9px"><button id="unfireGameRetry" type="button" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;background:#174b80;color:white">REINTENTAR</button><a href="maletin/index.html?v=20261023radio27v1&quality=compact" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;color:white;text-decoration:none">JUGAR DIRECTO</a></div>';
+  help.innerHTML='Si el juego no aparece, prueba el modo compatible.<div style="display:flex;justify-content:center;gap:8px;margin-top:9px"><button id="unfireGameRetry" type="button" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;background:#174b80;color:white">REINTENTAR</button><a href="maletin/index.html?v=20261023crossdevicev1&quality=compact" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;color:white;text-decoration:none">JUGAR DIRECTO</a></div>';
   pin.appendChild(help);
   help.querySelector('#unfireGameRetry').onclick=()=>{help.style.display='none';start(true);};
   const fail=()=>{pin.classList.add('scene-error');pin.classList.remove('scene-ready');help.style.display='block';
