@@ -32,7 +32,7 @@ async function probe(page,name) {
       const el=document.getElementById(id);
       if(!el)return null;
       const s=getComputedStyle(el),r=el.getBoundingClientRect();
-      return (s.display==='none'||s.visibility==='hidden'||r.width<1||r.height<1) ?
+      return (s.display==='none'||s.visibility==='hidden'||Number(s.opacity)<.05||r.width<1||r.height<1) ?
         null : {id,left:r.left,top:r.top,right:r.right,bottom:r.bottom,
           width:r.width,height:r.height};
     }).filter(Boolean);
