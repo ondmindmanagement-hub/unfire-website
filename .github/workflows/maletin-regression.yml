@@ -1,4 +1,5 @@
 name: Maletin case regression
+
 on:
   pull_request:
     paths:
@@ -12,16 +13,63 @@ on:
       - 'audio/game.webmanifest'
       - '.github/workflows/maletin-regression.yml'
   workflow_dispatch:
+
+# New commits supersede their own outdated test run. No parallel WebGL
+# instances: each heavyweight browser suite gets a fresh isolated runner.
+concurrency:
+  group: maletin-regression-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
       - name: Check syntax, click routing, missions, audio and multiplayer preservation
         run: node tests/maletin-v50.test.cjs
+
+  entry:
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser test runtime
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium
+      - name: Verify first-tap immersive entry and Nimbo HUD layout
+        run: |
+          python3 -m http.server 8767 --bind 127.0.0.1 >/tmp/unfire-entry-http.log 2>&1 &
+          sleep 2
+          UNFIRE_ENTRY_URL=http://127.0.0.1:8767/audio/ node tests/maletin-entry-fullscreen.cjs
+
+  mobile:
+    needs: entry
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser test runtime
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium
+      - name: Check portrait, landscape, touch and online menu without losing story progress
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/unfire-mobile-http.log 2>&1 &
+          sleep 2
+          node tests/maletin-mobile-rotation.cjs
+
+  browser:
+    needs: mobile
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
       - name: Install browser test runtime
         run: |
           npm install --no-save playwright@1.56.1
@@ -31,12 +79,3 @@ jobs:
           python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/unfire-http.log 2>&1 &
           sleep 2
           node tests/maletin-v50-browser.cjs
-
-      - name: Check portrait, landscape, touch and online menu without losing story progress
-        run: node tests/maletin-mobile-rotation.cjs
-
-      - name: Verify first-tap immersive entry and Nimbo HUD layout
-        run: |
-          python3 -m http.server 8767 --bind 127.0.0.1 >/tmp/unfire-entry-http.log 2>&1 &
-          sleep 2
-          UNFIRE_ENTRY_URL=http://127.0.0.1:8767/audio/ node tests/maletin-entry-fullscreen.cjs

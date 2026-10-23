@@ -70,15 +70,40 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
      const state=await page.evaluate(()=>{
        const d=document.getElementById('malFrame').contentWindow.document;
        const story=d.getElementById('story');assertExists(story);
-       d.body.classList.add('storyOn');story.classList.add('on');
+       // Reset the previous orientation's artificial story overlay before
+       // measuring the case-view-only PASEAR button: storyOn hides it by design.
+       d.body.classList.remove('storyOn');story.classList.remove('on');
        const rect=(el)=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}};
+       // The existing PASEAR is a case-view-only action, not part of the
+       // central bottom captions. Probe its real CSS before the story hides it.
+       const walk=d.getElementById('roamB'), oldDisplay=walk.style.display;
+       walk.style.display='block';
+       const pasear=rect(walk);
+       const map=rect(d.getElementById('minimap'));
+       const zoomHud=rect(d.getElementById('hud'));
+       walk.style.display=oldDisplay;
+       d.body.classList.add('storyOn');story.classList.add('on');
        const box=rect(story.querySelector('.box'));
        const touch=['unfireTouchPad','unfireFly','unfireTalk','unfireDown']
          .map(id=>({id,hidden:getComputedStyle(d.getElementById(id)).display==='none'}));
-       const exit=rect(d.getElementById('unfireExitGame'));
-       return {box,touch,exit};
+       const exitButton=d.getElementById('unfireExitGame');
+       const exit=rect(exitButton),style=getComputedStyle(exitButton);
+       const label={text:exitButton.textContent.trim(),scrollWidth:exitButton.scrollWidth,
+         clientWidth:exitButton.clientWidth,whiteSpace:style.whiteSpace};
+       const tipEl=d.getElementById('tip'),tip=rect(tipEl);
+       return {box,touch,exit,label,tip,pasear,map,zoomHud};
+
        function assertExists(x){if(!x)throw Error('Story overlay missing');}
      });
+     const intersects=(a,b)=>a.w>0&&a.h>0&&b.w>0&&b.h>0&&
+       a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+     const walk=state.pasear;
+     assert(walk.x>=0&&walk.y>=0&&walk.w>=70&&walk.x+walk.w<=width+2&&
+       walk.y+walk.h<=height+2&&walk.y<height*.2,
+       'PASEAR not in the safe upper-left case slot '+JSON.stringify({width,height,walk}));
+     assert(!intersects(walk,state.exit)&&!intersects(walk,state.map)&&
+       !intersects(walk,state.zoomHud)&&!intersects(walk,state.tip),
+       'PASEAR overlaps exit, minimap, zoom HUD or captions '+JSON.stringify({width,height,walk,exit:state.exit,map:state.map,hud:state.zoomHud,tip:state.tip}));
      const b=state.box;
      assert(b.x>=-1&&b.y>=-1&&b.x+b.w<=width+2&&b.y+b.h<=height+2,
        'Nimbo story dialogue clipped '+JSON.stringify({width,height,b}));
@@ -86,6 +111,13 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        'Buttons overlap active story dialogue '+JSON.stringify(state.touch));
      assert(state.exit.x>=-1&&state.exit.y>=-1&&state.exit.x+state.exit.w<=width+1,
        'Game exit clipped by small viewport');
+     assert(/(SALIR A LA WEB|BACK TO THE WEBSITE)/.test(state.label.text)&&state.label.whiteSpace!=='nowrap'&&
+       state.label.scrollWidth<=state.label.clientWidth+2,
+       'Game exit label visibly truncated or missing '+JSON.stringify({width,height,label:state.label}));
+     const overlaps=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+     assert(!overlaps(state.exit,state.box),
+       'Story dialogue overlaps the exit on rotated phone '+JSON.stringify({width,height,exit:state.exit,box:state.box}));
+
    }
    // Carry/throw capsule action stays on the left rail, beyond the central
    // avatar, and between minimap and thumbstick across rotations.
