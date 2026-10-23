@@ -81,7 +81,9 @@ test('prewarm does not start when tab hidden or player already walking',()=>{
 test('original complete collision fallback still exists in active gameplay',()=>{
   assert.match(engine,/if \(!window\.__PROPS\) \{ const L = \[\]/);
   assert.match(engine,/window\.__OBST = window\.__buildObst\(\)/);
-  assert.match(engine,/if \(LOWDEV\) setTimeout\(prewarmRoamingProps, 350\)/);
+  assert.match(engine,/roomPrewarmRequested = true/);
+  assert.match(engine,/lidOpen > 0\.985 && !entryDolly\.active/);
+  assert.match(engine,/setTimeout\(prewarmRoamingProps, 500\)/);
   assert.match(fragment,/performance\.now\(\) \+ 2\.5/);
   assert.match(fragment,/!ROAMS\.on && !window\.__OBST && !document\.hidden/);
 });
