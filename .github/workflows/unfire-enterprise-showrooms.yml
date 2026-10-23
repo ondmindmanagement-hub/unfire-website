@@ -1,0 +1,30 @@
+name: Unfire enterprise showrooms
+
+on:
+  pull_request:
+    paths:
+      - "enterprise/**"
+      - "contact/index.html"
+      - "tests/unfire-enterprise-showrooms.test.cjs"
+      - ".github/workflows/unfire-enterprise-showrooms.yml"
+  push:
+    branches: [main]
+    paths:
+      - "enterprise/**"
+      - "contact/index.html"
+      - "tests/unfire-enterprise-showrooms.test.cjs"
+      - ".github/workflows/unfire-enterprise-showrooms.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  commercial-and-navigation:
+    name: Showrooms content and navigation
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Run zero-dependency Node tests
+        run: node tests/unfire-enterprise-showrooms.test.cjs
