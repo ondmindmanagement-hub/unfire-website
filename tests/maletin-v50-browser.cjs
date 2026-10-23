@@ -106,13 +106,18 @@ const assert=require('node:assert/strict');
   const studio=await f.evaluate(()=>{const panel=document.querySelector('#onl .b').getBoundingClientRect();return {cards:document.querySelectorAll('#onT .robotCard').length,locked:document.querySelectorAll('#onT .robotCard:disabled').length,portraits:document.querySelectorAll('#onT .robotCard img').length,width:panel.width,viewport:innerWidth}});
   assert(studio.cards===20&&studio.locked===0&&studio.portraits>=2&&studio.width<studio.viewport*0.5,'Workshop obstructs player or 3D portraits missing: '+JSON.stringify(studio));
   // First-time players use the case on the table; carrying is locked until chapter 3.
+  // Release the validated first game and its software WebGL context before
+  // launching another; CI runners have limited RAM/GPU time.
+  await page.close();
   const firstPage=await browser.newPage({viewport:{width:960,height:700}});
   const firstErrors=[];firstPage.on('pageerror',e=>firstErrors.push(e.message));
   await firstPage.addInitScript(()=>{try{localStorage.setItem('unfire_save_v1',JSON.stringify({name:'New',level:1,ch:0,step:0,done:[],met:true,ts:Date.now()}))}catch(e){}});
-  await firstPage.goto(process.env.UNFIRE_TEST_URL||'http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded'});
-  await firstPage.locator('#openBtn').evaluate(e=>e.click());
-  await firstPage.waitForFunction(()=>!!document.getElementById('malFrame')?.contentWindow?.__mal?.S,null,{timeout:120000,polling:250});
-  const newcomer=firstPage.frames().find(x=>x.url().includes('/audio/maletin/index.html'));
+  // The website's first-tap entry is exercised separately by maletin-entry-fullscreen.
+  // This check only needs the same game engine, not a *second* parent page+iframe.
+  const direct=new URL('maletin/index.html',process.env.UNFIRE_TEST_URL||'http://127.0.0.1:8765/audio/').href;
+  await firstPage.goto(direct,{waitUntil:'commit',timeout:120000});
+  await firstPage.waitForFunction(()=>!!window.__mal?.S,null,{timeout:120000,polling:250});
+  const newcomer=firstPage;
   await newcomer.evaluate(()=>{window.__mal.setP(1);window.__mal.requestOpen();window.__roamAPI.enterRoam();window.__mal.toggleCase()});
   const newbie=await newcomer.evaluate(()=>({unlocked:window.__UNFIRE_CASE_QA.portableUnlocked,carrying:window.__UNFIRE_CASE_QA.carrying,visible:window.__UNFIRE_CASE_QA.caseVisible,roam:window.__UNFIRE_CASE_QA.roam,disabled:document.getElementById('unfireCarryCase').disabled}));
   assert(!newbie.unlocked&&!newbie.carrying&&newbie.visible&&newbie.roam&&newbie.disabled,'Newcomer portable case should stay locked but normal gameplay continue: '+JSON.stringify(newbie));
