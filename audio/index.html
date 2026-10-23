@@ -101,6 +101,16 @@ html.immOn,body.immOn{overflow:hidden!important;overscroll-behavior:none}body.im
 /* When leaving the game, keep it parked behind an intentional Y2K re-entry
    screen. Scrolling the website must never grab the 3D canvas again. */
 .hero-pin.web-return #malFrame{visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+/* Native fullscreen may be left by Esc or browser/OS. Keep the CSS game
+   viewport, and offer a real user-gesture recovery only when native fullscreen
+   has actually been active. Safari on iPhone uses CSS immersion instead. */
+#unfireRestoreFullscreen[hidden]{display:none!important}
+#unfireRestoreFullscreen{position:absolute;z-index:100;top:max(10px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);
+  max-width:calc(100dvw - 28px);padding:10px 15px;min-height:44px;border:1px solid #b8e8ff;border-radius:999px;
+  color:#fff;background:#09274deb;box-shadow:0 8px 24px #000b;font:700 11px/1.3 system-ui,sans-serif;
+  cursor:pointer;touch-action:manipulation;white-space:normal;text-align:center}
+#unfireRestoreFullscreen:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.hero-pin.web-return #unfireRestoreFullscreen{display:none!important}
 .hero-pin.web-return .hero-copy,.hero-pin.web-return #sndBtn,.hero-pin.web-return #noWebglLink{display:none!important}
 #unfireReturnPortal{display:none;position:absolute;inset:0;z-index:12;box-sizing:border-box;
   place-items:center;padding:clamp(16px,4vw,44px);background:radial-gradient(ellipse at 50% 45%,#203b71 0%,#0b1632 48%,#03060e 100%);
@@ -503,6 +513,7 @@ footer a{color:var(--soft)}
         <button id="unfireReturnPlay" type="button">✦ VOLVER A JUGAR</button>
       </div>
     </div>
+    <button id="unfireRestoreFullscreen" type="button" hidden aria-label="Volver a pantalla completa sin reiniciar el juego">⛶ RECUPERAR PANTALLA COMPLETA</button>
     <button class="sndbtn" id="sndBtn" type="button" aria-pressed="false">🔈 Sonido</button>
   </div>
 </div>
@@ -959,7 +970,7 @@ const Snd={mal:false,ui(){const open=[...document.querySelectorAll('#sheet,#hype
   all(){this.stopMal();document.querySelectorAll('#sheet,#hyper,#synth').forEach(x=>x.open&&x.close());this.mal=false;this.ui()}};
 (()=>{const sm=HTMLDialogElement.prototype.showModal;HTMLDialogElement.prototype.showModal=function(){if(['sheet','hyper','synth'].includes(this.id)){Snd.stopMal();document.querySelectorAll('#sheet,#hyper,#synth').forEach(x=>x!==this&&x.open&&x.close())}const r=sm.call(this);Snd.ui();return r};
   document.addEventListener('close',()=>setTimeout(()=>Snd.ui(),0),true);addEventListener('pagehide',()=>Snd.all());document.addEventListener('visibilitychange',()=>{if(document.hidden)Snd.all()})})();
-const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp=0,snap=0;let anim=0,passUntil=0,parked=0,loadingIntent=false,caseLocal=false,webReturn=false;
+const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp=0,snap=0;let anim=0,passUntil=0,parked=0,loadingIntent=false,caseLocal=false,webReturn=false,entryStarted=false;
   // A single tap starts the game; Safari uses viewport immersion when native
   // element fullscreen is unavailable (most iPhones).
   const immersive=()=>{
@@ -981,13 +992,14 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
     try{const p=fn.call(pin,{navigationUI:'hide'});p?.catch?.(()=>{});}catch(_){}
   };
   const enterGame=()=>{
-    // Start the actual lid motion only after the fullscreen enlargement is complete.
+    // Only a deliberate case tap starts the lid and story. Auto boot just shows 3D.
+    entryStarted=true;
     immersive();
     try{fr.contentWindow.postMessage({unfire:1,entryStart:true,vis:true},location.origin);}catch(_){}
   };
   let entryTransition=false;
   const open=(D=1100)=>{
-    if(entryTransition||caseLocal)return;
+    if(entryTransition||(caseLocal&&entryStarted))return;
     if($('#heroPin').classList.contains('scene-error')){loadingIntent=false;UNFIRE_SCENE.start(true);}
     else UNFIRE_SCENE.start();
     entryTransition=true;
@@ -1030,6 +1042,37 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
     try{fr.contentWindow.postMessage({unfire:1,vis:true,entryResume:true},location.origin);}catch(e){}
   };
   document.getElementById('unfireReturnPlay').addEventListener('click',resumeGame);
+  const restoreFullscreen=document.getElementById('unfireRestoreFullscreen');
+  let nativeWasActive=false;
+  const nativeFullscreenActive=()=>!!(document.fullscreenElement||document.webkitFullscreenElement);
+  const preserveGameViewport=()=>{
+    // Only the game's own explicit exit action is allowed to reveal the web.
+    if(webReturn||!caseLocal){restoreFullscreen.hidden=true;return;}
+    $('#heroPin').classList.add('imm');
+    document.body.classList.add('immOn');
+    document.documentElement.classList.add('immOn');
+    const active=nativeFullscreenActive();
+    if(active)nativeWasActive=true;
+    // Do not show a misleading browser-fullscreen button on iPhone Safari.
+    restoreFullscreen.hidden=!nativeWasActive||active;
+  };
+  ['fullscreenchange','webkitfullscreenchange'].forEach(eventName=>
+    document.addEventListener(eventName,preserveGameViewport));
+  addEventListener('pageshow',preserveGameViewport);
+  addEventListener('focus',preserveGameViewport);
+  addEventListener('orientationchange',preserveGameViewport);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)preserveGameViewport()});
+  restoreFullscreen.addEventListener('click',()=>{
+    immersive();fullscreenFromGesture();preserveGameViewport();
+  });
+  const bootImmersiveCase=()=>{
+    // Direct /audio/ visit: genuine WebGL case is the first playable screen.
+    // Native browser fullscreen requires user activation, so boot in CSS mode.
+    if(document.documentElement.classList.contains('no-webgl'))return;
+    immersive();
+    UNFIRE_SCENE.start();
+    preserveGameViewport();
+  };
   const y1o=()=>hero.offsetTop+(hero.offsetHeight-innerHeight)*.62;const gate=(dy)=>{if(webReturn)return false;if(anim)return true;const y=scrollY,Y=y1o();if(dy>0&&y<Y-6&&y>hero.offsetTop-120){open(1300);return true}return false};addEventListener('wheel',e=>{if(gate(e.deltaY))e.preventDefault()},{passive:false});
   const prog=()=>{const r=hero.getBoundingClientRect();return Math.min(1,Math.max(0,-r.top/Math.max(1,r.height-innerHeight)))};
   function tick(){if(caseLocal||webReturn)return;if(parked&&scrollY<=hero.offsetTop+8)parked=0;const v=parked?0:prog();try{const rb=hero.getBoundingClientRect();fr.contentWindow.postMessage({unfire:1,vis:caseLocal||rb.bottom>90,...(caseLocal?{}:{p:Math.min(1,v*1.5)})},'*')}catch(e){}hc.style.opacity=1-Math.min(1,v*3.2);
@@ -1075,6 +1118,7 @@ if(d.lv!=null)document.documentElement.style.setProperty('--lv',d.lv);if(d.rect)
   function shut(){caseLocal=true;$('#heroPin').classList.add('imm');document.body.classList.add('immOn');document.documentElement.classList.add('immOn');fr.style.pointerEvents='auto';fr.style.clipPath='none';}
   function exitGame(){
     caseLocal=false;webReturn=true;parked=1;
+    restoreFullscreen.hidden=true;
     let exited=Promise.resolve();
     if(document.fullscreenElement||document.webkitFullscreenElement){
       try{exited=Promise.resolve((document.exitFullscreen||document.webkitExitFullscreen)?.call(document)).catch(()=>{});}catch(_){}}
@@ -1089,7 +1133,8 @@ if(d.lv!=null)document.documentElement.style.setProperty('--lv',d.lv);if(d.rect)
       if(target)target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'});
     }));
   }
-  return{tick,open,rect,shut,gate,exitGame};})();
+  return{tick,open,rect,shut,gate,exitGame,bootImmersiveCase};})();
+Mal.bootImmersiveCase();
 /* ================= Precios en la página ================= */
 document.querySelectorAll('[data-p]').forEach(el=>{const k=el.dataset.p;el.textContent=k==='saveAll'?eur(PRICES.hyper+PRICES.fx20+PRICES.synth-PRICES.todo):eur(PRICES[k])});
 $('[data-price="hyper"]').innerHTML=`Gratis<small>la semana de lanzamiento · después ${eur(PRICES.hyper)}</small>`;
