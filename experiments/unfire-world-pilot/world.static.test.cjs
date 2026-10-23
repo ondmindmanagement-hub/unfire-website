@@ -20,6 +20,12 @@ const checks = [
   ["Sin pasarela de pago ni red saliente", !/\bfetch\s*\(|XMLHttpRequest|sendBeacon|stripe|checkout\./i.test(js)],
   ["Sin scripts ni estilos de terceros", !/<script[^>]+src="https?:/i.test(html) && !/<link[^>]+href="https?:/i.test(html)],
   ["Responsive y cero scroll lateral intencional", css.includes("overflow-x:clip") && css.includes("max-width:450px")],
+  ["Escaparate público sólo de Unfire Audio", html.includes('id="tienda-piloto"') && html.includes('src="/audio/img/maletin-real-first-frame-desktop.webp"') && html.includes('href="/audio/"')],
+  ["Captura auténtica existente y ligera", (()=>{const p=path.resolve(root,"../../audio/img/maletin-real-first-frame-desktop.webp");return fs.existsSync(p)&&fs.statSync(p).size<100000})()],
+  ["Zona navegable por enlaces convencionales", html.includes('href="#showroom"') && html.includes('href="#tienda-piloto"')],
+  ["Vista 2D responde realmente al control", html.includes('id="fallback-shape"') && html.includes('id="fallback-label"') && js.includes('fallbackShape.style.borderRadius')],
+  ["Recuperación y liberación de recursos WebGL", js.includes('webglcontextrestored') && js.includes('releaseResources()') && js.includes('addEventListener("pagehide"')],
+  ["Medición local sin rastreo externo", js.includes('performance.mark?.("unfire-world:first-draw")') && !js.includes("sendBeacon(")],
 ];
 for(const [label,ok] of checks){assert.ok(ok,label);console.log("PASS",label)}
 console.log("TOTAL",checks.length,"/ ",checks.length,"PASS");
