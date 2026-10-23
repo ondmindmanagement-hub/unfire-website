@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "last_reviewed_utc": "2026-10-23",
+  "merchant": "individual_unverified",
+  "direct_web_checkout_authorized": false,
+  "release_checks": {
+    "merchant_identity_and_bank_verified": false,
+    "aeat_activity_registration_checked": false,
+    "social_security_reta_position_checked": false,
+    "sepe_benefit_position_resolved": false,
+    "seller_identification_notice_complete": false,
+    "tax_and_cross_border_vat_configured": false,
+    "consumer_terms_and_digital_withdrawal_confirmed": false,
+    "individual_builds_signed_and_compatibility_tested": false,
+    "paid_order_webhook_and_secure_fulfillment_tested": false,
+    "receipts_refunds_support_and_cancellations_ready": false
+  },
+  "approved_skus": {}
+}
