@@ -43,7 +43,15 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
     assert(a.x+a.w<=b.x||b.x+b.w<=a.x||a.y+a.h<=b.y||b.y+b.h<=a.y,'Joystick and fly button overlap');
     console.log('PASS mobile',width+'x'+height,state.orientation,'mission preserved, touch controls fitted');
   };
-  for(const [w,h] of [[390,844],[844,390],[320,568],[568,320],[390,844]])await check(w,h);
+  // Same live WebGL context across rotations, including narrow displays and
+  // tablet-sized viewports. Browser emulation does not replace physical QA.
+  for(const [w,h] of [
+    [390,844],[844,390],     // current reference phone
+    [320,568],[568,320],     // compact phone, both orientations
+    [280,653],[653,280],     // extra-narrow display and rotated display
+    [768,1024],[1024,768],   // portrait and landscape tablet
+    [390,844]                // return to phone without losing progress
+  ])await check(w,h);
   await page.evaluate(()=>{const b=document.getElementById('onlB');if(!b)throw Error('Online button missing');b.click();});
   await page.waitForTimeout(200);
   const modal=await page.evaluate(()=>{const o=document.getElementById('onl');const b=o.querySelector('.b').getBoundingClientRect();return {display:getComputedStyle(o).display,width:b.width,height:b.height,viewport:innerHeight};});
