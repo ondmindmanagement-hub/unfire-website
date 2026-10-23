@@ -1063,7 +1063,38 @@
   const REDUCED_MOTION_CASE_CUE=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;    // ~56° desde arriba, recto
   const view = { tx: 0, tz: 0.15, dist: 9, D0: 9, gx: 0, gz: 0.15, gd: 9 };
   // modo paseo: la cámara se suelta del maletín y miras/andas por la habitación
-  const ROAMS = { on: false, yaw: 0, pitch: -0.12, p: V(0, 8.5, 15), k: {} }; const roamB = document.createElement('button'); roamB.id = 'roamB'; roamB.textContent = '🚶 PASEAR'; roamB.style.cssText = 'position:fixed;right:14px;bottom:calc(9vh + 14px);z-index:40;border:2px solid #fff;border-radius:999px;padding:9px 14px;font:800 12px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);box-shadow:0 6px 18px #0008;cursor:pointer;display:none'; document.body.appendChild(roamB);
+  const ROAMS = { on: false, yaw: 0, pitch: -0.12, p: V(0, 8.5, 15), k: {} };
+
+  // Tap combos use the original flight buttons/arrow keys; no extra HUD, timers or GPU loop.
+  const FLIGHT_TAPS = { up: { at: 0, count: 0 }, down: { at: 0, count: 0 } };
+  function resetFlightCombos() {
+    FLIGHT_TAPS.up.at = FLIGHT_TAPS.down.at = 0;
+    FLIGHT_TAPS.up.count = FLIGHT_TAPS.down.count = 0;
+    ROAMS.slam = false; ROAMS.slamV = 0; ROAMS.boostT = 0;
+  }
+  function flightTap(dir) {
+    if (!ROAMS.on || ROAMS.mini || (window.__VIEW && window.__VIEW.on) || REC.on || document.getElementById('unfireControlGuide')?.classList.contains('on')) return;
+    const st = FLIGHT_TAPS[dir], now = performance.now(), gap = dir === 'up' ? 470 : 390;
+    st.count = now - st.at <= gap ? st.count + 1 : 1;
+    st.at = now;
+    if (dir === 'down' && st.count >= 2) {
+      st.count = 0;
+      if (!ROAMS.fly || (ROAMS.h || 0) < (ROAMS.fl || 0) + 2.5 || ROAMS.slam || now - (ROAMS.lastSlam || 0) < 850) return;
+      ROAMS.lastSlam = now; ROAMS.slam = true; ROAMS.slamV = 280; ROAMS.boostT = 0;
+      say('💥 Aterrizaje de impacto'); hap(0.3);
+    } else if (dir === 'up' && st.count >= 3) {
+      st.count = 0;
+      if (now - (ROAMS.lastBoost || 0) < 1100) return;
+      ROAMS.lastBoost = now;
+      if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.flyT = 0; }
+      ROAMS.slam = false; ROAMS.slamV = 0;
+      ROAMS.flyH = Math.max(ROAMS.fl || 0, ROAMS.h || 0);
+      ROAMS.boostT = 0.72; ROAMS.climbV = (window.ATM_OUT ? 500 : 38) * (ROAMS.perkF || 1);
+      try { window.__SPRAY && window.__SPRAY(ROAMS.p.x, -8.9 + (ROAMS.h || 0), ROAMS.p.z, 28, 6, 12); } catch (_) {}
+      say('🚀 ¡Propulsión turbo!'); hap(0.8);
+    }
+  }
+  const roamB = document.createElement('button'); roamB.id = 'roamB'; roamB.textContent = '🚶 PASEAR'; roamB.style.cssText = 'position:fixed;right:14px;bottom:calc(9vh + 14px);z-index:40;border:2px solid #fff;border-radius:999px;padding:9px 14px;font:800 12px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);box-shadow:0 6px 18px #0008;cursor:pointer;display:none'; document.body.appendChild(roamB);
   const MIX = (() => { const d = document.createElement('div'); d.id = 'mix'; d.innerHTML = '<style>#mix{position:fixed;left:14px;top:10px;transform:scale(.88);transform-origin:top left;z-index:40;display:none;gap:6px;flex-direction:column;padding:10px 12px;border-radius:16px;background:linear-gradient(180deg,#eef6ff,#a9cdff);border:2px solid #fff;box-shadow:0 8px 22px #0009,0 0 18px #3d8bff88;font:700 11px Michroma,Arial;color:#0a1a3a}#mix.on{display:flex}#mix .row{display:flex;gap:6px;align-items:center}#mix button{border:0;border-radius:999px;padding:6px 10px;font:800 11px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);cursor:pointer}#mix button.off{background:linear-gradient(180deg,#b8c0d0,#6b7385);opacity:.8}#mix b{font:900 12px Orbitron,Arial;min-width:180px;text-align:center}</style><div class=row><button data-s=-1>◀</button><b id=mixN>—</b><button data-s=1>▶</button></div><div class=row><button data-m=drums>🥁 BATERÍA</button><button data-m=bass>🎸 BAJO</button><button data-m=chords>🎹 ACORDES</button><button data-m=lead>✨ MELODÍA</button><button data-p=1>🎹 OTRA MELODÍA</button></div><div class=row>TONALIDAD <select id=tonK><option value=-1>AUTO</option>' + ['DO', 'DO#', 'RE', 'RE#', 'MI', 'FA', 'FA#', 'SOL', 'SOL#', 'LA', 'LA#', 'SI'].map((n, i) => '<option value=' + i + '>' + n + '</option>').join('') + '</select> MODO <select id=tonM><option value=auto>SIGUE LA CANCIÓN</option><option value=mayor>MAYOR</option><option value=menor>MENOR</option><option value=dorico>DÓRICO</option><option value=penta>PENTATÓNICA</option><option value=blues>BLUES</option></select></div><div class=row style="font-size:9px;opacity:.8">Teclado: A S D F G H J K L = blancas · W E T Y U O P = negras · Z/X octava</div>'; document.body.appendChild(d); d.addEventListener('pointerdown', (e) => e.stopPropagation()); d.addEventListener('wheel', (e) => e.stopPropagation());
     d.onchange = (e) => { if (e.target.id === 'tonK') { TON.key = +e.target.value; if (TON.key >= 0) { RADIO.st.lockRoot = 45 + ((TON.key - 9 + 12) % 12); RADIO.st.root = RADIO.st.lockRoot; } else RADIO.st.lockRoot = null; } if (e.target.id === 'tonM') TON.mode = e.target.value; if (TON.mode !== 'auto' && TON.key < 0) { TON.key = 0; d.querySelector('#tonK').value = 0; } hap(0.2); }; d.onclick = (e) => { const b = e.target.closest('button'); if (!b) return; hap(0.25); if (b.dataset.p && HW) { HW.melSeed = (HW.melSeed || 0) + 1; HW.mel = null; say('🎹 Melodía nueva'); } if (b.dataset.s) { const n = RADIO.STYLES.length; RADIO.newSong(((RADIO.st.style + +b.dataset.s) % n + n) % n); } if (b.dataset.m) { const S2 = RADIO.st.stems || (RADIO.st.stems = { drums: 1, bass: 1, chords: 1, lead: 1 }); S2[b.dataset.m] = S2[b.dataset.m] ? 0 : 1; b.classList.toggle('off', !S2[b.dataset.m]); } };
     return { d, tick() { const on = RADIO.st.on && lidOpen > 0.95 && !ROAMS.on; d.classList.toggle('on', on); if (on) { const nm = RADIO.STYLES[RADIO.st.style].name; if (MIX.last !== nm) { MIX.last = nm; d.querySelector('#mixN').textContent = '♪ ' + nm; } } } }; })();
@@ -1164,10 +1195,10 @@
     REC.p.x=clamp(REC.p.x,-90000,90000);REC.p.y=clamp(REC.p.y,-90000,90000);REC.p.z=clamp(REC.p.z,-90000,90000);
     if (!REC.cq) { REC.cy = REC.yaw; REC.cpch = REC.pitch; REC.cq = 1; } REC.cy = angL(REC.cy, REC.yaw, Math.min(1, dt * 6)); REC.cpch += (REC.pitch - REC.cpch) * Math.min(1, dt * 6);
     cam.position.copy(REC.p); const c2 = Math.cos(REC.cpch); cam.lookAt(REC.p.x + Math.sin(REC.cy) * c2, REC.p.y + Math.sin(REC.cpch), REC.p.z - Math.cos(REC.cy) * c2); cam.near = 0.08; };
-  function enterRoam() { if (ROAMS.on) return; ROAMS.on = true; document.body.classList.add('unfire-roaming'); ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
+  function enterRoam() { if (ROAMS.on) return; resetFlightCombos(); ROAMS.on = true; document.body.classList.add('unfire-roaming'); ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
   function exitRoam() { if (REC.on) REC.set(false); if (!ROAMS.on) return;
     CASE_VIEW.on=false;CAPS.cancel();carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
- ROAMS.on = false; document.body.classList.remove('unfire-roaming'); ROAMS.cp = null; ROAMS.mini = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
+ resetFlightCombos(); ROAMS.on = false; document.body.classList.remove('unfire-roaming'); ROAMS.cp = null; ROAMS.mini = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
   // First visit: the EXISTING PASEAR control blinks for exactly two seconds
   // once the physical lid has completely opened, then stays visible.
   let firstCaseWalkHint=false;
@@ -1764,17 +1795,49 @@
   // ===== CÓMO SE JUEGA (primera vez) + CONTROLES TÁCTILES para móvil y tablet =====
   { const TOUCH = (() => { try { return matchMedia('(pointer:coarse)').matches; } catch (e) { return false; } })();
     const help = document.createElement('div'); help.id = 'howto'; help.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:80;max-width:min(92vw,520px);padding:18px 22px;border-radius:20px;background:rgba(6,16,46,.88);border:2px solid #5fc8ff;color:#fff;font:600 14px/1.55 Arial,sans-serif;box-shadow:0 20px 60px #000a;display:none;text-align:left';
-    help.innerHTML = TOUCH ? '<b style="font:900 18px Orbitron,Arial;color:#5fc8ff">CÓMO SE JUEGA</b><br>🕹️ Joystick de la izquierda: andar<br>👆 Arrastra en la pantalla: mirar alrededor<br>🪽 Mantén VOLAR: subir · suéltalo y flotas · ⬇ BAJAR: bajar<br>💬 HABLAR: charla con el robot más cercano<br>⏏ Arriba a la derecha: volver a la web<br><br><span style="color:#b6ff3b">Toca para empezar</span>' : '<b style="font:900 18px Orbitron,Arial;color:#5fc8ff">CÓMO SE JUEGA</b><br>⌨️ W A S D o flechas: andar (Shift = correr)<br>🖱️ Arrastra con el ratón: mirar alrededor<br>🪽 Mantén ESPACIO: volar y subir · suéltalo y flotas · S o ↓: bajar<br>💬 T: hablar con el robot más cercano · M: mapa · C: cámara<br>🚪 Sal por la puerta azul para ir a la isla · ⏏ arriba a la derecha: volver a la web<br><br><span style="color:#b6ff3b">Haz clic para empezar</span>';
+    help.innerHTML = TOUCH ? '<b style="font:900 18px Orbitron,Arial;color:#5fc8ff">CÓMO SE JUEGA</b><br>🕹️ Joystick de la izquierda: andar<br>👆 Arrastra en la pantalla: mirar alrededor<br>⬆ Mantén VOLAR: subir · suéltalo y flotas · ⬇ BAJAR: bajar<br>🚀 3 toques ⬆ VOLAR: turbo · 💥 2 toques ⬇ BAJAR: aterrizaje rápido<br>💬 HABLAR: charla con el robot más cercano<br>⏏ Arriba a la derecha: volver a la web<br><br><span style="color:#b6ff3b">Toca para empezar</span>' : '<b style="font:900 18px Orbitron,Arial;color:#5fc8ff">CÓMO SE JUEGA</b><br>⌨️ W A S D o flechas: andar (Shift = correr)<br>🖱️ Arrastra con el ratón: mirar alrededor<br>⬆ Mantén ESPACIO: volar y subir · suéltalo y flotas · S o ↓: bajar<br>🚀 3 pulsaciones ↑: turbo · 💥 2 pulsaciones ↓: aterrizaje rápido<br>💬 T: hablar con el robot más cercano · M: mapa · C: cámara<br>🚪 Sal por la puerta azul para ir a la isla · ⏏ arriba a la derecha: volver a la web<br><br><span style="color:#b6ff3b">Haz clic para empezar</span>';
+
+    // A permanent, accessible control list inside the existing ⚙ settings menu.
+    const controlsGuide = document.createElement('section');
+    controlsGuide.id = 'unfireControlGuide'; controlsGuide.setAttribute('role', 'dialog');
+    controlsGuide.setAttribute('aria-modal', 'true'); controlsGuide.setAttribute('aria-label', 'Guía de controles');
+    controlsGuide.tabIndex = -1;
+    controlsGuide.style.cssText = 'position:fixed;inset:0;z-index:96;display:none;align-items:center;justify-content:center;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));box-sizing:border-box;background:rgba(1,4,18,.82);overscroll-behavior:contain';
+    controlsGuide.innerHTML = '<div style="box-sizing:border-box;width:min(95vw,540px);max-height:min(78dvh,680px);overflow-y:auto;overscroll-behavior:contain;background:#0c1636;border:1px solid #77c7ff;border-radius:18px;padding:18px 20px;color:#fff;font:500 14px/1.55 system-ui,sans-serif;box-shadow:0 20px 70px #000a"><div style="display:flex;align-items:center;justify-content:space-between;gap:14px"><h2 style="margin:0;font:800 18px system-ui">🎮 Guía de controles</h2><button type="button" id="unfireGuideClose" aria-label="Cerrar guía" style="min-width:44px;min-height:44px;border:1px solid #9edaff;border-radius:12px;color:#fff;background:#244d83;font-size:20px;cursor:pointer">✕</button></div><p><strong>Movimiento:</strong> joystick izquierdo (móvil) o WASD/flechas (teclado). Arrastra para mirar, Shift para correr y Q/E para girar.</p><p><strong>Vuelo:</strong> mantén ⬆ VOLAR o Espacio para subir; suelta para flotar. Mantén ⬇ BAJAR o S/↓ para descender.</p><p><strong>🚀 Impulso turbo:</strong> pulsa 3 veces rápido ⬆ VOLAR o ↑. <strong>💥 Aterrizaje de impacto:</strong> pulsa 2 veces rápido ⬇ BAJAR o ↓ mientras vuelas. El aterrizaje respeta el suelo y las plataformas.</p><p><strong>Más acciones:</strong> F = picado; C = cambiar cámara; M = mapa; T/💬 HABLAR = hablar; V = cámara cine; B = tabla de surf cuando esté disponible; G = cápsula tras desbloquearla.</p><p><strong>Juego:</strong> ⚙ abre ajustes, 📖 HISTORIA muestra misiones, 🗺️ MAPA orienta, 💾 GUARDAR conserva el progreso, 🚶 PASEAR explora y ⟲ vuelve al maletín.</p><p style="opacity:.78;margin-bottom:0">Los controles especiales solo actúan durante el juego. Puedes cerrar esta guía con ✕ o Escape.</p></div>';
+    document.body.appendChild(controlsGuide);
+    const guideClose = controlsGuide.querySelector('#unfireGuideClose');
+    const closeGuide = () => { controlsGuide.classList.remove('on'); controlsGuide.style.display = 'none'; };
+    // STORY_INIT builds the HUD later in the boot sequence; attach when it exists.
+    const attachControlsToSettings = () => {
+      const settingsHud = document.getElementById('storyHud');
+      if (!settingsHud) return false;
+      if (!document.getElementById('unfireControlsButton')) {
+        const guideButton = document.createElement('button');
+        guideButton.id = 'unfireControlsButton'; guideButton.type = 'button';
+        guideButton.textContent = '🎮 CONTROLES'; guideButton.setAttribute('aria-haspopup', 'dialog');
+        guideButton.onclick = (ev) => { ev.stopPropagation(); ROAMS.k[' '] = 0; ROAMS.k.s = 0; controlsGuide.style.display = 'flex'; controlsGuide.classList.add('on'); guideClose.focus(); };
+        settingsHud.insertBefore(guideButton, settingsHud.querySelector('.obj'));
+      }
+      return true;
+    };
+    if (!attachControlsToSettings()) {
+      const guideWatcher = new MutationObserver(() => { if (attachControlsToSettings()) guideWatcher.disconnect(); });
+      guideWatcher.observe(document.body, { childList: true, subtree: true });
+      addEventListener('pagehide', () => guideWatcher.disconnect(), { once: true });
+    }
+    guideClose.onclick = closeGuide;
+    controlsGuide.addEventListener('pointerdown', (ev) => ev.stopPropagation());
+    controlsGuide.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); closeGuide(); } });
     document.body.appendChild(help); help.addEventListener('pointerdown', (e) => { e.stopPropagation(); help.style.display = 'none'; }, true);
     let shown = false; setInterval(() => { if (ROAMS.on && !shown) { shown = true; let seen = false; try { seen = !!localStorage.getItem('unfire_howto'); localStorage.setItem('unfire_howto', '1'); } catch (e) {} if (!seen) { help.style.display = 'block'; setTimeout(() => (help.style.display = 'none'), 12000); } } }, 500);
     if (TOUCH) { const pad = document.createElement('div'); pad.id='unfireTouchPad'; pad.style.cssText = 'position:fixed;left:18px;bottom:18px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.5);z-index:70;display:none;touch-action:none'; const knob = document.createElement('div'); knob.id='unfireTouchKnob'; knob.style.cssText = 'position:absolute;left:40px;top:40px;width:50px;height:50px;border-radius:50%;background:rgba(95,200,255,.85);box-shadow:0 4px 14px #0008'; pad.appendChild(knob); document.body.appendChild(pad);
       const btn = (txt, css) => { const b = document.createElement('button'); b.textContent = txt; b.style.cssText = 'position:fixed;z-index:70;display:none;border:2px solid #fff;border-radius:999px;padding:14px 18px;font:900 14px Orbitron,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);box-shadow:0 6px 18px #0008;touch-action:none;' + css; document.body.appendChild(b); return b; };
-      const fly = btn('🪽 VOLAR', 'right:18px;bottom:24px'), talk = btn('💬 HABLAR', 'right:18px;bottom:90px'), down = btn('⬇ BAJAR', 'right:150px;bottom:24px'); fly.id='unfireFly'; talk.id='unfireTalk'; down.id='unfireDown'; down.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); ROAMS.k.s = 1; }); ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => down.addEventListener(ev, () => { ROAMS.k.s = 0; }));
+      const fly = btn('⬆ VOLAR', 'right:18px;bottom:24px'), talk = btn('💬 HABLAR', 'right:18px;bottom:90px'), down = btn('⬇ BAJAR', 'right:150px;bottom:24px'); fly.id='unfireFly'; talk.id='unfireTalk'; down.id='unfireDown'; down.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); flightTap('down'); ROAMS.k.s = 1; }); ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => down.addEventListener(ev, () => { ROAMS.k.s = 0; }));
       let pid = null, cx = 0, cy = 0; const setK = (dx, dy) => { const K = ROAMS.k, d = 0.3; K.w = dy < -d ? 1 : 0; K.s = dy > d ? 1 : 0; K.a = dx < -d ? 1 : 0; K.d = dx > d ? 1 : 0; const center = (pad.clientWidth - knob.offsetWidth) / 2, radius = Math.max(1, pad.clientWidth * .30); knob.style.left = center + dx * radius + 'px'; knob.style.top = center + dy * radius + 'px'; };
       pad.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); if (pid !== null) return; pid = e.pointerId; const r = pad.getBoundingClientRect(); cx = r.left + r.width / 2; cy = r.top + r.height / 2; pad.setPointerCapture(pid); });
       pad.addEventListener('pointermove', (e) => { if (e.pointerId !== pid) return; e.stopPropagation(); let dx = (e.clientX - cx) / Math.max(1, pad.clientWidth * .42), dy = (e.clientY - cy) / Math.max(1, pad.clientHeight * .42); const l = Math.hypot(dx, dy); if (l > 1) { dx /= l; dy /= l; } setK(dx, dy); });
       const up = (e) => { if (e.pointerId !== pid) return; pid = null; setK(0, 0); }; pad.addEventListener('pointerup', up); pad.addEventListener('pointercancel', up); const resetTouch = () => { pid=null; setK(0,0); ROAMS.k[' '] = 0; }; addEventListener('blur',resetTouch); addEventListener('orientationchange',resetTouch); document.addEventListener('visibilitychange',()=>{if(document.hidden)resetTouch();});
-      fly.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); if (ROAMS.board && ROAMS.wet && !ROAMS.fly && window.ATM_OUT) { dispatchEvent(new KeyboardEvent('keydown', { key: ' ' })); return; } if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; } ROAMS.k[' '] = 1; }); ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => fly.addEventListener(ev, () => { ROAMS.k[' '] = 0; }));
+      fly.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); flightTap('up'); if (ROAMS.board && ROAMS.wet && !ROAMS.fly && window.ATM_OUT) { dispatchEvent(new KeyboardEvent('keydown', { key: ' ' })); return; } if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; } ROAMS.k[' '] = 1; }); ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => fly.addEventListener(ev, () => { ROAMS.k[' '] = 0; }));
       talk.addEventListener('pointerdown', (e) => { e.stopPropagation(); const c = document.getElementById('chat'); c.classList.add('on'); const i = document.getElementById('chatq'); i.placeholder = 'Habla con el robot que tengas más cerca… (Enter)'; setTimeout(() => i.focus(), 30); });
       setInterval(() => { const on = ROAMS.on && !(window.__VIEW && window.__VIEW.on); [pad, fly, talk].forEach((el) => (el.style.display = on ? 'block' : 'none')); down.style.display = on && ROAMS.fly ? 'block' : 'none'; }, 300); } }
   // ===== MODO VISTA: videoclip automático por la casa (y fuera), cortes al ritmo, tomas que no se repiten =====
@@ -1823,7 +1886,7 @@
     focusHost: (who, soft) => { HOST.talk(); if (soft) { if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } return; } let p = HOST.pos; if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; p = it.W.getWorldPosition(V(0, 0, 0)); try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } if (ROAMS.on) { const d = V(cam.position.x - p.x, 0, cam.position.z - p.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const side = V(-d.z, 0, d.x); const q = V(p.x + d.x * 11 + side.x * 7, p.y + 5.5, p.z + d.z * 11 + side.z * 7); const lx = p.x - q.x, lz = p.z - q.z; ROAMS.tgt = { p: q, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(p.y + 1.5 - q.y, Math.hypot(lx, lz)) }; } else { view.gx = clamp(p.x * 0.7, -CW / 2 - 1, CW / 2 + 1); view.gz = clamp(p.z * 0.7, -CD / 2 - 1, CD / 2 + 2); view.gd = view.D0 * 0.85; } } }); } catch (e) { console.warn('story', e); }
   roamB.addEventListener('pointerdown', (e) => e.stopPropagation());
   function roamMove(f, side = 0) { const y = ROAMS.yaw, px0 = ROAMS.p.x, pz0 = ROAMS.p.z; ROAMS.p.x += Math.sin(y) * f + Math.cos(y) * side; ROAMS.p.z -= Math.cos(y) * f - Math.sin(y) * side; if (!ROAMS.mini && (window.ATM_OUT ? (window.__OBSTO = window.__OBSTO || window.__buildObstOut()) : window.__OBST)) { const OB = window.ATM_OUT ? window.__OBSTO : window.__OBST, feet = -8.9 + (ROAMS.h || 0), hit = (x, z) => { for (const B of OB) if (x > B.x0 && x < B.x1 && z > B.z0 && z < B.z1 && feet < B.y1 - 0.4) return true; return false; }; { const nx = ROAMS.p.x, nz = ROAMS.p.z; if (!hit(px0, pz0)) { ROAMS.p.x = px0; ROAMS.p.z = pz0; if (!hit(nx, pz0)) ROAMS.p.x = nx; if (!hit(ROAMS.p.x, nz)) ROAMS.p.z = nz; } const want = Math.hypot(nx - px0, nz - pz0), got = Math.hypot(ROAMS.p.x - px0, ROAMS.p.z - pz0); if (want > 0.01 && got < want * 0.15) { ROAMS.stkN = (ROAMS.stkN || 0) + 1; if (ROAMS.stkN > 40) { ROAMS.p.x = nx; ROAMS.p.z = nz; ROAMS.stkN = 30; } } else ROAMS.stkN = 0; } } if (window.ATM_OUT) { const HX = 82, Z0 = -18, Z1 = 98; if (Math.abs(ROAMS.p.x) < HX && ROAMS.p.z > Z0 && ROAMS.p.z < Z1 && -8.9 + (ROAMS.h || 0) < 26.6) { if (Math.abs(ROAMS.p.x + 30) < 4) { ROAMS.p.x += (-30 - ROAMS.p.x) * 0.25; if (ROAMS.p.z < 93) { try { ATM.setOut(false); } catch (e) {} } } else { ROAMS.p.x = px0; ROAMS.p.z = pz0; } } } if (ROAMS.mini) { ROAMS.p.x = clamp(ROAMS.p.x, -12.6, 12.6); ROAMS.p.z = clamp(ROAMS.p.z, -7.2, 4.9); if (Math.abs(ROAMS.p.x) < 3.15 && Math.abs(ROAMS.p.z) < 2.25) { ROAMS.p.x = px0; ROAMS.p.z = pz0; } ROAMS.p.y = 0.3; return; } const B = window.__RB || { x: 19.5, z0: -14, z1: 18.5 }; ROAMS.p.x = clamp(ROAMS.p.x, -B.x, B.x); ROAMS.p.z = clamp(ROAMS.p.z, B.z0, B.z1); if (!window.ATM_OUT && Math.abs(ROAMS.p.x + 30) < 5 && ROAMS.p.z > 89) { ROAMS.p.x += (-30 - ROAMS.p.x) * 0.25; if (ROAMS.p.z > 93) { try { ATM.setOut(true); } catch (e) { console.warn(e); } } } { const hx = ROAMS.p.x, hz = ROAMS.p.z - 1, hd = Math.hypot(hx, hz); if (!window.ATM_OUT && hd < 8.5) { const s = 8.5 / Math.max(hd, 0.01); ROAMS.p.x = hx * s; ROAMS.p.z = hz * s + 1; } } }
-  addEventListener('keydown', (e) => { if (!ROAMS.on || (e.target && e.target.tagName === 'INPUT')) return; if (e.key === 'Escape') { if (CASE_VIEW.on) showRobotView(); else exitRoam(); return; } if (CASE_VIEW.on) return; const k = e.key.length === 1 ? e.key.toLowerCase() : e.key; if (k === 'Shift' || k === 'Alt') ROAMS.k[k] = 1; if (k === 'b' && !e.repeat && window.ATM_OUT) { window.__surfToggle && window.__surfToggle(); e.preventDefault(); e.stopImmediatePropagation(); return; } if (k === ' ' && !e.repeat && !ROAMS.mini && window.ATM_OUT && ROAMS.wet && !ROAMS.fly && ROAMS.board) { ROAMS.spDown = performance.now(); ROAMS.k[' '] = 1; if (!ROAMS.air && !ROAMS.trick) { const wv0 = window.__WAVE ? window.__WAVE(ROAMS.p.x, ROAMS.p.z, window.__T || 0) : 0; ROAMS.vy = Math.min(66, 30 + Math.max(0, wv0) * 3.4); try { window.__SPRAY && window.__SPRAY(ROAMS.p.x, -8.9 + (ROAMS.h || 0), ROAMS.p.z, 40, 8, 14); } catch (e2) {} const KD = ['360', 'FLIP', 'GRAB', 'SUPERMAN']; ROAMS.trick = { t: 0, k: KD[Math.floor(Math.random() * KD.length)], sd: Math.random() < 0.5 ? 1 : -1 }; } e.preventDefault(); e.stopImmediatePropagation(); return; } if (k === ' ' && !e.repeat && !ROAMS.mini) { const now = performance.now(); if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; say('🪽 Transformación · MANTÉN ESPACIO para subir · suéltalo y te quedas flotando · S o ↓ para bajar · F en picado · W hacia delante'); } ROAMS.lastSp = now; ROAMS.k[' '] = 1; } if (k === 'f') ROAMS.k.f = 1; if (k.startsWith('Arrow') || 'wasdqe'.includes(k) || k === ' ') { ROAMS.k[k] = 1; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+  addEventListener('keydown', (e) => { if (!ROAMS.on || (e.target && e.target.tagName === 'INPUT')) return; if (e.key === 'Escape') { if (CASE_VIEW.on) showRobotView(); else exitRoam(); return; } if (CASE_VIEW.on) return; const k = e.key.length === 1 ? e.key.toLowerCase() : e.key; if (k === 'Shift' || k === 'Alt') ROAMS.k[k] = 1; if (k === 'b' && !e.repeat && window.ATM_OUT) { window.__surfToggle && window.__surfToggle(); e.preventDefault(); e.stopImmediatePropagation(); return; } if (k === ' ' && !e.repeat && !ROAMS.mini && window.ATM_OUT && ROAMS.wet && !ROAMS.fly && ROAMS.board) { ROAMS.spDown = performance.now(); ROAMS.k[' '] = 1; if (!ROAMS.air && !ROAMS.trick) { const wv0 = window.__WAVE ? window.__WAVE(ROAMS.p.x, ROAMS.p.z, window.__T || 0) : 0; ROAMS.vy = Math.min(66, 30 + Math.max(0, wv0) * 3.4); try { window.__SPRAY && window.__SPRAY(ROAMS.p.x, -8.9 + (ROAMS.h || 0), ROAMS.p.z, 40, 8, 14); } catch (e2) {} const KD = ['360', 'FLIP', 'GRAB', 'SUPERMAN']; ROAMS.trick = { t: 0, k: KD[Math.floor(Math.random() * KD.length)], sd: Math.random() < 0.5 ? 1 : -1 }; } e.preventDefault(); e.stopImmediatePropagation(); return; } if (!e.repeat && (k === 'ArrowDown' || k === 'ArrowUp')) flightTap(k === 'ArrowDown' ? 'down' : 'up'); if (k === ' ' && !e.repeat && !ROAMS.mini) { const now = performance.now(); if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; say('🪽 Transformación · MANTÉN ESPACIO para subir · suéltalo y te quedas flotando · S o ↓ para bajar · F en picado · W hacia delante'); } ROAMS.lastSp = now; ROAMS.k[' '] = 1; } if (k === 'f') ROAMS.k.f = 1; if (k.startsWith('Arrow') || 'wasdqe'.includes(k) || k === ' ') { ROAMS.k[k] = 1; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
   addEventListener('keyup', (e) => { ROAMS.k[e.key.length === 1 ? e.key.toLowerCase() : e.key] = 0; });
   function fitD0() { const vf = (cam.fov * Math.PI) / 360, hf = Math.atan(Math.tan(vf) * cam.aspect); view.D0 = Math.max((CW / 2 + 0.5) / Math.tan(hf), (CD / 2 + 1.3) / Math.tan(vf)) * 1.02; if (view.gd > view.D0 || view.gd === view.dist && view.dist >= view.D0 - 0.01) { view.gd = view.D0; } }
   // Combine the iPhone device budget with rotation-safe backbuffer sizing.
@@ -2279,33 +2342,76 @@
   const clock = new THREE.Clock(); let t = 0; const pend = { it: null, t: 0 }; let MEMO = null, LV = 0; let frameN = 0; let idleT = 0, lastPlaying = false, liftY = 0;
   const tb = new Uint8Array(1024), fb = new Uint8Array(512); let level = 0;
   let frameVisible = true, previousRenderAt = 0;
-  // Lower the drawing resolution ONCE only after sustained poor foreground FPS.
-  // UI, gameplay, audio, timings and scene composition remain untouched.
-  // Avoid oscillating pixel-ratio allocations that can themselves stall mobile GPUs.
-  const adaptivePerf={since:0,frames:0,reduced:false};
-  function protectSlowGPU(now){
-    if(!adaptivePerf.since){adaptivePerf.since=now;adaptivePerf.frames=0;return;}
-    adaptivePerf.frames++;
-    const elapsed=now-adaptivePerf.since;
-    if(elapsed<6000)return;
-    if(!adaptivePerf.reduced&&adaptivePerf.frames>=12&&elapsed/adaptivePerf.frames>48){
-      const current=S.renderer.getPixelRatio();
-      const safer=Math.max(0.65,Math.min(current,DEVICE.maxDpr)*0.78);
-      if(safer<current-0.08){
-        S.renderer.setPixelRatio(safer);
-        adaptivePerf.reduced=true;
-        document.documentElement.dataset.unfireAdaptiveQuality='on';
-      }
+  // One shared renderer budget for the house AND the outdoor world.
+  // Do not run two independent DPR controllers: each GPU realloc can stall a mobile frame.
+  function createSceneFrameBudget(renderer, device, compact) {
+    const initial = Math.min(renderer.getPixelRatio(), device.maxDpr);
+    const minimum = Math.min(initial, compact ? 0.60 : 0.70);
+    const stats = {a: 1 / (compact ? 24 : 35), f: 0, dpr: initial, max: initial,
+      outdoor: false, slow: false, adjustments: 0, areaChanges: 0};
+    let area = null, started = 0, last = 0, changedAt = 0, frames = 0, slowFrames = 0, sumMs = 0;
+    function reset(now) {
+      started = now; last = now; frames = 0; slowFrames = 0; sumMs = 0;
+      stats.a = 1 / (compact ? 24 : 35); stats.slow = false;
     }
-    adaptivePerf.since=now;adaptivePerf.frames=0;
+    return {
+      stats,
+      pause() { area = null; reset(0); },
+      note(now, interval, outdoors) {
+        // Navigation and foreground resumes have large, unrepresentative frame gaps.
+        // The *same* budget applies indoors and outdoors; use each area's frame target.
+        if (!Number.isFinite(now) || !Number.isFinite(interval) || interval <= 0) return stats;
+        if (area !== outdoors || !last || now - last > 1200 || now < last) {
+          if (area !== null && area !== outdoors) stats.areaChanges++;
+          area = outdoors; stats.outdoor = outdoors; reset(now);
+          return stats;
+        }
+        last = now;
+        const targetMs = compact ? (device.tier === 'compact' ? 42 : 33) : (outdoors ? 33 : 28);
+        const ms = Math.min(180, Math.max(8, interval * 1000));
+        stats.f++;
+        stats.a = stats.a * 0.88 + interval * 0.12;
+        frames++; sumMs += ms;
+        if (ms > targetMs * 1.45) slowFrames++;
+        stats.slow = stats.a * 1000 > targetMs * 1.48;
+        if (renderer.shadowMap.enabled) {
+          renderer.shadowMap.autoUpdate = false;
+          renderer.shadowMap.needsUpdate = stats.f % (outdoors ? 7 : 4) === 0;
+        }
+        // Evaluate only complete windows, not a few expensive shader compile frames.
+        if (now - started < 9000 || frames < 42) return stats;
+        const persistentlySlow = slowFrames / frames >= 0.63 &&
+          sumMs / frames > targetMs * 1.32;
+        // Keep the full slow sample until cooldown expires; otherwise a reset
+        // at 9s would discard evidence before the first eligible change at 12s.
+        if (persistentlySlow && now - changedAt < 12000) return stats;
+        if (persistentlySlow && now - changedAt >= 12000) {
+          const current = Math.min(renderer.getPixelRatio(), device.maxDpr);
+          const next = Math.max(minimum, Math.round((current - 0.10) * 100) / 100);
+          if (next < current - 0.025) {
+            renderer.setPixelRatio(next);
+            stats.dpr = next; stats.adjustments++; changedAt = now;
+            // No forced second setSize(), forced material compile or shadow reallocation.
+            // Keep full scenes, hit targets, audio, collisions and multiplayer untouched.
+            document.documentElement.dataset.unfireAdaptiveQuality = 'on';
+          }
+        }
+        // Never automatically scale UP in the hot loop: repeated reallocations were
+        // especially costly when flying through the house/outdoor boundary.
+        reset(now);
+        return stats;
+      }
+    };
   }
+  const sceneFrameBudget = createSceneFrameBudget(S.renderer, DEVICE, LOWDEV);
+  window.__perf = sceneFrameBudget.stats;
   // Opening the website/direct-link case keeps the camera on the physical
   // maletín. Exploring as the robot is an explicit separate player choice.
   // The lid animation and all equipment remain available in this view.
   function frame(now) {
     // Park the heavy animation loop when hidden/out of the hero: never spend 60 callbacks/sec there.
     if (document.hidden || !frameVisible) {
-      previousRenderAt = 0; adaptivePerf.since=0; adaptivePerf.frames=0; clock.getDelta();
+      previousRenderAt = 0; sceneFrameBudget.pause(); window.__LOWFPS = false; clock.getDelta();
       setTimeout(() => requestAnimationFrame(frame), 180);
       return;
     }
@@ -2314,7 +2420,8 @@
     if (previousRenderAt && now - previousRenderAt < (LOWDEV ? (DEVICE.tier==='compact' ? 42 : 33) : window.ATM_OUT ? 33 : 28)) return;
     const actualFrameTime = previousRenderAt ? Math.min(0.18, Math.max(0.008, (now - previousRenderAt) / 1000)) : 1 / 30;
     previousRenderAt = now;
-    protectSlowGPU(now);
+    sceneFrameBudget.note(now, actualFrameTime, !!window.ATM_OUT);
+    window.__LOWFPS = sceneFrameBudget.stats.slow;
     const dt = Math.min(0.05, clock.getDelta()) * (window.__dts || 1); t += dt;
     // A packed case is inventory-only: no heavy model following or obscuring the camera.
     updateCarryUI();
@@ -2384,7 +2491,17 @@
         if (GTA) { const dir = ROAMS.yaw + Math.atan2(sd2, fw), y0 = ROAMS.yaw; ROAMS.cy = angL(ROAMS.cy, dir, Math.min(1, dt * 10)); ROAMS.yaw = ROAMS.cy; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; let sl = 1; if (wet && window.__WAVE) { const dx2 = Math.sin(dir) * 4, dz2 = -Math.cos(dir) * 4; sl = clamp(1 - (window.__WAVE(ROAMS.p.x + dx2, ROAMS.p.z + dz2, t) - window.__WAVE(ROAMS.p.x, ROAMS.p.z, t)) * 0.22, 0.7, 1.6); } ROAMS.surfV = (ROAMS.surfV || 1) + (sl - (ROAMS.surfV || 1)) * Math.min(1, dt * 2); const vv = 34 * SPD * (wet ? (ROAMS.board ? 1.9 * ROAMS.surfV : 1.15) : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 * (window.__PROP ? window.__PROP() : 1) : 1.4) : 1); ROAMS.run = vv > 18 && !wet; ROAMS.wet = wet; ROAMS.vvS = ROAMS.fly ? (ROAMS.vvS || vv) + (vv - (ROAMS.vvS || vv)) * Math.min(1, dt * 2.5) : vv; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(dt * ROAMS.vvS, 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.yaw = y0; if (fw >= 0) ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * (sd2 ? 1.2 : 2.6))); }
         else if (ROAMS.mode === '1p' && !ROAMS.mini) { ROAMS.yaw += sd2 * dt * 2.0; ROAMS.cy = ROAMS.yaw; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : true) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; const vv = 34 * SPD * (wet ? 2.0 : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 : 1.4) : 1); ROAMS.run = vv > 18 && !wet; ROAMS.wet = wet; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(fw * dt * vv * (fw < 0 ? 0.6 : 1), 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); } else { ROAMS.cy = ROAMS.yaw; roamMove(fw * dt * 44 * ms * SPD, sd2 * dt * 34 * ms * SPD); } } ROAMS.moving = !!(fw || sd2);
       { if (ROAMS.h == null) { ROAMS.h = 0; ROAMS.vy = 0; } const fl = (() => { if (window.ATM_OUT) { if (Math.abs(ROAMS.p.x) < 82 && ROAMS.p.z > -18 && ROAMS.p.z < 98 && -8.9 + (ROAMS.h || 0) > 25) { const inDome = Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 37 && window.__DOME && window.__DOME.open > 0.6; if (!inDome) return 26.6 + 8.9 + 0.2; return 0; } if (window.__SKYDEV && (ROAMS.h || 0) > 40) { for (const o of window.__SKYDEV()) { if (!o.visible) continue; const s = o.scale.x, top = o.position.y + s * 0.45; if (Math.hypot(ROAMS.p.x - o.position.x, ROAMS.p.z - o.position.z) < s * 0.7 && top + 9 <= ROAMS.h + 2 && top + 9 > ROAMS.h - 60) { ROAMS.onDevN = o; return top + 9; } } } if (window.__WAVE && window.__LAND && !window.__LAND(ROAMS.p.x, ROAMS.p.z)) { return window.__WAVE(ROAMS.p.x, ROAMS.p.z, t) - (ROAMS.board ? -1.1 : 0.85); } let g = 0; for (const B of window.__OBSTO || []) if (B.y1 != null && ROAMS.p.x > B.x0 + 0.9 && ROAMS.p.x < B.x1 - 0.9 && ROAMS.p.z > B.z0 + 0.9 && ROAMS.p.z < B.z1 - 0.9 && B.y1 + 9 <= ROAMS.h + 0.6) g = Math.max(g, B.y1 + 9); return g; } if (ROAMS.mini || !window.__OBST) return 0; let g = 0; const p = ROAMS.p; for (const B of window.__OBST) if (B.y1 != null && p.x > B.x0 + 0.9 && p.x < B.x1 - 0.9 && p.z > B.z0 + 0.9 && p.z < B.z1 - 0.9 && B.y1 + 8.9 <= ROAMS.h + 0.6) g = Math.max(g, B.y1 + 8.9); return g; })(); ROAMS.fl = fl; { const o = ROAMS.onDevN; ROAMS.onDevN = null; const onTop = o && (ROAMS.h || 0) <= fl + 1.5; if (onTop) { if (ROAMS.devObj === o && ROAMS.devPrev) { ROAMS.p.x += o.position.x - ROAMS.devPrev.x; ROAMS.p.z += o.position.z - ROAMS.devPrev.z; } ROAMS.devObj = o; ROAMS.devPrev = o.position.clone(); if (ROAMS.landedOn !== o) { ROAMS.landedOn = o; let n = 0; try { n = (+localStorage.getItem('unfire_skyland') || 0) + 1; localStorage.setItem('unfire_skyland', String(n)); } catch (e) {} if (n % 3 === 0) { try { window.__REWARD('Has aterrizado en ' + n + ' plugins gigantes'); } catch (e) {} } else say(n % 3 === 0 ? '' : '🛬 ¡Aterrizaje en un plugin gigante! (' + n + ') · aterriza en 3 para completar la misión · mantén ESPACIO para despegar'); hap(0.5); } } else { ROAMS.devObj = null; if (!o) ROAMS.landedOn = (ROAMS.h || 0) > 60 ? ROAMS.landedOn : null; } } if (ROAMS.board && ROAMS.wet && K[' '] && ROAMS.spDown && performance.now() - ROAMS.spDown > 450 && !ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; ROAMS.trick = null; }
-        ROAMS.wet = !!window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !ROAMS.fly; ROAMS.wk = (ROAMS.wk || 0) + ((ROAMS.fly ? 1 : 0) - (ROAMS.wk || 0)) * Math.min(1, dt * 3); if (ROAMS.fly && !ROAMS.mini) { const hov = Math.max(fl, window.ATM_OUT ? 22 : 9); ROAMS.flyT = (ROAMS.flyT || 0) + dt; const sink = window.ATM_OUT ? Math.min(420, 10 + (ROAMS.h || 0) * 0.14) : 5; ROAMS.climbV = K[' '] ? Math.min(Math.max(ROAMS.climbV || 0, 0) + dt * (window.ATM_OUT ? 150 : 22) * (ROAMS.perkF || 1), (window.ATM_OUT ? 380 : 12) * (ROAMS.perkF || 1)) : K.f ? -Math.min(window.ATM_OUT ? 1200 : 18, Math.abs(ROAMS.climbV || 0) + dt * 1500) : (K.s || K.ArrowDown) ? (ROAMS.climbV || 0) + (-Math.max(window.ATM_OUT ? 60 : 8, sink * 1.6) - (ROAMS.climbV || 0)) * Math.min(1, dt * 3) : (ROAMS.climbV || 0) * Math.max(0, 1 - dt * 4); const up = (fw ? Math.sin(ROAMS.pitch) * (window.ATM_OUT ? 260 : 30) * fw * (K.Shift ? 2 : 1) : 0) * (window.__PROP ? Math.sqrt(window.__PROP()) : 1) + ROAMS.climbV; const inDomeI = !window.ATM_OUT && Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 36; ROAMS.flyH = Math.max(fl, Math.min(window.ATM_OUT ? 8000 : inDomeI ? 60 : 14, (ROAMS.flyH == null ? hov : ROAMS.flyH) + up * dt)); ROAMS.vy = (ROAMS.flyH + Math.sin(t * 2) * 0.4 - ROAMS.h) * 6; if (ROAMS.flyT > 1.2 && !K[' '] && ROAMS.flyH <= fl + 0.3 && ROAMS.h <= fl + 0.6) { ROAMS.fly = false; ROAMS.climbV = 0; say('🦶 Aterrizado'); } } else { ROAMS.flyH = null; ROAMS.vy -= dt * (ROAMS.h > fl + 40 ? 300 : 38); if (ROAMS.vy < -700) ROAMS.vy = -700; if (ROAMS.h < fl + 30 && ROAMS.vy < -40) ROAMS.vy += (-40 - ROAMS.vy) * Math.min(1, dt * 4); } ROAMS.h += ROAMS.vy * dt; const inDomeT = !window.ATM_OUT && Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 36; const top = window.ATM_OUT ? 8000 : inDomeT ? 60 : 14; if (inDomeT && -8.9 + (ROAMS.h || 0) > 30 && ROAMS.fly) { try { ATM.setOut(true); if (window.__DOME) window.__DOME.open = 1; ROAMS.flyH = ROAMS.h; say('🪽 ¡Has salido volando por la cúpula!'); } catch (e) {} } if (ROAMS.h > top) { ROAMS.h = top; ROAMS.vy = Math.min(ROAMS.vy, 0); } if (ROAMS.h < fl) { ROAMS.h = ROAMS.wet ? ROAMS.h + (fl - ROAMS.h) * Math.min(1, dt * 10) : fl; ROAMS.vy = 0; } ROAMS.air = ROAMS.h > fl + 0.3; } { const CT = ROOM.R.userData.camTrack; if (CT && !(fw || sd2)) { const CD0 = ROOM.R.userData.camTrackDir; const d = CD0 ? V(CD0.x, 0, CD0.z) : V(cam.position.x - CT.x, 0, cam.position.z - CT.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const side = V(-d.z, 0, d.x); const p = V(CT.x + d.x * 12 + side.x * 9, CT.y + 2.2, CT.z + d.z * 12 + side.z * 9); const lx = CT.x - p.x, lz = CT.z - p.z; ROAMS.tgt = { p, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(CT.y - p.y, Math.hypot(lx, lz)) }; } } if (ROAMS.tgt) { const T0 = ROAMS.tgt; const dx = T0.p.x - ROAMS.p.x, dz = T0.p.z - ROAMS.p.z, d = Math.hypot(dx, dz); if (d > 1.2) { let dir = Math.atan2(dx, -dz); if ((ROAMS.stkN || 0) > 6) { if (!ROAMS.avoidS) ROAMS.avoidS = Math.random() < 0.5 ? 1 : -1; dir += ROAMS.avoidS * 1.2; } else if ((ROAMS.stkN || 0) === 0) ROAMS.avoidS = 0; ROAMS.cy = angL(ROAMS.cy == null ? dir : ROAMS.cy, dir, Math.min(1, dt * 8)); const sp = Math.min(d, (d > 25 ? 42 : 24) * dt * (window.ATM_OUT ? 1.6 : 1)); const y0 = ROAMS.yaw; ROAMS.yaw = ROAMS.cy; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(sp, 0); ROAMS.yaw = y0; ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.moving = true; ROAMS.run = d > 25; ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * 4)); } else { ROAMS.avoidS = 0; ROAMS.p.y += (T0.p.y - ROAMS.p.y) * 0.1; ROAMS.yaw = angL(ROAMS.yaw, T0.yaw, 0.1); } ROAMS.pitch += (T0.pitch - ROAMS.pitch) * 0.1; } if (K.q) ROAMS.yaw -= dt * 1.9; if (K.e) ROAMS.yaw += dt * 1.9; const cp = Math.cos(ROAMS.pitch); if (!ROAMS.av) { try { const r0 = ROBOT.build(Object.assign({}, MUTANTS.list[(ROAMS.myType == null ? 4 : ROAMS.myType) % MUTANTS.list.length], { n: ROAMS.myNum || 27 })); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); if (ROAMS.myCol && window.__tintAvatar) window.__tintAvatar(r0.root, ROAMS.myCol); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(10.5 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; S.scene.add(w); const WG = new THREE.Group(); const s0 = w.scale.x || 1; w.rotation.order = 'YXZ'; WG.position.set(0, 10.5 * 0.62 / s0, -1.0 / s0); let bodyMat = null; r0.root.traverse((o) => { if (!bodyMat && o.isMesh && o.material && o.material.color && (o.material.metalness || 0) > 0.3) bodyMat = o.material; }); const bladeM = bodyMat ? bodyMat : new THREE.MeshPhysicalMaterial({ color: 0xd8dde6, metalness: 0.9, roughness: 0.18, clearcoat: 1 }); const acc = new THREE.Color((MUTANTS.list[4 % MUTANTS.list.length].accent) || '#ff2a4a'); const tipM = new THREE.MeshStandardMaterial({ color: acc, emissive: acc, emissiveIntensity: 1.1, toneMapped: false });
+        ROAMS.wet = !!window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !ROAMS.fly; ROAMS.wk = (ROAMS.wk || 0) + ((ROAMS.fly ? 1 : 0) - (ROAMS.wk || 0)) * Math.min(1, dt * 3); if (ROAMS.slam && ROAMS.fly && !ROAMS.mini) {
+          ROAMS.slamV = Math.min(2300, Math.max(ROAMS.slamV || 280, (ROAMS.h - fl) * 2.2, (ROAMS.slamV || 280) + dt * 1300));
+          ROAMS.flyH = fl; ROAMS.vy = -ROAMS.slamV;
+          // Integrate toward the actual collision floor, never tunnel through roofs/platforms/water.
+          if (ROAMS.h + ROAMS.vy * dt <= fl + 0.02) {
+            ROAMS.h = fl; ROAMS.vy = 0; ROAMS.slam = false; ROAMS.slamV = 0;
+            ROAMS.fly = false; ROAMS.flyH = null; ROAMS.climbV = 0; ROAMS.boostT = 0;
+            try { window.__SPRAY && window.__SPRAY(ROAMS.p.x, -8.9 + fl, ROAMS.p.z, 75, 13, 22); } catch (_) {}
+            hap(1); say('💥 ¡Aterrizaje de héroe!');
+          }
+        } else if (ROAMS.fly && !ROAMS.mini) { const hov = Math.max(fl, window.ATM_OUT ? 22 : 9); ROAMS.flyT = (ROAMS.flyT || 0) + dt; const sink = window.ATM_OUT ? Math.min(420, 10 + (ROAMS.h || 0) * 0.14) : 5; ROAMS.boostT = Math.max(0, (ROAMS.boostT || 0) - dt); ROAMS.climbV = ROAMS.boostT > 0 ? (window.ATM_OUT ? 500 : 38) * (ROAMS.perkF || 1) : K[' '] ? Math.min(Math.max(ROAMS.climbV || 0, 0) + dt * (window.ATM_OUT ? 150 : 22) * (ROAMS.perkF || 1), (window.ATM_OUT ? 380 : 12) * (ROAMS.perkF || 1)) : K.f ? -Math.min(window.ATM_OUT ? 1200 : 18, Math.abs(ROAMS.climbV || 0) + dt * 1500) : (K.s || K.ArrowDown) ? (ROAMS.climbV || 0) + (-Math.max(window.ATM_OUT ? 60 : 8, sink * 1.6) - (ROAMS.climbV || 0)) * Math.min(1, dt * 3) : (ROAMS.climbV || 0) * Math.max(0, 1 - dt * 4); const up = (fw ? Math.sin(ROAMS.pitch) * (window.ATM_OUT ? 260 : 30) * fw * (K.Shift ? 2 : 1) : 0) * (window.__PROP ? Math.sqrt(window.__PROP()) : 1) + ROAMS.climbV; const inDomeI = !window.ATM_OUT && Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 36; ROAMS.flyH = Math.max(fl, Math.min(window.ATM_OUT ? 8000 : inDomeI ? 60 : 14, (ROAMS.flyH == null ? hov : ROAMS.flyH) + up * dt)); ROAMS.vy = (ROAMS.flyH + Math.sin(t * 2) * 0.4 - ROAMS.h) * 6; if (ROAMS.flyT > 1.2 && !K[' '] && ROAMS.flyH <= fl + 0.3 && ROAMS.h <= fl + 0.6) { ROAMS.fly = false; ROAMS.climbV = 0; say('🦶 Aterrizado'); } } else { ROAMS.flyH = null; ROAMS.vy -= dt * (ROAMS.h > fl + 40 ? 300 : 38); if (ROAMS.vy < -700) ROAMS.vy = -700; if (ROAMS.h < fl + 30 && ROAMS.vy < -40) ROAMS.vy += (-40 - ROAMS.vy) * Math.min(1, dt * 4); } ROAMS.h += ROAMS.vy * dt; const inDomeT = !window.ATM_OUT && Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 36; const top = window.ATM_OUT ? 8000 : inDomeT ? 60 : 14; if (inDomeT && -8.9 + (ROAMS.h || 0) > 30 && ROAMS.fly) { try { ATM.setOut(true); if (window.__DOME) window.__DOME.open = 1; ROAMS.flyH = ROAMS.h; say('🪽 ¡Has salido volando por la cúpula!'); } catch (e) {} } if (ROAMS.h > top) { ROAMS.h = top; ROAMS.vy = Math.min(ROAMS.vy, 0); } if (ROAMS.h < fl) { ROAMS.h = ROAMS.wet ? ROAMS.h + (fl - ROAMS.h) * Math.min(1, dt * 10) : fl; ROAMS.vy = 0; } ROAMS.air = ROAMS.h > fl + 0.3; } { const CT = ROOM.R.userData.camTrack; if (CT && !(fw || sd2)) { const CD0 = ROOM.R.userData.camTrackDir; const d = CD0 ? V(CD0.x, 0, CD0.z) : V(cam.position.x - CT.x, 0, cam.position.z - CT.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const side = V(-d.z, 0, d.x); const p = V(CT.x + d.x * 12 + side.x * 9, CT.y + 2.2, CT.z + d.z * 12 + side.z * 9); const lx = CT.x - p.x, lz = CT.z - p.z; ROAMS.tgt = { p, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(CT.y - p.y, Math.hypot(lx, lz)) }; } } if (ROAMS.tgt) { const T0 = ROAMS.tgt; const dx = T0.p.x - ROAMS.p.x, dz = T0.p.z - ROAMS.p.z, d = Math.hypot(dx, dz); if (d > 1.2) { let dir = Math.atan2(dx, -dz); if ((ROAMS.stkN || 0) > 6) { if (!ROAMS.avoidS) ROAMS.avoidS = Math.random() < 0.5 ? 1 : -1; dir += ROAMS.avoidS * 1.2; } else if ((ROAMS.stkN || 0) === 0) ROAMS.avoidS = 0; ROAMS.cy = angL(ROAMS.cy == null ? dir : ROAMS.cy, dir, Math.min(1, dt * 8)); const sp = Math.min(d, (d > 25 ? 42 : 24) * dt * (window.ATM_OUT ? 1.6 : 1)); const y0 = ROAMS.yaw; ROAMS.yaw = ROAMS.cy; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(sp, 0); ROAMS.yaw = y0; ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.moving = true; ROAMS.run = d > 25; ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * 4)); } else { ROAMS.avoidS = 0; ROAMS.p.y += (T0.p.y - ROAMS.p.y) * 0.1; ROAMS.yaw = angL(ROAMS.yaw, T0.yaw, 0.1); } ROAMS.pitch += (T0.pitch - ROAMS.pitch) * 0.1; } if (K.q) ROAMS.yaw -= dt * 1.9; if (K.e) ROAMS.yaw += dt * 1.9; const cp = Math.cos(ROAMS.pitch); if (!ROAMS.av) { try { const r0 = ROBOT.build(Object.assign({}, MUTANTS.list[(ROAMS.myType == null ? 4 : ROAMS.myType) % MUTANTS.list.length], { n: ROAMS.myNum || 27 })); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); if (ROAMS.myCol && window.__tintAvatar) window.__tintAvatar(r0.root, ROAMS.myCol); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(10.5 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; S.scene.add(w); const WG = new THREE.Group(); const s0 = w.scale.x || 1; w.rotation.order = 'YXZ'; WG.position.set(0, 10.5 * 0.62 / s0, -1.0 / s0); let bodyMat = null; r0.root.traverse((o) => { if (!bodyMat && o.isMesh && o.material && o.material.color && (o.material.metalness || 0) > 0.3) bodyMat = o.material; }); const bladeM = bodyMat ? bodyMat : new THREE.MeshPhysicalMaterial({ color: 0xd8dde6, metalness: 0.9, roughness: 0.18, clearcoat: 1 }); const acc = new THREE.Color((MUTANTS.list[4 % MUTANTS.list.length].accent) || '#ff2a4a'); const tipM = new THREE.MeshStandardMaterial({ color: acc, emissive: acc, emissiveIntensity: 1.1, toneMapped: false });
           const wingM = new THREE.MeshPhysicalMaterial({ color: 0x3fd65a, metalness: 0.55, roughness: 0.22, clearcoat: 1, clearcoatRoughness: 0.1 }); const stripeM = new THREE.MeshPhysicalMaterial({ color: 0xf4f6fa, metalness: 0.7, roughness: 0.2, clearcoat: 1 });
           const side = (sg) => { const root = new THREE.Group(); const pod = mesh(new THREE.CylinderGeometry(0.42, 0.55, 1.5, 16), bodyMat || stripeM); pod.rotation.z = Math.PI / 2; pod.position.x = sg * 0.55; root.add(pod);
             const hinge = new THREE.Group(); hinge.position.x = sg * 0.9; root.add(hinge);
@@ -2453,23 +2570,7 @@
           for (const B of (q.out ? window.__OBSTO : window.__OBST) || []) { const x0 = B.x0 + 1.1 - q.r, x1 = B.x1 - 1.1 + q.r, z0 = B.z0 + 1.1 - q.r, z1 = B.z1 - 1.1 + q.r; if (P.x > x0 && P.x < x1 && P.z > z0 && P.z < z1 && P.y - q.r < B.y1) { const dl = P.x - x0, dr = x1 - P.x, db = P.z - z0, df = z1 - P.z, mn = Math.min(dl, dr, db, df); if (mn === dl) { P.x = x0; q.v.x = -Math.abs(q.v.x) * 0.6; } else if (mn === dr) { P.x = x1; q.v.x = Math.abs(q.v.x) * 0.6; } else if (mn === db) { P.z = z0; q.v.z = -Math.abs(q.v.z) * 0.6; } else { P.z = z1; q.v.z = Math.abs(q.v.z) * 0.6; } } }
           const sp = Math.hypot(q.v.x, q.v.z); if (sp > 0.01) { const ax = V(q.v.z, 0, -q.v.x).normalize(); q.b.rotateOnWorldAxis(ax, sp * dt / q.r); } }
         for (let i = 0; i < BL.length; i++) for (let j = i + 1; j < BL.length; j++) { const a = BL[i], b = BL[j]; if (a.out !== b.out) continue; const d = a.b.position.distanceTo(b.b.position), R0 = a.r + b.r; if (d < R0 && d > 0.001) { const n = b.b.position.clone().sub(a.b.position).divideScalar(d), o = (R0 - d) / 2; a.b.position.addScaledVector(n, -o); b.b.position.addScaledVector(n, o); const rv = b.v.clone().sub(a.v).dot(n); if (rv < 0) { a.v.addScaledVector(n, rv * 0.9); b.v.addScaledVector(n, -rv * 0.9); } } } } catch (e) {} }
-    // Adaptive resolution compares actual frame time with the device's intended frame
-    // interval. The old 25/32-fps thresholds treated a healthy 25-fps mobile cap as
-    // overload; preserve sharpness and avoid repeated GPU allocations on phones.
-    { const Q = window.__perf || (window.__perf = { a: LOWDEV ? 1/25 : 1/33, t: 0, dpr: S.renderer.getPixelRatio(), max: Math.min(S.renderer.getPixelRatio(),DEVICE.maxDpr) });
-      Q.a=Q.a*0.88+actualFrameTime*0.12;Q.t+=dt;Q.f=(Q.f||0)+1;
-      const target=LOWDEV?(DEVICE.tier==='compact'?1/24:1/30):(window.ATM_OUT?1/30:1/35);
-      window.__LOWFPS=Q.a>target*1.5;
-      if(S.renderer.shadowMap.enabled)S.renderer.shadowMap.needsUpdate=Q.f%(window.ATM_OUT?7:4)===0;
-      if(Q.t>3){Q.t=0;let next=Q.dpr;
-        if(Q.a>target*1.32)next=Math.max(LOWDEV?0.60:0.70,Q.dpr-0.10);
-        else if(Q.a<target*1.08)next=Math.min(window.ATM_OUT?1:Q.max,Q.dpr+0.06);
-        next=Math.min(next,Q.max,DEVICE.maxDpr);
-        if(Math.abs(next-Q.dpr)>0.015){Q.dpr=next;S.renderer.setPixelRatio(next);
-          S.renderer.setSize(renderWidth||innerWidth,renderHeight||innerHeight,false);}
-        S.renderer.shadowMap.autoUpdate=false;
-      }
-    }
+    // DPR/shadow refresh uses sceneFrameBudget above (shared across indoor and outdoor).
     window.__idleT = ROAMS.moving || ROAMS.fly ? 0 : (window.__idleT || 0) + dt;
     if (window.__DOME) { const DM2 = window.__DOME; const near = ROAMS.on && window.ATM_OUT && (ROAMS.h || 0) > 20 && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 90; DM2.open += ((near ? 1 : 0) - DM2.open) * Math.min(1, dt * 2); DM2.PET.forEach((p, i) => { p.rotation.z = -DM2.open * (1.75 + Math.sin(i) * 0.05); }); if (DM2.open > 0.6 && window.ATM_OUT && ROAMS.on && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 36 && -9 + (ROAMS.h || 0) < DM2.c.y - 1) { try { ATM.setOut(false); ROAMS.h = Math.min(ROAMS.h, 13); ROAMS.flyH = 12; say('🏠 Has entrado por la cúpula'); } catch (e) {} } }
     // sonido de mar y viento fuera (más fuerte en la orilla y en el agua, viento al volar alto)
