@@ -1059,7 +1059,8 @@
   pageBtn.add(mesh(rbox(0.6, 0.12, 0.04, 0.02), M.blackGloss)); { const f = new THREE.Mesh(new THREE.PlaneGeometry(0.56, 0.1), new THREE.MeshBasicMaterial({ map: PGT, toneMapped: false })); f.position.z = 0.022; pageBtn.add(f); }
   function setCapPage(n) { capPage = (n + 3) % 3; closeAll(true); items.filter((x) => x.kind === 'cap').forEach((it, i) => { const p = CAPPAGES[capPage][i]; it.spec = p; it.name = p.name; const mt = it.tok.children[0].material; mt.color.setHSL((p.n * 0.6180339887 + capPage * 0.13) % 1, capPage === 2 ? 0.6 : 0.85, capPage === 1 ? 0.45 : 0.55); }); drawPg(); }
   // ---------- cámara de inmersión ----------
-  window.__dbg = { S }; const cam = S.camera, DIR = V(0, Math.sin(0.98), Math.cos(0.98)), ELEV = { a: 0.5 }, ORB = { az: 0, de: 0, gaz: 0, gde: 0 };    // ~56° desde arriba, recto
+  window.__dbg = { S }; const cam = S.camera, DIR = V(0, Math.sin(0.98), Math.cos(0.98)), ELEV = { a: 0.5 }, ORB = { az: 0, de: 0, gaz: 0, gde: 0 };
+  const REDUCED_MOTION_CASE_CUE=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;    // ~56° desde arriba, recto
   const view = { tx: 0, tz: 0.15, dist: 9, D0: 9, gx: 0, gz: 0.15, gd: 9 };
   // modo paseo: la cámara se suelta del maletín y miras/andas por la habitación
   const ROAMS = { on: false, yaw: 0, pitch: -0.12, p: V(0, 8.5, 15), k: {} }; const roamB = document.createElement('button'); roamB.id = 'roamB'; roamB.textContent = '🚶 PASEAR'; roamB.style.cssText = 'position:fixed;right:14px;bottom:calc(9vh + 14px);z-index:40;border:2px solid #fff;border-radius:999px;padding:9px 14px;font:800 12px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);box-shadow:0 6px 18px #0008;cursor:pointer;display:none'; document.body.appendChild(roamB);
@@ -2552,7 +2553,7 @@
     { const parts=window.__unfireOpenButtonParts;
       if(parts&&parts[2]&&parts[2].material){
         const prompt=!ROAMS.on&&lidOpen<0.08&&!lidControlledByPlayer&&!document.hidden;
-        const reduce=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
         const beat=prompt?(reduce?0.42:Math.pow(Math.max(0,Math.sin(t*3.4)),4)):0;
         const dome=parts[2].material;
         dome.emissiveIntensity=prompt?0.55+1.4*beat:0.6;
