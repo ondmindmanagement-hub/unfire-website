@@ -71,6 +71,67 @@
       ],
       "web_asset": "bolt-iphone.webp",
       "bytes": 46046
+    },
+    {
+      "app_visual": "archer-mobile",
+      "source_original": "ARCHER_Mobile/QA/STORE_SCREENS_1_0_1/ARCHER_iPhone16ProMax_After12s.png",
+      "original_size": [
+        1320,
+        2868
+      ],
+      "web_size": [
+        740,
+        1541
+      ],
+      "web_asset": "archer-mobile.webp",
+      "bytes": 107104,
+      "sha256": "f095cde5faacafed4d81e7259742c87f03d6f9a603db94612be71621fbd45e19",
+      "crop": "Remove top 120px of simulator debug audio-input warning; chrome UI remains unmodified."
+    },
+    {
+      "app_visual": "unfire-synth-ipad",
+      "source_original": "UnfireOrbit/Mobile/ipad_final2.png",
+      "original_size": [
+        1668,
+        2420
+      ],
+      "web_size": [
+        900,
+        1306
+      ],
+      "web_asset": "unfire-synth-ipad.webp",
+      "bytes": 37458,
+      "sha256": "30ec3133bf9dd408da7bc858e2e65288cebf52767137e5d622f2fc46ba9c86e3"
+    },
+    {
+      "app_visual": "unfire-control-icon",
+      "source_original": "UNFIRE_VISION_ADAPTIVE_BETA/AppIcon/UnfireControl.icns",
+      "original_size": [
+        1024,
+        1024
+      ],
+      "web_size": [
+        480,
+        480
+      ],
+      "web_asset": "unfire-control-icon.webp",
+      "bytes": 19614,
+      "sha256": "039cf9b1f92d08bf9d0c5680a01b5729d5913fef333ef26bf378baf4c3cc0ec5"
+    },
+    {
+      "app_visual": "keybridge-iphone",
+      "source_original": "Unfire_AppStore_Real_Captures_20261019/FINAL_PROFESSIONAL_MEDIA/KeyBridge/iPhone/01_overview.png",
+      "original_size": [
+        1206,
+        2622
+      ],
+      "web_size": [
+        736,
+        1600
+      ],
+      "web_asset": "keybridge-iphone.webp",
+      "bytes": 33256,
+      "sha256": "c897bdb3b6514864a76dbdfc51ffefd20825ad3c213932b419f3313f649a1d09"
     }
   ]
 }
