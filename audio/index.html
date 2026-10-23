@@ -95,7 +95,7 @@ p{margin:0}
 #heroPin:fullscreen #malFrame,#heroPin:-webkit-full-screen #malFrame{inset:0!important;width:100%!important;height:100%!important;clip-path:none!important}
 html.immOn,body.immOn{overflow:hidden!important;overscroll-behavior:none}body.immOn header,body.immOn .hero-copy{visibility:hidden}body.immOn #stopAll,body.immOn #sndBtn{display:none!important}
 /* The 2D butterfly belongs to the landing page, never to active gameplay. */
-body.immOn #openBtn{display:none!important}
+body.immOn #openBtn,#heroPin.imm #openBtn,#heroPin:fullscreen #openBtn,#heroPin:-webkit-full-screen #openBtn{display:none!important;visibility:hidden!important;pointer-events:none!important}
 .hero-pin{position:sticky;top:62px;height:calc(100vh - 62px);overflow:hidden;display:grid;place-items:center}
 /* Defer heavy WebGL startup until the document is interactive. Same full-resolution game. */
 .hero-pin:not(.scene-ready)::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 70%,#1c3353 0%,#08090c 65%)}
@@ -419,7 +419,7 @@ footer a{color:var(--soft)}
 <!-- 0 · El maletín 3D con inmersión -->
 <div class="hero" id="hero" data-field="0">
   <div class="hero-pin" id="heroPin">
-    <iframe id="malFrame" data-src="maletin/index.html?v=20261023hud2" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone; fullscreen" allowfullscreen></iframe>
+    <iframe id="malFrame" data-src="maletin/index.html?v=20261023hud3" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone; fullscreen" allowfullscreen></iframe>
     <a id="noWebglLink" href="#instrumentos">Explorar los instrumentos ↓</a>
     <div class="hero-copy" id="heroCopy">
       <img src="img/logo-unfire-256.webp" alt="" width="64" height="64" style="width:64px;height:64px;margin:0 auto 12px;filter:drop-shadow(0 0 18px rgba(61,139,255,.6))">
@@ -799,7 +799,7 @@ const UNFIRE_SCENE=(()=>{
   if(window.visualViewport)visualViewport.addEventListener('resize',recalibrate,{passive:true});
   const help=document.createElement('div');help.id='unfireGameHelp';
   help.style.cssText='display:none;position:absolute;z-index:30;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(91vw,330px);padding:13px;border:1px solid #83cfff;border-radius:16px;background:#081528f5;color:#eef7ff;text-align:center;font:600 12px/1.5 system-ui;box-shadow:0 12px 30px #000a';
-  help.innerHTML='Si el juego no aparece, prueba el modo compatible.<div style="display:flex;justify-content:center;gap:8px;margin-top:9px"><button id="unfireGameRetry" type="button" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;background:#174b80;color:white">REINTENTAR</button><a href="maletin/index.html?v=20261023hud2&quality=compact" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;color:white;text-decoration:none">JUGAR DIRECTO</a></div>';
+  help.innerHTML='Si el juego no aparece, prueba el modo compatible.<div style="display:flex;justify-content:center;gap:8px;margin-top:9px"><button id="unfireGameRetry" type="button" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;background:#174b80;color:white">REINTENTAR</button><a href="maletin/index.html?v=20261023hud3&quality=compact" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;color:white;text-decoration:none">JUGAR DIRECTO</a></div>';
   pin.appendChild(help);
   help.querySelector('#unfireGameRetry').onclick=()=>{help.style.display='none';start(true);};
   const fail=()=>{pin.classList.add('scene-error');pin.classList.remove('scene-ready');help.style.display='block';

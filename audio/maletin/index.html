@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023hud2" as="script"></head><body><title>UNFIRE Maletín</title>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023hud3" as="script"></head><body><title>UNFIRE Maletín</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
@@ -107,13 +107,8 @@ body.unfire-roaming #cv{touch-action:none}
   #story.on.cine .bar{height:min(3vh,17px)!important}
   body.storyOn #unfireTouchPad,body.storyOn #unfireTouchKnob,
   body.storyOn #unfireFly,body.storyOn #unfireTalk,
-  body.storyOn #unfireDown,body.storyOn #caseModeHud,
+  body.storyOn #unfireDown,
   body.storyOn #minimap,body.storyOn #unfireCarryCase{display:none!important}
-  #caseModeHud{left:50%!important;right:auto!important;bottom:calc(env(safe-area-inset-bottom) + 142px)!important;
-    transform:translateX(-50%)!important;width:min(52vw,212px)!important;
-    max-width:212px!important;box-sizing:border-box!important;padding:4px!important;gap:3px!important;
-    background:rgba(7,18,38,.64)!important;backdrop-filter:blur(5px)!important}
-  #caseModeHud button{font-size:9px!important;line-height:1.2!important;min-height:29px!important;padding:5px 7px!important;flex:1 1 auto}
   #unfireExitGame{top:calc(env(safe-area-inset-top) + 8px)!important;
     right:calc(env(safe-area-inset-right) + 8px)!important;
     max-width:45vw!important;min-height:32px!important;padding:6px 9px!important;
@@ -125,7 +120,6 @@ body.unfire-roaming #cv{touch-action:none}
     transform:none!important;width:min(63vw,590px)!important;max-height:70dvh!important;font-size:12px!important}
   #story .tx{max-height:36dvh!important;padding:6px 9px!important}
   #story .ch button{min-height:29px!important;padding:4px 8px!important}
-  #caseModeHud{width:min(36vw,250px)!important;max-width:250px!important;bottom:calc(env(safe-area-inset-bottom) + 8px)!important}
   #unfireExitGame{font-size:9px!important;min-height:28px!important}
 }
 @media(pointer:coarse) and (max-height:420px){
@@ -133,6 +127,23 @@ body.unfire-roaming #cv{touch-action:none}
   #story .nm{margin-bottom:2px!important}
   #story .ch{margin-top:3px!important}
 }
+  /* Single contextual onboarding action; never cover the touch joystick. */
+  #unfireCharacterEntry{position:fixed;left:50%;bottom:max(11px,env(safe-area-inset-bottom));
+    transform:translateX(-50%);z-index:54;min-height:40px;width:max-content;
+    max-width:calc(100vw - 164px);box-sizing:border-box;padding:9px 12px;
+    color:#eaf7ff;background:linear-gradient(180deg,rgba(27,58,106,.97),rgba(7,22,51,.97));
+    border:1px solid #7ac6ff;border-radius:999px;box-shadow:0 5px 18px #0009;
+    font:700 clamp(9px,1.7vw,11px)/1.2 system-ui,sans-serif;
+    letter-spacing:.02em;white-space:normal;text-align:center;cursor:pointer;touch-action:manipulation}
+  #unfireCharacterEntry[hidden],body.storyOn #unfireCharacterEntry{display:none!important}
+  #unfireCharacterEntry.unfire-intro-blink{
+    animation:unfire-character-2s 2s steps(1,end) 1}
+  @keyframes unfire-character-2s{
+    0%,20%,40%,60%,80%{visibility:visible;filter:brightness(1.65)}
+    10%,30%,50%,70%,90%{visibility:hidden;filter:brightness(1)}
+    100%{visibility:visible;filter:brightness(1)}}
+  @media(max-width:430px){#unfireCharacterEntry{max-width:calc(100vw - 124px);padding:8px 9px;font-size:9px}}
+  @media(pointer:coarse) and (orientation:landscape){#unfireCharacterEntry{bottom:max(5px,env(safe-area-inset-bottom));max-width:calc(100vw - 210px);min-height:30px;padding:5px 8px}}
 </style>
 <canvas id="cv" aria-label="Maletín UNFIRE en 3D. Acerca la vista con la rueda para entrar"></canvas>
 <div class="hud" id="hud"><button id="zin" aria-label="Acercar">+</button><button id="zout" aria-label="Alejar">−</button><button id="home" aria-label="Volver al maletín">⟲</button><div class="crumb" id="crumb">MALETÍN</div></div>
@@ -4642,5 +4653,5 @@ window.STORY_INIT = function (H) {
 };
 
 </script>
-<script src="game-engine-v50.js?v=20261023hud2"></script>
+<script src="game-engine-v50.js?v=20261023hud3"></script>
 </body></html>
