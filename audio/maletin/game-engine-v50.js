@@ -1982,15 +1982,75 @@
   let lastEnter = 0;
   // arrastrar = desplazarse; clic = actuar
   let drag = null;
-  cv.addEventListener('pointerdown', (e) => { if (CINE.on && e.isTrusted) { CINE.on = false; say('Control manual'); } if (MV) { MV.drag = true; try { cv.setPointerCapture(e.pointerId); } catch (er) {} return; } drag = { x: e.clientX, y: e.clientY, lx: e.clientX, ly: e.clientY, gx: view.gx, gz: view.gz, moved: false, id: e.pointerId, pan: e.button === 2 || e.shiftKey }; try { cv.setPointerCapture(e.pointerId); } catch (er) {} onDown(e); });
+  // Touch taps tolerate natural finger jitter; multi-touch cannot fire an accidental case click.
+  const activeTouchPointers = new Set();
+  // Prefer the event timestamp: on a loaded mobile GPU, dispatch may be delayed
+  // while the user has already released their finger.
+  const tapMoment = (e) => Number.isFinite(e.timeStamp) && e.timeStamp > 0 ? e.timeStamp : performance.now();
+  cv.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'touch') {
+      activeTouchPointers.add(e.pointerId);
+      if (e.isPrimary === false || activeTouchPointers.size !== 1) { drag = null; return; }
+    }
+    if (CINE.on && e.isTrusted) { CINE.on = false; say('Control manual'); }
+    if (MV) { MV.drag = true; try { cv.setPointerCapture(e.pointerId); } catch (er) {} return; }
+    drag = { x: e.clientX, y: e.clientY, lx: e.clientX, ly: e.clientY,
+      gx: view.gx, gz: view.gz, moved: false, id: e.pointerId,
+      slop: e.pointerType === 'touch' ? 16 : e.pointerType === 'pen' ? 9 : 4,
+      since: tapMoment(e), pan: e.button === 2 || e.shiftKey };
+    try { cv.setPointerCapture(e.pointerId); } catch (er) {}
+    onDown(e);
+  });
   cv.addEventListener('contextmenu', (e) => e.preventDefault());
-  cv.addEventListener('pointermove', (e) => { if (MV && MV.drag) { const p = cursorPoint(e); if (p) { MV.o.position.x = clamp(p.x, -CW / 2 + 0.25, CW / 2 - 0.25); MV.o.position.z = clamp(p.z, -CD / 2 + 0.25, CD / 2 - 0.25); } return; } if (knobDrag) { if (knobDrag.hwVol) { HWVOL = clamp(knobDrag.v + (knobDrag.y - e.clientY) / 160); try { if (knobDrag.hwVol.rot) knobDrag.hwVol.rot.rotation.y = -(Math.PI * 0.75 * 2 * (HWVOL - 0.5)); } catch (er) {} HW.lock = { t: performance.now() / 1000, label: '🔊 VOLUMEN', text: Math.round(HWVOL * 100) + ' %', v: 1 }; return; } if (!knobDrag.hw) onKnobMove(e); return; } if (!drag) { hover(e); return; } const dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.hypot(dx, dy) > 4) drag.moved = true; if (!drag.moved) return;
+  cv.addEventListener('pointermove', (e) => { if (MV && MV.drag) { const p = cursorPoint(e); if (p) { MV.o.position.x = clamp(p.x, -CW / 2 + 0.25, CW / 2 - 0.25); MV.o.position.z = clamp(p.z, -CD / 2 + 0.25, CD / 2 - 0.25); } return; } if (knobDrag) { if (knobDrag.hwVol) { HWVOL = clamp(knobDrag.v + (knobDrag.y - e.clientY) / 160); try { if (knobDrag.hwVol.rot) knobDrag.hwVol.rot.rotation.y = -(Math.PI * 0.75 * 2 * (HWVOL - 0.5)); } catch (er) {} HW.lock = { t: performance.now() / 1000, label: '🔊 VOLUMEN', text: Math.round(HWVOL * 100) + ' %', v: 1 }; return; } if (!knobDrag.hw) onKnobMove(e); return; } if (!drag || drag.id !== e.pointerId) { if (e.pointerType === 'mouse') hover(e); return; } const dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.hypot(dx, dy) > drag.slop) drag.moved = true; if (!drag.moved) return;
     if (drag.pan && zoomed() && !CASE_VIEW.on) { const s = view.dist / innerHeight * 1.1, ca = Math.cos(ORB.az), sa = Math.sin(ORB.az), px = -dx * s, pz = -dy * s * 1.2; view.gx = clamp(drag.gx + px * ca + pz * sa, -CW / 2, CW / 2); view.gz = clamp(drag.gz - px * sa + pz * ca, -CD / 2, CD / 2); }
     else if (ROAMS.on && CASE_VIEW.on) { CASE_VIEW.angle-=(e.clientX-drag.lx)*0.006;CASE_VIEW.elevation=clamp(CASE_VIEW.elevation+(e.clientY-drag.ly)*0.003,0.2,1.1); }
     else if (ROAMS.on) { const O = REC.on ? REC : ROAMS; ROAMS.tgt = null; O.yaw += (e.clientX - drag.lx) * (REC.on ? 0.0035 : 0.005); O.pitch = clamp(O.pitch - (e.clientY - drag.ly) * (REC.on ? 0.003 : 0.004), -1.45, 1.45); }
     else { ORB.gaz = clamp(ORB.gaz - (e.clientX - drag.lx) * 0.006, -1.4, 1.4); if (e.pointerType === 'mouse' || zoomed()) ORB.gde = clamp(ORB.gde + (e.clientY - drag.ly) * 0.004, -0.85, 0.5); }
     drag.lx = e.clientX; drag.ly = e.clientY; });
-  addEventListener('pointerup', (e) => { if (MV && MV.drag) { MV = null; $('tb').querySelectorAll('button').forEach((b) => b.classList.remove('on')); return; } if (drag && !drag.moved) onClick(e); drag = null; endKnob(e); });
+  addEventListener('pointerup', (e) => {
+    if (e.pointerType === 'touch') activeTouchPointers.delete(e.pointerId);
+    if (MV && MV.drag) { MV = null; drag = null; $('tb').querySelectorAll('button').forEach((b) => b.classList.remove('on')); endKnob(e); return; }
+    // Up must belong to the original pointer, remain within touch slop and not be a long hold.
+    if (drag && drag.id === e.pointerId) {
+      if (!drag.moved && tapMoment(e) - drag.since <= 1100) onClick(e);
+      drag = null;
+    }
+    endKnob(e);
+  });
+  addEventListener('pointercancel', (e) => {
+    if (e.pointerType === 'touch') activeTouchPointers.delete(e.pointerId);
+    if (drag && drag.id === e.pointerId) drag = null;
+    endKnob(e);
+  });
+  // A lost OS focus/rotation must not leave stale touch IDs that block future taps.
+  const resetTapPointers = () => { activeTouchPointers.clear(); drag = null; };
+  addEventListener('blur', resetTapPointers);
+  addEventListener('pagehide', resetTapPointers);
+  addEventListener('orientationchange', resetTapPointers);
+  // Older touch browsers without Pointer Events still get single-tap interaction.
+  if (!('PointerEvent' in window)) {
+    let legacyTap = null;
+    cv.addEventListener('touchstart', (e) => {
+      legacyTap = e.touches.length === 1 ? {
+        x: e.touches[0].clientX, y: e.touches[0].clientY, since: tapMoment(e)
+      } : null;
+    }, { passive: true });
+    cv.addEventListener('touchmove', (e) => {
+      if (legacyTap && (e.touches.length !== 1 ||
+          Math.hypot(e.touches[0].clientX - legacyTap.x, e.touches[0].clientY - legacyTap.y) > 16)) legacyTap = null;
+    }, { passive: true });
+    cv.addEventListener('touchend', (e) => {
+      const tap = legacyTap; legacyTap = null;
+      if (tap && e.touches.length === 0 && e.changedTouches.length === 1 &&
+          tapMoment(e) - tap.since <= 1100) {
+        const t = e.changedTouches[0];
+        if (Math.hypot(t.clientX - tap.x, t.clientY - tap.y) <= 16)
+          onClick({ clientX: t.clientX, clientY: t.clientY });
+      }
+    }, { passive: true });
+    cv.addEventListener('touchcancel', () => { legacyTap = null; }, { passive: true });
+  }
   // pellizco en móvil
   let pinch = null, lastTap = 0;
   cv.addEventListener('touchstart', (e) => { if (e.touches.length === 2 && lidOpen > 0.9) { const [a, b] = e.touches; pinch = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); } }, { passive: true });

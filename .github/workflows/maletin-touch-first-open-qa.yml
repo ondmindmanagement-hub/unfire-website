@@ -1,0 +1,38 @@
+name: Maletin touch first-open QA
+
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/index.html'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/maletin-touch-first-open.test.cjs'
+      - 'tests/maletin-touch-first-open-browser.cjs'
+      - '.github/workflows/maletin-touch-first-open-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: maletin-touch-first-open-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  touch-first-open:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify pointer, touch, mouse, pen and game contracts
+        run: |
+          node --check audio/maletin/game-engine-v50.js
+          node --check tests/maletin-touch-first-open-browser.cjs
+          node tests/maletin-touch-first-open.test.cjs
+          node tests/maletin-first-paint.test.cjs
+          node tests/maletin-v50.test.cjs
+      - name: Install browser runtime
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: First tap on original 3D butterfly and loading image across screen sizes
+        run: node tests/maletin-touch-first-open-browser.cjs
