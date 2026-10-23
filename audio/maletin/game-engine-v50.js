@@ -2096,9 +2096,9 @@
   const clock = new THREE.Clock(); let t = 0; const pend = { it: null, t: 0 }; let MEMO = null, LV = 0; let frameN = 0; let idleT = 0, lastPlaying = false, liftY = 0;
   const tb = new Uint8Array(1024), fb = new Uint8Array(512); let level = 0;
   let frameVisible = true, previousRenderAt = 0;
-  // Website and direct-link entries use the existing unfolded-case transition,
-  // then automatically hand control to the player. No mission/save mutations.
-  let autoEntryPending=false;
+  // Opening the website/direct-link case keeps the camera on the physical
+  // maletín. Exploring as the robot is an explicit separate player choice.
+  // The lid animation and all equipment remain available in this view.
   function frame(now) {
     // Park the heavy animation loop when hidden/out of the hero: never spend 60 callbacks/sec there.
     if (document.hidden || !frameVisible) {
@@ -2116,13 +2116,6 @@
     updateCarryUI();
     { const stowed = (!HW || ((HW.u || 0) < 0.03 && (HW.T || 0) < 0.05)) && CK.every((k) => compG[k].userData.t < 0.04) && !open.length && !items.some((it) => (it.kind === 'mut' && it.T > 0.05) || (it.kk || 0) > 0.05 || it.retT > 0) && !flyers.length; let pt = pTarget; if (pt < pNow && !lidControlledByPlayer && !stowed && pNow > 0.86) { pt = Math.max(pt, 0.9); STOW = true; } else if (stowed) STOW = false; pNow += (pt - pNow) * (lidControlledByPlayer ? 0.18 : 0.16); } setLid(pNow); oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
     const busy = (k) => open.some((g) => g.it.comp === k && g.m > 0.04) || items.some((it) => it.comp === k && ((it.kind === 'mut' && it.T > 0.04) || (it.g && (it.kk || 0) > 0.04))) || (k === 'hw' && HW && ((HW.T || 0) > 0.05 || (HW.u || 0) > 0.03));
-    if(autoEntryPending && lidOpen>0.94){
-      autoEntryPending=false;
-      if(!ROAMS.on)enterRoam();
-      showRobotView();
-      ROAMS.cp=null;
-      updateCarryUI();
-    }
     CK.forEach((k) => { if (compG[k].userData.open && lidOpen > 0.95) return; open.forEach((g) => { if (g.it.comp === k && !g.closing) { g.it.was = 1; g.closing = true; g.pin = false; g.manual = 0; } }); items.forEach((it) => { if (it.comp !== k) return; if (it.kind === 'mut' && it.tgt) { it.was = it.tgt; it.tgt = 0; } if (it.g && it.on) { it.was = 1; it.on = 0; } }); if (k === 'hw' && HW) HW.tg = 0; if (SEL && ((SEL.type === 'cap' && SEL.g.it.comp === k) || (SEL.it && SEL.it.comp === k) || (SEL.type === 'hw' && k === 'hw'))) SEL = null; });
     CK.forEach((k) => { if (!(compG[k].userData.open && compG[k].userData.t > 0.97)) return; items.forEach((it, i) => { if (it.comp !== k || !it.was) return; const w = it.was; it.was = 0; setTimeout(() => { if (it.kind === 'cap') openGear(it, true); else if (it.kind === 'mut') it.tgt = w; else if (it.g) it.on = 1; }, 200 + (i % 8) * 180); }); });
     CK.forEach((k) => { const u = compG[k].userData; u.t = clamp(u.t + (u.open && lidOpen > 0.95 ? dt * 0.55 : busy(k) ? 0 : -dt * 2)); compG[k].position.y = -0.34 * (1 - ease.smooth(clamp((u.t - 0.7) / 0.3))); });
@@ -2340,9 +2333,13 @@
     S.renderer.render(S.scene, cam);
   }
   addEventListener('message', (e) => { const d = e.data || {}; if(d.unfire && d.entryStart){
-      autoEntryPending=true;frameVisible=true;
-      lidControlledByPlayer=true;carryingCase=false;caseG.visible=true;
+      // The host is already edge-to-edge. Animate the lid *here*, without
+      // teleporting to the robot or replacing the maletín inspection camera.
+      frameVisible=true;lidControlledByPlayer=true;
+      carryingCase=false;caseG.visible=true;
       pTarget=1;ROOM.AMB.mute=false;
+      if(!ROAMS.on){CASE_VIEW.on=false;view.gd=Math.min(view.gd,view.D0); }
+      updateCarryUI();
     }
     if (d.unfire && d.p != null && !lidControlledByPlayer) pTarget = d.p; if (d.unfire && d.legacyCaseClose) closeCaseInGame(); if(d.unfire && d.releaseCaseControl){CAPS.cancel();lidControlledByPlayer=false;carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();} if (d.unfire && d.stop) { closeAll(true); stopAll(); ROOM.AMB.mute = true; } if (d.unfire && d.p > 0.5) ROOM.AMB.mute = false; if (d.unfire && 'vis' in d) { frameVisible = !!d.vis; if(frameVisible && ROOM.AMB)ROOM.AMB.mute=false; window.__gameVisible = frameVisible; ONLINE.voiceVisibility(frameVisible); } if (d.unfire && d.vis === false) { closeAll(true); setRobot(null); stopAll(); CINE.on = false; if (MEGA) megaOff(); CK.forEach((k) => { compG[k].userData.open = 0; compG[k].userData.t = 0; }); if (HW) { HW.T = 0; HW.u = 0; HW.tg = 0; } items.forEach((it) => { if (it.kind === 'mut') { it.tgt = 0; it.T = 0; } if (it.g) { it.on = 0; it.kk = 0; } if (it.W && it.home) { it.W.position.copy(it.home); it.W.rotation.set(0, 0, 0); it.retT = 0; } }); view.gd = view.D0; view.gx = 0; view.gz = 0.15; ORB.gaz = ORB.gde = 0; } if (d.unfire && d.audio) { try { UA.init(); } catch (er) {} } });
   window.__UNFIRE_CASE_QA = {
@@ -2369,10 +2366,11 @@
     get openControl(){return getComputedStyle(carryButton).display},
     get scrollLock(){return lidControlledByPlayer}
   };
-  window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), startGame:()=>{autoEntryPending=true;openCaseInGame();}, showCaseView, showRobotView, packCapsule: () => CAPS.pack(), throwCapsule: () => CAPS.throwIt(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
+  window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), startGame:()=>{openCaseInGame();}, showCaseView, showRobotView, packCapsule: () => CAPS.pack(), throwCapsule: () => CAPS.throwIt(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
   // A direct-link visitor can tap the button before the heavy 3D scene is initialized.
   if (parent === window && window.__unfireDirectOpenPending) {
-    autoEntryPending=true;pTarget = 1;
+    lidControlledByPlayer=true;carryingCase=false;caseG.visible=true;
+    pTarget = 1;ROOM.AMB.mute=false;
     const direct = document.getElementById('directOpen');
     if (direct) direct.hidden = true;
   }
