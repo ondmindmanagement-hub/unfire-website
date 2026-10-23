@@ -28,7 +28,12 @@
         <p class="intro-copy">El primer experimento de un futuro espacio comercial explorable: una transformación de geometría calculada en tiempo real, con controles táctiles y alternativa accesible. No representa un producto a la venta.</p>
       </section>
 
-      <section class="showroom" aria-label="Laboratorio de experiencia 3D">
+      <nav class="world-nav" aria-label="Explorar espacios del prototipo">
+        <a href="#showroom">01 <span>Laboratorio 3D</span></a>
+        <a href="#tienda-piloto">02 <span>Escaparate Unfire Audio</span></a>
+      </nav>
+
+      <section id="showroom" class="showroom" aria-label="Laboratorio de experiencia 3D">
         <div class="section-topline">
           <span>01 / SHOWROOM PROCEDURAL</span>
           <span>PRUEBA DE CONCEPTO — OBJETO GEOMÉTRICO</span>
@@ -39,9 +44,9 @@
             <div class="stage-grid" aria-hidden="true"></div>
             <canvas id="world-canvas" aria-label="Objeto tridimensional: su geometría cambia de cubo a esfera" role="img" hidden>La demostración 3D requiere WebGL. Se ofrece una descripción alternativa al lado.</canvas>
             <div id="fallback-visual" class="fallback-visual" role="status">
-              <div class="fallback-shape" aria-hidden="true">◆</div>
+              <div id="fallback-shape" class="fallback-shape" aria-hidden="true"></div>
               <p>Vista 2D disponible</p>
-              <small>La experiencia WebGL es opcional.</small>
+              <small id="fallback-label">Previsualización simplificada · 0 %</small>
             </div>
             <span class="scene-marker marker-left">GEOMETRY / 001</span>
             <span class="scene-marker marker-right" id="scene-mode">MODO 2D</span>
@@ -73,6 +78,26 @@
             <div class="panel-footnote"><span>WEBGL 1 · SIN LIBRERÍAS EXTERNAS</span><span>DEMO / NO CHECKOUT</span></div>
           </div>
         </div>
+      </section>
+
+      <section id="tienda-piloto" class="store-section" aria-labelledby="store-title">
+        <div class="store-heading">
+          <p class="eyebrow">02 / PRIMER ESCAPARATE PROPIO</p>
+          <h2 id="store-title">UNFIRE AUDIO<span> / ACCESO REAL</span></h2>
+          <p>El primer destino del prototipo apunta a un proyecto de Unfire existente. Esta es una tarjeta de exploración, no una tienda con pagos.</p>
+        </div>
+        <article class="store-card">
+          <a class="store-image-link" href="/audio/" aria-label="Abrir la experiencia real de Unfire Audio">
+            <img src="/audio/img/maletin-real-first-frame-desktop.webp" width="1152" height="648" loading="lazy" decoding="async" alt="Captura auténtica del maletín tridimensional de Unfire Audio, tomada del juego real">
+          </a>
+          <div class="store-info">
+            <span class="store-state">EXPERIENCIA PROPIA · DEMO DISPONIBLE</span>
+            <h3>Entra en el mundo de Unfire.</h3>
+            <p>Visita el juego 3D real y descubre su presentación interactiva, con tecnología desarrollada para navegador.</p>
+            <a class="store-visit" href="/audio/">Entrar a Unfire Audio <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <p class="store-legal">Sin tiendas de terceros, compras, afiliaciones comerciales ni productos anunciados como disponibles dentro de este laboratorio.</p>
       </section>
 
       <section class="next-step" aria-labelledby="next-title">
