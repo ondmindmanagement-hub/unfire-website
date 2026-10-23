@@ -31,6 +31,14 @@ Titular previsto: persona física (Unfire es nombre comercial, no una sociedad c
 - El checkout actual usa un enlace por SKU, NO una cesta multipartida segura; no prometer pago combinado de todos los plugins. Si se desea cesta real, diseñar Checkout Sessions en backend con su tabla de precios inmutable y webhooks.
 - GitHub PR #25 tiene el ámbito comercial ARCHER y otro capitán edita maletín: esta rama no modifica `audio/index.html`, ni motores, ni checkout actual. Fusionar tras inspección de CI sin revertir otras ramas.
 
+
+## Licencia del framework JUCE 8 y materiales de terceros — bloqueo adicional
+- El CMake de los 20 efectos FX20 fija **JUCE 8.0.16-security**. JUCE 8 está bajo licencia dual AGPLv3/comercial: antes de publicar software propietario se debe demostrar una **licencia comercial aplicable** y cumplir sus límites, condiciones de distribución y licencias por usuario; la alternativa AGPLv3 requiere analizar obligaciones de divulgación y compatibilidad con el producto. La mera existencia de compilaciones no supone permiso para comercializarlas.
+- EULA de JUCE 8 (fuente oficial, revisada 23 octubre 2026): modalidad **Starter gratuita hasta 20.000 USD** de ingresos/financiación aplicables durante los 12 meses previos para el licenciatario; Indie hasta 300.000 USD y Pro sin límite, según condiciones. Para personas físicas el cálculo incluye ingresos directos/indirectos generados usando JUCE. **NO se ha verificado** la situación real de ingresos ni la categoría/licencia aceptada por el titular: esta comprobación debe seguir marcada FALSE hasta tener documentación privada.
+- Inventariar también JUCE, Steinberg VST3 SDK, bibliotecas JUCE adicionales, activos visuales, GIF, clips, fonts, muestras y presets integrados, y registrar atribuciones u obligaciones de redistribución por SKU. No dar por comercializable un recurso de terceros por el mero hecho de que sea visible en una demo.
+- Referencias: [JUCE 8 EULA oficial](https://juce.com/legal/juce-8-licence/); [JUCE licencias oficiales](https://juce.com/get-juce/); [JUCE licencia dual oficial](https://github.com/juce-framework/JUCE/blob/master/LICENSE.md).
+- El guard `framework_and_third_party_licenses_verified` deberá permanecer en `false` hasta validación real. No confundir certificación de firma Developer ID con licencia comercial de terceros.
+
 ## Fuentes oficiales consultadas
 - [AEAT — Declaración de alta censal Modelo 036](https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-practicos/guia-practica-cumplimentacion-modelo-censal-036/capitulo-01-cuestiones-generales/plazos-presentacion/declaracion-alta/alta-censo-empresarios-profesionales-retenedores-036.html)
 - [AEAT — IVA comercio electrónico y ventanilla única OSS](https://www3.agenciatributaria.gob.es/Sede/iva/iva-comercio-electronico/regimenes-especiales-ventanilla-unica.html)
