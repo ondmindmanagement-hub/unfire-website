@@ -28,8 +28,11 @@ test('in-game ARCHER points to its own offer, never charges Todo UNFIRE bundle',
  assert.doesNotMatch(engine,/archer: 'todo'/);
  assert.doesNotMatch(engine,/\['ARCHER', '#2bd96b', 'todo'\]/);
  const game=fs.readFileSync(path.join(__dirname,'../../audio/maletin/index.html'),'utf8');
- assert.match(game,/game-engine-v50\.js\?v=20261023sales1/);
- assert.match(html,/maletin\/index\.html\?v=20261023sales1/);
+ const gameVersions=[...game.matchAll(/game-engine-v50\.js\?v=([a-zA-Z0-9]+)/g)].map(m=>m[1]);
+ const hostVersion=html.match(/maletin\/index\.html\?v=([a-zA-Z0-9]+)/)?.[1];
+ assert(gameVersions.length>=2,'preload and script must both carry a version');
+ assert(gameVersions.every(v=>v===gameVersions[0]),'preload and script versions must match');
+ assert.equal(hostVersion,gameVersions[0],'host frame and 3D engine must use same cache-bust revision');
 });
 
 test('demo purchase directs an iPhone/iPad to ARCHER for iOS rather than Mac-only edition',()=>{

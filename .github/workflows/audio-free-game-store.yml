@@ -1,0 +1,33 @@
+name: Free game and official storefront
+on:
+  pull_request:
+    paths:
+      - "audio/tienda/**"
+      - "audio/catalogo/index.html"
+      - ".github/docs/unfire-audio-free-daw-interoperability.md"
+      - ".github/tests/audio-free-game-official-store.test.cjs"
+      - ".github/tests/audio-archer-sales-links.test.cjs"
+      - ".github/workflows/audio-free-game-store.yml"
+  push:
+    branches: [main]
+    paths:
+      - "audio/tienda/**"
+      - "audio/catalogo/index.html"
+      - ".github/tests/audio-free-game-official-store.test.cjs"
+      - ".github/tests/audio-archer-sales-links.test.cjs"
+      - ".github/workflows/audio-free-game-store.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  official-store-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Official product URLs and free game
+        run: node .github/tests/audio-free-game-official-store.test.cjs
+      - name: Preserve ARCHER and no unauthorized checkout
+        run: |
+          node --test .github/tests/audio-archer-sales-links.test.cjs
+          node --test .github/tests/audio-commerce-release-gate.test.cjs
