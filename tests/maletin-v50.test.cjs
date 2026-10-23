@@ -7,7 +7,7 @@ function chk(label,condition){assert.ok(condition,label);console.log('PASS',labe
 chk('No standalone 2D opener on website',!html.includes('id="openBtn"')&&!html.includes('#openBtn'));
 chk('Only the real 3D butterfly opens the case',engine.includes('parent.__UNFIRE_ENTER_CASE()')&&engine.includes('ray.intersectObject(caseG, true)'));
 chk('Single original click enters immersive viewport and starts 3D lid during zoom',html.includes('immersive();\n    fullscreenFromGesture();')&&html.includes('UNFIRE_SCENE.onReady(()=>{loadingIntent=false;begin();})')&&html.includes('entryTransition=false;parked=0;'));
-chk('Lid uses >5s real-time procedural animation',engine.includes('5.6*Math.abs(pt-pNow)')&&engine.includes('actualFrameTime')&&!engine.includes('lidControlledByPlayer ? 0.18 : 0.16'));
+chk('Lid uses real foreground time with responsive 3s procedural animation',engine.includes('3.0*Math.abs(pt-pNow)')&&engine.includes('lidMotion.elapsed=Math.min(lidMotion.duration,lidMotion.elapsed+foregroundFrameTime)')&&engine.includes('actualFrameTime')&&!engine.includes('lidControlledByPlayer ? 0.18 : 0.16'));
 chk('Original case opening SFX follow the actual procedural 3D hinge timeline',
   engine.includes('const CASE_SOUND=(()=>')&&engine.includes('CASE_SOUND.sync(pNow,pTarget,lidControlledByPlayer);')&&
   ['latch','hinge','thud','reveal'].every(x=>engine.includes("play('"+x+"'"))&&
@@ -65,7 +65,7 @@ chk('Entry always forces 3D case, never the roaming robot',engine.includes('if(R
 chk('Cinematic noclip traverses house, walls, doors and windows',engine.includes('Cinematic camera is a spectator')&&engine.includes('REC.p.x=clamp(REC.p.x,-90000,90000)')&&!engine.includes('REC.p.z = clamp(REC.p.z, -13.5, 93.5)'));
 chk('Case camera approaches using a smooth timed dolly',engine.includes('entryDolly.elapsed=Math.min')&&engine.includes('entryDolly.to=view.D0*.96'));
 chk('Direct game also has no 2D opener',!game.includes('id="directOpen"'));
-chk('Original button opens slow lid concurrently with camera dolly',engine.includes('entryDolly.openAfter=false;view.gd=entryDolly.to;pTarget=1;')&&engine.includes('5.6*Math.abs(pt-pNow)'));
+chk('Original button opens responsive 3D lid concurrently with camera dolly',engine.includes('entryDolly.openAfter=false;view.gd=entryDolly.to;pTarget=1;')&&engine.includes('3.0*Math.abs(pt-pNow)')&&engine.includes('entryDolly.elapsed=Math.min(entryDolly.duration,entryDolly.elapsed+foregroundFrameTime)'));
 chk('No floating 2D showcase return button',!game.includes('✕ DEVOLVER A LA VITRINA'));
 chk('Original 3D butterfly artwork preserved',engine.includes("G3.drawEmblem(em.getContext('2d'), 256, '#7fd0ff')"));
 chk('Real 3D lid-button calls local toggle',engine.includes('ray.intersectObject(lidBtn, true).length) { toggleCaseInGame()'));
@@ -121,8 +121,10 @@ chk('Room audio implementation retained',engine.includes('const AMB ='));
 chk('Parent scroll no longer overrides manual open/close',engine.includes('!lidControlledByPlayer) pTarget = d.p;'));
 chk('Host keeps iframe active when case is local',html.includes('vis:caseLocal||rb.bottom>90'));
 chk('Host does not scroll when closing case',!html.includes('if(d.closeCase)Mal.shut();'));
-chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v=20261023casecuev1'));
-chk('Host loads exact matching game',/maletin\/index\.html\?v=20261023casecuev1/.test(html));
+const releaseVersion=(html.match(/id="malFrame" data-src="maletin\/index\.html\?v=([a-zA-Z0-9_-]+)"/)||[])[1];
+chk('Release version is present on the original iframe',!!releaseVersion);
+chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v='+releaseVersion));
+chk('Host loads exact matching game',html.includes('maletin/index.html?v='+releaseVersion));
 chk('User can explicitly exit if desired',engine.includes('window.__exitGame'));
 chk('3D original scene size intact',engine.length>500000);
 const storySource=game.slice(game.indexOf('window.STORY_INIT = function (H) {'),game.indexOf('</script>',game.indexOf('window.STORY_INIT = function (H) {')));
