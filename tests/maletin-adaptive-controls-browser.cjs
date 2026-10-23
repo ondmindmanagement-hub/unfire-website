@@ -7,9 +7,11 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
 const root=path.resolve(__dirname,'..');
 const port=Number(process.env.UNFIRE_ADAPTIVE_QA_PORT||8792);
 const views=[
+  {name:'small-phone-portrait',w:320,h:568,expected:'phone'},
   {name:'iphone-portrait',w:390,h:844,expected:'phone'},
   {name:'iphone-landscape',w:844,h:390,expected:'phone'},
-  {name:'ipad-portrait',w:768,h:1024,expected:'tablet'}
+  {name:'ipad-portrait',w:768,h:1024,expected:'tablet'},
+  {name:'ipad-landscape',w:1194,h:834,expected:'tablet'}
 ];
 let server,browser;
 function collides(a,b,gap=1) {
