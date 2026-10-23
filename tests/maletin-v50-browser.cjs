@@ -47,7 +47,7 @@ const assert=require('node:assert/strict');
   console.log('CASE_STATE_DIAGNOSTIC',JSON.stringify({initial,closed}));
   assert(closed.closed&&closed.carrying&&closed.mission===initial.mission,'Closing case loses game or quest');
   const host=await page.evaluate(()=>({url:location.pathname,frameSrc:document.getElementById('malFrame').getAttribute('src'),immersive:document.body.classList.contains('immOn')}));
-  assert(host.immersive&&host.frameSrc.includes('v=20261023sales1'),'Game returned to website after closing case');
+  assert(host.immersive&&host.frameSrc.includes('v=20261023case3'),'Game returned to website after closing case');
   const control=await f.evaluate(()=>{const b=document.getElementById('unfireCarryCase');if(!b)return {exists:false};const q=b.getBoundingClientRect();return {exists:true,display:getComputedStyle(b).display,visibility:getComputedStyle(b).visibility,rect:[q.x,q.y,q.width,q.height],hidden:b.hidden,roam:window.__UNFIRE_CASE_QA.roam,carry:window.__UNFIRE_CASE_QA.carrying};});
   console.log('CARRY_BUTTON_DIAGNOSTIC',JSON.stringify(control));
   assert.equal(await f.evaluate(()=>window.__UNFIRE_CASE_QA.caseVisible),false,'Case must not obstruct player camera when packed');

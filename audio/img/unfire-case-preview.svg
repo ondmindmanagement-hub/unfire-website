@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 650" role="img" aria-label="Maletín UNFIRE AUDIO">
+<defs>
+ <linearGradient id="al" x2="0.15" y2="1"><stop stop-color="#e5ecf6"/><stop offset=".45" stop-color="#a2b3c9"/><stop offset=".55" stop-color="#59697d"/><stop offset="1" stop-color="#b6c8db"/></linearGradient>
+ <linearGradient id="blue" x2=".3" y2="1"><stop stop-color="#86e5ff"/><stop offset=".45" stop-color="#3d8bff"/><stop offset="1" stop-color="#171a74"/></linearGradient>
+ <linearGradient id="black" x2="0" y2="1"><stop stop-color="#1a3046"/><stop offset="1" stop-color="#03060d"/></linearGradient>
+ <filter id="sh"><feGaussianBlur stdDeviation="18"/></filter>
+ <pattern id="grid" width="30" height="26" patternUnits="userSpaceOnUse"><path d="M0 0l15 9v17L0 17zm15 9L30 0v17L15 26" stroke="#204e86" stroke-width="1.5" fill="none" opacity=".6"/></pattern>
+</defs>
+<ellipse cx="500" cy="578" rx="375" ry="46" fill="#071324" opacity=".72" filter="url(#sh)"/>
+<path d="M145 160 L808 160 898 458 103 458 Z" fill="url(#al)" stroke="#b0d1f5" stroke-width="9"/>
+<path d="M171 181H788L860 422H135Z" fill="url(#black)" stroke="#53ceff" stroke-width="5"/>
+<path d="M171 181H788L860 422H135Z" fill="url(#grid)"/>
+<path d="M103 458H898V540L786 587H207L103 540Z" fill="url(#al)" stroke="#e6f6ff" stroke-width="7"/>
+<path d="M206 540H791V587H206Z" fill="#7388a4" stroke="#c1ecff" stroke-width="3"/>
+<rect x="436" y="533" width="128" height="55" rx="16" fill="#111b2b" stroke="#d8eafb" stroke-width="6"/>
+<rect x="448" y="539" width="104" height="30" rx="10" fill="#3b4b63"/>
+<path d="M137 478H866" stroke="#61d5ff" stroke-width="5"/>
+<g fill="#e8f0ff" stroke="#6b7b8b" stroke-width="6"><rect x="133" y="444" width="58" height="92" rx="5"/><rect x="814" y="444" width="58" height="92" rx="5"/><rect x="283" y="510" width="48" height="35" rx="5"/><rect x="673" y="510" width="48" height="35" rx="5"/></g>
+<rect x="280" y="211" width="450" height="95" rx="13" fill="#0a1022" stroke="#7ecaff" stroke-width="5"/>
+<text x="503" y="255" font-family="Arial, sans-serif" font-size="55" font-weight="900" text-anchor="middle" letter-spacing="8" fill="#dcefff">UNFIRE</text>
+<text x="503" y="286" font-family="Arial, sans-serif" font-size="19" font-weight="600" text-anchor="middle" letter-spacing="9" fill="#70b9ff">AUDIO • FLIGHT CASE</text>
+<circle cx="501" cy="367" r="53" fill="#80e7ff" opacity=".2" filter="url(#sh)"/>
+<circle cx="501" cy="367" r="47" fill="url(#blue)" stroke="#d3f1ff" stroke-width="9"/>
+<circle cx="501" cy="367" r="34" fill="#70bdff" opacity=".65"/>
+<path d="M501 359c-27-41-59-15-21 8-34 18-2 52 21 10 22 42 56 8 22-10 39-23 6-49-22-8Zm0 7v35" fill="#fff" stroke="#d7f5ff" stroke-width="4" stroke-linejoin="round"/>
+</svg>
