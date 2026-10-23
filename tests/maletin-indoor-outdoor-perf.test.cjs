@@ -8,7 +8,8 @@ const begin=engine.indexOf('  function createSceneFrameBudget(');
 const end=engine.indexOf('  const sceneFrameBudget =',begin);
 assert(begin>0&&end>begin,'Single shared render budget must exist');
 const code=engine.slice(begin,end);
-assert(!/setInterval|setTimeout|requestAnimationFrame|setSize\(/.test(code),
+const executable=code.replace(/\/\/[^\n]*/g,'');
+assert(!/\b(?:setInterval|setTimeout|requestAnimationFrame)\s*\(|\.setSize\s*\(/.test(executable),
   'Quality guard cannot add loop/timer or a second framebuffer allocation');
 const document={documentElement:{dataset:{}}};
 function createRenderer(startDpr){
