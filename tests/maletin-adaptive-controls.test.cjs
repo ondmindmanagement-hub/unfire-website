@@ -58,7 +58,7 @@ function testPad() {
   };
   const ctx = {window, document,
     navigator:{getGamepads(){return [physical];}},
-    module:{exports:{}},console,setTimeout,clearTimeout};
+    module:{exports:{}},console,setTimeout,clearTimeout,addEventListener(){} };
   vm.runInNewContext(source,ctx,{timeout:1500});
   const module=ctx.module.exports;
   const input=module.init({ROAMS,flightTap(x){taps.push(x);},
