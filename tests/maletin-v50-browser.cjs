@@ -10,12 +10,15 @@ const assert=require('node:assert/strict');
     try{localStorage.setItem('unfire_save_v1',JSON.stringify({name:'Tester',level:1,ch:2,step:0,done:[0,1],met:true,ts:Date.now()}));}catch(e){}
   });
   await page.goto(process.env.UNFIRE_TEST_URL||'http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded',timeout:30000});
-  await page.locator('#openBtn').evaluate(e=>e.click());
   const frame=page.frameLocator('#malFrame');
   await frame.locator('#directOpen').count();
   await page.waitForFunction(()=>{try{return !!document.getElementById('malFrame')?.contentWindow?.__mal?.S}catch{return false}},null,{timeout:90000,polling:250});
   const f=page.frames().find(x=>x.url().includes('/audio/maletin/index.html'));
   assert(f,'Game iframe missing');
+  assert.equal(await page.locator('#openBtn').count(),0,'2D opener must not exist');
+  const canvas=frame.locator('#cv'),box=await canvas.boundingBox();
+  await canvas.click({position:{x:box.width/2,y:box.height/2},timeout:30000});
+  await page.waitForFunction(()=>document.body.classList.contains('immOn'),null,{timeout:30000});
   // CI runs WebGL in CPU software, causing >1min stalls on animation frames.
   // Pause only its render scheduler, preserving all actual gameplay actions and
   // testing capsule physics through real deterministic simulation ticks below.
@@ -32,7 +35,7 @@ const assert=require('node:assert/strict');
   console.log('CASE_STATE_DIAGNOSTIC',JSON.stringify({initial,closed}));
   assert(closed.closed&&closed.carrying&&closed.mission===initial.mission,'Closing case loses game or quest');
   const host=await page.evaluate(()=>({url:location.pathname,frameSrc:document.getElementById('malFrame').getAttribute('src'),immersive:document.body.classList.contains('immOn')}));
-  assert(host.immersive&&host.frameSrc.includes('v=20261023fs2'),'Game returned to website after closing case');
+  assert(host.immersive&&host.frameSrc.includes('v=20261023case2'),'Game returned to website after closing case');
   const control=await f.evaluate(()=>{const b=document.getElementById('unfireCarryCase');if(!b)return {exists:false};const q=b.getBoundingClientRect();return {exists:true,display:getComputedStyle(b).display,visibility:getComputedStyle(b).visibility,rect:[q.x,q.y,q.width,q.height],hidden:b.hidden,roam:window.__UNFIRE_CASE_QA.roam,carry:window.__UNFIRE_CASE_QA.carrying};});
   console.log('CARRY_BUTTON_DIAGNOSTIC',JSON.stringify(control));
   assert.equal(await f.evaluate(()=>window.__UNFIRE_CASE_QA.caseVisible),false,'Case must not obstruct player camera when packed');

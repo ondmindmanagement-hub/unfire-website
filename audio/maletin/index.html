@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023fs2" as="script"></head><body><title>UNFIRE Maletín</title>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023case2" as="script"></head><body><title>UNFIRE Maletín</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
@@ -28,15 +28,6 @@ body::before { top:0 } body::after { bottom:0 }
 body.cine::before, body.cine::after { height:9vh }
 </style>
 <style>
-#directOpen{position:fixed;left:50%;bottom:max(48px,calc(env(safe-area-inset-bottom) + 28px));transform:translateX(-50%);z-index:20;
- min-width:174px;min-height:46px;padding:12px 19px;border:1px solid #8ab9f6;border-radius:999px;
- background:linear-gradient(155deg,rgba(27,47,82,.97),rgba(5,10,24,.98));box-shadow:0 10px 32px #000a,0 0 15px #3d8bff55;
- color:#fff;font:700 12px/1.3 system-ui,sans-serif;letter-spacing:.09em;cursor:pointer;
- white-space:nowrap;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-#directOpen[hidden]{display:none!important}
-#directOpen:focus-visible{outline:3px solid #d6eaff;outline-offset:4px}
-#directOpen:disabled{cursor:progress}
-@media(max-width:600px){#directOpen{bottom:max(28px,calc(env(safe-area-inset-bottom) + 22px));min-width:158px}}
 
 /* Small-screen game HUD: portrait, landscape, browser bars and safe areas. */
 body.unfire-roaming #cv{touch-action:none}
@@ -139,37 +130,6 @@ body.unfire-roaming #cv{touch-action:none}
 <div class="tip" id="tip"></div>
 <div class="tb" id="tb"><button data-a="next" title="Siguiente">⟳<small>TRANSFORMAR</small></button><button data-a="back" title="Atrás">↺<small>ATRÁS</small></button><button data-a="move" title="Mover">✥<small>MOVER</small></button><button data-a="close" class="x" title="Cerrar y guardar">✕<small>CERRAR</small></button></div>
 <button class="enter" id="buy" type="button"></button>
-<button id="directOpen" type="button" hidden aria-label="Abrir el maletín 3D" translate="no">ABRIR MALETÍN</button>
-<script>
-// The direct game is shared on social media. A first tap must never be lost
-// while the full 3D engine downloads, and this button never appears in embedded mode.
-(() => {
-  if (parent !== window) return;
-  const b = document.getElementById('directOpen');
-  b.hidden = false;
-  const spanish = (navigator.language || '').toLowerCase().startsWith('es');
-  b.textContent = spanish ? 'ABRIR MALETÍN' : 'OPEN CASE';
-  b.addEventListener('click', (e) => {
-    e.stopPropagation();
-    window.__unfireDirectOpenPending = true;
-    // Request native fullscreen synchronously from the player's tap wherever
-    // supported (Android, desktop, iPad). iPhone Safari remains edge-to-edge
-    // inside the available viewport unless launched from the Home Screen.
-    const root = document.documentElement;
-    const fs = root.requestFullscreen || root.webkitRequestFullscreen;
-    if (typeof fs === 'function' && !document.fullscreenElement && !document.webkitFullscreenElement) {
-      try { const p = fs.call(root, { navigationUI: 'hide' }); p?.catch?.(() => {}); } catch (_) {}
-    }
-    if (window.__mal && typeof window.__mal.requestOpen === 'function') {
-      (window.__mal.startGame || window.__mal.requestOpen)();
-      b.hidden = true;
-      return;
-    }
-    b.textContent = spanish ? 'CARGANDO…' : 'LOADING…';
-    b.disabled = true;
-  }, { once: true });
-})();
-</script>
 
 <script>
 /* Device-adaptive boot. Local-only settings; no external services or personal data. */
@@ -252,7 +212,7 @@ body.unfire-roaming #cv{touch-action:none}
     'DESFILE UNFIRE · EN DIRECTO': 'UNFIRE PARADE · LIVE', 'TIENDA UNFIRE': 'UNFIRE STORE', 'EL TIEMPO · TOCA UNO': 'WEATHER · TOUCH ONE', 'DISCO DE ORO · UNFIRE 2001': 'GOLD RECORD · UNFIRE 2001', 'ÓRBITA · CUBIERTA 7': 'ORBIT · DECK 7', 'SALIDA': 'EXIT', 'NO PASAR': 'DO NOT ENTER',
     'Conectando a Internet...': 'Connecting to the Internet...', 'Marcando 56k  ♪ piiii-krrrr-shhh': 'Dialing 56k  ♪ beeee-krrrr-shhh', 'Chat 2000 — sala: productores': 'Chat 2000 — room: producers', 'GATO PIANISTA.WMV': 'PIANO CAT.WMV', 'Inicio': 'Home', 'Foto: ': 'Photo: ', 'Dominio público': 'Public domain',
     'Clave de la API de YouTube (gratis en Google Cloud). Se guarda solo en este navegador:': 'YouTube API key (free on Google Cloud). It is only stored in this browser:',
-    'BAJA SOBRE UNA COMPUERTA PARA ABRIRLA · FUERA = TODAS · O PULSA ABRIR TODO': 'SCROLL ON A HATCH TO OPEN IT · OUTSIDE = ALL · OR PRESS OPEN ALL', 'PULSA EL BOTÓN DE LA MARIPOSA · O BAJA UN POCO': 'PRESS THE BUTTERFLY BUTTON · OR SCROLL DOWN A BIT',
+    'BAJA SOBRE UNA COMPUERTA PARA ABRIRLA · FUERA = TODAS · O PULSA ABRIR TODO': 'SCROLL ON A HATCH TO OPEN IT · OUTSIDE = ALL · OR PRESS OPEN ALL', 'PULSA LA MARIPOSA DEL MALETÍN · O BAJA UN POCO': 'PRESS THE CASE BUTTERFLY · OR SCROLL DOWN A BIT',
     'CÓMO SE JUEGA': 'HOW TO PLAY', '⌨️ W A S D o flechas: andar (Shift = correr)': '⌨️ W A S D or arrows: walk (Shift = run)', '🖱️ Arrastra con el ratón: mirar alrededor': '🖱️ Drag with the mouse: look around', '🪽 Mantén ESPACIO: volar y subir · suéltalo y flotas · S o ↓: bajar': '🪽 Hold SPACE: fly up · release it to hover · S or ↓: go down', '💬 T: hablar con el robot más cercano · M: mapa · C: cámara': '💬 T: talk to the nearest robot · M: map · C: camera', '🚪 Sal por la puerta azul para ir a la isla · ⏏ arriba a la derecha: volver a la web': '🚪 Go out the blue door to reach the island · ⏏ top right: back to the website', 'Haz clic para empezar': 'Click to start', 'Toca para empezar': 'Tap to start',
     '🕹️ Joystick de la izquierda: andar': '🕹️ Left joystick: walk', '👆 Arrastra en la pantalla: mirar alrededor': '👆 Drag on the screen: look around', '🪽 Mantén VOLAR: subir · suéltalo y flotas · ⬇ BAJAR: bajar': '🪽 Hold FLY: go up · release it to hover · ⬇ DOWN: descend', '⬇ BAJAR': '⬇ DOWN', '💬 HABLAR: charla con el robot más cercano': '💬 TALK: chat with the nearest robot', '⏏ Arriba a la derecha: volver a la web': '⏏ Top right: back to the website', '🪽 VOLAR': '🪽 FLY', '💬 HABLAR': '💬 TALK',
     '🔒 MANTENER TIEMPO: SÍ': '🔒 KEEP WEATHER: YES', '🔓 MANTENER TIEMPO: NO': '🔓 KEEP WEATHER: NO', 'sol': 'sun', 'nubes': 'clouds', 'lluvia': 'rain', 'rayos': 'lightning', 'nieve': 'snow', '🚪 Puerta abierta · camina hacia fuera': '🚪 Door open · walk outside', '🚪 Puerta cerrada': '🚪 Door closed',
@@ -4131,11 +4091,11 @@ window.ROOMC = function (D) {
           dv.root.scale.setScalar(displayScale);
           dv.root.position.set(c.m.position.x, c.m.position.y - 0.7, 1.3); dv.root.rotation.y = Math.random() * 6; g.add(dv.root); c.m.visible = false; spinners.push({ dv, sp: 0.3 + Math.random() * 0.25 }); } catch (e) {} } if (k < todo.length) IDLE(step, { timeout: 2000 }); }; setTimeout(() => IDLE(step, { timeout: 2000 }), 9000); }
     anim.push((dt) => { if (!SHOW()) return; for (const s of spinners) s.dv.root.rotation.y += dt * s.sp; });
-    let cur = null; const wpos = new THREE.Vector3(); const VX = document.createElement('button'); VX.textContent = '✕ DEVOLVER A LA VITRINA'; VX.style.cssText = 'position:fixed;left:50%;bottom:calc(9vh + 60px);transform:translateX(-50%);z-index:62;display:none;border:2px solid #fff;border-radius:999px;padding:9px 14px;font:800 12px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#ff6b81,#d8203a);cursor:pointer;box-shadow:0 6px 18px #0008'; document.body.appendChild(VX); VX.addEventListener('pointerdown', (e) => e.stopPropagation()); VX.onclick = (e) => { e.stopPropagation(); if (cur) cur.out = true; VX.style.display = 'none'; };
+    let cur = null; const wpos = new THREE.Vector3(); // The same exhibit can be tapped again to return the item; no floating global button.
     cells.forEach((c) => picks.push({ o: c.m, noFocus: false, f: () => { hap(0.4); openT = 6; if (cur && cur.cell === c) { cur.out = true; return; } if (cur) { cur.out = true; } try { let dv; if (c.it.spec) dv = D.device(c.it.spec, true); else { const r0 = ROBOT.build(c.it.mspec); const w = new THREE.Group(); const w2 = new THREE.Group(); w.add(w2); w2.add(r0.root); r0.update(3.7, 0.016, {}); const bb = new THREE.Box3().setFromObject(r0.root); w2.scale.setScalar(1 / Math.max(0.001, bb.getSize(V(0, 0, 0)).y)); r0.root.position.y -= bb.min.y; w2.position.y = -0.5; r0.update(0, 0.016, {}); dv = { root: w, update: (T, dt) => r0.update(T * 1.7, dt, { act: T > 2 ? 'dance' : null, ph: performance.now() / 1000, mood: 'happy' }), robot: 1 }; }
-        dv.root.position.set(c.m.position.x, c.m.position.y, 4.5); dv.root.scale.setScalar(0.01); g.add(dv.root); cur = { dv, cell: c, T: 0, tg: 2.2, s: 0, out: false }; const nm2 = c.it.name || 'Artilugio'; say('🔎 ' + nm2 + (c.it.fam ? ' · ' + c.it.fam : '') + ' · ✕ o tócalo otra vez para devolverlo a la vitrina'); VX.style.display = 'block'; c.mat.map = c.it.atlas != null ? capB : c.mat.map; } catch (e) { console.warn('vitrina', e); } } }));
-    const olds = []; anim.push((dt, t) => { if (!SHOW()) { VX.style.display = 'none'; return; } openT = Math.max(0, openT - dt); open += ((openT > 0 || cur ? 1 : 0) - open) * Math.min(1, dt * 3); doorL.position.x = -W / 4 - open * W * 0.24; doorR.position.x = W / 4 + open * W * 0.24;
-      if (cur) { const q = cur; q.age = (q.age || 0) + dt; if (q.age > 45) q.out = true; if (q.out) { olds.push(q); cur = null; VX.style.display = 'none'; } else { q.s = Math.min(1, q.s + dt * 1.2); const big = q.dv.robot ? 4.5 : 1.3; q.dv.root.scale.setScalar(Math.max(0.01, q.s) * big); q.T += clamp(q.tg - q.T, -dt * 0.9, dt * 0.45); q.dv.update(q.T, dt, { level: 0.25 }); if (q.T > 2.15) q.dv.root.rotation.y += dt * 0.4; else q.dv.root.rotation.y *= 0.95; } }
+        dv.root.position.set(c.m.position.x, c.m.position.y, 4.5); dv.root.scale.setScalar(0.01); g.add(dv.root); cur = { dv, cell: c, T: 0, tg: 2.2, s: 0, out: false }; const nm2 = c.it.name || 'Artilugio'; say('🔎 ' + nm2 + (c.it.fam ? ' · ' + c.it.fam : '') + ' · tócalo otra vez para devolverlo a la vitrina');  c.mat.map = c.it.atlas != null ? capB : c.mat.map; } catch (e) { console.warn('vitrina', e); } } }));
+    const olds = []; anim.push((dt, t) => { if (!SHOW()) {  return; } openT = Math.max(0, openT - dt); open += ((openT > 0 || cur ? 1 : 0) - open) * Math.min(1, dt * 3); doorL.position.x = -W / 4 - open * W * 0.24; doorR.position.x = W / 4 + open * W * 0.24;
+      if (cur) { const q = cur; q.age = (q.age || 0) + dt; if (q.age > 45) q.out = true; if (q.out) { olds.push(q); cur = null;  } else { q.s = Math.min(1, q.s + dt * 1.2); const big = q.dv.robot ? 4.5 : 1.3; q.dv.root.scale.setScalar(Math.max(0.01, q.s) * big); q.T += clamp(q.tg - q.T, -dt * 0.9, dt * 0.45); q.dv.update(q.T, dt, { level: 0.25 }); if (q.T > 2.15) q.dv.root.rotation.y += dt * 0.4; else q.dv.root.rotation.y *= 0.95; } }
       for (let i = olds.length - 1; i >= 0; i--) { const q = olds[i]; q.T = Math.max(0, q.T - dt * 1.4); q.dv.update(q.T, dt, { level: 0 }); if (q.T <= 0) { q.s -= dt * 2; q.dv.root.scale.setScalar(Math.max(0.01, q.s) * (q.dv.robot ? 4.5 : 1.3)); if (q.s <= 0) { g.remove(q.dv.root); if (q.cell.it.atlas != null) q.cell.mat.map = capA; olds.splice(i, 1); } } } });
     return g; };
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
@@ -4642,5 +4602,5 @@ window.STORY_INIT = function (H) {
 };
 
 </script>
-<script src="game-engine-v50.js?v=20261023fs2"></script>
+<script src="game-engine-v50.js?v=20261023case2"></script>
 </body></html>
