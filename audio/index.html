@@ -1055,7 +1055,7 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
 if(d.lv!=null)document.documentElement.style.setProperty('--lv',d.lv);if(d.rect){Mal.rect(d)}if('playing' in d){Snd.mal=d.playing;Snd.ui()}
     if(d.open==='fx'){const f=FX.find(x=>x[0]===d.id);if(f)openFx(f)}if(d.open==='archer')document.querySelector('[data-archer]').click();if(d.open==='hyper')document.querySelector('[data-hyper]').click();if(d.open==='synth')document.querySelector('[data-synth]').click()});
   function rect(d){const pad=28;if(caseLocal){fr.style.clipPath='none';fr.style.pointerEvents='auto';return;}if(performance.now()<passUntil)return;fr.style.pointerEvents='auto';
-    if(d.zoom||matchMedia('(pointer:fine)').matches){fr.style.clipPath='none';return}const W=fr.clientWidth,H=fr.clientHeight,[x0,y0,x1,y1]=d.rect;fr.style.clipPath=`inset(${Math.max(0,y0-pad)}px ${Math.max(0,W-x1-pad)}px ${Math.max(0,H-y1-pad)}px ${Math.max(0,x0-pad)}px round 24px)`}
+    if(d.zoom||matchMedia('(pointer:fine)').matches||matchMedia('(pointer:coarse)').matches){fr.style.clipPath='none';return}const W=fr.clientWidth,H=fr.clientHeight,[x0,y0,x1,y1]=d.rect;fr.style.clipPath=`inset(${Math.max(0,y0-pad)}px ${Math.max(0,W-x1-pad)}px ${Math.max(0,H-y1-pad)}px ${Math.max(0,x0-pad)}px round 24px)`}
   addEventListener('unfire:scene-error',()=>{
     loadingIntent=false;
     if(entryTransition){

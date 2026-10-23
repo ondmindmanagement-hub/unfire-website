@@ -2365,6 +2365,77 @@
   // Opening the website/direct-link case keeps the camera on the physical
   // maletín. Exploring as the robot is an explicit separate player choice.
   // The lid animation and all equipment remain available in this view.
+  let seaBuild = null, seaBuildFailed = false;
+  function ensureSeaAmbience() {
+    if (window.__SEA || seaBuild || seaBuildFailed || !ROAMS.on) return;
+    const nearDoor = !window.ATM_OUT && ROAMS.p.z > 66 && Math.abs(ROAMS.p.x + 30) < 25;
+    const nearDome = !window.ATM_OUT && ROAMS.fly && ROAMS.h > 7 &&
+      Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 95;
+    if (!window.ATM_OUT && !nearDoor && !nearDome) return;
+    if (!audioOk()) return;
+    const c = UA.ctx;
+    if (!c || c.state === 'closed') return;
+    const state = seaBuild = { channel: 0, offset: 0, prev: 0, scheduled: false,
+      buffer: null, channels: null, frames: 0 };
+    const schedule = () => {
+      if (!state.scheduled) {
+        state.scheduled = true;
+        setTimeout(fillSlice, 24);
+      }
+    };
+    function fillSlice() {
+      state.scheduled = false;
+      if (seaBuild !== state || window.__SEA) return;
+      if (document.hidden) {
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden && seaBuild === state) schedule();
+        }, { once: true });
+        return;
+      }
+      try {
+        if (c.state === 'closed') { seaBuild = null; return; }
+        if (!state.buffer) {
+          state.frames = Math.max(1024, Math.floor(c.sampleRate * 4));
+          state.buffer = c.createBuffer(2, state.frames, c.sampleRate);
+          state.channels = [state.buffer.getChannelData(0), state.buffer.getChannelData(1)];
+        }
+        const deadline = performance.now() + 2;
+        let completed = 0;
+        while (state.channel < 2 && completed < 3072 && performance.now() < deadline) {
+          const samples = state.channels[state.channel];
+          const end = Math.min(state.frames, state.offset + 512,
+            state.offset + 3072 - completed);
+          for (; state.offset < end; state.offset++) {
+            state.prev = state.prev * 0.985 + (Math.random() * 2 - 1) * 0.12;
+            samples[state.offset] = state.prev;
+            completed++;
+          }
+          if (state.offset === state.frames) {
+            state.channel++; state.offset = 0; state.prev = 0;
+          }
+        }
+        if (state.channel < 2) { schedule(); return; }
+        const src = c.createBufferSource(); src.buffer = state.buffer; src.loop = true;
+        const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900;
+        const g = c.createGain(); g.gain.value = 0;
+        src.connect(lp).connect(g).connect(UA.bus.master);
+        const src2 = c.createBufferSource(); src2.buffer = state.buffer;
+        src2.loop = true; src2.playbackRate.value = 1.7;
+        const bp = c.createBiquadFilter(); bp.type = 'bandpass';
+        bp.frequency.value = 1600; bp.Q.value = 0.6;
+        const g2 = c.createGain(); g2.gain.value = 0;
+        const wl = c.createBiquadFilter(); wl.type = 'lowpass'; wl.frequency.value = 2000;
+        src2.connect(bp).connect(wl).connect(g2).connect(UA.bus.master);
+        src.start(); src2.start();
+        window.__SEA = { g, g2, lp, bp, wl };
+        seaBuild = null;
+      } catch (error) {
+        seaBuild = null; seaBuildFailed = true;
+        console.warn('Unfire outdoor ambience initialization skipped', error);
+      }
+    }
+    schedule();
+  }
   function frame(now) {
     // Park the heavy animation loop when hidden/out of the hero: never spend 60 callbacks/sec there.
     if (document.hidden || !frameVisible) {
@@ -2546,7 +2617,7 @@
     window.__idleT = ROAMS.moving || ROAMS.fly ? 0 : (window.__idleT || 0) + dt;
     if (window.__DOME) { const DM2 = window.__DOME; const near = ROAMS.on && window.ATM_OUT && (ROAMS.h || 0) > 20 && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 90; DM2.open += ((near ? 1 : 0) - DM2.open) * Math.min(1, dt * 2); DM2.PET.forEach((p, i) => { p.rotation.z = -DM2.open * (1.75 + Math.sin(i) * 0.05); }); if (DM2.open > 0.6 && window.ATM_OUT && ROAMS.on && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 36 && -9 + (ROAMS.h || 0) < DM2.c.y - 1) { try { ATM.setOut(false); ROAMS.h = Math.min(ROAMS.h, 13); ROAMS.flyH = 12; say('🏠 Has entrado por la cúpula'); } catch (e) {} } }
     // sonido de mar y viento fuera (más fuerte en la orilla y en el agua, viento al volar alto)
-    try { if (ROAMS.on && window.ATM_OUT && audioOk() && !window.__SEA) { const c = UA.ctx, N = c.sampleRate * 4, bf = c.createBuffer(2, N, c.sampleRate); for (let ch = 0; ch < 2; ch++) { const d = bf.getChannelData(ch); let b = 0; for (let i = 0; i < N; i++) { b = b * 0.985 + (Math.random() * 2 - 1) * 0.12; d[i] = b; } } const src = c.createBufferSource(); src.buffer = bf; src.loop = true; const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; const g = c.createGain(); g.gain.value = 0; src.connect(lp).connect(g).connect(UA.bus.master); src.start(); const src2 = c.createBufferSource(); src2.buffer = bf; src2.loop = true; src2.playbackRate.value = 1.7; const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1600; bp.Q.value = 0.6; const g2 = c.createGain(); g2.gain.value = 0; const wl = c.createBiquadFilter(); wl.type = 'lowpass'; wl.frequency.value = 2000; src2.connect(bp).connect(wl).connect(g2).connect(UA.bus.master); src2.start(); window.__SEA = { g, g2, lp, bp, wl }; }
+    try { ensureSeaAmbience();
       if (window.__SEA) { const S0 = window.__SEA, out = ROAMS.on && window.ATM_OUT, r = Math.hypot(ROAMS.p.x, ROAMS.p.z); const shore = out ? (ROAMS.wet ? 1 : Math.max(0.25, 1 - Math.abs(r - 256) / 160)) : 0; const hi = out ? Math.min(1, (ROAMS.h || 0) / 400) : 0; const mus = ((window.__WRADIO && window.__WRADIO.on) || (RADIO.st && RADIO.st.on) ? 0.4 : 1) * (window.speechSynthesis && speechSynthesis.speaking ? 0.3 : 1); const wave = 0.55 + 0.45 * Math.sin(t * 0.55) * Math.sin(t * 0.21 + 1); S0.g.gain.value += ((out ? 0.13 * shore * wave * (1 - hi * 0.8) * mus : 0) - S0.g.gain.value) * Math.min(1, dt * 2); if (window.__RAING) window.__RAING.gain.value = 0.012 * mus * (window.ATM_OUT ? 1 - hi * 0.7 : 0.6); S0.lp.frequency.value = (mus < 1 ? 380 : 500) + wave * (mus < 1 ? 500 : 900);  const wz = Math.tanh((ROAMS.spd || 0) / 500); S0.g2.gain.value += ((out ? Math.min(0.085, 0.015 + hi * 0.03 + (ROAMS.fly ? wz * 0.055 : 0)) * mus : 0) - S0.g2.gain.value) * Math.min(1, dt * 1.5); if (S0.bp) { S0.bp.frequency.value = 650 + 1300 * wz; } if (S0.wl) S0.wl.frequency.value = 1800 + 2200 * wz; } } catch (e) {}
     // lo que no se ve no existe: dentro de la casa, el mundo de fuera (Atlantis, desierto, moáis, pirámide) se apaga
     if (window.__EXT) { const c = cam.position, inside = !window.ATM_OUT && Math.abs(c.x) < 81 && c.z > -17.5 && c.z < 97.5 && c.y < 27; if (inside !== window.__EXTin) { window.__EXTin = inside; window.__EXT.forEach((o) => { if (!o.userData.tall) o.visible = !inside; }); } }
