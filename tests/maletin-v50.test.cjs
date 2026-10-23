@@ -39,6 +39,16 @@ chk('Clicking maletin from avatar returns to identical case view',
   engine.includes('if(ray.intersectObject(caseG,true).length){')&&
   engine.includes('if(window.ATM_OUT)showCaseView();else exitRoam();')&&
   engine.includes("roamB.textContent = '🚶 PASEAR'"));
+chk('PASEAR sits in its own upper-left case-view slot, never over the lower central instructions',
+  game.includes('body:not(.unfire-roaming) #roamB{')&&
+  game.includes('top:calc(env(safe-area-inset-top) + 12px)!important')&&
+  game.includes('left:max(12px,env(safe-area-inset-left))!important')&&
+  game.includes('top:calc(env(safe-area-inset-top) + 7px)!important')&&
+  game.includes('top:calc(env(safe-area-inset-top) + 6px)!important')&&
+  !game.includes('#roamB{left:50%!important')&&
+  !game.includes('The centered PASEAR action')&&
+  engine.includes("const container=ROAMS.on?dock:document.body;")&&
+  engine.includes("roamB.style.position=ROAMS.on?'static':'fixed';"));
 chk('First visit PASEAR blinks exactly two seconds after opening',
   engine.includes("'unfire_pasear_intro_v1'")&&
   engine.includes('},2000);')&&
