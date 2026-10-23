@@ -4,6 +4,7 @@ const path=require('path');
 const repo=path.resolve(__dirname,'../..');
 const page=fs.readFileSync(path.join(repo,'audio/tienda/index.html'),'utf8');
 const catalog=fs.readFileSync(path.join(repo,'audio/catalogo/index.html'),'utf8');
+const host=fs.readFileSync(path.join(repo,'audio/index.html'),'utf8');
 const gate=JSON.parse(fs.readFileSync(path.join(repo,'.github/audio-commerce-release.json'),'utf8'));
 const guide=fs.readFileSync(path.join(repo,'.github/docs/unfire-audio-free-daw-interoperability.md'),'utf8');
 assert.match(page,/<html lang="es">/);
@@ -13,6 +14,7 @@ assert.match(page,/No disponible aún/);
 assert.match(page,/No existe todavía una descarga AU\/VST3 publicada/);
 assert.match(page,/No existe ningún checkout directo/);
 assert.match(catalog,/href="\.\.\/tienda\/"/);
+assert.equal((host.match(/href="tienda\/"/g)||[]).length,2,'desktop navigation and mobile-visible footer link to official store');
 for(const id of ['6812968924','6822109610','6814615903','6815880143']){
  assert.equal(page.split('id'+id+'\"').length-1,1,`one official link for ${id}`);
 }
