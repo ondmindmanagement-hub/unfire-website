@@ -838,6 +838,17 @@
     if(parent!==window)parentPost({caseState:'closed'});
   }
   function openCaseInGame(landing){
+    // A player tapping the case *inside* the game can activate native fullscreen
+    // before the parent iframe receives its asynchronous caseState message.
+    // Preserve user choice if it is already fullscreen; no navigation/reload.
+    if (!document.fullscreenElement && !document.webkitFullscreenElement
+        && (!('userActivation' in navigator) || navigator.userActivation.isActive)) {
+      const root = document.documentElement;
+      const fs = root.requestFullscreen || root.webkitRequestFullscreen;
+      if (typeof fs === 'function') {
+        try { const result = fs.call(root, {navigationUI:'hide'}); result?.catch?.(() => {}); } catch (_) {}
+      }
+    }
     CASE_VIEW.on=false;
     lidControlledByPlayer=true;
     if(carryingCase){
@@ -2141,8 +2152,10 @@
       ? clamp(((ROAMS.spd || 0) - 85) / 700, 0, 1) : 0;
     ROAMS.camBoost = (ROAMS.camBoost || 0) + (thrusterK - (ROAMS.camBoost || 0)) * Math.min(1, dt * 3.6);
     const baseFov = ROAMS.on ? (ROAMS.mini ? 70 : 80 + 16 * ROAMS.camBoost) : 30;
-    const portraitCorrection = cam.aspect < 1 ? Math.min(1.24, 1 + (1 - cam.aspect) * 0.5) : 1;
-    const desiredFov = Math.min(104, baseFov * portraitCorrection);
+    // Portrait view gets a wider vertical panorama instead of cropping the
+    // player's forward world to a narrow horizontal strip. No stretched canvas.
+    const portraitCorrection = cam.aspect < 1 ? Math.min(1.34, 1 + (1 - cam.aspect) * 0.67) : 1;
+    const desiredFov = Math.min(108, baseFov * portraitCorrection);
     const nextFov = cam.fov + (desiredFov - cam.fov) * Math.min(1, dt * 4.2);
     if (Math.abs(cam.fov - nextFov) > 0.005) {
       cam.fov = nextFov;
@@ -2322,7 +2335,7 @@
       const a=CASE_VIEW.angle,d=CASE_VIEW.dist,el=CASE_VIEW.elevation;
       cam.position.set(caseG.position.x+Math.sin(a)*Math.cos(el)*d,caseG.position.y+Math.sin(el)*d,caseG.position.z+Math.cos(a)*Math.cos(el)*d);
       cam.lookAt(caseG.position.x,caseG.position.y+0.4,caseG.position.z);
-      cam.near=0.05;cam.fov=48;cam.updateProjectionMatrix();
+      cam.near=0.05;cam.fov=cam.aspect<1?Math.min(62,48+(1-cam.aspect)*24):48;cam.updateProjectionMatrix();
     }
     S.renderer.render(S.scene, cam);
   }
