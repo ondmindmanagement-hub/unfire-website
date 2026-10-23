@@ -64,7 +64,9 @@ function run({ timeout, command, args }) {
     clearTimeout(watchdog);
     // Clean up owned headless browsers even if the QA script exited early.
     signalOwnedGroup('SIGTERM');
-    if (escalation) clearTimeout(escalation);
+    // Keep escalation after timeout: a stubborn browser descendant may outlive its launcher.
+    // Only the isolated process group launched by this QA run is targeted.
+    if (escalation && !timedOut && !interrupted) clearTimeout(escalation);
     process.exitCode = timedOut ? 124 : interrupted === 'SIGINT' ? 130 : interrupted === 'SIGTERM' ? 143 : spawnError ? 127 : code ?? (signal ? 1 : 0);
   });
 }
