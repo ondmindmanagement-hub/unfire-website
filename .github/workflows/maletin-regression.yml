@@ -4,6 +4,10 @@ on:
   pull_request:
     paths:
       - 'audio/index.html'
+      - 'audio/img/maletin-real-first-frame-desktop.webp'
+      - 'audio/img/maletin-real-first-frame-mobile.webp'
+      - 'tests/maletin-first-paint.test.cjs'
+      - 'tests/maletin-first-paint-browser.cjs'
       - 'audio/maletin/index.html'
       - 'audio/maletin/game-engine-v50.js'
       - 'tests/maletin-v50.test.cjs'
@@ -33,6 +37,7 @@ jobs:
       - name: Check syntax, click routing, missions, audio and multiplayer preservation
         run: |
           node tests/maletin-v50.test.cjs
+          node tests/maletin-first-paint.test.cjs
           node tests/maletin-radio-volume.test.cjs
 
   entry:
@@ -49,6 +54,7 @@ jobs:
         run: |
           python3 -m http.server 8767 --bind 127.0.0.1 >/tmp/unfire-entry-http.log 2>&1 &
           sleep 2
+          UNFIRE_ENTRY_URL=http://127.0.0.1:8767/audio/ node tests/maletin-first-paint-browser.cjs
           UNFIRE_ENTRY_URL=http://127.0.0.1:8767/audio/ node tests/maletin-entry-fullscreen.cjs
 
   mobile:
