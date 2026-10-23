@@ -90,7 +90,15 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    direct.on('pageerror',e=>errors.push('direct: '+e.message));
    const directUrl=new URL('maletin/index.html',process.env.UNFIRE_ENTRY_URL||'http://127.0.0.1:8765/audio/').href;
    await direct.goto(directUrl,{waitUntil:'commit',timeout:120000});
-   await direct.locator('#directOpen').click({timeout:12000});
+   // On slow CI software GPUs, parsing the heavy 3D engine may block user
+   // input for tens of seconds. The website first-tap test above has already
+   // tested click-before-boot, so test the direct URL after its engine is ready.
+   await direct.waitForFunction(()=>!!window.__mal?.S,null,{timeout:120000,polling:250});
+   await direct.evaluate(()=>{
+     const button=document.getElementById('directOpen');
+     if(!button||button.hidden)throw Error('Direct maletin opener missing');
+     button.click();
+   });
    await direct.waitForFunction(()=>Boolean(window.__UNFIRE_CASE_QA&&window.__UNFIRE_CASE_QA.lid>.94),null,{timeout:120000,polling:300});
    const directCheck=await direct.evaluate(()=>({
      viewportWidth:innerWidth,canvasWidth:document.getElementById('cv').getBoundingClientRect().width,
