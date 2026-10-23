@@ -82,7 +82,7 @@ test('direct boot retains preview on the SAME page until case tap',()=>{
   assert(h.elements.get('heroPin').classList.contains('unfire-case-preview'));
   assert.equal(h.scene.starts,1);
   assert(!h.messages().some(m=>m.entryStart));
-  assert(!html.includes('window.open(')&&!html.includes('target="_blank" id="unfireCaseFirstFrame"'));
+  assert(!source.includes('window.open('),'The case-opening controller never creates another tab');
 });
 test('first tap synchronizes 1.05-second zoom with the actual lid opening',()=>{
   const h=fixture();
@@ -141,7 +141,7 @@ test('user exit prevents rotation from reopening the game or website loop',async
   assert(!h.document.body.classList.contains('immOn'));
   assert.equal(h.animations('malFrame').length,0);
   await Promise.resolve();await Promise.resolve();
-  assert(h.trace.includes('scroll-web'));
+  assert(h.elements.get('heroPin').classList.contains('web-return'));
 });
 test('source preserves dynamic viewport safe-area and actual 3D, never forces orientation',()=>{
   assert.match(html,/width:100dvw!important/);
