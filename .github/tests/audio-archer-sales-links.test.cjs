@@ -19,3 +19,15 @@ test('unreleased cart offers only true third-party purchase alternatives',()=>{
   assert.match(bag,/ARCHER para iPhone o iPad/);
   assert.match(bag,/consulta por correo no supone compra/);
 });
+
+test('in-game ARCHER points to its own offer, never charges Todo UNFIRE bundle',()=>{
+ const engine=fs.readFileSync(path.join(__dirname,'../../audio/maletin/game-engine-v50.js'),'utf8');
+ assert.match(engine,/\['ARCHER', '#2bd96b', 'archer'\]/);
+ assert.match(engine,/archer: 'archer'/);
+ assert.match(engine,/parentPost\(\{ open: 'archer' \}\)/);
+ assert.doesNotMatch(engine,/archer: 'todo'/);
+ assert.doesNotMatch(engine,/\['ARCHER', '#2bd96b', 'todo'\]/);
+ const game=fs.readFileSync(path.join(__dirname,'../../audio/maletin/index.html'),'utf8');
+ assert.match(game,/game-engine-v50\.js\?v=20261023sales1/);
+ assert.match(html,/maletin\/index\.html\?v=20261023sales1/);
+});
