@@ -15,9 +15,19 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    assert.equal(await page.locator('#openBtn').count(),0,'2D butterfly button must not exist on website');
    await page.waitForFunction(()=>!!document.getElementById('malFrame')?.contentWindow?.__mal?.S,
      null,{timeout:120000,polling:250});
-   const gameCanvas=page.frameLocator('#malFrame').locator('#cv');
-   const canvasBox=await gameCanvas.boundingBox();
-   await gameCanvas.click({position:{x:canvasBox.width/2,y:canvasBox.height/2},timeout:25000});
+   // Avoid expensive layout-stability waits in GitHub CPU-only WebGL;
+   // exercise the actual canvas pointerdown/up handler and 3D raycast.
+   const tapped=await page.evaluate(()=>{
+     const w=document.getElementById('malFrame').contentWindow;
+     const canvas=w.document.getElementById('cv');if(!canvas)return false;
+     const rect=canvas.getBoundingClientRect();
+     const x=rect.left+rect.width/2,y=rect.top+rect.height/2;
+     const p={bubbles:true,cancelable:true,pointerId:19,pointerType:'mouse',button:0,clientX:x,clientY:y};
+     canvas.dispatchEvent(new w.PointerEvent('pointerdown',{...p,buttons:1}));
+     w.dispatchEvent(new w.PointerEvent('pointerup',{...p,buttons:0}));
+     return true;
+   });
+   assert(tapped,'3D maletín canvas was not initialized');
    await page.waitForFunction(()=>document.body.classList.contains('immOn'),null,{timeout:120000,polling:200});
    const instant=await page.evaluate(()=>({visible:document.body.classList.contains('immOn'),
      fullWidth:document.getElementById('malFrame').getBoundingClientRect().width>=innerWidth-1,
@@ -119,9 +129,13 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    // tested click-before-boot, so test the direct URL after its engine is ready.
    await direct.waitForFunction(()=>!!window.__mal?.S,null,{timeout:120000,polling:250});
    assert.equal(await direct.locator('#directOpen').count(),0,'Direct link may not show 2D opener');
-   const directCanvas=direct.locator('#cv');
-   const dr=await directCanvas.boundingBox();
-   await directCanvas.click({position:{x:dr.width/2,y:dr.height/2},timeout:30000});
+   await direct.evaluate(()=>{
+     const c=document.getElementById('cv');if(!c)throw Error('No direct 3D canvas');
+     const r=c.getBoundingClientRect();
+     const p={bubbles:true,cancelable:true,pointerId:19,pointerType:'mouse',button:0,clientX:r.left+r.width/2,clientY:r.top+r.height/2};
+     c.dispatchEvent(new PointerEvent('pointerdown',{...p,buttons:1}));
+     window.dispatchEvent(new PointerEvent('pointerup',{...p,buttons:0}));
+   });
    await direct.waitForFunction(()=>Boolean(window.__UNFIRE_CASE_QA&&window.__UNFIRE_CASE_QA.lid>.94),null,{timeout:120000,polling:300});
    const directCheck=await direct.evaluate(()=>({
      viewportWidth:innerWidth,canvasWidth:document.getElementById('cv').getBoundingClientRect().width,

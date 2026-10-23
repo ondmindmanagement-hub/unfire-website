@@ -16,8 +16,20 @@ const assert=require('node:assert/strict');
   const f=page.frames().find(x=>x.url().includes('/audio/maletin/index.html'));
   assert(f,'Game iframe missing');
   assert.equal(await page.locator('#openBtn').count(),0,'2D opener must not exist');
-  const canvas=frame.locator('#cv'),box=await canvas.boundingBox();
-  await canvas.click({position:{x:box.width/2,y:box.height/2},timeout:30000});
+  // In software WebGL CI, Playwright boundingBox() can stall despite canvas
+  // readiness. Synthesize the *same* pointerdown/up on the 3D case instead;
+  // real physical Chromium pointer input is tested by the separate local QA.
+  const tap=await page.evaluate(()=>{
+    const w=document.getElementById('malFrame').contentWindow;
+    const canvas=w.document.getElementById('cv');if(!canvas)return false;
+    const rect=canvas.getBoundingClientRect();
+    const x=rect.left+rect.width/2,y=rect.top+rect.height/2;
+    const p={bubbles:true,cancelable:true,pointerId:19,pointerType:'mouse',button:0,clientX:x,clientY:y};
+    canvas.dispatchEvent(new w.PointerEvent('pointerdown',{...p,buttons:1}));
+    w.dispatchEvent(new w.PointerEvent('pointerup',{...p,buttons:0}));
+    return true;
+  });
+  assert(tap,'3D case canvas was unavailable for the first-tap probe');
   await page.waitForFunction(()=>document.body.classList.contains('immOn'),null,{timeout:30000});
   // CI runs WebGL in CPU software, causing >1min stalls on animation frames.
   // Pause only its render scheduler, preserving all actual gameplay actions and
