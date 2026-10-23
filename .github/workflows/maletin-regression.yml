@@ -8,6 +8,8 @@ on:
       - 'tests/maletin-v50.test.cjs'
       - 'tests/maletin-v50-browser.cjs'
       - 'tests/maletin-mobile-rotation.cjs'
+      - 'tests/maletin-entry-fullscreen.cjs'
+      - 'audio/game.webmanifest'
       - '.github/workflows/maletin-regression.yml'
   workflow_dispatch:
 permissions:
@@ -32,3 +34,6 @@ jobs:
 
       - name: Check portrait, landscape, touch and online menu without losing story progress
         run: node tests/maletin-mobile-rotation.cjs
+
+      - name: Verify first-tap immersive entry and Nimbo HUD layout
+        run: node tests/maletin-entry-fullscreen.cjs
