@@ -12,15 +12,18 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    const errors=[];
    page.on('pageerror',e=>errors.push(e.message));
    await page.goto(process.env.UNFIRE_ENTRY_URL||'http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded',timeout:45000});
-   assert.match(await page.locator('#openBtn').innerText(),/PULSAR AQUÍ/,'Landing button must guide first-time players');
-   await page.locator('#openBtn').click({timeout:12000});
-   // Loading never shows a blank enlarged canvas. Expand only after the 3D is ready.
+   assert.equal(await page.locator('#openBtn').count(),0,'2D butterfly button must not exist on website');
+   await page.waitForFunction(()=>!!document.getElementById('malFrame')?.contentWindow?.__mal?.S,
+     null,{timeout:120000,polling:250});
+   const gameCanvas=page.frameLocator('#malFrame').locator('#cv');
+   const canvasBox=await gameCanvas.boundingBox();
+   await gameCanvas.click({position:{x:canvasBox.width/2,y:canvasBox.height/2},timeout:25000});
    await page.waitForFunction(()=>document.body.classList.contains('immOn'),null,{timeout:120000,polling:200});
    const instant=await page.evaluate(()=>({visible:document.body.classList.contains('immOn'),
      fullWidth:document.getElementById('malFrame').getBoundingClientRect().width>=innerWidth-1,
-     butterflyHidden:getComputedStyle(document.getElementById('openBtn')).display==='none'}));
-   assert(instant.visible&&instant.fullWidth&&instant.butterflyHidden,
-     'Fullscreen viewport must grow without showing the old 2D butterfly '+JSON.stringify(instant));
+     noButtons:!document.querySelector('#openBtn')&&!document.getElementById('malFrame').contentDocument.querySelector('#directOpen')}));
+   assert(instant.visible&&instant.fullWidth&&instant.noButtons,
+     '3D case must open in fullscreen with no 2D overlay '+JSON.stringify(instant));
    await page.waitForFunction(()=>{
      const g=document.getElementById('malFrame')?.contentWindow;
      return !!g?.__UNFIRE_CASE_QA && g.__UNFIRE_CASE_QA.lid>0.94;
@@ -115,16 +118,15 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    // input for tens of seconds. The website first-tap test above has already
    // tested click-before-boot, so test the direct URL after its engine is ready.
    await direct.waitForFunction(()=>!!window.__mal?.S,null,{timeout:120000,polling:250});
-   await direct.evaluate(()=>{
-     const button=document.getElementById('directOpen');
-     if(!button||button.hidden)throw Error('Direct maletin opener missing');
-     button.click();
-   });
+   assert.equal(await direct.locator('#directOpen').count(),0,'Direct link may not show 2D opener');
+   const directCanvas=direct.locator('#cv');
+   const dr=await directCanvas.boundingBox();
+   await directCanvas.click({position:{x:dr.width/2,y:dr.height/2},timeout:30000});
    await direct.waitForFunction(()=>Boolean(window.__UNFIRE_CASE_QA&&window.__UNFIRE_CASE_QA.lid>.94),null,{timeout:120000,polling:300});
    const directCheck=await direct.evaluate(()=>({
      viewportWidth:innerWidth,canvasWidth:document.getElementById('cv').getBoundingClientRect().width,
      cameraAspect:window.__mal.S.camera.aspect,
-     directOpenHidden:document.getElementById('directOpen').hidden,
+     directOpenHidden:!document.getElementById('directOpen'),
      roaming:window.__UNFIRE_CASE_QA.roam,
      caseVisible:window.__UNFIRE_CASE_QA.caseVisible,
      panoramaFov:window.__mal.S.camera.fov,

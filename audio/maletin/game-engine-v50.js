@@ -777,7 +777,7 @@
   let lidControlledByPlayer = false, carryingCase = false, carryUIShown = false;
   // Time-based mechanical lid animation: stable on 30/60Hz or slower devices.
   // Reversing direction begins from the current pose, without jumping.
-  const lidMotion={from:0,to:0,elapsed:0,duration:2.45};
+  const lidMotion={from:0,to:0,elapsed:0,duration:4.6};
   // One uninterrupted dolly toward the flight case once the host fills the viewport.
   const entryDolly={active:false,from:0,to:0,elapsed:0,duration:1.55};
   const originalCasePosition = caseG.position.clone();
@@ -2009,7 +2009,20 @@
       if(ray.intersectObject(caseG,true).length){showCaseView();/* Continue handling the same click: gates and controls must still work first try. */}
     }
     { const pc = lidOpen > 0.5 ? pickCtl(e) : null; if (pc && !pc.c) { SEL = { type: 'cap', g: pc.g }; activate(pc.g); return; } }
-    if (lidOpen < 0.5) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const hitD = ray.intersectObject(dragon, true).length; if (hitD || ray.intersectObject(caseG, true).length) { if (hitD) ALL = true;
+    if (lidOpen < 0.5) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const hitD = ray.intersectObject(dragon, true).length; if (hitD || ray.intersectObject(caseG, true).length) {
+        if(parent!==window&&!window.__unfireCaseEntryStarted){
+          try{if(typeof parent.__UNFIRE_ENTER_CASE==='function'){parent.__UNFIRE_ENTER_CASE();return;}}catch(_){}
+          parentPost({entryRequest:true});return;
+        }
+        if(parent===window&&!window.__unfireCaseEntryStarted){
+          window.__unfireCaseEntryStarted=true;
+          try{const root=document.documentElement,fs=root.requestFullscreen||root.webkitRequestFullscreen;if(fs&&!document.fullscreenElement)fs.call(root).catch?.(()=>{});}catch(_){}
+          // The standalone direct link also glides first, then opens slowly.
+          entryDolly.active=true;entryDolly.from=view.dist;entryDolly.to=view.D0*.96;
+          entryDolly.elapsed=0;entryDolly.openAfter=true;view.gd=entryDolly.to;lidControlledByPlayer=true;
+          return;
+        }
+        if (hitD) ALL = true;
         openCaseInGame();
         try { RADIO.chime && UA.ctx && RADIO.chime(UA.ctx.currentTime + 0.02); } catch (er) {} } return; }
     if (lidOpen > 0.9) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); if (window.__fd && ray.intersectObject(window.__fd.parent, true).length) { hap(0.5); act('shut'); return; } if (ray.intersectObject(lidBtn, true).length) { toggleCaseInGame(); hap(0.25); return; } if (!CASE_VIEW.on && ROOM.pick(ray, ROAMS.on ? Infinity : ((ray.intersectObject(caseG, true)[0] || {}).distance || Infinity))) return; if (ray.intersectObject(pageBtn, true).length) { setCapPage(capPage + 1); return; } { const ph = ray.intersectObjects(PB.filter((b) => b.parent && b.parent.visible), true)[0]; if (ph) { let o = ph.object; while (o && !o.userData.btn) o = o.parent; if (o) { SEL = o.userData.btn.sel; hap(0.3); act(o.userData.btn.a); return; } } }
@@ -2130,7 +2143,7 @@
       if (lidControlledByPlayer) {
         if (Math.abs(lidMotion.to-pt)>0.0001) {
           lidMotion.from=pNow;lidMotion.to=pt;lidMotion.elapsed=0;
-          lidMotion.duration=Math.max(0.42,2.45*Math.abs(pt-pNow));
+          lidMotion.duration=Math.max(0.85,4.6*Math.abs(pt-pNow));
         }
         // Use real elapsed frame time for consistent physical timing.
         lidMotion.elapsed=Math.min(lidMotion.duration,lidMotion.elapsed+Math.min(0.12,actualFrameTime));
@@ -2164,7 +2177,7 @@
       entryDolly.elapsed=Math.min(entryDolly.duration,entryDolly.elapsed+Math.min(.12,actualFrameTime));
       const u=ease.smooth(clamp(entryDolly.elapsed/entryDolly.duration));
       view.dist=entryDolly.from+(entryDolly.to-entryDolly.from)*u;
-      if(u>=1)entryDolly.active=false;
+      if(u>=1){entryDolly.active=false;if(entryDolly.openAfter){entryDolly.openAfter=false;pTarget=1;}}
     }else{view.dist+=(view.gd-view.dist)*(1-Math.exp(-6*Math.min(.12,actualFrameTime)));}
     view.tx += (view.gx - view.tx) * 0.14; view.tz += (view.gz - view.tz) * 0.14;
     if (!open.length && !items.some((it) => it.kind === 'mut' && it.T > 2.5) && RADIO.st.on) { idleT += dt; if (idleT > 1.6) RADIO.stop(); } else idleT = 0;
@@ -2364,16 +2377,16 @@
     }
     S.renderer.render(S.scene, cam);
   }
-  addEventListener('message', (e) => { const d = e.data || {}; if(d.unfire && d.entryStart){
+  addEventListener('message', (e) => { const d = e.data || {}; if(d.unfire && d.entryStart){window.__unfireCaseEntryStarted=true;
       // The host is already edge-to-edge. Animate the lid *here*, without
       // teleporting to the robot or replacing the maletín inspection camera.
       frameVisible=true;lidControlledByPlayer=true;
       carryingCase=false;caseG.visible=true;
-      pTarget=1;ROOM.AMB.mute=false;
+      pTarget=0;ROOM.AMB.mute=false;
       if(ROAMS.on)exitRoam();CASE_VIEW.on=false;
       // Glide toward the physical case, then open the lid in place. Never jump to robot camera.
       entryDolly.active=true;entryDolly.from=view.dist;entryDolly.to=view.D0*.96;
-      entryDolly.elapsed=0;view.gd=entryDolly.to;
+      entryDolly.elapsed=0;entryDolly.openAfter=true;view.gd=entryDolly.to;
       updateCarryUI();
     }
     if (d.unfire && d.p != null && !lidControlledByPlayer) pTarget = d.p; if (d.unfire && d.legacyCaseClose) closeCaseInGame(); if(d.unfire && d.releaseCaseControl){CAPS.cancel();lidControlledByPlayer=false;carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();} if (d.unfire && d.stop) { closeAll(true); stopAll(); ROOM.AMB.mute = true; } if (d.unfire && d.p > 0.5) ROOM.AMB.mute = false; if (d.unfire && 'vis' in d) { frameVisible = !!d.vis; if(frameVisible && ROOM.AMB)ROOM.AMB.mute=false; window.__gameVisible = frameVisible; ONLINE.voiceVisibility(frameVisible); } if (d.unfire && d.vis === false) { closeAll(true); setRobot(null); stopAll(); CINE.on = false; if (MEGA) megaOff(); CK.forEach((k) => { compG[k].userData.open = 0; compG[k].userData.t = 0; }); if (HW) { HW.T = 0; HW.u = 0; HW.tg = 0; } items.forEach((it) => { if (it.kind === 'mut') { it.tgt = 0; it.T = 0; } if (it.g) { it.on = 0; it.kk = 0; } if (it.W && it.home) { it.W.position.copy(it.home); it.W.rotation.set(0, 0, 0); it.retT = 0; } }); view.gd = view.D0; view.gx = 0; view.gz = 0.15; ORB.gaz = ORB.gde = 0; } if (d.unfire && d.audio) { try { UA.init(); } catch (er) {} } });
