@@ -153,3 +153,11 @@ test('source preserves dynamic viewport safe-area and actual 3D, never forces or
   assert.match(html,/entryStart:true/);
   assert(!html.includes('screen.orientation.lock('));
 });
+
+
+test('mobile loading hint stays visible until the WebGL scene is ready',()=>{
+  assert.match(html,/#unfireMobileTapHint\{display:block/);
+  assert.match(html,/\.hero-pin\.scene-ready #unfireMobileTapHint/);
+  assert(!html.includes('.hero-pin.imm #unfireMobileTapHint'),
+    'Entering CSS immersion alone must not hide the first-tap/loading guide');
+});
