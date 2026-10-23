@@ -2341,11 +2341,11 @@
     const thrusterK = ROAMS.on && ROAMS.fly && !ROAMS.mini
       ? clamp(((ROAMS.spd || 0) - 85) / 700, 0, 1) : 0;
     ROAMS.camBoost = (ROAMS.camBoost || 0) + (thrusterK - (ROAMS.camBoost || 0)) * Math.min(1, dt * 3.6);
-    const baseFov = ROAMS.on ? (ROAMS.mini ? 70 : 80 + 16 * ROAMS.camBoost) : 30;
-    // Portrait view gets a wider vertical panorama instead of cropping the
-    // player's forward world to a narrow horizontal strip. No stretched canvas.
-    const portraitCorrection = cam.aspect < 1 ? Math.min(1.34, 1 + (1 - cam.aspect) * 0.67) : 1;
-    const desiredFov = Math.min(108, baseFov * portraitCorrection);
+    const baseFov = ROAMS.on ? (ROAMS.mini ? 70 : 83 + 9 * ROAMS.camBoost) : 30;
+    // Modest panoramic gameplay on wide screens, with a bounded portrait
+    // correction. Keep straight architecture natural, not a fish-eye lens.
+    const portraitCorrection = cam.aspect < 1 ? Math.min(1.18, 1 + (1 - cam.aspect) * 0.28) : 1;
+    const desiredFov = Math.min(98, baseFov * portraitCorrection);
     const nextFov = cam.fov + (desiredFov - cam.fov) * Math.min(1, dt * 4.2);
     if (Math.abs(cam.fov - nextFov) > 0.005) {
       cam.fov = nextFov;
