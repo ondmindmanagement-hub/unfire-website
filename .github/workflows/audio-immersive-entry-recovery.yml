@@ -1,0 +1,25 @@
+name: Audio immersive game entry
+on:
+  pull_request:
+    paths:
+      - 'audio/index.html'
+      - 'tests/audio-immersive-entry-recovery.test.cjs'
+      - '.github/workflows/audio-immersive-entry-recovery.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'audio/index.html'
+      - 'tests/audio-immersive-entry-recovery.test.cjs'
+      - '.github/workflows/audio-immersive-entry-recovery.yml'
+jobs:
+  immersive-entry-contract:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/audio-immersive-entry-recovery.test.cjs
