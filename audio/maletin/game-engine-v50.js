@@ -775,6 +775,11 @@
   let STOW = false; let lidOpen = 0, pTarget = 0, pNow = 0, gateK = 0, gateT = 0, ALL = false, lastOpen = 0;
   // The case is a game prop: toggling the lid never means exiting to the website.
   let lidControlledByPlayer = false, carryingCase = false, carryUIShown = false;
+  // Time-based mechanical lid animation: stable on 30/60Hz or slower devices.
+  // Reversing direction begins from the current pose, without jumping.
+  const lidMotion={from:0,to:0,elapsed:0,duration:2.45};
+  // One uninterrupted dolly toward the flight case once the host fills the viewport.
+  const entryDolly={active:false,from:0,to:0,elapsed:0,duration:1.55};
   const originalCasePosition = caseG.position.clone();
   const portableUnlocked = () => { try { return typeof window.__unfireCasePortabilityUnlocked === 'function' && !!window.__unfireCasePortabilityUnlocked(); } catch(e) { return false; } };
   // Camera-choice state is separate from the player's roaming state: quests and online continue.
@@ -1075,10 +1080,10 @@
   // ===== MODO CINE / GRABACIÓN: cámara libre por toda la casa y el mundo, sin interfaz, para grabar como en los juegos =====
   const REC = window.__REC = { on: false, p: new THREE.Vector3(), v: new THREE.Vector3(), yaw: 0, pitch: 0, k: {}, slow: 0 };
   const recB = document.createElement('button'); recB.id = 'recB'; recB.textContent = '🎬 MODO CINE (V)'; recB.style.cssText = camB.style.cssText.replace('bottom:calc(9vh + 106px)', 'bottom:calc(9vh + 152px)'); recB.style.bottom = 'calc(9vh + 152px)'; recB.style.top = 'auto'; document.body.appendChild(recB); recB.addEventListener('pointerdown', (e) => e.stopPropagation());
-  const recHud = document.createElement('div'); recHud.id = 'recHud'; recHud.innerHTML = '<b style="color:#ff2a4a">● REC</b> <span>MODO CINE · WASD · Q/E · arrastra · V salir</span> <button id="recX">✕ SALIR</button>'; recHud.style.cssText = 'position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:60;display:none;align-items:center;gap:10px;font:600 11px "Share Tech Mono",monospace;color:#fff;background:rgba(0,0,0,.42);padding:6px 10px;border-radius:12px;backdrop-filter:blur(6px);transition:opacity 1.2s;max-width:calc(100vw - 32px);flex-wrap:wrap;justify-content:center';
+  const recHud = document.createElement('div'); recHud.id = 'recHud'; recHud.innerHTML = '<b style="color:#ff2a4a">● REC</b> <span>MODO CINE · CÁMARA LIBRE · ATRAVIESA TODO · WASD · Q/E · V salir</span> <button id="recX">✕ SALIR</button>'; recHud.style.cssText = 'position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:60;display:none;align-items:center;gap:10px;font:600 11px "Share Tech Mono",monospace;color:#fff;background:rgba(0,0,0,.42);padding:6px 10px;border-radius:12px;backdrop-filter:blur(6px);transition:opacity 1.2s;max-width:calc(100vw - 32px);flex-wrap:wrap;justify-content:center';
   document.body.appendChild(recHud); { const st = document.createElement('style'); st.textContent = 'body.recOn>*:not(#cv):not(#recHud):not(audio):not(iframe){visibility:hidden!important}#recX{all:unset;cursor:pointer;color:#fff;background:#ff2a4a;padding:3px 8px;border-radius:8px}'; document.head.appendChild(st); }
   // controles abajo a la derecha en una sola columna ordenada: nunca se pisan, se encogen en pantallas pequeñas o ventanas minimizadas
-  { const dock = document.createElement('div'); dock.id = 'ctlDock'; dock.style.cssText = 'position:fixed;right:max(12px,env(safe-area-inset-right));bottom:calc(9vh + 14px);z-index:40;display:flex;flex-direction:column-reverse;align-items:flex-end;gap:8px;pointer-events:none;max-height:calc(100vh - 140px)'; document.body.appendChild(dock); const surfB = document.createElement('button'); surfB.id = 'surfB'; surfB.textContent = '🏄 TABLA: NO (B)'; surfB.style.cssText = camB.style.cssText; surfB.style.background = 'linear-gradient(180deg,#5fe0ff,#0a8fb8)'; surfB.addEventListener('pointerdown', (e) => e.stopPropagation()); window.__surfToggle = () => { ROAMS.board = !ROAMS.board; surfB.textContent = ROAMS.board ? '🏄 TABLA: SÍ (B)' : '🏄 TABLA: NO (B)'; say(ROAMS.board ? '🏄 Tabla activada · en el agua: ESPACIO = truco (mantén para volar)' : '🪽 Tabla guardada · ESPACIO vuelve a ser volar'); hap(0.3); }; surfB.onclick = (e) => { e.stopPropagation(); window.__surfToggle(); }; window.__surfB = surfB; const onlB = document.createElement('button'); onlB.id = 'onlB'; onlB.textContent = '🌐 ONLINE'; onlB.style.cssText = camB.style.cssText; onlB.style.background = 'linear-gradient(180deg,#b06bff,#6a2bd8)'; onlB.addEventListener('pointerdown', (e) => e.stopPropagation()); onlB.onclick = (e) => { e.stopPropagation(); try { ONLINE.open(); } catch (er) {} }; window.__onlB = onlB; [roamB, camB, recB, surfB, onlB].forEach((b) => { b.style.position = 'static'; b.style.right = b.style.bottom = b.style.top = b.style.left = 'auto'; b.style.pointerEvents = 'auto'; b.style.whiteSpace = 'nowrap'; dock.appendChild(b); }); const st = document.createElement('style'); st.textContent = '@keyframes surfPop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}#ctlDock button{font-size:clamp(9px,1.6vw,12px)!important;padding:clamp(6px,1.2vw,9px) clamp(9px,1.8vw,14px)!important}@media (hover:hover) and (max-height:520px){#ctlDock{bottom:12px!important;flex-direction:row-reverse!important}}@media (hover:hover) and (max-width:520px){#ctlDock{bottom:calc(9vh + 60px)!important}}body.storyOn #ctlDock{visibility:hidden}'; document.head.appendChild(st); }
+  { const dock = document.createElement('div'); dock.id = 'ctlDock'; dock.style.cssText = 'position:fixed;right:max(12px,env(safe-area-inset-right));bottom:calc(9vh + 14px);z-index:40;display:flex;flex-direction:column-reverse;align-items:flex-end;gap:8px;pointer-events:none;max-height:calc(100vh - 140px)'; document.body.appendChild(dock); const surfB = document.createElement('button'); surfB.id = 'surfB'; surfB.textContent = '🏄 TABLA: NO (B)'; surfB.style.cssText = camB.style.cssText; surfB.style.background = 'linear-gradient(180deg,#5fe0ff,#0a8fb8)'; surfB.addEventListener('pointerdown', (e) => e.stopPropagation()); window.__surfToggle = () => { ROAMS.board = !ROAMS.board; surfB.textContent = ROAMS.board ? '🏄 TABLA: SÍ (B)' : '🏄 TABLA: NO (B)'; say(ROAMS.board ? '🏄 Tabla activada · en el agua: ESPACIO = truco (mantén para volar)' : '🪽 Tabla guardada · ESPACIO vuelve a ser volar'); hap(0.3); }; surfB.onclick = (e) => { e.stopPropagation(); window.__surfToggle(); }; window.__surfB = surfB; const onlB = document.createElement('button'); onlB.id = 'onlB'; onlB.textContent = '🌐 ONLINE'; onlB.style.cssText = camB.style.cssText; onlB.style.background = 'linear-gradient(180deg,#b06bff,#6a2bd8)'; onlB.addEventListener('pointerdown', (e) => e.stopPropagation()); onlB.onclick = (e) => { e.stopPropagation(); try { ONLINE.open(); } catch (er) {} }; window.__onlB = onlB; [roamB, camB, recB, surfB, onlB].forEach((b) => { b.style.position = 'static'; b.style.right = b.style.bottom = b.style.top = b.style.left = 'auto'; b.style.pointerEvents = 'auto'; b.style.whiteSpace = 'nowrap'; dock.appendChild(b); }); const st = document.createElement('style'); st.textContent = '@keyframes surfPop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}#ctlDock button{font-size:clamp(9px,1.6vw,12px)!important;padding:clamp(6px,1.2vw,9px) clamp(9px,1.8vw,14px)!important}@media (hover:hover) and (max-height:520px){#ctlDock{bottom:12px!important;flex-direction:row-reverse!important}}@media (hover:hover) and (max-width:520px){#ctlDock{bottom:calc(9vh + 60px)!important}}body.storyOn #ctlDock{visibility:hidden}@media(pointer:coarse) and (max-height:420px) and (orientation:landscape){#ctlDock button{min-height:30px!important;padding:3px 6px!important;font-size:9px!important}}'; document.head.appendChild(st); }
   let recIdle = 0; const recWake = () => { recIdle = 0; recHud.style.opacity = '1'; };
   REC.set = (v) => { if (!!v === REC.on) return; if (v && !ROAMS.on) return; REC.on = !!v; document.body.classList.toggle('recOn', REC.on); recHud.style.display = REC.on ? 'flex' : 'none'; REC.k = {}; if (REC.on) { REC.p.copy(cam.position); const d = new THREE.Vector3(); cam.getWorldDirection(d); REC.yaw = Math.atan2(d.x, -d.z); REC.pitch = Math.asin(clamp(d.y, -1, 1)); REC.v.set(0, 0, 0); for (const k in ROAMS.k) ROAMS.k[k] = 0; recWake(); } else { ROAMS.cp = null; } };
   recB.onclick = (e) => { e.stopPropagation(); REC.set(!REC.on); hap(0.3); }; recHud.querySelector('#recX').onclick = (e) => { e.stopPropagation(); REC.set(false); };
@@ -1086,7 +1091,12 @@
   addEventListener('keyup', (e) => { REC.k[e.key.length === 1 ? e.key.toLowerCase() : e.key] = 0; });
   REC.tick = (dt) => { recIdle += dt; if (recIdle > 3) recHud.style.opacity = '0.08'; const K = REC.k, J = ROAMS.k; const fw = (K.w || K.ArrowUp || J.w || J.ArrowUp ? 1 : 0) - (K.s || K.ArrowDown || J.s || J.ArrowDown ? 1 : 0), sd = (K.d || K.ArrowRight || J.d || J.ArrowRight ? 1 : 0) - (K.a || K.ArrowLeft || J.a || J.ArrowLeft ? 1 : 0), up = (K.e || K[' '] || J[' '] ? 1 : 0) - (K.q || K.c ? 1 : 0);
     const sp = (window.ATM_OUT ? 60 : 16) * (K.Shift ? 3 : K.Alt ? 0.3 : 1); const cy = Math.cos(REC.pitch), fx = Math.sin(REC.yaw) * cy, fz = -Math.cos(REC.yaw) * cy, fy = Math.sin(REC.pitch); const want = new THREE.Vector3(fx * fw + Math.cos(REC.yaw) * sd, fy * fw + up, fz * fw + Math.sin(REC.yaw) * sd).multiplyScalar(sp);
-    REC.v.lerp(want, Math.min(1, dt * 2.5)); REC.p.addScaledVector(REC.v, dt); if (!window.ATM_OUT) { REC.p.x = clamp(REC.p.x, -77, 77); REC.p.z = clamp(REC.p.z, -13.5, 93.5); REC.p.y = clamp(REC.p.y, -8, 23.5); } else { REC.p.y = clamp(REC.p.y, -6, 3200); const r = Math.hypot(REC.p.x, REC.p.z), RM = window.__WORLD_R || 4200; if (r > RM) REC.p.multiplyScalar(RM / r); }
+    // Cinematic camera is a spectator, independent of robot and collision physics.
+    // No collision, ceiling/floor clamp or wall/window blocking, inside or outside the house.
+    REC.v.lerp(want,1-Math.exp(-2.5*Math.min(.12,dt)));
+    REC.p.addScaledVector(REC.v,dt);
+    // Guard only against numeric overflow if a camera flies very far.
+    REC.p.x=clamp(REC.p.x,-90000,90000);REC.p.y=clamp(REC.p.y,-90000,90000);REC.p.z=clamp(REC.p.z,-90000,90000);
     if (!REC.cq) { REC.cy = REC.yaw; REC.cpch = REC.pitch; REC.cq = 1; } REC.cy = angL(REC.cy, REC.yaw, Math.min(1, dt * 6)); REC.cpch += (REC.pitch - REC.cpch) * Math.min(1, dt * 6);
     cam.position.copy(REC.p); const c2 = Math.cos(REC.cpch); cam.lookAt(REC.p.x + Math.sin(REC.cy) * c2, REC.p.y + Math.sin(REC.cpch), REC.p.z - Math.cos(REC.cy) * c2); cam.near = 0.08; };
   function enterRoam() { if (ROAMS.on) return; ROAMS.on = true; document.body.classList.add('unfire-roaming'); ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
@@ -2114,7 +2124,23 @@
     const dt = Math.min(0.05, clock.getDelta()) * (window.__dts || 1); t += dt;
     // A packed case is inventory-only: no heavy model following or obscuring the camera.
     updateCarryUI();
-    { const stowed = (!HW || ((HW.u || 0) < 0.03 && (HW.T || 0) < 0.05)) && CK.every((k) => compG[k].userData.t < 0.04) && !open.length && !items.some((it) => (it.kind === 'mut' && it.T > 0.05) || (it.kk || 0) > 0.05 || it.retT > 0) && !flyers.length; let pt = pTarget; if (pt < pNow && !lidControlledByPlayer && !stowed && pNow > 0.86) { pt = Math.max(pt, 0.9); STOW = true; } else if (stowed) STOW = false; pNow += (pt - pNow) * (lidControlledByPlayer ? 0.18 : 0.16); } setLid(pNow); oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
+    { const stowed = (!HW || ((HW.u || 0) < 0.03 && (HW.T || 0) < 0.05)) && CK.every((k) => compG[k].userData.t < 0.04) && !open.length && !items.some((it) => (it.kind === 'mut' && it.T > 0.05) || (it.kk || 0) > 0.05 || it.retT > 0) && !flyers.length;
+      let pt = pTarget;
+      if (pt < pNow && !lidControlledByPlayer && !stowed && pNow > 0.86) { pt = Math.max(pt, 0.9); STOW = true; } else if (stowed) STOW = false;
+      if (lidControlledByPlayer) {
+        if (Math.abs(lidMotion.to-pt)>0.0001) {
+          lidMotion.from=pNow;lidMotion.to=pt;lidMotion.elapsed=0;
+          lidMotion.duration=Math.max(0.42,2.45*Math.abs(pt-pNow));
+        }
+        // Use real elapsed frame time for consistent physical timing.
+        lidMotion.elapsed=Math.min(lidMotion.duration,lidMotion.elapsed+Math.min(0.12,actualFrameTime));
+        const alpha=ease.smooth(clamp(lidMotion.elapsed/lidMotion.duration));
+        pNow=lidMotion.from+(lidMotion.to-lidMotion.from)*alpha;
+      } else {
+        pNow+=(pt-pNow)*(1-Math.exp(-5.2*Math.min(0.12,actualFrameTime)));
+        lidMotion.to=pNow;lidMotion.from=pNow;lidMotion.elapsed=0;
+      }
+    } setLid(pNow); oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
     const busy = (k) => open.some((g) => g.it.comp === k && g.m > 0.04) || items.some((it) => it.comp === k && ((it.kind === 'mut' && it.T > 0.04) || (it.g && (it.kk || 0) > 0.04))) || (k === 'hw' && HW && ((HW.T || 0) > 0.05 || (HW.u || 0) > 0.03));
     CK.forEach((k) => { if (compG[k].userData.open && lidOpen > 0.95) return; open.forEach((g) => { if (g.it.comp === k && !g.closing) { g.it.was = 1; g.closing = true; g.pin = false; g.manual = 0; } }); items.forEach((it) => { if (it.comp !== k) return; if (it.kind === 'mut' && it.tgt) { it.was = it.tgt; it.tgt = 0; } if (it.g && it.on) { it.was = 1; it.on = 0; } }); if (k === 'hw' && HW) HW.tg = 0; if (SEL && ((SEL.type === 'cap' && SEL.g.it.comp === k) || (SEL.it && SEL.it.comp === k) || (SEL.type === 'hw' && k === 'hw'))) SEL = null; });
     CK.forEach((k) => { if (!(compG[k].userData.open && compG[k].userData.t > 0.97)) return; items.forEach((it, i) => { if (it.comp !== k || !it.was) return; const w = it.was; it.was = 0; setTimeout(() => { if (it.kind === 'cap') openGear(it, true); else if (it.kind === 'mut') it.tgt = w; else if (it.g) it.on = 1; }, 200 + (i % 8) * 180); }); });
@@ -2134,7 +2160,13 @@
     if (lidOpen < 0.98 && MEGA) megaOff();
     if (lidOpen < 0.9) { CK.forEach((k) => { const u = compG[k].userData; u.open = 0; u.t = Math.min(u.t, Math.max(0, (lidOpen - 0.2) / 0.7)); }); if (HW) { HW.T = Math.max(0, (HW.T || 0) - dt * 4); HW.u = Math.min(HW.u || 0, Math.max(0, (lidOpen - 0.3) / 0.6)); } items.forEach((it) => { if (it.W && it.home && !it.retT) { it.W.position.lerp(it.home, 0.2); it.W.rotation.set(0, 0, 0); } }); }
     if (lidOpen < 0.98 || STOW) { if (HW) HW.equip = false; CK.forEach((k) => { compG[k].userData.open = 0; }); if (CINE.on) CINE.on = false; open.forEach((g) => { g.closing = true; g.pin = false; }); items.forEach((it) => { if (it.kind === 'mut') it.tgt = 0; if (it.g) it.on = 0; }); if (HW) { HW.tg = 0; HW.closeGate = 1; } SEL = null; MV = null; } if (lidOpen < 0.85 && (open.length || A.using)) { closeAll(true); stopAll(); }
-    view.dist += (view.gd - view.dist) * 0.14; view.tx += (view.gx - view.tx) * 0.14; view.tz += (view.gz - view.tz) * 0.14;
+    if(entryDolly.active&&!ROAMS.on){
+      entryDolly.elapsed=Math.min(entryDolly.duration,entryDolly.elapsed+Math.min(.12,actualFrameTime));
+      const u=ease.smooth(clamp(entryDolly.elapsed/entryDolly.duration));
+      view.dist=entryDolly.from+(entryDolly.to-entryDolly.from)*u;
+      if(u>=1)entryDolly.active=false;
+    }else{view.dist+=(view.gd-view.dist)*(1-Math.exp(-6*Math.min(.12,actualFrameTime)));}
+    view.tx += (view.gx - view.tx) * 0.14; view.tz += (view.gz - view.tz) * 0.14;
     if (!open.length && !items.some((it) => it.kind === 'mut' && it.T > 2.5) && RADIO.st.on) { idleT += dt; if (idleT > 1.6) RADIO.stop(); } else idleT = 0;
     const playing = !!(RADIO.st.on || A.using); if (playing !== lastPlaying) { lastPlaying = playing; parentPost({ playing }); }
     liftY += ((CINE.on && CINE.o && CINE.y != null ? CINE.y : robot ? robot.R.root.position.y * 0.8 : 0) - liftY) * 0.12; if (!CINE.on) CINE.o = null;
@@ -2338,7 +2370,10 @@
       frameVisible=true;lidControlledByPlayer=true;
       carryingCase=false;caseG.visible=true;
       pTarget=1;ROOM.AMB.mute=false;
-      if(!ROAMS.on){CASE_VIEW.on=false;view.gd=Math.min(view.gd,view.D0); }
+      if(ROAMS.on)exitRoam();CASE_VIEW.on=false;
+      // Glide toward the physical case, then open the lid in place. Never jump to robot camera.
+      entryDolly.active=true;entryDolly.from=view.dist;entryDolly.to=view.D0*.96;
+      entryDolly.elapsed=0;view.gd=entryDolly.to;
       updateCarryUI();
     }
     if (d.unfire && d.p != null && !lidControlledByPlayer) pTarget = d.p; if (d.unfire && d.legacyCaseClose) closeCaseInGame(); if(d.unfire && d.releaseCaseControl){CAPS.cancel();lidControlledByPlayer=false;carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();} if (d.unfire && d.stop) { closeAll(true); stopAll(); ROOM.AMB.mute = true; } if (d.unfire && d.p > 0.5) ROOM.AMB.mute = false; if (d.unfire && 'vis' in d) { frameVisible = !!d.vis; if(frameVisible && ROOM.AMB)ROOM.AMB.mute=false; window.__gameVisible = frameVisible; ONLINE.voiceVisibility(frameVisible); } if (d.unfire && d.vis === false) { closeAll(true); setRobot(null); stopAll(); CINE.on = false; if (MEGA) megaOff(); CK.forEach((k) => { compG[k].userData.open = 0; compG[k].userData.t = 0; }); if (HW) { HW.T = 0; HW.u = 0; HW.tg = 0; } items.forEach((it) => { if (it.kind === 'mut') { it.tgt = 0; it.T = 0; } if (it.g) { it.on = 0; it.kk = 0; } if (it.W && it.home) { it.W.position.copy(it.home); it.W.rotation.set(0, 0, 0); it.retT = 0; } }); view.gd = view.D0; view.gx = 0; view.gz = 0.15; ORB.gaz = ORB.gde = 0; } if (d.unfire && d.audio) { try { UA.init(); } catch (er) {} } });
@@ -2366,7 +2401,7 @@
     get openControl(){return getComputedStyle(carryButton).display},
     get scrollLock(){return lidControlledByPlayer}
   };
-  window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), startGame:()=>{openCaseInGame();}, showCaseView, showRobotView, packCapsule: () => CAPS.pack(), throwCapsule: () => CAPS.throwIt(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
+  window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; lidMotion.from=lidMotion.to=p; lidMotion.elapsed=0; setLid(p); }, requestOpen: () => openCaseInGame(), startGame:()=>{if(ROAMS.on)exitRoam();openCaseInGame();}, showCaseView, showRobotView, packCapsule: () => CAPS.pack(), throwCapsule: () => CAPS.throwIt(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
   // A direct-link visitor can tap the button before the heavy 3D scene is initialized.
   if (parent === window && window.__unfireDirectOpenPending) {
     lidControlledByPlayer=true;carryingCase=false;caseG.visible=true;

@@ -12,10 +12,15 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    const errors=[];
    page.on('pageerror',e=>errors.push(e.message));
    await page.goto(process.env.UNFIRE_ENTRY_URL||'http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded',timeout:45000});
+   assert.match(await page.locator('#openBtn').innerText(),/PULSAR AQUÍ/,'Landing button must guide first-time players');
    await page.locator('#openBtn').click({timeout:12000});
+   // Loading never shows a blank enlarged canvas. Expand only after the 3D is ready.
+   await page.waitForFunction(()=>document.body.classList.contains('immOn'),null,{timeout:120000,polling:200});
    const instant=await page.evaluate(()=>({visible:document.body.classList.contains('immOn'),
-     fullWidth:document.getElementById('malFrame').getBoundingClientRect().width>=innerWidth-1}));
-   assert(instant.visible&&instant.fullWidth,'Fullscreen viewport must activate immediately on ABRIR, not after the lid opens');
+     fullWidth:document.getElementById('malFrame').getBoundingClientRect().width>=innerWidth-1,
+     butterflyHidden:getComputedStyle(document.getElementById('openBtn')).display==='none'}));
+   assert(instant.visible&&instant.fullWidth&&instant.butterflyHidden,
+     'Fullscreen viewport must grow without showing the old 2D butterfly '+JSON.stringify(instant));
    await page.waitForFunction(()=>{
      const g=document.getElementById('malFrame')?.contentWindow;
      return !!g?.__UNFIRE_CASE_QA && g.__UNFIRE_CASE_QA.lid>0.94;
@@ -81,6 +86,22 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    });
    assert(choice.exploring&&choice.returned&&choice.caseVisible&&choice.lid>.94,
      'Case-to-avatar must be optional and reversible '+JSON.stringify(choice));
+   // MODO CINE: spectator camera must pass through the entire house, walls,
+   // ceilings, windows and furnishings without constraining the player robot.
+   const cinematic=await page.evaluate(()=>{
+     const g=document.getElementById('malFrame').contentWindow;
+     g.__roamAPI.enterRoam();
+     const rec=g.__REC;rec.set(true);
+     if(!rec.on)throw Error('Cinematic spectator mode did not start');
+     rec.p.set(76,24,93);rec.v.set(35,12,35);
+     const player=g.__roamAPI.ROAMS.p.clone();
+     rec.tick(.8);
+     const result={camera:[rec.p.x,rec.p.y,rec.p.z],playerUnchanged:player.distanceTo(g.__roamAPI.ROAMS.p)<.01};
+     rec.set(false);g.__roamAPI.exitRoam();
+     return result;
+   });
+   assert(cinematic.camera[0]>78&&cinematic.camera[1]>24&&cinematic.camera[2]>95&&cinematic.playerUnchanged,
+     'Cinematic spectator must traverse physical and architectural bounds without moving robot '+JSON.stringify(cinematic));
    // The first game has already been validated; release its expensive software
    // WebGL context before starting a second game in a CI worker.
    await page.close();
