@@ -2823,7 +2823,31 @@
         for (let i = 0; i < BL.length; i++) for (let j = i + 1; j < BL.length; j++) { const a = BL[i], b = BL[j]; if (a.out !== b.out) continue; const d = a.b.position.distanceTo(b.b.position), R0 = a.r + b.r; if (d < R0 && d > 0.001) { const n = b.b.position.clone().sub(a.b.position).divideScalar(d), o = (R0 - d) / 2; a.b.position.addScaledVector(n, -o); b.b.position.addScaledVector(n, o); const rv = b.v.clone().sub(a.v).dot(n); if (rv < 0) { a.v.addScaledVector(n, rv * 0.9); b.v.addScaledVector(n, -rv * 0.9); } } } } catch (e) {} }
     governGraphics(now,actualFrameTime);
     window.__idleT = ROAMS.moving || ROAMS.fly ? 0 : (window.__idleT || 0) + dt;
-    if (window.__DOME) { const DM2 = window.__DOME; const near = ROAMS.on && window.ATM_OUT && (ROAMS.h || 0) > 20 && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 90; DM2.open += ((near ? 1 : 0) - DM2.open) * Math.min(1, dt * 2); DM2.PET.forEach((p, i) => { p.rotation.z = -DM2.open * (1.75 + Math.sin(i) * 0.05); }); if (DM2.open > 0.6 && window.ATM_OUT && ROAMS.on && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 36 && -9 + (ROAMS.h || 0) < DM2.c.y - 1) { try { ATM.setOut(false); ROAMS.h = Math.min(ROAMS.h, 13); ROAMS.flyH = 12; say('🏠 Has entrado por la cúpula'); } catch (e) {} } }
+    if (window.__DOME) {
+      const dome = window.__DOME;
+      const radius = Math.hypot(ROAMS.p.x - dome.c.x, ROAMS.p.z - dome.c.z);
+      const altitude = ROAMS.h || 0;
+      // Open in advance when ascending from the room as well as approaching from outside.
+      const approaching = ROAMS.on && !ROAMS.mini && radius < 90 &&
+        (window.ATM_OUT ? altitude > 20 : ROAMS.fly && altitude > 10);
+      dome.open += ((approaching ? 1 : 0) - dome.open) * Math.min(1, dt * 2);
+      dome.PET.forEach((p, i) => { p.rotation.z = -dome.open * (1.75 + Math.sin(i) * 0.05); });
+      if (ROAMS.on && !ROAMS.mini && dome.open > 0.6 && radius < 34) {
+        const worldY = -8.9 + altitude;
+        if (!window.ATM_OUT && ROAMS.fly && worldY > dome.c.y + 1.5) {
+          // Keep avatar/camera position and flight state; don't reload the scene.
+          ATM.setOut(true);
+          ROAMS.flyH = Math.max(ROAMS.flyH || altitude, altitude);
+          ROAMS.vy = Math.max(0, ROAMS.vy || 0);
+        } else if (window.ATM_OUT && worldY < dome.c.y - 1) {
+          // Different thresholds prevent immediate indoor/outdoor oscillation.
+          ATM.setOut(false);
+          // Descend naturally through the roof opening, without a 20m teleport.
+          ROAMS.flyH = 12;
+          say('🏠 Has entrado por la cúpula');
+        }
+      }
+    }
     // sonido de mar y viento fuera (más fuerte en la orilla y en el agua, viento al volar alto)
     try { ensureSeaAmbience();
       if (window.__SEA) { const S0 = window.__SEA, out = ROAMS.on && window.ATM_OUT, r = Math.hypot(ROAMS.p.x, ROAMS.p.z); const shore = out ? (ROAMS.wet ? 1 : Math.max(0.25, 1 - Math.abs(r - 256) / 160)) : 0; const hi = out ? Math.min(1, (ROAMS.h || 0) / 400) : 0; const mus = ((window.__WRADIO && window.__WRADIO.on) || (RADIO.st && RADIO.st.on) ? 0.4 : 1) * (window.speechSynthesis && speechSynthesis.speaking ? 0.3 : 1); const wave = 0.55 + 0.45 * Math.sin(t * 0.55) * Math.sin(t * 0.21 + 1); S0.g.gain.value += ((out ? 0.13 * shore * wave * (1 - hi * 0.8) * mus : 0) - S0.g.gain.value) * Math.min(1, dt * 2); if (window.__RAING) window.__RAING.gain.value = 0.012 * mus * (window.ATM_OUT ? 1 - hi * 0.7 : 0.6); S0.lp.frequency.value = (mus < 1 ? 380 : 500) + wave * (mus < 1 ? 500 : 900);  const wz = Math.tanh((ROAMS.spd || 0) / 500); S0.g2.gain.value += ((out ? Math.min(0.085, 0.015 + hi * 0.03 + (ROAMS.fly ? wz * 0.055 : 0)) * mus : 0) - S0.g2.gain.value) * Math.min(1, dt * 1.5); if (S0.bp) { S0.bp.frequency.value = 650 + 1300 * wz; } if (S0.wl) S0.wl.frequency.value = 1800 + 2200 * wz; } } catch (e) {}
