@@ -1,0 +1,25 @@
+name: Unfire product gallery categories
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'tests/unfire-gallery-categories.test.cjs'
+      - '.github/workflows/product-gallery-categories.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  gallery-responsive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install isolated Chromium test runtime
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check nine assets, four categories, prototype labels and responsive layouts
+        run: |
+          python3 -m http.server 8771 --bind 127.0.0.1 > /tmp/unfire-gallery-http.log 2>&1 &
+          sleep 2
+          UNFIRE_GALLERY_URL=http://127.0.0.1:8771/ node tests/unfire-gallery-categories.test.cjs
