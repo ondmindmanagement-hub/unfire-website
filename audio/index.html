@@ -693,14 +693,16 @@ const PRICES={fx:9,fx20:49,hyper:59,synth:29,todo:99,clubM:6.99,clubY:59};
    No usar un mismo enlace generico para productos distintos ni para una bolsa mixta. */
 const PAY={fx20:'',hyper:'',synth:'',todo:'',clubM:'',clubY:''};
 const READY_FOR_SALE=new Set([]); // Ningun producto del catalogo web esta validado para cobro aun.
+const NONPAYABLE_PRODUCTS=new Set(['starter','launch']); // Evitar cobrar por las demos o el aviso.
 const paymentKey=k=>k==='club'?'clubM':k;
 function paymentLinkFor(k){
+  if(NONPAYABLE_PRODUCTS.has(k))return '';
   const key=paymentKey(k),raw=PAY[key];
   if(!READY_FOR_SALE.has(key)||typeof raw!=='string'||!raw.trim())return '';
   try{
     const u=new URL(raw);
     if(u.protocol!=='https:'||u.hostname!=='buy.stripe.com'||u.username||u.password||
-       !/^\/[A-Za-z0-9_-]+$/.test(u.pathname)||u.pathname.startsWith('/test_')||u.hash)return '';
+       !/^\/[A-Za-z0-9_-]+$/.test(u.pathname)||u.pathname.startsWith('/test_')||u.hash||u.search)return '';
     return u.href;
   }catch(_){return ''}
 }

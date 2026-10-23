@@ -51,6 +51,20 @@ test('ready product by itself is insufficient without a real link',()=>{
   const p=checkout();p.READY_FOR_SALE.add('todo');
   assert.equal(p.checkoutLinkFor(['todo']),'');
 });
+test('free demos and launch notifications cannot be converted into paid products',()=>{
+  const p=checkout();
+  p.PAY.starter='https://buy.stripe.com/fake123456';
+  p.READY_FOR_SALE.add('starter');
+  assert.equal(p.checkoutLinkFor(['starter']),'');
+  p.PAY.launch='https://buy.stripe.com/fake123456';
+  p.READY_FOR_SALE.add('launch');
+  assert.equal(p.checkoutLinkFor(['launch']),'');
+});
+test('do not propagate query parameters from payment links',()=>{
+  const p=checkout();p.READY_FOR_SALE.add('hyper');
+  p.PAY.hyper='https://buy.stripe.com/abc123?prefilled_email=example%40example.org';
+  assert.equal(p.checkoutLinkFor(['hyper']),'');
+});
 test('checkout UI keeps not-yet-launched products as enquiries',()=>{
   assert.match(page, /id="bagUnreleased"/);
   assert.match(page, /id="bagPayMethods" hidden/);
