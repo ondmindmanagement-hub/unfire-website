@@ -838,6 +838,17 @@
     if(parent!==window)parentPost({caseState:'closed'});
   }
   function openCaseInGame(landing){
+    // A player tapping the case *inside* the game can activate native fullscreen
+    // before the parent iframe receives its asynchronous caseState message.
+    // Preserve user choice if it is already fullscreen; no navigation/reload.
+    if (!document.fullscreenElement && !document.webkitFullscreenElement
+        && (!('userActivation' in navigator) || navigator.userActivation.isActive)) {
+      const root = document.documentElement;
+      const fs = root.requestFullscreen || root.webkitRequestFullscreen;
+      if (typeof fs === 'function') {
+        try { const result = fs.call(root, {navigationUI:'hide'}); result?.catch?.(() => {}); } catch (_) {}
+      }
+    }
     CASE_VIEW.on=false;
     lidControlledByPlayer=true;
     if(carryingCase){
@@ -1451,9 +1462,52 @@
       return { get on() { return enabled; }, bindPeer, tick, stop, disconnect, visibility };
     })();
     function setup(c) { conns.push(c); c.on('data', (d) => { if (!d || !d.id || d.id === myId) return; if (d.nt != null) NOTES.take(d.nt, false); else if (d.bye) drop(d.id); else recv(d); if (isHost) conns.forEach((o) => { if (o !== c && o.open) try { o.send(d); } catch (e) {} }); }); c.on('close', () => { conns = conns.filter((x) => x !== c); if (isHost) { drop(c.peer); conns.forEach((o) => { try { o.send({ id: c.peer, bye: 1 }); } catch (e) {} }); } else { say('🌐 El anfitrión cerró la sala'); leave(); } }); }
-    function create() { save(); applyMe(); msg('Creando sala…'); load(() => { code = rnd(); isHost = true; peer = new Peer('unfire-sala-' + code); VOICE.bindPeer(peer); peer.on('open', (id) => { myId = id; started(); }); peer.on('connection', (c) => { c.on('open', () => setup(c)); }); peer.on('error', (e) => { if (e.type === 'unavailable-id') { try { peer.destroy(); } catch (er) {} create(); } else msg('Error online: ' + e.type); }); }); }
-    function join(c0) { save(); applyMe(); const cc = (c0 || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); if (cc.length !== 5) { msg('El código tiene 5 letras o números'); return; } msg('Entrando en la sala ' + cc + '…'); load(() => { code = cc; isHost = false; peer = new Peer(); VOICE.bindPeer(peer); peer.on('open', (id) => { myId = id; const c = peer.connect('unfire-sala-' + code, { reliable: false }); c.on('open', () => { setup(c); started(); }); }); peer.on('error', (e) => msg(e.type === 'peer-unavailable' ? 'Esa sala no existe o el anfitrión se ha ido' : 'Error online: ' + e.type)); }); }
-    function leave() { VOICE.stop(); NOTES.clear(); try { conns.forEach((c) => { try { c.send({ id: myId, bye: 1 }); } catch (e) {} c.close(); }); peer && peer.destroy(); } catch (e) {} conns = []; peer = null; code = null; hud.style.display = 'none'; Object.keys(R).forEach(drop); }
+    function create() { if (joining) { msg('Primero termina o cancela el intento de conexión'); return; } save(); applyMe(); msg('Creando sala…'); load(() => { code = rnd(); isHost = true; peer = new Peer('unfire-sala-' + code); VOICE.bindPeer(peer); peer.on('open', (id) => { myId = id; started(); }); peer.on('connection', (c) => { c.on('open', () => setup(c)); }); peer.on('error', (e) => { if (e.type === 'unavailable-id') { try { peer.destroy(); } catch (er) {} create(); } else msg('Error online: ' + e.type); }); }); }
+    // A remote connection may stall behind strict NATs or restricted Wi-Fi.
+    // Keep the screen responsive, offer a retry and never leave a dangling Peer.
+    let joining = null;
+    function clearJoining() { if (joining) { clearTimeout(joining.timer); joining = null; } }
+    function join(c0) {
+      save(); applyMe();
+      const cc = (c0 || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (cc.length !== 5) { msg('El código tiene 5 letras o números'); return; }
+      if (joining) { msg('Conectando… si tarda demasiado podrás reintentarlo'); return; }
+      if (code && peer) { msg('Ya estás en una sala; sal antes de unirte a otra'); return; }
+      msg('Entrando en la sala ' + cc + '…');
+      const task = { timer: null, current: null };
+      joining = task;
+      const failed = (reason) => {
+        if (joining !== task) return;
+        clearJoining();
+        try { if (task.current && !task.current.destroyed) task.current.destroy(); } catch (_) {}
+        if (peer === task.current) { peer = null; code = null; myId = null; }
+        msg(reason);
+      };
+      task.timer = setTimeout(() => failed('La sala no responde. Comprueba la conexión o pide otro código e inténtalo de nuevo.'), 22000);
+      load(() => {
+        if (joining !== task) return;
+        code = cc; isHost = false;
+        let p;
+        try { p = new Peer(); } catch (_) { failed('No se pudo iniciar la conexión. Inténtalo otra vez.'); return; }
+        peer = task.current = p; VOICE.bindPeer(p);
+        p.on('open', (id) => {
+          if (joining !== task) return;
+          myId = id;
+          let c;
+          try { c = p.connect('unfire-sala-' + cc, { reliable: false }); }
+          catch (_) { failed('No se pudo conectar con esa sala. Inténtalo otra vez.'); return; }
+          if (!c) { failed('No se pudo abrir esa sala.'); return; }
+          c.on('open', () => {
+            if (joining !== task) { try { c.close(); } catch (_) {} return; }
+            clearJoining(); setup(c); started();
+          });
+          c.on('error', () => failed('Falló la conexión entre jugadores. Inténtalo de nuevo.'));
+          c.on('close', () => { if (joining === task) failed('No se pudo entrar en esa sala. Inténtalo otra vez.'); });
+        });
+        p.on('error', (e) => failed(e.type === 'peer-unavailable' ? 'Esa sala no existe o el anfitrión se ha ido' : 'Error de conexión online: ' + e.type));
+      });
+    }
+    function leave() { clearJoining(); VOICE.stop(); NOTES.clear(); try { conns.forEach((c) => { try { c.send({ id: myId, bye: 1 }); } catch (e) {} c.close(); }); peer && peer.destroy(); } catch (e) {} conns = []; peer = null; code = null; hud.style.display = 'none'; Object.keys(R).forEach(drop); }
     function drop(id) { VOICE.disconnect(id); const r = R[id]; if (!r) return; S.scene.remove(r.w); S.scene.remove(r.tag); delete R[id]; if (code) upd(); }
     function recv(d) { let r = R[d.id]; if (!r || r.t !== d.t || r.c !== d.c) { if (r) drop(d.id); try { const r0 = ROBOT.build(Object.assign({}, MUTANTS.list[d.t % MUTANTS.list.length])); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(10.5 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; tint(w, d.c); S.scene.add(w); const cv = document.createElement('canvas'); cv.width = 256; cv.height = 64; const g = cv.getContext('2d'); g.fillStyle = 'rgba(8,14,40,.8)'; g.beginPath(); g.roundRect ? g.roundRect(2, 8, 252, 48, 24) : g.rect(2, 8, 252, 48); g.fill(); g.fillStyle = d.c; g.font = '900 28px Arial'; g.textAlign = 'center'; g.fillText(String(d.n || 'Jugador').slice(0, 14), 128, 43); const tag = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cv), depthTest: false, transparent: true })); tag.scale.set(8, 2, 1); S.scene.add(tag); w.position.set(d.x, -8.9 + d.h, d.z); r = R[d.id] = { w, r0, tag, t: d.t, c: d.c, p: V(d.x, -8.9 + d.h, d.z), wd: 0 }; upd(); if (!d.q) say('👋 ' + (d.n || 'Alguien') + ' ha entrado en la sala'); } catch (e) { return; } } r.d = d; r.last = performance.now(); }
     let pending = null; try { pending = new URLSearchParams(parent.location.search).get('room'); } catch (e) {} if (!pending) try { pending = new URLSearchParams(location.search).get('room'); } catch (e) {}
@@ -1476,12 +1530,12 @@
       addEventListener('pagehide',()=>watcher.disconnect(),{once:true});
     }
     applyMe();
-    return { open(taller) { ui.classList.toggle('workshop',!!taller);ui.classList.add('on');paint(); $o('onN').value = cfg.name || (window.__STORYNAME && window.__STORYNAME()) || ''; $o('onNum').value = cfg.num || 27; msg(''); ui.querySelector('h3').textContent = taller ? '🔧 TALLER · personaliza tu robot' : '🌐 MODO ONLINE'; ui.querySelectorAll('.act').forEach((a, i) => (a.style.display = taller && i < 2 ? 'none' : 'flex')); ui.classList.add('on'); }, get on() { return !!code; }, get audioPlayers() { return code ? Object.values(R) : []; }, voiceVisibility(v) { VOICE.visibility(v); },
+    return { open(taller) { ui.classList.toggle('workshop',!!taller);ui.classList.add('on');paint(); $o('onN').value = cfg.name || (window.__STORYNAME && window.__STORYNAME()) || ''; $o('onNum').value = cfg.num || 27; msg(''); ui.querySelector('h3').textContent = taller ? '🔧 TALLER · personaliza tu robot' : '🌐 MODO ONLINE'; ui.querySelectorAll('.act').forEach((a, i) => (a.style.display = taller && i < 2 ? 'none' : 'flex')); ui.classList.add('on'); }, get on() { return !!code; }, get joining() { return !!joining; }, get audioPlayers() { return code ? Object.values(R) : []; }, voiceVisibility(v) { VOICE.visibility(v); },
       tick(dt, t) { if (pending && ROAMS.on) { this.open(); $o('onCode').value = pending; msg('Te han invitado a la sala ' + pending + ' · elige tu robot y pulsa UNIRME'); pending = null; }
         if (!code || !peer) return; sendT -= dt; if (sendT <= 0 && myId) { sendT = 0.1; const d = { id: myId, n: cfg.name, c: cfg.col, t: cfg.type, x: +ROAMS.p.x.toFixed(2), z: +ROAMS.p.z.toFixed(2), h: +(ROAMS.h || 0).toFixed(2), y: +((ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy)).toFixed(3), sc: NOTES.sc, f: ROAMS.fly ? 1 : 0, o: window.ATM_OUT ? 1 : 0, m: ROAMS.moving ? 1 : 0, v: VOICE.on ? 1 : 0, q: 1 }; conns.forEach((c) => { if (c.open) try { c.send(d); } catch (e) {} }); }
         if (NOTES.g) { NOTES.g.visible = !!window.ATM_OUT; const fy = -8.9 + (ROAMS.h || 0) + 5; NOTES.list.forEach((n, i) => { if (!n.on) return; n.sp.material.rotation = Math.sin(t * 2 + i) * 0.3; if (window.ATM_OUT && Math.abs(ROAMS.p.x - n.sp.position.x) < 7 && Math.abs(ROAMS.p.z - n.sp.position.z) < 7 && Math.abs(fy - n.sp.position.y) < 9) { NOTES.take(i, true); conns.forEach((c) => { if (c.open) try { c.send({ id: myId, nt: i }); } catch (e) {} }); upd(); } }); } NOTES.uT = (NOTES.uT || 0) - dt; if (NOTES.uT <= 0) { NOTES.uT = 1; upd(); } const now = performance.now(); Object.keys(R).forEach((id) => { const r = R[id], d = r.d; if (!d) return; if (now - r.last > 8000) { drop(id); return; } const vis = !!d.o === !!window.ATM_OUT; r.w.visible = r.tag.visible = vis; if (!vis) return; const tgt = V(d.x, -8.9 + d.h, d.z), mv = r.w.position.distanceTo(tgt); r.w.position.lerp(tgt, Math.min(1, dt * 8)); r.wd += Math.min(mv, 5); r.w.rotation.y = Math.atan2(Math.sin(d.y), -Math.cos(d.y)); r.tag.position.set(r.w.position.x, r.w.position.y + 13, r.w.position.z); r.r0.update(3.7, dt, { act: d.f ? 'fly' : d.m ? 'walk' : null, ph: d.m ? STEPPH(r.wd, 10.5, false) : t, mood: 'happy' }); }); VOICE.tick(dt); }, create, join, leave, link, saveMe() { save(); applyMe(); } };
   })();
-  { const g = (id) => document.getElementById(id); g('onNew').onclick = () => ONLINE.create(); g('onJoin').onclick = () => ONLINE.join(g('onCode').value); g('onX').onclick = () => { ONLINE.saveMe(); g('onl').classList.remove('on'); };
+  { const g = (id) => document.getElementById(id); g('onNew').onclick = () => ONLINE.create(); g('onJoin').onclick = () => ONLINE.join(g('onCode').value); g('onX').onclick = () => { ONLINE.saveMe(); if (ONLINE.joining) ONLINE.leave(); g('onl').classList.remove('on'); };
     g('onlQ').onclick = () => { ONLINE.leave(); say('🌐 Has salido de la sala'); };
     g('onlInv').onclick = async () => { const l = ONLINE.link(), txt = '¡Ven a jugar conmigo a UNFIRE AUDIO! Sala: '; try { if (navigator.share) { await navigator.share({ title: 'UNFIRE AUDIO', text: txt, url: l }); return; } } catch (e) {} try { await navigator.clipboard.writeText(l); say('📨 Enlace copiado: ' + l + ' · pégalo a tus amigos'); } catch (e) { say('📨 Envía este enlace a tus amigos: ' + l); } }; }
   // ===== Reusable capsule inventory: pack, throw, deploy and collect without leaving roam =====
@@ -2085,9 +2139,9 @@
   const clock = new THREE.Clock(); let t = 0; const pend = { it: null, t: 0 }; let MEMO = null, LV = 0; let frameN = 0; let idleT = 0, lastPlaying = false, liftY = 0;
   const tb = new Uint8Array(1024), fb = new Uint8Array(512); let level = 0;
   let frameVisible = true, previousRenderAt = 0;
-  // Website and direct-link entries use the existing unfolded-case transition,
-  // then automatically hand control to the player. No mission/save mutations.
-  let autoEntryPending=false;
+  // Opening the website/direct-link case keeps the camera on the physical
+  // maletín. Exploring as the robot is an explicit separate player choice.
+  // The lid animation and all equipment remain available in this view.
   function frame(now) {
     // Park the heavy animation loop when hidden/out of the hero: never spend 60 callbacks/sec there.
     if (document.hidden || !frameVisible) {
@@ -2105,13 +2159,6 @@
     updateCarryUI();
     { const stowed = (!HW || ((HW.u || 0) < 0.03 && (HW.T || 0) < 0.05)) && CK.every((k) => compG[k].userData.t < 0.04) && !open.length && !items.some((it) => (it.kind === 'mut' && it.T > 0.05) || (it.kk || 0) > 0.05 || it.retT > 0) && !flyers.length; let pt = pTarget; if (pt < pNow && !lidControlledByPlayer && !stowed && pNow > 0.86) { pt = Math.max(pt, 0.9); STOW = true; } else if (stowed) STOW = false; pNow += (pt - pNow) * (lidControlledByPlayer ? 0.18 : 0.16); } setLid(pNow); oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
     const busy = (k) => open.some((g) => g.it.comp === k && g.m > 0.04) || items.some((it) => it.comp === k && ((it.kind === 'mut' && it.T > 0.04) || (it.g && (it.kk || 0) > 0.04))) || (k === 'hw' && HW && ((HW.T || 0) > 0.05 || (HW.u || 0) > 0.03));
-    if(autoEntryPending && lidOpen>0.94){
-      autoEntryPending=false;
-      if(!ROAMS.on)enterRoam();
-      showRobotView();
-      ROAMS.cp=null;
-      updateCarryUI();
-    }
     CK.forEach((k) => { if (compG[k].userData.open && lidOpen > 0.95) return; open.forEach((g) => { if (g.it.comp === k && !g.closing) { g.it.was = 1; g.closing = true; g.pin = false; g.manual = 0; } }); items.forEach((it) => { if (it.comp !== k) return; if (it.kind === 'mut' && it.tgt) { it.was = it.tgt; it.tgt = 0; } if (it.g && it.on) { it.was = 1; it.on = 0; } }); if (k === 'hw' && HW) HW.tg = 0; if (SEL && ((SEL.type === 'cap' && SEL.g.it.comp === k) || (SEL.it && SEL.it.comp === k) || (SEL.type === 'hw' && k === 'hw'))) SEL = null; });
     CK.forEach((k) => { if (!(compG[k].userData.open && compG[k].userData.t > 0.97)) return; items.forEach((it, i) => { if (it.comp !== k || !it.was) return; const w = it.was; it.was = 0; setTimeout(() => { if (it.kind === 'cap') openGear(it, true); else if (it.kind === 'mut') it.tgt = w; else if (it.g) it.on = 1; }, 200 + (i % 8) * 180); }); });
     CK.forEach((k) => { const u = compG[k].userData; u.t = clamp(u.t + (u.open && lidOpen > 0.95 ? dt * 0.55 : busy(k) ? 0 : -dt * 2)); compG[k].position.y = -0.34 * (1 - ease.smooth(clamp((u.t - 0.7) / 0.3))); });
@@ -2141,8 +2188,10 @@
       ? clamp(((ROAMS.spd || 0) - 85) / 700, 0, 1) : 0;
     ROAMS.camBoost = (ROAMS.camBoost || 0) + (thrusterK - (ROAMS.camBoost || 0)) * Math.min(1, dt * 3.6);
     const baseFov = ROAMS.on ? (ROAMS.mini ? 70 : 80 + 16 * ROAMS.camBoost) : 30;
-    const portraitCorrection = cam.aspect < 1 ? Math.min(1.24, 1 + (1 - cam.aspect) * 0.5) : 1;
-    const desiredFov = Math.min(104, baseFov * portraitCorrection);
+    // Portrait view gets a wider vertical panorama instead of cropping the
+    // player's forward world to a narrow horizontal strip. No stretched canvas.
+    const portraitCorrection = cam.aspect < 1 ? Math.min(1.34, 1 + (1 - cam.aspect) * 0.67) : 1;
+    const desiredFov = Math.min(108, baseFov * portraitCorrection);
     const nextFov = cam.fov + (desiredFov - cam.fov) * Math.min(1, dt * 4.2);
     if (Math.abs(cam.fov - nextFov) > 0.005) {
       cam.fov = nextFov;
@@ -2322,14 +2371,18 @@
       const a=CASE_VIEW.angle,d=CASE_VIEW.dist,el=CASE_VIEW.elevation;
       cam.position.set(caseG.position.x+Math.sin(a)*Math.cos(el)*d,caseG.position.y+Math.sin(el)*d,caseG.position.z+Math.cos(a)*Math.cos(el)*d);
       cam.lookAt(caseG.position.x,caseG.position.y+0.4,caseG.position.z);
-      cam.near=0.05;cam.fov=48;cam.updateProjectionMatrix();
+      cam.near=0.05;cam.fov=cam.aspect<1?Math.min(62,48+(1-cam.aspect)*24):48;cam.updateProjectionMatrix();
     }
     S.renderer.render(S.scene, cam);
   }
   addEventListener('message', (e) => { const d = e.data || {}; if(d.unfire && d.entryStart){
-      autoEntryPending=true;frameVisible=true;
-      lidControlledByPlayer=true;carryingCase=false;caseG.visible=true;
+      // The host is already edge-to-edge. Animate the lid *here*, without
+      // teleporting to the robot or replacing the maletín inspection camera.
+      frameVisible=true;lidControlledByPlayer=true;
+      carryingCase=false;caseG.visible=true;
       pTarget=1;ROOM.AMB.mute=false;
+      if(!ROAMS.on){CASE_VIEW.on=false;view.gd=Math.min(view.gd,view.D0); }
+      updateCarryUI();
     }
     if (d.unfire && d.p != null && !lidControlledByPlayer) pTarget = d.p; if (d.unfire && d.legacyCaseClose) closeCaseInGame(); if(d.unfire && d.releaseCaseControl){CAPS.cancel();lidControlledByPlayer=false;carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();} if (d.unfire && d.stop) { closeAll(true); stopAll(); ROOM.AMB.mute = true; } if (d.unfire && d.p > 0.5) ROOM.AMB.mute = false; if (d.unfire && 'vis' in d) { frameVisible = !!d.vis; if(frameVisible && ROOM.AMB)ROOM.AMB.mute=false; window.__gameVisible = frameVisible; ONLINE.voiceVisibility(frameVisible); } if (d.unfire && d.vis === false) { closeAll(true); setRobot(null); stopAll(); CINE.on = false; if (MEGA) megaOff(); CK.forEach((k) => { compG[k].userData.open = 0; compG[k].userData.t = 0; }); if (HW) { HW.T = 0; HW.u = 0; HW.tg = 0; } items.forEach((it) => { if (it.kind === 'mut') { it.tgt = 0; it.T = 0; } if (it.g) { it.on = 0; it.kk = 0; } if (it.W && it.home) { it.W.position.copy(it.home); it.W.rotation.set(0, 0, 0); it.retT = 0; } }); view.gd = view.D0; view.gx = 0; view.gz = 0.15; ORB.gaz = ORB.gde = 0; } if (d.unfire && d.audio) { try { UA.init(); } catch (er) {} } });
   window.__UNFIRE_CASE_QA = {
@@ -2356,10 +2409,11 @@
     get openControl(){return getComputedStyle(carryButton).display},
     get scrollLock(){return lidControlledByPlayer}
   };
-  window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), startGame:()=>{autoEntryPending=true;openCaseInGame();}, showCaseView, showRobotView, packCapsule: () => CAPS.pack(), throwCapsule: () => CAPS.throwIt(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
+  window.__mal = { t: { openEverything, openAllComp, act, openGear, setSel: (x) => (SEL = x), compG, HW },  open: (i) => openGear(items.filter((x) => x.kind === 'cap')[i], true),  setP: (p) => { pTarget = pNow = p; setLid(p); }, requestOpen: () => openCaseInGame(), startGame:()=>{openCaseInGame();}, showCaseView, showRobotView, packCapsule: () => CAPS.pack(), throwCapsule: () => CAPS.throwIt(), toggleCase: toggleCaseInGame, view, zoomBy, flyTo, items, S, snap() { view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; }, go(it) { flyTo(it); view.dist = view.gd; view.tx = view.gx; view.tz = view.gz; } };
   // A direct-link visitor can tap the button before the heavy 3D scene is initialized.
   if (parent === window && window.__unfireDirectOpenPending) {
-    autoEntryPending=true;pTarget = 1;
+    lidControlledByPlayer=true;carryingCase=false;caseG.visible=true;
+    pTarget = 1;ROOM.AMB.mute=false;
     const direct = document.getElementById('directOpen');
     if (direct) direct.hidden = true;
   }
