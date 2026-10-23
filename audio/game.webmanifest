@@ -1,0 +1,30 @@
+{
+  "name": "Unfire Audio",
+  "short_name": "Unfire Audio",
+  "description": "Juego 3D Unfire Audio",
+  "start_url": "./",
+  "scope": "./",
+  "id": "/audio/",
+  "display": "standalone",
+  "display_override": [
+    "fullscreen",
+    "standalone"
+  ],
+  "background_color": "#08090c",
+  "theme_color": "#08090c",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "../apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/logo-unfire-256.webp",
+      "sizes": "256x256",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ]
+}

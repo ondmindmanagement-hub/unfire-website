@@ -21,7 +21,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
       const rect={};for(const name of names){const el=document.getElementById(name);if(!el)continue;const b=el.getBoundingClientRect();rect[name]={x:b.x,y:b.y,w:b.width,h:b.height,visible:getComputedStyle(el).display!=='none'};}
       const r=window.__roamAPI.ROAMS;const quality=window.__UNFIRE_ACTIVE_DEVICE;const pixelRatio=window.__mal.S.renderer.getPixelRatio();
       const s=window.__mal.S.renderer.getSize(new THREE.Vector2());
-      return {size:[innerWidth,innerHeight],render:[s.x,s.y],rect,roam:r.on,mission:window.__UNFIRE_CASE_QA.mission,orientation:window.__unfireViewport.orientation,touch:getComputedStyle(document.getElementById('cv')).touchAction,quality:quality?.tier,pixelRatio,maxDpr:quality?.maxDpr};
+      return {size:[innerWidth,innerHeight],render:[s.x,s.y],rect,roam:r.on,mission:window.__UNFIRE_CASE_QA.mission,orientation:window.__unfireViewport.orientation,storyActive:document.body.classList.contains('storyOn'),touch:getComputedStyle(document.getElementById('cv')).touchAction,quality:quality?.tier,pixelRatio,maxDpr:quality?.maxDpr};
     });
     assert.deepEqual(state.render,[width,height],'WebGL render size');
     assert.equal(state.roam,true,'Rotation ended gameplay');
@@ -31,8 +31,13 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
     assert(state.pixelRatio <= state.maxDpr + .01,'WebGL pixel ratio must respect device GPU budget');
     assert.equal(state.orientation,width>=height?'landscape':'portrait');
     for(const name of ['unfireTouchPad','unfireFly','unfireTalk']){
-      const b=state.rect[name];assert(b&&b.visible&&b.w>0&&b.h>0,'missing touch control '+name);
-      assert(b.x>=-1&&b.y>=-1&&b.x+b.w<=width+2&&b.y+b.h<=height+2,'Control outside mobile screen '+name+' '+JSON.stringify({b,width,height}));
+      const b=state.rect[name];assert(b,'missing touch control '+name);
+      if(state.storyActive){
+        assert(!b.visible,'Touch controls must not overlap a live Nimbo story dialogue '+name);
+      }else{
+        assert(b.visible&&b.w>0&&b.h>0,'Touch controls must be visible during active free-roam '+name);
+        assert(b.x>=-1&&b.y>=-1&&b.x+b.w<=width+2&&b.y+b.h<=height+2,'Control outside mobile screen '+name+' '+JSON.stringify({b,width,height}));
+      }
     }
     const a=state.rect.unfireTouchPad,b=state.rect.unfireFly;
     assert(a.x+a.w<=b.x||b.x+b.w<=a.x||a.y+a.h<=b.y||b.y+b.h<=a.y,'Joystick and fly button overlap');

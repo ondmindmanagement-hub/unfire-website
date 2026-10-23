@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023d" as="script"></head><body><title>UNFIRE Maletín</title>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023e" as="script"></head><body><title>UNFIRE Maletín</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
@@ -88,6 +88,51 @@ body.unfire-roaming #cv{touch-action:none}
 
 </style>
 
+<style id="unfireSafeMobileHud">
+/* Keep cinematic text and controls from obscuring one another.
+   Only the narrow touch layout is changed; native desktop remains intact. */
+@media(pointer:coarse){
+  #story.on .box{
+    box-sizing:border-box!important;left:50%!important;right:auto!important;
+    bottom:calc(env(safe-area-inset-bottom) + 12px)!important;
+    transform:translateX(-50%)!important;width:min(94vw,500px)!important;
+    max-height:min(46dvh,310px)!important;overflow:auto!important;
+    font:500 clamp(12px,2.9vw,15px)/1.36 system-ui!important;
+  }
+  #story .nm{font:800 10px/1.2 Orbitron,Arial!important;letter-spacing:.05em!important;padding:4px 9px!important;margin-bottom:4px!important}
+  #story .tx{font-size:inherit!important;line-height:inherit!important;min-height:0!important;max-height:26dvh!important;overflow-y:auto!important;padding:10px 12px!important;border-radius:13px!important}
+  #story .ch{margin-top:5px!important;gap:5px!important}
+  #story .ch button{min-height:37px!important;font-size:10px!important;padding:7px 11px!important}
+  #story.on.cine .bar{height:min(3vh,17px)!important}
+  body.storyOn #unfireTouchPad,body.storyOn #unfireTouchKnob,
+  body.storyOn #unfireFly,body.storyOn #unfireTalk,
+  body.storyOn #unfireDown,body.storyOn #caseModeHud,
+  body.storyOn #minimap,body.storyOn #unfireCarryCase{display:none!important}
+  #caseModeHud{left:50%!important;right:auto!important;bottom:calc(env(safe-area-inset-bottom) + 142px)!important;
+    transform:translateX(-50%)!important;width:min(52vw,212px)!important;
+    max-width:212px!important;box-sizing:border-box!important;padding:4px!important;gap:3px!important;
+    background:rgba(7,18,38,.64)!important;backdrop-filter:blur(5px)!important}
+  #caseModeHud button{font-size:9px!important;line-height:1.2!important;min-height:29px!important;padding:5px 7px!important;flex:1 1 auto}
+  #unfireExitGame{top:calc(env(safe-area-inset-top) + 8px)!important;
+    right:calc(env(safe-area-inset-right) + 8px)!important;
+    max-width:45vw!important;min-height:32px!important;padding:6px 9px!important;
+    font:700 10px/1.2 system-ui!important;border-width:1px!important;
+    box-shadow:0 3px 12px #0007!important}
+}
+@media(pointer:coarse) and (orientation:landscape){
+  #story.on .box{left:max(9px,env(safe-area-inset-left))!important;bottom:calc(env(safe-area-inset-bottom) + 6px)!important;
+    transform:none!important;width:min(63vw,590px)!important;max-height:70dvh!important;font-size:12px!important}
+  #story .tx{max-height:36dvh!important;padding:6px 9px!important}
+  #story .ch button{min-height:29px!important;padding:4px 8px!important}
+  #caseModeHud{width:min(36vw,250px)!important;max-width:250px!important;bottom:calc(env(safe-area-inset-bottom) + 8px)!important}
+  #unfireExitGame{font-size:9px!important;min-height:28px!important}
+}
+@media(pointer:coarse) and (max-height:420px){
+  #story.on .box{max-height:73dvh!important}
+  #story .nm{margin-bottom:2px!important}
+  #story .ch{margin-top:3px!important}
+}
+</style>
 <canvas id="cv" aria-label="Maletín UNFIRE en 3D. Acerca la vista con la rueda para entrar"></canvas>
 <div class="hud" id="hud"><button id="zin" aria-label="Acercar">+</button><button id="zout" aria-label="Alejar">−</button><button id="home" aria-label="Volver al maletín">⟲</button><div class="crumb" id="crumb">MALETÍN</div></div>
 <div class="tip" id="tip"></div>
@@ -107,7 +152,7 @@ body.unfire-roaming #cv{touch-action:none}
     e.stopPropagation();
     window.__unfireDirectOpenPending = true;
     if (window.__mal && typeof window.__mal.requestOpen === 'function') {
-      window.__mal.requestOpen();
+      (window.__mal.startGame || window.__mal.requestOpen)();
       b.hidden = true;
       return;
     }
@@ -4588,5 +4633,5 @@ window.STORY_INIT = function (H) {
 };
 
 </script>
-<script src="game-engine-v50.js?v=20261023d"></script>
+<script src="game-engine-v50.js?v=20261023e"></script>
 </body></html>
