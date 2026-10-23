@@ -145,6 +145,18 @@ html.immOn,body.immOn{overflow:hidden!important;overscroll-behavior:none}body.im
     text-align:center;pointer-events:none;box-shadow:0 8px 22px rgba(0,0,0,.32)}
   .hero-pin.scene-ready #unfireMobileTapHint,.hero-pin.web-return #unfireMobileTapHint,.hero-pin.imm #unfireMobileTapHint{display:none}
 }
+/* One gentle GPU-composited entrance for the genuine first frame on portrait phones.
+   It starts visible at full opacity, lands at the SAME final framing as the
+   stable static mobile rule above, and never animates the interactive iframe. */
+@keyframes unfireCaseArrival{
+  from{transform:scale(.99) translateY(-10%)}
+  to{transform:scale(1.08) translateY(-13%)}
+}
+@media (max-width:600px) and (orientation:portrait) and (prefers-reduced-motion:no-preference){
+  .hero-pin:not(.scene-ready):not(.imm) #unfireCaseFirstFrame img{
+    animation:unfireCaseArrival .76s cubic-bezier(.2,.7,.24,1) both;
+  }
+}
 @media(prefers-reduced-motion:reduce){#unfireCaseFirstFrame,.hero-pin.scene-ready #unfireCaseFirstFrame{transition:none}}
 /* First interactive impression is the live 3D case, never a product advertisement. */
 .hero-pin:not(.scene-ready)::after{content:"PREPARANDO MALETÍN 3D";position:absolute;inset:auto 0 10%;pointer-events:none;z-index:1;text-align:center;font:700 11px/1.5 Michroma,Arial,sans-serif;letter-spacing:.2em;color:#86c9ff;text-shadow:0 0 14px #3d8bff}
