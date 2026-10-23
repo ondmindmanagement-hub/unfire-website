@@ -442,7 +442,7 @@ footer a{color:var(--soft)}
 <!-- 0 · El maletín 3D con inmersión -->
 <div class="hero" id="hero" data-field="0">
   <div class="hero-pin" id="heroPin">
-    <iframe id="malFrame" data-src="maletin/index.html?v=20261023sound1" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone; fullscreen" allowfullscreen></iframe>
+    <iframe id="malFrame" data-src="maletin/index.html?v=20261023sales1" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone; fullscreen" allowfullscreen></iframe>
     <a id="noWebglLink" href="#instrumentos">Explorar los instrumentos ↓</a>
     <div class="hero-copy" id="heroCopy">
       <img src="img/logo-unfire-256.webp" alt="" width="64" height="64" style="width:64px;height:64px;margin:0 auto 12px;filter:drop-shadow(0 0 18px rgba(61,139,255,.6))">
@@ -522,7 +522,7 @@ footer a{color:var(--soft)}
         <div class="kicker"><span class="chip live"><span class="dot"></span>Ya en App Store</span><span class="chip">AUv3 · macOS</span></div>
         <h3 style="font-size:32px">ARCHER by Unfire</h3>
         <p class="lede" style="margin-top:12px">Clipper con tres mandos: Gain, Threshold y Atmosphere. Corta los picos con carácter y añade aire alrededor.</p>
-        <div class="buy"><button class="btn btn-blue" type="button" data-archer>▶ Probar en la web</button><a class="btn btn-gel" href="https://apps.apple.com/us/app/archer-by-unfire/id6812968924" target="_blank" rel="noopener">App Store ↗</a></div>
+        <div class="buy"><button class="btn btn-blue" type="button" data-archer>▶ Probar en la web</button><a class="btn btn-gel" href="https://apps.apple.com/us/app/archer-by-unfire/id6812968924" target="_blank" rel="noopener noreferrer" aria-label="Comprar ARCHER para Mac en la App Store">Comprar para Mac ↗</a><a class="btn btn-gel" href="https://apps.apple.com/es/app/archer-for-iphone-ipad/id6822109610" target="_blank" rel="noopener noreferrer" aria-label="Comprar ARCHER para iPhone o iPad en la App Store">iPhone / iPad ↗</a></div>
       </div>
     </div>
   </div><div class="rail r" aria-hidden="true"></div></div>
@@ -653,7 +653,7 @@ document.getElementById('shareGame').addEventListener('click',async function(){
     <div style="color:var(--ok)"><span id="bagOfferLabel">Semana de lanzamiento</span><span id="bagLaunch">0 €</span></div>
     <button class="btn btn-gel" type="button" id="bagGo">Consultar disponibilidad</button>
     <p id="bagPayMethods" hidden style="font:500 12px/1.6 Arial,sans-serif;color:#254161;margin:12px 0 0">Pago seguro gestionado por Stripe. Tarjeta, Apple Pay (Face ID o Touch ID), Google Pay y Link, cuando estén disponibles para tu dispositivo y región. UNFIRE no almacena tus datos bancarios. El importe final se confirmará en Stripe.</p>
-    <p id="bagUnreleased" style="font:500 12px/1.6 Arial,sans-serif;color:#254161;margin:12px 0 0">Catálogo en preparación para macOS y Windows. Esta consulta por correo no supone compra, cargo, reserva confirmada ni entrega de instaladores. <a href="compatibilidad/" style="color:#254161;text-decoration:underline;text-underline-offset:3px">Ver compatibilidad y estado de lanzamiento</a>.</p>
+    <p id="bagUnreleased" style="font:500 12px/1.6 Arial,sans-serif;color:#254161;margin:12px 0 0">Catálogo en preparación para macOS y Windows. Esta consulta por correo no supone compra, cargo, reserva confirmada ni entrega de instaladores. <a href="compatibilidad/" style="color:#254161;text-decoration:underline;text-underline-offset:3px">Ver compatibilidad y estado de lanzamiento</a>. Si quieres comprar software que ya está publicado, <a href="https://apps.apple.com/us/app/archer-by-unfire/id6812968924" target="_blank" rel="noopener noreferrer" style="color:#254161;text-decoration:underline">ARCHER para Mac</a> y <a href="https://apps.apple.com/es/app/archer-for-iphone-ipad/id6822109610" target="_blank" rel="noopener noreferrer" style="color:#254161;text-decoration:underline">ARCHER para iPhone o iPad</a> se venden por la App Store.</p>
   </div>
 </div></dialog>
 
@@ -857,7 +857,7 @@ const UNFIRE_SCENE=(()=>{
   if(window.visualViewport)visualViewport.addEventListener('resize',recalibrate,{passive:true});
   const help=document.createElement('div');help.id='unfireGameHelp';
   help.style.cssText='display:none;position:absolute;z-index:30;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(91vw,330px);padding:13px;border:1px solid #83cfff;border-radius:16px;background:#081528f5;color:#eef7ff;text-align:center;font:600 12px/1.5 system-ui;box-shadow:0 12px 30px #000a';
-  help.innerHTML='Si el juego no aparece, prueba el modo compatible.<div style="display:flex;justify-content:center;gap:8px;margin-top:9px"><button id="unfireGameRetry" type="button" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;background:#174b80;color:white">REINTENTAR</button><a href="maletin/index.html?v=20261023sound1&quality=compact" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;color:white;text-decoration:none">JUGAR DIRECTO</a></div>';
+  help.innerHTML='Si el juego no aparece, prueba el modo compatible.<div style="display:flex;justify-content:center;gap:8px;margin-top:9px"><button id="unfireGameRetry" type="button" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;background:#174b80;color:white">REINTENTAR</button><a href="maletin/index.html?v=20261023sales1&quality=compact" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;color:white;text-decoration:none">JUGAR DIRECTO</a></div>';
   pin.appendChild(help);
   help.querySelector('#unfireGameRetry').onclick=()=>{help.style.display='none';start(true);};
   const fail=()=>{pin.classList.add('scene-error');pin.classList.remove('scene-ready');help.style.display='block';
@@ -1093,7 +1093,7 @@ function knobs(box,names,vals,cb){box.innerHTML='';names.forEach((n,i)=>{const i
 const sheet=$('#sheet');let stopScope=null,playing=false,tlT=null,sheetItem=null;
 function openFx(f,isArcher){sheet.style.setProperty('--led',f[4]);$('#sheetImg').src=isArcher?'img/archer.webp':`img/fx-${f[0]}.webp`;$('#sheetImg').alt='Interfaz de '+f[1];
   $('#sheetType').textContent=isArcher?'UNFAIR · Clipper':'UNFIRE · '+f[2];const t=$('#sheetTitle');t.textContent=f[1];if(isArcher)t.style.font='800 34px var(--display)';else face(t,f,38);
-  $('#sheetMotif').textContent=isArcher?'Gain, Threshold y Atmosphere. La versión completa está en el Mac App Store.':'Tema: '+f[3]+'. Collage de fotografías de archivo con LED en el contorno.';
+  $('#sheetMotif').textContent=isArcher?'Gain, Threshold y Atmosphere. Compra la versión terminada para Mac o iPhone/iPad en la App Store oficial.':'Tema: '+f[3]+'. Collage de fotografías de archivo con LED en el contorno.';
   sheetItem=isArcher?null:'fx-'+f[0];$('#sheetGet').textContent=isArcher?'App Store ↗':'+ A la bolsa';
   $('#sheetPrice').innerHTML=isArcher?'':STARTER.includes(f[0])?'<span style="color:var(--ok)">Gratis siempre</span>':`${eur(PRICES.fx)}<small>o los 20 por ${eur(PRICES.fx20)}</small>`;
   stopDemo();DEMO.load(f[8]);knobs($('#knobs'),f[6],DEF,(i,v)=>DEMO.setParam(i,v));DEF.forEach((v,i)=>DEMO.setParam(i,v));DEMO.setBypass(false);$('#byp').setAttribute('aria-pressed','false');$('#byp').textContent='Bypass';
@@ -1105,7 +1105,10 @@ $('#play').onclick=async()=>{if(playing){stopDemo();return}playing=true;$('#play
 $('#src').onchange=()=>{if(playing){DEMO.stop();DEMO.play($('#src').value,onEnd)}};
 $('#byp').onclick=e=>{const on=e.currentTarget.getAttribute('aria-pressed')!=='true';e.currentTarget.setAttribute('aria-pressed',on);e.currentTarget.textContent=on?'Bypass activo':'Bypass';DEMO.setBypass(on)};
 sheet.addEventListener('close',()=>{stopDemo();stopScope&&stopScope()});
-$('#sheetGet').onclick=()=>{if(!sheetItem){window.open('https://apps.apple.com/us/app/archer-by-unfire/id6812968924','_blank','noopener');return}Bag.add(sheetItem)};
+const archerStoreUrl=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)
+  ?'https://apps.apple.com/es/app/archer-for-iphone-ipad/id6822109610'
+  :'https://apps.apple.com/us/app/archer-by-unfire/id6812968924';
+$('#sheetGet').onclick=()=>{if(!sheetItem){window.open(archerStoreUrl(),'_blank','noopener');return}Bag.add(sheetItem)};
 document.querySelector('[data-archer]').onclick=()=>openFx(['archer','ARCHER','Clipper','','#c9d0d9','',['Gain','Threshold','Atmosphere'],'din','archer'],true);
 
 /* HYPERWAVE completo dentro de la página */
