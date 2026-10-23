@@ -1,0 +1,25 @@
+name: Audio tap timeout diagnostics
+on:
+  pull_request:
+    paths:
+      - 'tests/maletin-touch-timeout-diagnostics-browser.cjs'
+      - '.github/workflows/audio-tap-timeout-diagnostics.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  diagnose-touch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax + existing tap contracts
+        run: |
+          node --check tests/maletin-touch-timeout-diagnostics-browser.cjs
+          node tests/maletin-touch-first-open.test.cjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Physical projection and detailed post-tap diagnosis
+        run: node tests/maletin-touch-timeout-diagnostics-browser.cjs
