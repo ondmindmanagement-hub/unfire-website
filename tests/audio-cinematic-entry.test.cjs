@@ -76,10 +76,11 @@ function fixture({loaded=true,reduced=false,native=true}={}){
   };
 }
 
-test('direct boot retains preview on the SAME page until case tap',()=>{
+test('direct boot keeps full-size first paint on the SAME page until case tap',()=>{
   const h=fixture();
   assert(h.document.body.classList.contains('immOn'));
-  assert(h.elements.get('heroPin').classList.contains('unfire-case-preview'));
+  assert(!h.elements.get('heroPin').classList.contains('unfire-case-preview'));
+  assert.equal(h.elements.get('heroPin').getBoundingClientRect().width,390);
   assert.equal(h.scene.starts,1);
   assert(!h.messages().some(m=>m.entryStart));
   assert(!source.includes('window.open('),'The case-opening controller never creates another tab');
@@ -91,6 +92,7 @@ test('first tap synchronizes 1.05-second zoom with the actual lid opening',()=>{
   assert(animation);
   assert.equal(animation.config.duration,1050);
   assert.match(animation.config.easing,/cubic-bezier/);
+  assert.match(animation.keyframes[0].transform,/scale\(0\.92,0\.92\)/);
   const opened=h.messages().filter(m=>m.entryStart);
   assert.equal(opened.length,1);
   assert(h.trace.findIndex(x=>x===animation)<h.trace.findIndex(x=>x.type==='message'&&x.message.entryStart));
@@ -99,10 +101,11 @@ test('first tap synchronizes 1.05-second zoom with the actual lid opening',()=>{
   h.tap();
   assert.equal(h.messages().filter(m=>m.entryStart).length,1,'No duplicate lid sound/animation');
 });
-test('slow 3D boot holds preview and starts animation only once ready',()=>{
+test('slow 3D boot holds full-size first paint and starts animation only once ready',()=>{
   const h=fixture({loaded:false});
   h.tap();
-  assert(h.elements.get('heroPin').classList.contains('unfire-case-preview'));
+  assert(h.document.body.classList.contains('immOn'));
+  assert.equal(h.elements.get('heroPin').getBoundingClientRect().width,390);
   assert.equal(h.animations('heroPin').length,0);
   assert(!h.messages().some(m=>m.entryStart));
   h.ready();
