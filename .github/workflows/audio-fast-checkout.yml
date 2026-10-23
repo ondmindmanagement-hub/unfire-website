@@ -1,0 +1,17 @@
+name: Audio Fast Checkout
+on:
+  pull_request:
+    paths:
+      - 'audio/index.html'
+      - '.github/tests/audio-fast-checkout.test.cjs'
+      - '.github/workflows/audio-fast-checkout.yml'
+  workflow_dispatch:
+jobs:
+  safe-payment-routing:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify checkout safety and individual merchant disclosure
+        run: node --test .github/tests/audio-fast-checkout.test.cjs
