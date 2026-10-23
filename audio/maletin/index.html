@@ -198,6 +198,10 @@ body.unfire-roaming #cv{touch-action:none}
  body.storyOn #ctlDock,body.storyOn #cfgB,body.storyOn #storyHud,
  body.storyOn #onlHud,body.storyOn #roamB{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
  body:has(#storyHud.cfgOn) #ctlDock,body:has(#storyHud.cfgOn) #tip{opacity:0!important;pointer-events:none!important}
+ /* Product detail only appears while inspecting the case, never across gameplay
+    controls or the central PASEAR action. */
+ body.unfire-roaming #buy.enter{display:none!important}
+ body:not(.unfire-roaming) #buy.enter{bottom:calc(env(safe-area-inset-bottom) + 125px)!important}
  /* The case-view toolbar and movement pad must never compete for the same corner. */
  body.unfire-roaming .hud{opacity:0!important;pointer-events:none!important}
  body.unfire-roaming #tip{max-width:36vw!important}
@@ -213,7 +217,13 @@ body.unfire-roaming #cv{touch-action:none}
  .hud{left:max(6px,env(safe-area-inset-left))!important;bottom:calc(env(safe-area-inset-bottom) + 5px)!important}
  .hud .crumb{max-width:15vw;font-size:9px}
  #tip{top:calc(env(safe-area-inset-top) + 8px)!important;max-width:min(22vw,150px)!important;font-size:9px!important}
- #buy.enter{bottom:calc(env(safe-area-inset-bottom) + 44px)!important;max-width:29vw!important;font-size:10px!important}
+ #buy.enter{bottom:calc(env(safe-area-inset-bottom) + 90px)!important;max-width:29vw!important;font-size:10px!important}
+ /* Reserve the upper-right corner for exit; gear and dock sit BELOW it. */
+ #cfgB{top:calc(env(safe-area-inset-top) + 52px)!important}
+ #ctlDock{top:calc(env(safe-area-inset-top) + 112px)!important;
+   max-height:calc(100dvh - env(safe-area-inset-top) - 124px)!important}
+ #storyHud.cfgOn{top:calc(env(safe-area-inset-top) + 106px)!important;
+   max-height:calc(100dvh - env(safe-area-inset-top) - 115px)!important;overflow-y:auto!important}
  #story.on .box{box-sizing:border-box;left:max(8px,env(safe-area-inset-left))!important;right:auto!important;
    transform:none!important;bottom:calc(env(safe-area-inset-bottom) + 6px)!important;
    width:min(60vw,570px)!important;max-height:calc(100dvh - 2*max(8px,env(safe-area-inset-top)))!important}
