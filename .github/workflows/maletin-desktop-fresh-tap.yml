@@ -1,0 +1,30 @@
+name: Maletin desktop fresh-tap diagnostic
+
+on:
+  pull_request:
+    paths:
+      - 'tests/maletin-desktop-fresh-tap-browser.cjs'
+      - '.github/workflows/maletin-desktop-fresh-tap.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: maletin-desktop-fresh-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  desktop-fresh-tap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate standalone desktop diagnostic
+        run: node --check tests/maletin-desktop-fresh-tap-browser.cjs
+      - name: Install Chromium for remote-only repro
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Desktop real 3D butterfly click with event and hit-target diagnostics
+        run: node tests/maletin-desktop-fresh-tap-browser.cjs
