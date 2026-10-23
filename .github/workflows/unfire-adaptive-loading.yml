@@ -30,4 +30,4 @@ jobs:
           node --check tests/unfire-adaptive-loading.test.cjs
           node tests/unfire-adaptive-loading.test.cjs
       - name: No accidental whitespace errors
-        run: git diff --check HEAD^ HEAD
+        run: git show --format= --check HEAD
