@@ -78,19 +78,34 @@
         p = Array.from(pads || []).find(g => g && g.connected !== false &&
           g.mapping === 'standard' && g.axes && g.axes.length >= 4);
       } catch (_) {}
-      if (!p || !padEnabled()) {
+      if (!p || !ROAMS.on || doc.hidden) {
         state.active = false;
         state.lx = state.ly = state.rx = state.ry = 0;
         state.up = state.down = state.dive = state.sprint = false;
         state.last = []; return;
+      }
+      const pressed = i => hasButton(p, i);
+      const edge = i => pressed(i) && !state.last[i];
+      // Options must also CLOSE the guide on a controller-only device.
+      if (edge(9)) {
+        const guide = doc.getElementById('unfireControlGuide');
+        if (guide?.classList.contains('on'))
+          guide.querySelector('#unfireGuideClose')?.click();
+        else doc.getElementById('unfireControlsButton')?.click();
+      }
+      const blocked = !padEnabled();
+      if (blocked) {
+        state.active = false;
+        state.lx = state.ly = state.rx = state.ry = 0;
+        state.up = state.down = state.dive = state.sprint = false;
+        state.last = Array.from({length:16}, (_, i) => pressed(i));
+        return;
       }
       state.active = true;
       state.lx = deadzone(p.axes[0]);
       state.ly = deadzone(-p.axes[1]);
       state.rx = deadzone(p.axes[2]);
       state.ry = deadzone(p.axes[3]);
-      const pressed = i => hasButton(p, i);
-      const edge = i => pressed(i) && !state.last[i];
       const up = pressed(0) || pressed(12);
       const down = pressed(1) || pressed(13);
       if ((edge(0) || edge(12)) && typeof flightTap === 'function') flightTap('up');
@@ -109,7 +124,7 @@
           if (chat.classList.contains('on')) chat.querySelector('input')?.focus();
         }
       }
-      if (edge(9)) doc.getElementById('unfireControlsButton')?.click();
+
       if (padEnabled() && !editing) {
         const delta = Math.min(0.05, Math.max(0, Number(dt) || 0));
         ROAMS.yaw += state.rx * delta * 2.4;
@@ -321,6 +336,15 @@
     addEventListener('resize',recalc,{passive:true});
     if (host.visualViewport) host.visualViewport.addEventListener('resize',recalc,{passive:true});
     addEventListener('orientationchange',recalc,{passive:true});
+    if (typeof ResizeObserver === 'function') {
+      // The story HUD changes at runtime. Refit only when its dimensions change.
+      const observer = new ResizeObserver(recalc);
+      for (const selector of ['#hud','#tb','#storyHud','#ctlDock','#wradio',
+        '#minimap','#chat','#story .box']) {
+        doc.querySelectorAll(selector).forEach(el => observer.observe(el));
+      }
+      addEventListener('pagehide', () => observer.disconnect(), {once:true});
+    }
     layout();
     return {tick,stop,layout,startEdit,endEdit};
   }
