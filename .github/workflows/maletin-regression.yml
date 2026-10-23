@@ -7,6 +7,7 @@ on:
       - 'audio/maletin/index.html'
       - 'audio/maletin/game-engine-v50.js'
       - 'tests/maletin-v50.test.cjs'
+      - 'tests/maletin-radio-volume.test.cjs'
       - 'tests/maletin-v50-browser.cjs'
       - 'tests/maletin-mobile-rotation.cjs'
       - 'tests/maletin-entry-fullscreen.cjs'
@@ -30,7 +31,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check syntax, click routing, missions, audio and multiplayer preservation
-        run: node tests/maletin-v50.test.cjs
+        run: |
+          node tests/maletin-v50.test.cjs
+          node tests/maletin-radio-volume.test.cjs
 
   entry:
     needs: validate
