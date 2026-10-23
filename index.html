@@ -3986,6 +3986,16 @@ main .uf-hero-title {
 @media(max-width:900px){#apps.uf-app-showcase{padding:84px 0}#apps .uf-gallery-card--mobile{grid-column:span 3}#apps .uf-gallery-card--mobile:last-child{grid-column:2 / span 4}#apps .uf-gallery-card--mobile .uf-gallery-media{height:390px}}
 @media(max-width:620px){#apps.uf-app-showcase{padding:72px 0 80px}#apps .uf-gallery-grid{grid-template-columns:minmax(0,1fr);gap:16px}#apps .uf-gallery-card,#apps .uf-gallery-card--wide,#apps .uf-gallery-card--mobile,#apps .uf-gallery-card--mobile:last-child{grid-column:1 / -1}#apps .uf-gallery-card{border-radius:20px}#apps .uf-gallery-card--mobile .uf-gallery-media{height:410px;padding:20px}#apps .uf-gallery-intro{margin-bottom:34px}#apps .uf-gallery-copy{padding:21px 22px 26px}#apps h2{font-size:clamp(36px,10vw,54px)!important}}
 @media(prefers-reduced-motion:reduce){#apps .uf-gallery-media img{transition:none}}
+
+/* The expanded portfolio uses only genuine lightweight product assets. */
+#apps .uf-gallery-card--mobile .uf-gallery-media{height:380px;padding:18px 16px 0}
+#apps .uf-gallery-copy{flex:1}
+#apps .uf-gallery-availability{display:block;margin-top:16px;color:#9da7ba;font-size:11px;line-height:1.5;letter-spacing:.025em}
+#apps .uf-gallery-card--icon .uf-gallery-media{background:radial-gradient(circle at 50% 50%,#1e2636 0%,#0b1019 64%,#090c13 100%)}
+#apps .uf-gallery-card--icon .uf-gallery-media img{width:min(57%,200px);height:auto;max-height:200px;border-radius:22%;box-shadow:0 12px 30px rgba(0,0,0,.38)}
+@media(min-width:901px){#apps .uf-gallery-card--mobile:last-child{grid-column:3 / span 2}}
+@media(max-width:900px){#apps .uf-gallery-card--mobile .uf-gallery-media{height:350px}}
+@media(max-width:620px){#apps .uf-gallery-card--mobile .uf-gallery-media{height:min(390px,110vw);padding:18px 12px 0}#apps .uf-gallery-card--mobile:last-child{grid-column:1/-1}}
 </style>
 <link rel="stylesheet" href="/assets/css/unfire-compact-system-20261019.css?v=2">
 <link rel="stylesheet" href="/assets/css/unfire-unified-header-20261020.css?v=4">
@@ -4154,8 +4164,25 @@ main .uf-hero-title {
 <a class="uf-gallery-media" href="assets/products/bolt-iphone.webp" target="_blank" rel="noopener" aria-label="View the BOLT Mobile iPhone cover at full size"><img src="assets/products/bolt-iphone.webp" alt="BOLT Mobile app cover showing the real iPhone local review interface" loading="lazy" decoding="async"></a>
 <div class="uf-gallery-copy"><p class="uf-gallery-type">AI Review / iPhone</p><h3>BOLT Mobile</h3><p>Keep the original intact and review proposed changes before deciding.</p></div>
 </article>
+
+<article class="uf-gallery-card uf-gallery-card--mobile">
+<a class="uf-gallery-media" href="assets/products/archer-mobile.webp" target="_blank" rel="noopener noreferrer" aria-label="View the real ARCHER mobile interface at full size"><img src="assets/products/archer-mobile.webp" width="740" height="1541" alt="ARCHER mobile clipping controls on an iPhone, captured from the app" loading="lazy" decoding="async"></a>
+<div class="uf-gallery-copy"><p class="uf-gallery-type">Audio / iPhone &amp; iPad</p><h3>ARCHER Mobile</h3><p>Touch-first clipping controls in the ARCHER family.</p><span class="uf-gallery-availability">Product preview</span></div>
+</article>
+<article class="uf-gallery-card uf-gallery-card--mobile">
+<a class="uf-gallery-media" href="assets/products/unfire-synth-ipad.webp" target="_blank" rel="noopener noreferrer" aria-label="View the real Unfire Synthesizer tablet interface at full size"><img src="assets/products/unfire-synth-ipad.webp" width="900" height="1306" alt="Unfire Synthesizer instrument interface captured on iPad" loading="lazy" decoding="async"></a>
+<div class="uf-gallery-copy"><p class="uf-gallery-type">Music creation / iPad</p><h3><span translate="no" class="notranslate">Unfire</span> Synthesizer</h3><p>Synthesis, sequencing and sound shaping in a compact instrument workspace.</p><span class="uf-gallery-availability">Development preview</span></div>
+</article>
+<article class="uf-gallery-card uf-gallery-card--mobile uf-gallery-card--icon">
+<a class="uf-gallery-media" href="assets/products/unfire-control-icon.webp" target="_blank" rel="noopener noreferrer" aria-label="View the authentic Unfire Control app icon"><img src="assets/products/unfire-control-icon.webp" width="480" height="480" alt="Original Unfire Control application icon, not an interface screenshot" loading="lazy" decoding="async"></a>
+<div class="uf-gallery-copy"><p class="uf-gallery-type">Gestures &amp; voice / Mac</p><h3><span translate="no" class="notranslate">Unfire</span> Control</h3><p>Hands-free desktop navigation through camera gestures and assisted voice commands.</p><span class="uf-gallery-availability">App preview · original app icon</span></div>
+</article>
+<article class="uf-gallery-card uf-gallery-card--mobile">
+<a class="uf-gallery-media" href="assets/products/keybridge-iphone.webp" target="_blank" rel="noopener noreferrer" aria-label="View the real Unfire KeyBridge prototype interface at full size"><img src="assets/products/keybridge-iphone.webp" width="736" height="1600" alt="Unfire KeyBridge early iPhone prototype for reviewing approval requests" loading="lazy" decoding="async"></a>
+<div class="uf-gallery-copy"><p class="uf-gallery-type">Device security / iPhone</p><h3><span translate="no" class="notranslate">Unfire</span> KeyBridge</h3><p>A research prototype for reviewing specific workstation requests on a trusted phone.</p><span class="uf-gallery-availability">Lab prototype · not a production sign-in system</span></div>
+</article>
 </div>
-<p class="uf-gallery-footnote">Product imagery adapted from existing <span class="notranslate" translate="no">Unfire</span> app presentations and genuine interface captures.</p>
+<p class="uf-gallery-footnote">Imagery comes from actual <span class="notranslate" translate="no">Unfire</span> product assets and interface captures. Previews and prototypes are identified; features and release status may change.</p>
 </div>
 </section>
 
