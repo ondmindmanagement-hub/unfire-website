@@ -7,25 +7,60 @@
   function numberOrNull(value) {
     return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : null;
   }
-  function network(navigatorLike) {
+  // Uses only completed same-origin transfers already recorded by the browser.
+  // This is a coarse throughput observation, NEVER an exact Wi-Fi speed test.
+  function estimateResourceMbps(env) {
+    const perf = env && env.performance;
+    const origin = env && env.location && env.location.origin;
+    if (!perf || typeof perf.getEntriesByType !== 'function' || typeof origin !== 'string') return null;
+    let entries, now;
+    try {
+      entries = perf.getEntriesByType('resource');
+      now = typeof perf.now === 'function' ? perf.now() : Number.POSITIVE_INFINITY;
+    } catch (_) { return null; }
+    if (!Array.isArray(entries)) return null;
+    const rates = [];
+    for (let i = entries.length - 1, visited = 0;
+      i >= 0 && visited < 40 && rates.length < 12; i--, visited++) {
+      const r = entries[i];
+      if (!r || typeof r.name !== 'string' || !r.name.startsWith(origin + '/')) continue;
+      const ms = r.responseEnd - r.responseStart;
+      // Exclude cached/opaque/small/old transfers and implausible timing data.
+      if (!(r.transferSize >= 32768 && r.responseStart > 0 && ms >= 40 &&
+        ms <= 20000 && r.responseEnd <= now &&
+        now - r.responseEnd <= 60000)) continue;
+      const mbps = (r.transferSize * 8) / (ms * 1000);
+      if (Number.isFinite(mbps) && mbps > 0 && mbps < 10000) rates.push(mbps);
+    }
+    if (rates.length < 3) return null;
+    rates.sort((a,b)=>a-b);
+    return rates[Math.floor(rates.length / 2)];
+  }
+  function network(navigatorLike, observedMbps) {
     const nav = navigatorLike || {};
-    const conn = nav.connection || nav.mozConnection || nav.webkitConnection;
-    if (nav.onLine === false) return { kind: 'offline', known: true, saveData: Boolean(conn && conn.saveData) };
-    if (!conn) return { kind: 'unknown', known: false, saveData: false };
+    const conn = nav.connection || nav.mozConnection || nav.webkitConnection || {};
+    if (nav.onLine === false) return { kind: 'offline', known: true, saveData: Boolean(conn.saveData) };
     const type = typeof conn.effectiveType === 'string' ? conn.effectiveType.toLowerCase() : '';
     const downlink = numberOrNull(conn.downlink);
     const rtt = numberOrNull(conn.rtt);
     const saveData = Boolean(conn.saveData);
+    const observed = numberOrNull(observedMbps);
     let kind = 'unknown';
     if (saveData || type === 'slow-2g' || type === '2g' || type === '3g' ||
         (downlink !== null && downlink < 1.5) || (rtt !== null && rtt >= 600)) kind = 'constrained';
     else if ((downlink !== null && downlink < 3) || (rtt !== null && rtt >= 250)) kind = 'moderate';
     else if (type || downlink !== null || rtt !== null) kind = 'good';
-    return { kind, known: Boolean(type || downlink !== null || rtt !== null || saveData), saveData };
+    // Observed transfer rates can downgrade optimistic cellular/network hints.
+    if (observed !== null) {
+      const measuredKind = observed < 1.5 ? 'constrained' : observed < 4 ? 'moderate' : 'good';
+      const rank = { unknown: 3, good: 2, moderate: 1, constrained: 0 };
+      if (kind === 'unknown' || rank[measuredKind] < rank[kind]) kind = measuredKind;
+    }
+    return { kind, known: Boolean(type || downlink !== null || rtt !== null || saveData || observed !== null), saveData };
   }
   function profile(input) {
     const p = input || {};
-    const net = network(p.navigator);
+    const net = network(p.navigator, p.observedMbps);
     const cores = numberOrNull(p.navigator && p.navigator.hardwareConcurrency);
     const memory = numberOrNull(p.navigator && p.navigator.deviceMemory);
     const dpr = numberOrNull(p.dpr) || 1;
@@ -54,7 +89,8 @@
     return profile({
       navigator: w.navigator || {},
       dpr: w.devicePixelRatio || 1,
-      reducedMotion: motion, stableFps
+      reducedMotion: motion, stableFps,
+      observedMbps: estimateResourceMbps(w)
     });
   }
   // Passive notifications only, no polling. Caller is responsible for disposing.
@@ -69,17 +105,23 @@
       const key = [p.render, p.maxDpr, p.assetPolicy, p.reducedMotion, p.network].join('|');
       if (key !== oldKey) { oldKey = key; onChange(p); }
     };
-    if (w.addEventListener) { w.addEventListener('online', update); w.addEventListener('offline', update); }
+    if (w.addEventListener) {
+      w.addEventListener('online', update); w.addEventListener('offline', update);
+      w.addEventListener('load', update);
+    }
     if (conn && conn.addEventListener) conn.addEventListener('change', update);
     if (media && media.addEventListener) media.addEventListener('change', update);
     update();
     return () => {
-      if (w.removeEventListener) { w.removeEventListener('online', update); w.removeEventListener('offline', update); }
+      if (w.removeEventListener) {
+        w.removeEventListener('online', update); w.removeEventListener('offline', update);
+        w.removeEventListener('load', update);
+      }
       if (conn && conn.removeEventListener) conn.removeEventListener('change', update);
       if (media && media.removeEventListener) media.removeEventListener('change', update);
     };
   }
-  const api = Object.freeze({ network, profile, capture, observe });
+  const api = Object.freeze({ estimateResourceMbps, network, profile, capture, observe });
   root.UnfireClientQuality = api;
   if (typeof module === 'object' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);
