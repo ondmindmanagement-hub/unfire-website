@@ -41,8 +41,20 @@ const baseUrl = (process.env.UNFIRE_WORLD_TEST_URL || "http://127.0.0.1:48763").
       });
       assert.equal(await page.$eval("#morph-output", el => el.textContent), "80 %");
       await page.click("#morph-button");
-      await new Promise(resolve => setTimeout(resolve, 900));
-      assert.equal(await page.$eval("#morph-output", el => el.textContent), "0 %");
+      // WebGL software rendering may throttle RAF; assert eventual correctness,
+      // not an exact animation duration on an emulated GPU.
+      await page.waitForFunction(() => document.querySelector("#morph-output").textContent === "0 %", {timeout:5000});
+      const image = await page.evaluate(async () => {
+        const response = await fetch("/audio/img/maletin-real-first-frame-desktop.webp");
+        const bytes = (await response.arrayBuffer()).byteLength;
+        return {status:response.status,bytes};
+      });
+      assert.equal(image.status,200);
+      assert.ok(image.bytes > 5000 && image.bytes < 200000, "First-party preview needs an authentic, lightweight asset");
+      assert.equal(await page.$eval(".store-visit", el => el.getAttribute("href")), "/audio/");
+      const marks = await page.evaluate(() => performance.getEntriesByType("mark").map(mark => mark.name));
+      assert.ok(marks.includes("unfire-world:webgl-ready"));
+      assert.ok(marks.includes("unfire-world:first-draw"));
       assert.deepEqual(errors,[]);
       console.log("PASS viewport",width+"x"+height);
       pass++;
@@ -62,9 +74,49 @@ const baseUrl = (process.env.UNFIRE_WORLD_TEST_URL || "http://127.0.0.1:48763").
       hidden:document.querySelector("canvas").hidden
     }));
     assert.deepEqual(fallback,{mode:"MODO 2D",visible:true,hidden:true});
+    await page.$eval("#morph-slider", el => {el.value="100";el.dispatchEvent(new Event("input",{bubbles:true}));});
+    assert.equal(await page.$eval("#morph-output", el=>el.textContent),"100 %");
+    assert.equal(await page.$eval("#fallback-label", el=>el.textContent),"Previsualización 2D · 100 %");
+    assert.equal(await page.$eval("#fallback-shape", el=>el.style.borderRadius),"50%");
     console.log("PASS no WebGL fallback");
     pass++;
     await page.close();
-    console.log("TOTAL",pass,"/",6,"PASS");
+    // The sample should obey reduced-motion and update without an animated tween.
+    const reduced = await browser.newPage();
+    await reduced.emulateMediaFeatures([{name:"prefers-reduced-motion",value:"reduce"}]);
+    await reduced.goto(baseUrl + "/experiments/unfire-world-pilot/",{waitUntil:"networkidle0"});
+    await reduced.waitForFunction(() => document.querySelector("#scene-mode").textContent === "WEBGL ACTIVO",{timeout:10000});
+    await reduced.click("#morph-button");
+    assert.equal(await reduced.$eval("#morph-output", el=>el.textContent),"100 %");
+    await reduced.close();
+    console.log("PASS reduced-motion immediate change");
+    pass++;
+
+    // Context-loss recovery is optional in WebGL implementations but must
+    // restore a working stage when the extension exists.
+    const contextPage = await browser.newPage();
+    await contextPage.goto(baseUrl + "/experiments/unfire-world-pilot/",{waitUntil:"networkidle0"});
+    await contextPage.waitForFunction(() => document.querySelector("#scene-mode").textContent === "WEBGL ACTIVO",{timeout:10000});
+    const extension = await contextPage.evaluate(() => {
+      const context = document.querySelector("canvas").getContext("webgl");
+      const extension = context.getExtension("WEBGL_lose_context");
+      if(!extension) return false;
+      extension.loseContext();
+      return true;
+    });
+    if (extension) {
+      await contextPage.waitForFunction(() => document.querySelector("#scene-mode").textContent === "MODO 2D",{timeout:10000});
+      await contextPage.evaluate(() => {
+        document.querySelector("canvas").getContext("webgl").getExtension("WEBGL_lose_context").restoreContext();
+      });
+      await contextPage.waitForFunction(() => document.querySelector("#scene-mode").textContent === "WEBGL ACTIVO",{timeout:15000});
+      assert.equal(await contextPage.$eval("canvas",el=>el.hidden),false);
+      console.log("PASS WebGL context loss and restore");
+      pass++;
+    } else {
+      console.log("SKIP WebGL context loss extension unsupported");
+    }
+    await contextPage.close();
+    console.log("TOTAL",pass,"/",extension ? 8 : 7,"PASS");
   } finally { await browser.close(); }
 })().catch(error=>{console.error(error.stack||String(error));process.exitCode=1});
