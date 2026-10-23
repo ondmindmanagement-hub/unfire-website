@@ -2318,6 +2318,9 @@
         if (now - started < 9000 || frames < 42) return stats;
         const persistentlySlow = slowFrames / frames >= 0.63 &&
           sumMs / frames > targetMs * 1.32;
+        // Keep the full slow sample until cooldown expires; otherwise a reset
+        // at 9s would discard evidence before the first eligible change at 12s.
+        if (persistentlySlow && now - changedAt < 12000) return stats;
         if (persistentlySlow && now - changedAt >= 12000) {
           const current = Math.min(renderer.getPixelRatio(), device.maxDpr);
           const next = Math.max(minimum, Math.round((current - 0.10) * 100) / 100);
