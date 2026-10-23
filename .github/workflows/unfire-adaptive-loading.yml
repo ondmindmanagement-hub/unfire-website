@@ -29,5 +29,8 @@ jobs:
           node --check assets/js/unfire-adaptive-loading.js
           node --check tests/unfire-adaptive-loading.test.cjs
           node tests/unfire-adaptive-loading.test.cjs
-      - name: No accidental whitespace errors
-        run: git show --format= --check HEAD
+      - name: New loader source whitespace only (not historical repository files)
+        run: |
+          if grep -nE "[[:blank:]]+$" assets/css/unfire-adaptive-loading.css assets/js/unfire-adaptive-loading.js tests/unfire-adaptive-loading.test.cjs .github/workflows/unfire-adaptive-loading.yml; then
+            exit 1
+          fi
