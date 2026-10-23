@@ -53,7 +53,7 @@ chk('Gacha procedural FX reveal uses a side-on avatar approach, never central oc
   engine.includes('const side=V(-d.z,0,d.x);const p = V(c.x + d.x * dist + side.x * Math.min(7,dist*.45)'));
 chk('First-tap 3D case opens in the existing web document, without a new tab',
   html.includes('window.__UNFIRE_ENTER_CASE=()=>open(1050)')&&
-  html.includes('immersive();\n    fullscreenFromGesture();')&&
+  html.includes('if(UNFIRE_SCENE.isReady())fullscreenFromGesture();')&&
   html.includes('fr.contentWindow.postMessage({unfire:1,entryStart:true,vis:true},location.origin)')&&
   !html.slice(html.indexOf('const Mal=(()=>'),html.indexOf('/* ================= Precios')).includes("window.open("));
 chk('First visit PASEAR blinks exactly two seconds after opening',
