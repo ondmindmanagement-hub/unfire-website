@@ -41,11 +41,24 @@ async function exercise(spec) {
       return { x, y, ringVisible: ring.visible, box: [r.left,r.top,r.width,r.height],
         closed: w.__UNFIRE_CASE_QA.closed,
         canvasTouchAction: getComputedStyle(w.document.getElementById('cv')).touchAction,
-        over: document.elementFromPoint(x, y)?.id };
+        over: document.elementFromPoint(x, y)?.id,
+        iframePointerEvents: getComputedStyle(f).pointerEvents,
+        iframeClipPath: getComputedStyle(f).clipPath,
+        iframeInlinePointerEvents: f.style.pointerEvents,
+        iframeInlineClipPath: f.style.clipPath };
     });
     assert(pos.closed && pos.canvasTouchAction === 'none', 'Initial lid must be closed and touch must not be canceled: ' + JSON.stringify(pos));
     assert(pos.x > 2 && pos.x < spec.width - 2 && pos.y > 2 && pos.y < spec.height - 2,
       'Physical butterfly projects into the viewport ' + JSON.stringify(pos));
+    await page.evaluate(() => {
+      const w=document.getElementById('malFrame')?.contentWindow, cv=w?.document.getElementById('cv');
+      window.__tapDebug=[];
+      if(cv) for(const type of ['pointerdown','pointerup','pointercancel','touchstart','touchend']){
+        cv.addEventListener(type,e=>window.__tapDebug.push({
+          type,time:e.timeStamp,isPrimary:e.isPrimary,pointerType:e.pointerType,
+          x:e.clientX,y:e.clientY}),{capture:true,passive:true});
+      }
+    });
     if(spec.mobile) await page.touchscreen.tap(pos.x, pos.y);
     else await page.mouse.click(pos.x, pos.y);
     console.log('TAP_QA_BEFORE', JSON.stringify({label: spec.label, pos, elapsedMs: Date.now()-started}));
@@ -78,6 +91,11 @@ async function exercise(spec) {
             budget:w?.__UNFIRE_ACTIVE_DEVICE,
             fps:w?.__perf&&{averageInterval:w.__perf.a,frames:w.__perf.f,dpr:w.__perf.dpr},
             renderer:renderer&&{drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles},
+            iframePointerEvents:f&&getComputedStyle(f).pointerEvents,
+            iframeClipPath:f&&getComputedStyle(f).clipPath,
+            iframeInlinePointerEvents:f&&f.style.pointerEvents,
+            iframeInlineClipPath:f&&f.style.clipPath,
+            tapDebug:window.__tapDebug?.slice(0,12),
             iframeSize:r&&[r.width,r.height],viewport:[innerWidth,innerHeight],url:location.pathname
           };
         },pos);
