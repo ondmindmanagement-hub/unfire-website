@@ -20,4 +20,4 @@ assert.match(block, /stageCompact \? 512 : stageBalanced \? 1024 : 2048/);
 assert.match(block, /key\.shadow\.mapSize\.set\(stageShadowMapSize, stageShadowMapSize\)/);
 assert.match(html, /game-engine-v50\.js\?v=/);
 assert.match(html, /mobile-hud-guard\.css\?v=/);
-console.log('PASS secondary-stage DPR/shadow budget contracts (14 checks)');
+console.log('PASS secondary-stage DPR/shadow budget contracts (16 checks)');
