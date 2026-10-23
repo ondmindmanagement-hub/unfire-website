@@ -59,6 +59,8 @@
   window.__LOWDEV=LOWDEV;window.__UNFIRE_ACTIVE_DEVICE=DEVICE;
   const S = Y2K.stage(cv, { reflect: false, zoom: false, exposure: 0.98, shadow: 0.38,
     maxDpr: DEVICE.maxDpr, antialias: DEVICE.antialias, shadowResolution: LOWDEV?512:2048, fov: 30 });
+  // Texture sampler cost is chosen once, before any scene textures upload.
+  if (window.UnfirePerformanceGuard) window.UnfirePerformanceGuard.attach(S.renderer, DEVICE);
   if (LOWDEV) { S.renderer.shadowMap.enabled = false; }
   else { S.renderer.shadowMap.autoUpdate = false; S.renderer.shadowMap.needsUpdate = true; }
 
@@ -312,16 +314,37 @@
       const bTop = mesh(new THREE.SphereGeometry(1.6, 28, 14, 0, TAU, 0, H2), topM), bBot = mesh(new THREE.SphereGeometry(1.6, 28, 14, 0, TAU, H2, H2), botM); const hinge0 = new THREE.Group(); hinge0.position.set(0, 0, -1.6); ball.add(hinge0); bTop.position.set(0, 0, 1.6); hinge0.add(bTop); ball.add(bBot);
       const PED = V(0, 2.1, 10); let dev = null, devT = 0, devTg = 0, devS = 0, phase = 'idle', ph = 0, queued = false, ped = mesh(new THREE.CylinderGeometry(3, 3.4, 2, 64), [new THREE.MeshPhysicalMaterial({ color: 0xd8dee8, metalness: 1, roughness: 0.18, clearcoat: 1 }), new THREE.MeshPhysicalMaterial({ map: cnv(512, 512, (g) => { const gr = g.createRadialGradient(256, 256, 20, 256, 256, 256); gr.addColorStop(0, '#ffffff'); gr.addColorStop(0.55, '#dff3ff'); gr.addColorStop(1, '#8fd0ff'); g.fillStyle = gr; g.fillRect(0, 0, 512, 512); g.strokeStyle = '#1d4fd8'; g.lineWidth = 10; for (const r of [230, 200]) { g.beginPath(); g.arc(256, 256, r, 0, TAU); g.stroke(); } g.lineWidth = 3; for (let i = 0; i < 48; i++) { const a = i / 48 * TAU; g.beginPath(); g.moveTo(256 + Math.cos(a) * 200, 256 + Math.sin(a) * 200); g.lineTo(256 + Math.cos(a) * 230, 256 + Math.sin(a) * 230); g.stroke(); } g.fillStyle = '#1d4fd8'; g.font = '900 54px Orbitron, Arial'; g.textAlign = 'center'; g.fillText('UNFIRE', 256, 120); g.font = '700 24px Michroma, Arial'; g.fillText('PLATAFORMA DE PREMIO', 256, 420); }), roughness: 0.15, clearcoat: 1 }), new THREE.MeshPhysicalMaterial({ color: 0x1a1d26, roughness: 0.3 })]); ped.position.set(0, 1, 10); gm.add(ped); ped.geometry.groups.forEach((gp, i) => (gp.materialIndex = i));
       const ring = new THREE.Mesh(new THREE.TorusGeometry(2.6, 0.12, 10, 64), new THREE.MeshBasicMaterial({ color: 0x5fe0ff, toneMapped: false, transparent: true, opacity: 0.0 })); ring.rotation.x = H2; ring.position.set(0, 2.05, 10); gm.add(ring);
-      const wp = new THREE.Vector3(); const track = (p) => { gm.localToWorld(wp.copy(p)); R.userData.camTrack = wp.clone(); };
+      const wp = new THREE.Vector3(); const track = (p) => {
+        gm.localToWorld(wp.copy(p)); R.userData.camTrack = wp.clone();
+        const shot = R.userData.gachaFocus;
+        // Smooth only the prize target, never move the player's body toward the glass.
+        if (shot) { if (!shot.ready) shot.target.copy(wp); else shot.target.lerp(wp, 0.22); shot.ready = true; }
+      };
       const spawn = () => { try { const i = Math.floor(Math.random() * PLUGINS.list.length), spec = PLUGINS.list[i]; dev = (spec.g3 ? GEAR3 : GEAR4).build(spec, kindOf(spec), Object.keys(ENGINES.PARAMS[spec.engine]).slice(0, 4).map((k) => k.toUpperCase())); dev.root.position.copy(PED); dev.root.scale.setScalar(0.01); gm.add(dev.root); R.userData.camTrackDir = gm.localToWorld(V(0, 0, 1)).sub(gm.localToWorld(V(0, 0, 0))).normalize(); dev.spec = spec; devT = 0; devTg = 2.2; devS = 0; try { window.UEV('gacha'); } catch (e) {} dev.root.rotation.y = 0.5; say('🎰 ¡Te ha tocado ' + (spec.name || 'un aparato') + '! · tócalo para verlo otra vez'); hap(0.4); } catch (e) { console.warn(e); } };
-      const go = () => { if (phase !== 'idle' && phase !== 'show') { queued = true; return; } hap(0.6); R.userData.camTrackDir = gm.localToWorld(V(0, 0, 1)).sub(gm.localToWorld(V(0, 0, 0))).normalize(); if (dev) { phase = 'close'; ph = 0; } else { phase = 'spin'; ph = 0; } };
-      picks.push({ o: gm, f: go }); R.userData.gacha = go; picks.push({ o: ped, f: () => { if (dev && phase === 'show') { devTg = 0; setTimeout(() => (devTg = 2.2), 1400); hap(0.3); } } });
+      const go = () => {
+        if (phase !== 'idle' && phase !== 'show') { queued = true; return; }
+        hap(0.6);
+        R.userData.camTrackDir = gm.localToWorld(V(0, 0, 1)).sub(gm.localToWorld(V(0, 0, 0))).normalize();
+        // A single, unobstructed presentation angle for 1p and 3p. The robot stays put.
+        // The tall framing is more distant to avoid cropping the prize on phones.
+        if (ROAMS.on && !window.ATM_OUT) {
+          ROAMS.tgt = null;
+          R.userData.gachaFocus = {
+            camWide: gm.localToWorld(V(0, 10, 30)),
+            camTall: gm.localToWorld(V(0, 12, 37)),
+            target: gm.localToWorld(V(0, 6, 8)),
+            yaw: ROAMS.yaw, pitch: ROAMS.pitch, ready: false
+          };
+        }
+        if (dev) { phase = 'close'; ph = 0; } else { phase = 'spin'; ph = 0; }
+      };
+      picks.push({ o: gm, f: go, noFocus: true }); R.userData.gacha = go; picks.push({ o: ped, noFocus: true, f: () => { if (dev && phase === 'show') { devTg = 0; setTimeout(() => (devTg = 2.2), 1400); hap(0.3); } } });
       anim.push((dt, t) => { ph += dt;
         if (phase === 'close') { devTg = 0; track(PED); if (devT < 0.05) { devS = Math.max(0, devS - dt * 1.4); dev.root.position.y = PED.y - (1 - devS) * 2; dev.root.scale.setScalar(Math.max(0.01, devS) * 1.1); if (devS <= 0) { gm.remove(dev.root); dev = null; phase = 'spin'; ph = 0; } } }
         else if (phase === 'spin') { crank.rotation.z -= dt * 8; track(V(0, 6, 3.6)); if (ph > 1.4) { phase = 'roll'; ph = 0; ball.visible = true; ball.userData.popped = 0; ball.scale.setScalar(1); hinge0.rotation.x = 0; topM.color.setHSL(Math.random(), 0.85, 0.55); } }
         else if (phase === 'roll') { const k = Math.min(1, ph / 1.35); const z = 4.3 + k * 5.7, y = 1.0 + (PED.y + 1.6 - 1.0) * k + Math.sin(k * Math.PI) * 7.5; ball.position.set(0, y, z); ball.rotation.x += dt * 12 * (1 - k); track(V(0, 4.5, 8)); if (k > 0.62 && !ball.userData.popped) { ball.userData.popped = 1; ring.material.opacity = 1; ring.position.set(0, y - 1, z); ring.scale.setScalar(0.4); hap(0.7); try { if (audioOk()) { const c = UA.ctx, n = c.currentTime, o = c.createOscillator(), gg = c.createGain(), f = c.createBiquadFilter(); o.type = 'triangle'; o.frequency.setValueAtTime(220, n); o.frequency.exponentialRampToValueAtTime(880, n + 0.18); f.type = 'lowpass'; f.frequency.value = 2500; gg.gain.setValueAtTime(0.0001, n); gg.gain.exponentialRampToValueAtTime(0.05, n + 0.02); gg.gain.exponentialRampToValueAtTime(0.0001, n + 0.35); o.connect(f).connect(gg).connect(UA.bus.master); o.start(n); o.stop(n + 0.4); } } catch (e) {} if (!dev) spawn(); } if (ball.userData.popped) { hinge0.rotation.x = -Math.min(1, (k - 0.62) / 0.2) * 2.3; ring.scale.setScalar(ring.scale.x + dt * 6); if (dev) dev.root.position.set(0, Math.max(PED.y, y - 0.4), z); } if (k >= 1) { phase = 'open'; ph = 0; ring.position.set(0, 2.05, 10); ring.scale.setScalar(1); } }
         else if (phase === 'open') { track(V(0, 4.2, 9)); ball.position.y -= dt * 7; ball.scale.setScalar(Math.max(0.01, 1 - ph * 1.4)); if (ph > 0.75) { ball.visible = false; ball.scale.setScalar(1); ball.userData.popped = 0; phase = 'show'; ph = 0; } }
-        else if (phase === 'show') { if (ph > 6) R.userData.camTrack = null; if (queued) { queued = false; go(); } }
+        else if (phase === 'show') { if (ph <= 6) track(V(0, 5.2, 9.8)); else { R.userData.camTrack = null; R.userData.gachaFocus = null; } if (queued) { queued = false; go(); } }
         if (phase !== 'show' && phase !== 'close' && phase !== 'spin' && phase !== 'roll' && phase !== 'open') R.userData.camTrack = null;
         ring.material.opacity *= 0.985;
         bp.forEach((b, i) => { b.v.add(V(Math.sin(t * 1.3 + i) * 9 * dt, (Math.random() < 0.02 ? 30 : 0) * dt * 10, Math.cos(t * 1.1 + i) * 9 * dt)); if (phase === 'spin') b.v.add(V((Math.random() - 0.5) * 30 * dt, Math.random() * 40 * dt, (Math.random() - 0.5) * 30 * dt)); b.v.y -= 25 * dt; b.p.addScaledVector(b.v, dt); const c = V(0, 12, 0), d0 = b.p.clone().sub(c), L0 = d0.length(); if (L0 > 3.7) { d0.normalize(); b.p.copy(c).addScaledVector(d0, 3.7); const vn = b.v.dot(d0); if (vn > 0) b.v.addScaledVector(d0, -1.5 * vn); b.v.multiplyScalar(0.9); } BI.setMatrixAt(i, new THREE.Matrix4().makeTranslation(b.p.x, b.p.y, b.p.z)); }); BI.instanceMatrix.needsUpdate = true;
@@ -732,7 +755,14 @@
   const SC = Y2K.cnv(1024, 300), SG = SC.getContext('2d'), ST = Y2K.toTex(SC, { color: true }); const LOG = ['UNFIRE AUDIO · FLIGHT CASE', 'Listo.']; let scrT = 0;
   const screenM = new THREE.Mesh(new THREE.PlaneGeometry(3.3, 0.97), new THREE.MeshBasicMaterial({ map: ST, toneMapped: false })); screenM.rotation.x = H2; screenM.position.set(0, -0.022, 0.6); lid.add(screenM);
   const sbz = mesh(rbox(3.42, 0.03, 1.08, 0.04), M.blackGloss); sbz.position.set(0, -0.0, 0.6); lid.add(sbz);
-  const RT = new THREE.WebGLRenderTarget(512, 320); RT.texture.encoding = THREE.sRGBEncoding; const rtCam = new THREE.PerspectiveCamera(30, 1.6, 0.01, 60);
+  // Auxiliary product inspection must never claim the same GPU budget as the main world.
+  // Preserve the 16:10 image while scaling both its pixel cost and render cadence.
+  const INSPECTION_BUDGET = LOWDEV
+    ? (DEVICE.tier === 'compact' ? { width: 192, height: 120, stride: 8 } : { width: 256, height: 160, stride: 6 })
+    : { width: 512, height: 320, stride: 4 };
+  const RT = new THREE.WebGLRenderTarget(INSPECTION_BUDGET.width, INSPECTION_BUDGET.height);
+  RT.texture.encoding = THREE.sRGBEncoding;
+  const rtCam = new THREE.PerspectiveCamera(30, 1.6, 0.01, 60);
   const rtPlane = new THREE.Mesh(new THREE.PlaneGeometry(1.12, 0.7), new THREE.MeshBasicMaterial({ map: RT.texture, toneMapped: false })); rtPlane.rotation.x = H2; rtPlane.position.set(0.99, -0.024, 0.513); rtPlane.scale.y = 0.99; lid.add(rtPlane); rtPlane.visible = false;
   mesh2.visible = false; const rings = []; { const ov = mesh(new THREE.TorusGeometry(1, 0.022, 8, 96).rotateX(H2), CHROME); ov.scale.set(2.45, 1, 0.92); ov.position.set(0, -0.012, -0.85); const ovl = mesh(new THREE.TorusGeometry(1, 0.007, 6, 96).rotateX(H2), Y2K.led('#3d8bff', 2)); ovl.scale.set(2.36, 1, 0.84); ovl.position.set(0, -0.016, -0.85); }
   for (const sx of [-1, 1]) { const rg = new THREE.Group(); rg.position.set(sx * 2.3, -0.012, 0.6); rg.scale.setScalar(0.72); lid.add(rg); rg.add(mesh(new THREE.CylinderGeometry(0.4, 0.42, 0.02, 48), M.blackGloss)); for (let k = 1; k < 6; k++) { const gr = mesh(new THREE.TorusGeometry(0.06 * k, 0.006, 6, 40).rotateX(H2), M.graphite); gr.position.y = -0.012; rg.add(gr); } rg.add(mesh(new THREE.TorusGeometry(0.42, 0.025, 10, 48).rotateX(H2), CHROME));
@@ -1321,7 +1351,10 @@
   // MUNDO DE FONDO (solo paisaje, inalcanzable): titanes de varias alturas, megatitanes que tocan el espacio, dragones procedurales volando
   // y pantallas-collage con vídeos reales; todo se oscurece de noche y se aclara de día con la luz del cielo
   const FAR = (() => { let G = null, DR = [], SCR = [], MATS = []; const self = {};
-    const dim = (o) => o.traverse((m) => { if (m.isMesh && m.material && !m.material.userData.c0) { m.material = m.material.clone(); m.material.userData.c0 = m.material.color ? m.material.color.clone() : null; MATS.push(m.material); m.castShadow = m.receiveShadow = false; m.frustumCulled = false; } });
+    // The giant decorative horizon is purely visual: let THREE reject individual
+    // far-away meshes outside the camera frustum on constrained devices.
+    const mediaFrustum = new THREE.Frustum(), mediaMatrix = new THREE.Matrix4();
+    const dim = (o) => o.traverse((m) => { if (m.isMesh && m.material && !m.material.userData.c0) { m.material = m.material.clone(); m.material.userData.c0 = m.material.color ? m.material.color.clone() : null; MATS.push(m.material); m.castShadow = m.receiveShadow = false; m.frustumCulled = LOWDEV; } });
     const build = () => { G = new THREE.Group(); S.scene.add(G);
       // megatitanes: tan altos que la cabeza entra en el espacio
       for (let k = 0; k < (LOWDEV ? 1 : 2); k++) { try { const r0 = ROBOT.build(MUTANTS.list[(k * 5 + 6) % MUTANTS.list.length]); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(5200 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; dim(w); G.add(w); DR.push({ type: 'mega', w, r0, a: 1 + k * 3.1, R: 8300, sp: (k ? -1 : 1) * 0.0025, wd: 0 }); } catch (e) {} }
@@ -1344,8 +1377,26 @@
       { const DC2 = [0xc0c8d8, 0xffd27a, 0x7fe9ff]; for (let k = 0; k < (LOWDEV ? 1 : 3); k++) { const g = new THREE.Group(); const M = new THREE.MeshPhysicalMaterial({ color: DC2[k], roughness: 0.1, metalness: 1, clearcoat: 1 }); const segs = []; for (let i = 0; i < 16; i++) { const m = new THREE.Mesh(new THREE.SphereGeometry(((1 - i / 18) * 34 + 8) * 9, 14, 10), M); g.add(m); segs.push(m); } const wingG = new THREE.ConeGeometry(630, 1620, 3); const wl = new THREE.Mesh(wingG, M), wr = new THREE.Mesh(wingG, M); g.add(wl, wr); dim(g); G.add(g); DR.push({ type: 'dragon', g, segs, wl, wr, R: 17500 + k * 1800, y: 9000 + k * 1600, a: k * 2.2, sp: (k % 2 ? 1 : -1) * 0.004, ph: k + 7 }); } }
       [[1.1, 30000, 0x9be7ff], [2.9, 31000, 0xffb6e6], [4.6, 29500, 0xc6ff9b]].forEach(([a, R0, cl], k) => { const tr = new THREE.Group(); tr.position.set(Math.cos(a) * R0, -10, Math.sin(a) * R0); const bk = new THREE.MeshPhysicalMaterial({ map: barkT, color: cl, roughness: 0.35, metalness: 0.3, clearcoat: 1 }); const tk = new THREE.Mesh(new THREE.CylinderGeometry(1100, 2200, 120000, 24, 1, true), bk); tk.position.y = 60000; tr.add(tk); const lm2 = new THREE.MeshPhysicalMaterial({ color: cl, roughness: 0.05, transparent: true, opacity: 0.8, clearcoat: 1 }); for (let j = 0; j < 10; j++) { const b = new THREE.Mesh(new THREE.SphereGeometry(2600, 20, 14), lm2); const aa = j * 2.4; b.position.set(Math.cos(aa) * 4200, 5000 + j * 6000, Math.sin(aa) * 4200); tr.add(b); } dim(tr); G.add(tr); DR.push({ type: 'tree', g: tr }); });
       // pantallas-collage con vídeos reales flotando muy lejos
-      const MED2 = IMG.replace(/img\/?$/, 'media/'); ['v_jelly.mp4', 'v_reef.mp4', 'v_steens.mp4', 'v_waves.mp4'].slice(0, LOWDEV ? 2 : 4).forEach((f, k) => { const v = document.createElement('video'); v.src = MED2 + f; v.muted = true; v.loop = true; v.playsInline = true; v.crossOrigin = 'anonymous'; const tx = new THREE.VideoTexture(v); tx.encoding = THREE.sRGBEncoding; const al = (() => { const c = Y2K.cnv(256, 144), g = c.getContext('2d'), r = g.createRadialGradient(128, 72, 20, 128, 72, 130); r.addColorStop(0, '#fff'); r.addColorStop(0.6, '#ddd'); r.addColorStop(1, '#000'); g.save(); g.scale(1, 144 / 256); g.fillStyle = r; g.fillRect(0, 0, 256, 256); g.restore(); return new THREE.CanvasTexture(c); })(); const m = new THREE.Mesh(new THREE.PlaneGeometry(1800, 1012), new THREE.MeshBasicMaterial({ map: tx, alphaMap: al, transparent: true, opacity: 0.55, depthWrite: false, toneMapped: false })); const a = k * TAU / 4 + 0.4; m.position.set(Math.cos(a) * 9800, 1800 + k * 800, Math.sin(a) * 9800); m.lookAt(0, m.position.y * 0.6, 0); m.frustumCulled = false; G.add(m); SCR.push({ m, v }); }); };
-    return { tick(dt, t) { const out = !!window.ATM_OUT && ROAMS.on; if (!G) { if (!out || ((ROAMS.h || 0) < 800 && Math.hypot(ROAMS.p.x, ROAMS.p.z) < 1800)) return; build(); } G.visible = out; if (out && window.__LOWFPS) { self.sk = ((self.sk || 0) + 1) % 3; if (self.sk) return; dt *= 3; } SCR.forEach((s) => { if (out) { if (s.v.paused) s.v.play().catch(() => {}); } else if (!s.v.paused) s.v.pause(); }); if (!out) return;
+      const MED2 = IMG.replace(/img\/?$/, 'media/'); ['v_jelly.mp4', 'v_reef.mp4', 'v_steens.mp4', 'v_waves.mp4'].slice(0, LOWDEV ? 2 : 4).forEach((f, k) => { const v = document.createElement('video'); v.preload = 'none'; v.src = MED2 + f; v.muted = true; v.loop = true; v.playsInline = true; v.crossOrigin = 'anonymous'; const tx = new THREE.VideoTexture(v); tx.encoding = THREE.sRGBEncoding; const al = (() => { const c = Y2K.cnv(256, 144), g = c.getContext('2d'), r = g.createRadialGradient(128, 72, 20, 128, 72, 130); r.addColorStop(0, '#fff'); r.addColorStop(0.6, '#ddd'); r.addColorStop(1, '#000'); g.save(); g.scale(1, 144 / 256); g.fillStyle = r; g.fillRect(0, 0, 256, 256); g.restore(); return new THREE.CanvasTexture(c); })(); const m = new THREE.Mesh(new THREE.PlaneGeometry(1800, 1012), new THREE.MeshBasicMaterial({ map: tx, alphaMap: al, transparent: true, opacity: 0.55, depthWrite: false, toneMapped: false })); const a = k * TAU / 4 + 0.4; m.position.set(Math.cos(a) * 9800, 1800 + k * 800, Math.sin(a) * 9800); m.lookAt(0, m.position.y * 0.6, 0); m.frustumCulled = false; G.add(m); SCR.push({ m, v }); }); };
+    return { tick(dt, t) { const out = !!window.ATM_OUT && ROAMS.on; if (!G) { if (!out || ((ROAMS.h || 0) < 800 && Math.hypot(ROAMS.p.x, ROAMS.p.z) < 1800)) return; build(); } G.visible = out; if (out && window.__LOWFPS) { self.sk = ((self.sk || 0) + 1) % 3; if (self.sk) return; dt *= 3; } // Decode/update background video only when a plane is actually inside the
+      // camera view. Do not create an extra timer or GPU renderer for the test.
+      // ~8Hz is enough for purely decorative media and avoids per-frame work.
+      const videoNow = performance.now();
+      if (!out || !LOWDEV || !self.videoAt || videoNow - self.videoAt >= 120) {
+        self.videoAt = videoNow;
+        if (out && LOWDEV) {
+          cam.updateMatrixWorld();
+          mediaFrustum.setFromProjectionMatrix(mediaMatrix.multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse));
+        }
+        SCR.forEach((s) => {
+          if (out && LOWDEV) s.m.updateMatrixWorld(true);
+          const inSight = out && (!LOWDEV || mediaFrustum.intersectsObject(s.m));
+          s.m.visible = inSight;
+          if (inSight) { if (s.v.paused) s.v.play().catch(() => {}); }
+          else if (!s.v.paused) s.v.pause();
+        });
+      }
+      if (!out) return;
       const day = window.__SKYDAY ? window.__SKYDAY() : 1, k = 0.12 + 0.88 * day; MATS.forEach((m) => { if (m.userData.c0) m.color.copy(m.userData.c0).multiplyScalar(k); if (m.emissive) m.emissiveIntensity = 0.15 + (1 - day) * 0.5; }); SCR.forEach((s) => (s.m.material.opacity = 0.2 + 0.4 * day));
       const BD = window.__BANDS || { b: 0, d: 0, s: 0 }; const O3b = FAR.O3 || (FAR.O3 = new THREE.Object3D());
       DR.forEach((d, i) => { if (d.type === 'planet') { d.g.rotation.y += dt * 0.01; return; } if (d.type === 'ufo') { d.a += d.sp * dt; d.g.position.set(Math.cos(d.a) * d.R, d.y + Math.sin(t * 0.7 + i) * 60, Math.sin(d.a) * d.R); d.g.rotation.y += dt * 1.5; d.g.rotation.z = Math.sin(t * 0.9 + i) * 0.1; return; } if (d.type === 'tree') { d.g.rotation.y += dt * 0.004; d.g.scale.setScalar(1 + BD.b * 0.02); return; } if (d.type === 'dna') { d.g.rotation.y += dt * d.sp * (1 + BD.s * 3); d.g.scale.setScalar(1 + BD.d * 0.12); return; } if (d.type === 'bub') { d.BB.forEach((q, j) => { q.y += q.v * dt; if (q.y > 3600) q.y = 150; q.a += dt * 0.004; O3b.position.set(Math.cos(q.a) * q.R, q.y, Math.sin(q.a) * q.R); O3b.scale.setScalar(q.s * (1 + BD.b * 0.15)); O3b.updateMatrix(); d.bub.setMatrixAt(j, O3b.matrix); }); d.bub.instanceMatrix.needsUpdate = true; return; } if (d.type === 'mega') { d.a += d.sp * dt; d.w.position.set(Math.cos(d.a) * d.R, -10, Math.sin(d.a) * d.R); d.w.rotation.y = Math.atan2(-Math.sin(d.a) * Math.sign(d.sp), Math.cos(d.a) * Math.sign(d.sp)); d.wd += Math.abs(d.sp) * d.R * dt; if ((Math.floor(t * 15) + i) % 4 === 0) d.r0.update(3.7, dt * 4, { act: 'walk', ph: STEPPH(d.wd / d.w.scale.x, 3.7, false), mood: 'happy' }); return; }
@@ -1952,15 +2003,75 @@
   let lastEnter = 0;
   // arrastrar = desplazarse; clic = actuar
   let drag = null;
-  cv.addEventListener('pointerdown', (e) => { if (CINE.on && e.isTrusted) { CINE.on = false; say('Control manual'); } if (MV) { MV.drag = true; try { cv.setPointerCapture(e.pointerId); } catch (er) {} return; } drag = { x: e.clientX, y: e.clientY, lx: e.clientX, ly: e.clientY, gx: view.gx, gz: view.gz, moved: false, id: e.pointerId, pan: e.button === 2 || e.shiftKey }; try { cv.setPointerCapture(e.pointerId); } catch (er) {} onDown(e); });
+  // Touch taps tolerate natural finger jitter; multi-touch cannot fire an accidental case click.
+  const activeTouchPointers = new Set();
+  // Prefer the event timestamp: on a loaded mobile GPU, dispatch may be delayed
+  // while the user has already released their finger.
+  const tapMoment = (e) => Number.isFinite(e.timeStamp) && e.timeStamp > 0 ? e.timeStamp : performance.now();
+  cv.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'touch') {
+      activeTouchPointers.add(e.pointerId);
+      if (e.isPrimary === false || activeTouchPointers.size !== 1) { drag = null; return; }
+    }
+    if (CINE.on && e.isTrusted) { CINE.on = false; say('Control manual'); }
+    if (MV) { MV.drag = true; try { cv.setPointerCapture(e.pointerId); } catch (er) {} return; }
+    drag = { x: e.clientX, y: e.clientY, lx: e.clientX, ly: e.clientY,
+      gx: view.gx, gz: view.gz, moved: false, id: e.pointerId,
+      slop: e.pointerType === 'touch' ? 16 : e.pointerType === 'pen' ? 9 : 4,
+      since: tapMoment(e), pan: e.button === 2 || e.shiftKey };
+    try { cv.setPointerCapture(e.pointerId); } catch (er) {}
+    onDown(e);
+  });
   cv.addEventListener('contextmenu', (e) => e.preventDefault());
-  cv.addEventListener('pointermove', (e) => { if (MV && MV.drag) { const p = cursorPoint(e); if (p) { MV.o.position.x = clamp(p.x, -CW / 2 + 0.25, CW / 2 - 0.25); MV.o.position.z = clamp(p.z, -CD / 2 + 0.25, CD / 2 - 0.25); } return; } if (knobDrag) { if (knobDrag.hwVol) { HWVOL = clamp(knobDrag.v + (knobDrag.y - e.clientY) / 160); try { if (knobDrag.hwVol.rot) knobDrag.hwVol.rot.rotation.y = -(Math.PI * 0.75 * 2 * (HWVOL - 0.5)); } catch (er) {} HW.lock = { t: performance.now() / 1000, label: '🔊 VOLUMEN', text: Math.round(HWVOL * 100) + ' %', v: 1 }; return; } if (!knobDrag.hw) onKnobMove(e); return; } if (!drag) { hover(e); return; } const dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.hypot(dx, dy) > 4) drag.moved = true; if (!drag.moved) return;
+  cv.addEventListener('pointermove', (e) => { if (MV && MV.drag) { const p = cursorPoint(e); if (p) { MV.o.position.x = clamp(p.x, -CW / 2 + 0.25, CW / 2 - 0.25); MV.o.position.z = clamp(p.z, -CD / 2 + 0.25, CD / 2 - 0.25); } return; } if (knobDrag) { if (knobDrag.hwVol) { HWVOL = clamp(knobDrag.v + (knobDrag.y - e.clientY) / 160); try { if (knobDrag.hwVol.rot) knobDrag.hwVol.rot.rotation.y = -(Math.PI * 0.75 * 2 * (HWVOL - 0.5)); } catch (er) {} HW.lock = { t: performance.now() / 1000, label: '🔊 VOLUMEN', text: Math.round(HWVOL * 100) + ' %', v: 1 }; return; } if (!knobDrag.hw) onKnobMove(e); return; } if (!drag || drag.id !== e.pointerId) { if (e.pointerType === 'mouse') hover(e); return; } const dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.hypot(dx, dy) > drag.slop) drag.moved = true; if (!drag.moved) return;
     if (drag.pan && zoomed() && !CASE_VIEW.on) { const s = view.dist / innerHeight * 1.1, ca = Math.cos(ORB.az), sa = Math.sin(ORB.az), px = -dx * s, pz = -dy * s * 1.2; view.gx = clamp(drag.gx + px * ca + pz * sa, -CW / 2, CW / 2); view.gz = clamp(drag.gz - px * sa + pz * ca, -CD / 2, CD / 2); }
     else if (ROAMS.on && CASE_VIEW.on) { CASE_VIEW.angle-=(e.clientX-drag.lx)*0.006;CASE_VIEW.elevation=clamp(CASE_VIEW.elevation+(e.clientY-drag.ly)*0.003,0.2,1.1); }
     else if (ROAMS.on) { const O = REC.on ? REC : ROAMS; ROAMS.tgt = null; O.yaw += (e.clientX - drag.lx) * (REC.on ? 0.0035 : 0.005); O.pitch = clamp(O.pitch - (e.clientY - drag.ly) * (REC.on ? 0.003 : 0.004), -1.45, 1.45); }
     else { ORB.gaz = clamp(ORB.gaz - (e.clientX - drag.lx) * 0.006, -1.4, 1.4); if (e.pointerType === 'mouse' || zoomed()) ORB.gde = clamp(ORB.gde + (e.clientY - drag.ly) * 0.004, -0.85, 0.5); }
     drag.lx = e.clientX; drag.ly = e.clientY; });
-  addEventListener('pointerup', (e) => { if (MV && MV.drag) { MV = null; $('tb').querySelectorAll('button').forEach((b) => b.classList.remove('on')); return; } if (drag && !drag.moved) onClick(e); drag = null; endKnob(e); });
+  addEventListener('pointerup', (e) => {
+    if (e.pointerType === 'touch') activeTouchPointers.delete(e.pointerId);
+    if (MV && MV.drag) { MV = null; drag = null; $('tb').querySelectorAll('button').forEach((b) => b.classList.remove('on')); endKnob(e); return; }
+    // Up must belong to the original pointer, remain within touch slop and not be a long hold.
+    if (drag && drag.id === e.pointerId) {
+      if (!drag.moved && tapMoment(e) - drag.since <= 1100) onClick(e);
+      drag = null;
+    }
+    endKnob(e);
+  });
+  addEventListener('pointercancel', (e) => {
+    if (e.pointerType === 'touch') activeTouchPointers.delete(e.pointerId);
+    if (drag && drag.id === e.pointerId) drag = null;
+    endKnob(e);
+  });
+  // A lost OS focus/rotation must not leave stale touch IDs that block future taps.
+  const resetTapPointers = () => { activeTouchPointers.clear(); drag = null; };
+  addEventListener('blur', resetTapPointers);
+  addEventListener('pagehide', resetTapPointers);
+  addEventListener('orientationchange', resetTapPointers);
+  // Older touch browsers without Pointer Events still get single-tap interaction.
+  if (!('PointerEvent' in window)) {
+    let legacyTap = null;
+    cv.addEventListener('touchstart', (e) => {
+      legacyTap = e.touches.length === 1 ? {
+        x: e.touches[0].clientX, y: e.touches[0].clientY, since: tapMoment(e)
+      } : null;
+    }, { passive: true });
+    cv.addEventListener('touchmove', (e) => {
+      if (legacyTap && (e.touches.length !== 1 ||
+          Math.hypot(e.touches[0].clientX - legacyTap.x, e.touches[0].clientY - legacyTap.y) > 16)) legacyTap = null;
+    }, { passive: true });
+    cv.addEventListener('touchend', (e) => {
+      const tap = legacyTap; legacyTap = null;
+      if (tap && e.touches.length === 0 && e.changedTouches.length === 1 &&
+          tapMoment(e) - tap.since <= 1100) {
+        const t = e.changedTouches[0];
+        if (Math.hypot(t.clientX - tap.x, t.clientY - tap.y) <= 16)
+          onClick({ clientX: t.clientX, clientY: t.clientY });
+      }
+    }, { passive: true });
+    cv.addEventListener('touchcancel', () => { legacyTap = null; }, { passive: true });
+  }
   // pellizco en móvil
   let pinch = null, lastTap = 0;
   cv.addEventListener('touchstart', (e) => { if (e.touches.length === 2 && lidOpen > 0.9) { const [a, b] = e.touches; pinch = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); } }, { passive: true });
@@ -2408,6 +2519,9 @@
   // ---------- bucle ----------
   const clock = new THREE.Clock(); let t = 0; const pend = { it: null, t: 0 }; let MEMO = null, LV = 0; let frameN = 0; let idleT = 0, lastPlaying = false, liftY = 0;
   const tb = new Uint8Array(1024), fb = new Uint8Array(512); let level = 0;
+  // HUD captions are state labels, not animated sprites. Avoid rewriting the
+  // DOM 24–35 times a second when the string did not actually change.
+  const hudCopy = { buyKey: null, buyText: null, crumb: null, tip: null };
   let frameVisible = true, previousRenderAt = 0;
   // One shared renderer budget for the house AND the outdoor world.
   // Do not run two independent DPR controllers: each GPU realloc can stall a mobile frame.
@@ -2472,6 +2586,79 @@
   }
   const sceneFrameBudget = createSceneFrameBudget(S.renderer, DEVICE, LOWDEV);
   window.__perf = sceneFrameBudget.stats;
+  // Never synthesize four seconds of stereo ambience synchronously in a frame
+  // while the player passes the door or dome. Prepare short bounded slices.
+  let seaBuild = null, seaBuildFailed = false;
+  function ensureSeaAmbience() {
+    if (window.__SEA || seaBuild || seaBuildFailed || !ROAMS.on) return;
+    const nearDoor = !window.ATM_OUT && ROAMS.p.z > 66 && Math.abs(ROAMS.p.x + 30) < 25;
+    const nearDome = !window.ATM_OUT && ROAMS.fly && ROAMS.h > 7 &&
+      Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 95;
+    if (!window.ATM_OUT && !nearDoor && !nearDome) return;
+    if (!audioOk()) return;
+    const c = UA.ctx;
+    if (!c || c.state === 'closed') return;
+    const state = seaBuild = { channel: 0, offset: 0, prev: 0, scheduled: false,
+      buffer: null, channels: null, frames: 0 };
+    const schedule = () => {
+      if (!state.scheduled) {
+        state.scheduled = true;
+        setTimeout(fillSlice, 24);
+      }
+    };
+    function fillSlice() {
+      state.scheduled = false;
+      if (seaBuild !== state || window.__SEA) return;
+      if (document.hidden) {
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden && seaBuild === state) schedule();
+        }, { once: true });
+        return;
+      }
+      try {
+        if (c.state === 'closed') { seaBuild = null; return; }
+        if (!state.buffer) {
+          state.frames = Math.max(1024, Math.floor(c.sampleRate * 4));
+          state.buffer = c.createBuffer(2, state.frames, c.sampleRate);
+          state.channels = [state.buffer.getChannelData(0), state.buffer.getChannelData(1)];
+        }
+        const deadline = performance.now() + 2;
+        let completed = 0;
+        while (state.channel < 2 && completed < 3072 && performance.now() < deadline) {
+          const samples = state.channels[state.channel];
+          const end = Math.min(state.frames, state.offset + 512,
+            state.offset + 3072 - completed);
+          for (; state.offset < end; state.offset++) {
+            state.prev = state.prev * 0.985 + (Math.random() * 2 - 1) * 0.12;
+            samples[state.offset] = state.prev;
+            completed++;
+          }
+          if (state.offset === state.frames) {
+            state.channel++; state.offset = 0; state.prev = 0;
+          }
+        }
+        if (state.channel < 2) { schedule(); return; }
+        const src = c.createBufferSource(); src.buffer = state.buffer; src.loop = true;
+        const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900;
+        const g = c.createGain(); g.gain.value = 0;
+        src.connect(lp).connect(g).connect(UA.bus.master);
+        const src2 = c.createBufferSource(); src2.buffer = state.buffer;
+        src2.loop = true; src2.playbackRate.value = 1.7;
+        const bp = c.createBiquadFilter(); bp.type = 'bandpass';
+        bp.frequency.value = 1600; bp.Q.value = 0.6;
+        const g2 = c.createGain(); g2.gain.value = 0;
+        const wl = c.createBiquadFilter(); wl.type = 'lowpass'; wl.frequency.value = 2000;
+        src2.connect(bp).connect(wl).connect(g2).connect(UA.bus.master);
+        src.start(); src2.start();
+        window.__SEA = { g, g2, lp, bp, wl };
+        seaBuild = null;
+      } catch (error) {
+        seaBuild = null; seaBuildFailed = true;
+        console.warn('Unfire outdoor ambience initialization skipped', error);
+      }
+    }
+    schedule();
+  }
   // Opening the website/direct-link case keeps the camera on the physical
   // maletín. Exploring as the robot is an explicit separate player choice.
   // The lid animation and all equipment remain available in this view.
@@ -2485,7 +2672,11 @@
     requestAnimationFrame(frame);
     // Cap this heavy 3D scene to ~30-40fps; input events continue unthrottled.
     if (previousRenderAt && now - previousRenderAt < (LOWDEV ? (DEVICE.tier==='compact' ? 42 : 33) : window.ATM_OUT ? 33 : 28)) return;
-    const actualFrameTime = previousRenderAt ? Math.min(0.18, Math.max(0.008, (now - previousRenderAt) / 1000)) : 1 / 30;
+    // Case/camera animations must use real foreground elapsed time even if
+    // WebGL renders only a few frames per second. Physics keeps its bounded
+    // delta, and the hidden-tab branch resets previousRenderAt for safe resume.
+    const foregroundFrameTime = previousRenderAt ? Math.min(6, Math.max(0.008, (now - previousRenderAt) / 1000)) : 1 / 30;
+    const actualFrameTime = Math.min(0.18, foregroundFrameTime);
     previousRenderAt = now;
     sceneFrameBudget.note(now, actualFrameTime, !!window.ATM_OUT);
     window.__LOWFPS = sceneFrameBudget.stats.slow;
@@ -2498,10 +2689,10 @@
       if (lidControlledByPlayer) {
         if (Math.abs(lidMotion.to-pt)>0.0001) {
           lidMotion.from=pNow;lidMotion.to=pt;lidMotion.elapsed=0;
-          lidMotion.duration=pt>pNow?Math.max(0.85,5.6*Math.abs(pt-pNow)):Math.max(0.42,2.1*Math.abs(pt-pNow));
+          lidMotion.duration=pt>pNow?Math.max(0.85,3.0*Math.abs(pt-pNow)):Math.max(0.42,1.6*Math.abs(pt-pNow));
         }
         // Use real elapsed frame time for consistent physical timing.
-        lidMotion.elapsed=Math.min(lidMotion.duration,lidMotion.elapsed+Math.min(0.12,actualFrameTime));
+        lidMotion.elapsed=Math.min(lidMotion.duration,lidMotion.elapsed+foregroundFrameTime);
         const alpha=ease.smooth(clamp(lidMotion.elapsed/lidMotion.duration));
         pNow=lidMotion.from+(lidMotion.to-lidMotion.from)*alpha;
       } else {
@@ -2529,7 +2720,7 @@
     if (lidOpen < 0.9) { CK.forEach((k) => { const u = compG[k].userData; u.open = 0; u.t = Math.min(u.t, Math.max(0, (lidOpen - 0.2) / 0.7)); }); if (HW) { HW.T = Math.max(0, (HW.T || 0) - dt * 4); HW.u = Math.min(HW.u || 0, Math.max(0, (lidOpen - 0.3) / 0.6)); } items.forEach((it) => { if (it.W && it.home && !it.retT) { it.W.position.lerp(it.home, 0.2); it.W.rotation.set(0, 0, 0); } }); }
     if (lidOpen < 0.98 || STOW) { if (HW) HW.equip = false; CK.forEach((k) => { compG[k].userData.open = 0; }); if (CINE.on) CINE.on = false; open.forEach((g) => { g.closing = true; g.pin = false; }); items.forEach((it) => { if (it.kind === 'mut') it.tgt = 0; if (it.g) it.on = 0; }); if (HW) { HW.tg = 0; HW.closeGate = 1; } SEL = null; MV = null; } if (lidOpen < 0.85 && (open.length || A.using)) { closeAll(true); stopAll(); }
     if(entryDolly.active&&!ROAMS.on){
-      entryDolly.elapsed=Math.min(entryDolly.duration,entryDolly.elapsed+Math.min(.12,actualFrameTime));
+      entryDolly.elapsed=Math.min(entryDolly.duration,entryDolly.elapsed+foregroundFrameTime);
       const u=ease.smooth(clamp(entryDolly.elapsed/entryDolly.duration));
       view.dist=entryDolly.from+(entryDolly.to-entryDolly.from)*u;
       if(u>=1){entryDolly.active=false;if(entryDolly.openAfter){entryDolly.openAfter=false;pTarget=1;}}
@@ -2554,9 +2745,23 @@
       cam.fov = nextFov;
       cam.updateProjectionMatrix(); // FOV changes must reach the GPU, not only the property.
     } window.__roam = ROAMS.on || view.gd > view.D0 * 1.2; if (ROAMS.on) { const K = CASE_VIEW.on ? {} : ROAMS.k; if (K.ArrowUp || K.ArrowDown) ROAMS.tgt = null; const fw = REC.on ? 0 : (K.ArrowUp || K.w ? 1 : 0) - ((K.ArrowDown || K.s) && !ROAMS.fly ? 1 : 0), sd2 = REC.on ? 0 : (K.ArrowRight || K.d ? 1 : 0) - (K.ArrowLeft || K.a ? 1 : 0); if (ROAMS.cy == null) ROAMS.cy = ROAMS.yaw; const GTA = ((ROAMS.mode || '3p') === '3p' || ROAMS.mode === '3pl') && !ROAMS.mini; ROAMS.run = false;
-      if (fw || sd2) { ROAMS.tgt = null; ROOM.R.userData.camTrack = null; const ms = ROAMS.mini ? 0.07 : 1; const SPD = (K.Shift ? 1.8 : K.Alt ? 0.5 : 1) * (window.ATM_OUT ? 1.55 : 0.78) * (ROAMS.perkV || 1);
+      if (fw || sd2 || (ROAMS.mode === '1p' && (K.q || K.e))) { ROAMS.tgt = null; ROOM.R.userData.camTrack = null; const ms = ROAMS.mini ? 0.07 : 1; const SPD = (K.Shift ? 1.8 : K.Alt ? 0.5 : 1) * (window.ATM_OUT ? 1.55 : 0.78) * (ROAMS.perkV || 1);
         if (GTA) { const dir = ROAMS.yaw + Math.atan2(sd2, fw), y0 = ROAMS.yaw; ROAMS.cy = angL(ROAMS.cy, dir, Math.min(1, dt * 10)); ROAMS.yaw = ROAMS.cy; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; let sl = 1; if (wet && window.__WAVE) { const dx2 = Math.sin(dir) * 4, dz2 = -Math.cos(dir) * 4; sl = clamp(1 - (window.__WAVE(ROAMS.p.x + dx2, ROAMS.p.z + dz2, t) - window.__WAVE(ROAMS.p.x, ROAMS.p.z, t)) * 0.22, 0.7, 1.6); } ROAMS.surfV = (ROAMS.surfV || 1) + (sl - (ROAMS.surfV || 1)) * Math.min(1, dt * 2); const vv = 34 * SPD * (wet ? (ROAMS.board ? 1.9 * ROAMS.surfV : 1.15) : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 * (window.__PROP ? window.__PROP() : 1) : 1.4) : 1); ROAMS.run = vv > 18 && !wet; ROAMS.wet = wet; ROAMS.vvS = ROAMS.fly ? (ROAMS.vvS || vv) + (vv - (ROAMS.vvS || vv)) * Math.min(1, dt * 2.5) : vv; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(dt * ROAMS.vvS, 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.yaw = y0; if (fw >= 0) ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * (sd2 ? 1.2 : 2.6))); }
-        else if (ROAMS.mode === '1p' && !ROAMS.mini) { ROAMS.yaw += sd2 * dt * 2.0; ROAMS.cy = ROAMS.yaw; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : true) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; const vv = 34 * SPD * (wet ? 2.0 : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 : 1.4) : 1); ROAMS.run = vv > 18 && !wet; ROAMS.wet = wet; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(fw * dt * vv * (fw < 0 ? 0.6 : 1), 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); } else { ROAMS.cy = ROAMS.yaw; roamMove(fw * dt * 44 * ms * SPD, sd2 * dt * 34 * ms * SPD); } } ROAMS.moving = !!(fw || sd2);
+        else if (ROAMS.mode === '1p' && !ROAMS.mini) {
+          // First-person WASD = forward/back/strafe; arrows or Q/E = turn.
+          // Preserve the existing down-to-descend bindings during flight.
+          const turn = ((K.ArrowRight || K.e) ? 1 : 0) - ((K.ArrowLeft || K.q) ? 1 : 0);
+          const strafe = (K.d ? 1 : 0) - (K.a ? 1 : 0);
+          ROAMS.yaw += turn * dt * 2.0; ROAMS.cy = ROAMS.yaw;
+          const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : true) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly;
+          const vv = 34 * SPD * (wet ? 2.0 : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 : 1.4) : 1);
+          ROAMS.run = vv > 18 && !wet; ROAMS.wet = wet;
+          const ox = ROAMS.p.x, oz = ROAMS.p.z;
+          const forward = fw * (fw < 0 ? 0.6 : 1);
+          const norm = Math.max(1, Math.hypot(forward, strafe));
+          roamMove(dt * vv * forward / norm, dt * vv * strafe / norm);
+          ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz);
+        } else { ROAMS.cy = ROAMS.yaw; roamMove(fw * dt * 44 * ms * SPD, sd2 * dt * 34 * ms * SPD); } } ROAMS.moving = !!(fw || (ROAMS.mode === '1p' ? K.a || K.d : sd2));
       { if (ROAMS.h == null) { ROAMS.h = 0; ROAMS.vy = 0; } const fl = (() => { if (window.ATM_OUT) { if (Math.abs(ROAMS.p.x) < 82 && ROAMS.p.z > -18 && ROAMS.p.z < 98 && -8.9 + (ROAMS.h || 0) > 25) { const inDome = Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 37 && window.__DOME && window.__DOME.open > 0.6; if (!inDome) return 26.6 + 8.9 + 0.2; return 0; } if (window.__SKYDEV && (ROAMS.h || 0) > 40) { for (const o of window.__SKYDEV()) { if (!o.visible) continue; const s = o.scale.x, top = o.position.y + s * 0.45; if (Math.hypot(ROAMS.p.x - o.position.x, ROAMS.p.z - o.position.z) < s * 0.7 && top + 9 <= ROAMS.h + 2 && top + 9 > ROAMS.h - 60) { ROAMS.onDevN = o; return top + 9; } } } if (window.__WAVE && window.__LAND && !window.__LAND(ROAMS.p.x, ROAMS.p.z)) { return window.__WAVE(ROAMS.p.x, ROAMS.p.z, t) - (ROAMS.board ? -1.1 : 0.85); } let g = 0; for (const B of window.__OBSTO || []) if (B.y1 != null && ROAMS.p.x > B.x0 + 0.9 && ROAMS.p.x < B.x1 - 0.9 && ROAMS.p.z > B.z0 + 0.9 && ROAMS.p.z < B.z1 - 0.9 && B.y1 + 9 <= ROAMS.h + 0.6) g = Math.max(g, B.y1 + 9); return g; } if (ROAMS.mini || !window.__OBST) return 0; let g = 0; const p = ROAMS.p; for (const B of window.__OBST) if (B.y1 != null && p.x > B.x0 + 0.9 && p.x < B.x1 - 0.9 && p.z > B.z0 + 0.9 && p.z < B.z1 - 0.9 && B.y1 + 8.9 <= ROAMS.h + 0.6) g = Math.max(g, B.y1 + 8.9); return g; })(); ROAMS.fl = fl; { const o = ROAMS.onDevN; ROAMS.onDevN = null; const onTop = o && (ROAMS.h || 0) <= fl + 1.5; if (onTop) { if (ROAMS.devObj === o && ROAMS.devPrev) { ROAMS.p.x += o.position.x - ROAMS.devPrev.x; ROAMS.p.z += o.position.z - ROAMS.devPrev.z; } ROAMS.devObj = o; ROAMS.devPrev = o.position.clone(); if (ROAMS.landedOn !== o) { ROAMS.landedOn = o; let n = 0; try { n = (+localStorage.getItem('unfire_skyland') || 0) + 1; localStorage.setItem('unfire_skyland', String(n)); } catch (e) {} if (n % 3 === 0) { try { window.__REWARD('Has aterrizado en ' + n + ' plugins gigantes'); } catch (e) {} } else say(n % 3 === 0 ? '' : '🛬 ¡Aterrizaje en un plugin gigante! (' + n + ') · aterriza en 3 para completar la misión · mantén ESPACIO para despegar'); hap(0.5); } } else { ROAMS.devObj = null; if (!o) ROAMS.landedOn = (ROAMS.h || 0) > 60 ? ROAMS.landedOn : null; } } if (ROAMS.board && ROAMS.wet && K[' '] && ROAMS.spDown && performance.now() - ROAMS.spDown > 450 && !ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; ROAMS.trick = null; }
         ROAMS.wet = !!window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !ROAMS.fly; ROAMS.wk = (ROAMS.wk || 0) + ((ROAMS.fly ? 1 : 0) - (ROAMS.wk || 0)) * Math.min(1, dt * 3); if (ROAMS.slam && ROAMS.fly && !ROAMS.mini) {
           ROAMS.slamV = Math.min(2300, Math.max(ROAMS.slamV || 280, (ROAMS.h - fl) * 2.2, (ROAMS.slamV || 280) + dt * 1300));
@@ -2579,7 +2784,7 @@
             const eng = mesh(new THREE.CylinderGeometry(0.32, 0.4, 1.4, 14), stripeM); eng.rotation.x = Math.PI / 2; eng.position.set(sg * 2.2, -0.25, 0.2); hinge.add(eng); const glow = new THREE.Mesh(new THREE.CircleGeometry(0.28, 14), tipM); glow.position.set(sg * 2.2, -0.25, -0.52); glow.rotation.y = Math.PI; hinge.add(glow);
             return { root, hinge, sg, bl: [] }; };
           const wl = side(1), wr = side(-1); WG.add(wl.root, wr.root); WG.scale.setScalar(0.001 / s0); w.add(WG); const TH = new THREE.Group(); const thM = new THREE.MeshBasicMaterial({ color: 0x7fd6ff, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }); [-1, 1].forEach((sx) => { const piv = new THREE.Group(); piv.position.set(sx * 1.0 / s0, 0.05 / s0, 0); const c = new THREE.Mesh(new THREE.ConeGeometry(0.55 / s0, 3.2 / s0, 16, 1, true), thM); c.rotation.x = Math.PI; c.position.y = -1.6 / s0; piv.add(c); TH.add(piv); }); TH.visible = false; w.add(TH); const BRD = new THREE.Group(); { const bt = ((f) => { const c = Y2K.cnv(256, 64); f(c.getContext('2d')); return Y2K.toTex(c, { color: true }); })((g) => { g.fillStyle = '#fefefe'; g.fillRect(0, 0, 256, 64); g.fillStyle = '#ff2fb0'; g.fillRect(0, 26, 256, 12); g.fillStyle = '#3d8bff'; g.fillRect(0, 20, 256, 4); g.fillRect(0, 40, 256, 4); g.fillStyle = '#111'; g.font = '900 22px Impact'; g.fillText('UNFIRE 27', 90, 34); }); const bg = new THREE.SphereGeometry(1, 28, 12); const bm = new THREE.Mesh(bg, new THREE.MeshPhysicalMaterial({ map: bt, roughness: 0.25, clearcoat: 1 })); bm.scale.set(1.5 / s0, 0.2 / s0, 5.2 / s0); bm.castShadow = true; BRD.add(bm); const fin = new THREE.Mesh(new THREE.BoxGeometry(0.06 / s0, 0.5 / s0, 0.5 / s0), new THREE.MeshStandardMaterial({ color: 0x222222 })); fin.position.set(0, -0.35 / s0, 3.8 / s0); BRD.add(fin); } BRD.visible = false; w.add(BRD); if (ROAMS.myCol && window.__tintAvatar) { window.__tintAvatar(WG, ROAMS.myCol); window.__tintAvatar(BRD, ROAMS.myCol); } ROAMS.av = { w, r0, ph: 0, WG, wl, wr, TH, BRD }; } catch (e) { ROAMS.av = { w: null }; } }
-      const AV = ROAMS.av; const fx = Math.sin(ROAMS.yaw), fz = -Math.cos(ROAMS.yaw); const MODE = REC.on ? '3p' : ROAMS.mode === 'libre' ? '3p' : ROAMS.mode || '3p'; if ((MODE !== '3p' && MODE !== '3pl' && MODE !== '1p') || ROAMS.mini) { if (AV.w) AV.w.visible = false; const eye = MODE === '1p' && !ROAMS.mini ? (window.ATM_OUT ? -9 : -8.9) + 9.6 + (ROAMS.h || 0) : ROAMS.p.y; if (!ROAMS.cp) ROAMS.cp = cam.position.clone(); ROAMS.cp.lerp(V(ROAMS.p.x, eye, ROAMS.p.z), MODE === '1p' ? 0.5 : 0.25); cam.position.copy(ROAMS.cp); cam.lookAt(cam.position.x + fx * cp, cam.position.y + Math.sin(ROAMS.pitch), cam.position.z + fz * cp); cam.near = ROAMS.mini ? 0.01 : 0.1; } else { if (AV.w) { AV.w.visible = true; AV.w.position.set(ROAMS.p.x, -8.9 + (ROAMS.h || 0), ROAMS.p.z); if (AV.WG) { const k = ROAMS.wk || 0, s0 = AV.w.scale.x || 1; AV.WG.scale.setScalar(Math.max(0.001, Math.min(1, k * 3)) / s0); AV.WG.visible = k > 0.01; const fl2 = Math.sin(t * (ROAMS.moving ? 7 : 3)) * 0.18 * k; [AV.wl, AV.wr].forEach((S2) => { const kk = Math.max(0, Math.min(1, k * 1.4 - 0.2)), e = kk * kk * (3 - 2 * kk); S2.hinge.rotation.y = S2.sg * (1 - e) * 1.45; S2.hinge.rotation.z = S2.sg * ((1 - e) * -0.9 + e * 0.08 + fl2 * 0.25 - (AV.bank || 0) * 0.25 * S2.sg); S2.hinge.scale.setScalar(0.25 + 0.75 * Math.min(1, k * 1.3)); }); { const yr = ROAMS.cy - (AV.lyaw == null ? ROAMS.cy : AV.lyaw); AV.lyaw = ROAMS.cy; AV.bank = (AV.bank || 0) * 0.9 + Math.max(-0.6, Math.min(0.6, -Math.atan2(Math.sin(yr), Math.cos(yr)) * 8)) * 0.1; const tp = ROAMS.fly ? (ROAMS.moving ? 1.25 : ((ROAMS.climbV || 0) > 5 ? -0.05 : 0.12)) : 0; AV.tilt = (AV.tilt || 0) + (tp - (AV.tilt || 0)) * Math.min(1, dt * 3); AV.w.rotation.x = AV.tilt + (ROAMS.fly ? Math.sin(t * 2.3) * 0.04 + Math.sin(t * 5.1) * 0.015 : 0); AV.w.rotation.z = ROAMS.fly ? AV.bank + Math.sin(t * 1.7) * 0.05 : 0; if (AV.TH) { AV.TH.visible = k > 0.05; AV.TH.children.forEach((c, i) => { c.scale.set(1, (0.6 + Math.random() * 0.5 + ((ROAMS.climbV || 0) > 5 || ROAMS.moving ? 0.8 : 0)) * k, 1); }); } } if (ROAMS.wet && !ROAMS.fly) { AV.w.rotation.x = ROAMS.moving ? 0.22 : 0.05; AV.w.rotation.z = Math.sin(t * 1.7) * 0.07; } } const cyy = ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy; AV.w.rotation.y = Math.atan2(Math.sin(cyy), -Math.cos(cyy));
+      const AV = ROAMS.av; const fx = Math.sin(ROAMS.yaw), fz = -Math.cos(ROAMS.yaw); const MODE = REC.on ? '3p' : ROAMS.mode === 'libre' ? '3p' : ROAMS.mode || '3p'; if ((MODE !== '3p' && MODE !== '3pl' && MODE !== '1p') || ROAMS.mini || !AV.w) { if (AV.w) AV.w.visible = false; const eye = MODE === '1p' && !ROAMS.mini ? (window.ATM_OUT ? -9 : -8.9) + 9.6 + (ROAMS.h || 0) : ROAMS.p.y; if (!ROAMS.cp) ROAMS.cp = cam.position.clone(); ROAMS.cp.lerp(V(ROAMS.p.x, eye, ROAMS.p.z), MODE === '1p' ? 0.5 : 0.25); cam.position.copy(ROAMS.cp); cam.lookAt(cam.position.x + fx * cp, cam.position.y + Math.sin(ROAMS.pitch), cam.position.z + fz * cp); cam.near = ROAMS.mini ? 0.01 : 0.1; } else { if (AV.w) { AV.w.visible = true; AV.w.position.set(ROAMS.p.x, -8.9 + (ROAMS.h || 0), ROAMS.p.z); if (AV.WG) { const k = ROAMS.wk || 0, s0 = AV.w.scale.x || 1; AV.WG.scale.setScalar(Math.max(0.001, Math.min(1, k * 3)) / s0); AV.WG.visible = k > 0.01; const fl2 = Math.sin(t * (ROAMS.moving ? 7 : 3)) * 0.18 * k; [AV.wl, AV.wr].forEach((S2) => { const kk = Math.max(0, Math.min(1, k * 1.4 - 0.2)), e = kk * kk * (3 - 2 * kk); S2.hinge.rotation.y = S2.sg * (1 - e) * 1.45; S2.hinge.rotation.z = S2.sg * ((1 - e) * -0.9 + e * 0.08 + fl2 * 0.25 - (AV.bank || 0) * 0.25 * S2.sg); S2.hinge.scale.setScalar(0.25 + 0.75 * Math.min(1, k * 1.3)); }); { const yr = ROAMS.cy - (AV.lyaw == null ? ROAMS.cy : AV.lyaw); AV.lyaw = ROAMS.cy; AV.bank = (AV.bank || 0) * 0.9 + Math.max(-0.6, Math.min(0.6, -Math.atan2(Math.sin(yr), Math.cos(yr)) * 8)) * 0.1; const tp = ROAMS.fly ? (ROAMS.moving ? 1.25 : ((ROAMS.climbV || 0) > 5 ? -0.05 : 0.12)) : 0; AV.tilt = (AV.tilt || 0) + (tp - (AV.tilt || 0)) * Math.min(1, dt * 3); AV.w.rotation.x = AV.tilt + (ROAMS.fly ? Math.sin(t * 2.3) * 0.04 + Math.sin(t * 5.1) * 0.015 : 0); AV.w.rotation.z = ROAMS.fly ? AV.bank + Math.sin(t * 1.7) * 0.05 : 0; if (AV.TH) { AV.TH.visible = k > 0.05; AV.TH.children.forEach((c, i) => { c.scale.set(1, (0.6 + Math.random() * 0.5 + ((ROAMS.climbV || 0) > 5 || ROAMS.moving ? 0.8 : 0)) * k, 1); }); } } if (ROAMS.wet && !ROAMS.fly) { AV.w.rotation.x = ROAMS.moving ? 0.22 : 0.05; AV.w.rotation.z = Math.sin(t * 1.7) * 0.07; } } const cyy = ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy; AV.w.rotation.y = Math.atan2(Math.sin(cyy), -Math.cos(cyy));
         // SURF: tabla bajo los pies en el agua, postura de lado, trucos con ESPACIO (360, flip, grab, superman) y puntuación con récord
         { const surf = !!(window.ATM_OUT && ROAMS.wet && !ROAMS.fly && ROAMS.board); AV.bk = (AV.bk || 0) + ((surf || ROAMS.trick ? 1 : 0) - (AV.bk || 0)) * Math.min(1, dt * 5); if (AV.BRD) { AV.BRD.visible = AV.bk > 0.02; const e3 = AV.bk; AV.BRD.scale.set(e3, 1, Math.max(0.05, e3 * e3)); AV.BRD.rotation.y = (1 - e3) * 3.0; } AV.st = (AV.st || 0) + ((surf ? 1 : 0) - (AV.st || 0)) * Math.min(1, dt * 6); if (AV.r0 && AV.r0.root) AV.r0.root.rotation.y = AV.st * 1.25 * (1 - (ROAMS.trick && ROAMS.trick.k === 'SUPERMAN' ? 1 : 0)); window.__T = t; if (surf && window.__WAVE) { const W1 = window.__WAVE, px = ROAMS.p.x, pz = ROAMS.p.z, fx = Math.sin(cyy), fz = -Math.cos(cyy), e = 3; const sF = (W1(px + fx * e, pz + fz * e, t) - W1(px - fx * e, pz - fz * e, t)) / (2 * e), sS = (W1(px - fz * e, pz + fx * e, t) - W1(px + fz * e, pz - fx * e, t)) / (2 * e); AV.sp0 = (AV.sp0 || 0) + (Math.atan(sF) - (AV.sp0 || 0)) * Math.min(1, dt * 6); AV.sr0 = (AV.sr0 || 0) + (Math.atan(sS) - (AV.sr0 || 0)) * Math.min(1, dt * 6); AV.w.rotation.x = -AV.sp0 * 0.9; AV.w.rotation.z = (AV.bank || 0) * 1.6 + AV.sr0 * 0.9 + Math.sin(t * 1.3) * 0.04; }
           const TK = ROAMS.trick; if (TK) { TK.t += dt; const u = Math.min(1, TK.t / 0.95), e = u * u * (3 - 2 * u); if (TK.k === '360') AV.w.rotation.y += TK.sd * e * TAU; else if (TK.k === 'FLIP') AV.w.rotation.x += e * TAU; else if (TK.k === 'GRAB') AV.w.rotation.z += Math.sin(u * Math.PI) * 0.7 * TK.sd; else AV.w.rotation.x -= Math.sin(u * Math.PI) * 1.3;
@@ -2602,10 +2807,26 @@
         sample.x = P.x; sample.z = P.z; sample.h = height;
       }
     }
-    if (ROAMS.on && !ROAMS.mini && ROAMS.av && ROAMS.av.w) { const AV = ROAMS.av, hd = AV.r0 && AV.r0.J && AV.r0.J.head ? AV.r0.J.head.g : null; const FP = (ROAMS.mode === '1p') && !REC.on;
+    if (ROAMS.on && !ROAMS.mini) { const AV = ROAMS.av, hd = AV && AV.r0 && AV.r0.J && AV.r0.J.head ? AV.r0.J.head.g : null; const FP = (ROAMS.mode === '1p') && !REC.on;
       if (hd) hd.visible = !FP;
-      // 1ª persona de verdad: la cámara va en los ojos del 27; ves tus brazos, tu cuerpo y tus alas al mirar abajo
-      if (FP) { AV.w.updateMatrixWorld(true); const hp = hd ? hd.getWorldPosition(V(0, 0, 0)) : V(ROAMS.p.x, -8.9 + 9.6 + (ROAMS.h || 0), ROAMS.p.z); const fx2 = Math.sin(ROAMS.yaw), fz2 = -Math.cos(ROAMS.yaw); const eye = V(hp.x + fx2 * 1.25, hp.y + 0.25, hp.z + fz2 * 1.25); if (!ROAMS.ep || ROAMS.ep.distanceTo(eye) > 6) ROAMS.ep = eye.clone(); ROAMS.ep.lerp(eye, Math.min(1, dt * 22)); cam.position.copy(ROAMS.ep); const pc = Math.cos(ROAMS.pitch); cam.lookAt(cam.position.x + fx2 * pc, cam.position.y + Math.sin(ROAMS.pitch), cam.position.z + fz2 * pc); cam.near = window.ATM_OUT ? 0.12 : 0.07; ROAMS.cp = cam.position.clone(); }
+      // Keep the view on a stable player-relative eye anchor, NOT on the animated head.
+      // Flight leans/wing animations can move the head by metres and make the view jump.
+      if (FP) {
+        const outside = !!window.ATM_OUT;
+        const fx2 = Math.sin(ROAMS.yaw), fz2 = -Math.cos(ROAMS.yaw);
+        const floorY = (outside ? -9 : -8.9) + (ROAMS.h || 0);
+        const eye = V(ROAMS.p.x + fx2 * 1.1, floorY + 9.6, ROAMS.p.z + fz2 * 1.1);
+        // Hard-snap on teleport/indoor-outdoor transition to avoid sweeping through walls.
+        if (!ROAMS.ep || ROAMS._fpOut !== outside || ROAMS.ep.distanceToSquared(eye) > 100)
+          ROAMS.ep = eye.clone();
+        else ROAMS.ep.lerp(eye, 1 - Math.exp(-Math.min(0.05, Math.max(0, dt)) * 18));
+        ROAMS._fpOut = outside;
+        cam.position.copy(ROAMS.ep);
+        const pc = Math.cos(ROAMS.pitch);
+        cam.lookAt(cam.position.x + fx2 * pc, cam.position.y + Math.sin(ROAMS.pitch), cam.position.z + fz2 * pc);
+        cam.near = outside ? 0.18 : 0.12;
+        ROAMS.cp = cam.position.clone();
+      } else { ROAMS.ep = null; }
       if (REC.on) REC.tick(dt); }
     camB.style.display = ROAMS.on ? 'block' : 'none'; recB.style.display = ROAMS.on && !ROAMS.mini ? 'block' : 'none'; if (window.__onlB) window.__onlB.style.display = ROAMS.on && !ROAMS.mini && !(window.ONLINE_ON && window.ONLINE_ON()) ? 'block' : 'none'; if (window.__surfB) { const SB = window.__surfB; SB.k = (SB.k || 0) + 1; if (SB.k % 8 === 0) { let nw = false; if (ROAMS.on && window.ATM_OUT && !ROAMS.mini && window.__LAND && (ROAMS.h || 0) < (ROAMS.fl || 0) + 18) { const px = ROAMS.p.x, pz = ROAMS.p.z; nw = !window.__LAND(px, pz) || [0, 1, 2, 3, 4, 5].some((i) => !window.__LAND(px + Math.cos(i * 1.047) * 9, pz + Math.sin(i * 1.047) * 9)); } if (nw && !SB.shown) { SB.style.animation = 'none'; void SB.offsetWidth; SB.style.animation = 'surfPop .45s cubic-bezier(.3,1.6,.5,1)'; if (!SB.told) { SB.told = 1; say('🏄 ¡Estás en el agua! Pulsa TABLA (o B) para surfear'); } } SB.shown = nw; SB.style.display = nw ? 'block' : 'none'; } } MIX.tick(); ATM.tick(dt, t); $('tip').style.visibility = ROAMS.on ? 'hidden' : ''; cam.updateProjectionMatrix();
     // colisiones: tu robot no atraviesa muebles ni máquinas (cajas de colisión de lo que está en el suelo)
@@ -2671,7 +2892,7 @@
       }
     }
     // sonido de mar y viento fuera (más fuerte en la orilla y en el agua, viento al volar alto)
-    try { if (ROAMS.on && window.ATM_OUT && audioOk() && !window.__SEA) { const c = UA.ctx, N = c.sampleRate * 4, bf = c.createBuffer(2, N, c.sampleRate); for (let ch = 0; ch < 2; ch++) { const d = bf.getChannelData(ch); let b = 0; for (let i = 0; i < N; i++) { b = b * 0.985 + (Math.random() * 2 - 1) * 0.12; d[i] = b; } } const src = c.createBufferSource(); src.buffer = bf; src.loop = true; const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; const g = c.createGain(); g.gain.value = 0; src.connect(lp).connect(g).connect(UA.bus.master); src.start(); const src2 = c.createBufferSource(); src2.buffer = bf; src2.loop = true; src2.playbackRate.value = 1.7; const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1600; bp.Q.value = 0.6; const g2 = c.createGain(); g2.gain.value = 0; const wl = c.createBiquadFilter(); wl.type = 'lowpass'; wl.frequency.value = 2000; src2.connect(bp).connect(wl).connect(g2).connect(UA.bus.master); src2.start(); window.__SEA = { g, g2, lp, bp, wl }; }
+    try { ensureSeaAmbience();
       if (window.__SEA) { const S0 = window.__SEA, out = ROAMS.on && window.ATM_OUT, r = Math.hypot(ROAMS.p.x, ROAMS.p.z); const shore = out ? (ROAMS.wet ? 1 : Math.max(0.25, 1 - Math.abs(r - 256) / 160)) : 0; const hi = out ? Math.min(1, (ROAMS.h || 0) / 400) : 0; const mus = ((window.__WRADIO && window.__WRADIO.on) || (RADIO.st && RADIO.st.on) ? 0.4 : 1) * (window.speechSynthesis && speechSynthesis.speaking ? 0.3 : 1); const wave = 0.55 + 0.45 * Math.sin(t * 0.55) * Math.sin(t * 0.21 + 1); S0.g.gain.value += ((out ? 0.13 * shore * wave * (1 - hi * 0.8) * mus : 0) - S0.g.gain.value) * Math.min(1, dt * 2); if (window.__RAING) window.__RAING.gain.value = 0.012 * mus * (window.ATM_OUT ? 1 - hi * 0.7 : 0.6); S0.lp.frequency.value = (mus < 1 ? 380 : 500) + wave * (mus < 1 ? 500 : 900);  const wz = Math.tanh((ROAMS.spd || 0) / 500); S0.g2.gain.value += ((out ? Math.min(0.085, 0.015 + hi * 0.03 + (ROAMS.fly ? wz * 0.055 : 0)) * mus : 0) - S0.g2.gain.value) * Math.min(1, dt * 1.5); if (S0.bp) { S0.bp.frequency.value = 650 + 1300 * wz; } if (S0.wl) S0.wl.frequency.value = 1800 + 2200 * wz; } } catch (e) {}
     // lo que no se ve no existe: dentro de la casa, el mundo de fuera (Atlantis, desierto, moáis, pirámide) se apaga
     if (window.__EXT) { const c = cam.position, inside = !window.ATM_OUT && Math.abs(c.x) < 81 && c.z > -17.5 && c.z < 97.5 && c.y < 27; if (inside !== window.__EXTin) { window.__EXTin = inside; window.__EXT.forEach((o) => { if (!o.userData.tall) o.visible = !inside; }); } }
@@ -2705,17 +2926,27 @@
       if (it.laptop) { it.laptop.rotation.x = -1.85 * ease.smooth(it.kk); it.g.rotation.x = lerp(0, 0.35, k); it.g.position.y = 0.03 + k * 0.1; return; }
       it.g.rotation.x = lerp(0, it.kind === 'fx' ? 0.42 : H2 - 0.45, k); const cy = it.comp && compG[it.comp] ? compG[it.comp].position.y : 0; it.g.position.y = (it.kind === 'fx' ? 0.05 : 0.02) + cy + k * (it.kind === 'fx' ? 0.07 : 0.42); it.g.visible = cy > -0.3; });
     // HUD
-    const zoomK = 1 - view.dist / view.D0; $('hud').classList.toggle('on', zoomK > 0.05); const bi = zoomK > 0.55 ? items.reduce((b, it) => (planar(it) < (b ? planar(b) : 0.45) ? it : b), null) : null; const bk = bi ? ({ fx: 'fx-' + bi.id, hyper: 'hyper', synth: 'synth', cap: 'club', mut: 'club', archer: 'archer' })[bi.kind] : null; $('buy').classList.toggle('on', !!bk); if (bk) { $('buy').dataset.k = bk; $('buy').textContent = (bk === 'archer' ? 'VER EN APP STORE · ' : 'AÑADIR A LA BOLSA · ') + bi.name; }
+    const zoomK = 1 - view.dist / view.D0; $('hud').classList.toggle('on', zoomK > 0.05); const bi = zoomK > 0.55 ? items.reduce((b, it) => (planar(it) < (b ? planar(b) : 0.45) ? it : b), null) : null; const bk = bi ? ({ fx: 'fx-' + bi.id, hyper: 'hyper', synth: 'synth', cap: 'club', mut: 'club', archer: 'archer' })[bi.kind] : null; $('buy').classList.toggle('on', !!bk);
+    if (bk) {
+      const buyText = (bk === 'archer' ? 'VER EN APP STORE · ' : 'AÑADIR A LA BOLSA · ') + bi.name;
+      if (hudCopy.buyKey !== bk) { $('buy').dataset.k = bk; hudCopy.buyKey = bk; }
+      if (hudCopy.buyText !== buyText) { $('buy').textContent = buyText; hudCopy.buyText = buyText; }
+    }
     let near = null, nd = 1e9; for (const it of items) { const d = Math.hypot(it.pos.x - view.tx, it.pos.z - view.tz); if (d < nd) { nd = d; near = it; } }
     const comp = Object.values(COMP).find((c) => view.tx >= c.x0 - 0.1 && view.tx <= c.x1 + 0.1 && view.tz >= c.z0 - 0.1 && view.tz <= c.z1 + 0.1);
-    $('crumb').innerHTML = 'MALETÍN' + (comp && zoomK > 0.25 ? ' › ' + comp.name.toUpperCase() : '') + (near && zoomK > 0.6 ? ' › <b>' + near.name + '</b>' : '');
+    const crumbText = 'MALETÍN' + (comp && zoomK > 0.25 ? ' › ' + comp.name.toUpperCase() : '') + (near && zoomK > 0.6 ? ' › <b>' + near.name + '</b>' : '');
+    if (hudCopy.crumb !== crumbText) { $('crumb').innerHTML = crumbText; hudCopy.crumb = crumbText; }
     const tip = lidOpen < 0.05 ? 'Pulsa el botón de la mariposa · o baja un poco' : lidOpen < 0.9 ? '' : zoomK < 0.05 ? (allOpen() ? 'Rueda sobre el maletín = acercarte · fuera = bajar la página' : 'Baja sobre una compuerta para abrirla · fuera = todas · o pulsa ABRIR TODO') : open.some((g) => g.m > 0.9) ? 'Pulsa la mariposa para cambiar de forma · arrastra los mandos' : near && ['fx', 'archer', 'hyper', 'synth'].includes(near.kind) && zoomK > 0.6 ? 'Clic para probarlo' : 'Arrastra para girar · cursor al borde para moverte · acércate para abrir';
     // Touch-first HUD: no long translucent instruction banners over the avatar,
     // the suitcase, or the mobile action controls. Desktop keeps full hints.
     const mobileTip = window.__UNFIRE_AUTOCALIB && window.__UNFIRE_AUTOCALIB.touch
       ? (!ROAMS.on && lidOpen < 0.05 ? 'PULSA LA MARIPOSA' : '')
       : tip;
-    $('tip').textContent = mobileTip; $('tip').classList.toggle('on', !!mobileTip);
+    if (hudCopy.tip !== mobileTip) {
+      $('tip').textContent = mobileTip;
+      $('tip').classList.toggle('on', !!mobileTip);
+      hudCopy.tip = mobileTip;
+    }
     if (!(frameN++ % 6)) { const pts = []; for (const x of [-CW / 2 - 0.1, CW / 2 + 0.1]) for (const z of [-CD / 2 - 0.1, CD / 2 + 0.25]) { pts.push(V(x, 0, z), V(x, HB + 0.1, z)); pts.push(lid.localToWorld(V(x, HL, z))); } let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
       for (const p of pts) { p.project(cam); const sx = (p.x + 1) / 2 * innerWidth, sy = (1 - p.y) / 2 * innerHeight; x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy); }
       parentPost({ rect: [Math.round(x0), Math.round(y0), Math.round(x1), Math.round(y1)], lv: Math.round(LV * 100) / 100, open: lidOpen > 0.9, zoom: zoomed() || !!drag || !!knobDrag }); }
@@ -2729,11 +2960,21 @@
       if (!CINE.on) separate(items.filter((it) => it.W && it.R), 0.2, false);
       flyers.forEach((f, i) => { f.m = Math.min(2, f.m + dt * 0.5); f.a += dt * 0.22; f.dev.root.position.set(Math.cos(f.a) * (CW / 2 - 0.4), 0.8 + 0.12 * Math.sin(bt + i), Math.sin(f.a) * (CD / 2 - 0.35)); f.dev.root.rotation.y = -f.a; f.dev.update(f.m, dt, { level: 0.3 }); }); }
     document.body.classList.toggle('cine', CINE.on && lidOpen > 0.95);
-    scrT -= dt; if (scrT <= 0) { scrT = 0.25; drawScr(t, A.song, CINE.on); }
+    scrT -= dt;
+    if (scrT <= 0) {
+      scrT = 0.25;
+      // Do not rasterize/upload the interior screen while the case is closed
+      // or stowed. Its next visible update still happens within 250 ms.
+      if (caseG.visible && lidOpen > 0.05) drawScr(t, A.song, CINE.on);
+    }
     if (CINE.on !== DRC.was) { DRC.was = CINE.on; try { CINE.on ? cineStart() : cineStop(); } catch (er) { console.warn(er); } }
     if (CINE.on && lidOpen > 0.95) DIRECTOR(dt, t);
     rings.forEach((r) => { r.m.rotation.y += dt * (0.4 + r.i * 0.3 + LV * 3) * r.sx * (r.i % 2 ? -1 : 1); r.m.scale.setScalar(1 + LV * 0.12 * (3 - r.i)); r.m.material.emissiveIntensity = 1 + LV * 4; });
-    rtPlane.visible = !!SEL && lidOpen > 0.9; if (rtPlane.visible && !(frameN % (window.__LOWFPS ? 10 : 4))) { const o = SEL.type === 'cap' ? SEL.g.dev.root : SEL.type === 'mut' ? SEL.it.W : SEL.type === 'dev' ? SEL.it.g : HW.root, wp = o.getWorldPosition(V(0, 0, 0)), d = { cap: 0.5, mut: 0.42, hw: 1.3, dev: 0.75 }[SEL.type];
+    rtPlane.visible = !!SEL && lidOpen > 0.9;
+    // Each auxiliary pass renders the whole scene again. Scale its cadence
+    // down first under GPU stress; never throttle gameplay/input/mission ticks.
+    const inspectionStride = window.__LOWFPS ? Math.ceil(INSPECTION_BUDGET.stride * 1.5) : INSPECTION_BUDGET.stride;
+    if (rtPlane.visible && !(frameN % inspectionStride)) { const o = SEL.type === 'cap' ? SEL.g.dev.root : SEL.type === 'mut' ? SEL.it.W : SEL.type === 'dev' ? SEL.it.g : HW.root, wp = o.getWorldPosition(V(0, 0, 0)), d = { cap: 0.5, mut: 0.42, hw: 1.3, dev: 0.75 }[SEL.type];
       wp.y += d * 0.25; rtCam.position.set(wp.x + Math.sin(t * 0.6) * d, wp.y + d * 0.55, wp.z + Math.cos(t * 0.6) * d); rtCam.lookAt(wp); rtPlane.visible = false; S.renderer.setRenderTarget(RT); S.renderer.render(S.scene, rtCam); S.renderer.setRenderTarget(null); rtPlane.visible = true; }
     btns.forEach((b) => { b.p = Math.max(0, b.p - dt * 4); b.cap.position.y = 0.04 * b.p; const hv = HOVB === b ? 0.6 : 0; let ei = (SEL && b.a !== 'super' && b.a !== 'cine' ? 0.45 + 0.25 * Math.sin(t * 4) : 0.25) + b.p + hv; if (b.a === 'super') { ei = (MEGA ? 1.3 : 0.75) + 0.3 * Math.sin(t * 3) + b.p + hv + LV * 0.6; b.halo.material.opacity = (MEGA ? 0.55 : 0.28) + 0.12 * Math.sin(t * 3) + LV * 0.3; b.orb.rotation.y += dt * (MEGA ? 3 : 0.8); b.orb.children.forEach((o, k) => { o.position.y = -0.06 - 0.03 * Math.abs(Math.sin(t * 4 + k)); o.rotation.y += dt * 4; }); }
       if (b.a === 'cine' && b.orb) b.orb.rotation.y -= dt * (CINE.on ? 2.5 : MEGA ? 1.4 : 0.4); if (b.a === 'cine') { const bl = MEGA && !CINE.on; const on = bl ? Math.sin(t * 14) > 0 : CINE.on; ei = on ? 2.6 : 0.3; b.halo.material.opacity = bl ? (on ? 1 : 0) : CINE.on ? 0.5 : 0; b.halo.scale.setScalar(bl ? 1.3 : 0.9); } b.cap.material.emissiveIntensity = ei; b.ring.material.color.setHex(b.cap.material.color.getHex()).multiplyScalar(0.6 + Math.min(1.4, ei * 0.5)); });
@@ -2772,6 +3013,27 @@
       cam.position.set(caseG.position.x+Math.sin(a)*Math.cos(el)*d,caseG.position.y+Math.sin(el)*d,caseG.position.z+Math.cos(a)*Math.cos(el)*d);
       cam.lookAt(caseG.position.x,caseG.position.y+0.4,caseG.position.z);
       cam.near=0.05;const panoramic=window.ATM_OUT;cam.fov=panoramic?(cam.aspect<1?Math.min(70,56+(1-cam.aspect)*18):56):(cam.aspect<1?Math.min(62,48+(1-cam.aspect)*24):48);cam.updateProjectionMatrix();
+    }
+    // Apply AFTER the standard 1p/3p/flight camera and after case view, but BEFORE
+    // the actual render. No avatar teleport, no forced approach or lens inside glass.
+    const gachaShot = ROOM.R.userData.gachaFocus;
+    if (gachaShot && ROAMS.on && !ROAMS.fly && !CASE_VIEW.on && !REC.on && !VIEW.on && !window.ATM_OUT) {
+      const keys = ROAMS.k || {};
+      const yawDelta = Math.atan2(Math.sin(ROAMS.yaw - gachaShot.yaw), Math.cos(ROAMS.yaw - gachaShot.yaw));
+      if (keys.w || keys.a || keys.s || keys.d || keys.q || keys.e ||
+          keys.ArrowUp || keys.ArrowDown || keys.ArrowLeft || keys.ArrowRight ||
+          Math.abs(yawDelta) > 0.045 || Math.abs(ROAMS.pitch - gachaShot.pitch) > 0.045) {
+        ROOM.R.userData.gachaFocus = null; ROOM.R.userData.camTrack = null;
+      } else {
+        const portrait = cam.aspect < 0.72;
+        cam.position.copy(portrait ? gachaShot.camTall : gachaShot.camWide);
+        cam.lookAt(gachaShot.target);
+        cam.near = 0.12;
+        cam.fov = portrait ? 64 : 56;
+        cam.updateProjectionMatrix();
+      }
+    } else if (gachaShot) {
+      ROOM.R.userData.gachaFocus = null;
     }
     S.renderer.render(S.scene, cam);
   }

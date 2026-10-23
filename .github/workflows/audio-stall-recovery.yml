@@ -1,0 +1,29 @@
+name: Audio 3D stall recovery
+on:
+  pull_request:
+    paths:
+      - 'audio/game-stability-recovery.js'
+      - 'audio/index.html'
+      - 'tests/audio-game-stability-recovery.test.cjs'
+      - '.github/workflows/audio-stall-recovery.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'audio/game-stability-recovery.js'
+      - 'audio/index.html'
+      - 'tests/audio-game-stability-recovery.test.cjs'
+      - '.github/workflows/audio-stall-recovery.yml'
+permissions:
+  contents: read
+jobs:
+  no-reload-loop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check audio/game-stability-recovery.js
+      - run: node --test tests/audio-game-stability-recovery.test.cjs
+      - run: node tests/maletin-cache-sync.test.cjs
