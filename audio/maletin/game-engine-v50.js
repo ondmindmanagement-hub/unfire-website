@@ -2765,7 +2765,8 @@
         }
       }
       if (index < roots.length) setTimeout(scanSlice, 26);
-      else if (!ROAMS.on && !window.__PROPS && !document.hidden) {
+      else if (!ROAMS.on && !window.__PROPS && !document.hidden &&
+               ROOM.R.children.length === roots.length) {
         window.__PROPS = found;
         prewarmRoamingObstacles();
       }
