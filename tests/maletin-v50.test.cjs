@@ -6,7 +6,7 @@ new vm.Script(engine,{filename:'game-engine-v50.js'});
 function chk(label,condition){assert.ok(condition,label);console.log('PASS',label)}
 chk('No standalone 2D opener on website',!html.includes('id="openBtn"')&&!html.includes('#openBtn'));
 chk('Only the real 3D butterfly opens the case',engine.includes('parent.__UNFIRE_ENTER_CASE()')&&engine.includes('ray.intersectObject(caseG, true)'));
-chk('Single original click enters immersive viewport and starts 3D lid during zoom',html.includes('immersive();\n    fullscreenFromGesture();')&&html.includes('UNFIRE_SCENE.onReady(()=>{loadingIntent=false;begin();})')&&html.includes('entryTransition=false;parked=0;'));
+chk('Single original click enters immersive viewport and starts 3D lid during zoom',html.includes('if(UNFIRE_SCENE.isReady())fullscreenFromGesture();')&&html.includes('UNFIRE_SCENE.onReady(()=>{loadingIntent=false;begin();})')&&html.includes('entryTransition=false;parked=0;')&&html.includes("pin.classList.remove('unfire-case-preview')")&&html.includes('enterGame();'));
 chk('Lid uses >5s real-time procedural animation',engine.includes('5.6*Math.abs(pt-pNow)')&&engine.includes('actualFrameTime')&&!engine.includes('lidControlledByPlayer ? 0.18 : 0.16'));
 chk('Original case opening SFX follow the actual procedural 3D hinge timeline',
   engine.includes('const CASE_SOUND=(()=>')&&engine.includes('CASE_SOUND.sync(pNow,pTarget,lidControlledByPlayer);')&&
