@@ -2698,6 +2698,49 @@
   // Prime movable indoor props during the already-interactive case view, NOT
   // on the first walking frame. Work is bounded and never hides collision data:
   // if the player starts early, the original synchronous fallback still runs.
+  function prewarmRoamingObstacles() {
+    if (ROAMS.on || !window.__PROPS || window.__OBST || document.hidden) return;
+    const roots = ROOM.R.children.slice(), excluded = new Set(window.__PROPS.map(q => q.o));
+    const pending = [], found = [];
+    const bounds = new THREE.Box3(), size = new THREE.Vector3();
+    let rootIndex = 0;
+    const scanSlice = () => {
+      if (ROAMS.on || window.__OBST || document.hidden ||
+          ROOM.R.children.length !== roots.length) return;
+      const end = performance.now() + 2.5;
+      let processed = 0;
+      while (processed < 32 && performance.now() < end &&
+             (pending.length || rootIndex < roots.length)) {
+        if (!pending.length) {
+          const top = roots[rootIndex++];
+          if (!top.visible || top.isLight || excluded.has(top) || top.userData.noCollide) continue;
+          top.updateMatrixWorld(true);
+          pending.push(top);
+        }
+        const o = pending.pop(); processed++;
+        if (!o.visible) continue;
+        if (o.children) for (let i = o.children.length - 1; i >= 0; i--) pending.push(o.children[i]);
+        if (!o.isMesh || o.isSprite || o.isPoints || (o.material &&
+            ((o.material.transparent && o.material.opacity < 0.5) ||
+             o.material.blending === THREE.AdditiveBlending))) continue;
+        bounds.setFromObject(o);
+        if (bounds.isEmpty()) continue;
+        bounds.getSize(size);
+        if (bounds.min.y > -1.4 || bounds.max.y < -8.2) continue;
+        if (Math.max(size.x, size.z) > 60 || (size.x > 30 && size.z > 30)) continue;
+        if (Math.min(size.x, size.z) < 0.05 && Math.max(size.x, size.z) < 0.5) continue;
+        found.push({x0: bounds.min.x-1.1, x1: bounds.max.x+1.1,
+          z0: bounds.min.z-1.1, z1: bounds.max.z+1.1, y1: bounds.max.y});
+      }
+      if (pending.length || rootIndex < roots.length) setTimeout(scanSlice, 26);
+      else if (!ROAMS.on && !window.__OBST && !document.hidden)
+        window.__OBST = found.filter(B =>
+          !(0 > B.x0 && 0 < B.x1 && 24 > B.z0 && 24 < B.z1) &&
+          !(-30 > B.x0 - 3 && -30 < B.x1 + 3 && B.z1 > 84) &&
+          Math.abs(B.x1 - B.x0) < 70);
+    };
+    setTimeout(scanSlice, 26);
+  }
   function prewarmRoamingProps() {
     if (!LOWDEV || ROAMS.on || window.__PROPS || document.hidden) return;
     const roots = ROOM.R.children.slice(), found = [];
@@ -2722,7 +2765,10 @@
         }
       }
       if (index < roots.length) setTimeout(scanSlice, 26);
-      else if (!ROAMS.on && !window.__PROPS && !document.hidden) window.__PROPS = found;
+      else if (!ROAMS.on && !window.__PROPS && !document.hidden) {
+        window.__PROPS = found;
+        prewarmRoamingObstacles();
+      }
     };
     setTimeout(scanSlice, 26);
   }
