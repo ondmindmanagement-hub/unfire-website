@@ -96,6 +96,29 @@ p{margin:0}
 html.immOn,body.immOn{overflow:hidden!important;overscroll-behavior:none}body.immOn header,body.immOn .hero-copy{visibility:hidden}body.immOn #stopAll,body.immOn #sndBtn{display:none!important}
 /* The physical 3D butterfly on the case is the only entry surface. */
 .hero-pin.scene-ready #malFrame{pointer-events:auto;touch-action:manipulation}
+/* When leaving the game, keep it parked behind an intentional Y2K re-entry
+   screen. Scrolling the website must never grab the 3D canvas again. */
+.hero-pin.web-return #malFrame{visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+.hero-pin.web-return .hero-copy,.hero-pin.web-return #sndBtn,.hero-pin.web-return #noWebglLink{display:none!important}
+#unfireReturnPortal{display:none;position:absolute;inset:0;z-index:12;box-sizing:border-box;
+  place-items:center;padding:clamp(16px,4vw,44px);background:radial-gradient(ellipse at 50% 45%,#203b71 0%,#0b1632 48%,#03060e 100%);
+  color:#edf7ff;text-align:center;isolation:isolate}
+.hero-pin.web-return #unfireReturnPortal{display:grid}
+#unfireReturnPortal::before{content:'';position:absolute;inset:15px;border:1px solid #79caff66;border-radius:22px;pointer-events:none}
+#unfireReturnPortal .portal-card{width:min(90vw,490px);padding:clamp(20px,5vw,36px) 18px;
+  border:1px solid #9adfffbb;border-radius:22px;background:linear-gradient(145deg,#0d2551df,#060b21ed);
+  box-shadow:0 0 70px #3d8bff33,inset 0 1px #ffffff33}
+#unfireReturnPortal .portal-meta{font:700 10px/1.5 Michroma,Orbitron,Arial,sans-serif;letter-spacing:.13em;color:#94dcff}
+#unfireReturnPortal h2{font:900 clamp(18px,3.6vw,30px)/1.25 Orbitron,Michroma,Arial,sans-serif;
+  color:#f8fbff;letter-spacing:.06em;margin:18px 0 10px;text-shadow:0 0 15px #3d8bff}
+#unfireReturnPortal p{font:500 12px/1.6 Michroma,Arial,sans-serif;color:#b8cbe7;margin:0 auto 24px;max-width:38ch}
+#unfireReturnPlay{border:1px solid #a5edff;border-radius:999px;padding:14px 24px;min-height:46px;
+  color:#f8fcff;background:linear-gradient(120deg,#194787,#266ff0 50%,#09285d);
+  box-shadow:0 0 25px #338bffaa,inset 0 1px #fff8;cursor:pointer;touch-action:manipulation;
+  font:800 11px/1.3 Michroma,Arial,sans-serif;letter-spacing:.08em}
+#unfireReturnPlay:focus-visible{outline:3px solid #fff;outline-offset:4px}
+#unfireReturnPlay:hover{filter:brightness(1.2)}
+@media(prefers-reduced-motion:reduce){#unfireReturnPlay{transition:none}}
 .hero-pin{position:sticky;top:62px;height:calc(100vh - 62px);overflow:hidden;display:grid;place-items:center}
 /* Defer heavy WebGL startup until the document is interactive. Same full-resolution game. */
 .hero-pin:not(.scene-ready)::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 70%,#1c3353 0%,#08090c 65%)}
@@ -425,6 +448,14 @@ footer a{color:var(--soft)}
       <img src="img/logo-unfire-256.webp" alt="" width="64" height="64" style="width:64px;height:64px;margin:0 auto 12px;filter:drop-shadow(0 0 18px rgba(61,139,255,.6))">
       <h1>Todo el sonido de <em>UNFIRE</em><br>en un solo maletín.</h1>
       <p class="lede">Pulsa la mariposa del maletín 3D para entrar. Se acercará la cámara y después se abrirá lentamente.</p><a class="byu" href="https://unfire.technology" target="_blank" rel="noopener"><img src="img/dragon.webp" alt="">UNFIRE<img src="img/emblem-butterfly.webp" alt=""></a>
+    </div>
+    <div id="unfireReturnPortal" role="region" aria-label="Volver al juego" translate="no">
+      <div class="portal-card">
+        <div class="portal-meta">✦ UNFIRE AUDIO · WORLD 2000 ✦</div>
+        <h2>LA AVENTURA CONTINÚA</h2>
+        <p>La web está a tu disposición. Tu mundo te espera cuando quieras regresar.</p>
+        <button id="unfireReturnPlay" type="button">✦ VOLVER A JUGAR</button>
+      </div>
     </div>
     <button class="sndbtn" id="sndBtn" type="button" aria-pressed="false">🔈 Sonido</button>
   </div>
@@ -851,10 +882,12 @@ const Snd={mal:false,ui(){const open=[...document.querySelectorAll('#sheet,#hype
   all(){this.stopMal();document.querySelectorAll('#sheet,#hyper,#synth').forEach(x=>x.open&&x.close());this.mal=false;this.ui()}};
 (()=>{const sm=HTMLDialogElement.prototype.showModal;HTMLDialogElement.prototype.showModal=function(){if(['sheet','hyper','synth'].includes(this.id)){Snd.stopMal();document.querySelectorAll('#sheet,#hyper,#synth').forEach(x=>x!==this&&x.open&&x.close())}const r=sm.call(this);Snd.ui();return r};
   document.addEventListener('close',()=>setTimeout(()=>Snd.ui(),0),true);addEventListener('pagehide',()=>Snd.all());document.addEventListener('visibilitychange',()=>{if(document.hidden)Snd.all()})})();
-const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp=0,snap=0;let anim=0,passUntil=0,parked=0,loadingIntent=false,caseLocal=false;
+const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp=0,snap=0;let anim=0,passUntil=0,parked=0,loadingIntent=false,caseLocal=false,webReturn=false;
   // A single tap starts the game; Safari uses viewport immersion when native
   // element fullscreen is unavailable (most iPhones).
   const immersive=()=>{
+    webReturn=false;
+    $('#heroPin').classList.remove('web-return');
     caseLocal=true;$('#heroPin').classList.add('imm');
     document.body.classList.add('immOn');
     document.documentElement.classList.add('immOn');
@@ -911,13 +944,19 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
       }catch(_){setTimeout(finish,0);}
     }else setTimeout(finish,0);
   };
-  const y1o=()=>hero.offsetTop+(hero.offsetHeight-innerHeight)*.62;const gate=(dy)=>{if(anim)return true;const y=scrollY,Y=y1o();if(dy>0&&y<Y-6&&y>hero.offsetTop-120){open(1300);return true}return false};addEventListener('wheel',e=>{if(gate(e.deltaY))e.preventDefault()},{passive:false});
+  const resumeGame=()=>{
+    // Re-enter the existing scene: no forced lid reset or loss of mission state.
+    immersive();fullscreenFromGesture();
+    try{fr.contentWindow.postMessage({unfire:1,vis:true,entryResume:true},location.origin);}catch(e){}
+  };
+  document.getElementById('unfireReturnPlay').addEventListener('click',resumeGame);
+  const y1o=()=>hero.offsetTop+(hero.offsetHeight-innerHeight)*.62;const gate=(dy)=>{if(webReturn)return false;if(anim)return true;const y=scrollY,Y=y1o();if(dy>0&&y<Y-6&&y>hero.offsetTop-120){open(1300);return true}return false};addEventListener('wheel',e=>{if(gate(e.deltaY))e.preventDefault()},{passive:false});
   const prog=()=>{const r=hero.getBoundingClientRect();return Math.min(1,Math.max(0,-r.top/Math.max(1,r.height-innerHeight)))};
-  function tick(){if(caseLocal)return;if(parked&&scrollY<=hero.offsetTop+8)parked=0;const v=parked?0:prog();try{const rb=hero.getBoundingClientRect();fr.contentWindow.postMessage({unfire:1,vis:caseLocal||rb.bottom>90,...(caseLocal?{}:{p:Math.min(1,v*1.5)})},'*')}catch(e){}hc.style.opacity=1-Math.min(1,v*3.2);
+  function tick(){if(caseLocal||webReturn)return;if(parked&&scrollY<=hero.offsetTop+8)parked=0;const v=parked?0:prog();try{const rb=hero.getBoundingClientRect();fr.contentWindow.postMessage({unfire:1,vis:caseLocal||rb.bottom>90,...(caseLocal?{}:{p:Math.min(1,v*1.5)})},'*')}catch(e){}hc.style.opacity=1-Math.min(1,v*3.2);
     const cross=(x)=>(lp<x&&v>=x)||(lp>x&&v<=x);if(cross(.06)||cross(.1))CaseSfx.play('latch');if(cross(.2))CaseSfx.play('lid',v<lp);if(cross(.5)&&v>lp)CaseSfx.play('thud');if(cross(.54)&&v>lp)CaseSfx.play('chime');lp=v}
   addEventListener('scroll',tick,{passive:true});fr.addEventListener('load',()=>{tick();setTimeout(tick,600)});
   addEventListener('keydown',e=>{const t=e.target;if(t&&/INPUT|TEXTAREA|SELECT/.test(t.tagName)||e.metaKey||e.ctrlKey)return;try{fr.contentWindow.postMessage({unfire:1,kd:e.key},'*')}catch(_){}});addEventListener('keyup',e=>{try{fr.contentWindow.postMessage({unfire:1,ku:e.key},'*')}catch(_){}});
-  addEventListener('message',e=>{const d=e.data||{};if(!d.unfire)return;if(d.entryRequest){Mal.open(1050);return;}if(d.scroll&&!caseLocal&&!Mal.gate(d.scroll))window.scrollBy(0,d.scroll);if(d.pass&&!caseLocal){passUntil=performance.now()+500;fr.style.pointerEvents='none'}if(d.buy&&typeof Bag!=='undefined')Bag.add(d.buy);if(d.caseState==='closed'||d.caseState==='open'){
+  addEventListener('message',e=>{const d=e.data||{};if(!d.unfire)return;if(d.entryRequest){if(!webReturn)Mal.open(1050);return;}if(d.scroll&&!caseLocal&&!webReturn&&!Mal.gate(d.scroll))window.scrollBy(0,d.scroll);if(d.pass&&!caseLocal&&!webReturn){passUntil=performance.now()+500;fr.style.pointerEvents='none'}if(d.buy&&typeof Bag!=='undefined')Bag.add(d.buy);if(!webReturn&&(d.caseState==='closed'||d.caseState==='open')){
       caseLocal=true;
       $('#heroPin').classList.add('imm');
       document.body.classList.add('immOn');
@@ -925,7 +964,7 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
       fr.style.pointerEvents='auto';
       fr.style.clipPath='none';
     }
-    if('immersive' in d&&(!caseLocal||d.immersive)){
+    if(!webReturn&&'immersive' in d&&(!caseLocal||d.immersive)){
       $('#heroPin').classList.toggle('imm',!!d.immersive);
       document.body.classList.toggle('immOn',!!d.immersive);
       document.documentElement.classList.toggle('immOn',!!d.immersive);
@@ -941,11 +980,22 @@ if(d.lv!=null)document.documentElement.style.setProperty('--lv',d.lv);if(d.rect)
   // Same-origin 3D case click calls this function directly (keeps user gesture).
   window.__UNFIRE_ENTER_CASE=()=>open(1050);fr.style.pointerEvents='auto';
   function shut(){caseLocal=true;$('#heroPin').classList.add('imm');document.body.classList.add('immOn');document.documentElement.classList.add('immOn');fr.style.pointerEvents='auto';fr.style.clipPath='none';}
-  function exitGame(){caseLocal=false;
+  function exitGame(){
+    caseLocal=false;webReturn=true;parked=1;
+    let exited=Promise.resolve();
     if(document.fullscreenElement||document.webkitFullscreenElement){
-      try{const p=(document.exitFullscreen||document.webkitExitFullscreen)?.call(document);p?.catch?.(()=>{});}catch(_){}}
-    $('#heroPin').classList.remove('imm');document.body.classList.remove('immOn');document.documentElement.classList.remove('immOn');parked=1;tick();fr.style.pointerEvents='none';
-    setTimeout(()=>{const y0=scrollY,y1=hero.offsetTop+hero.offsetHeight+2,t0=performance.now(),D=1300;const st=(n)=>{const k=Math.min(1,(n-t0)/D),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;scrollTo(0,y0+(y1-y0)*e);if(k<1)requestAnimationFrame(st)};requestAnimationFrame(st)},1500)}
+      try{exited=Promise.resolve((document.exitFullscreen||document.webkitExitFullscreen)?.call(document)).catch(()=>{});}catch(_){}}
+    $('#heroPin').classList.remove('imm');
+    $('#heroPin').classList.add('web-return');
+    document.body.classList.remove('immOn');document.documentElement.classList.remove('immOn');
+    fr.style.pointerEvents='none';fr.style.clipPath='none';
+    // Directly reveal the actual product website. Going back to the hero
+    // displays the re-entry portal, not another autoplaying WebGL session.
+    exited.finally(()=>requestAnimationFrame(()=>{
+      const target=document.getElementById('instrumentos');
+      if(target)target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'});
+    }));
+  }
   return{tick,open,rect,shut,gate,exitGame};})();
 /* ================= Precios en la página ================= */
 document.querySelectorAll('[data-p]').forEach(el=>{const k=el.dataset.p;el.textContent=k==='saveAll'?eur(PRICES.hyper+PRICES.fx20+PRICES.synth-PRICES.todo):eur(PRICES[k])});

@@ -9,6 +9,20 @@ chk('Only the real 3D butterfly opens the case',engine.includes('parent.__UNFIRE
 chk('Fullscreen transition completes before the case lid opens',html.includes('movement.finished.then(finish,()=>{})')&&html.includes('entryTransition=false;enterGame()'));
 chk('Lid uses >5s real-time procedural animation',engine.includes('5.6*Math.abs(pt-pNow)')&&engine.includes('actualFrameTime')&&!engine.includes('lidControlledByPlayer ? 0.18 : 0.16'));
 chk('Giant exterior 3D ABRIR circle removed',!engine.includes('const ringB = mesh(new THREE.TorusGeometry(0.42, 0.02')&&engine.includes('const lidBtn = new THREE.Group()'));
+chk('Web exit parks WebGL behind a themed, manual return-to-play screen',
+  html.includes('id="unfireReturnPortal"')&&html.includes('id="unfireReturnPlay"')&&
+  html.includes("$('#heroPin').classList.add('web-return')")&&
+  html.includes('if(webReturn)return false')&&
+  html.includes('if(caseLocal||webReturn)return;')&&
+  html.includes("document.getElementById('instrumentos')")&&
+  html.includes('const resumeGame=()=>{'));
+chk('Web return resumes existing game without restarting missions',
+  html.includes('entryResume:true')&&html.includes('if(!webReturn&&(d.caseState')&&
+  html.includes("if(!webReturn&&'immersive' in d"));
+chk('Capsule carry control stays on left lateral rather than over the robot',
+  engine.includes('left:max(12px,env(safe-area-inset-left));top:clamp(190px,40dvh,420px)')&&
+  game.includes('#unfireCarryCase{left:max(9px,env(safe-area-inset-left))!important'));
+
 chk('Old double camera buttons completely removed',!engine.includes('caseModeHud')&&!game.includes('#caseModeHud'));
 chk('Only one character button shown in case camera after opening',engine.includes("characterEntryButton.id='unfireCharacterEntry'")&&engine.includes('lidOpen>=0.998')&&engine.includes("ROAMS.on && !CASE_VIEW.on && lidOpen > 0.95")&&game.includes('#unfireCharacterEntry[hidden]'));
 chk('First visit character button blinks exactly 2s',engine.includes("'unfire_character_entry_hint_v1'")&&engine.includes('},2000);')&&game.includes('animation:unfire-character-2s 2s steps(1,end) 1'));

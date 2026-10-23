@@ -844,7 +844,7 @@
   carryButton.type = 'button';
   carryButton.setAttribute('aria-label','Abrir el maletín que llevas');
   carryButton.innerHTML = '<img src="../img/emblem-butterfly.webp" alt="" width="25" height="25"> <span>ABRIR MALETÍN</span>';
-  carryButton.style.cssText='position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:53;display:none;align-items:center;gap:9px;padding:11px 14px;border:1px solid #81b9ff;border-radius:999px;background:linear-gradient(130deg,#172d50,#030815);box-shadow:0 8px 25px #0009;color:#fff;font:700 12px Arial,sans-serif;touch-action:manipulation;cursor:pointer';
+  carryButton.style.cssText='position:fixed;left:max(12px,env(safe-area-inset-left));top:clamp(190px,40dvh,420px);right:auto;bottom:auto;max-width:195px;box-sizing:border-box;z-index:53;display:none;align-items:center;gap:9px;padding:11px 14px;border:1px solid #81b9ff;border-radius:999px;background:linear-gradient(130deg,#172d50,#030815);box-shadow:0 8px 25px #0009;color:#fff;font:700 12px Arial,sans-serif;touch-action:manipulation;cursor:pointer';
   document.body.appendChild(carryButton);
   function updateCarryUI(){
     const show=ROAMS.on;

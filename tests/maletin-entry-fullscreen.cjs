@@ -87,6 +87,26 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
      assert(state.exit.x>=-1&&state.exit.y>=-1&&state.exit.x+state.exit.w<=width+1,
        'Game exit clipped by small viewport');
    }
+   // Carry/throw capsule action stays on the left rail, beyond the central
+   // avatar, and between minimap and thumbstick across rotations.
+   for(const [width,height] of [[390,844],[844,390]]){
+     await page.setViewportSize({width,height});
+     const layout=await page.evaluate(()=>{
+       const d=document.getElementById('malFrame').contentDocument;
+       d.body.classList.remove('storyOn');
+       const b=d.getElementById('unfireCarryCase');
+       b.style.display='flex';
+       const r=b.getBoundingClientRect();
+       const mini=d.getElementById('minimap').getBoundingClientRect();
+       b.style.display='none';
+       return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,
+         minimapBottom:mini.bottom,width:d.defaultView.innerWidth,height:d.defaultView.innerHeight};
+     });
+     assert(layout.x>=0&&layout.right<width*.5&&layout.bottom<height-58&&
+       layout.y>=layout.minimapBottom-4,
+       'Capsule carry action obscures avatar/minimap/joystick '+JSON.stringify(layout));
+   }
+   // Return to web must not reactivate the scene when the page scrolls.
    // Walking is a separate voluntary action. The player can freely enter and
    // return to the case without restarting the mission or collapsing the lid.
    await page.waitForFunction(()=>{const g=document.getElementById('malFrame')?.contentWindow;
@@ -125,6 +145,27 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    });
    assert(cinematic.camera[0]>78&&cinematic.camera[1]>24&&cinematic.camera[2]>95&&cinematic.playerUnchanged,
      'Cinematic spectator must traverse physical and architectural bounds without moving robot '+JSON.stringify(cinematic));
+   const savedLid=await page.evaluate(()=>document.getElementById('malFrame').contentWindow.__UNFIRE_CASE_QA.lid);
+   await page.evaluate(()=>document.getElementById('malFrame').contentWindow.__exitGame());
+   await page.waitForFunction(()=>document.getElementById('heroPin').classList.contains('web-return'),null,{timeout:10000});
+   const afterExit=await page.evaluate(()=>{
+     dispatchEvent(new WheelEvent('wheel',{deltaY:380,cancelable:true,bubbles:true}));
+     return {portal:!!document.getElementById('unfireReturnPortal'),
+       returnLabel:document.getElementById('unfireReturnPlay')?.textContent,
+       gamePaused:!document.body.classList.contains('immOn'),
+       persistent:document.getElementById('heroPin').classList.contains('web-return')};
+   });
+   assert(afterExit.portal&&/VOLVER A JUGAR/.test(afterExit.returnLabel)&&afterExit.gamePaused&&afterExit.persistent,
+     'Exit to website did not leave game parked with manual return portal '+JSON.stringify(afterExit));
+   await page.evaluate(()=>document.getElementById('unfireReturnPlay').click());
+   await page.waitForFunction(()=>document.body.classList.contains('immOn'),null,{timeout:10000});
+   const afterResume=await page.evaluate(()=>({
+     portalClosed:!document.getElementById('heroPin').classList.contains('web-return'),
+     lid:document.getElementById('malFrame').contentWindow.__UNFIRE_CASE_QA.lid
+   }));
+   assert(afterResume.portalClosed&&Math.abs(afterResume.lid-savedLid)<.06,
+     'VOLVER A JUGAR must resume original maletin scene, not restart '+JSON.stringify({savedLid,afterResume}));
+   console.log('PASS exit directly to web, no scroll auto-reopen, Y2K portal, resumable game and responsive capsule HUD');
    // The first game has already been validated; release its expensive software
    // WebGL context before starting a second game in a CI worker.
    await page.close();
