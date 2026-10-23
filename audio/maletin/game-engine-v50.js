@@ -2483,7 +2483,12 @@
     const comp = Object.values(COMP).find((c) => view.tx >= c.x0 - 0.1 && view.tx <= c.x1 + 0.1 && view.tz >= c.z0 - 0.1 && view.tz <= c.z1 + 0.1);
     $('crumb').innerHTML = 'MALETÍN' + (comp && zoomK > 0.25 ? ' › ' + comp.name.toUpperCase() : '') + (near && zoomK > 0.6 ? ' › <b>' + near.name + '</b>' : '');
     const tip = lidOpen < 0.05 ? 'Pulsa el botón de la mariposa · o baja un poco' : lidOpen < 0.9 ? '' : zoomK < 0.05 ? (allOpen() ? 'Rueda sobre el maletín = acercarte · fuera = bajar la página' : 'Baja sobre una compuerta para abrirla · fuera = todas · o pulsa ABRIR TODO') : open.some((g) => g.m > 0.9) ? 'Pulsa la mariposa para cambiar de forma · arrastra los mandos' : near && ['fx', 'archer', 'hyper', 'synth'].includes(near.kind) && zoomK > 0.6 ? 'Clic para probarlo' : 'Arrastra para girar · cursor al borde para moverte · acércate para abrir';
-    $('tip').textContent = tip; $('tip').classList.toggle('on', !!tip);
+    // Touch-first HUD: no long translucent instruction banners over the avatar,
+    // the suitcase, or the mobile action controls. Desktop keeps full hints.
+    const mobileTip = window.__UNFIRE_AUTOCALIB && window.__UNFIRE_AUTOCALIB.touch
+      ? (!ROAMS.on && lidOpen < 0.05 ? 'PULSA LA MARIPOSA' : '')
+      : tip;
+    $('tip').textContent = mobileTip; $('tip').classList.toggle('on', !!mobileTip);
     if (!(frameN++ % 6)) { const pts = []; for (const x of [-CW / 2 - 0.1, CW / 2 + 0.1]) for (const z of [-CD / 2 - 0.1, CD / 2 + 0.25]) { pts.push(V(x, 0, z), V(x, HB + 0.1, z)); pts.push(lid.localToWorld(V(x, HL, z))); } let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
       for (const p of pts) { p.project(cam); const sx = (p.x + 1) / 2 * innerWidth, sy = (1 - p.y) / 2 * innerHeight; x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy); }
       parentPost({ rect: [Math.round(x0), Math.round(y0), Math.round(x1), Math.round(y1)], lv: Math.round(LV * 100) / 100, open: lidOpen > 0.9, zoom: zoomed() || !!drag || !!knobDrag }); }
