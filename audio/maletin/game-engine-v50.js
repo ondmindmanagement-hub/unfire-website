@@ -2476,11 +2476,12 @@
   // while the player passes the door or dome. Prepare short bounded slices.
   let seaBuild = null, seaBuildFailed = false;
   function ensureSeaAmbience() {
-    if (window.__SEA || seaBuild || seaBuildFailed || !ROAMS.on || !audioOk()) return;
+    if (window.__SEA || seaBuild || seaBuildFailed || !ROAMS.on) return;
     const nearDoor = !window.ATM_OUT && ROAMS.p.z > 66 && Math.abs(ROAMS.p.x + 30) < 25;
     const nearDome = !window.ATM_OUT && ROAMS.fly && ROAMS.h > 7 &&
       Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 95;
     if (!window.ATM_OUT && !nearDoor && !nearDome) return;
+    if (!audioOk()) return;
     const c = UA.ctx;
     if (!c || c.state === 'closed') return;
     const state = seaBuild = { channel: 0, offset: 0, prev: 0, scheduled: false,
