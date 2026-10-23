@@ -29,7 +29,9 @@ const {summarizeFrames}=require('../scripts/unfire-frame-metrics.cjs');
       const stage=window.__mal.S,renderer=stage.renderer;
       const originalRender=renderer.render;
       const renderedAt=[],rafAt=[];
-      const samplingMs=6000;
+      // Software WebGL in CI can require several seconds per frame; sample long enough
+      // to collect multiple render calls without imposing any FPS pass threshold.
+      const samplingMs=16000;
       const start=performance.now();
       // Count the final game scene-camera render, not merely browser RAF ticks.
       // Other offscreen reflection passes have different cameras and are excluded.
