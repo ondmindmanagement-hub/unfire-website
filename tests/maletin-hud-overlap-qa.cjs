@@ -44,7 +44,10 @@ const geo=()=>Array.from(document.querySelectorAll('#mix,#wradio,#ctlDock,#unfir
 });
 const overlap=(a,b)=>Math.min(a.r,b.r)-Math.max(a.l,b.l)>2 && Math.min(a.b,b.b)-Math.max(a.t,b.t)>2;
 (async()=>{
- const browser=await chromium.launch({headless:true,executablePath:process.env.UNFIRE_CHROME||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',args:['--no-sandbox']});
+ const launch={headless:true,args:['--no-sandbox']};
+ if(process.env.UNFIRE_CHROME)launch.executablePath=process.env.UNFIRE_CHROME;
+ else if(process.platform==='darwin')launch.executablePath='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+ const browser=await chromium.launch(launch);
  try{
  for(const [width,height] of dims){
   const context=await browser.newContext({viewport:{width,height},isMobile:true,hasTouch:true,deviceScaleFactor:1,reducedMotion:'reduce'});
