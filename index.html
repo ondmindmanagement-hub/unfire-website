@@ -2,6 +2,20 @@
 
 <html lang="en">
 <head>
+<script id="unfire-home-game-router">
+/* The main URL opens Unfire Audio; explicit site URLs remain usable. */
+(function(){
+  'use strict';
+  if(location.pathname!=='/' || new URLSearchParams(location.search).get('site')==='1')return;
+  if(location.hash && location.hash!=='#play' && location.hash!=='#jugar')return;
+  var params=new URLSearchParams(location.search);
+  var target=new URL('/audio/',location.origin);
+  ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(function(key){
+    params.getAll(key).forEach(function(value){target.searchParams.append(key,value);});
+  });
+  location.replace(target.pathname+target.search);
+})();
+</script>
 <meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'">
 
     <!-- Unfire favicon: Safari 26+ and modern browsers -->
@@ -4192,6 +4206,7 @@ main .uf-hero-title {
 <section id="apps" class="uf-app-showcase" aria-labelledby="uf-apps-title">
 <div class="wrap">
 <div class="uf-gallery-intro">
+<a class="unfire-audio-entry" href="/audio/" aria-label="Volver a jugar a Unfire Audio">↶ Volver a jugar</a>
 <div class="uf-gallery-kicker"><span class="notranslate" translate="no">Unfire</span> / Applications</div>
 <h2 id="uf-apps-title">Software, in focus.<span> Built for real work.</span></h2>
 <p class="uf-gallery-subtitle">A closer look at the interfaces behind our work, from creative audio tools to AI-assisted workflows and practical everyday utilities.</p>

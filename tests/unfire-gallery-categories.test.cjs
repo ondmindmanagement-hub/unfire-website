@@ -3,6 +3,8 @@ const assert = require('node:assert/strict');
 const { chromium } = require('playwright');
 
 const base = process.env.UNFIRE_GALLERY_URL || 'http://127.0.0.1:8771/';
+const corporateUrl = new URL(base);
+if (corporateUrl.pathname === '/') corporateUrl.searchParams.set('site', '1');
 const expected = {
   'apps-ai': ['BOLT', 'BOLT Mobile'],
   'apps-audio': ['ARCHER', 'ARCHER Mobile', 'Pocket Capture', 'Unfire Synthesizer'],
@@ -18,12 +20,12 @@ const viewports = [
 ];
 
 (async () => {
-  const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
+  const browser = await chromium.launch({ headless: true, executablePath: process.env.UNFIRE_CHROME || undefined, args: ['--no-sandbox'] });
   try {
     for (const viewport of viewports) {
       const page = await browser.newPage({ viewport, reducedMotion: 'reduce' });
       try {
-        await page.goto(base, { waitUntil: 'domcontentloaded', timeout: 30000 });
+        await page.goto(corporateUrl.href, { waitUntil: 'domcontentloaded', timeout: 30000 });
         await page.locator('#apps').scrollIntoViewIfNeeded();
         const summary = await page.evaluate((expected) => {
           const root = document.querySelector('#apps');

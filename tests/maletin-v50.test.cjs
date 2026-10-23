@@ -121,8 +121,9 @@ chk('Room audio implementation retained',engine.includes('const AMB ='));
 chk('Parent scroll no longer overrides manual open/close',engine.includes('!lidControlledByPlayer) pTarget = d.p;'));
 chk('Host keeps iframe active when case is local',html.includes('vis:caseLocal||rb.bottom>90'));
 chk('Host does not scroll when closing case',!html.includes('if(d.closeCase)Mal.shut();'));
-chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v=20261023casecuev1'));
-chk('Host loads exact matching game',/maletin\/index\.html\?v=20261023casecuev1/.test(html));
+const {version: releaseCacheVersion}=require('./maletin-cache-sync.test.cjs');
+chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v='+releaseCacheVersion));
+chk('Host loads exact matching game',html.includes('maletin/index.html?v='+releaseCacheVersion));
 chk('User can explicitly exit if desired',engine.includes('window.__exitGame'));
 chk('3D original scene size intact',engine.length>500000);
 const storySource=game.slice(game.indexOf('window.STORY_INIT = function (H) {'),game.indexOf('</script>',game.indexOf('window.STORY_INIT = function (H) {')));
@@ -143,4 +144,6 @@ chk('Showcase exhibition keeps player camera and avoids overlapping full-size pl
   game.includes('if (olds.length) { say(')&&
   !game.includes('noFocus: false, f: () => { hap(0.4); openT = 6;'));
 chk('PC screen shows mystery app icon',engine.includes("g.fillText('?', 14, 78)"));
+require('./maletin-flight-combos.test.cjs');
+require('./maletin-indoor-outdoor-perf.test.cjs');
 console.log('All staged structural tests PASSED; full gameplay and device performance still require browser QA.');

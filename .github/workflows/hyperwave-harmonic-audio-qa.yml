@@ -1,0 +1,41 @@
+name: Hyperwave harmonic audio QA
+
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/hyperwave-harmony.js'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'tests/maletin-hyperwave-harmony.test.cjs'
+      - '.github/workflows/hyperwave-harmonic-audio-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'audio/maletin/hyperwave-harmony.js'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'tests/maletin-hyperwave-harmony.test.cjs'
+      - '.github/workflows/hyperwave-harmonic-audio-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  harmony:
+    name: Harmony, samples and safety
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check real Harmony module and game engine syntax
+        run: |
+          node --check audio/maletin/hyperwave-harmony.js
+          node --check audio/maletin/game-engine-v50.js
+      - name: Deterministic harmony and asset QA
+        run: node tests/maletin-hyperwave-harmony.test.cjs
+      - name: Existing case and radio regression
+        run: |
+          node tests/maletin-v50.test.cjs
+          node tests/maletin-radio-volume.test.cjs
+          node tests/maletin-first-paint.test.cjs

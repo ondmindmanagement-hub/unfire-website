@@ -409,7 +409,7 @@
       const sh = new THREE.Shape(); sh.moveTo(-RX, WZ); sh.lineTo(RX, WZ); sh.lineTo(RX, RZ); sh.lineTo(-RX, RZ); sh.closePath(); const ho = new THREE.Path(); ho.absarc(0, 40, 40, 0, TAU, true); sh.holes.push(ho); [[-62, 8], [62, 8], [-62, 40], [62, 40], [-62, 72], [62, 72]].forEach(([sx, sz]) => { const h2 = new THREE.Path(); h2.moveTo(sx - 10, sz - 9); h2.lineTo(sx - 10, sz + 9); h2.lineTo(sx + 10, sz + 9); h2.lineTo(sx + 10, sz - 9); h2.closePath(); sh.holes.push(h2); }); const cg = new THREE.ShapeGeometry(sh, 64); cg.rotateX(H2); const cm = new THREE.Mesh(cg, new THREE.MeshStandardMaterial({ map: ct, roughness: 0.6, side: THREE.DoubleSide })); cm.position.y = CY - 0.15; cm.userData.noCollide = true; R.add(cm); }
     const stT = cnv(64, 64, (g) => { g.fillStyle = '#d8ff9a'; g.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, r = i % 2 ? 12 : 30; g.lineTo(32 + Math.cos(a) * r, 32 + Math.sin(a) * r); } g.fill(); }); const STM = new THREE.MeshBasicMaterial({ map: stT, transparent: true, toneMapped: false, color: 0x8a9a70 });
     for (let i = 0; i < 0; i++) { const s = new THREE.Mesh(new THREE.PlaneGeometry(0.7 + Math.random() * 0.6, 0.7 + Math.random() * 0.6), STM); s.rotation.set(H2, 0, Math.random() * 3); s.position.set(-RX + 2 + Math.random() * (2 * RX - 4), CY - 0.02, WZ + 2 + Math.random() * (RZ - WZ - 4)); R.add(s); }
-    const lamp0 = mesh(new THREE.SphereGeometry(1.6, 32, 16, 0, TAU, H2, H2), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xfff6dd, emissiveIntensity: 0.8 })); 
+    const lamp0 = mesh(new THREE.SphereGeometry(1.6, 32, 16, 0, TAU, H2, H2), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xfff6dd, emissiveIntensity: 0.8 }));
     // muebles: cama, puf, estantería de CDs, mininevera con pegatinas, máquina recreativa, monopatín y equipo de música
     const glossy = (c) => new THREE.MeshPhysicalMaterial({ color: c, roughness: 0.25, clearcoat: 1 });
     { const bed = new THREE.Group(); bed.position.set(-30, FY, -8); R.add(bed); const fr = mesh(rbox(9, 1.6, 13, 0.2), glossy(0x5a3a8a)); fr.position.y = 0.8; bed.add(fr); const mt = mesh(rbox(8.6, 1.2, 12.4, 0.4), SM(cnv(512, 512, (g) => { g.fillStyle = '#1d4fd8'; g.fillRect(0, 0, 512, 512); g.fillStyle = '#ffd21a'; for (let i = 0; i < 60; i++) { const x = Math.random() * 512, y = Math.random() * 512; g.beginPath(); for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, r = k % 2 ? 4 : 10; g.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r); } g.fill(); } }), 0.9)); mt.position.y = 2.1; bed.add(mt); const pl = mesh(rbox(5, 0.9, 2.4, 0.4), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9 })); pl.position.set(0, 3.0, -4.6); bed.add(pl); }
@@ -829,9 +829,18 @@
           tone(c,out,t,84,.37,.27,'sine',42);
           noise(c,out,t,.15,720,170,1,.10);
         }else if(which==='reveal'){
-          noise(c,out,t,1.05,3600,9000,3,.025);
-          tone(c,out,t+.02,880,.95,.075,'sine',1320);
-          tone(c,out,t+.15,1318,.7,.041,'sine',1760);
+          noise(c,out,t,.82,2900,6200,1.4,.017);
+          // The reveal chime must belong to the CURRENT soundtrack chord.
+          // Unknown-key recorded songs: neutral shimmer only, no random notes.
+          const unknownSong = !!(window.__WRADIO && window.__WRADIO.on) && !RADIO.st.on;
+          if(!unknownSong){
+            const chord = RADIO.st.on ? RADIO.chordAt() : [57,60,64];
+            const hz = m => 440*Math.pow(2,(m-69)/12);
+            if(chord.length >= 3){
+              tone(c,out,t+.02,hz(chord[0]+24),.58,.047,'sine',hz(chord[0]+24));
+              tone(c,out,t+.12,hz(chord[2]+24),.53,.026,'sine',hz(chord[2]+24));
+            }
+          }
         }
       }catch(e){if(!window.__caseSoundWarned){window.__caseSoundWarned=true;console.warn('Case sound:',e);}}
     }
@@ -1063,7 +1072,38 @@
   const REDUCED_MOTION_CASE_CUE=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;    // ~56° desde arriba, recto
   const view = { tx: 0, tz: 0.15, dist: 9, D0: 9, gx: 0, gz: 0.15, gd: 9 };
   // modo paseo: la cámara se suelta del maletín y miras/andas por la habitación
-  const ROAMS = { on: false, yaw: 0, pitch: -0.12, p: V(0, 8.5, 15), k: {} }; const roamB = document.createElement('button'); roamB.id = 'roamB'; roamB.textContent = '🚶 PASEAR'; roamB.style.cssText = 'position:fixed;right:14px;bottom:calc(9vh + 14px);z-index:40;border:2px solid #fff;border-radius:999px;padding:9px 14px;font:800 12px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);box-shadow:0 6px 18px #0008;cursor:pointer;display:none'; document.body.appendChild(roamB);
+  const ROAMS = { on: false, yaw: 0, pitch: -0.12, p: V(0, 8.5, 15), k: {} };
+
+  // Tap combos use the original flight buttons/arrow keys; no extra HUD, timers or GPU loop.
+  const FLIGHT_TAPS = { up: { at: 0, count: 0 }, down: { at: 0, count: 0 } };
+  function resetFlightCombos() {
+    FLIGHT_TAPS.up.at = FLIGHT_TAPS.down.at = 0;
+    FLIGHT_TAPS.up.count = FLIGHT_TAPS.down.count = 0;
+    ROAMS.slam = false; ROAMS.slamV = 0; ROAMS.boostT = 0;
+  }
+  function flightTap(dir) {
+    if (!ROAMS.on || ROAMS.mini || (window.__VIEW && window.__VIEW.on) || REC.on || document.getElementById('unfireControlGuide')?.classList.contains('on')) return;
+    const st = FLIGHT_TAPS[dir], now = performance.now(), gap = dir === 'up' ? 470 : 390;
+    st.count = now - st.at <= gap ? st.count + 1 : 1;
+    st.at = now;
+    if (dir === 'down' && st.count >= 2) {
+      st.count = 0;
+      if (!ROAMS.fly || (ROAMS.h || 0) < (ROAMS.fl || 0) + 2.5 || ROAMS.slam || now - (ROAMS.lastSlam || 0) < 850) return;
+      ROAMS.lastSlam = now; ROAMS.slam = true; ROAMS.slamV = 280; ROAMS.boostT = 0;
+      say('💥 Aterrizaje de impacto'); hap(0.3);
+    } else if (dir === 'up' && st.count >= 3) {
+      st.count = 0;
+      if (now - (ROAMS.lastBoost || 0) < 1100) return;
+      ROAMS.lastBoost = now;
+      if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.flyT = 0; }
+      ROAMS.slam = false; ROAMS.slamV = 0;
+      ROAMS.flyH = Math.max(ROAMS.fl || 0, ROAMS.h || 0);
+      ROAMS.boostT = 0.72; ROAMS.climbV = (window.ATM_OUT ? 500 : 38) * (ROAMS.perkF || 1);
+      try { window.__SPRAY && window.__SPRAY(ROAMS.p.x, -8.9 + (ROAMS.h || 0), ROAMS.p.z, 28, 6, 12); } catch (_) {}
+      say('🚀 ¡Propulsión turbo!'); hap(0.8);
+    }
+  }
+  const roamB = document.createElement('button'); roamB.id = 'roamB'; roamB.textContent = '🚶 PASEAR'; roamB.style.cssText = 'position:fixed;right:14px;bottom:calc(9vh + 14px);z-index:40;border:2px solid #fff;border-radius:999px;padding:9px 14px;font:800 12px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);box-shadow:0 6px 18px #0008;cursor:pointer;display:none'; document.body.appendChild(roamB);
   const MIX = (() => { const d = document.createElement('div'); d.id = 'mix'; d.innerHTML = '<style>#mix{position:fixed;left:14px;top:10px;transform:scale(.88);transform-origin:top left;z-index:40;display:none;gap:6px;flex-direction:column;padding:10px 12px;border-radius:16px;background:linear-gradient(180deg,#eef6ff,#a9cdff);border:2px solid #fff;box-shadow:0 8px 22px #0009,0 0 18px #3d8bff88;font:700 11px Michroma,Arial;color:#0a1a3a}#mix.on{display:flex}#mix .row{display:flex;gap:6px;align-items:center}#mix button{border:0;border-radius:999px;padding:6px 10px;font:800 11px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);cursor:pointer}#mix button.off{background:linear-gradient(180deg,#b8c0d0,#6b7385);opacity:.8}#mix b{font:900 12px Orbitron,Arial;min-width:180px;text-align:center}</style><div class=row><button data-s=-1>◀</button><b id=mixN>—</b><button data-s=1>▶</button></div><div class=row><button data-m=drums>🥁 BATERÍA</button><button data-m=bass>🎸 BAJO</button><button data-m=chords>🎹 ACORDES</button><button data-m=lead>✨ MELODÍA</button><button data-p=1>🎹 OTRA MELODÍA</button></div><div class=row>TONALIDAD <select id=tonK><option value=-1>AUTO</option>' + ['DO', 'DO#', 'RE', 'RE#', 'MI', 'FA', 'FA#', 'SOL', 'SOL#', 'LA', 'LA#', 'SI'].map((n, i) => '<option value=' + i + '>' + n + '</option>').join('') + '</select> MODO <select id=tonM><option value=auto>SIGUE LA CANCIÓN</option><option value=mayor>MAYOR</option><option value=menor>MENOR</option><option value=dorico>DÓRICO</option><option value=penta>PENTATÓNICA</option><option value=blues>BLUES</option></select></div><div class=row style="font-size:9px;opacity:.8">Teclado: A S D F G H J K L = blancas · W E T Y U O P = negras · Z/X octava</div>'; document.body.appendChild(d); d.addEventListener('pointerdown', (e) => e.stopPropagation()); d.addEventListener('wheel', (e) => e.stopPropagation());
     d.onchange = (e) => { if (e.target.id === 'tonK') { TON.key = +e.target.value; if (TON.key >= 0) { RADIO.st.lockRoot = 45 + ((TON.key - 9 + 12) % 12); RADIO.st.root = RADIO.st.lockRoot; } else RADIO.st.lockRoot = null; } if (e.target.id === 'tonM') TON.mode = e.target.value; if (TON.mode !== 'auto' && TON.key < 0) { TON.key = 0; d.querySelector('#tonK').value = 0; } hap(0.2); }; d.onclick = (e) => { const b = e.target.closest('button'); if (!b) return; hap(0.25); if (b.dataset.p && HW) { HW.melSeed = (HW.melSeed || 0) + 1; HW.mel = null; say('🎹 Melodía nueva'); } if (b.dataset.s) { const n = RADIO.STYLES.length; RADIO.newSong(((RADIO.st.style + +b.dataset.s) % n + n) % n); } if (b.dataset.m) { const S2 = RADIO.st.stems || (RADIO.st.stems = { drums: 1, bass: 1, chords: 1, lead: 1 }); S2[b.dataset.m] = S2[b.dataset.m] ? 0 : 1; b.classList.toggle('off', !S2[b.dataset.m]); } };
     return { d, tick() { const on = RADIO.st.on && lidOpen > 0.95 && !ROAMS.on; d.classList.toggle('on', on); if (on) { const nm = RADIO.STYLES[RADIO.st.style].name; if (MIX.last !== nm) { MIX.last = nm; d.querySelector('#mixN').textContent = '♪ ' + nm; } } } }; })();
@@ -1164,10 +1204,10 @@
     REC.p.x=clamp(REC.p.x,-90000,90000);REC.p.y=clamp(REC.p.y,-90000,90000);REC.p.z=clamp(REC.p.z,-90000,90000);
     if (!REC.cq) { REC.cy = REC.yaw; REC.cpch = REC.pitch; REC.cq = 1; } REC.cy = angL(REC.cy, REC.yaw, Math.min(1, dt * 6)); REC.cpch += (REC.pitch - REC.cpch) * Math.min(1, dt * 6);
     cam.position.copy(REC.p); const c2 = Math.cos(REC.cpch); cam.lookAt(REC.p.x + Math.sin(REC.cy) * c2, REC.p.y + Math.sin(REC.cpch), REC.p.z - Math.cos(REC.cy) * c2); cam.near = 0.08; };
-  function enterRoam() { if (ROAMS.on) return; ROAMS.on = true; document.body.classList.add('unfire-roaming'); ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
+  function enterRoam() { if (ROAMS.on) return; resetFlightCombos(); ROAMS.on = true; document.body.classList.add('unfire-roaming'); ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
   function exitRoam() { if (REC.on) REC.set(false); if (!ROAMS.on) return;
     CASE_VIEW.on=false;CAPS.cancel();carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
- ROAMS.on = false; document.body.classList.remove('unfire-roaming'); ROAMS.cp = null; ROAMS.mini = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
+ resetFlightCombos(); ROAMS.on = false; document.body.classList.remove('unfire-roaming'); ROAMS.cp = null; ROAMS.mini = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
   // First visit: the EXISTING PASEAR control blinks for exactly two seconds
   // once the physical lid has completely opened, then stays visible.
   let firstCaseWalkHint=false;
@@ -1764,17 +1804,49 @@
   // ===== CÓMO SE JUEGA (primera vez) + CONTROLES TÁCTILES para móvil y tablet =====
   { const TOUCH = (() => { try { return matchMedia('(pointer:coarse)').matches; } catch (e) { return false; } })();
     const help = document.createElement('div'); help.id = 'howto'; help.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:80;max-width:min(92vw,520px);padding:18px 22px;border-radius:20px;background:rgba(6,16,46,.88);border:2px solid #5fc8ff;color:#fff;font:600 14px/1.55 Arial,sans-serif;box-shadow:0 20px 60px #000a;display:none;text-align:left';
-    help.innerHTML = TOUCH ? '<b style="font:900 18px Orbitron,Arial;color:#5fc8ff">CÓMO SE JUEGA</b><br>🕹️ Joystick de la izquierda: andar<br>👆 Arrastra en la pantalla: mirar alrededor<br>🪽 Mantén VOLAR: subir · suéltalo y flotas · ⬇ BAJAR: bajar<br>💬 HABLAR: charla con el robot más cercano<br>⏏ Arriba a la derecha: volver a la web<br><br><span style="color:#b6ff3b">Toca para empezar</span>' : '<b style="font:900 18px Orbitron,Arial;color:#5fc8ff">CÓMO SE JUEGA</b><br>⌨️ W A S D o flechas: andar (Shift = correr)<br>🖱️ Arrastra con el ratón: mirar alrededor<br>🪽 Mantén ESPACIO: volar y subir · suéltalo y flotas · S o ↓: bajar<br>💬 T: hablar con el robot más cercano · M: mapa · C: cámara<br>🚪 Sal por la puerta azul para ir a la isla · ⏏ arriba a la derecha: volver a la web<br><br><span style="color:#b6ff3b">Haz clic para empezar</span>';
+    help.innerHTML = TOUCH ? '<b style="font:900 18px Orbitron,Arial;color:#5fc8ff">CÓMO SE JUEGA</b><br>🕹️ Joystick de la izquierda: andar<br>👆 Arrastra en la pantalla: mirar alrededor<br>⬆ Mantén VOLAR: subir · suéltalo y flotas · ⬇ BAJAR: bajar<br>🚀 3 toques ⬆ VOLAR: turbo · 💥 2 toques ⬇ BAJAR: aterrizaje rápido<br>💬 HABLAR: charla con el robot más cercano<br>⏏ Arriba a la derecha: volver a la web<br><br><span style="color:#b6ff3b">Toca para empezar</span>' : '<b style="font:900 18px Orbitron,Arial;color:#5fc8ff">CÓMO SE JUEGA</b><br>⌨️ W A S D o flechas: andar (Shift = correr)<br>🖱️ Arrastra con el ratón: mirar alrededor<br>⬆ Mantén ESPACIO: volar y subir · suéltalo y flotas · S o ↓: bajar<br>🚀 3 pulsaciones ↑: turbo · 💥 2 pulsaciones ↓: aterrizaje rápido<br>💬 T: hablar con el robot más cercano · M: mapa · C: cámara<br>🚪 Sal por la puerta azul para ir a la isla · ⏏ arriba a la derecha: volver a la web<br><br><span style="color:#b6ff3b">Haz clic para empezar</span>';
+
+    // A permanent, accessible control list inside the existing ⚙ settings menu.
+    const controlsGuide = document.createElement('section');
+    controlsGuide.id = 'unfireControlGuide'; controlsGuide.setAttribute('role', 'dialog');
+    controlsGuide.setAttribute('aria-modal', 'true'); controlsGuide.setAttribute('aria-label', 'Guía de controles');
+    controlsGuide.tabIndex = -1;
+    controlsGuide.style.cssText = 'position:fixed;inset:0;z-index:96;display:none;align-items:center;justify-content:center;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));box-sizing:border-box;background:rgba(1,4,18,.82);overscroll-behavior:contain';
+    controlsGuide.innerHTML = '<div style="box-sizing:border-box;width:min(95vw,540px);max-height:min(78dvh,680px);overflow-y:auto;overscroll-behavior:contain;background:#0c1636;border:1px solid #77c7ff;border-radius:18px;padding:18px 20px;color:#fff;font:500 14px/1.55 system-ui,sans-serif;box-shadow:0 20px 70px #000a"><div style="display:flex;align-items:center;justify-content:space-between;gap:14px"><h2 style="margin:0;font:800 18px system-ui">🎮 Guía de controles</h2><button type="button" id="unfireGuideClose" aria-label="Cerrar guía" style="min-width:44px;min-height:44px;border:1px solid #9edaff;border-radius:12px;color:#fff;background:#244d83;font-size:20px;cursor:pointer">✕</button></div><p><strong>Movimiento:</strong> joystick izquierdo (móvil) o WASD/flechas (teclado). Arrastra para mirar, Shift para correr y Q/E para girar.</p><p><strong>Vuelo:</strong> mantén ⬆ VOLAR o Espacio para subir; suelta para flotar. Mantén ⬇ BAJAR o S/↓ para descender.</p><p><strong>🚀 Impulso turbo:</strong> pulsa 3 veces rápido ⬆ VOLAR o ↑. <strong>💥 Aterrizaje de impacto:</strong> pulsa 2 veces rápido ⬇ BAJAR o ↓ mientras vuelas. El aterrizaje respeta el suelo y las plataformas.</p><p><strong>Más acciones:</strong> F = picado; C = cambiar cámara; M = mapa; T/💬 HABLAR = hablar; V = cámara cine; B = tabla de surf cuando esté disponible; G = cápsula tras desbloquearla.</p><p><strong>Juego:</strong> ⚙ abre ajustes, 📖 HISTORIA muestra misiones, 🗺️ MAPA orienta, 💾 GUARDAR conserva el progreso, 🚶 PASEAR explora y ⟲ vuelve al maletín.</p><p style="opacity:.78;margin-bottom:0">Los controles especiales solo actúan durante el juego. Puedes cerrar esta guía con ✕ o Escape.</p></div>';
+    document.body.appendChild(controlsGuide);
+    const guideClose = controlsGuide.querySelector('#unfireGuideClose');
+    const closeGuide = () => { controlsGuide.classList.remove('on'); controlsGuide.style.display = 'none'; };
+    // STORY_INIT builds the HUD later in the boot sequence; attach when it exists.
+    const attachControlsToSettings = () => {
+      const settingsHud = document.getElementById('storyHud');
+      if (!settingsHud) return false;
+      if (!document.getElementById('unfireControlsButton')) {
+        const guideButton = document.createElement('button');
+        guideButton.id = 'unfireControlsButton'; guideButton.type = 'button';
+        guideButton.textContent = '🎮 CONTROLES'; guideButton.setAttribute('aria-haspopup', 'dialog');
+        guideButton.onclick = (ev) => { ev.stopPropagation(); ROAMS.k[' '] = 0; ROAMS.k.s = 0; controlsGuide.style.display = 'flex'; controlsGuide.classList.add('on'); guideClose.focus(); };
+        settingsHud.insertBefore(guideButton, settingsHud.querySelector('.obj'));
+      }
+      return true;
+    };
+    if (!attachControlsToSettings()) {
+      const guideWatcher = new MutationObserver(() => { if (attachControlsToSettings()) guideWatcher.disconnect(); });
+      guideWatcher.observe(document.body, { childList: true, subtree: true });
+      addEventListener('pagehide', () => guideWatcher.disconnect(), { once: true });
+    }
+    guideClose.onclick = closeGuide;
+    controlsGuide.addEventListener('pointerdown', (ev) => ev.stopPropagation());
+    controlsGuide.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); closeGuide(); } });
     document.body.appendChild(help); help.addEventListener('pointerdown', (e) => { e.stopPropagation(); help.style.display = 'none'; }, true);
     let shown = false; setInterval(() => { if (ROAMS.on && !shown) { shown = true; let seen = false; try { seen = !!localStorage.getItem('unfire_howto'); localStorage.setItem('unfire_howto', '1'); } catch (e) {} if (!seen) { help.style.display = 'block'; setTimeout(() => (help.style.display = 'none'), 12000); } } }, 500);
     if (TOUCH) { const pad = document.createElement('div'); pad.id='unfireTouchPad'; pad.style.cssText = 'position:fixed;left:18px;bottom:18px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.5);z-index:70;display:none;touch-action:none'; const knob = document.createElement('div'); knob.id='unfireTouchKnob'; knob.style.cssText = 'position:absolute;left:40px;top:40px;width:50px;height:50px;border-radius:50%;background:rgba(95,200,255,.85);box-shadow:0 4px 14px #0008'; pad.appendChild(knob); document.body.appendChild(pad);
       const btn = (txt, css) => { const b = document.createElement('button'); b.textContent = txt; b.style.cssText = 'position:fixed;z-index:70;display:none;border:2px solid #fff;border-radius:999px;padding:14px 18px;font:900 14px Orbitron,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);box-shadow:0 6px 18px #0008;touch-action:none;' + css; document.body.appendChild(b); return b; };
-      const fly = btn('🪽 VOLAR', 'right:18px;bottom:24px'), talk = btn('💬 HABLAR', 'right:18px;bottom:90px'), down = btn('⬇ BAJAR', 'right:150px;bottom:24px'); fly.id='unfireFly'; talk.id='unfireTalk'; down.id='unfireDown'; down.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); ROAMS.k.s = 1; }); ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => down.addEventListener(ev, () => { ROAMS.k.s = 0; }));
+      const fly = btn('⬆ VOLAR', 'right:18px;bottom:24px'), talk = btn('💬 HABLAR', 'right:18px;bottom:90px'), down = btn('⬇ BAJAR', 'right:150px;bottom:24px'); fly.id='unfireFly'; talk.id='unfireTalk'; down.id='unfireDown'; down.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); flightTap('down'); ROAMS.k.s = 1; }); ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => down.addEventListener(ev, () => { ROAMS.k.s = 0; }));
       let pid = null, cx = 0, cy = 0; const setK = (dx, dy) => { const K = ROAMS.k, d = 0.3; K.w = dy < -d ? 1 : 0; K.s = dy > d ? 1 : 0; K.a = dx < -d ? 1 : 0; K.d = dx > d ? 1 : 0; const center = (pad.clientWidth - knob.offsetWidth) / 2, radius = Math.max(1, pad.clientWidth * .30); knob.style.left = center + dx * radius + 'px'; knob.style.top = center + dy * radius + 'px'; };
       pad.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); if (pid !== null) return; pid = e.pointerId; const r = pad.getBoundingClientRect(); cx = r.left + r.width / 2; cy = r.top + r.height / 2; pad.setPointerCapture(pid); });
       pad.addEventListener('pointermove', (e) => { if (e.pointerId !== pid) return; e.stopPropagation(); let dx = (e.clientX - cx) / Math.max(1, pad.clientWidth * .42), dy = (e.clientY - cy) / Math.max(1, pad.clientHeight * .42); const l = Math.hypot(dx, dy); if (l > 1) { dx /= l; dy /= l; } setK(dx, dy); });
       const up = (e) => { if (e.pointerId !== pid) return; pid = null; setK(0, 0); }; pad.addEventListener('pointerup', up); pad.addEventListener('pointercancel', up); const resetTouch = () => { pid=null; setK(0,0); ROAMS.k[' '] = 0; }; addEventListener('blur',resetTouch); addEventListener('orientationchange',resetTouch); document.addEventListener('visibilitychange',()=>{if(document.hidden)resetTouch();});
-      fly.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); if (ROAMS.board && ROAMS.wet && !ROAMS.fly && window.ATM_OUT) { dispatchEvent(new KeyboardEvent('keydown', { key: ' ' })); return; } if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; } ROAMS.k[' '] = 1; }); ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => fly.addEventListener(ev, () => { ROAMS.k[' '] = 0; }));
+      fly.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); flightTap('up'); if (ROAMS.board && ROAMS.wet && !ROAMS.fly && window.ATM_OUT) { dispatchEvent(new KeyboardEvent('keydown', { key: ' ' })); return; } if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; } ROAMS.k[' '] = 1; }); ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => fly.addEventListener(ev, () => { ROAMS.k[' '] = 0; }));
       talk.addEventListener('pointerdown', (e) => { e.stopPropagation(); const c = document.getElementById('chat'); c.classList.add('on'); const i = document.getElementById('chatq'); i.placeholder = 'Habla con el robot que tengas más cerca… (Enter)'; setTimeout(() => i.focus(), 30); });
       setInterval(() => { const on = ROAMS.on && !(window.__VIEW && window.__VIEW.on); [pad, fly, talk].forEach((el) => (el.style.display = on ? 'block' : 'none')); down.style.display = on && ROAMS.fly ? 'block' : 'none'; }, 300); } }
   // ===== MODO VISTA: videoclip automático por la casa (y fuera), cortes al ritmo, tomas que no se repiten =====
@@ -1823,7 +1895,7 @@
     focusHost: (who, soft) => { HOST.talk(); if (soft) { if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } return; } let p = HOST.pos; if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; p = it.W.getWorldPosition(V(0, 0, 0)); try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } if (ROAMS.on) { const d = V(cam.position.x - p.x, 0, cam.position.z - p.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const side = V(-d.z, 0, d.x); const q = V(p.x + d.x * 11 + side.x * 7, p.y + 5.5, p.z + d.z * 11 + side.z * 7); const lx = p.x - q.x, lz = p.z - q.z; ROAMS.tgt = { p: q, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(p.y + 1.5 - q.y, Math.hypot(lx, lz)) }; } else { view.gx = clamp(p.x * 0.7, -CW / 2 - 1, CW / 2 + 1); view.gz = clamp(p.z * 0.7, -CD / 2 - 1, CD / 2 + 2); view.gd = view.D0 * 0.85; } } }); } catch (e) { console.warn('story', e); }
   roamB.addEventListener('pointerdown', (e) => e.stopPropagation());
   function roamMove(f, side = 0) { const y = ROAMS.yaw, px0 = ROAMS.p.x, pz0 = ROAMS.p.z; ROAMS.p.x += Math.sin(y) * f + Math.cos(y) * side; ROAMS.p.z -= Math.cos(y) * f - Math.sin(y) * side; if (!ROAMS.mini && (window.ATM_OUT ? (window.__OBSTO = window.__OBSTO || window.__buildObstOut()) : window.__OBST)) { const OB = window.ATM_OUT ? window.__OBSTO : window.__OBST, feet = -8.9 + (ROAMS.h || 0), hit = (x, z) => { for (const B of OB) if (x > B.x0 && x < B.x1 && z > B.z0 && z < B.z1 && feet < B.y1 - 0.4) return true; return false; }; { const nx = ROAMS.p.x, nz = ROAMS.p.z; if (!hit(px0, pz0)) { ROAMS.p.x = px0; ROAMS.p.z = pz0; if (!hit(nx, pz0)) ROAMS.p.x = nx; if (!hit(ROAMS.p.x, nz)) ROAMS.p.z = nz; } const want = Math.hypot(nx - px0, nz - pz0), got = Math.hypot(ROAMS.p.x - px0, ROAMS.p.z - pz0); if (want > 0.01 && got < want * 0.15) { ROAMS.stkN = (ROAMS.stkN || 0) + 1; if (ROAMS.stkN > 40) { ROAMS.p.x = nx; ROAMS.p.z = nz; ROAMS.stkN = 30; } } else ROAMS.stkN = 0; } } if (window.ATM_OUT) { const HX = 82, Z0 = -18, Z1 = 98; if (Math.abs(ROAMS.p.x) < HX && ROAMS.p.z > Z0 && ROAMS.p.z < Z1 && -8.9 + (ROAMS.h || 0) < 26.6) { if (Math.abs(ROAMS.p.x + 30) < 4) { ROAMS.p.x += (-30 - ROAMS.p.x) * 0.25; if (ROAMS.p.z < 93) { try { ATM.setOut(false); } catch (e) {} } } else { ROAMS.p.x = px0; ROAMS.p.z = pz0; } } } if (ROAMS.mini) { ROAMS.p.x = clamp(ROAMS.p.x, -12.6, 12.6); ROAMS.p.z = clamp(ROAMS.p.z, -7.2, 4.9); if (Math.abs(ROAMS.p.x) < 3.15 && Math.abs(ROAMS.p.z) < 2.25) { ROAMS.p.x = px0; ROAMS.p.z = pz0; } ROAMS.p.y = 0.3; return; } const B = window.__RB || { x: 19.5, z0: -14, z1: 18.5 }; ROAMS.p.x = clamp(ROAMS.p.x, -B.x, B.x); ROAMS.p.z = clamp(ROAMS.p.z, B.z0, B.z1); if (!window.ATM_OUT && Math.abs(ROAMS.p.x + 30) < 5 && ROAMS.p.z > 89) { ROAMS.p.x += (-30 - ROAMS.p.x) * 0.25; if (ROAMS.p.z > 93) { try { ATM.setOut(true); } catch (e) { console.warn(e); } } } { const hx = ROAMS.p.x, hz = ROAMS.p.z - 1, hd = Math.hypot(hx, hz); if (!window.ATM_OUT && hd < 8.5) { const s = 8.5 / Math.max(hd, 0.01); ROAMS.p.x = hx * s; ROAMS.p.z = hz * s + 1; } } }
-  addEventListener('keydown', (e) => { if (!ROAMS.on || (e.target && e.target.tagName === 'INPUT')) return; if (e.key === 'Escape') { if (CASE_VIEW.on) showRobotView(); else exitRoam(); return; } if (CASE_VIEW.on) return; const k = e.key.length === 1 ? e.key.toLowerCase() : e.key; if (k === 'Shift' || k === 'Alt') ROAMS.k[k] = 1; if (k === 'b' && !e.repeat && window.ATM_OUT) { window.__surfToggle && window.__surfToggle(); e.preventDefault(); e.stopImmediatePropagation(); return; } if (k === ' ' && !e.repeat && !ROAMS.mini && window.ATM_OUT && ROAMS.wet && !ROAMS.fly && ROAMS.board) { ROAMS.spDown = performance.now(); ROAMS.k[' '] = 1; if (!ROAMS.air && !ROAMS.trick) { const wv0 = window.__WAVE ? window.__WAVE(ROAMS.p.x, ROAMS.p.z, window.__T || 0) : 0; ROAMS.vy = Math.min(66, 30 + Math.max(0, wv0) * 3.4); try { window.__SPRAY && window.__SPRAY(ROAMS.p.x, -8.9 + (ROAMS.h || 0), ROAMS.p.z, 40, 8, 14); } catch (e2) {} const KD = ['360', 'FLIP', 'GRAB', 'SUPERMAN']; ROAMS.trick = { t: 0, k: KD[Math.floor(Math.random() * KD.length)], sd: Math.random() < 0.5 ? 1 : -1 }; } e.preventDefault(); e.stopImmediatePropagation(); return; } if (k === ' ' && !e.repeat && !ROAMS.mini) { const now = performance.now(); if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; say('🪽 Transformación · MANTÉN ESPACIO para subir · suéltalo y te quedas flotando · S o ↓ para bajar · F en picado · W hacia delante'); } ROAMS.lastSp = now; ROAMS.k[' '] = 1; } if (k === 'f') ROAMS.k.f = 1; if (k.startsWith('Arrow') || 'wasdqe'.includes(k) || k === ' ') { ROAMS.k[k] = 1; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+  addEventListener('keydown', (e) => { if (!ROAMS.on || (e.target && e.target.tagName === 'INPUT')) return; if (e.key === 'Escape') { if (CASE_VIEW.on) showRobotView(); else exitRoam(); return; } if (CASE_VIEW.on) return; const k = e.key.length === 1 ? e.key.toLowerCase() : e.key; if (k === 'Shift' || k === 'Alt') ROAMS.k[k] = 1; if (k === 'b' && !e.repeat && window.ATM_OUT) { window.__surfToggle && window.__surfToggle(); e.preventDefault(); e.stopImmediatePropagation(); return; } if (k === ' ' && !e.repeat && !ROAMS.mini && window.ATM_OUT && ROAMS.wet && !ROAMS.fly && ROAMS.board) { ROAMS.spDown = performance.now(); ROAMS.k[' '] = 1; if (!ROAMS.air && !ROAMS.trick) { const wv0 = window.__WAVE ? window.__WAVE(ROAMS.p.x, ROAMS.p.z, window.__T || 0) : 0; ROAMS.vy = Math.min(66, 30 + Math.max(0, wv0) * 3.4); try { window.__SPRAY && window.__SPRAY(ROAMS.p.x, -8.9 + (ROAMS.h || 0), ROAMS.p.z, 40, 8, 14); } catch (e2) {} const KD = ['360', 'FLIP', 'GRAB', 'SUPERMAN']; ROAMS.trick = { t: 0, k: KD[Math.floor(Math.random() * KD.length)], sd: Math.random() < 0.5 ? 1 : -1 }; } e.preventDefault(); e.stopImmediatePropagation(); return; } if (!e.repeat && (k === 'ArrowDown' || k === 'ArrowUp')) flightTap(k === 'ArrowDown' ? 'down' : 'up'); if (k === ' ' && !e.repeat && !ROAMS.mini) { const now = performance.now(); if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; say('🪽 Transformación · MANTÉN ESPACIO para subir · suéltalo y te quedas flotando · S o ↓ para bajar · F en picado · W hacia delante'); } ROAMS.lastSp = now; ROAMS.k[' '] = 1; } if (k === 'f') ROAMS.k.f = 1; if (k.startsWith('Arrow') || 'wasdqe'.includes(k) || k === ' ') { ROAMS.k[k] = 1; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
   addEventListener('keyup', (e) => { ROAMS.k[e.key.length === 1 ? e.key.toLowerCase() : e.key] = 0; });
   function fitD0() { const vf = (cam.fov * Math.PI) / 360, hf = Math.atan(Math.tan(vf) * cam.aspect); view.D0 = Math.max((CW / 2 + 0.5) / Math.tan(hf), (CD / 2 + 1.3) / Math.tan(vf)) * 1.02; if (view.gd > view.D0 || view.gd === view.dist && view.dist >= view.D0 - 0.01) { view.gd = view.D0; } }
   // Combine the iPhone device budget with rotation-safe backbuffer sizing.
@@ -1950,7 +2022,7 @@
   const XFX = (() => { let built = false, inp, out, dry, wet, cur = 'clean', nextT = 0, dens = 0, reg = 60, lastN = 0; const N = {};
     function build() { if (built || !audioOk()) return built; const c = UA.ctx; inp = c.createGain(); out = c.createGain(); dry = c.createGain(); wet = c.createGain(); dry.gain.value = 1; wet.gain.value = 0; inp.connect(dry); dry.connect(out); out.connect(UA.bus.master);
       // anillo
-      N.ring = c.createGain(); N.ring.gain.value = 0; N.ringO = c.createOscillator(); N.ringO.frequency.value = 220; N.ringO.connect(N.ring.gain); N.ringO.start(); 
+      N.ring = c.createGain(); N.ring.gain.value = 0; N.ringO = c.createOscillator(); N.ringO.frequency.value = 220; N.ringO.connect(N.ring.gain); N.ringO.start();
       // fase (4 pasa-todo con LFO)
       N.ph = [0, 1, 2, 3].map(() => { const f = c.createBiquadFilter(); f.type = 'allpass'; f.frequency.value = 800; f.Q.value = 0.7; return f; }); N.ph.reduce((a, b) => (a.connect(b), b)); N.phL = c.createOscillator(); N.phL.frequency.value = 0.35; N.phA = c.createGain(); N.phA.gain.value = 600; N.phL.connect(N.phA); N.ph.forEach((f) => N.phA.connect(f.frequency)); N.phL.start();
       // bitcrush
@@ -1965,23 +2037,44 @@
     const MODES = { clean: [], ring: ['ring'], phase: ['ph'], crush: ['cr'], dub: ['dl'], sweep: ['sw'], stutter: ['st'], ringdub: ['ring', 'dl'], crushsweep: ['cr', 'sw'], phasedub: ['ph', 'dl'] };
     function setMode(m) { if (!built) return; const c = UA.ctx; try { inp.disconnect(); } catch (e) {} inp.connect(dry); [N.ring, N.ph[3], N.cr, N.dlLP, N.sw, N.st].forEach((n) => { try { n.disconnect(); } catch (e) {} }); if (N.dlLP) N.dlLP.connect(N.dlF); const chain = MODES[m] || []; let last = inp;
       chain.forEach((k) => { if (k === 'ring') { last.connect(N.ring); last = N.ring; } else if (k === 'ph') { last.connect(N.ph[0]); last = N.ph[3]; } else if (k === 'cr') { last.connect(N.cr); last = N.cr; } else if (k === 'dl') { last.connect(N.dl); last = N.dlLP; } else if (k === 'sw') { last.connect(N.sw); last = N.sw; } else if (k === 'st') { last.connect(N.st); last = N.st; } }); if (chain.length) last.connect(N.mix); cur = m; }
-    return { get node() { return build() ? inp : null; }, get mode() { return cur; }, makeup(v) { if (built) out.gain.setTargetAtTime(v, UA.ctx.currentTime, v > 1.2 ? 0.04 : 0.5); },
+    return { get node() { return build() ? inp : null; }, get mode() { return cur; }, makeup(v) { if (built) out.gain.setTargetAtTime(Math.min(0.90, Math.max(0.48, v * 0.48)), UA.ctx.currentTime, 0.25); },
       note(m) { const now = performance.now(); dens = Math.min(1, dens + 0.12); reg = reg * 0.8 + m * 0.2; lastN = now; },
       tick(dt, t, mega, lv) { if (!built) return; const c = UA.ctx, n = c.currentTime; dens = Math.max(0, dens - dt * 0.35); const playing = performance.now() - lastN < 2500;
-        nextT -= dt; if (nextT <= 0) { const pool = mega ? ['ring', 'phase', 'crush', 'dub', 'sweep', 'stutter', 'ringdub', 'crushsweep', 'phasedub'] : playing ? ['phase', 'dub', 'sweep', 'clean', 'phasedub'] : ['clean', 'dub', 'phase']; setMode(pool[Math.floor(Math.random() * pool.length)]); nextT = (60 / (RADIO.bpm || 120)) * 4 * (mega ? 4 : 8); }
-        const w = cur === 'clean' ? 0 : (mega ? 0.55 : 0.32) * (0.5 + dens * 0.6); wet.gain.setTargetAtTime(w, n, 0.3); dry.gain.setTargetAtTime(1 - w * 0.35, n, 0.3);
+        nextT -= dt; if (nextT <= 0) { const pool = mega ? ['clean', 'phase', 'dub', 'phasedub'] : playing ? ['clean', 'phase', 'dub', 'phasedub'] : ['clean', 'phase', 'dub']; /* Excludes ring modulation, crushing and resonant sweeps. */ setMode(pool[Math.floor(Math.random() * pool.length)]); nextT = (60 / (RADIO.bpm || 120)) * 4 * (mega ? 4 : 8); }
+        const w = cur === 'clean' ? 0 : (mega ? 0.20 : 0.15) * (0.55 + dens * 0.4); wet.gain.setTargetAtTime(w, n, 0.3); dry.gain.setTargetAtTime(1 - w * 0.35, n, 0.3);
         if (N.ringO) N.ringO.frequency.setTargetAtTime(110 * Math.pow(2, Math.round((reg - 48) / 12)) * (1 + Math.round(dens * 2) * 0.5), n, 0.2);
-        if (N.dl) N.dl.delayTime.setTargetAtTime((60 / (RADIO.bpm || 120)) * (dens > 0.6 ? 0.25 : 0.75), n, 0.1); if (N.dlF) N.dlF.gain.setTargetAtTime(dens > 0.6 ? 0.35 : 0.58, n, 0.3);
+        if (N.dl) N.dl.delayTime.setTargetAtTime((60 / (RADIO.bpm || 120)) * (dens > 0.6 ? 0.25 : 0.75), n, 0.1); if (N.dlF) N.dlF.gain.setTargetAtTime(dens > 0.6 ? 0.24 : 0.31, n, 0.3);
         if (N.swL) N.swL.frequency.setTargetAtTime(0.1 + dens * 0.6, n, 0.5); if (N.phL) N.phL.frequency.setTargetAtTime(0.2 + dens * 1.2, n, 0.5);
         if (cur === 'stutter' && RADIO.st.on) { const sd = 60 / (RADIO.bpm || 120) / 4, ph = (n / sd) % 2; N.st.gain.setTargetAtTime(ph < 1 ? 1 : 0.05, n, 0.004); } } }; })();
   function pickCtl(e) { if (!open.length) return null; ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam);
     for (const h of ray.intersectObjects(open.map((g) => g.dev.root), true)) { let o = h.object, vis = true; while (o) { if (!o.visible) { vis = false; break; } o = o.parent; } if (!vis) continue;
       const g = open.find((x) => { let p = h.object; while (p) { if (p === x.dev.root) return true; p = p.parent; } return false; }); return { c: h.object.userData.ctl || null, g }; } return null; }
   const HV = new Map();
+  // A gentle non-pitched real-time click lets players tap along to uploaded or
+  // pre-recorded music whose key is unknown. Never invent its harmony.
+  let hwTapBuffer = null;
+  function hwNeutralTap() {
+    if (!audioOk()) return;
+    const c = UA.ctx, t = c.currentTime + 0.003;
+    if (!hwTapBuffer || hwTapBuffer.sampleRate !== c.sampleRate) {
+      const b = c.createBuffer(1, Math.round(c.sampleRate * 0.025), c.sampleRate);
+      const data = b.getChannelData(0);
+      for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 3);
+      hwTapBuffer = b;
+    }
+    const src = c.createBufferSource(), bp = c.createBiquadFilter(), g = c.createGain();
+    src.buffer = hwTapBuffer; bp.type = 'bandpass'; bp.frequency.value = 1300; bp.Q.value = 0.7;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(0.028, t + 0.004);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.038);
+    src.connect(bp).connect(g).connect(UA.bus.master);
+    src.start(t); src.stop(t + 0.041);
+    src.onended = () => { src.disconnect(); bp.disconnect(); g.disconnect(); };
+  }
   let HVA = null, LVA = null, vaSty = -1; const VMAP = [0, 4, 5, 5, 5, 0, 4, 1, 5, 4], LMAP = [4, 5, 4, 5, 5, 4, 5, 5, 4, 4], KV = new Map();
   function vaSync() { try { if (!HVA && audioOk() && typeof VA !== 'undefined') { HVA = VA.create(); LVA = VA.create(); RADIO.st.leadVA = LVA; try { const xn = XFX.node; if (xn) HVA.route(xn); } catch (e) {} } if (!HVA) return null; const st = RADIO.st.style || 0; if (st !== vaSty) { vaSty = st; const SY = RADIO.STYLES[st] || {}; HVA.preset(SY.va != null ? SY.va : VMAP[st % VMAP.length]); LVA.preset(SY.lva != null ? SY.lva : LMAP[st % LMAP.length]); try { HVA.set('bpm', RADIO.bpm); LVA.set('bpm', RADIO.bpm); } catch (e) {} } return HVA; } catch (e) { return null; } }
-  function hwNote(m, on) { if (on) try { window.UEV('hwkey'); } catch (e) {} if (!audioOk()) return; if (on) try { XFX.note(m); } catch (e) {} { const v = vaSync(); if (v) { if (on) { window.__kLast = performance.now(); const sm = SNAP(m); KV.set(m, sm); v.noteOn(sm, 0.85, undefined, 'k'); } else { const sm = KV.get(m); if (sm != null) { v.noteOff(sm, undefined, 'k'); KV.delete(m); } } return; } } const c = UA.ctx, now = c.currentTime; if (on) { const sty = RADIO.st.style || 0; const P = [{ w: ['sawtooth', 'sawtooth', 'sawtooth', 'sawtooth', 'sawtooth'], d: [-14, -6, 0, 6, 14], cut: 3800, end: 1800, q: 1.2, a: 0.02, g: 0.06 }, { w: ['square', 'sawtooth'], d: [-5, 5], cut: 3000, end: 1200, q: 3, a: 0.005, g: 0.07 }, { w: ['sawtooth', 'sawtooth'], d: [-8, 8], cut: 900, end: 2600, q: 6, a: 0.01, g: 0.08 }, { w: ['sine', 'triangle'], d: [0, 1200], cut: 4000, end: 2500, q: 0.7, a: 0.008, g: 0.12 }, { w: ['triangle', 'sine'], d: [0, 1900], cut: 5000, end: 3000, q: 0.5, a: 0.004, g: 0.12 }, { w: ['square', 'square'], d: [-4, 1204], cut: 2600, end: 900, q: 4, a: 0.003, g: 0.06 }][sty % 6];
-      const g = c.createGain(), f = c.createBiquadFilter(); f.type = 'lowpass'; f.Q.value = P.q; f.frequency.setValueAtTime(P.cut, now); f.frequency.exponentialRampToValueAtTime(P.end, now + 0.5); g.gain.setValueAtTime(0, now); g.gain.linearRampToValueAtTime(P.g, now + P.a); g.gain.setTargetAtTime(P.g * 0.7, now + 0.15, 0.3); const hz = 440 * 2 ** ((SNAP(m) - 69) / 12);
+  function hwNote(m, on) { if (on) { window.__kLast = performance.now(); try { window.UEV('hwkey'); } catch (e) {} } if (!audioOk()) return; if (on) try { XFX.note(m); } catch (e) {} { const v = vaSync(); if (v) { if (on) { window.__kLast = performance.now(); const sm = SNAP(m); if (sm === null) { hwNeutralTap(); return; } KV.set(m, sm); v.noteOn(sm, 0.66, undefined, 'k' + m); } else { const sm = KV.get(m); if (sm != null) { v.noteOff(sm, undefined, 'k' + m); KV.delete(m); } } return; } } const c = UA.ctx, now = c.currentTime; if (on && SNAP(m) === null) { hwNeutralTap(); return; } if (on) { const sty = RADIO.st.style || 0; const P = [{ w: ['sawtooth', 'sawtooth', 'sawtooth', 'sawtooth', 'sawtooth'], d: [-14, -6, 0, 6, 14], cut: 3800, end: 1800, q: 1.2, a: 0.02, g: 0.06 }, { w: ['square', 'sawtooth'], d: [-5, 5], cut: 3000, end: 1200, q: 3, a: 0.005, g: 0.07 }, { w: ['sawtooth', 'sawtooth'], d: [-8, 8], cut: 900, end: 2600, q: 6, a: 0.01, g: 0.08 }, { w: ['sine', 'triangle'], d: [0, 1200], cut: 4000, end: 2500, q: 0.7, a: 0.008, g: 0.12 }, { w: ['triangle', 'sine'], d: [0, 1900], cut: 5000, end: 3000, q: 0.5, a: 0.004, g: 0.12 }, { w: ['square', 'square'], d: [-4, 1204], cut: 2600, end: 900, q: 4, a: 0.003, g: 0.06 }][sty % 6];
+      const g = c.createGain(), f = c.createBiquadFilter(); f.type = 'lowpass'; f.Q.value = P.q; f.frequency.setValueAtTime(P.cut, now); f.frequency.exponentialRampToValueAtTime(P.end, now + 0.5); g.gain.setValueAtTime(0, now); g.gain.linearRampToValueAtTime(P.g * 0.50, now + P.a); g.gain.setTargetAtTime(P.g * 0.24, now + 0.15, 0.3); const hz = 440 * 2 ** ((SNAP(m) - 69) / 12);
       if (HV.size > 10) { const [k0, v0] = HV.entries().next().value; v0.g.gain.setTargetAtTime(0, now, 0.05); v0.os.forEach((o) => o.stop(now + 0.3)); HV.delete(k0); } const os = P.w.map((w, k) => { const o = c.createOscillator(); o.type = w; o.frequency.value = hz; o.detune.value = P.d[k]; o.connect(f); o.start(now); return o; }); f.connect(g).connect(UA.bus.master); HV.set(m, { g, os }); }
     else { const v = HV.get(m); if (!v) return; v.g.gain.cancelScheduledValues(now); v.g.gain.setTargetAtTime(0, now, 0.15); v.os.forEach((o) => o.stop(now + 0.9)); HV.delete(m); } }
   function hwPick(e) { if (!HW || (HW.u || 0) < 0.5) return null; ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const h = ray.intersectObjects(HW.hits, false)[0]; return h ? h.object.userData.ctl : null; }
@@ -2007,16 +2100,49 @@
     setTimeout(() => { items.filter((x) => x.kind === 'cap').forEach((it, i) => setTimeout(() => { const g = openGear(it, true); g.manual = 2; }, 300 + i * 260)); items.forEach((it) => { if (it.kind === 'mut') it.tgt = 3; if (it.kind === 'fx') it.on = 1; }); if (HW) HW.tg = 3.6;
       [1, 2].forEach((pg) => CAPPAGES[pg].slice(0, 3).forEach((spec, i) => setTimeout(() => { if (!MEGA) return; const dev = (spec.g3 ? GEAR3 : GEAR4).build(spec, kindOf(spec), Object.keys(ENGINES.PARAMS[spec.engine]).slice(0, 4).map((k) => k.toUpperCase())); dev.root.scale.setScalar(0.07); caseG.add(dev.root); flyers.push({ dev, a: ((pg - 1) * 6 + i) / 12 * TAU, m: 0 }); }, 5600 + (pg * 3 + i) * 450)));
       say('▶ Pulsa CINE para verlo como una peli'); }, 1800); }
-  let hwSub = null; function hwPlay(m, t0, dur) { if (!audioOk()) return; if (KV.size || performance.now() - (window.__kLast || 0) < 1800) return; { const v = vaSync(); if (v) { v.noteOn(m, 0.75, t0, 'm'); v.noteOff(m, t0 + dur, 'm'); return; } } const c = UA.ctx, g = c.createGain(), f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.setValueAtTime(4200, t0); f.frequency.exponentialRampToValueAtTime(1200, t0 + dur); g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.07, t0 + 0.02); g.gain.setTargetAtTime(0, t0 + dur * 0.7, 0.15); [-6, 6].forEach((d) => { const o = c.createOscillator(); o.type = 'sawtooth'; o.frequency.value = 440 * 2 ** ((m - 69) / 12); o.detune.value = d; o.connect(f); o.start(t0); o.stop(t0 + dur + 0.8); }); f.connect(g).connect(UA.bus.master); }
+  let hwSub = null; function hwPlay(m, t0, dur, velocity = 0.34) { if (!audioOk() || !Number.isFinite(m)) return; if (KV.size || performance.now() - (window.__kLast || 0) < 1800) return; { const v = vaSync(); if (v) { v.noteOn(m, Math.min(0.52, Math.max(0.15, velocity)), t0, 'm'); v.noteOff(m, t0 + dur, 'm'); return; } } const c = UA.ctx, g = c.createGain(), f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.setValueAtTime(4200, t0); f.frequency.exponentialRampToValueAtTime(1200, t0 + dur); g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(Math.min(0.032, velocity * 0.075), t0 + 0.02); g.gain.setTargetAtTime(0, t0 + dur * 0.7, 0.15); [-6, 6].forEach((d) => { const o = c.createOscillator(); o.type = 'sawtooth'; o.frequency.value = 440 * 2 ** ((m - 69) / 12); o.detune.value = d; o.connect(f); o.start(t0); o.stop(t0 + dur + 0.8); }); f.connect(g).connect(UA.bus.master); }
   function megaOff() { window.__mega = false; try { HAND.show(false); } catch (e) {} if (hwSub) { hwSub(); hwSub = null; } MEGA = false; flyers.forEach((f) => { f.out = 1; }); items.forEach((it) => { if (it.W && it.home) { it.fly = 0; it.retT = 2.2; } }); open.forEach((g) => { const h = g.it.tok.position; g.dev.root.position.x = h.x; g.dev.root.position.z = h.z; g.dev.root.rotation.y = 0; }); say('Mega apagado'); }
   function superAll() { open.forEach((g) => { g.manual = 2; g.boost = 4; }); items.forEach((it) => { if (it.kind === 'mut') it.tgt = 3; }); if (HW && compG.hw.userData.open) HW.tg = 3.6; if (audioOk()) { RADIO.start(); RADIO.next(); } say('★ SÚPER TRANSFORMACIÓN'); }
   // ===== DIRECTOR DE CINE: escenas en grupo, emociones, voces y piano para ti =====
   const DRC = { sc: -1, t: 0, shot: 0, shT: 0, warm: 0, focus: new THREE.Object3D(), B: [], n: 0, step: null };
   caseG.add(DRC.focus); window.__drc = DRC; window.__bots = () => bots(); window.__cine = CINE;
   let LASTCH = null;
-  if (RADIO.onStep) RADIO.onStep((st, tt, sd, bar, ch) => { if (ch) LASTCH = ch; if (CINE.on && DRC.step) try { DRC.step(st, tt, sd, ch); } catch (e) {} });
+  const HW_CHORD_CLOCK = [];
+  if (RADIO.onStep) RADIO.onStep((st, tt, sd, bar, ch) => {
+    if (ch) LASTCH = ch;
+    if (st === 0 && ch) {
+      HW_CHORD_CLOCK.push({ t: tt, chord: ch.slice(0, 4) });
+      if (HW_CHORD_CLOCK.length > 6) HW_CHORD_CLOCK.shift();
+    }
+    if (CINE.on && DRC.step) try { DRC.step(st, tt, sd, ch); } catch (e) {}
+  });
+  // Uses the RADIO audio clock itself: no extra timer/worker or per-frame
+  // scheduling, avoids phasing, and produces occasional chord-tone arpeggios.
+  if (RADIO.onStep && window.UNFIRE_HARMONY) RADIO.onStep((st, tt, sd, bar, ch) => {
+    if (!HW || (HW.T || 0) < 2.5 || !RADIO.st.on || MEGA || !audioOk()) return;
+    const note = window.UNFIRE_HARMONY.phrase(bar, st, ch, {
+      generatedPlaying: true, externalPlaying: false, mega: MEGA,
+      heldKeys: KV.size > 0 || performance.now() - (window.__kLast || 0) < 2400,
+      section: RADIO.st.sec, style: RADIO.st.style
+    });
+    if (note) hwPlay(note.midi, tt, sd * note.durationSteps * 0.80, note.velocity);
+  });
   const TON = { key: -1, mode: 'auto' }; const MODES = { mayor: [0, 2, 4, 5, 7, 9, 11], menor: [0, 2, 3, 5, 7, 8, 10], dorico: [0, 2, 3, 5, 7, 9, 10], penta: [0, 3, 5, 7, 10], blues: [0, 3, 5, 6, 7, 10] };
-  function SNAP(m) { const ch = LASTCH, md = (n) => ((n % 12) + 12) % 12; const set = TON.mode !== 'auto' && TON.key >= 0 ? MODES[TON.mode].map((x) => md(x + TON.key)) : ch ? [...ch.map(md), md(ch[0] + 2)] : [0, 2, 4, 7, 9]; const fold = (x) => { while (x > 81) x -= 12; while (x < 33) x += 12; return x; }; for (let d = 0; d < 7; d++) { if (set.includes(md(m - d))) return fold(m - d); if (set.includes(md(m + d))) return fold(m + d); } return fold(m); }
+  function SNAP(m) {
+    const H = window.UNFIRE_HARMONY;
+    if (!H) return null; // Fail-safe neutral tap if the harmony script cannot load.
+    const generatedPlaying = !!RADIO.st.on;
+    const externalPlaying = !!(window.__WRADIO && window.__WRADIO.on) && !generatedPlaying;
+    const now = UA.ctx ? UA.ctx.currentTime : 0;
+    let current = null;
+    for (const e of HW_CHORD_CLOCK) if (e.t <= now + 0.016) current = e.chord;
+    const chord = current || (generatedPlaying ? RADIO.chordAt() : null);
+    const style = RADIO.STYLES[RADIO.st.style] || {};
+    return H.snap(m, { generatedPlaying, externalPlaying, chord,
+      mode: TON.mode, key: TON.key,
+      root: RADIO.st.root, fallbackMode: style.scale === 'major' ? 'mayor' :
+        style.scale === 'dorian' ? 'dorico' : 'menor' });
+  }
   const bots = () => items.filter((it) => it.kind === 'mut' && it.W && it.R);
   // ===== ROBOTS GIGANTES: crecen desde el maletín (≈2× el maletín), saltan al suelo y corren por la casa sin atravesar nada =====
   const GROW = (() => { let on = false; const G = []; const HT = 11.5, FL = -8.905;
@@ -2091,9 +2217,13 @@
   document.getElementById('chatq').addEventListener('keydown', (e) => { e.stopPropagation(); if (e.key === 'Enter') { ask(e.target.value); e.target.value = ''; } });
   // ---- piano con el teclado del ordenador (con transposer) ----
   const KMAP = 'asdfghjklñ', KSEMI = { a: 0, w: 1, s: 2, e: 3, d: 4, f: 5, t: 6, g: 7, y: 8, h: 9, u: 10, j: 11, k: 12, o: 13, l: 14, p: 15, 'ñ': 16, ';': 16 }, KDOWN = new Map(); let OCT = -1;
-  function pianoKey(key, down) { const kl = (key || '').toLowerCase(); if (down && (kl === 'z' || kl === 'x') && HW && (HW.T || 0) >= 2.5) { OCT = clamp(OCT + (kl === 'x' ? 1 : -1), -3, 2); say('🎹 Octava ' + (OCT >= 0 ? '+' : '') + OCT + ' (Z baja · X sube)'); hap(0.2); return true; } const i = KSEMI[(key || '').toLowerCase()]; if (i == null || !HW || (HW.T || 0) < 2.5) return false; const m = 60 + OCT * 12 + i; if (down) { if (KDOWN.has(i)) return true; try { UA.init(); } catch (er) {} KDOWN.set(i, m); hwNote(m, true); hwKey(SNAP(m), 0.25); hap(0.12); } else { const mm = KDOWN.get(i); if (mm != null) { hwNote(mm, false); KDOWN.delete(i); } } return true; }
+  function pianoKey(key, down) { const kl = (key || '').toLowerCase(); if (down && (kl === 'z' || kl === 'x') && HW && (HW.T || 0) >= 2.5) { OCT = clamp(OCT + (kl === 'x' ? 1 : -1), -3, 2); say('🎹 Octava ' + (OCT >= 0 ? '+' : '') + OCT + ' (Z baja · X sube)'); hap(0.2); return true; } const i = KSEMI[(key || '').toLowerCase()]; if (i == null || !HW || (HW.T || 0) < 2.5) return false; const m = 60 + OCT * 12 + i; if (down) { if (KDOWN.has(i)) return true; try { UA.init(); } catch (er) {} KDOWN.set(i, m); hwNote(m, true); { const n = SNAP(m); if (n !== null) hwKey(n, 0.25); } hap(0.12); } else { const mm = KDOWN.get(i); if (mm != null) { hwNote(mm, false); KDOWN.delete(i); } } return true; }
   addEventListener('keydown', (e) => { if (e.target && e.target.tagName === 'INPUT') return; if (pianoKey(e.key, true)) e.preventDefault(); });
   addEventListener('keyup', (e) => { pianoKey(e.key, false); });
+  // Release every active key if focus is lost mid-performance (including touch cancel).
+  const HW_RELEASE_ALL = () => { for (const midi of KDOWN.values()) hwNote(midi, false); KDOWN.clear(); if (knobDrag && knobDrag.hw) endKnob(); };
+  addEventListener('blur', HW_RELEASE_ALL);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) HW_RELEASE_ALL(); });
   addEventListener('message', (e) => { const d = e.data || {}; if (!d.unfire) return; if (d.kd) pianoKey(d.kd, true); if (d.ku) pianoKey(d.ku, false); });
   // ---- golpes de batalla (energía de pelea en forma de drums) ----
   function hitDrum(kind, tt) { if (!audioOk() || REC_GUARD()) return; const c = UA.ctx, n = tt || c.currentTime; if (kind === 'kick') { const o = c.createOscillator(), g = c.createGain(); o.frequency.setValueAtTime(150, n); o.frequency.exponentialRampToValueAtTime(40, n + 0.18); g.gain.setValueAtTime(0.5, n); g.gain.exponentialRampToValueAtTime(0.001, n + 0.3); o.connect(g).connect(UA.bus.master); o.start(n); o.stop(n + 0.32); return; }
@@ -2201,7 +2331,7 @@
     if (best.kind === 'archer') parentPost({ open: 'archer' });
     if (best.kind === 'hyper') parentPost({ open: 'hyper' });
     if (best.kind === 'synth') parentPost({ open: 'synth' });
-    
+
   }
   function flyTo(it) { const lap = it.laptop; view.gx = it.pos.x; view.gz = it.pos.z + (lap ? -0.3 : 0.02); view.gd = it.kind === 'cap' ? 1.3 : it.kind === 'mut' ? 1.25 : it.kind === 'fx' ? 1.1 : lap ? 2.0 : 1.6; }
   function hover(e) { { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); { const hl = lidOpen > 0.5 ? ray.intersectObject(lidArt, false)[0] : null; const hp = hl ? hl.point : ray.ray.intersectPlane(plane, V(0, 0, 0)); if (hp) { HOVL.position.copy(hp); if (hl) HOVL.position.add(hl.face.normal.clone().transformDirection(lidArt.matrixWorld).multiplyScalar(0.3)); else HOVL.position.y += 0.35; } HOVB = null; if (lidOpen > 0.9) { const bh = ray.intersectObjects(btns.map((b) => b.g), true)[0]; if (bh) HOVB = btns.find((b) => { let p = bh.object; while (p) { if (p === b.g) return true; p = p.parent; } return false; }) || null; } } const objs = lidOpen > 0.9 ? items.filter((it) => it.g && it.g.visible).map((it) => it.g) : []; const h = objs.length && ray.intersectObjects(objs, true)[0]; HOV = h ? items.find((it) => { let p = h.object; while (p) { if (p === it.g) return true; p = p.parent; } return false; }) : null; } if (lidOpen < 0.5) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); cv.style.cursor = ray.intersectObject(caseG, true).length ? 'pointer' : 'default'; return; } const c = pickCtl(e); cv.style.cursor = c && c.c ? (c.c.type === 'knob' ? 'ns-resize' : 'pointer') : zoomed() ? 'grab' : 'default'; }
@@ -2279,33 +2409,76 @@
   const clock = new THREE.Clock(); let t = 0; const pend = { it: null, t: 0 }; let MEMO = null, LV = 0; let frameN = 0; let idleT = 0, lastPlaying = false, liftY = 0;
   const tb = new Uint8Array(1024), fb = new Uint8Array(512); let level = 0;
   let frameVisible = true, previousRenderAt = 0;
-  // Lower the drawing resolution ONCE only after sustained poor foreground FPS.
-  // UI, gameplay, audio, timings and scene composition remain untouched.
-  // Avoid oscillating pixel-ratio allocations that can themselves stall mobile GPUs.
-  const adaptivePerf={since:0,frames:0,reduced:false};
-  function protectSlowGPU(now){
-    if(!adaptivePerf.since){adaptivePerf.since=now;adaptivePerf.frames=0;return;}
-    adaptivePerf.frames++;
-    const elapsed=now-adaptivePerf.since;
-    if(elapsed<6000)return;
-    if(!adaptivePerf.reduced&&adaptivePerf.frames>=12&&elapsed/adaptivePerf.frames>48){
-      const current=S.renderer.getPixelRatio();
-      const safer=Math.max(0.65,Math.min(current,DEVICE.maxDpr)*0.78);
-      if(safer<current-0.08){
-        S.renderer.setPixelRatio(safer);
-        adaptivePerf.reduced=true;
-        document.documentElement.dataset.unfireAdaptiveQuality='on';
-      }
+  // One shared renderer budget for the house AND the outdoor world.
+  // Do not run two independent DPR controllers: each GPU realloc can stall a mobile frame.
+  function createSceneFrameBudget(renderer, device, compact) {
+    const initial = Math.min(renderer.getPixelRatio(), device.maxDpr);
+    const minimum = Math.min(initial, compact ? 0.60 : 0.70);
+    const stats = {a: 1 / (compact ? 24 : 35), f: 0, dpr: initial, max: initial,
+      outdoor: false, slow: false, adjustments: 0, areaChanges: 0};
+    let area = null, started = 0, last = 0, changedAt = 0, frames = 0, slowFrames = 0, sumMs = 0;
+    function reset(now) {
+      started = now; last = now; frames = 0; slowFrames = 0; sumMs = 0;
+      stats.a = 1 / (compact ? 24 : 35); stats.slow = false;
     }
-    adaptivePerf.since=now;adaptivePerf.frames=0;
+    return {
+      stats,
+      pause() { area = null; reset(0); },
+      note(now, interval, outdoors) {
+        // Navigation and foreground resumes have large, unrepresentative frame gaps.
+        // The *same* budget applies indoors and outdoors; use each area's frame target.
+        if (!Number.isFinite(now) || !Number.isFinite(interval) || interval <= 0) return stats;
+        if (area !== outdoors || !last || now - last > 1200 || now < last) {
+          if (area !== null && area !== outdoors) stats.areaChanges++;
+          area = outdoors; stats.outdoor = outdoors; reset(now);
+          return stats;
+        }
+        last = now;
+        const targetMs = compact ? (device.tier === 'compact' ? 42 : 33) : (outdoors ? 33 : 28);
+        const ms = Math.min(180, Math.max(8, interval * 1000));
+        stats.f++;
+        stats.a = stats.a * 0.88 + interval * 0.12;
+        frames++; sumMs += ms;
+        if (ms > targetMs * 1.45) slowFrames++;
+        stats.slow = stats.a * 1000 > targetMs * 1.48;
+        if (renderer.shadowMap.enabled) {
+          renderer.shadowMap.autoUpdate = false;
+          renderer.shadowMap.needsUpdate = stats.f % (outdoors ? 7 : 4) === 0;
+        }
+        // Evaluate only complete windows, not a few expensive shader compile frames.
+        if (now - started < 9000 || frames < 42) return stats;
+        const persistentlySlow = slowFrames / frames >= 0.63 &&
+          sumMs / frames > targetMs * 1.32;
+        // Keep the full slow sample until cooldown expires; otherwise a reset
+        // at 9s would discard evidence before the first eligible change at 12s.
+        if (persistentlySlow && now - changedAt < 12000) return stats;
+        if (persistentlySlow && now - changedAt >= 12000) {
+          const current = Math.min(renderer.getPixelRatio(), device.maxDpr);
+          const next = Math.max(minimum, Math.round((current - 0.10) * 100) / 100);
+          if (next < current - 0.025) {
+            renderer.setPixelRatio(next);
+            stats.dpr = next; stats.adjustments++; changedAt = now;
+            // No forced second setSize(), forced material compile or shadow reallocation.
+            // Keep full scenes, hit targets, audio, collisions and multiplayer untouched.
+            document.documentElement.dataset.unfireAdaptiveQuality = 'on';
+          }
+        }
+        // Never automatically scale UP in the hot loop: repeated reallocations were
+        // especially costly when flying through the house/outdoor boundary.
+        reset(now);
+        return stats;
+      }
+    };
   }
+  const sceneFrameBudget = createSceneFrameBudget(S.renderer, DEVICE, LOWDEV);
+  window.__perf = sceneFrameBudget.stats;
   // Opening the website/direct-link case keeps the camera on the physical
   // maletín. Exploring as the robot is an explicit separate player choice.
   // The lid animation and all equipment remain available in this view.
   function frame(now) {
     // Park the heavy animation loop when hidden/out of the hero: never spend 60 callbacks/sec there.
     if (document.hidden || !frameVisible) {
-      previousRenderAt = 0; adaptivePerf.since=0; adaptivePerf.frames=0; clock.getDelta();
+      previousRenderAt = 0; sceneFrameBudget.pause(); window.__LOWFPS = false; clock.getDelta();
       setTimeout(() => requestAnimationFrame(frame), 180);
       return;
     }
@@ -2314,7 +2487,8 @@
     if (previousRenderAt && now - previousRenderAt < (LOWDEV ? (DEVICE.tier==='compact' ? 42 : 33) : window.ATM_OUT ? 33 : 28)) return;
     const actualFrameTime = previousRenderAt ? Math.min(0.18, Math.max(0.008, (now - previousRenderAt) / 1000)) : 1 / 30;
     previousRenderAt = now;
-    protectSlowGPU(now);
+    sceneFrameBudget.note(now, actualFrameTime, !!window.ATM_OUT);
+    window.__LOWFPS = sceneFrameBudget.stats.slow;
     const dt = Math.min(0.05, clock.getDelta()) * (window.__dts || 1); t += dt;
     // A packed case is inventory-only: no heavy model following or obscuring the camera.
     updateCarryUI();
@@ -2344,7 +2518,7 @@
       if (G.type === 'dome') { const a = ease.smooth(clamp(e / 0.45)), b = ease.smooth(clamp((e - 0.42) / 0.33)); G.segs.forEach((s0, i) => { s0.rotation.y = -i * TAU / 8 * a; s0.position.set(0, 0, 0); const fb = ease.smooth(b); s0.scale.set(1 - 0.25 * fb, Math.max(0.02, 1 - fb), 1 - 0.25 * fb); s0.rotation.z = Math.sin(fb * Math.PI) * 0.18 * (i % 2 ? 1 : -1); s0.visible = b < 0.99; }); G.g.children.forEach((ch) => { if (!G.segs.includes(ch)) ch.visible = b < 0.9; }); G.ed.material = e > 0.3 ? LEDG : G.ed.userData.m || (G.ed.userData.m = G.ed.material); if (e > 0.85 && !G.boom) { G.boom = 1; boom(); } if (e < 0.1) G.boom = 0; return; }
       const s2 = ease.smooth(clamp(e * 1.6)) * (G.d + 0.06); G.list.forEach((g) => { let z = g.userData.z - s2, y = 0.115, r = 0; if (z < G.c.z0) { const ex = G.c.z0 - z; z = G.c.z0 - 0.012; y = 0.115 - ex; r = -H2 * Math.min(1, ex / 0.05); } g.position.set(g.position.x, y, z); g.rotation.x = r; g.visible = y > -0.45; }); });
     lidBtn.userData.dome.material.emissiveIntensity = allOpen() ? 0.15 : 0.45 + 0.35 * Math.sin(t * 3); if(window.__ringB)window.__ringB.scale.setScalar(1.45*(1+0.1*Math.sin(t*3)));
-    const lk = clamp(gateK * 1.25); laser.visible = false; laser.position.set(-CW / 2 + 0.1 + lk * (CW - 0.2), 0.14, 0); 
+    const lk = clamp(gateK * 1.25); laser.visible = false; laser.position.set(-CW / 2 + 0.1 + lk * (CW - 0.2), 0.14, 0);
     if (lidOpen < 0.5 && ALL) { ALL = false; } if(window.__hexPan)window.__hexPan.material.emissiveIntensity=0.25+0.2*Math.max(0,Math.sin(t*1.5+1))+0.5*clamp(lidOpen*3); if (window.__fd) window.__fd.material.emissiveIntensity = lidOpen < 0.3 ? 0.6 + 0.5 * Math.sin(t * 4) : 0.2; plate.material.emissiveIntensity = lidOpen < 0.3 ? 0.12 + 0.12 * Math.sin(t * 3) : 0;
     ELEV.a += (lerp(0.55, view.gd > view.D0 * 1.25 ? 0.32 : zoomed() || CINE.on ? 0.98 : 0.6, ease.smooth(clamp(lidOpen * 1.15))) - ELEV.a) * 0.2; ORB.az += (ORB.gaz - ORB.az) * 0.15; ORB.de += (ORB.gde - ORB.de) * 0.15; const el = clamp(ELEV.a + ORB.de, 0.12, 1.5); DIR.set(Math.sin(ORB.az) * Math.cos(el), Math.sin(el), Math.cos(ORB.az) * Math.cos(el));
     if (zoomed() && mouse.in && !drag && !knobDrag && performance.now() - mouse.t < 4000) { const ez = (v) => (Math.abs(v) > 0.6 ? (v - Math.sign(v) * 0.6) / 0.4 : 0), a = ez(mouse.nx), b = ez(mouse.ny), ca = Math.cos(ORB.az), sa = Math.sin(ORB.az); view.gx = clamp(view.gx + (a * ca + b * sa) * view.dist * 0.8 * dt, -CW / 2, CW / 2); view.gz = clamp(view.gz + (-a * sa + b * ca) * view.dist * 0.8 * dt, -CD / 2, CD / 2); }
@@ -2384,7 +2558,17 @@
         if (GTA) { const dir = ROAMS.yaw + Math.atan2(sd2, fw), y0 = ROAMS.yaw; ROAMS.cy = angL(ROAMS.cy, dir, Math.min(1, dt * 10)); ROAMS.yaw = ROAMS.cy; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; let sl = 1; if (wet && window.__WAVE) { const dx2 = Math.sin(dir) * 4, dz2 = -Math.cos(dir) * 4; sl = clamp(1 - (window.__WAVE(ROAMS.p.x + dx2, ROAMS.p.z + dz2, t) - window.__WAVE(ROAMS.p.x, ROAMS.p.z, t)) * 0.22, 0.7, 1.6); } ROAMS.surfV = (ROAMS.surfV || 1) + (sl - (ROAMS.surfV || 1)) * Math.min(1, dt * 2); const vv = 34 * SPD * (wet ? (ROAMS.board ? 1.9 * ROAMS.surfV : 1.15) : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 * (window.__PROP ? window.__PROP() : 1) : 1.4) : 1); ROAMS.run = vv > 18 && !wet; ROAMS.wet = wet; ROAMS.vvS = ROAMS.fly ? (ROAMS.vvS || vv) + (vv - (ROAMS.vvS || vv)) * Math.min(1, dt * 2.5) : vv; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(dt * ROAMS.vvS, 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.yaw = y0; if (fw >= 0) ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * (sd2 ? 1.2 : 2.6))); }
         else if (ROAMS.mode === '1p' && !ROAMS.mini) { ROAMS.yaw += sd2 * dt * 2.0; ROAMS.cy = ROAMS.yaw; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : true) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; const vv = 34 * SPD * (wet ? 2.0 : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 : 1.4) : 1); ROAMS.run = vv > 18 && !wet; ROAMS.wet = wet; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(fw * dt * vv * (fw < 0 ? 0.6 : 1), 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); } else { ROAMS.cy = ROAMS.yaw; roamMove(fw * dt * 44 * ms * SPD, sd2 * dt * 34 * ms * SPD); } } ROAMS.moving = !!(fw || sd2);
       { if (ROAMS.h == null) { ROAMS.h = 0; ROAMS.vy = 0; } const fl = (() => { if (window.ATM_OUT) { if (Math.abs(ROAMS.p.x) < 82 && ROAMS.p.z > -18 && ROAMS.p.z < 98 && -8.9 + (ROAMS.h || 0) > 25) { const inDome = Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 37 && window.__DOME && window.__DOME.open > 0.6; if (!inDome) return 26.6 + 8.9 + 0.2; return 0; } if (window.__SKYDEV && (ROAMS.h || 0) > 40) { for (const o of window.__SKYDEV()) { if (!o.visible) continue; const s = o.scale.x, top = o.position.y + s * 0.45; if (Math.hypot(ROAMS.p.x - o.position.x, ROAMS.p.z - o.position.z) < s * 0.7 && top + 9 <= ROAMS.h + 2 && top + 9 > ROAMS.h - 60) { ROAMS.onDevN = o; return top + 9; } } } if (window.__WAVE && window.__LAND && !window.__LAND(ROAMS.p.x, ROAMS.p.z)) { return window.__WAVE(ROAMS.p.x, ROAMS.p.z, t) - (ROAMS.board ? -1.1 : 0.85); } let g = 0; for (const B of window.__OBSTO || []) if (B.y1 != null && ROAMS.p.x > B.x0 + 0.9 && ROAMS.p.x < B.x1 - 0.9 && ROAMS.p.z > B.z0 + 0.9 && ROAMS.p.z < B.z1 - 0.9 && B.y1 + 9 <= ROAMS.h + 0.6) g = Math.max(g, B.y1 + 9); return g; } if (ROAMS.mini || !window.__OBST) return 0; let g = 0; const p = ROAMS.p; for (const B of window.__OBST) if (B.y1 != null && p.x > B.x0 + 0.9 && p.x < B.x1 - 0.9 && p.z > B.z0 + 0.9 && p.z < B.z1 - 0.9 && B.y1 + 8.9 <= ROAMS.h + 0.6) g = Math.max(g, B.y1 + 8.9); return g; })(); ROAMS.fl = fl; { const o = ROAMS.onDevN; ROAMS.onDevN = null; const onTop = o && (ROAMS.h || 0) <= fl + 1.5; if (onTop) { if (ROAMS.devObj === o && ROAMS.devPrev) { ROAMS.p.x += o.position.x - ROAMS.devPrev.x; ROAMS.p.z += o.position.z - ROAMS.devPrev.z; } ROAMS.devObj = o; ROAMS.devPrev = o.position.clone(); if (ROAMS.landedOn !== o) { ROAMS.landedOn = o; let n = 0; try { n = (+localStorage.getItem('unfire_skyland') || 0) + 1; localStorage.setItem('unfire_skyland', String(n)); } catch (e) {} if (n % 3 === 0) { try { window.__REWARD('Has aterrizado en ' + n + ' plugins gigantes'); } catch (e) {} } else say(n % 3 === 0 ? '' : '🛬 ¡Aterrizaje en un plugin gigante! (' + n + ') · aterriza en 3 para completar la misión · mantén ESPACIO para despegar'); hap(0.5); } } else { ROAMS.devObj = null; if (!o) ROAMS.landedOn = (ROAMS.h || 0) > 60 ? ROAMS.landedOn : null; } } if (ROAMS.board && ROAMS.wet && K[' '] && ROAMS.spDown && performance.now() - ROAMS.spDown > 450 && !ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; ROAMS.trick = null; }
-        ROAMS.wet = !!window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !ROAMS.fly; ROAMS.wk = (ROAMS.wk || 0) + ((ROAMS.fly ? 1 : 0) - (ROAMS.wk || 0)) * Math.min(1, dt * 3); if (ROAMS.fly && !ROAMS.mini) { const hov = Math.max(fl, window.ATM_OUT ? 22 : 9); ROAMS.flyT = (ROAMS.flyT || 0) + dt; const sink = window.ATM_OUT ? Math.min(420, 10 + (ROAMS.h || 0) * 0.14) : 5; ROAMS.climbV = K[' '] ? Math.min(Math.max(ROAMS.climbV || 0, 0) + dt * (window.ATM_OUT ? 150 : 22) * (ROAMS.perkF || 1), (window.ATM_OUT ? 380 : 12) * (ROAMS.perkF || 1)) : K.f ? -Math.min(window.ATM_OUT ? 1200 : 18, Math.abs(ROAMS.climbV || 0) + dt * 1500) : (K.s || K.ArrowDown) ? (ROAMS.climbV || 0) + (-Math.max(window.ATM_OUT ? 60 : 8, sink * 1.6) - (ROAMS.climbV || 0)) * Math.min(1, dt * 3) : (ROAMS.climbV || 0) * Math.max(0, 1 - dt * 4); const up = (fw ? Math.sin(ROAMS.pitch) * (window.ATM_OUT ? 260 : 30) * fw * (K.Shift ? 2 : 1) : 0) * (window.__PROP ? Math.sqrt(window.__PROP()) : 1) + ROAMS.climbV; const inDomeI = !window.ATM_OUT && Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 36; ROAMS.flyH = Math.max(fl, Math.min(window.ATM_OUT ? 8000 : inDomeI ? 60 : 14, (ROAMS.flyH == null ? hov : ROAMS.flyH) + up * dt)); ROAMS.vy = (ROAMS.flyH + Math.sin(t * 2) * 0.4 - ROAMS.h) * 6; if (ROAMS.flyT > 1.2 && !K[' '] && ROAMS.flyH <= fl + 0.3 && ROAMS.h <= fl + 0.6) { ROAMS.fly = false; ROAMS.climbV = 0; say('🦶 Aterrizado'); } } else { ROAMS.flyH = null; ROAMS.vy -= dt * (ROAMS.h > fl + 40 ? 300 : 38); if (ROAMS.vy < -700) ROAMS.vy = -700; if (ROAMS.h < fl + 30 && ROAMS.vy < -40) ROAMS.vy += (-40 - ROAMS.vy) * Math.min(1, dt * 4); } ROAMS.h += ROAMS.vy * dt; const inDomeT = !window.ATM_OUT && Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 36; const top = window.ATM_OUT ? 8000 : inDomeT ? 60 : 14; if (inDomeT && -8.9 + (ROAMS.h || 0) > 30 && ROAMS.fly) { try { ATM.setOut(true); if (window.__DOME) window.__DOME.open = 1; ROAMS.flyH = ROAMS.h; say('🪽 ¡Has salido volando por la cúpula!'); } catch (e) {} } if (ROAMS.h > top) { ROAMS.h = top; ROAMS.vy = Math.min(ROAMS.vy, 0); } if (ROAMS.h < fl) { ROAMS.h = ROAMS.wet ? ROAMS.h + (fl - ROAMS.h) * Math.min(1, dt * 10) : fl; ROAMS.vy = 0; } ROAMS.air = ROAMS.h > fl + 0.3; } { const CT = ROOM.R.userData.camTrack; if (CT && !(fw || sd2)) { const CD0 = ROOM.R.userData.camTrackDir; const d = CD0 ? V(CD0.x, 0, CD0.z) : V(cam.position.x - CT.x, 0, cam.position.z - CT.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const side = V(-d.z, 0, d.x); const p = V(CT.x + d.x * 12 + side.x * 9, CT.y + 2.2, CT.z + d.z * 12 + side.z * 9); const lx = CT.x - p.x, lz = CT.z - p.z; ROAMS.tgt = { p, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(CT.y - p.y, Math.hypot(lx, lz)) }; } } if (ROAMS.tgt) { const T0 = ROAMS.tgt; const dx = T0.p.x - ROAMS.p.x, dz = T0.p.z - ROAMS.p.z, d = Math.hypot(dx, dz); if (d > 1.2) { let dir = Math.atan2(dx, -dz); if ((ROAMS.stkN || 0) > 6) { if (!ROAMS.avoidS) ROAMS.avoidS = Math.random() < 0.5 ? 1 : -1; dir += ROAMS.avoidS * 1.2; } else if ((ROAMS.stkN || 0) === 0) ROAMS.avoidS = 0; ROAMS.cy = angL(ROAMS.cy == null ? dir : ROAMS.cy, dir, Math.min(1, dt * 8)); const sp = Math.min(d, (d > 25 ? 42 : 24) * dt * (window.ATM_OUT ? 1.6 : 1)); const y0 = ROAMS.yaw; ROAMS.yaw = ROAMS.cy; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(sp, 0); ROAMS.yaw = y0; ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.moving = true; ROAMS.run = d > 25; ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * 4)); } else { ROAMS.avoidS = 0; ROAMS.p.y += (T0.p.y - ROAMS.p.y) * 0.1; ROAMS.yaw = angL(ROAMS.yaw, T0.yaw, 0.1); } ROAMS.pitch += (T0.pitch - ROAMS.pitch) * 0.1; } if (K.q) ROAMS.yaw -= dt * 1.9; if (K.e) ROAMS.yaw += dt * 1.9; const cp = Math.cos(ROAMS.pitch); if (!ROAMS.av) { try { const r0 = ROBOT.build(Object.assign({}, MUTANTS.list[(ROAMS.myType == null ? 4 : ROAMS.myType) % MUTANTS.list.length], { n: ROAMS.myNum || 27 })); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); if (ROAMS.myCol && window.__tintAvatar) window.__tintAvatar(r0.root, ROAMS.myCol); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(10.5 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; S.scene.add(w); const WG = new THREE.Group(); const s0 = w.scale.x || 1; w.rotation.order = 'YXZ'; WG.position.set(0, 10.5 * 0.62 / s0, -1.0 / s0); let bodyMat = null; r0.root.traverse((o) => { if (!bodyMat && o.isMesh && o.material && o.material.color && (o.material.metalness || 0) > 0.3) bodyMat = o.material; }); const bladeM = bodyMat ? bodyMat : new THREE.MeshPhysicalMaterial({ color: 0xd8dde6, metalness: 0.9, roughness: 0.18, clearcoat: 1 }); const acc = new THREE.Color((MUTANTS.list[4 % MUTANTS.list.length].accent) || '#ff2a4a'); const tipM = new THREE.MeshStandardMaterial({ color: acc, emissive: acc, emissiveIntensity: 1.1, toneMapped: false });
+        ROAMS.wet = !!window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !ROAMS.fly; ROAMS.wk = (ROAMS.wk || 0) + ((ROAMS.fly ? 1 : 0) - (ROAMS.wk || 0)) * Math.min(1, dt * 3); if (ROAMS.slam && ROAMS.fly && !ROAMS.mini) {
+          ROAMS.slamV = Math.min(2300, Math.max(ROAMS.slamV || 280, (ROAMS.h - fl) * 2.2, (ROAMS.slamV || 280) + dt * 1300));
+          ROAMS.flyH = fl; ROAMS.vy = -ROAMS.slamV;
+          // Integrate toward the actual collision floor, never tunnel through roofs/platforms/water.
+          if (ROAMS.h + ROAMS.vy * dt <= fl + 0.02) {
+            ROAMS.h = fl; ROAMS.vy = 0; ROAMS.slam = false; ROAMS.slamV = 0;
+            ROAMS.fly = false; ROAMS.flyH = null; ROAMS.climbV = 0; ROAMS.boostT = 0;
+            try { window.__SPRAY && window.__SPRAY(ROAMS.p.x, -8.9 + fl, ROAMS.p.z, 75, 13, 22); } catch (_) {}
+            hap(1); say('💥 ¡Aterrizaje de héroe!');
+          }
+        } else if (ROAMS.fly && !ROAMS.mini) { const hov = Math.max(fl, window.ATM_OUT ? 22 : 9); ROAMS.flyT = (ROAMS.flyT || 0) + dt; const sink = window.ATM_OUT ? Math.min(420, 10 + (ROAMS.h || 0) * 0.14) : 5; ROAMS.boostT = Math.max(0, (ROAMS.boostT || 0) - dt); ROAMS.climbV = ROAMS.boostT > 0 ? (window.ATM_OUT ? 500 : 38) * (ROAMS.perkF || 1) : K[' '] ? Math.min(Math.max(ROAMS.climbV || 0, 0) + dt * (window.ATM_OUT ? 150 : 22) * (ROAMS.perkF || 1), (window.ATM_OUT ? 380 : 12) * (ROAMS.perkF || 1)) : K.f ? -Math.min(window.ATM_OUT ? 1200 : 18, Math.abs(ROAMS.climbV || 0) + dt * 1500) : (K.s || K.ArrowDown) ? (ROAMS.climbV || 0) + (-Math.max(window.ATM_OUT ? 60 : 8, sink * 1.6) - (ROAMS.climbV || 0)) * Math.min(1, dt * 3) : (ROAMS.climbV || 0) * Math.max(0, 1 - dt * 4); const up = (fw ? Math.sin(ROAMS.pitch) * (window.ATM_OUT ? 260 : 30) * fw * (K.Shift ? 2 : 1) : 0) * (window.__PROP ? Math.sqrt(window.__PROP()) : 1) + ROAMS.climbV; const inDomeI = !window.ATM_OUT && Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 36; ROAMS.flyH = Math.max(fl, Math.min(window.ATM_OUT ? 8000 : inDomeI ? 60 : 14, (ROAMS.flyH == null ? hov : ROAMS.flyH) + up * dt)); ROAMS.vy = (ROAMS.flyH + Math.sin(t * 2) * 0.4 - ROAMS.h) * 6; if (ROAMS.flyT > 1.2 && !K[' '] && ROAMS.flyH <= fl + 0.3 && ROAMS.h <= fl + 0.6) { ROAMS.fly = false; ROAMS.climbV = 0; say('🦶 Aterrizado'); } } else { ROAMS.flyH = null; ROAMS.vy -= dt * (ROAMS.h > fl + 40 ? 300 : 38); if (ROAMS.vy < -700) ROAMS.vy = -700; if (ROAMS.h < fl + 30 && ROAMS.vy < -40) ROAMS.vy += (-40 - ROAMS.vy) * Math.min(1, dt * 4); } ROAMS.h += ROAMS.vy * dt; const inDomeT = !window.ATM_OUT && Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 36; const top = window.ATM_OUT ? 8000 : inDomeT ? 60 : 14; if (inDomeT && -8.9 + (ROAMS.h || 0) > 30 && ROAMS.fly) { try { ATM.setOut(true); if (window.__DOME) window.__DOME.open = 1; ROAMS.flyH = ROAMS.h; say('🪽 ¡Has salido volando por la cúpula!'); } catch (e) {} } if (ROAMS.h > top) { ROAMS.h = top; ROAMS.vy = Math.min(ROAMS.vy, 0); } if (ROAMS.h < fl) { ROAMS.h = ROAMS.wet ? ROAMS.h + (fl - ROAMS.h) * Math.min(1, dt * 10) : fl; ROAMS.vy = 0; } ROAMS.air = ROAMS.h > fl + 0.3; } { const CT = ROOM.R.userData.camTrack; if (CT && !(fw || sd2)) { const CD0 = ROOM.R.userData.camTrackDir; const d = CD0 ? V(CD0.x, 0, CD0.z) : V(cam.position.x - CT.x, 0, cam.position.z - CT.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const side = V(-d.z, 0, d.x); const p = V(CT.x + d.x * 12 + side.x * 9, CT.y + 2.2, CT.z + d.z * 12 + side.z * 9); const lx = CT.x - p.x, lz = CT.z - p.z; ROAMS.tgt = { p, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(CT.y - p.y, Math.hypot(lx, lz)) }; } } if (ROAMS.tgt) { const T0 = ROAMS.tgt; const dx = T0.p.x - ROAMS.p.x, dz = T0.p.z - ROAMS.p.z, d = Math.hypot(dx, dz); if (d > 1.2) { let dir = Math.atan2(dx, -dz); if ((ROAMS.stkN || 0) > 6) { if (!ROAMS.avoidS) ROAMS.avoidS = Math.random() < 0.5 ? 1 : -1; dir += ROAMS.avoidS * 1.2; } else if ((ROAMS.stkN || 0) === 0) ROAMS.avoidS = 0; ROAMS.cy = angL(ROAMS.cy == null ? dir : ROAMS.cy, dir, Math.min(1, dt * 8)); const sp = Math.min(d, (d > 25 ? 42 : 24) * dt * (window.ATM_OUT ? 1.6 : 1)); const y0 = ROAMS.yaw; ROAMS.yaw = ROAMS.cy; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(sp, 0); ROAMS.yaw = y0; ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.moving = true; ROAMS.run = d > 25; ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * 4)); } else { ROAMS.avoidS = 0; ROAMS.p.y += (T0.p.y - ROAMS.p.y) * 0.1; ROAMS.yaw = angL(ROAMS.yaw, T0.yaw, 0.1); } ROAMS.pitch += (T0.pitch - ROAMS.pitch) * 0.1; } if (K.q) ROAMS.yaw -= dt * 1.9; if (K.e) ROAMS.yaw += dt * 1.9; const cp = Math.cos(ROAMS.pitch); if (!ROAMS.av) { try { const r0 = ROBOT.build(Object.assign({}, MUTANTS.list[(ROAMS.myType == null ? 4 : ROAMS.myType) % MUTANTS.list.length], { n: ROAMS.myNum || 27 })); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); if (ROAMS.myCol && window.__tintAvatar) window.__tintAvatar(r0.root, ROAMS.myCol); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(10.5 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; S.scene.add(w); const WG = new THREE.Group(); const s0 = w.scale.x || 1; w.rotation.order = 'YXZ'; WG.position.set(0, 10.5 * 0.62 / s0, -1.0 / s0); let bodyMat = null; r0.root.traverse((o) => { if (!bodyMat && o.isMesh && o.material && o.material.color && (o.material.metalness || 0) > 0.3) bodyMat = o.material; }); const bladeM = bodyMat ? bodyMat : new THREE.MeshPhysicalMaterial({ color: 0xd8dde6, metalness: 0.9, roughness: 0.18, clearcoat: 1 }); const acc = new THREE.Color((MUTANTS.list[4 % MUTANTS.list.length].accent) || '#ff2a4a'); const tipM = new THREE.MeshStandardMaterial({ color: acc, emissive: acc, emissiveIntensity: 1.1, toneMapped: false });
           const wingM = new THREE.MeshPhysicalMaterial({ color: 0x3fd65a, metalness: 0.55, roughness: 0.22, clearcoat: 1, clearcoatRoughness: 0.1 }); const stripeM = new THREE.MeshPhysicalMaterial({ color: 0xf4f6fa, metalness: 0.7, roughness: 0.2, clearcoat: 1 });
           const side = (sg) => { const root = new THREE.Group(); const pod = mesh(new THREE.CylinderGeometry(0.42, 0.55, 1.5, 16), bodyMat || stripeM); pod.rotation.z = Math.PI / 2; pod.position.x = sg * 0.55; root.add(pod);
             const hinge = new THREE.Group(); hinge.position.x = sg * 0.9; root.add(hinge);
@@ -2453,25 +2637,39 @@
           for (const B of (q.out ? window.__OBSTO : window.__OBST) || []) { const x0 = B.x0 + 1.1 - q.r, x1 = B.x1 - 1.1 + q.r, z0 = B.z0 + 1.1 - q.r, z1 = B.z1 - 1.1 + q.r; if (P.x > x0 && P.x < x1 && P.z > z0 && P.z < z1 && P.y - q.r < B.y1) { const dl = P.x - x0, dr = x1 - P.x, db = P.z - z0, df = z1 - P.z, mn = Math.min(dl, dr, db, df); if (mn === dl) { P.x = x0; q.v.x = -Math.abs(q.v.x) * 0.6; } else if (mn === dr) { P.x = x1; q.v.x = Math.abs(q.v.x) * 0.6; } else if (mn === db) { P.z = z0; q.v.z = -Math.abs(q.v.z) * 0.6; } else { P.z = z1; q.v.z = Math.abs(q.v.z) * 0.6; } } }
           const sp = Math.hypot(q.v.x, q.v.z); if (sp > 0.01) { const ax = V(q.v.z, 0, -q.v.x).normalize(); q.b.rotateOnWorldAxis(ax, sp * dt / q.r); } }
         for (let i = 0; i < BL.length; i++) for (let j = i + 1; j < BL.length; j++) { const a = BL[i], b = BL[j]; if (a.out !== b.out) continue; const d = a.b.position.distanceTo(b.b.position), R0 = a.r + b.r; if (d < R0 && d > 0.001) { const n = b.b.position.clone().sub(a.b.position).divideScalar(d), o = (R0 - d) / 2; a.b.position.addScaledVector(n, -o); b.b.position.addScaledVector(n, o); const rv = b.v.clone().sub(a.v).dot(n); if (rv < 0) { a.v.addScaledVector(n, rv * 0.9); b.v.addScaledVector(n, -rv * 0.9); } } } } catch (e) {} }
-    // Adaptive resolution compares actual frame time with the device's intended frame
-    // interval. The old 25/32-fps thresholds treated a healthy 25-fps mobile cap as
-    // overload; preserve sharpness and avoid repeated GPU allocations on phones.
-    { const Q = window.__perf || (window.__perf = { a: LOWDEV ? 1/25 : 1/33, t: 0, dpr: S.renderer.getPixelRatio(), max: Math.min(S.renderer.getPixelRatio(),DEVICE.maxDpr) });
-      Q.a=Q.a*0.88+actualFrameTime*0.12;Q.t+=dt;Q.f=(Q.f||0)+1;
-      const target=LOWDEV?(DEVICE.tier==='compact'?1/24:1/30):(window.ATM_OUT?1/30:1/35);
-      window.__LOWFPS=Q.a>target*1.5;
-      if(S.renderer.shadowMap.enabled)S.renderer.shadowMap.needsUpdate=Q.f%(window.ATM_OUT?7:4)===0;
-      if(Q.t>3){Q.t=0;let next=Q.dpr;
-        if(Q.a>target*1.32)next=Math.max(LOWDEV?0.60:0.70,Q.dpr-0.10);
-        else if(Q.a<target*1.08)next=Math.min(window.ATM_OUT?1:Q.max,Q.dpr+0.06);
-        next=Math.min(next,Q.max,DEVICE.maxDpr);
-        if(Math.abs(next-Q.dpr)>0.015){Q.dpr=next;S.renderer.setPixelRatio(next);
-          S.renderer.setSize(renderWidth||innerWidth,renderHeight||innerHeight,false);}
-        S.renderer.shadowMap.autoUpdate=false;
+    // DPR/shadow refresh uses sceneFrameBudget above (shared across indoor and outdoor).
+    window.__idleT = ROAMS.moving || ROAMS.fly ? 0 : (window.__idleT || 0) + dt;
+    if (window.__DOME) {
+      const dome = window.__DOME;
+      const radius = Math.hypot(ROAMS.p.x - dome.c.x, ROAMS.p.z - dome.c.z);
+      const altitude = ROAMS.h || 0;
+      // Open in advance when ascending from the room as well as approaching from outside.
+      const approaching = ROAMS.on && !ROAMS.mini && radius < 90 &&
+        (window.ATM_OUT ? altitude > 20 : ROAMS.fly && altitude > 10);
+      dome.open += ((approaching ? 1 : 0) - dome.open) * Math.min(1, dt * 2);
+      // Warm exterior collision boxes in small timed batches while still inside.
+      // The outdoor switch itself must not perform a costly synchronous traversal.
+      if (approaching && !window.ATM_OUT && !window.__obstWarmReady &&
+          !window.__obstWarmPending && window.__warmOutsideObstacles) {
+        window.__warmOutsideObstacles();
+      }
+      dome.PET.forEach((p, i) => { p.rotation.z = -dome.open * (1.75 + Math.sin(i) * 0.05); });
+      if (ROAMS.on && !ROAMS.mini && dome.open > 0.6 && radius < 34) {
+        const worldY = -8.9 + altitude;
+        if (!window.ATM_OUT && ROAMS.fly && worldY > dome.c.y + 1.5) {
+          // Keep avatar/camera position and flight state; don't reload the scene.
+          ATM.setOut(true);
+          ROAMS.flyH = Math.max(ROAMS.flyH || altitude, altitude);
+          ROAMS.vy = Math.max(0, ROAMS.vy || 0);
+        } else if (window.ATM_OUT && worldY < dome.c.y - 1) {
+          // Different thresholds prevent immediate indoor/outdoor oscillation.
+          ATM.setOut(false);
+          // Descend naturally through the roof opening, without a 20m teleport.
+          ROAMS.flyH = 12;
+          say('🏠 Has entrado por la cúpula');
+        }
       }
     }
-    window.__idleT = ROAMS.moving || ROAMS.fly ? 0 : (window.__idleT || 0) + dt;
-    if (window.__DOME) { const DM2 = window.__DOME; const near = ROAMS.on && window.ATM_OUT && (ROAMS.h || 0) > 20 && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 90; DM2.open += ((near ? 1 : 0) - DM2.open) * Math.min(1, dt * 2); DM2.PET.forEach((p, i) => { p.rotation.z = -DM2.open * (1.75 + Math.sin(i) * 0.05); }); if (DM2.open > 0.6 && window.ATM_OUT && ROAMS.on && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 36 && -9 + (ROAMS.h || 0) < DM2.c.y - 1) { try { ATM.setOut(false); ROAMS.h = Math.min(ROAMS.h, 13); ROAMS.flyH = 12; say('🏠 Has entrado por la cúpula'); } catch (e) {} } }
     // sonido de mar y viento fuera (más fuerte en la orilla y en el agua, viento al volar alto)
     try { if (ROAMS.on && window.ATM_OUT && audioOk() && !window.__SEA) { const c = UA.ctx, N = c.sampleRate * 4, bf = c.createBuffer(2, N, c.sampleRate); for (let ch = 0; ch < 2; ch++) { const d = bf.getChannelData(ch); let b = 0; for (let i = 0; i < N; i++) { b = b * 0.985 + (Math.random() * 2 - 1) * 0.12; d[i] = b; } } const src = c.createBufferSource(); src.buffer = bf; src.loop = true; const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; const g = c.createGain(); g.gain.value = 0; src.connect(lp).connect(g).connect(UA.bus.master); src.start(); const src2 = c.createBufferSource(); src2.buffer = bf; src2.loop = true; src2.playbackRate.value = 1.7; const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1600; bp.Q.value = 0.6; const g2 = c.createGain(); g2.gain.value = 0; const wl = c.createBiquadFilter(); wl.type = 'lowpass'; wl.frequency.value = 2000; src2.connect(bp).connect(wl).connect(g2).connect(UA.bus.master); src2.start(); window.__SEA = { g, g2, lp, bp, wl }; }
       if (window.__SEA) { const S0 = window.__SEA, out = ROAMS.on && window.ATM_OUT, r = Math.hypot(ROAMS.p.x, ROAMS.p.z); const shore = out ? (ROAMS.wet ? 1 : Math.max(0.25, 1 - Math.abs(r - 256) / 160)) : 0; const hi = out ? Math.min(1, (ROAMS.h || 0) / 400) : 0; const mus = ((window.__WRADIO && window.__WRADIO.on) || (RADIO.st && RADIO.st.on) ? 0.4 : 1) * (window.speechSynthesis && speechSynthesis.speaking ? 0.3 : 1); const wave = 0.55 + 0.45 * Math.sin(t * 0.55) * Math.sin(t * 0.21 + 1); S0.g.gain.value += ((out ? 0.13 * shore * wave * (1 - hi * 0.8) * mus : 0) - S0.g.gain.value) * Math.min(1, dt * 2); if (window.__RAING) window.__RAING.gain.value = 0.012 * mus * (window.ATM_OUT ? 1 - hi * 0.7 : 0.6); S0.lp.frequency.value = (mus < 1 ? 380 : 500) + wave * (mus < 1 ? 500 : 900);  const wz = Math.tanh((ROAMS.spd || 0) / 500); S0.g2.gain.value += ((out ? Math.min(0.085, 0.015 + hi * 0.03 + (ROAMS.fly ? wz * 0.055 : 0)) * mus : 0) - S0.g2.gain.value) * Math.min(1, dt * 1.5); if (S0.bp) { S0.bp.frequency.value = 650 + 1300 * wz; } if (S0.wl) S0.wl.frequency.value = 1800 + 2200 * wz; } } catch (e) {}
@@ -2547,13 +2745,13 @@
     LAVA.draw(dt, LV || 0); window.__LVL = LV || 0; ROOM.tick(dt, t, LV || 0);
     try { OUTTALK.tick(dt, t); SIDE.tick(); BANDS.tick(); SPEEDL.tick(dt); CAPS.tick(dt); SECRETS.tick(dt, t); SKYBOTS.tick(dt, t); ONLINE.tick(dt, t); SURFBOTS.tick(dt, t); TITANS.tick(dt, t); FAR.tick(dt, t); } catch (e) {} ROBOT_STEPS.tick(dt); GROW.tick(dt, t); if (ROAMS.on && ROAMS.fly) { try { (window.__GROW.list || []).forEach((g, i) => { if (g.w && g.st !== 'grow' && g.st !== 'shrink') { g.w.position.y += ((ROAMS.h || 0) - 8.9 + 2 + Math.sin(t * 1.3 + i) * 3 - g.w.position.y) * Math.min(1, dt * 1.5); } }); } catch (e) {} } try { HOST.tick(dt, t); MAP.tick(); if (STORY) STORY.chatter(dt, lidOpen > 0.95 && !CINE.on && (!ROAMS.on || (window.__idleT || 0) > 14)); if (STORY) STORY.tick({ open: lidOpen > 0.95 && !CINE.on, far: view.gd > view.D0 * 1.08 || ROAMS.on }); if (HW && (HW.T || 0) > 3) { if (!window.__hwEv) { window.__hwEv = 1; window.UEV('hwopen'); } } else window.__hwEv = 0; } catch (e) {} MEGALIT.tick(dt, t, LV || 0); try { HAND.tick(dt); } catch (e) {} if (HW && (HW.u || 0) > 0.3 && HW.root) { HWAUTO.bbT = (HWAUTO.bbT || 0) - dt; if (HWAUTO.bbT <= 0) { HWAUTO.bbT = 0.8; const bb = new THREE.Box3().setFromObject(HW.root), sz = bb.getSize(V(0, 0, 0)); HWAUTO.c = bb.getCenter(V(0, 0, 0)); HWAUTO.r = Math.max(sz.x, sz.z) * 0.55; }
       bots().forEach((it) => { const par = it.W.parent; if (!par || !HWAUTO.c) return; const ws = par.getWorldScale(V(1, 1, 1)).x || 1, hl = par.worldToLocal(HWAUTO.c.clone()), R0 = HWAUTO.r / ws + 0.12, p = it.W.position, dx = p.x - hl.x, dz = p.z - hl.z, d = Math.hypot(dx, dz) || 0.01; if (d < R0) { const k = R0 / d; p.x = hl.x + dx * k; p.z = hl.z + dz * k; if (it.cn) { it.cn.x = p.x; it.cn.z = p.z; const tx = it.cn.tx - hl.x, tz = it.cn.tz - hl.z, td = Math.hypot(tx, tz) || 0.01; if (td < R0) { it.cn.tx = hl.x + tx / td * R0 * 1.2; it.cn.tz = hl.z + tz / td * R0 * 1.2; } } } }); }
-    bots().forEach((it, i) => { const u = it.W.userData; if (u.s0 == null) u.s0 = it.W.scale.x; const tg = MEGA && i % 2 === 0 ? u.s0 * 1.9 : u.s0; if (Math.abs(it.W.scale.x - tg) > 1e-4) it.W.scale.setScalar(lerp(it.W.scale.x, tg, 0.04)); }); WRADIO.tick(dt, !!(RADIO.st.on || A.using || A.duck || (window.__kLast && performance.now() - window.__kLast < 4000))); try { XFX.tick(dt, t, MEGA, LV || 0); { const pl = performance.now() - (window.__kLast || 0) < 1600; if (pl !== HWAUTO.pl) { HWAUTO.pl = pl; try { const B = RADIO.buses; if (B && B.out) B.out.gain.setTargetAtTime(pl ? 0.5 : 0.85, UA.ctx.currentTime, pl ? 0.05 : 0.7); } catch (e) {} XFX.makeup(pl ? (MEGA ? 1.9 : 1.6) : 1.25); } } if (HVA && MEGA) { HWAUTO.pT = (HWAUTO.pT == null ? 20 : HWAUTO.pT) - dt; if (HWAUTO.pT <= 0) { HWAUTO.pT = 24 + Math.random() * 16; const pool = [0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15]; const pi = pool[Math.floor(Math.random() * pool.length)]; try { const pr = HVA.preset(pi); say('🎛️ HYPERWAVE · sonido: ' + pr.name); } catch (e) {} } } if (HVA) { HWAUTO.t -= dt; if (HWAUTO.t <= 0) { HWAUTO.t = 0.25; const sc = HVA.scope ? HVA.scope().level : 0; HWAUTO.k += ((sc > 0.8 ? 0.8 : sc < 0.25 && performance.now() - (window.__kLast || 0) < 2000 ? 1.12 : 1) * (RADIO.st.on ? 0.92 + 0.12 * (RADIO.st.energy || 0.5) : 1) - HWAUTO.k) * 0.3; const v = clamp(HWVOL * HWAUTO.k, 0, 1); if (Math.abs(v - HWAUTO.last) > 0.01) { HWAUTO.last = v; HVA.set('volume', v); } } { HWAUTO.fx = (HWAUTO.fx || 0) - dt; if (HWAUTO.fx <= 0) { HWAUTO.fx = 0.5; const sc2 = HVA.scope ? HVA.scope().level : 0, en = (RADIO.st && RADIO.st.energy) || 0.5, busy = performance.now() - (window.__kLast || 0) < 1500, tt = performance.now() / 1000; const P = { cutoff: clamp(0.5 + 0.2 * Math.sin(tt * 0.07) + (busy ? 0.08 : 0) - sc2 * 0.1, 0.35, 0.8), delay: clamp(0.16 + 0.1 * en - (busy ? 0.04 : 0), 0.1, 0.3), reverb: clamp(0.28 + 0.12 * (1 - sc2), 0.2, 0.42) }; HWAUTO.P = HWAUTO.P || {}; for (const k in P) { const o = HWAUTO.P[k] == null ? P[k] : HWAUTO.P[k], nv = o + (P[k] - o) * 0.35; HWAUTO.P[k] = nv; try { HVA.set(k, nv); } catch (e) {} } } } } } catch (e) {} lidArt.material.emissiveIntensity = 0.9 + (LV || 0) * 2.6 + 0.15 * Math.sin(t * 2);
+    bots().forEach((it, i) => { const u = it.W.userData; if (u.s0 == null) u.s0 = it.W.scale.x; const tg = MEGA && i % 2 === 0 ? u.s0 * 1.9 : u.s0; if (Math.abs(it.W.scale.x - tg) > 1e-4) it.W.scale.setScalar(lerp(it.W.scale.x, tg, 0.04)); }); WRADIO.tick(dt, !!(RADIO.st.on || A.using || A.duck || (window.__kLast && performance.now() - window.__kLast < 4000))); try { XFX.tick(dt, t, MEGA, LV || 0); { const pl = performance.now() - (window.__kLast || 0) < 1600; if (pl !== HWAUTO.pl) { HWAUTO.pl = pl; try { const B = RADIO.buses; if (B && B.out) B.out.gain.setTargetAtTime(pl ? 0.5 : 0.85, UA.ctx.currentTime, pl ? 0.05 : 0.7); } catch (e) {} XFX.makeup(pl ? (MEGA ? 1.9 : 1.6) : 1.25); } } if (HVA && MEGA) { HWAUTO.pT = (HWAUTO.pT == null ? 20 : HWAUTO.pT) - dt; if (HWAUTO.pT <= 0) { HWAUTO.pT = 24 + Math.random() * 16; const pool = [0, 3, 4, 5, 7, 8, 9, 10, 12, 14, 15]; const pi = pool[Math.floor(Math.random() * pool.length)]; try { const pr = HVA.preset(pi); say('🎛️ HYPERWAVE · sonido: ' + pr.name); } catch (e) {} } } if (HVA) { HWAUTO.t -= dt; if (HWAUTO.t <= 0) { HWAUTO.t = 0.25; const sc = HVA.scope ? HVA.scope().level : 0; HWAUTO.k += ((sc > 0.8 ? 0.8 : sc < 0.25 && performance.now() - (window.__kLast || 0) < 2000 ? 1.12 : 1) * (RADIO.st.on ? 0.92 + 0.12 * (RADIO.st.energy || 0.5) : 1) - HWAUTO.k) * 0.3; const v = clamp(HWVOL * HWAUTO.k, 0, 0.69); if (Math.abs(v - HWAUTO.last) > 0.01) { HWAUTO.last = v; HVA.set('volume', v); } } { HWAUTO.fx = (HWAUTO.fx || 0) - dt; if (HWAUTO.fx <= 0) { HWAUTO.fx = 0.5; const sc2 = HVA.scope ? HVA.scope().level : 0, en = (RADIO.st && RADIO.st.energy) || 0.5, busy = performance.now() - (window.__kLast || 0) < 1500, tt = performance.now() / 1000; const P = { cutoff: clamp(0.5 + 0.2 * Math.sin(tt * 0.07) + (busy ? 0.08 : 0) - sc2 * 0.1, 0.35, 0.8), delay: clamp(0.16 + 0.1 * en - (busy ? 0.04 : 0), 0.1, 0.3), reverb: clamp(0.28 + 0.12 * (1 - sc2), 0.2, 0.42) }; HWAUTO.P = HWAUTO.P || {}; for (const k in P) { const o = HWAUTO.P[k] == null ? P[k] : HWAUTO.P[k], nv = o + (P[k] - o) * 0.35; HWAUTO.P[k] = nv; try { HVA.set(k, nv); } catch (e) {} } } } } } catch (e) {} lidArt.material.emissiveIntensity = 0.9 + (LV || 0) * 2.6 + 0.15 * Math.sin(t * 2);
     // Native case switch breathes while closed to invite the first tap.
     // Same scene and materials, no extra timers, sprites or render pass.
     { const parts=window.__unfireOpenButtonParts;
       if(parts&&parts[2]&&parts[2].material){
         const prompt=!ROAMS.on&&lidOpen<0.08&&!lidControlledByPlayer&&!document.hidden;
-        
+
         const beat=prompt?(REDUCED_MOTION_CASE_CUE?0.42:Math.pow(Math.max(0,Math.sin(t*3.4)),4)):0;
         const dome=parts[2].material;
         dome.emissiveIntensity=prompt?0.55+1.4*beat:0.6;

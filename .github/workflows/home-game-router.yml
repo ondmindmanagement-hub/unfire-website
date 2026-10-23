@@ -1,0 +1,28 @@
+name: Home game-first navigation
+
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'audio/index.html'
+      - 'tests/home-game-router.test.cjs'
+      - '.github/workflows/home-game-router.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'audio/index.html'
+      - 'tests/home-game-router.test.cjs'
+      - '.github/workflows/home-game-router.yml'
+
+jobs:
+  navigation-contract:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/home-game-router.test.cjs
