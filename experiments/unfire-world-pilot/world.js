@@ -7,6 +7,8 @@
   const canvas = document.getElementById("world-canvas");
   const stage = document.getElementById("stage");
   const fallback = document.getElementById("fallback-visual");
+  const fallbackShape = document.getElementById("fallback-shape");
+  const fallbackLabel = document.getElementById("fallback-label");
   const slider = document.getElementById("morph-slider");
   const output = document.getElementById("morph-output");
   const button = document.getElementById("morph-button");
@@ -28,17 +30,33 @@
   let tracking = null;
   let prevX = 0;
   let resizeObserver = null;
+  let firstFrameMarked = false;
 
   function updateControl() {
     slider.value = String(Math.round(morph * 100));
     output.value = String(Math.round(morph * 100)) + " %";
     output.textContent = output.value;
     button.firstChild.textContent = morph >= 0.5 ? "Volver al cubo " : "Transformar ";
+    // This is a deliberately simplified 2D preview, not a second fake WebGL render.
+    fallbackShape.style.borderRadius = Math.round(morph * 50) + "%";
+    fallbackLabel.textContent = "Previsualización 2D · " + Math.round(morph * 100) + " %";
+  }
+
+  function releaseResources() {
+    if (gl && !gl.isContextLost()) {
+      if (meshBuffer) gl.deleteBuffer(meshBuffer);
+      if (indexBuffer) gl.deleteBuffer(indexBuffer);
+      if (program) gl.deleteProgram(program);
+    }
+    meshBuffer = null;
+    indexBuffer = null;
+    program = null;
   }
 
   function failGracefully(message) {
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
+    releaseResources();
     gl = null;
     canvas.hidden = true;
     stage.classList.remove("is-rendered");
@@ -194,6 +212,8 @@
       canvas.hidden = false;
       stage.classList.add("is-rendered");
       mode.textContent = "WEBGL ACTIVO";
+      firstFrameMarked = false;
+      performance.mark?.("unfire-world:webgl-ready");
       status.textContent = "Geometría WebGL activa. La escena solo se vuelve a dibujar cuando interactúas.";
       schedule();
       if (!resizeObserver && "ResizeObserver" in window) {
@@ -225,6 +245,10 @@
     gl.uniform1f(uniforms.yaw, yaw);
     gl.uniform1f(uniforms.aspect, width / height);
     gl.drawElements(gl.TRIANGLES, meshCount, gl.UNSIGNED_SHORT, 0);
+    if (!firstFrameMarked && !gl.isContextLost()) {
+      firstFrameMarked = true;
+      performance.mark?.("unfire-world:first-draw");
+    }
   }
 
   function tick(now) {
@@ -304,6 +328,14 @@
     failGracefully("El dispositivo ha perdido el contexto 3D. La alternativa 2D sigue operativa.");
   });
   canvas.addEventListener("webglcontextrestored", initialize);
+  window.addEventListener("pagehide", () => {
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+    tween = null;
+    releaseResources();
+    gl = null;
+    resizeObserver?.disconnect();
+  });
 
   updateControl();
   // Paint the HTML/fallback first; WebGL is non-essential progressive enhancement.
