@@ -1,0 +1,19 @@
+name: Audio cinematic entry and orientation
+
+on:
+  pull_request:
+    paths:
+      - 'audio/index.html'
+      - 'tests/audio-cinematic-entry.test.cjs'
+      - '.github/workflows/audio-cinematic-entry.yml'
+  workflow_dispatch:
+
+jobs:
+  cinematic-entry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check same-page entry and responsive orientation
+        run: |
+          node --test tests/audio-cinematic-entry.test.cjs tests/audio-immersive-entry-recovery.test.cjs
