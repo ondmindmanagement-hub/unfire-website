@@ -175,27 +175,9 @@
     for (const [w, d, x, z] of [[CW - 0.5, 0.02, 0, CD / 2 - 0.25], [CW - 0.5, 0.02, 0, -CD / 2 + 0.25], [0.02, CD - 0.5, CW / 2 - 0.25, 0], [0.02, CD - 0.5, -CW / 2 + 0.25, 0]]) { const st = mesh(new THREE.BoxGeometry(w, 0.012, d), Y2K.led('#3d8bff', 2.6)); st.position.set(x, HL + 0.012, z); lid.add(st); }
     const seam = mesh(new THREE.BoxGeometry(CW + 0.06, 0.012, 0.012), Y2K.led('#3d8bff', 3)); seam.position.set(0, 0.02, CD / 2 + 0.06); caseG.add(seam);
   }
-  // Restored ORIGINAL lid-integrated UNFIRE button (not the removed fixed 2D button).
-  // Its group moves with the hinge and is hit by the same 3D case raycasting.
-  const originalUnfireLidButton=new THREE.Group();
-  originalUnfireLidButton.position.set(0,HL+0.03,0.3);
-  lid.add(originalUnfireLidButton);
-  const originalUnfireRing=mesh(new THREE.TorusGeometry(0.42,0.02,10,64).rotateX(H2),Y2K.led('#7fd0ff',3));
-  originalUnfireRing.position.y=0.025;originalUnfireRing.scale.setScalar(1.45);
-  originalUnfireLidButton.add(originalUnfireRing);
-  const originalUnfireBezel=mesh(new THREE.TorusGeometry(0.54,0.08,18,64).rotateX(H2),CHROME);
-  originalUnfireLidButton.add(originalUnfireBezel);
-  const originalUnfireDome=mesh(new THREE.SphereGeometry(0.5,48,20,0,TAU,0,1.0),
-    new THREE.MeshPhysicalMaterial({color:0x2a6dff,emissive:0x2a6dff,emissiveIntensity:0.6,roughness:0.05,clearcoat:1,transparent:true,opacity:0.88}));
-  originalUnfireDome.scale.y=0.42;originalUnfireDome.position.y=-0.01;
-  originalUnfireLidButton.add(originalUnfireDome);
-  const originalUnfireCanvas=Y2K.cnv(256,256);
-  G3.drawEmblem(originalUnfireCanvas.getContext('2d'),256,'#ffffff');
-  const originalUnfireFace=new THREE.Mesh(new THREE.CircleGeometry(0.38,40),
-    new THREE.MeshBasicMaterial({map:Y2K.toTex(originalUnfireCanvas,{color:true}),transparent:true,toneMapped:false}));
-  originalUnfireFace.rotation.x=-H2;originalUnfireFace.position.y=0.205;
-  originalUnfireLidButton.add(originalUnfireFace);
-  originalUnfireLidButton.userData.isUnfireOpen=true;
+  // Original Claude procedural flight-case lid switch, restored directly from git 91346cf.
+  // This REPLACES the newer replica; do not add any second button or a floating 2D CTA.
+  { const ringB = mesh(new THREE.TorusGeometry(0.42, 0.02, 10, 64).rotateX(H2), Y2K.led('#7fd0ff', 3)); ringB.position.set(0, HL + 0.05, 0.3); ringB.scale.setScalar(1.45); { const bz = mesh(new THREE.TorusGeometry(0.54, 0.08, 18, 64).rotateX(H2), CHROME); bz.position.set(0, HL + 0.03, 0.3); lid.add(bz); const dm = mesh(new THREE.SphereGeometry(0.5, 48, 20, 0, TAU, 0, 1.0), new THREE.MeshPhysicalMaterial({ color: 0x2a6dff, emissive: 0x2a6dff, emissiveIntensity: 0.6, roughness: 0.05, clearcoat: 1, transparent: true, opacity: 0.88 })); dm.scale.y = 0.42; dm.position.set(0, HL + 0.02, 0.3); lid.add(dm); const ec = Y2K.cnv(256, 256); G3.drawEmblem(ec.getContext('2d'), 256, '#ffffff'); const fc = new THREE.Mesh(new THREE.CircleGeometry(0.38, 40), new THREE.MeshBasicMaterial({ map: Y2K.toTex(ec, { color: true }), transparent: true, toneMapped: false })); fc.rotation.x = -H2; fc.position.set(0, HL + 0.235, 0.3); lid.add(fc); } lid.add(ringB); window.__ringB = ringB; }
   // interior de la tapa: espuma de huevera + bolsillo de malla
   const lidFoam = mesh(new THREE.BoxGeometry(CW - 0.18, 0.05, CD - 0.18), CARB); lidFoam.position.y = 0.02; lid.add(lidFoam);
   const LX = (x) => (x + 2.65) / 5.3 * 2048, LY = (z) => (1.7 - z) / 3.4 * 1314, LK = 2048 / 5.3;
@@ -2332,7 +2314,7 @@
     gateK = Math.max(...CK.map((k) => compG[k].userData.t)); gates.forEach((G) => { const e = compG[G.k].userData.t;
       if (G.type === 'dome') { const a = ease.smooth(clamp(e / 0.45)), b = ease.smooth(clamp((e - 0.42) / 0.33)); G.segs.forEach((s0, i) => { s0.rotation.y = -i * TAU / 8 * a; s0.position.set(0, 0, 0); const fb = ease.smooth(b); s0.scale.set(1 - 0.25 * fb, Math.max(0.02, 1 - fb), 1 - 0.25 * fb); s0.rotation.z = Math.sin(fb * Math.PI) * 0.18 * (i % 2 ? 1 : -1); s0.visible = b < 0.99; }); G.g.children.forEach((ch) => { if (!G.segs.includes(ch)) ch.visible = b < 0.9; }); G.ed.material = e > 0.3 ? LEDG : G.ed.userData.m || (G.ed.userData.m = G.ed.material); if (e > 0.85 && !G.boom) { G.boom = 1; boom(); } if (e < 0.1) G.boom = 0; return; }
       const s2 = ease.smooth(clamp(e * 1.6)) * (G.d + 0.06); G.list.forEach((g) => { let z = g.userData.z - s2, y = 0.115, r = 0; if (z < G.c.z0) { const ex = G.c.z0 - z; z = G.c.z0 - 0.012; y = 0.115 - ex; r = -H2 * Math.min(1, ex / 0.05); } g.position.set(g.position.x, y, z); g.rotation.x = r; g.visible = y > -0.45; }); });
-    lidBtn.userData.dome.material.emissiveIntensity = allOpen() ? 0.15 : 0.45 + 0.35 * Math.sin(t * 3); originalUnfireRing.material.emissiveIntensity=1.1+0.15*Math.sin(t*2.4);
+    lidBtn.userData.dome.material.emissiveIntensity = allOpen() ? 0.15 : 0.45 + 0.35 * Math.sin(t * 3); if(window.__ringB)window.__ringB.scale.setScalar(1.45*(1+0.1*Math.sin(t*3)));
     const lk = clamp(gateK * 1.25); laser.visible = false; laser.position.set(-CW / 2 + 0.1 + lk * (CW - 0.2), 0.14, 0); 
     if (lidOpen < 0.5 && ALL) { ALL = false; } if(window.__hexPan)window.__hexPan.material.emissiveIntensity=0.25+0.2*Math.max(0,Math.sin(t*1.5+1))+0.5*clamp(lidOpen*3); if (window.__fd) window.__fd.material.emissiveIntensity = lidOpen < 0.3 ? 0.6 + 0.5 * Math.sin(t * 4) : 0.2; plate.material.emissiveIntensity = lidOpen < 0.3 ? 0.12 + 0.12 * Math.sin(t * 3) : 0;
     ELEV.a += (lerp(0.42, view.gd > view.D0 * 1.25 ? 0.32 : zoomed() || CINE.on ? 0.98 : 0.6, ease.smooth(clamp(lidOpen * 1.15))) - ELEV.a) * 0.2; ORB.az += (ORB.gaz - ORB.az) * 0.15; ORB.de += (ORB.gde - ORB.de) * 0.15; const el = clamp(ELEV.a + ORB.de, 0.12, 1.5); DIR.set(Math.sin(ORB.az) * Math.cos(el), Math.sin(el), Math.cos(ORB.az) * Math.cos(el));
@@ -2579,7 +2561,7 @@
     get mission(){return typeof SIDE!=='undefined' && SIDE.cur ? SIDE.cur.t : null},
     get roam(){return ROAMS.on},
     get originalButterfly(){return !!lidBtn && lidBtn.children.length>0},
-    get originalLidButton(){return !!originalUnfireLidButton && originalUnfireLidButton.children.length===4},
+    get originalLidButton(){return !!window.__ringB && window.__ringB.parent===lid && window.__ringB.geometry.type==='TorusGeometry'},
     get casePos(){return [caseG.position.x,caseG.position.y,caseG.position.z]},
     get playerPos(){return [ROAMS.p.x,ROAMS.p.y,ROAMS.p.z]},
     get openControl(){return getComputedStyle(carryButton).display},
