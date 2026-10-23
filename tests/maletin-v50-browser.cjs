@@ -32,7 +32,7 @@ const assert=require('node:assert/strict');
   console.log('CASE_STATE_DIAGNOSTIC',JSON.stringify({initial,closed}));
   assert(closed.closed&&closed.carrying&&closed.mission===initial.mission,'Closing case loses game or quest');
   const host=await page.evaluate(()=>({url:location.pathname,frameSrc:document.getElementById('malFrame').getAttribute('src'),immersive:document.body.classList.contains('immOn')}));
-  assert(host.immersive&&host.frameSrc.includes('v=20261023fs1'),'Game returned to website after closing case');
+  assert(host.immersive&&host.frameSrc.includes('v=20261023fs2'),'Game returned to website after closing case');
   const control=await f.evaluate(()=>{const b=document.getElementById('unfireCarryCase');if(!b)return {exists:false};const q=b.getBoundingClientRect();return {exists:true,display:getComputedStyle(b).display,visibility:getComputedStyle(b).visibility,rect:[q.x,q.y,q.width,q.height],hidden:b.hidden,roam:window.__UNFIRE_CASE_QA.roam,carry:window.__UNFIRE_CASE_QA.carrying};});
   console.log('CARRY_BUTTON_DIAGNOSTIC',JSON.stringify(control));
   assert.equal(await f.evaluate(()=>window.__UNFIRE_CASE_QA.caseVisible),false,'Case must not obstruct player camera when packed');
@@ -105,6 +105,38 @@ const assert=require('node:assert/strict');
   await f.waitForFunction(()=>document.querySelectorAll("#onT .robotCard img").length>=2,{timeout:20000}).catch(()=>{});
   const studio=await f.evaluate(()=>{const panel=document.querySelector('#onl .b').getBoundingClientRect();return {cards:document.querySelectorAll('#onT .robotCard').length,locked:document.querySelectorAll('#onT .robotCard:disabled').length,portraits:document.querySelectorAll('#onT .robotCard img').length,width:panel.width,viewport:innerWidth}});
   assert(studio.cards===20&&studio.locked===0&&studio.portraits>=2&&studio.width<studio.viewport*0.5,'Workshop obstructs player or 3D portraits missing: '+JSON.stringify(studio));
+  // Reliable offline QA for PeerJS errors. Do not require third-party
+  // signaling/network access in the mandatory deployment regression.
+  await f.evaluate(()=>{
+    window.__peerQAOriginal=window.Peer;
+    window.__peerQADestroyed=0;
+    window.Peer=class SimulatedPeerFailure {
+      on(event,cb){if(event==='error')queueMicrotask(()=>cb({type:'peer-unavailable'}));return this;}
+      destroy(){window.__peerQADestroyed++;}
+    };
+    document.getElementById('onlB').click();
+    document.getElementById('onCode').value='ABCDE';
+    document.getElementById('onJoin').click();
+  });
+  await f.waitForFunction(()=>document.getElementById('onMsg')?.textContent?.includes('Esa sala no existe'),null,{timeout:7000});
+  await f.evaluate(()=>{
+    // A failed connection must not prevent immediate user retries.
+    document.getElementById('onJoin').click();
+  });
+  await f.waitForFunction(()=>window.__peerQADestroyed>=2,null,{timeout:7000});
+  await f.evaluate(()=>{
+    // A stalled attempt must be cancellable on closing the online menu.
+    window.Peer=class SimulatedPeerStall {
+      on(){return this;}
+      destroy(){window.__peerQADestroyed++;}
+    };
+    document.getElementById('onJoin').click();
+    document.getElementById('onX').click();
+    if(window.__peerQADestroyed<3)throw Error('Closing online menu did not release stalled Peer');
+    window.Peer=window.__peerQAOriginal;
+    delete window.__peerQAOriginal;
+  });
+  console.log('PASS PeerJS failure shows error, immediate retry, cancel stalled peer, no JS exceptions');
   // First-time players use the case on the table; carrying is locked until chapter 3.
   // Release the validated first game and its software WebGL context before
   // launching another; CI runners have limited RAM/GPU time.
