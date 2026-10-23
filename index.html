@@ -4024,6 +4024,11 @@ main .uf-hero-title {
   }
   toggle.addEventListener("click",function(){setOpen(!header.classList.contains("is-menu-open"));});
   nav.addEventListener("click",function(event){if(event.target.closest("a"))setOpen(false);});
+  // Catch navigation at document-capture level: legacy site handlers may stop bubbling.
+  document.addEventListener("click",function(event){
+    const link=event.target.closest&&event.target.closest("a");
+    if(link&&nav.contains(link))setOpen(false);
+  },true);
   document.addEventListener("keydown",function(event){
     if(event.key==="Escape"&&header.classList.contains("is-menu-open"))setOpen(false,true);
   });
