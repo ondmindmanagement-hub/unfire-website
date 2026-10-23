@@ -2479,6 +2479,12 @@
       const approaching = ROAMS.on && !ROAMS.mini && radius < 90 &&
         (window.ATM_OUT ? altitude > 20 : ROAMS.fly && altitude > 10);
       dome.open += ((approaching ? 1 : 0) - dome.open) * Math.min(1, dt * 2);
+      // Warm exterior collision boxes in small timed batches while still inside.
+      // The outdoor switch itself must not perform a costly synchronous traversal.
+      if (approaching && !window.ATM_OUT && !window.__obstWarmReady &&
+          !window.__obstWarmPending && window.__warmOutsideObstacles) {
+        window.__warmOutsideObstacles();
+      }
       dome.PET.forEach((p, i) => { p.rotation.z = -dome.open * (1.75 + Math.sin(i) * 0.05); });
       if (ROAMS.on && !ROAMS.mini && dome.open > 0.6 && radius < 34) {
         const worldY = -8.9 + altitude;
