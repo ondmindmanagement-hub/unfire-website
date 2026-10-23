@@ -2695,6 +2695,37 @@
   $('buy').onclick = () => { const k = $('buy').dataset.k; if (k === 'archer') parentPost({ open: 'archer' }); else if (k) parentPost({ buy: k }); };
   Y2K.fonts().then(() => {}); resize(); view.dist = view.gd = view.D0;
   S.fit(new THREE.Box3(V(-CW / 2, 0, -CD / 2), V(CW / 2, HB + 2, CD / 2)));
+  // Prime movable indoor props during the already-interactive case view, NOT
+  // on the first walking frame. Work is bounded and never hides collision data:
+  // if the player starts early, the original synchronous fallback still runs.
+  function prewarmRoamingProps() {
+    if (!LOWDEV || ROAMS.on || window.__PROPS || document.hidden) return;
+    const roots = ROOM.R.children.slice(), found = [];
+    const bounds = new THREE.Box3(), size = new THREE.Vector3(), center = new THREE.Vector3();
+    let index = 0;
+    const scanSlice = () => {
+      if (ROAMS.on || window.__PROPS || document.hidden) return;
+      const end = performance.now() + 2.5;
+      let processed = 0;
+      while (index < roots.length && processed < 6 && performance.now() < end) {
+        const o = roots[index++]; processed++;
+        if (!o.visible || o.isLight || o.userData.noPush) continue;
+        bounds.setFromObject(o);
+        if (bounds.isEmpty()) continue;
+        bounds.getSize(size); bounds.getCenter(center);
+        if (size.y < 5.8 && Math.max(size.x, size.z) < 6.5 &&
+            bounds.min.y < -7.6 && Math.hypot(center.x, center.z) > 9 &&
+            Math.abs(center.x) < 76 && center.z < 93) {
+          found.push({ o, r: Math.max(size.x, size.z) * 0.5,
+            off: V(center.x - o.position.x, 0, center.z - o.position.z),
+            vx: 0, vz: 0, sp: 0 });
+        }
+      }
+      if (index < roots.length) setTimeout(scanSlice, 26);
+      else if (!ROAMS.on && !window.__PROPS && !document.hidden) window.__PROPS = found;
+    };
+    setTimeout(scanSlice, 26);
+  }
   const VER = /ver=(\d+)/.exec(location.search + location.hash);
   if (VER) { caseG.visible = false; ROOM.R.visible = false; ['hud', 'tip', 'buy', 'tb'].forEach((id) => { const el = $(id); if (el) el.style.display = 'none'; });
     const spec = PLUGINS.list[+VER[1] % PLUGINS.list.length], dev = GEAR4.build(spec, kindOf(spec), Object.keys(ENGINES.PARAMS[spec.engine]).slice(0, 4).map((k) => k.toUpperCase())); dev.root.scale.setScalar(0.42); S.scene.add(dev.root);
@@ -2706,6 +2737,7 @@
     cv.addEventListener('pointerdown', (e) => { vd = e.clientX; }); addEventListener('pointermove', (e) => { if (vd != null) { a -= (e.clientX - vd) * 0.01; vd = e.clientX; } }); addEventListener('pointerup', () => { vd = null; });
     S.renderer.setSize(innerWidth, innerHeight, false); requestAnimationFrame(vloop); }
   else { requestAnimationFrame(frame);
+    if (LOWDEV) setTimeout(prewarmRoamingProps, 350);
     // No hidden-scene precompile: compiling every hidden model and all cached gadgets
     // in the same frame caused large GPU memory spikes and a freeze on room exit.
     // Devices already load lazily as their compartments are opened.
