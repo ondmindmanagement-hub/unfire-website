@@ -13,7 +13,8 @@ chk('Original case opening SFX follow the actual procedural 3D hinge timeline',
   ['latch','hinge','thud','reveal'].every(x=>engine.includes("play('"+x+"'"))&&
   engine.includes("!manual||document.hidden")&&engine.includes("v.connect(UA.bus.master)"));
 
-chk('Giant exterior 3D ABRIR circle removed',!engine.includes('const ringB = mesh(new THREE.TorusGeometry(0.42, 0.02')&&engine.includes('const lidBtn = new THREE.Group()'));
+chk('Original glossy UNFIRE butterfly button restored on lid',engine.includes('const originalUnfireLidButton=new THREE.Group();')&&engine.includes('lid.add(originalUnfireLidButton);')&&engine.includes('G3.drawEmblem(originalUnfireCanvas.getContext')&&engine.includes('originalUnfireLidButton.userData.isUnfireOpen=true;'));
+chk('Still no standalone 2D ABRIR button',!html.includes('id="openBtn"')&&!game.includes('id="directOpen"'));
 chk('Web exit parks WebGL behind a themed, manual return-to-play screen',
   html.includes('id="unfireReturnPortal"')&&html.includes('id="unfireReturnPlay"')&&
   html.includes("$('#heroPin').classList.add('web-return')")&&
@@ -36,7 +37,7 @@ chk('Existing PASEAR is the only character action with an open maletin',
   !engine.includes('characterEntryButton')&&!game.includes('#unfireCharacterEntry'));
 chk('Clicking maletin from avatar returns to identical case view',
   engine.includes('if(ray.intersectObject(caseG,true).length){')&&
-  engine.includes("exitRoam();\n        return;")&&
+  engine.includes('if(window.ATM_OUT)showCaseView();else exitRoam();')&&
   engine.includes("roamB.textContent = '🚶 PASEAR'"));
 chk('First visit PASEAR blinks exactly two seconds after opening',
   engine.includes("'unfire_pasear_intro_v1'")&&
@@ -65,7 +66,19 @@ chk('Capsule never exits the game',!engine.slice(engine.indexOf('const CAPS=(()=
 chk('Workshop attaches to story HUD without timer polling',engine.includes('const mountWorkshopControls = () =>')&&engine.includes('new MutationObserver(')&&!engine.includes('setTimeout(function addT()'));
 chk('Case view stops walk shortcuts while allowing piano notes',engine.includes('if (CASE_VIEW.on) return; const k = e.key.length === 1'));
 chk('Case view G note does not pack capsule',engine.includes('&&ROAMS.on&&!CASE_VIEW.on&&portableUnlocked()'));
-chk('Case mobile pinch zooms inspection camera',engine.includes('CASE_VIEW.dist=clamp(CASE_VIEW.dist*f,5.4,14.5)'));
+chk('Case mobile pinch zooms inspection camera',engine.includes('CASE_VIEW.dist=clamp(CASE_VIEW.dist*f,window.ATM_OUT?6.8:5.4,window.ATM_OUT?17:14.5)'));
+chk('First landing focuses maletin and never flashes synthesizer advert',
+  html.includes('unfire-case-preview.svg')&&
+  !html.includes('background:url("img/hyperwave-open.webp")')&&
+  fs.existsSync('audio/img/unfire-case-preview.svg'));
+chk('Outdoor capsule rests above terrain instead of on the ground',
+  engine.includes('floor+(window.ATM_OUT?6.8:0.8)')&&
+  engine.includes('landing ? landing.y : -8.9+(ROAMS.h||0)+(window.ATM_OUT?6.8:0.3)'));
+chk('Outdoor case camera keeps the avatar in place and widens the horizon',
+  engine.includes('if(window.ATM_OUT)showCaseView();else exitRoam();')&&
+  engine.includes("CASE_VIEW.elevation=window.ATM_OUT?0.52:0.78")&&
+  engine.includes('const panoramic=window.ATM_OUT')&&
+  engine.includes("roamB.textContent=CASE_VIEW.on?'↩ VOLVER AL PERSONAJE'"));
 chk('Mission logic retained',engine.includes("localStorage.setItem('unfire_side'")&&engine.includes('const SIDE ='));
 chk('Multiplayer logic retained',engine.includes('const ONLINE ='));
 chk('Online joins timeout safely and allow retries',engine.includes('function clearJoining()')&&engine.includes('La sala no responde.')&&engine.includes('ONLINE.joining'));
@@ -73,8 +86,8 @@ chk('Room audio implementation retained',engine.includes('const AMB ='));
 chk('Parent scroll no longer overrides manual open/close',engine.includes('!lidControlledByPlayer) pTarget = d.p;'));
 chk('Host keeps iframe active when case is local',html.includes('vis:caseLocal||rb.bottom>90'));
 chk('Host does not scroll when closing case',!html.includes('if(d.closeCase)Mal.shut();'));
-chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v=20261023sales1'));
-chk('Host loads exact matching game',/maletin\/index\.html\?v=20261023sales1/.test(html));
+chk('Standalone game loads exact matching engine',game.includes('game-engine-v50.js?v=20261023case3'));
+chk('Host loads exact matching game',/maletin\/index\.html\?v=20261023case3/.test(html));
 chk('User can explicitly exit if desired',engine.includes('window.__exitGame'));
 chk('3D original scene size intact',engine.length>500000);
 const storySource=game.slice(game.indexOf('window.STORY_INIT = function (H) {'),game.indexOf('</script>',game.indexOf('window.STORY_INIT = function (H) {')));

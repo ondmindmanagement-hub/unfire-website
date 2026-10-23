@@ -174,7 +174,28 @@
     const ht = Y2K.toTex(hc, { color: true }); const pan = mesh(rbox(CW - 0.9, 0.03, CD - 0.9, 0.12), new THREE.MeshPhysicalMaterial({ color: 0x0b0e15, metalness: 0.6, roughness: 0.15, clearcoat: 1, emissive: 0xffffff, emissiveMap: ht, emissiveIntensity: 0.35 })); pan.position.set(0, HL + 0.005, 0); lid.add(pan); window.__hexPan = pan;
     for (const [w, d, x, z] of [[CW - 0.5, 0.02, 0, CD / 2 - 0.25], [CW - 0.5, 0.02, 0, -CD / 2 + 0.25], [0.02, CD - 0.5, CW / 2 - 0.25, 0], [0.02, CD - 0.5, -CW / 2 + 0.25, 0]]) { const st = mesh(new THREE.BoxGeometry(w, 0.012, d), Y2K.led('#3d8bff', 2.6)); st.position.set(x, HL + 0.012, z); lid.add(st); }
     const seam = mesh(new THREE.BoxGeometry(CW + 0.06, 0.012, 0.012), Y2K.led('#3d8bff', 3)); seam.position.set(0, 0.02, CD / 2 + 0.06); caseG.add(seam);
-  } // Exterior round ABRIR button deliberately removed.
+  }
+  // Restored ORIGINAL lid-integrated UNFIRE button (not the removed fixed 2D button).
+  // Its group moves with the hinge and is hit by the same 3D case raycasting.
+  const originalUnfireLidButton=new THREE.Group();
+  originalUnfireLidButton.position.set(0,HL+0.03,0.3);
+  lid.add(originalUnfireLidButton);
+  const originalUnfireRing=mesh(new THREE.TorusGeometry(0.42,0.02,10,64).rotateX(H2),Y2K.led('#7fd0ff',3));
+  originalUnfireRing.position.y=0.025;originalUnfireRing.scale.setScalar(1.45);
+  originalUnfireLidButton.add(originalUnfireRing);
+  const originalUnfireBezel=mesh(new THREE.TorusGeometry(0.54,0.08,18,64).rotateX(H2),CHROME);
+  originalUnfireLidButton.add(originalUnfireBezel);
+  const originalUnfireDome=mesh(new THREE.SphereGeometry(0.5,48,20,0,TAU,0,1.0),
+    new THREE.MeshPhysicalMaterial({color:0x2a6dff,emissive:0x2a6dff,emissiveIntensity:0.6,roughness:0.05,clearcoat:1,transparent:true,opacity:0.88}));
+  originalUnfireDome.scale.y=0.42;originalUnfireDome.position.y=-0.01;
+  originalUnfireLidButton.add(originalUnfireDome);
+  const originalUnfireCanvas=Y2K.cnv(256,256);
+  G3.drawEmblem(originalUnfireCanvas.getContext('2d'),256,'#ffffff');
+  const originalUnfireFace=new THREE.Mesh(new THREE.CircleGeometry(0.38,40),
+    new THREE.MeshBasicMaterial({map:Y2K.toTex(originalUnfireCanvas,{color:true}),transparent:true,toneMapped:false}));
+  originalUnfireFace.rotation.x=-H2;originalUnfireFace.position.y=0.205;
+  originalUnfireLidButton.add(originalUnfireFace);
+  originalUnfireLidButton.userData.isUnfireOpen=true;
   // interior de la tapa: espuma de huevera + bolsillo de malla
   const lidFoam = mesh(new THREE.BoxGeometry(CW - 0.18, 0.05, CD - 0.18), CARB); lidFoam.position.y = 0.02; lid.add(lidFoam);
   const LX = (x) => (x + 2.65) / 5.3 * 2048, LY = (z) => (1.7 - z) / 3.4 * 1314, LK = 2048 / 5.3;
@@ -857,12 +878,12 @@
   const originalCasePosition = caseG.position.clone();
   const portableUnlocked = () => { try { return typeof window.__unfireCasePortabilityUnlocked === 'function' && !!window.__unfireCasePortabilityUnlocked(); } catch(e) { return false; } };
   // Camera-choice state is separate from the player's roaming state: quests and online continue.
-  const CASE_VIEW={on:false,dist:8.4,angle:0.25,elevation:0.78};
+  const CASE_VIEW={on:false,dist:10.2,angle:0.25,elevation:0.52};
   const showCaseView=()=>{
     if(!ROAMS.on||carryingCase||CAPS.flying||!caseG.visible)return;
     try{if(REC.on)REC.set(false);}catch(e){}
     try{if(window.__VIEW?.on)window.__VIEW.stop();}catch(e){}
-    CASE_VIEW.on=true;CASE_VIEW.dist=8.4;CASE_VIEW.angle=caseG.rotation.y+0.25;
+    CASE_VIEW.on=true;CASE_VIEW.dist=window.ATM_OUT?10.2:8.4;CASE_VIEW.elevation=window.ATM_OUT?0.52:0.78;CASE_VIEW.angle=caseG.rotation.y+0.25;
     ROAMS.tgt=null;for(const k in ROAMS.k)ROAMS.k[k]=0;
     say('🎥 Cámara del maletín: toca sus controles, arrastra para girar y usa la rueda para acercarte.');
     updateCarryUI();
@@ -924,7 +945,7 @@
         const angle=ROAMS.cy==null?ROAMS.yaw:ROAMS.cy;
         caseG.position.set(
           landing ? landing.x : ROAMS.p.x+Math.sin(angle)*7,
-          landing ? landing.y : -8.9+(ROAMS.h||0)+0.3,
+          landing ? landing.y : -8.9+(ROAMS.h||0)+(window.ATM_OUT?6.8:0.3),
           landing ? landing.z : ROAMS.p.z-Math.cos(angle)*7
         );
         caseG.rotation.y=angle;
@@ -1172,8 +1193,16 @@
   function updateRoamButtonHint(){
     const ready=!ROAMS.on&&!CASE_VIEW.on&&caseG.visible&&!carryingCase&&!CINE.on
       &&pTarget>.99&&lidOpen>=.998;
-    const show=ready||(ROAMS.on&&!CASE_VIEW.on&&lidOpen>.95&&!CINE.on);
-    if(roamB.style.display!==(show?'block':'none'))roamB.style.display=show?'block':'none';
+    const show=ready||(ROAMS.on&&lidOpen>.95&&!CINE.on);
+    // The original PASEAR must sit centered at the bottom of the case view;
+    // while roaming it belongs to the dedicated right-side controls dock.
+    const dock=document.getElementById('ctlDock');
+    if(dock){
+      const container=ROAMS.on?dock:document.body;
+      if(roamB.parentElement!==container)container.appendChild(roamB);
+      roamB.style.position=ROAMS.on?'static':'fixed';
+    }
+    if(roamB.style.display!==(show?'block':'none'))roamB.style.display=show?'block':'none'; if(ROAMS.on)roamB.textContent=CASE_VIEW.on?'↩ VOLVER AL PERSONAJE':'↩ VOLVER AL MALETÍN';
     if(ready&&!firstCaseWalkHint){
       firstCaseWalkHint=true;
       try{localStorage.setItem('unfire_pasear_intro_v1','1');}catch(e){}
@@ -1193,7 +1222,8 @@
   roamB.onclick=(e)=>{
     e.stopPropagation();
     roamB.classList.remove('unfire-intro-blink');
-    if(ROAMS.on)exitRoam();
+    if(ROAMS.on&&CASE_VIEW.on)showRobotView();
+    else if(ROAMS.on)exitRoam();
     else if(pTarget>.99&&lidOpen>=.998)enterRoam();
     updateRoamButtonHint();
   };
@@ -1663,7 +1693,7 @@
       const dirX=Math.sin(yaw),dirZ=-Math.cos(yaw);
       const floor=-8.9+(ROAMS.h||0);
       start=V(ROAMS.p.x,floor+6.5,ROAMS.p.z);
-      target=V(ROAMS.p.x+dirX*7,floor+0.8,ROAMS.p.z+dirZ*7);
+      target=V(ROAMS.p.x+dirX*7,floor+(window.ATM_OUT?6.8:0.8),ROAMS.p.z+dirZ*7);
       capsule.position.copy(start);capsule.rotation.set(0,0,0);
       capsule.visible=true;flight=0.001;
       say('🎒 ¡Cápsula lanzada!');hap(0.3);
@@ -1698,7 +1728,7 @@
       capsule.rotation.x+=dt*7;capsule.rotation.z+=dt*5;
       if(u>=1){
         cancel();openCaseInGame(target);
-        say('💥 Maletín desplegado. Recógelo desde GUARDAR EN CÁPSULA para lanzarlo otra vez.');
+        say(window.ATM_OUT?'✨ Maletín flotando: tócalo para usarlo y vuelve al personaje con el botón azul.':'✨ Maletín desplegado. Puedes recogerlo en la cápsula.');
         hap(0.4);
       }
     }};
@@ -1825,11 +1855,11 @@
   if(window.visualViewport)window.visualViewport.addEventListener('resize',queueResize,{passive:true});
   const zoomed = () => view.gd < view.D0 * 0.985;
   const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), plane = new THREE.Plane(V(0, 1, 0), -HB), hitP = V(0, 0, 0);
-  function cursorPoint(e) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); return ray.ray.intersectPlane(plane, hitP) ? hitP.clone() : null; }
-  const overCase = (p) => p && Math.abs(p.x) < CW / 2 + 0.3 && Math.abs(p.z) < CD / 2 + 0.4;
+  function cursorPoint(e) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); if(CASE_VIEW.on)plane.constant=-caseG.position.y;else plane.constant=-HB;return ray.ray.intersectPlane(plane, hitP) ? hitP.clone() : null; }
+  const overCase = (p) => p && Math.abs(p.x-caseG.position.x) < CW / 2 + 0.3 && Math.abs(p.z-caseG.position.z) < CD / 2 + 0.4;
   function zoomBy(f, p) {
     // Keep touch pinch, double-tap and zoom buttons focused on the inspected case.
-    if (ROAMS.on && CASE_VIEW.on) { CASE_VIEW.dist=clamp(CASE_VIEW.dist*f,5.4,14.5); return; }
+    if (ROAMS.on && CASE_VIEW.on) { CASE_VIEW.dist=clamp(CASE_VIEW.dist*f,window.ATM_OUT?6.8:5.4,window.ATM_OUT?17:14.5); return; }
     const nd = clamp(view.gd * f, 0.55, view.D0 * 3.2), k = 1 - nd / view.gd;
     if (p && f < 1) { view.gx += (p.x - view.gx) * k; view.gz += (p.z - view.gz) * k; }
     view.gd = nd; if (nd >= view.D0 * 0.999) { view.gx = 0; view.gz = 0.15; } if (f > 1 && nd >= view.D0 * 3.15) enterRoam();
@@ -1839,7 +1869,7 @@
   addEventListener('wheel', (e) => { if (CINE.on) CINE.on = false;
     const p = cursorPoint(e), k = e.deltaMode ? 30 : 1, dy = e.deltaY * k, dx = e.deltaX * k;
     e.preventDefault();
-    if (ROAMS.on && CASE_VIEW.on) { CASE_VIEW.dist=clamp(CASE_VIEW.dist+dy*0.013,5.4,14.5);return; }
+    if (ROAMS.on && CASE_VIEW.on) { CASE_VIEW.dist=clamp(CASE_VIEW.dist+dy*0.013,window.ATM_OUT?6.8:5.4,window.ATM_OUT?17:14.5);return; }
     if (ROAMS.on) { ROAMS.tgt = null; const ms = ROAMS.mini ? 0.07 : 1; try { ROOM.R.userData.camTrack = null; } catch (e2) {} roamMove(-dy * 0.2 * ms, dx * 0.1 * ms); return; }
     if (lidOpen < 0.92) { parentPost({ scroll: dy, pass: 1 }); return; }
     ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const over = ray.intersectObject(caseG, true).length > 0;
@@ -1863,8 +1893,8 @@
   cv.addEventListener('pointerdown', (e) => { if (CINE.on && e.isTrusted) { CINE.on = false; say('Control manual'); } if (MV) { MV.drag = true; try { cv.setPointerCapture(e.pointerId); } catch (er) {} return; } drag = { x: e.clientX, y: e.clientY, lx: e.clientX, ly: e.clientY, gx: view.gx, gz: view.gz, moved: false, id: e.pointerId, pan: e.button === 2 || e.shiftKey }; try { cv.setPointerCapture(e.pointerId); } catch (er) {} onDown(e); });
   cv.addEventListener('contextmenu', (e) => e.preventDefault());
   cv.addEventListener('pointermove', (e) => { if (MV && MV.drag) { const p = cursorPoint(e); if (p) { MV.o.position.x = clamp(p.x, -CW / 2 + 0.25, CW / 2 - 0.25); MV.o.position.z = clamp(p.z, -CD / 2 + 0.25, CD / 2 - 0.25); } return; } if (knobDrag) { if (knobDrag.hwVol) { HWVOL = clamp(knobDrag.v + (knobDrag.y - e.clientY) / 160); try { if (knobDrag.hwVol.rot) knobDrag.hwVol.rot.rotation.y = -(Math.PI * 0.75 * 2 * (HWVOL - 0.5)); } catch (er) {} HW.lock = { t: performance.now() / 1000, label: '🔊 VOLUMEN', text: Math.round(HWVOL * 100) + ' %', v: 1 }; return; } if (!knobDrag.hw) onKnobMove(e); return; } if (!drag) { hover(e); return; } const dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.hypot(dx, dy) > 4) drag.moved = true; if (!drag.moved) return;
-    if (drag.pan && zoomed()) { const s = view.dist / innerHeight * 1.1, ca = Math.cos(ORB.az), sa = Math.sin(ORB.az), px = -dx * s, pz = -dy * s * 1.2; view.gx = clamp(drag.gx + px * ca + pz * sa, -CW / 2, CW / 2); view.gz = clamp(drag.gz - px * sa + pz * ca, -CD / 2, CD / 2); }
-    else if (ROAMS.on && CASE_VIEW.on) { CASE_VIEW.angle-=(e.clientX-drag.lx)*0.006;CASE_VIEW.elevation=clamp(CASE_VIEW.elevation+(e.clientY-drag.ly)*0.003,0.35,1.1); }
+    if (drag.pan && zoomed() && !CASE_VIEW.on) { const s = view.dist / innerHeight * 1.1, ca = Math.cos(ORB.az), sa = Math.sin(ORB.az), px = -dx * s, pz = -dy * s * 1.2; view.gx = clamp(drag.gx + px * ca + pz * sa, -CW / 2, CW / 2); view.gz = clamp(drag.gz - px * sa + pz * ca, -CD / 2, CD / 2); }
+    else if (ROAMS.on && CASE_VIEW.on) { CASE_VIEW.angle-=(e.clientX-drag.lx)*0.006;CASE_VIEW.elevation=clamp(CASE_VIEW.elevation+(e.clientY-drag.ly)*0.003,0.2,1.1); }
     else if (ROAMS.on) { const O = REC.on ? REC : ROAMS; ROAMS.tgt = null; O.yaw += (e.clientX - drag.lx) * (REC.on ? 0.0035 : 0.005); O.pitch = clamp(O.pitch - (e.clientY - drag.ly) * (REC.on ? 0.003 : 0.004), -1.45, 1.45); }
     else { ORB.gaz = clamp(ORB.gaz - (e.clientX - drag.lx) * 0.006, -1.4, 1.4); if (e.pointerType === 'mouse' || zoomed()) ORB.gde = clamp(ORB.gde + (e.clientY - drag.ly) * 0.004, -0.85, 0.5); }
     drag.lx = e.clientX; drag.ly = e.clientY; });
@@ -2144,7 +2174,7 @@
       ray.setFromCamera(ndc,cam);
       if(ray.intersectObject(caseG,true).length){
         // Identical to the established 'VOLVER AL MALETÍN' camera.
-        exitRoam();
+        if(window.ATM_OUT)showCaseView();else exitRoam();
         return;
       }
     }
@@ -2171,7 +2201,7 @@
     if (HW && compG.hw.userData.t > 0.9 && ray.intersectObject(HW.root, true).length) { SEL = { type: 'hw' }; return; }
     const objs = items.map((it) => (it.W ? it.W : it.tok || it.g)).filter((o) => o && o.visible), hit = ray.intersectObjects(objs, true)[0];
     let best = null; if (hit) best = items.find((it) => { const o = it.W ? it.W : it.tok || it.g; let p = hit.object; while (p) { if (p === o) return true; p = p.parent; } return false; });
-    if (!best) { const p = cursorPoint(e); if (!p) return; let bd = 0.22; for (const it of items) { if (it.tok || it.g) continue; const d = Math.hypot(it.pos.x - p.x, it.pos.z - p.z); if (d < bd) { bd = d; best = it; } } }
+    if (!best) { const p = cursorPoint(e); if (!p) return; let bd = 0.22; for (const it of items) { if (it.tok || it.g) continue; const d = Math.hypot(it.pos.x+caseG.position.x-p.x, it.pos.z+caseG.position.z-p.z); if (d < bd) { bd = d; best = it; } } }
     if (!best) return;
     if (best.kind === 'cap') { const g = openGear(best, true); activate(g); SEL = { type: 'cap', g }; return; }
     if (best.kind === 'mut') { if (best.tgt < 0.5) { best.tgt = 3; if (audioOk()) { RADIO.start(); RADIO.chime(UA.ctx.currentTime + 0.02); } } SEL = { type: 'mut', it: best }; return; }
@@ -2302,7 +2332,7 @@
     gateK = Math.max(...CK.map((k) => compG[k].userData.t)); gates.forEach((G) => { const e = compG[G.k].userData.t;
       if (G.type === 'dome') { const a = ease.smooth(clamp(e / 0.45)), b = ease.smooth(clamp((e - 0.42) / 0.33)); G.segs.forEach((s0, i) => { s0.rotation.y = -i * TAU / 8 * a; s0.position.set(0, 0, 0); const fb = ease.smooth(b); s0.scale.set(1 - 0.25 * fb, Math.max(0.02, 1 - fb), 1 - 0.25 * fb); s0.rotation.z = Math.sin(fb * Math.PI) * 0.18 * (i % 2 ? 1 : -1); s0.visible = b < 0.99; }); G.g.children.forEach((ch) => { if (!G.segs.includes(ch)) ch.visible = b < 0.9; }); G.ed.material = e > 0.3 ? LEDG : G.ed.userData.m || (G.ed.userData.m = G.ed.material); if (e > 0.85 && !G.boom) { G.boom = 1; boom(); } if (e < 0.1) G.boom = 0; return; }
       const s2 = ease.smooth(clamp(e * 1.6)) * (G.d + 0.06); G.list.forEach((g) => { let z = g.userData.z - s2, y = 0.115, r = 0; if (z < G.c.z0) { const ex = G.c.z0 - z; z = G.c.z0 - 0.012; y = 0.115 - ex; r = -H2 * Math.min(1, ex / 0.05); } g.position.set(g.position.x, y, z); g.rotation.x = r; g.visible = y > -0.45; }); });
-    lidBtn.userData.dome.material.emissiveIntensity = allOpen() ? 0.15 : 0.45 + 0.35 * Math.sin(t * 3);
+    lidBtn.userData.dome.material.emissiveIntensity = allOpen() ? 0.15 : 0.45 + 0.35 * Math.sin(t * 3); originalUnfireRing.material.emissiveIntensity=1.1+0.15*Math.sin(t*2.4);
     const lk = clamp(gateK * 1.25); laser.visible = false; laser.position.set(-CW / 2 + 0.1 + lk * (CW - 0.2), 0.14, 0); 
     if (lidOpen < 0.5 && ALL) { ALL = false; } if(window.__hexPan)window.__hexPan.material.emissiveIntensity=0.25+0.2*Math.max(0,Math.sin(t*1.5+1))+0.5*clamp(lidOpen*3); if (window.__fd) window.__fd.material.emissiveIntensity = lidOpen < 0.3 ? 0.6 + 0.5 * Math.sin(t * 4) : 0.2; plate.material.emissiveIntensity = lidOpen < 0.3 ? 0.12 + 0.12 * Math.sin(t * 3) : 0;
     ELEV.a += (lerp(0.42, view.gd > view.D0 * 1.25 ? 0.32 : zoomed() || CINE.on ? 0.98 : 0.6, ease.smooth(clamp(lidOpen * 1.15))) - ELEV.a) * 0.2; ORB.az += (ORB.gaz - ORB.az) * 0.15; ORB.de += (ORB.gde - ORB.de) * 0.15; const el = clamp(ELEV.a + ORB.de, 0.12, 1.5); DIR.set(Math.sin(ORB.az) * Math.cos(el), Math.sin(el), Math.cos(ORB.az) * Math.cos(el));
@@ -2513,7 +2543,7 @@
       const a=CASE_VIEW.angle,d=CASE_VIEW.dist,el=CASE_VIEW.elevation;
       cam.position.set(caseG.position.x+Math.sin(a)*Math.cos(el)*d,caseG.position.y+Math.sin(el)*d,caseG.position.z+Math.cos(a)*Math.cos(el)*d);
       cam.lookAt(caseG.position.x,caseG.position.y+0.4,caseG.position.z);
-      cam.near=0.05;cam.fov=cam.aspect<1?Math.min(62,48+(1-cam.aspect)*24):48;cam.updateProjectionMatrix();
+      cam.near=0.05;const panoramic=window.ATM_OUT;cam.fov=panoramic?(cam.aspect<1?Math.min(70,56+(1-cam.aspect)*18):56):(cam.aspect<1?Math.min(62,48+(1-cam.aspect)*24):48);cam.updateProjectionMatrix();
     }
     S.renderer.render(S.scene, cam);
   }
@@ -2549,6 +2579,7 @@
     get mission(){return typeof SIDE!=='undefined' && SIDE.cur ? SIDE.cur.t : null},
     get roam(){return ROAMS.on},
     get originalButterfly(){return !!lidBtn && lidBtn.children.length>0},
+    get originalLidButton(){return !!originalUnfireLidButton && originalUnfireLidButton.children.length===4},
     get casePos(){return [caseG.position.x,caseG.position.y,caseG.position.z]},
     get playerPos(){return [ROAMS.p.x,ROAMS.p.y,ROAMS.p.z]},
     get openControl(){return getComputedStyle(carryButton).display},

@@ -51,13 +51,13 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        caseCamera:!game.__UNFIRE_CASE_QA.roam&&!game.__UNFIRE_CASE_QA.inspecting,
        walkButtonExists:!!game.document.getElementById('roamB'),
        oldDoubleHudMissing:!game.document.getElementById('caseModeHud'),
-       exteriorCircleMissing:!game.__ringB,
+       lidButterflyRestored:game.__UNFIRE_CASE_QA.originalLidButton,
        lid:game.__UNFIRE_CASE_QA.lid,
        exit:!!game.document.getElementById('unfireExitGame'),
        gameSource:frame.getAttribute('src')
      };
    });
-   assert(first.immersive&&first.fullViewport&&first.fullscreenAllowed&&!first.roaming&&first.caseVisible&&first.caseCamera&&first.walkButtonExists&&first.oldDoubleHudMissing&&first.exteriorCircleMissing&&first.lid>0.94&&first.exit,
+   assert(first.immersive&&first.fullViewport&&first.fullscreenAllowed&&!first.roaming&&first.caseVisible&&first.caseCamera&&first.walkButtonExists&&first.oldDoubleHudMissing&&first.lidButterflyRestored&&first.lid>0.94&&first.exit,
      'Single tap did not enter immersive playable world '+JSON.stringify(first));
    for(const [width,height] of [[390,844],[844,390]]){
      await page.setViewportSize({width,height});

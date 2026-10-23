@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023sales1" as="script"></head><body><title>UNFIRE Maletín</title>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023case3" as="script"></head><body><title>UNFIRE Maletín</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
@@ -132,6 +132,30 @@ body.unfire-roaming #cv{touch-action:none}
     body:not(.unfire-roaming) #roamB{bottom:max(5px,env(safe-area-inset-bottom))!important;
       min-height:32px!important;padding:5px 11px!important;
       max-width:calc(100vw - 250px);font-size:9px!important}}
+  /* Case/robot controls: never place a second floating CTA in the main view. */
+  #ctlDock{box-sizing:border-box;max-width:min(42vw,230px);gap:7px!important;overflow-x:visible;overscroll-behavior:contain}
+  #ctlDock button{box-sizing:border-box;max-width:100%;white-space:normal!important;text-align:center;line-height:1.18!important}
+  body.unfire-roaming #unfireCarryCase{left:max(12px,env(safe-area-inset-left))!important;right:auto!important;
+    top:clamp(196px,41dvh,390px)!important;bottom:auto!important;max-width:min(164px,37vw)!important}
+  @media(pointer:fine) and (max-width:720px){
+    #ctlDock{bottom:calc(env(safe-area-inset-bottom) + 65px)!important}
+  }
+  @media(pointer:coarse){
+    #ctlDock{max-width:min(34vw,160px)!important;overflow-y:auto;scrollbar-width:thin}
+    body.unfire-roaming #unfireCarryCase{top:calc(env(safe-area-inset-top) + clamp(160px,34dvh,270px))!important;
+      max-width:min(140px,34vw)!important}
+  }
+  @media(pointer:coarse) and (orientation:landscape){
+    #ctlDock{top:calc(env(safe-area-inset-top) + 58px)!important;bottom:auto!important;
+      max-height:calc(100dvh - 115px)!important}
+    body.unfire-roaming #unfireCarryCase{top:calc(env(safe-area-inset-top) + 145px)!important}
+  }
+  @media(pointer:coarse) and (orientation:portrait){
+    #ctlDock{top:calc(env(safe-area-inset-top) + 110px)!important;bottom:auto!important;
+      max-height:calc(100dvh - 285px)!important}
+    body.unfire-roaming #unfireCarryCase{top:calc(env(safe-area-inset-top) + 195px)!important}
+  }
+  /* Hidden page UI must not consume taps on the active 3D lid. */
 </style>
 <canvas id="cv" aria-label="Maletín UNFIRE en 3D. Acerca la vista con la rueda para entrar"></canvas>
 <div class="hud" id="hud"><button id="zin" aria-label="Acercar">+</button><button id="zout" aria-label="Alejar">−</button><button id="home" aria-label="Volver al maletín">⟲</button><div class="crumb" id="crumb">MALETÍN</div></div>
@@ -4618,5 +4642,5 @@ window.STORY_INIT = function (H) {
 };
 
 </script>
-<script src="game-engine-v50.js?v=20261023sales1"></script>
+<script src="game-engine-v50.js?v=20261023case3"></script>
 </body></html>
