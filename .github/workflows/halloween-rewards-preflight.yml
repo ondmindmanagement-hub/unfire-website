@@ -1,0 +1,32 @@
+name: Halloween buyer rewards and wheel security preflight
+on:
+  pull_request:
+    paths:
+      - ".github/operations/promo_ledger.py"
+      - ".github/operations/.gitignore"
+      - ".github/tests/test_promo_ledger.py"
+      - ".github/docs/archer-halloween-2026-rewards-operator.md"
+      - ".github/workflows/halloween-rewards-preflight.yml"
+      - "audio/halloween/promo-status.json"
+  push:
+    branches: [main]
+    paths:
+      - ".github/operations/promo_ledger.py"
+      - ".github/tests/test_promo_ledger.py"
+      - "audio/halloween/promo-status.json"
+      - ".github/workflows/halloween-rewards-preflight.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test voucher uniqueness and wheel legal fail-closed behavior
+        run: python3 -m unittest discover -s .github/tests -p test_promo_ledger.py -v
+      - name: Confirm public storefront has no fake active promotions
+        run: |
+          node .github/tests/halloween-offer-gate.test.cjs
+          node --test .github/tests/audio-commerce-release-gate.test.cjs
