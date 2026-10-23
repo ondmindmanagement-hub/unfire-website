@@ -37,7 +37,7 @@ function harness(opts={}) {
   const jobs=[];
   let clock=0;
   const ctx={
-    ROOM,ROAMS,document,window,
+    ROOM,ROAMS,document,window,LOWDEV:true,
     THREE:{Box3:Box,Vector3:Vector,AdditiveBlending:2},
     V:(x,y,z)=>new Vector(x,y,z),
     setTimeout(fn){jobs.push(fn);return jobs.length;},
