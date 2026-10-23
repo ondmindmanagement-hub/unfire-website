@@ -1756,7 +1756,25 @@
         if (near && window.speechSynthesis && !speechSynthesis.speaking) { try { const u = new SpeechSynthesisUtterance(text); const VR = window.__voiceFor ? window.__voiceFor(b.name) : null; if (VR && VR.v) { u.voice = VR.v; u.lang = VR.v.lang; u.pitch = VR.pitch; u.rate = VR.rate; } else u.lang = 'es-ES'; speechSynthesis.speak(u); } catch (e) {} } }); } }; })();
   // ===== MAPA: dónde estás y dónde está la misión (mesa en modo robot, casa o isla) =====
   const MAP = (() => { const c = document.createElement('canvas'); c.id = 'minimap'; c.width = c.height = 220; c.style.cssText = 'position:fixed;left:14px;top:62px;z-index:41;width:180px;height:180px;border-radius:50%;border:3px solid #9fd0ff;box-shadow:0 8px 24px rgba(0,20,80,.45);display:none;background:#06102e'; document.body.appendChild(c); const g = c.getContext('2d'); let on = true, tt = 0;
-    return { toggle() { on = !on; hap(0.2); }, tick() { c.style.display = on && ROAMS.on && !(window.__VIEW && window.__VIEW.on) ? 'block' : 'none'; if (!on || !ROAMS.on) return; tt++; if (tt % 3) return; const mini = !!ROAMS.mini, out = !!window.ATM_OUT; const S0 = mini ? 220 / 30 : out ? 220 / 1500 : 220 / 190, cx = mini ? 0 : out ? ROAMS.p.x : 0, cz = mini ? -1 : out ? ROAMS.p.z : 40; const P = (x, z) => [110 + (x - cx) * S0, 110 + (z - cz) * S0];
+    // This canvas stays the lightweight circular HUD. The expanded map is a lazy 2D dialog.
+    const expanded = window.UnfireExpandedMap ? window.UnfireExpandedMap.create(() => ({
+      zone: ROAMS.mini ? 'table' : window.ATM_OUT ? 'island' : 'house',
+      x: ROAMS.p.x, z: ROAMS.p.z, yaw: ROAMS.yaw,
+      objective: (STORY && STORY.obj) || (window.ATM_OUT && SIDE.cur ? { x:SIDE.cur.x, z:SIDE.cur.z, mini:false } : null)
+    }), () => { for (const k in ROAMS.k) ROAMS.k[k] = 0; }) : null;
+    c.tabIndex = 0; c.setAttribute('role','button');
+    c.setAttribute('aria-label','Abrir el mapa grande');
+    c.title = 'Abrir mapa grande';
+    c.addEventListener('pointerdown', e => e.stopPropagation());
+    c.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); if (ROAMS.on && expanded) { expanded.show(); hap(0.2); } });
+    c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); if (ROAMS.on && expanded) expanded.show(); } });
+    return { toggle() { if (ROAMS.on && expanded) { expanded.toggle(); hap(0.2); } }, tick() {
+      if (expanded) {
+        if (!ROAMS.on && expanded.isOpen) expanded.hide();
+        if (expanded.isOpen) for (const k in ROAMS.k) ROAMS.k[k] = 0;
+        expanded.tick();
+      }
+      c.style.display = on && ROAMS.on && !(window.__VIEW && window.__VIEW.on) ? 'block' : 'none'; if (!on || !ROAMS.on) return; tt++; if (tt % 3) return; const mini = !!ROAMS.mini, out = !!window.ATM_OUT; const S0 = mini ? 220 / 30 : out ? 220 / 1500 : 220 / 190, cx = mini ? 0 : out ? ROAMS.p.x : 0, cz = mini ? -1 : out ? ROAMS.p.z : 40; const P = (x, z) => [110 + (x - cx) * S0, 110 + (z - cz) * S0];
       g.clearRect(0, 0, 220, 220); g.save(); g.beginPath(); g.arc(110, 110, 108, 0, Math.PI * 2); g.clip(); const bg = g.createRadialGradient(110, 110, 10, 110, 110, 120); bg.addColorStop(0, '#12306e'); bg.addColorStop(1, '#050a20'); g.fillStyle = bg; g.fillRect(0, 0, 220, 220);
       g.strokeStyle = 'rgba(160,220,255,.7)'; g.lineWidth = 2; const rect = (x0, z0, x1, z1, f) => { const [a, b] = P(x0, z0), [c2, d] = P(x1, z1); if (f) { g.fillStyle = f; g.fillRect(a, b, c2 - a, d - b); } g.strokeRect(a, b, c2 - a, d - b); };
       if (mini) { rect(-13, -7.45, 13, 5.05, 'rgba(217,185,138,.35)'); rect(-2.9, -1.95, 2.9, 1.95, 'rgba(180,190,210,.6)'); } else if (out) { g.fillStyle = 'rgba(63,207,90,.35)'; const [a, b] = P(0, 0); g.beginPath(); g.arc(a, b, 270 * S0, 0, Math.PI * 2); g.fill(); rect(-80, -16, 80, 96, 'rgba(220,240,255,.5)'); [[600, 0, 340, 'rgba(230,225,215,.55)'], [80, -500, 190, 'rgba(232,201,138,.6)'], [-760, -760, 250, 'rgba(255,190,215,.6)'], [-420, 120, 70, 'rgba(160,230,110,.5)'], [300, 420, 60, 'rgba(255,255,255,.5)'], [-360, -380, 80, 'rgba(192,139,255,.5)']].forEach(([x, z, r, c]) => { const [a2, b2] = P(x, z); g.fillStyle = c; g.beginPath(); g.arc(a2, b2, r * S0, 0, Math.PI * 2); g.fill(); }); } else { rect(-80, -16, 80, 96, 'rgba(220,240,255,.12)'); rect(-13, -7.5, 13, 5, 'rgba(217,185,138,.5)'); [[44, 8, '#ff2a4a'], [38, 44, '#3d8bff'], [-38, 40, '#2a3c8a'], [-8, 92, '#c0c0c0'], [-48, 56, '#f4f1ea'], [48, 56, '#f4f1ea']].forEach(([x, z, col]) => { const [a, b] = P(x, z); g.fillStyle = col; g.beginPath(); g.arc(a, b, 4, 0, Math.PI * 2); g.fill(); }); }

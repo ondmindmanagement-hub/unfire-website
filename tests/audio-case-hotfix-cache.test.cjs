@@ -14,7 +14,7 @@ test('one fresh cache token for host iframe, fallback and both engine loads',()=
   assert.equal(new Set(hostVersions).size,1);
   assert.equal(new Set(engineVersions).size,1);
   assert.equal(hostVersions[0],engineVersions[0]);
-  assert.equal(hostVersions[0],'20261023roamgrid1');
+  assert.equal(hostVersions[0],'20261023bigmap1');
 });
 test('the actual canvas accepts tap without browser scroll cancellation',()=>{
   assert.match(frame,/#cv\s*\{[^}]*touch-action:none/);
