@@ -7,7 +7,6 @@ const read = (name) => fs.readFileSync(path.join(root, name), 'utf8');
 const page = read('enterprise/showrooms/index.html');
 const enterprise = read('enterprise/index.html');
 const contact = read('contact/index.html');
-const playbook = read('docs/unfire-enterprise-commercial-playbook.md');
 let checks = 0;
 const check = (name, fn) => { fn(); checks++; console.log('PASS', name); };
 
@@ -55,12 +54,12 @@ check('entry points into new service exist in enterprise and contact', () => {
   assert.match(contact, /href="\/enterprise\/showrooms\/"/);
   assert.match(contact, /href="\/enterprise\/"/);
 });
-check('written commercial controls distinguish intention from verified operations', () => {
-  assert.match(playbook, /NOT public offers/);
-  assert.match(playbook, /not cost-free or guaranteed/);
-  assert.match(playbook, /written approval/);
-  assert.match(playbook, /licence register/);
-  assert.match(playbook, /LSSI/);
-  assert.match(playbook, /subcontracting/i);
+check('commercial copy has clear boundaries and avoids internal pricing disclosure', () => {
+  assert.match(page, /written agreement/);
+  assert.match(page, /third-party brand partnerships/);
+  assert.match(page, /Sponsored placements and affiliate links/);
+  assert.match(page, /not yet a verified operational marketplace/);
+  assert.doesNotMatch(page, /€[0-9]/);
+  assert.doesNotMatch(page, /\b(price hypotheses|internal strategy)\b/i);
 });
 console.log('Unfire showroom commercial checks:', checks, 'passed');
