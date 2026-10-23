@@ -1,0 +1,27 @@
+name: Audio mobile iframe hit-test
+on:
+  pull_request:
+    paths:
+      - 'audio/index.html'
+      - 'tests/audio-mobile-iframe-hit.test.cjs'
+      - '.github/workflows/audio-mobile-iframe-hit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  touch-hitbox:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Static host + touch contract
+        run: |
+          node --check tests/audio-mobile-iframe-hit.test.cjs
+          node --test tests/audio-mobile-iframe-hit.test.cjs
+          node tests/maletin-cache-sync.test.cjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: WebGL butterfly first touch, multiple form factors, orientation
+        run: node tests/maletin-touch-first-open-browser.cjs
