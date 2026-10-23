@@ -48,6 +48,7 @@ const viewports = [
             cardsWithin: allCards.every(within),
             outside: allCards.filter(x=>!within(x)).map(x=>({name:x.querySelector('h4')?.textContent, left:x.getBoundingClientRect().left, right:x.getBoundingClientRect().right, width:x.getBoundingClientRect().width, grid:x.parentElement.getBoundingClientRect().width, columns:getComputedStyle(x.parentElement).gridTemplateColumns})),
             bodyOverflow: document.documentElement.scrollWidth > innerWidth + 2,
+            layout: (()=>{const root=document.querySelector('#apps');const wrap=root.querySelector('.wrap');const g=root.querySelector('.uf-gallery-grid');const rect=el=>{const r=el.getBoundingClientRect();const cs=getComputedStyle(el);return {left:r.left,right:r.right,width:r.width,cssWidth:cs.width,padLeft:cs.paddingLeft,padRight:cs.paddingRight,box:cs.boxSizing,marginLeft:cs.marginLeft,transform:cs.transform,overflowX:cs.overflowX}};return {viewport:innerWidth,root:rect(root),wrap:rect(wrap),grid:rect(g),scrollX:scrollX}})(),
             footnote: root.querySelector('.uf-gallery-footnote')?.textContent || '',
           };
         }, expected);
@@ -55,7 +56,7 @@ const viewports = [
         assert.equal(summary.images, 8); // KeyBridge intentionally uses a private, text-only research cover
         assert.equal(summary.emptyAlt, 0);
         assert.equal(summary.bodyOverflow, false, 'Horizontal overflow at ' + viewport.width);
-        assert.equal(summary.cardsWithin, true, 'Cards spill out at ' + viewport.width + ': ' + JSON.stringify(summary.outside));
+        assert.equal(summary.cardsWithin, true, 'Cards spill out at ' + viewport.width + ': ' + JSON.stringify({outside:summary.outside,layout:summary.layout}));
         assert.equal(summary.categoryHeadersWithin, true, 'Category headings spill out at ' + viewport.width);
         assert.deepEqual(summary.nav, Object.keys(expected).map(x => '#' + x));
         assert.deepEqual(summary.groups, Object.entries(expected).map(([id,headings])=>({ id,headings })));
