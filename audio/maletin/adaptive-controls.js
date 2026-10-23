@@ -171,7 +171,8 @@
       try {localStorage.setItem(storageKey(), JSON.stringify(custom));} catch (_) {}
     }
     const reserved = ['#hud','#tb','#storyHud','#ctlDock','#wradio','#minimap',
-      '#chat','#howto','#storyMenu','#unfireControlGuide','#unfireTouchEditorBar',
+      '#chat','#howto','#storyMenu','#story .box','#story .bar','#tip',
+      '#unfireControlGuide','#unfireTouchEditorBar',
       '#roamBtn','#atmBtn','#stO','#unfireRecover','#gameHud'];
     function safeInsets() {
       const probe = doc.createElement('div');
