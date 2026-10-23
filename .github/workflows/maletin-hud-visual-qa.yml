@@ -1,0 +1,24 @@
+name: Unfire mobile HUD visual safety
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/mobile-hud-guard.css'
+      - 'audio/maletin/mobile-hud-guard.js'
+      - 'audio/maletin/index.html'
+      - 'tests/maletin-hud-overlap-qa.cjs'
+      - '.github/workflows/maletin-hud-visual-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  visual-hud:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser test runtime
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify music/radio visual safety in 8 simulated viewports
+        run: node tests/maletin-hud-overlap-qa.cjs
