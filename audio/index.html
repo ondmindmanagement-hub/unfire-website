@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=IM+Fell+English+SC&family=Michroma&family=Pirata+One&family=Righteous&family=Cormorant+SC:wght@700&family=Playfair+Display+SC:ital,wght@1,900&family=Black+Ops+One&family=Comfortaa:wght@700&family=Audiowide&family=Poiret+One&family=Orbitron:wght@800&family=Marcellus+SC&family=Bodoni+Moda:ital,wght@1,700&family=Bungee&family=Fraunces:ital,wght@1,700&family=Silkscreen:wght@700&family=VT323&family=New+Rocker&family=Special+Elite&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=IM+Fell+English+SC&family=Michroma&family=Pirata+One&family=Righteous&family=Cormorant+SC:wght@700&family=Playfair+Display+SC:ital,wght@1,900&family=Black+Ops+One&family=Comfortaa:wght@700&family=Audiowide&family=Poiret+One&family=Orbitron:wght@800&family=Marcellus+SC&family=Bodoni+Moda:ital,wght@1,700&family=Bungee&family=Fraunces:ital,wght@1,700&family=Silkscreen:wght@700&family=VT323&family=New+Rocker&family=Special+Elite&display=swap"></noscript>
 <link rel="preload" as="image" href="img/maletin-real-first-frame-desktop.webp" media="(min-width:601px)" fetchpriority="high">
-<link rel="preload" as="image" href="img/maletin-real-first-frame-mobile.webp" media="(max-width:600px)" fetchpriority="high">
+<link rel="preload" as="image" href="img/maletin-real-first-frame-mobile.webp?v=20261023-realworld2" media="(max-width:600px)" fetchpriority="high">
 <style>
 /* UNFIRE AUDIO — "El equipaje".
    Cada categoría vive en su propio contenedor: maletín de vuelo (inicio), flight case (instrumentos),
@@ -137,7 +137,9 @@ html.immOn,body.immOn{overflow:hidden!important;overscroll-behavior:none}body.im
 #unfireMobileTapHint{display:none}
 @media (max-width:600px) and (orientation:portrait){
   .hero-pin:not(.imm){height:calc(100svh - 62px)}
-  #unfireCaseFirstFrame img{transform:scale(1.08) translateY(-13%);transform-origin:center}
+  /* True portrait screenshot of the same live 3D desktop scene: no
+     framed rectangle, no geometric image stretching, no artificial zoom. */
+  #unfireCaseFirstFrame img{object-fit:cover;object-position:50% 50%;transform:none;transform-origin:center}
   #unfireMobileTapHint{display:block;position:absolute;left:50%;bottom:max(18svh,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:4;
     width:max-content;max-width:calc(100vw - 26px);box-sizing:border-box;padding:10px 14px;
     border-radius:999px;background:rgba(8,15,28,.84);border:1px solid rgba(175,201,235,.3);
@@ -482,7 +484,7 @@ footer a{color:var(--soft)}
   <div class="hero-pin" id="heroPin">
     <!-- Actual gameplay captured from the live WebGL case; available before WebGL boots. -->
     <picture id="unfireCaseFirstFrame" role="button" tabindex="0" aria-label="Entrar al mundo Unfire Audio desde el maletín real">
-      <source media="(max-width:600px)" srcset="img/maletin-real-first-frame-mobile.webp">
+      <source media="(max-width:600px)" srcset="img/maletin-real-first-frame-mobile.webp?v=20261023-realworld2">
       <img src="img/maletin-real-first-frame-desktop.webp" width="1100" height="635" alt="Maletín 3D auténtico de Unfire Audio, cerrado sobre la mesa, con su mariposa" fetchpriority="high" loading="eager" decoding="sync">
     </picture>
     <span id="unfireMobileTapHint" aria-hidden="true">Pulsa el botón central para abrir</span>
