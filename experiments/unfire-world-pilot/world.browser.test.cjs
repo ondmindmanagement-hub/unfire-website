@@ -31,7 +31,7 @@ const baseUrl = (process.env.UNFIRE_WORLD_TEST_URL || "http://127.0.0.1:48763").
         draws: window.__worldDrawCalls,
         error: document.querySelector("canvas").getContext("webgl").getError()
       }));
-      assert.equal(response.status(),200);
+      // Chrome may validate a cached localhost document with HTTP 304.\n      assert.ok([200,304].includes(response.status()), "Unexpected HTML response: "+response.status());
       assert.ok(result.width <= result.client + 1, JSON.stringify(result));
       assert.ok(result.draws >= 1, "No real WebGL draw");
       assert.equal(result.error,0);
