@@ -1,0 +1,26 @@
+name: Unfire responsive site header
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'assets/css/unfire-unified-header-20261020.css'
+      - 'tests/unfire-mobile-header.test.cjs'
+      - '.github/workflows/site-mobile-header.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mobile-header:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Chromium test runtime
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium
+      - name: Validate header, menu, translations and ten viewports
+        run: |
+          python3 -m http.server 8769 --bind 127.0.0.1 > /tmp/unfire-header-http.log 2>&1 &
+          sleep 2
+          UNFIRE_MOBILE_HEADER_URL=http://127.0.0.1:8769/ node tests/unfire-mobile-header.test.cjs
