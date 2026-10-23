@@ -18,6 +18,7 @@ const required=[
   'aeat_activity_registration_checked',
   'social_security_reta_position_checked',
   'sepe_benefit_position_resolved',
+  'framework_and_third_party_licenses_verified',
   'seller_identification_notice_complete',
   'tax_and_cross_border_vat_configured',
   'consumer_terms_and_digital_withdrawal_confirmed',
