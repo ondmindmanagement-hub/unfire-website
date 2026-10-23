@@ -619,8 +619,10 @@ document.getElementById('shareGame').addEventListener('click',async function(){
   <p class="lede" id="bagEmpty">Tu bolsa está vacía. Añade algo desde el catálogo.</p>
   <div class="sum">
     <div><span>Precio normal</span><span id="bagNormal">0 €</span></div>
-    <div style="color:var(--ok)"><span>Semana de lanzamiento</span><span id="bagLaunch">0 €</span></div>
-    <button class="btn btn-gel" type="button" id="bagGo">Consultar disponibilidad</button><p style="font:500 12px/1.6 Arial,sans-serif;color:#b7c8df;margin:12px 0 0">Catálogo en preparación para macOS y Windows. Esta consulta por correo no supone compra, cargo, reserva confirmada ni entrega de instaladores. <a href="compatibilidad/" style="color:#9fc9ff;text-decoration:underline;text-underline-offset:3px">Ver compatibilidad y estado de lanzamiento</a>.</p>
+    <div style="color:var(--ok)"><span id="bagOfferLabel">Semana de lanzamiento</span><span id="bagLaunch">0 €</span></div>
+    <button class="btn btn-gel" type="button" id="bagGo">Consultar disponibilidad</button>
+    <p id="bagPayMethods" hidden style="font:500 12px/1.6 Arial,sans-serif;color:#254161;margin:12px 0 0">Pago seguro gestionado por Stripe. Tarjeta, Apple Pay (Face ID o Touch ID), Google Pay y Link, cuando estén disponibles para tu dispositivo y región. UNFIRE no almacena tus datos bancarios. El importe final se confirmará en Stripe.</p>
+    <p id="bagUnreleased" style="font:500 12px/1.6 Arial,sans-serif;color:#254161;margin:12px 0 0">Catálogo en preparación para macOS y Windows. Esta consulta por correo no supone compra, cargo, reserva confirmada ni entrega de instaladores. <a href="compatibilidad/" style="color:#254161;text-decoration:underline;text-underline-offset:3px">Ver compatibilidad y estado de lanzamiento</a>.</p>
   </div>
 </div></dialog>
 
@@ -628,7 +630,7 @@ document.getElementById('shareGame').addEventListener('click',async function(){
   <button class="x" type="button" data-close aria-label="Cerrar">✕</button>
   <p class="eyebrow" id="licFor">Licencia</p><h3 id="licTitle" style="font-size:24px">Licencia de uso de UNFIRE AUDIO</h3>
   <div class="legal">
-    <p>Versión 1.0 · Borrador pendiente de revisión legal. Licenciante: Unfire (Omar Baró), Cardedeu, Barcelona, España · hello@unfire.technology.</p>
+    <p>Versión 1.0 · Borrador pendiente de revisión legal. Licenciante: Omar Baró (persona física), bajo la marca comercial Unfire, Barcelona, España · hello@unfire.technology. Unfire no se presenta como sociedad mercantil constituida.</p>
     <h4>1. Qué recibes</h4><p>Una licencia personal, no exclusiva e intransferible para instalar y usar el software, sus sonidos e imágenes («el Producto») en los ordenadores y dispositivos que te pertenecen. Si lo has obtenido gratis, la licencia también es gratuita.</p>
     <h4>2. Uso permitido</h4><p>Puedes usar el Producto para crear música, audio y vídeo, también con fines comerciales. Lo que crees con él es tuyo y no debes regalías a Unfire.</p>
     <h4>3. Usos prohibidos</h4><p>No puedes vender, revender, alquilar, prestar, sublicenciar, distribuir ni publicar el Producto o sus instaladores, ni incluirlo en otros packs, bibliotecas o tiendas, ni subirlo a otras webs. Tampoco puedes descompilar, desensamblar, modificar o crear obras derivadas del software, ni extraer sus imágenes, tipografías, sonidos o modelos para usarlos por separado, ni eliminar avisos de autoría, ni hacerlo pasar por tuyo.</p>
@@ -681,10 +683,36 @@ const STARTER=['lofi','pulsebits','airflow'];
 /* Precios en euros. Referencias de mercado: efecto suelto 9 € (impulso), pack 49 € (ancla), insignia 59 €,
    todo 99 €, Club 6,99 €/mes (Output One cobra 14,99 $/mes y Arcade 12,99 $/mes). Editables aquí. */
 const PRICES={fx:9,fx20:49,hyper:59,synth:29,todo:99,clubM:6.99,clubY:59};
-/* PAGOS: pega aquí el enlace de pago de Stripe (Payment Link) de cada producto y los botones cobrarán directamente. Vacío = consulta por correo. */
-const PAY={fx:'',fx20:'',hyper:'',synth:'',todo:'',clubM:'',clubY:''};
+/* COMERCIO: solo enlaces Payment Links definitivos, de productos entregables.
+   Nunca incluir claves secretas, datos de tarjetas ni precios calculados desde el navegador.
+   1) Crear un Payment Link LIVE para el producto exacto en Stripe con el importe y
+      el modo correctos (pago unico o suscripcion), recibo, impuestos y entrega revisados.
+   2) Pegar la URL en PAY con la clave exacta del producto, por ejemplo hyper.
+   3) Solo despues de revisar condiciones, compatibilidad y entrega, incorporar
+      esa clave a READY_FOR_SALE. Mientras tanto, todo sigue como consulta por correo.
+   Para cada FX individual usar una clave diferente: 'fx-razora', 'fx-overtones', etc.
+   No usar un mismo enlace generico para productos distintos ni para una bolsa mixta. */
+const PAY={fx20:'',hyper:'',synth:'',todo:'',clubM:'',clubY:''};
+const READY_FOR_SALE=new Set([]); // Ningun producto del catalogo web esta validado para cobro aun.
+const NONPAYABLE_PRODUCTS=new Set(['starter','launch']); // Evitar cobrar por las demos o el aviso.
+const paymentKey=k=>k==='club'?'clubM':k;
+function paymentLinkFor(k){
+  if(NONPAYABLE_PRODUCTS.has(k))return '';
+  const key=paymentKey(k),raw=PAY[key];
+  if(!READY_FOR_SALE.has(key)||typeof raw!=='string'||!raw.trim())return '';
+  try{
+    const u=new URL(raw);
+    if(u.protocol!=='https:'||u.hostname!=='buy.stripe.com'||u.username||u.password||
+       !/^\/[A-Za-z0-9_-]+$/.test(u.pathname)||u.pathname.startsWith('/test_')||u.hash||u.search)return '';
+    return u.href;
+  }catch(_){return ''}
+}
+function checkoutLinkFor(keys){
+  // One product per Payment Link. Never charge a partial/incorrect basket.
+  return keys.length===1?paymentLinkFor(keys[0]):'';
+}
 const eur=v=>v===0?'0 €':(Number.isInteger(v)?v:v.toFixed(2).replace('.',','))+' €';
-const ITEMS={hyper:['HYPERWAVE 2000',PRICES.hyper,0],synth:['Unfire Synthesizer (Mac)',PRICES.synth,PRICES.synth],todo:['Todo UNFIRE',PRICES.todo,PRICES.synth],starter:['Starter gratis (3 FX)',0,0],club:['UNFIRE Club · mensual',PRICES.clubM,PRICES.clubM],launch:['Aviso de lanzamiento',0,0]};
+const ITEMS={hyper:['HYPERWAVE 2000',PRICES.hyper,0],fx20:['FX20 · Pack de 20 efectos',PRICES.fx20,0],synth:['Unfire Synthesizer (Mac)',PRICES.synth,PRICES.synth],todo:['Todo UNFIRE',PRICES.todo,PRICES.synth],starter:['Starter gratis (3 FX)',0,0],club:['UNFIRE Club · mensual',PRICES.clubM,PRICES.clubM],launch:['Aviso de lanzamiento',0,0]};
 FX.forEach(f=>ITEMS['fx-'+f[0]]=['UNFIRE '+f[1],STARTER.includes(f[0])?0:PRICES.fx,0]);
 const DEF=[0.45,0.5,0.6];
 const FACE_STYLE={'Bodoni Moda':'italic 700','Fraunces':'italic 700','Playfair Display SC':'italic 900','Cinzel':'700','Cormorant SC':'700','Comfortaa':'700','Orbitron':'800','Silkscreen':'700'};
@@ -1060,19 +1088,51 @@ sy.addEventListener('close',()=>{[...held.keys()].forEach(up);sStop&&sStop()});
 const Bag=(()=>{let items=store.get('unfire.bag',[]).filter(k=>ITEMS[k]);const btn=$('#bagBtn');
   function render(){$('#bagCount').textContent=items.length;const ul=$('#bagList');ul.innerHTML='';
     items.forEach(k=>{const [n,p,l]=ITEMS[k];const li=document.createElement('li');li.innerHTML=`<span>${n}</span><span style="display:flex;gap:10px;align-items:center"><span class="sel" style="user-select:none">${eur(p)}</span><button type="button" aria-label="Quitar ${n}">✕</button></span>`;li.querySelector('button').onclick=()=>{items=items.filter(x=>x!==k);save()};ul.append(li)});
-    $('#bagEmpty').hidden=items.length>0;$('#bagNormal').textContent=eur(items.reduce((s,k)=>s+ITEMS[k][1],0));$('#bagLaunch').textContent=eur(items.reduce((s,k)=>s+ITEMS[k][2],0));$('#bagGo').disabled=!items.length}
+    $('#bagEmpty').hidden=items.length>0;$('#bagNormal').textContent=eur(items.reduce((s,k)=>s+ITEMS[k][1],0));
+    const express=checkoutLinkFor(items);
+    // An enabled checkout must never display the demo/promo estimate (possibly 0 EUR)
+    // as the payment total. The provider's final price must match this reviewed catalog price.
+    $('#bagOfferLabel').textContent=express?'Total del producto':'Semana de lanzamiento';
+    $('#bagLaunch').textContent=eur(express?items.reduce((sum,k)=>sum+ITEMS[k][1],0):items.reduce((sum,k)=>sum+ITEMS[k][2],0));
+    $('#bagGo').disabled=!items.length;
+    $('#bagGo').textContent=express?'Pagar rápido de forma segura':'Consultar disponibilidad';
+    $('#bagPayMethods').hidden=!express;$('#bagUnreleased').hidden=!!express}
   function save(){store.set('unfire.bag',items);render()}
   render();btn.onclick=()=>$('#bag').showModal();
-  return{add(k){if(!items.includes(k))items.push(k);save();btn.classList.add('bump');setTimeout(()=>btn.classList.remove('bump'),400)}};
+  return{add(k){if(!Object.prototype.hasOwnProperty.call(ITEMS,k))return;if(!items.includes(k))items.push(k);save();btn.classList.add('bump');setTimeout(()=>btn.classList.remove('bump'),400)}};
 })();
 document.addEventListener('click',e=>{const a=e.target.closest('[data-add]');if(a)Bag.add(a.dataset.add)});
 $('#bagGo').onclick=()=>{$('#bag').close();getLic('Tu bolsa')};
+// Express route appears only for a live, individually deliverable product.
+document.querySelectorAll('button[data-add]').forEach(add=>{
+  const k=add.dataset.add;
+  if(!ITEMS[k]||ITEMS[k][1]<=0||!paymentLinkFor(k))return;
+  const fast=document.createElement('button');
+  fast.type='button';fast.className='btn btn-gel';
+  fast.textContent='Pagar rápido';fast.setAttribute('aria-label','Pagar de forma segura: '+ITEMS[k][0]);
+  fast.addEventListener('click',()=>getLic(ITEMS[k][0],[k]));
+  add.insertAdjacentElement('afterend',fast);
+});
 
 /* ================= Licencia ================= */
 const lic=$('#lic');
-function getLic(what){$('#licFor').textContent='Licencia · '+what;$('#agree').checked=false;$('#doGet').disabled=true;$('#getMsg').hidden=true;lic.showModal()}
+let licenseSelection=null;
+function getLic(what,selected=null){licenseSelection=selected;$('#licFor').textContent='Licencia · '+what;$('#agree').checked=false;$('#doGet').disabled=true;$('#getMsg').hidden=true;$('#doGet').textContent=checkoutLinkFor(selected||store.get('unfire.bag',[]))?'Ir al pago seguro':'Continuar';lic.showModal()}
 $('#agree').onchange=e=>$('#doGet').disabled=!e.target.checked;
-$('#doGet').onclick=()=>{try{const ks=store.get('unfire.bag',[]).filter(k=>ITEMS[k]&&ITEMS[k][1]>0);const map={club:'clubM'};const lk=ks.length===1?PAY[map[ks[0]]||ks[0]]:(ks.length>1&&PAY.todo&&ks.includes('todo')?PAY.todo:'');if(lk){location.href=lk;return}}catch(e){}const it=[...document.querySelectorAll('#bagList li')].map(li=>'- '+li.textContent.replace('✕','').trim()).join('\n')||'- '+$('#licFor').textContent.replace('Licencia · ','');const tot=$('#bagLaunch')?$('#bagLaunch').textContent:'';const body='Hola UNFIRE,\n\nMe interesa recibir informacion sobre los siguientes productos:\n'+it+(tot?'\n\nTotal (precio de lanzamiento): '+tot:'')+'\n\nAcepto la licencia de uso personal (sin reventa).\n\nMi nombre:\nMi país:\n';location.href='mailto:hello@unfire.technology?subject='+encodeURIComponent('Consulta de disponibilidad · UNFIRE AUDIO')+'&body='+encodeURIComponent(body);$('#getMsg').hidden=false};
+$('#doGet').onclick=()=>{
+  const ks=(licenseSelection||store.get('unfire.bag',[])).filter(k=>ITEMS[k]);
+  const url=checkoutLinkFor(ks);
+  if(url){
+    // Leave fullscreen/iframes. Stripe handles authentication, wallets, 3DS and receipts.
+    location.assign(url);
+    return;
+  }
+  const it=ks.map(k=>'- '+ITEMS[k][0]+' ('+eur(ITEMS[k][1])+')').join('\n')||'- '+$('#licFor').textContent.replace('Licencia · ','');
+  const body='Hola UNFIRE,\n\nMe interesa recibir información sobre los siguientes productos:\n'+it+
+    '\n\nNo se trata de un pedido ni de un pago.\n\nMi nombre:\nMi país:\n';
+  location.href='mailto:hello@unfire.technology?subject='+encodeURIComponent('Consulta de disponibilidad · UNFIRE AUDIO')+'&body='+encodeURIComponent(body);
+  $('#getMsg').hidden=false;
+};
 $('#readLic').onclick=()=>getLic('Lectura');
 
 /* ================= Lanzamiento (fecha real cuando se decida) ================= */
