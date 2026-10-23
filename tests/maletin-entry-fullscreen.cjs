@@ -12,6 +12,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    const errors=[];
    page.on('pageerror',e=>errors.push(e.message));
    await page.goto(process.env.UNFIRE_ENTRY_URL||'http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded',timeout:45000});
+   const initialGameURL=page.url();const initialTabCount=page.context().pages().length;
    assert.equal(await page.locator('#openBtn').count(),0,'2D butterfly button must not exist on website');
    await page.waitForFunction(()=>!!document.getElementById('malFrame')?.contentWindow?.__mal?.S,
      null,{timeout:120000,polling:250});
@@ -34,6 +35,8 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
      noButtons:!document.querySelector('#openBtn')&&!document.getElementById('malFrame').contentDocument.querySelector('#directOpen')}));
    assert(instant.visible&&instant.fullWidth&&instant.noButtons,
      '3D case must open in fullscreen with no 2D overlay '+JSON.stringify(instant));
+   assert.equal(page.url(),initialGameURL,'Opening the 3D case must not navigate away from the Unfire page');
+   assert.equal(page.context().pages().length,initialTabCount,'Opening the maletin must not create another browser tab');
    await page.waitForFunction(()=>{
      const g=document.getElementById('malFrame')?.contentWindow;
      return !!g?.__UNFIRE_CASE_QA && g.__UNFIRE_CASE_QA.lid>0.94;
@@ -74,13 +77,14 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        // measuring the case-view-only PASEAR button: storyOn hides it by design.
        d.body.classList.remove('storyOn');story.classList.remove('on');
        const rect=(el)=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}};
-       // The existing PASEAR is a case-view-only action, not part of the
-       // central bottom captions. Probe its real CSS before the story hides it.
-       const walk=d.getElementById('roamB'), oldDisplay=walk.style.display;
+       // The SAME original PASEAR now lives inside the right-hand action dock.
+       // It may be hidden by the story overlay; measure before re-enabling it.
+       const walk=d.getElementById('roamB'), dock=d.getElementById('ctlDock'),oldDisplay=walk.style.display;
        walk.style.display='block';
-       const pasear=rect(walk);
+       const pasear=rect(walk),dockRect=rect(dock),insideDock=walk.parentElement===dock;
        const map=rect(d.getElementById('minimap'));
        const zoomHud=rect(d.getElementById('hud'));
+       const cfg=rect(d.getElementById('cfgB'));
        walk.style.display=oldDisplay;
        d.body.classList.add('storyOn');story.classList.add('on');
        const box=rect(story.querySelector('.box'));
@@ -91,19 +95,20 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        const label={text:exitButton.textContent.trim(),scrollWidth:exitButton.scrollWidth,
          clientWidth:exitButton.clientWidth,whiteSpace:style.whiteSpace};
        const tipEl=d.getElementById('tip'),tip=rect(tipEl);
-       return {box,touch,exit,label,tip,pasear,map,zoomHud};
+       return {box,touch,exit,label,tip,pasear,dockRect,insideDock,cfg,map,zoomHud};
 
        function assertExists(x){if(!x)throw Error('Story overlay missing');}
      });
      const intersects=(a,b)=>a.w>0&&a.h>0&&b.w>0&&b.h>0&&
        a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
      const walk=state.pasear;
-     assert(walk.x>=0&&walk.y>=0&&walk.w>=70&&walk.x+walk.w<=width+2&&
-       walk.y+walk.h<=height+2&&walk.y<height*.2,
-       'PASEAR not in the safe upper-left case slot '+JSON.stringify({width,height,walk}));
-     assert(!intersects(walk,state.exit)&&!intersects(walk,state.map)&&
-       !intersects(walk,state.zoomHud)&&!intersects(walk,state.tip),
-       'PASEAR overlaps exit, minimap, zoom HUD or captions '+JSON.stringify({width,height,walk,exit:state.exit,map:state.map,hud:state.zoomHud,tip:state.tip}));
+     assert(state.insideDock&&walk.x>=width*.54&&walk.y>=65&&walk.w>=65&&
+       walk.x>=-1&&walk.x+walk.w<=width+2&&walk.y+walk.h<=height+2&&
+       walk.x>=state.dockRect.x-2,
+       'PASEAR not inside the safe right action dock '+JSON.stringify({width,height,walk,dock:state.dockRect}));
+     assert(!intersects(walk,state.exit)&&!intersects(walk,state.cfg)&&
+       !intersects(walk,state.map)&&!intersects(walk,state.zoomHud)&&!intersects(walk,state.tip),
+       'PASEAR overlaps exit, gear, minimap, zoom HUD or captions '+JSON.stringify({width,height,walk,exit:state.exit,cfg:state.cfg,map:state.map,hud:state.zoomHud,tip:state.tip}));
      const b=state.box;
      assert(b.x>=-1&&b.y>=-1&&b.x+b.w<=width+2&&b.y+b.h<=height+2,
        'Nimbo story dialogue clipped '+JSON.stringify({width,height,b}));

@@ -118,32 +118,47 @@ body.unfire-roaming #cv{touch-action:none}
   #story .nm{margin-bottom:2px!important}
   #story .ch{margin-top:3px!important}
 }
-  /* Case-only PASEAR: left top action slot. Never cover center-bottom
-     instructions or the maletin. The SAME button moves to #ctlDock when walking. */
-  body:not(.unfire-roaming) #roamB{
-    position:fixed!important;
-    left:max(12px,env(safe-area-inset-left))!important;
-    top:calc(env(safe-area-inset-top) + 12px)!important;
-    right:auto!important;bottom:auto!important;transform:none!important;
-    box-sizing:border-box;max-width:min(38vw,182px)!important;
-    min-height:40px!important;padding:8px 12px!important;
-    white-space:normal!important;overflow-wrap:normal!important;
-    font-size:clamp(10px,1.3vw,12px)!important;line-height:1.2!important;
-    text-align:center!important;z-index:71!important;
+  /* ONE PASEAR in the right action column; never float over the maletin. */
+  #ctlDock #roamB{
+    position:static!important;left:auto!important;right:auto!important;top:auto!important;
+    bottom:auto!important;transform:none!important;margin:0!important;
+    box-sizing:border-box!important;width:100%!important;max-width:100%!important;
+    min-height:42px!important;padding:9px 12px!important;
+    white-space:normal!important;overflow-wrap:anywhere!important;
+    text-align:center!important;line-height:1.25!important;
+    font-size:clamp(10px,1.15vw,12px)!important;z-index:auto!important;
+    flex-shrink:0;
   }
+  /* Case view: right-side rail below exit and gear. Walking reuses its dock. */
+  body:not(.unfire-roaming) #ctlDock{
+    position:fixed!important;right:max(12px,env(safe-area-inset-right))!important;
+    left:auto!important;top:calc(env(safe-area-inset-top) + 135px)!important;
+    bottom:auto!important;max-width:min(23vw,190px)!important;
+    max-height:calc(100dvh - env(safe-area-inset-top) - 150px)!important;
+    flex-direction:column-reverse!important;overflow-x:hidden!important;
+  }
+  /* Never compete with expanded HISTORY/MAP/SETTINGS panel. */
+  body:has(#storyHud.cfgOn) #ctlDock{visibility:hidden!important;pointer-events:none!important}
   #roamB.unfire-intro-blink{animation:unfire-pasear-blink 2s steps(1,end) 1}
   @keyframes unfire-pasear-blink{
     0%,20%,40%,60%,80%{visibility:visible;filter:brightness(1.65)}
     10%,30%,50%,70%,90%{visibility:hidden;filter:brightness(1)}
     100%{visibility:visible;filter:brightness(1)}}
   body.storyOn #roamB{display:none!important}
-  @media(pointer:coarse) and (orientation:landscape){
-    body:not(.unfire-roaming) #roamB{
-      left:calc(env(safe-area-inset-left) + 8px)!important;
-      top:calc(env(safe-area-inset-top) + 6px)!important;
-      max-width:min(24vw,150px)!important;min-height:34px!important;
-      padding:6px 9px!important;font-size:10px!important
-    }
+  @media (pointer:coarse){
+    #ctlDock #roamB{min-height:40px!important;padding:8px 9px!important;
+      font-size:clamp(9px,2.4vw,11px)!important}
+    body:not(.unfire-roaming) #ctlDock{
+      right:max(8px,env(safe-area-inset-right))!important;
+      top:calc(env(safe-area-inset-top) + 112px)!important;
+      max-width:min(34vw,160px)!important;max-height:calc(100dvh - env(safe-area-inset-top) - 125px)!important}
+  }
+  @media (pointer:coarse) and (orientation:landscape){
+    body:not(.unfire-roaming) #ctlDock{
+      top:calc(env(safe-area-inset-top) + 110px)!important;
+      max-width:min(23vw,145px)!important;
+      max-height:calc(100dvh - env(safe-area-inset-top) - 120px)!important}
+    #ctlDock #roamB{min-height:34px!important;font-size:10px!important;padding:6px 8px!important}
   }
   /* Case/robot controls: never place a second floating CTA in the main view. */
   #ctlDock{box-sizing:border-box;max-width:min(42vw,230px);gap:7px!important;overflow-x:visible;overscroll-behavior:contain}
@@ -167,17 +182,6 @@ body.unfire-roaming #cv{touch-action:none}
     #ctlDock{top:calc(env(safe-area-inset-top) + 110px)!important;bottom:auto!important;
       max-height:calc(100dvh - 285px)!important}
     body.unfire-roaming #unfireCarryCase{top:calc(env(safe-area-inset-top) + 195px)!important}
-  }
-  /* Mobile safe area keeps PASEAR between the side edge and the status
-     bar, above the minimap lane; landscape has a shorter native button. */
-  @media(pointer:coarse) and (orientation:portrait){
-    body:not(.unfire-roaming) #roamB{
-      left:calc(env(safe-area-inset-left) + 8px)!important;
-      top:calc(env(safe-area-inset-top) + 7px)!important;
-      max-width:min(37vw,146px)!important;
-      min-height:38px!important;padding:7px 9px!important;
-      font-size:clamp(9px,2.6vw,11px)!important
-    }
   }
 
 </style>
