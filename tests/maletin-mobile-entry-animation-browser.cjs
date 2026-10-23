@@ -28,7 +28,10 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    if(s.w<s.h)assert(before.hintVisible&&before.hintBottom<=s.h&&before.hintTop>=0,'Hint offscreen '+JSON.stringify({s,before}));
    await page.waitForTimeout(900);
    const completed=await page.evaluate(()=>({photoVisible:getComputedStyle(document.querySelector('#unfireCaseFirstFrame')).visibility==='visible',canvasAnimated:getComputedStyle(document.querySelector('#malFrame')).animationName,transform:getComputedStyle(document.querySelector('#unfireCaseFirstFrame img')).transform}));
-   assert(completed.photoVisible&&completed.canvasAnimated==='none'&&(!s.animate||completed.transform!=='none'),'Still visible and no animated engine '+JSON.stringify({s,completed}));
+   // The newest real-world mobile WebP has no geometric crop. Arrival must
+   // settle to the native untransformed scene, not the older shifted framing.
+   const natural=completed.transform==='none'||completed.transform==='matrix(1, 0, 0, 1, 0, 0)';
+   assert(completed.photoVisible&&completed.canvasAnimated==='none'&&natural,'Real preview must settle without distortion '+JSON.stringify({s,completed}));
    const count=context.pages().length;
    await page.locator('#unfireCaseFirstFrame').click();
    await page.waitForFunction(()=>document.body.classList.contains('immOn'),null,{timeout:2000});
