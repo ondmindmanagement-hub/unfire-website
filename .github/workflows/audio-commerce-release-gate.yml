@@ -1,0 +1,41 @@
+name: Audio commerce release guard
+
+on:
+  push:
+    branches: [main, "chore/audio-legal-commerce-release-gate-20261023"]
+    paths:
+      - "audio/index.html"
+      - "audio/compatibilidad/index.html"
+      - "terms.html"
+      - "refunds.html"
+      - "software-license.html"
+      - "legal.html"
+      - "privacy.html"
+      - ".github/audio-commerce-release.json"
+      - ".github/tests/audio-commerce-release-gate.test.cjs"
+      - ".github/workflows/audio-commerce-release-gate.yml"
+  pull_request:
+    paths:
+      - "audio/index.html"
+      - "audio/compatibilidad/index.html"
+      - "terms.html"
+      - "refunds.html"
+      - "software-license.html"
+      - "legal.html"
+      - "privacy.html"
+      - ".github/audio-commerce-release.json"
+      - ".github/tests/audio-commerce-release-gate.test.cjs"
+      - ".github/workflows/audio-commerce-release-gate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  legal-commerce-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify no unapproved digital-product checkout
+        run: node --test .github/tests/audio-commerce-release-gate.test.cjs
