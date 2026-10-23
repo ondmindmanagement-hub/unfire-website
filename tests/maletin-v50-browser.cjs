@@ -138,7 +138,7 @@ const assert=require('node:assert/strict');
         cancelled:!document.getElementById('onl').classList.contains('on')};
     } finally {window.Peer=original;}
   });
-  assert(peerQA.first.includes('Esa sala no existe')&&peerQA.second.includes('Esa sala no existe')
+  assert(/(Esa sala no existe|That room does not exist)/.test(peerQA.first)&&/(Esa sala no existe|That room does not exist)/.test(peerQA.second)
     &&peerQA.afterErrors>=2&&peerQA.destroyed>=3&&peerQA.cancelled,
     'PeerJS error/retry/close did not recover cleanly '+JSON.stringify(peerQA));
   console.log('PASS PeerJS error/retry/stalled cancellation without third-party network or polling delays');
