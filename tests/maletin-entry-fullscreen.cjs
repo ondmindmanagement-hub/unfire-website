@@ -91,7 +91,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        'Buttons overlap active story dialogue '+JSON.stringify(state.touch));
      assert(state.exit.x>=-1&&state.exit.y>=-1&&state.exit.x+state.exit.w<=width+1,
        'Game exit clipped by small viewport');
-     assert(state.label.text.includes('SALIR A LA WEB')&&state.label.whiteSpace!=='nowrap'&&
+     assert(/(SALIR A LA WEB|BACK TO THE WEBSITE)/.test(state.label.text)&&state.label.whiteSpace!=='nowrap'&&
        state.label.scrollWidth<=state.label.clientWidth+2,
        'Game exit label visibly truncated or missing '+JSON.stringify({width,height,label:state.label}));
      const overlaps=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
