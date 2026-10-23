@@ -97,6 +97,22 @@ test('dome petals close progressively when the player leaves the area', () => {
   assert.ok(s.dome.PET.every(p => Number.isFinite(p.rotation.z)));
 });
 
+test('outdoor collisions prewarm once in background before dome exit', () => {
+  const s = makeState({ h: 18, open: 0 });
+  let warmCalls = 0;
+  s.window.__warmOutsideObstacles = () => {
+    warmCalls++;
+    s.window.__obstWarmPending = true;
+  };
+  for (let i = 0; i < 40; i++) s.tick();
+  assert.equal(warmCalls, 1, 'repeated frames must not start multiple warmups');
+  assert.equal(s.window.ATM_OUT, false, 'preparation precedes crossing');
+  s.window.__obstWarmPending = false;
+  s.window.__obstWarmReady = true;
+  s.tick();
+  assert.equal(warmCalls, 1, 'do not recreate prepared collision data');
+});
+
 test('door locomotion and collision entry points stay in the active motor', () => {
   assert.match(engine, /function roamMove\(f, side = 0\)/);
   assert.match(engine, /ATM\.setOut\(true\)/);
