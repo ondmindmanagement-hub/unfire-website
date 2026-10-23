@@ -1,0 +1,20 @@
+name: Unfire browser QA process guard
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/unfire-browser-qa-guard.cjs'
+      - 'tests/unfire-browser-qa-guard.test.cjs'
+      - '.github/workflows/unfire-browser-qa-guard.yml'
+  workflow_dispatch:
+
+jobs:
+  guard-unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate own-process cleanup and timeout behavior
+        run: |
+          node --check scripts/unfire-browser-qa-guard.cjs
+          node --test tests/unfire-browser-qa-guard.test.cjs
