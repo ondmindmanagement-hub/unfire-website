@@ -180,6 +180,15 @@ body.unfire-roaming #cv{touch-action:none}
    bottom:calc(env(safe-area-inset-bottom) + 64px)!important;
    max-width:min(40vw,210px)!important;white-space:normal!important;overflow-wrap:anywhere!important;
    text-align:center;line-height:1.2}
+ /* Always display the complete native exit label, even in small Safari viewports. */
+ #unfireExitGame{box-sizing:border-box!important;white-space:normal!important;overflow:visible!important;
+   overflow-wrap:normal!important;word-break:normal!important;hyphens:none!important;
+   text-align:center!important;line-height:1.25!important;
+   right:max(7px,env(safe-area-inset-right))!important;
+   top:calc(env(safe-area-inset-top) + 6px)!important;
+   min-height:40px!important;max-width:min(48vw,194px)!important;
+   min-width:0!important;padding:6px 9px!important;
+   font:700 clamp(9px,2.55vw,11px)/1.25 system-ui!important}
  /* Dialogue is one unobstructed layer; all gameplay controls return when it closes. */
  #story.on .box{box-sizing:border-box;overflow-y:auto!important;overscroll-behavior:contain;
    max-height:min(57dvh,375px)!important;max-width:calc(100vw - 2*max(10px,env(safe-area-inset-left)))!important}
@@ -194,7 +203,7 @@ body.unfire-roaming #cv{touch-action:none}
  body.unfire-roaming #tip{max-width:36vw!important}
 }
 @media (pointer:coarse) and (orientation:portrait){
-  #tip{max-width:min(41vw,162px)!important}
+  #tip{top:calc(env(safe-area-inset-top) + 62px)!important;max-width:min(34vw,145px)!important}
   #story.on .box{left:50%!important;right:auto!important;bottom:calc(env(safe-area-inset-bottom) + 12px)!important;
     transform:translateX(-50%)!important;width:min(94vw,510px)!important}
   #story .tx{max-height:25dvh!important}
@@ -203,7 +212,7 @@ body.unfire-roaming #cv{touch-action:none}
 @media (pointer:coarse) and (orientation:landscape){
  .hud{left:max(6px,env(safe-area-inset-left))!important;bottom:calc(env(safe-area-inset-bottom) + 5px)!important}
  .hud .crumb{max-width:15vw;font-size:9px}
- #tip{top:calc(env(safe-area-inset-top) + 6px)!important;max-width:min(35vw,250px)!important;font-size:9px!important}
+ #tip{top:calc(env(safe-area-inset-top) + 8px)!important;max-width:min(32vw,250px)!important;font-size:9px!important}
  #buy.enter{bottom:calc(env(safe-area-inset-bottom) + 44px)!important;max-width:29vw!important;font-size:10px!important}
  #story.on .box{box-sizing:border-box;left:max(8px,env(safe-area-inset-left))!important;right:auto!important;
    transform:none!important;bottom:calc(env(safe-area-inset-bottom) + 6px)!important;
@@ -217,6 +226,10 @@ body.unfire-roaming #cv{touch-action:none}
  #story .tx{padding:5px 8px!important;min-height:0!important}
  #story .ch{gap:3px!important;margin-top:3px!important}
  #story .ch button{font-size:9px!important;min-height:30px!important;padding:4px 7px!important}
+ #unfireExitGame{max-width:min(37vw,170px)!important;min-height:34px!important;
+   padding:5px 7px!important;font-size:clamp(9px,1.5vw,10px)!important}
+ #tip{max-width:min(29vw,170px)!important;font-size:9px!important}
+
 }
 @media (prefers-reduced-motion:reduce){
  .hud,#tip,#buy.enter,#story .box{transition:none!important}
