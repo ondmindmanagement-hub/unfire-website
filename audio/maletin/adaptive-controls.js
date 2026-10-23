@@ -220,10 +220,15 @@
       const sizes = dimensions();
       controls.forEach((el,i) => {
         const size=sizes[names[i]];
-        el.style.boxSizing='border-box';el.style.position='fixed';
-        el.style.width=size+'px';el.style.height=size+'px';
-        el.style.minWidth=size+'px';el.style.minHeight=size+'px';
-        el.style.padding='0';el.style.right='auto';el.style.bottom='auto';
+        el.style.boxSizing='border-box';
+        // Existing legacy mobile @media rules use !important on bottom/right,
+        // width and padding. Override in the inline important layer so the
+        // collision solver's rectangles equal the ACTUAL painted rectangles.
+        for (const [prop,value] of [
+          ['position','fixed'],['width',size+'px'],['height',size+'px'],
+          ['min-width',size+'px'],['min-height',size+'px'],['padding','0'],
+          ['right','auto'],['bottom','auto']
+        ]) el.style.setProperty(prop,value,'important');
         el.style.borderRadius='50%';el.style.touchAction='none';
         if (i) {
           el.style.font='800 '+(size<60?10:12)+'px system-ui,sans-serif';
@@ -248,8 +253,8 @@
         const rect=safePlacement({x:target[0]*innerWidth,y:target[1]*innerHeight},
           {width:size,height:size},box,used);
         if (rect) {
-          controls[i].style.left=rect.left+'px';
-          controls[i].style.top=rect.top+'px';
+          controls[i].style.setProperty('left',rect.left+'px','important');
+          controls[i].style.setProperty('top',rect.top+'px','important');
           controls[i].style.visibility='visible';
           used.push(rect);resolved[name]=rect;
         } else {
