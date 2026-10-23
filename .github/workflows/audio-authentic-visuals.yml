@@ -1,0 +1,31 @@
+name: Real Unfire Y2K screenshot gallery
+on:
+  pull_request:
+    paths:
+      - "audio/visuales/**"
+      - "audio/catalogo/index.html"
+      - ".github/tests/unfire-authentic-visuals.test.cjs"
+      - ".github/docs/unfire-visuals-authentic-20261023.md"
+      - ".github/workflows/audio-authentic-visuals.yml"
+  push:
+    branches: [main]
+    paths:
+      - "audio/visuales/**"
+      - "audio/catalogo/index.html"
+      - ".github/tests/unfire-authentic-visuals.test.cjs"
+      - ".github/workflows/audio-authentic-visuals.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify 20 authentic engineering captures and original no-text icon concepts
+        run: node .github/tests/unfire-authentic-visuals.test.cjs
+      - name: Preserve safe sales gate and free game
+        run: |
+          node --test .github/tests/audio-commerce-release-gate.test.cjs
+          node .github/tests/audio-free-game-official-store.test.cjs
