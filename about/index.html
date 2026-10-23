@@ -1,6 +1,21 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
+<script id="ufAdaptiveBoot">(function(){
+  try {
+    var coarse=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    var memory=Number(navigator.deviceMemory||0), cores=Number(navigator.hardwareConcurrency||0);
+    var unknown=!memory&&!cores&&Math.min(innerWidth,innerHeight)<400;
+    if(coarse&&((memory>0&&memory<=4)||(cores>0&&cores<=4)||unknown))
+      document.documentElement.classList.add('uf-load-pending');
+    // A network failure must never leave a permanent overlay.
+    setTimeout(function(){document.documentElement.classList.remove('uf-load-pending');},9000);
+  } catch(e) {}
+})();</script>
+<link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261023adaptive1">
+<script defer src="/assets/js/unfire-adaptive-loading.js?v=20261023adaptive1"></script>
+
 <meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'">
 
 <meta charset="utf-8">
@@ -49,6 +64,14 @@ a{text-underline-offset:3px}
 <link rel="stylesheet" href="/assets/css/unfire-compact-system-20261019.css?v=2">
 </head>
 <body>
+<div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
+  <div class="uf-load-card">
+    <span class="uf-load-emblem" aria-hidden="true"></span>
+    <strong class="uf-load-brand" translate="no">UNFIRE</strong>
+    <span class="uf-load-label" id="ufAdaptiveLabel">Preparing the experience…</span>
+  </div>
+</div>
+
 <nav><a class="brand" href="/"><img src="/unfire-dragon-transparent.png" alt=""><span><span class="notranslate" translate="no">Unfire</span></span></a><a class="secondary" href="/">Home</a></nav>
 <main>
 <div class="eyebrow">Company</div>

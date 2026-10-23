@@ -1,0 +1,33 @@
+name: Unfire adaptive loading safety
+
+on:
+  pull_request:
+    paths:
+      - 'assets/css/unfire-adaptive-loading.css'
+      - 'assets/js/unfire-adaptive-loading.js'
+      - 'tests/unfire-adaptive-loading.test.cjs'
+      - '**/index.html'
+      - 'index.html'
+      - '.github/workflows/unfire-adaptive-loading.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: unfire-adaptive-loading-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  adaptive-loading:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: JavaScript and HTML overlay safety checks
+        run: |
+          node --check assets/js/unfire-adaptive-loading.js
+          node --check tests/unfire-adaptive-loading.test.cjs
+          node tests/unfire-adaptive-loading.test.cjs
+      - name: No accidental whitespace errors
+        run: git diff --check HEAD^ HEAD

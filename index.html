@@ -2,6 +2,21 @@
 
 <html lang="en">
 <head>
+<!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
+<script id="ufAdaptiveBoot">(function(){
+  try {
+    var coarse=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    var memory=Number(navigator.deviceMemory||0), cores=Number(navigator.hardwareConcurrency||0);
+    var unknown=!memory&&!cores&&Math.min(innerWidth,innerHeight)<400;
+    if(coarse&&((memory>0&&memory<=4)||(cores>0&&cores<=4)||unknown))
+      document.documentElement.classList.add('uf-load-pending');
+    // A network failure must never leave a permanent overlay.
+    setTimeout(function(){document.documentElement.classList.remove('uf-load-pending');},9000);
+  } catch(e) {}
+})();</script>
+<link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261023adaptive1">
+<script defer src="/assets/js/unfire-adaptive-loading.js?v=20261023adaptive1"></script>
+
 <meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'">
 
     <!-- Unfire favicon: Safari 26+ and modern browsers -->
@@ -4026,6 +4041,14 @@ main .uf-hero-title {
 </style>
 </head>
 <body>
+<div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
+  <div class="uf-load-card">
+    <span class="uf-load-emblem" aria-hidden="true"></span>
+    <strong class="uf-load-brand" translate="no">UNFIRE</strong>
+    <span class="uf-load-label" id="ufAdaptiveLabel">Preparing the experience…</span>
+  </div>
+</div>
+
 <div id="unfire-clean-header-v2"><div class="unfire-clean-mainbar"><div class="unfire-clean-inner"><a class="unfire-clean-brand notranslate" data-unfire-move="header-brand" href="#top" translate="no"><img translate="no" alt="Unfire" class="unfire-header-logo" src="assets/logo/unfire-logo-white.png"/><span class="unfire-header-name notranslate" translate="no"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no">Unfire</span></span></a><button id="unfire-mobile-menu-toggle" class="unfire-mobile-menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="unfire-mobile-site-nav" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 8h16M4 16h16"/></svg></button><nav id="unfire-mobile-site-nav" aria-label="Main navigation" class="unfire-clean-nav" data-unfire-move="header-navigation"><a href="#company">Company</a><a href="#work">Work</a><a href="/apps/">Apps</a><a href="/audio/" class="notranslate" translate="no">Audio</a><a href="#system">System</a><a href="#scale">Scale</a><a href="#funding">Funding</a><a href="/contact/">Contact</a>
 </nav></div></div></div>
 <script id="unfire-mobile-nav-controller">

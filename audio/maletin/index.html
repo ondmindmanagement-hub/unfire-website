@@ -1,4 +1,27 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023taplidv1" as="script"></head><body><title>UNFIRE Maletín</title>
+<!doctype html><html><head>
+<!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
+<script id="ufAdaptiveBoot">(function(){
+  try {
+    var coarse=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    var memory=Number(navigator.deviceMemory||0), cores=Number(navigator.hardwareConcurrency||0);
+    var unknown=!memory&&!cores&&Math.min(innerWidth,innerHeight)<400;
+    if(coarse&&((memory>0&&memory<=4)||(cores>0&&cores<=4)||unknown))
+      document.documentElement.classList.add('uf-load-pending');
+    // A network failure must never leave a permanent overlay.
+    setTimeout(function(){document.documentElement.classList.remove('uf-load-pending');},9000);
+  } catch(e) {}
+})();</script>
+<link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261023adaptive1">
+<script defer src="/assets/js/unfire-adaptive-loading.js?v=20261023adaptive1"></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023taplidv1" as="script"></head><body>
+<div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
+  <div class="uf-load-card">
+    <span class="uf-load-emblem" aria-hidden="true"></span>
+    <strong class="uf-load-brand" translate="no">UNFIRE</strong>
+    <span class="uf-load-label" id="ufAdaptiveLabel">Preparando la experiencia…</span>
+  </div>
+</div>
+<title>UNFIRE Maletín</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
