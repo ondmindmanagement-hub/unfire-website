@@ -11,7 +11,7 @@ var low=root.classList.contains('uf-load-pending');
 var en=mode==='site'&&root.lang.toLowerCase().startsWith('en');
 var phase='',lastDisplay=0,lastRecovery=-15000,watchStart=0,suspect=0;
 var isHidden=doc.hidden,beatAt=performance.now(),ended=false,gameStarted=false;
-var hideTimer=0,gameTimer=0,showDelay=0,probeTimer=0;
+var hideTimer=0,gameTimer=0,showDelay=0,probeTimer=0,beatTimer=0;
 function clear(id){if(id)clearTimeout(id);}
 function copy(kind){return en?
 (kind==='recovery'?'Restoring smoothness…':kind==='game'?'Preparing the 3D world…':'Preparing the experience…'):
@@ -54,7 +54,9 @@ var attempts=0;
 probeTimer=setInterval(function(){
 if(ready()||++attempts>=95){gameReady();clearInterval(probeTimer);}
 },160);}
+function queueBeat(){if(!doc.hidden&&!beatTimer)beatTimer=setTimeout(beat,320);}
 function beat(){
+beatTimer=0;
 var now=performance.now(),gap=now-beatAt;beatAt=now;
 if(!isHidden&&doc.visibilityState==='visible'&&!pending()&&now>2200&&phase!=='game'){
 if(gap>1000&&gap<120000){
@@ -65,12 +67,13 @@ if(suspect>=2&&now-lastRecovery>14000){
 lastRecovery=now;suspect=0;show('recovery');
 hideTimer=setTimeout(function(){if(phase==='recovery')hide();},1900);
 }}
-setTimeout(beat,320);}
+queueBeat();}
 doc.addEventListener('visibilitychange',function(){
 isHidden=doc.hidden;beatAt=performance.now();suspect=0;
-if(isHidden&&phase==='recovery')hide();
+if(isHidden){clear(beatTimer);beatTimer=0;if(phase==='recovery')hide();}
+else queueBeat();
 });
 window.addEventListener('pageshow',function(){beatAt=performance.now();suspect=0;});
-setTimeout(beat,320);
+queueBeat();
 window.__UNFIRE_ADAPTIVE_LOADING={get mode(){return mode;},get lowPower(){return low;},get state(){return phase||'ready';}};
 })();
