@@ -93,6 +93,7 @@ test('integration, CSS mobile safe areas and atomic host/engine cache',()=>{
   assert.match(engine,/c\.addEventListener\('click', e =>.*expanded\.show\(\)/);
   assert.match(engine,/const expanded = window\.UnfireExpandedMap/);
   assert.match(engine,/if \(expanded\.isOpen\) for \(const k in ROAMS\.k\)/);
+  assert.match(engine,/if \(!MAP\.expandedOpen\) S\.renderer\.render\(S\.scene, cam\)/, 'no WebGL render while 2D map is open');
   assert.match(iframe,/expanded-map\.css\?v=20261023bigmap1/);
   assert.match(iframe,/expanded-map\.js\?v=20261023bigmap1/);
   assert.match(iframe,/game-engine-v50\.js\?v=20261023bigmap1/);
