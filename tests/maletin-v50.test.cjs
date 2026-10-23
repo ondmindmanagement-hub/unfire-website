@@ -6,7 +6,7 @@ new vm.Script(engine,{filename:'game-engine-v50.js'});
 function chk(label,condition){assert.ok(condition,label);console.log('PASS',label)}
 chk('No standalone 2D opener on website',!html.includes('id="openBtn"')&&!html.includes('#openBtn'));
 chk('Only the real 3D butterfly opens the case',engine.includes('parent.__UNFIRE_ENTER_CASE()')&&engine.includes('ray.intersectObject(caseG, true)'));
-chk('Single original click enters immersive viewport and starts 3D lid during zoom',html.includes('immersive();\n    fullscreenFromGesture();')&&html.includes('UNFIRE_SCENE.onReady(()=>{loadingIntent=false;begin();})')&&html.includes('entryTransition=false;parked=0;'));
+chk('Single original click enters immersive viewport and starts 3D lid during zoom',html.includes('fullscreenFromGesture();\n    const begin=')&&html.includes('UNFIRE_SCENE.onReady(()=>{loadingIntent=false;begin();})')&&html.includes('entryTransition=false;parked=0;')&&html.includes('const sx=ratioX>.985?.92:ratioX')&&html.includes('enterGame();'));
 chk('Lid uses >5s real-time procedural animation',engine.includes('5.6*Math.abs(pt-pNow)')&&engine.includes('actualFrameTime')&&!engine.includes('lidControlledByPlayer ? 0.18 : 0.16'));
 chk('Original case opening SFX follow the actual procedural 3D hinge timeline',
   engine.includes('const CASE_SOUND=(()=>')&&engine.includes('CASE_SOUND.sync(pNow,pTarget,lidControlledByPlayer);')&&
@@ -53,7 +53,7 @@ chk('Gacha procedural FX reveal uses a side-on avatar approach, never central oc
   engine.includes('const side=V(-d.z,0,d.x);const p = V(c.x + d.x * dist + side.x * Math.min(7,dist*.45)'));
 chk('First-tap 3D case opens in the existing web document, without a new tab',
   html.includes('window.__UNFIRE_ENTER_CASE=()=>open(1050)')&&
-  html.includes('immersive();\n    fullscreenFromGesture();')&&
+  html.includes('fullscreenFromGesture();\n    const begin=')&&
   html.includes('fr.contentWindow.postMessage({unfire:1,entryStart:true,vis:true},location.origin)')&&
   !html.slice(html.indexOf('const Mal=(()=>'),html.indexOf('/* ================= Precios')).includes("window.open("));
 chk('First visit PASEAR blinks exactly two seconds after opening',
