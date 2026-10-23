@@ -1,0 +1,32 @@
+{
+  "license": "free_original_midi_patterns",
+  "made": "2026-10-23",
+  "requires_purchase": false,
+  "total": 4,
+  "files": {
+    "clockwork_crypt_120bpm.mid": {
+      "bpm": 120,
+      "sha256": "5579782c6defac34e73674cfb20712a1619df148f9e6c166f1541a74f71a111c",
+      "notes": 32,
+      "bars": 4
+    },
+    "haunted_steps_138bpm.mid": {
+      "bpm": 138,
+      "sha256": "dd64f77f3a6e1bf85e23dad05b30e06fc4e823328c7e519b38ec7688a5473a4e",
+      "notes": 32,
+      "bars": 4
+    },
+    "lantern_glide_100bpm.mid": {
+      "bpm": 100,
+      "sha256": "c0530a2ee6c1a783cd9d8f93c0b4cef2e6d0ed7f1cc99bcc7efe0fb95b204ac9",
+      "notes": 32,
+      "bars": 4
+    },
+    "midnight_signal_124bpm.mid": {
+      "bpm": 124,
+      "sha256": "ae21aef3801ba6ff3b22922458ee4fbba77352a1f18301539c378d5ce99e39db",
+      "notes": 32,
+      "bars": 4
+    }
+  }
+}

@@ -1,0 +1,30 @@
+name: Halloween free-gift truth gate
+on:
+  pull_request:
+    paths:
+      - "audio/halloween/**"
+      - "audio/tienda/index.html"
+      - ".github/docs/unfire-halloween-2026-promotions-release.md"
+      - ".github/scripts/generate-halloween-midi.py"
+      - ".github/tests/halloween-offer-gate.test.cjs"
+      - ".github/workflows/halloween-gift-gate.yml"
+  push:
+    branches: [main]
+    paths:
+      - "audio/halloween/**"
+      - "audio/tienda/index.html"
+      - ".github/tests/halloween-offer-gate.test.cjs"
+      - ".github/workflows/halloween-gift-gate.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  free-gift-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify original downloadable MIDI gift and truthful promotion flags
+        run: node .github/tests/halloween-offer-gate.test.cjs
+      - name: Confirm no direct web sale is enabled
+        run: node --test .github/tests/audio-commerce-release-gate.test.cjs
