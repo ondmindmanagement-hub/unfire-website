@@ -1462,9 +1462,52 @@
       return { get on() { return enabled; }, bindPeer, tick, stop, disconnect, visibility };
     })();
     function setup(c) { conns.push(c); c.on('data', (d) => { if (!d || !d.id || d.id === myId) return; if (d.nt != null) NOTES.take(d.nt, false); else if (d.bye) drop(d.id); else recv(d); if (isHost) conns.forEach((o) => { if (o !== c && o.open) try { o.send(d); } catch (e) {} }); }); c.on('close', () => { conns = conns.filter((x) => x !== c); if (isHost) { drop(c.peer); conns.forEach((o) => { try { o.send({ id: c.peer, bye: 1 }); } catch (e) {} }); } else { say('🌐 El anfitrión cerró la sala'); leave(); } }); }
-    function create() { save(); applyMe(); msg('Creando sala…'); load(() => { code = rnd(); isHost = true; peer = new Peer('unfire-sala-' + code); VOICE.bindPeer(peer); peer.on('open', (id) => { myId = id; started(); }); peer.on('connection', (c) => { c.on('open', () => setup(c)); }); peer.on('error', (e) => { if (e.type === 'unavailable-id') { try { peer.destroy(); } catch (er) {} create(); } else msg('Error online: ' + e.type); }); }); }
-    function join(c0) { save(); applyMe(); const cc = (c0 || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); if (cc.length !== 5) { msg('El código tiene 5 letras o números'); return; } msg('Entrando en la sala ' + cc + '…'); load(() => { code = cc; isHost = false; peer = new Peer(); VOICE.bindPeer(peer); peer.on('open', (id) => { myId = id; const c = peer.connect('unfire-sala-' + code, { reliable: false }); c.on('open', () => { setup(c); started(); }); }); peer.on('error', (e) => msg(e.type === 'peer-unavailable' ? 'Esa sala no existe o el anfitrión se ha ido' : 'Error online: ' + e.type)); }); }
-    function leave() { VOICE.stop(); NOTES.clear(); try { conns.forEach((c) => { try { c.send({ id: myId, bye: 1 }); } catch (e) {} c.close(); }); peer && peer.destroy(); } catch (e) {} conns = []; peer = null; code = null; hud.style.display = 'none'; Object.keys(R).forEach(drop); }
+    function create() { if (joining) { msg('Primero termina o cancela el intento de conexión'); return; } save(); applyMe(); msg('Creando sala…'); load(() => { code = rnd(); isHost = true; peer = new Peer('unfire-sala-' + code); VOICE.bindPeer(peer); peer.on('open', (id) => { myId = id; started(); }); peer.on('connection', (c) => { c.on('open', () => setup(c)); }); peer.on('error', (e) => { if (e.type === 'unavailable-id') { try { peer.destroy(); } catch (er) {} create(); } else msg('Error online: ' + e.type); }); }); }
+    // A remote connection may stall behind strict NATs or restricted Wi-Fi.
+    // Keep the screen responsive, offer a retry and never leave a dangling Peer.
+    let joining = null;
+    function clearJoining() { if (joining) { clearTimeout(joining.timer); joining = null; } }
+    function join(c0) {
+      save(); applyMe();
+      const cc = (c0 || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (cc.length !== 5) { msg('El código tiene 5 letras o números'); return; }
+      if (joining) { msg('Conectando… si tarda demasiado podrás reintentarlo'); return; }
+      if (code && peer) { msg('Ya estás en una sala; sal antes de unirte a otra'); return; }
+      msg('Entrando en la sala ' + cc + '…');
+      const task = { timer: null, current: null };
+      joining = task;
+      const failed = (reason) => {
+        if (joining !== task) return;
+        clearJoining();
+        try { if (task.current && !task.current.destroyed) task.current.destroy(); } catch (_) {}
+        if (peer === task.current) { peer = null; code = null; myId = null; }
+        msg(reason);
+      };
+      task.timer = setTimeout(() => failed('La sala no responde. Comprueba la conexión o pide otro código e inténtalo de nuevo.'), 22000);
+      load(() => {
+        if (joining !== task) return;
+        code = cc; isHost = false;
+        let p;
+        try { p = new Peer(); } catch (_) { failed('No se pudo iniciar la conexión. Inténtalo otra vez.'); return; }
+        peer = task.current = p; VOICE.bindPeer(p);
+        p.on('open', (id) => {
+          if (joining !== task) return;
+          myId = id;
+          let c;
+          try { c = p.connect('unfire-sala-' + cc, { reliable: false }); }
+          catch (_) { failed('No se pudo conectar con esa sala. Inténtalo otra vez.'); return; }
+          if (!c) { failed('No se pudo abrir esa sala.'); return; }
+          c.on('open', () => {
+            if (joining !== task) { try { c.close(); } catch (_) {} return; }
+            clearJoining(); setup(c); started();
+          });
+          c.on('error', () => failed('Falló la conexión entre jugadores. Inténtalo de nuevo.'));
+          c.on('close', () => { if (joining === task) failed('No se pudo entrar en esa sala. Inténtalo otra vez.'); });
+        });
+        p.on('error', (e) => failed(e.type === 'peer-unavailable' ? 'Esa sala no existe o el anfitrión se ha ido' : 'Error de conexión online: ' + e.type));
+      });
+    }
+    function leave() { clearJoining(); VOICE.stop(); NOTES.clear(); try { conns.forEach((c) => { try { c.send({ id: myId, bye: 1 }); } catch (e) {} c.close(); }); peer && peer.destroy(); } catch (e) {} conns = []; peer = null; code = null; hud.style.display = 'none'; Object.keys(R).forEach(drop); }
     function drop(id) { VOICE.disconnect(id); const r = R[id]; if (!r) return; S.scene.remove(r.w); S.scene.remove(r.tag); delete R[id]; if (code) upd(); }
     function recv(d) { let r = R[d.id]; if (!r || r.t !== d.t || r.c !== d.c) { if (r) drop(d.id); try { const r0 = ROBOT.build(Object.assign({}, MUTANTS.list[d.t % MUTANTS.list.length])); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(10.5 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; tint(w, d.c); S.scene.add(w); const cv = document.createElement('canvas'); cv.width = 256; cv.height = 64; const g = cv.getContext('2d'); g.fillStyle = 'rgba(8,14,40,.8)'; g.beginPath(); g.roundRect ? g.roundRect(2, 8, 252, 48, 24) : g.rect(2, 8, 252, 48); g.fill(); g.fillStyle = d.c; g.font = '900 28px Arial'; g.textAlign = 'center'; g.fillText(String(d.n || 'Jugador').slice(0, 14), 128, 43); const tag = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cv), depthTest: false, transparent: true })); tag.scale.set(8, 2, 1); S.scene.add(tag); w.position.set(d.x, -8.9 + d.h, d.z); r = R[d.id] = { w, r0, tag, t: d.t, c: d.c, p: V(d.x, -8.9 + d.h, d.z), wd: 0 }; upd(); if (!d.q) say('👋 ' + (d.n || 'Alguien') + ' ha entrado en la sala'); } catch (e) { return; } } r.d = d; r.last = performance.now(); }
     let pending = null; try { pending = new URLSearchParams(parent.location.search).get('room'); } catch (e) {} if (!pending) try { pending = new URLSearchParams(location.search).get('room'); } catch (e) {}
@@ -1487,12 +1530,12 @@
       addEventListener('pagehide',()=>watcher.disconnect(),{once:true});
     }
     applyMe();
-    return { open(taller) { ui.classList.toggle('workshop',!!taller);ui.classList.add('on');paint(); $o('onN').value = cfg.name || (window.__STORYNAME && window.__STORYNAME()) || ''; $o('onNum').value = cfg.num || 27; msg(''); ui.querySelector('h3').textContent = taller ? '🔧 TALLER · personaliza tu robot' : '🌐 MODO ONLINE'; ui.querySelectorAll('.act').forEach((a, i) => (a.style.display = taller && i < 2 ? 'none' : 'flex')); ui.classList.add('on'); }, get on() { return !!code; }, get audioPlayers() { return code ? Object.values(R) : []; }, voiceVisibility(v) { VOICE.visibility(v); },
+    return { open(taller) { ui.classList.toggle('workshop',!!taller);ui.classList.add('on');paint(); $o('onN').value = cfg.name || (window.__STORYNAME && window.__STORYNAME()) || ''; $o('onNum').value = cfg.num || 27; msg(''); ui.querySelector('h3').textContent = taller ? '🔧 TALLER · personaliza tu robot' : '🌐 MODO ONLINE'; ui.querySelectorAll('.act').forEach((a, i) => (a.style.display = taller && i < 2 ? 'none' : 'flex')); ui.classList.add('on'); }, get on() { return !!code; }, get joining() { return !!joining; }, get audioPlayers() { return code ? Object.values(R) : []; }, voiceVisibility(v) { VOICE.visibility(v); },
       tick(dt, t) { if (pending && ROAMS.on) { this.open(); $o('onCode').value = pending; msg('Te han invitado a la sala ' + pending + ' · elige tu robot y pulsa UNIRME'); pending = null; }
         if (!code || !peer) return; sendT -= dt; if (sendT <= 0 && myId) { sendT = 0.1; const d = { id: myId, n: cfg.name, c: cfg.col, t: cfg.type, x: +ROAMS.p.x.toFixed(2), z: +ROAMS.p.z.toFixed(2), h: +(ROAMS.h || 0).toFixed(2), y: +((ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy)).toFixed(3), sc: NOTES.sc, f: ROAMS.fly ? 1 : 0, o: window.ATM_OUT ? 1 : 0, m: ROAMS.moving ? 1 : 0, v: VOICE.on ? 1 : 0, q: 1 }; conns.forEach((c) => { if (c.open) try { c.send(d); } catch (e) {} }); }
         if (NOTES.g) { NOTES.g.visible = !!window.ATM_OUT; const fy = -8.9 + (ROAMS.h || 0) + 5; NOTES.list.forEach((n, i) => { if (!n.on) return; n.sp.material.rotation = Math.sin(t * 2 + i) * 0.3; if (window.ATM_OUT && Math.abs(ROAMS.p.x - n.sp.position.x) < 7 && Math.abs(ROAMS.p.z - n.sp.position.z) < 7 && Math.abs(fy - n.sp.position.y) < 9) { NOTES.take(i, true); conns.forEach((c) => { if (c.open) try { c.send({ id: myId, nt: i }); } catch (e) {} }); upd(); } }); } NOTES.uT = (NOTES.uT || 0) - dt; if (NOTES.uT <= 0) { NOTES.uT = 1; upd(); } const now = performance.now(); Object.keys(R).forEach((id) => { const r = R[id], d = r.d; if (!d) return; if (now - r.last > 8000) { drop(id); return; } const vis = !!d.o === !!window.ATM_OUT; r.w.visible = r.tag.visible = vis; if (!vis) return; const tgt = V(d.x, -8.9 + d.h, d.z), mv = r.w.position.distanceTo(tgt); r.w.position.lerp(tgt, Math.min(1, dt * 8)); r.wd += Math.min(mv, 5); r.w.rotation.y = Math.atan2(Math.sin(d.y), -Math.cos(d.y)); r.tag.position.set(r.w.position.x, r.w.position.y + 13, r.w.position.z); r.r0.update(3.7, dt, { act: d.f ? 'fly' : d.m ? 'walk' : null, ph: d.m ? STEPPH(r.wd, 10.5, false) : t, mood: 'happy' }); }); VOICE.tick(dt); }, create, join, leave, link, saveMe() { save(); applyMe(); } };
   })();
-  { const g = (id) => document.getElementById(id); g('onNew').onclick = () => ONLINE.create(); g('onJoin').onclick = () => ONLINE.join(g('onCode').value); g('onX').onclick = () => { ONLINE.saveMe(); g('onl').classList.remove('on'); };
+  { const g = (id) => document.getElementById(id); g('onNew').onclick = () => ONLINE.create(); g('onJoin').onclick = () => ONLINE.join(g('onCode').value); g('onX').onclick = () => { ONLINE.saveMe(); if (ONLINE.joining) ONLINE.leave(); g('onl').classList.remove('on'); };
     g('onlQ').onclick = () => { ONLINE.leave(); say('🌐 Has salido de la sala'); };
     g('onlInv').onclick = async () => { const l = ONLINE.link(), txt = '¡Ven a jugar conmigo a UNFIRE AUDIO! Sala: '; try { if (navigator.share) { await navigator.share({ title: 'UNFIRE AUDIO', text: txt, url: l }); return; } } catch (e) {} try { await navigator.clipboard.writeText(l); say('📨 Enlace copiado: ' + l + ' · pégalo a tus amigos'); } catch (e) { say('📨 Envía este enlace a tus amigos: ' + l); } }; }
   // ===== Reusable capsule inventory: pack, throw, deploy and collect without leaving roam =====
