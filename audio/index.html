@@ -96,6 +96,17 @@ p{margin:0}
 #heroPin:fullscreen,#heroPin:-webkit-full-screen{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;background:#000!important}
 #heroPin:fullscreen #malFrame,#heroPin:-webkit-full-screen #malFrame{inset:0!important;width:100%!important;height:100%!important;clip-path:none!important}
 html.immOn,body.immOn{overflow:hidden!important;overscroll-behavior:none}body.immOn header,body.immOn .hero-copy{visibility:hidden}body.immOn #stopAll,body.immOn #sndBtn{display:none!important}
+/* Preview remains on the same page. First deliberate tap enlarges the
+   already-loaded WebGL viewport while its physical lid begins opening. */
+.hero-pin.imm.unfire-case-preview{
+  transform:scale(.88);transform-origin:center center;border-radius:24px;
+}
+@media(max-width:700px){
+  .hero-pin.imm.unfire-case-preview{transform:scale(.92);border-radius:18px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-pin.imm.unfire-case-preview{transform:none;border-radius:0}
+}
 /* The physical 3D butterfly on the case is the only entry surface. */
 .hero-pin.scene-ready #malFrame{pointer-events:auto;touch-action:manipulation}
 /* When leaving the game, keep it parked behind an intentional Y2K re-entry
@@ -997,17 +1008,18 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
     immersive();
     try{fr.contentWindow.postMessage({unfire:1,entryStart:true,vis:true},location.origin);}catch(_){}
   };
-  let entryTransition=false;
+  let entryTransition=false,entryAnimation=null;
+  const reducedMotion=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
   const open=(D=1100)=>{
     if(entryTransition||(caseLocal&&entryStarted))return;
-    if($('#heroPin').classList.contains('scene-error')){loadingIntent=false;UNFIRE_SCENE.start(true);}
+    const pin=$('#heroPin');
+    if(pin.classList.contains('scene-error')){loadingIntent=false;UNFIRE_SCENE.start(true);}
     else UNFIRE_SCENE.start();
     entryTransition=true;
-    const pin=$('#heroPin'),before=pin.getBoundingClientRect();
-    // Browser fullscreen must be requested while the real user's click is active.
-    immersive();
-    fullscreenFromGesture();
-    const after=pin.getBoundingClientRect();
+    // Native fullscreen must be requested synchronously from a real tap.
+    // If WebGL is still loading, retain the preview instead of going fullscreen
+    // with a black frame; Safari on iPhone uses CSS viewport immersion.
+    if(UNFIRE_SCENE.isReady())fullscreenFromGesture();
     const begin=()=>{
       if(!entryTransition)return;
       if(!UNFIRE_SCENE.isReady()){
@@ -1017,23 +1029,33 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
         }
         return;
       }
-      entryTransition=false;parked=0;
-      // Lid and camera start during the fullscreen zoom, not after it.
-      enterGame();
-    };
-    if(pin.animate&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+      const before=pin.getBoundingClientRect();
+      immersive();
+      pin.classList.remove('unfire-case-preview');
+      const after=pin.getBoundingClientRect();
       const dx=before.left+before.width/2-after.left-after.width/2;
       const dy=before.top+before.height/2-after.top-after.height/2;
-      const sx=Math.min(.90,Math.max(.2,before.width/Math.max(1,after.width)));
-      const sy=Math.min(.84,Math.max(.2,before.height/Math.max(1,after.height)));
-      try{
-        const movement=pin.animate([
-          {transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`,borderRadius:'22px'},
-          {transform:'translate(0px,0px) scale(1)',borderRadius:'0px'}
-        ],{duration:Math.max(800,Math.min(1250,D)),easing:'cubic-bezier(.2,.76,.16,1)',fill:'both'});
-        movement.finished.then(()=>movement.cancel(),()=>{});
-      }catch(_){}
-    }
+      const sx=Math.max(.5,Math.min(1,before.width/Math.max(1,after.width)));
+      const sy=Math.max(.5,Math.min(1,before.height/Math.max(1,after.height)));
+      const duration=Math.max(900,Math.min(1150,D));
+      if(entryAnimation){try{entryAnimation.cancel()}catch(_){}entryAnimation=null;}
+      if(pin.animate&&!reducedMotion()){
+        try{
+          const movement=pin.animate([
+            {transform:'translate('+dx+'px,'+dy+'px) scale('+sx+','+sy+')',borderRadius:'24px'},
+            {transform:'translate(0px,0px) scale(1,1)',borderRadius:'0px'}
+          ],{duration,easing:'cubic-bezier(.22,.75,.2,1)',fill:'both'});
+          entryAnimation=movement;
+          movement.finished.then(()=>{
+            if(entryAnimation===movement){entryAnimation=null;movement.cancel();}
+          },()=>{});
+        }catch(_){}
+      }
+      entryTransition=false;parked=0;
+      // Send entryStart during the same visual transition, never after its end.
+      // The game-engine's real-time lid clock (#87) controls gradual opening.
+      enterGame();
+    };
     begin();
   };
   const resumeGame=()=>{
@@ -1061,6 +1083,34 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
   addEventListener('pageshow',preserveGameViewport);
   addEventListener('focus',preserveGameViewport);
   addEventListener('orientationchange',preserveGameViewport);
+  // The engine handles immediate canvas resizing. This short compositor-only
+  // easing is for phone/tablet rotation; never restart WebGL, game state or audio.
+  const viewport=()=>{
+    const w=Math.max(1,Math.round(window.visualViewport?.width||window.innerWidth||390));
+    const h=Math.max(1,Math.round(window.visualViewport?.height||window.innerHeight||844));
+    return {w,h,landscape:w>h};
+  };
+  let previousViewport=viewport(),orientationAnimation=null;
+  const easeOrientation=()=>{
+    const next=viewport(),changed=next.landscape!==previousViewport.landscape;
+    previousViewport=next;
+    if(!changed||webReturn||!caseLocal||!entryStarted||reducedMotion())return;
+    preserveGameViewport();
+    if(entryAnimation){try{entryAnimation.cancel()}catch(_){}entryAnimation=null;}
+    if(orientationAnimation){try{orientationAnimation.cancel()}catch(_){}orientationAnimation=null;}
+    if(typeof fr.animate!=='function')return;
+    try{
+      const a=fr.animate([
+        {transform:'scale(.94)',opacity:.96},
+        {transform:'scale(1)',opacity:1}
+      ],{duration:320,easing:'cubic-bezier(.22,.7,.2,1)',fill:'none'});
+      orientationAnimation=a;
+      a.finished.then(()=>{if(orientationAnimation===a)orientationAnimation=null;},()=>{});
+    }catch(_){}
+  };
+  addEventListener('resize',easeOrientation,{passive:true});
+  if(window.visualViewport)window.visualViewport.addEventListener('resize',easeOrientation,{passive:true});
+
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)preserveGameViewport()});
   restoreFullscreen.addEventListener('click',()=>{
     immersive();fullscreenFromGesture();preserveGameViewport();
@@ -1070,6 +1120,9 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
     // Native browser fullscreen requires user activation, so boot in CSS mode.
     if(document.documentElement.classList.contains('no-webgl'))return;
     immersive();
+    // On the first case tap, scale the actual viewport up instead of opening a
+    // tab or replacing the 3D scene with a second splash-screen.
+    if(!entryStarted)$('#heroPin').classList.add('unfire-case-preview');
     UNFIRE_SCENE.start();
     preserveGameViewport();
   };
