@@ -49,7 +49,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        roaming:game.__UNFIRE_CASE_QA.roam,
        caseVisible:game.__UNFIRE_CASE_QA.caseVisible,
        caseCamera:!game.__UNFIRE_CASE_QA.roam&&!game.__UNFIRE_CASE_QA.inspecting,
-       characterButtonExists:!!game.document.getElementById('unfireCharacterEntry'),
+       walkButtonExists:!!game.document.getElementById('roamB'),
        oldDoubleHudMissing:!game.document.getElementById('caseModeHud'),
        exteriorCircleMissing:!game.__ringB,
        lid:game.__UNFIRE_CASE_QA.lid,
@@ -57,7 +57,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        gameSource:frame.getAttribute('src')
      };
    });
-   assert(first.immersive&&first.fullViewport&&first.fullscreenAllowed&&!first.roaming&&first.caseVisible&&first.caseCamera&&first.characterButtonExists&&first.oldDoubleHudMissing&&first.exteriorCircleMissing&&first.lid>0.94&&first.exit,
+   assert(first.immersive&&first.fullViewport&&first.fullscreenAllowed&&!first.roaming&&first.caseVisible&&first.caseCamera&&first.walkButtonExists&&first.oldDoubleHudMissing&&first.exteriorCircleMissing&&first.lid>0.94&&first.exit,
      'Single tap did not enter immersive playable world '+JSON.stringify(first));
    for(const [width,height] of [[390,844],[844,390]]){
      await page.setViewportSize({width,height});
@@ -110,7 +110,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    // Walking is a separate voluntary action. The player can freely enter and
    // return to the case without restarting the mission or collapsing the lid.
    await page.waitForFunction(()=>{const g=document.getElementById('malFrame')?.contentWindow;
-     return !!g?.document.getElementById('unfireCharacterEntry')&&!g.document.getElementById('unfireCharacterEntry').hidden;
+     return g?.document.getElementById('roamB')?.style.display==='block'&&!g.__UNFIRE_CASE_QA.roam;
    },null,{timeout:120000,polling:250});
    const choice=await page.evaluate(()=>{
      const game=document.getElementById('malFrame').contentWindow;
@@ -118,11 +118,11 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
      if(before.roam||before.lid<.94)throw Error('Opened case jumped to avatar');
      game.document.body.classList.remove('storyOn');
      game.document.getElementById('story').classList.remove('on');
-     const button=game.document.getElementById('unfireCharacterEntry');
-     if(button.hidden) throw Error('Contextual player button did not appear after lid opened');
+     const button=game.document.getElementById('roamB');
+     if(button.style.display==='none') throw Error('PASEAR missing after lid opened');
      button.click();
      const exploring=game.__UNFIRE_CASE_QA.roam;
-     const hiddenOnWalking=button.hidden;
+     const hiddenOnWalking=!button.textContent.includes('PASEAR');
      game.document.getElementById('roamB').click();
      return {exploring,hiddenOnWalking,returned:!game.__UNFIRE_CASE_QA.roam,
        lid:game.__UNFIRE_CASE_QA.lid,caseVisible:game.__UNFIRE_CASE_QA.caseVisible};

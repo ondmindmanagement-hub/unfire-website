@@ -868,51 +868,7 @@
     updateCarryUI();
   };
   const showRobotView=()=>{CASE_VIEW.on=false;ROAMS.cp=null;updateCarryUI();};
-  // Contextual discoverability, without the old bottom HUD: one button only
-  // while the case camera is visible. Walking remains a voluntary choice.
-  const characterEntryButton=document.createElement('button');
-  characterEntryButton.id='unfireCharacterEntry';
-  characterEntryButton.type='button';
-  characterEntryButton.textContent='🤖 DESDE EL PERSONAJE';
-  characterEntryButton.setAttribute('aria-label','Explorar el mundo desde el personaje');
-  characterEntryButton.hidden=true;
-  document.body.appendChild(characterEntryButton);
-  let characterIntroShown=false;
-  try { characterIntroShown=localStorage.getItem('unfire_character_entry_hint_v1')==='1'; } catch(e) {}
-  let characterHintTimer=0;
-  characterEntryButton.addEventListener('pointerdown',e=>e.stopPropagation());
-  characterEntryButton.addEventListener('click',e=>{
-    e.stopPropagation();
-    if(!characterEntryButton.hidden){
-      if(!ROAMS.on)enterRoam();
-      else if(CASE_VIEW.on)showRobotView();
-      characterEntryButton.hidden=true;
-      characterEntryButton.classList.remove('unfire-intro-blink');
-    }
-  });
-  function updateCharacterEntry(){
-    // No button during the opening animation or over the avatar.
-    const cameraActive=(!ROAMS.on||CASE_VIEW.on)&&!carryingCase&&caseG.visible&&!CINE.on;
-    const ready=cameraActive&&lidOpen>=0.998&&pTarget>.99;
-    if(characterEntryButton.hidden===ready)characterEntryButton.hidden=!ready;
-    if(ready&&!characterIntroShown){
-      characterIntroShown=true;
-      try {localStorage.setItem('unfire_character_entry_hint_v1','1');} catch(e) {}
-      characterEntryButton.classList.add('unfire-intro-blink');
-      clearTimeout(characterHintTimer);
-      // The animation begins only *after* the procedural lid has fully opened,
-      // and ends exactly 2000 ms later. Afterwards the button stays visible.
-      characterHintTimer=setTimeout(()=>{
-        characterEntryButton.classList.remove('unfire-intro-blink');
-        characterHintTimer=0;
-      },2000);
-    }
-    if(!ready&&characterEntryButton.classList.contains('unfire-intro-blink')){
-      clearTimeout(characterHintTimer);
-      characterEntryButton.classList.remove('unfire-intro-blink');
-      characterHintTimer=0;
-    }
-  }
+  // No duplicate 2D character action: use the original PASEAR button.
   const carryButton = document.createElement('button');
   carryButton.id = 'unfireCarryCase';
   carryButton.type = 'button';
@@ -1208,7 +1164,39 @@
   function exitRoam() { if (REC.on) REC.set(false); if (!ROAMS.on) return;
     CASE_VIEW.on=false;CAPS.cancel();carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
  ROAMS.on = false; document.body.classList.remove('unfire-roaming'); ROAMS.cp = null; ROAMS.mini = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
-  roamB.onclick = (e) => { e.stopPropagation(); ROAMS.on ? exitRoam() : enterRoam(); };
+  // First visit: the EXISTING PASEAR control blinks for exactly two seconds
+  // once the physical lid has completely opened, then stays visible.
+  let firstCaseWalkHint=false;
+  try{firstCaseWalkHint=localStorage.getItem('unfire_pasear_intro_v1')==='1';}catch(e){}
+  let caseWalkHintTimer=0;
+  function updateRoamButtonHint(){
+    const ready=!ROAMS.on&&!CASE_VIEW.on&&caseG.visible&&!carryingCase&&!CINE.on
+      &&pTarget>.99&&lidOpen>=.998;
+    const show=ready||(ROAMS.on&&!CASE_VIEW.on&&lidOpen>.95&&!CINE.on);
+    if(roamB.style.display!==(show?'block':'none'))roamB.style.display=show?'block':'none';
+    if(ready&&!firstCaseWalkHint){
+      firstCaseWalkHint=true;
+      try{localStorage.setItem('unfire_pasear_intro_v1','1');}catch(e){}
+      roamB.classList.add('unfire-intro-blink');
+      clearTimeout(caseWalkHintTimer);
+      caseWalkHintTimer=setTimeout(()=>{
+        roamB.classList.remove('unfire-intro-blink');caseWalkHintTimer=0;
+      },2000);
+    }
+    if(!ready&&roamB.classList.contains('unfire-intro-blink')){
+      clearTimeout(caseWalkHintTimer);
+      roamB.classList.remove('unfire-intro-blink');
+      caseWalkHintTimer=0;
+    }
+  }
+  roamB.addEventListener('pointerdown',e=>e.stopPropagation());
+  roamB.onclick=(e)=>{
+    e.stopPropagation();
+    roamB.classList.remove('unfire-intro-blink');
+    if(ROAMS.on)exitRoam();
+    else if(pTarget>.99&&lidOpen>=.998)enterRoam();
+    updateRoamButtonHint();
+  };
   window.__roamAPI = { ROAMS, enterRoam, exitRoam, roamMove }; window.__OUT_OPEN = true;
   { const spB = document.createElement('button'); const SP = [['🐢 LENTO', 0.45], ['🚶 NORMAL', 1], ['🏃 RÁPIDO', 1.8]]; let si = 1; window.__walkK = 1; spB.textContent = SP[si][0]; spB.style.cssText = camB.style.cssText.replace('bottom:calc(9vh + 106px)', 'bottom:calc(9vh + 152px)'); document.body.appendChild(spB); spB.addEventListener('pointerdown', (e) => e.stopPropagation()); spB.onclick = () => { si = (si + 1) % 3; window.__walkK = SP[si][1]; spB.textContent = SP[si][0]; hap(0.2); say('Velocidad: ' + SP[si][0] + ' · también Shift = correr, Alt = despacio'); }; spB.style.setProperty('display', 'none', 'important'); }
   // ===== RADIO DE PARED: tus canciones por los altavoces de la casa (sonido espacial). Suena sola, se apaga/enciende/cambia; tus archivos en los tocadiscos =====
@@ -2154,7 +2142,11 @@
     if(ROAMS.on&&!CASE_VIEW.on&&!carryingCase&&caseG.visible&&pTarget>0.5){
       ndc.set((e.clientX/innerWidth)*2-1,-(e.clientY/innerHeight)*2+1);
       ray.setFromCamera(ndc,cam);
-      if(ray.intersectObject(caseG,true).length){showCaseView();/* Continue handling the same click: gates and controls must still work first try. */}
+      if(ray.intersectObject(caseG,true).length){
+        // Identical to the established 'VOLVER AL MALETÍN' camera.
+        exitRoam();
+        return;
+      }
     }
     { const pc = lidOpen > 0.5 ? pickCtl(e) : null; if (pc && !pc.c) { SEL = { type: 'cap', g: pc.g }; activate(pc.g); return; } }
     if (lidOpen < 0.5) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const hitD = ray.intersectObject(dragon, true).length; if (hitD || ray.intersectObject(caseG, true).length) {
@@ -2301,7 +2293,7 @@
         pNow+=(pt-pNow)*(1-Math.exp(-5.2*Math.min(0.12,actualFrameTime)));
         lidMotion.to=pNow;lidMotion.from=pNow;lidMotion.elapsed=0;
       }
-    } CASE_SOUND.sync(pNow,pTarget,lidControlledByPlayer); setLid(pNow); updateCharacterEntry(); oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
+    } CASE_SOUND.sync(pNow,pTarget,lidControlledByPlayer); setLid(pNow); updateRoamButtonHint(); oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
     const busy = (k) => open.some((g) => g.it.comp === k && g.m > 0.04) || items.some((it) => it.comp === k && ((it.kind === 'mut' && it.T > 0.04) || (it.g && (it.kk || 0) > 0.04))) || (k === 'hw' && HW && ((HW.T || 0) > 0.05 || (HW.u || 0) > 0.03));
     CK.forEach((k) => { if (compG[k].userData.open && lidOpen > 0.95) return; open.forEach((g) => { if (g.it.comp === k && !g.closing) { g.it.was = 1; g.closing = true; g.pin = false; g.manual = 0; } }); items.forEach((it) => { if (it.comp !== k) return; if (it.kind === 'mut' && it.tgt) { it.was = it.tgt; it.tgt = 0; } if (it.g && it.on) { it.was = 1; it.on = 0; } }); if (k === 'hw' && HW) HW.tg = 0; if (SEL && ((SEL.type === 'cap' && SEL.g.it.comp === k) || (SEL.it && SEL.it.comp === k) || (SEL.type === 'hw' && k === 'hw'))) SEL = null; });
     CK.forEach((k) => { if (!(compG[k].userData.open && compG[k].userData.t > 0.97)) return; items.forEach((it, i) => { if (it.comp !== k || !it.was) return; const w = it.was; it.was = 0; setTimeout(() => { if (it.kind === 'cap') openGear(it, true); else if (it.kind === 'mut') it.tgt = w; else if (it.g) it.on = 1; }, 200 + (i % 8) * 180); }); });
@@ -2390,7 +2382,7 @@
       // 1ª persona de verdad: la cámara va en los ojos del 27; ves tus brazos, tu cuerpo y tus alas al mirar abajo
       if (FP) { AV.w.updateMatrixWorld(true); const hp = hd ? hd.getWorldPosition(V(0, 0, 0)) : V(ROAMS.p.x, -8.9 + 9.6 + (ROAMS.h || 0), ROAMS.p.z); const fx2 = Math.sin(ROAMS.yaw), fz2 = -Math.cos(ROAMS.yaw); const eye = V(hp.x + fx2 * 1.25, hp.y + 0.25, hp.z + fz2 * 1.25); if (!ROAMS.ep || ROAMS.ep.distanceTo(eye) > 6) ROAMS.ep = eye.clone(); ROAMS.ep.lerp(eye, Math.min(1, dt * 22)); cam.position.copy(ROAMS.ep); const pc = Math.cos(ROAMS.pitch); cam.lookAt(cam.position.x + fx2 * pc, cam.position.y + Math.sin(ROAMS.pitch), cam.position.z + fz2 * pc); cam.near = window.ATM_OUT ? 0.12 : 0.07; ROAMS.cp = cam.position.clone(); }
       if (REC.on) REC.tick(dt); }
-    roamB.style.display = ROAMS.on && !CASE_VIEW.on && lidOpen > 0.95 && !CINE.on ? 'block' : 'none'; camB.style.display = ROAMS.on ? 'block' : 'none'; recB.style.display = ROAMS.on && !ROAMS.mini ? 'block' : 'none'; if (window.__onlB) window.__onlB.style.display = ROAMS.on && !ROAMS.mini && !(window.ONLINE_ON && window.ONLINE_ON()) ? 'block' : 'none'; if (window.__surfB) { const SB = window.__surfB; SB.k = (SB.k || 0) + 1; if (SB.k % 8 === 0) { let nw = false; if (ROAMS.on && window.ATM_OUT && !ROAMS.mini && window.__LAND && (ROAMS.h || 0) < (ROAMS.fl || 0) + 18) { const px = ROAMS.p.x, pz = ROAMS.p.z; nw = !window.__LAND(px, pz) || [0, 1, 2, 3, 4, 5].some((i) => !window.__LAND(px + Math.cos(i * 1.047) * 9, pz + Math.sin(i * 1.047) * 9)); } if (nw && !SB.shown) { SB.style.animation = 'none'; void SB.offsetWidth; SB.style.animation = 'surfPop .45s cubic-bezier(.3,1.6,.5,1)'; if (!SB.told) { SB.told = 1; say('🏄 ¡Estás en el agua! Pulsa TABLA (o B) para surfear'); } } SB.shown = nw; SB.style.display = nw ? 'block' : 'none'; } } MIX.tick(); ATM.tick(dt, t); $('tip').style.visibility = ROAMS.on ? 'hidden' : ''; cam.updateProjectionMatrix();
+    camB.style.display = ROAMS.on ? 'block' : 'none'; recB.style.display = ROAMS.on && !ROAMS.mini ? 'block' : 'none'; if (window.__onlB) window.__onlB.style.display = ROAMS.on && !ROAMS.mini && !(window.ONLINE_ON && window.ONLINE_ON()) ? 'block' : 'none'; if (window.__surfB) { const SB = window.__surfB; SB.k = (SB.k || 0) + 1; if (SB.k % 8 === 0) { let nw = false; if (ROAMS.on && window.ATM_OUT && !ROAMS.mini && window.__LAND && (ROAMS.h || 0) < (ROAMS.fl || 0) + 18) { const px = ROAMS.p.x, pz = ROAMS.p.z; nw = !window.__LAND(px, pz) || [0, 1, 2, 3, 4, 5].some((i) => !window.__LAND(px + Math.cos(i * 1.047) * 9, pz + Math.sin(i * 1.047) * 9)); } if (nw && !SB.shown) { SB.style.animation = 'none'; void SB.offsetWidth; SB.style.animation = 'surfPop .45s cubic-bezier(.3,1.6,.5,1)'; if (!SB.told) { SB.told = 1; say('🏄 ¡Estás en el agua! Pulsa TABLA (o B) para surfear'); } } SB.shown = nw; SB.style.display = nw ? 'block' : 'none'; } } MIX.tick(); ATM.tick(dt, t); $('tip').style.visibility = ROAMS.on ? 'hidden' : ''; cam.updateProjectionMatrix();
     // colisiones: tu robot no atraviesa muebles ni máquinas (cajas de colisión de lo que está en el suelo)
     if (ROAMS.on && !ROAMS.mini && !window.ATM_OUT) { try { if (!window.__OBST && window.__PROPS) { window.__OBST = window.__buildObst(); }
       const p = ROAMS.p, ft = -8.9 + (ROAMS.h || 0); for (const B of window.__OBST || []) { if (p.x > B.x0 && p.x < B.x1 && p.z > B.z0 && p.z < B.z1 && ft < B.y1 - 0.4) { const dl = p.x - B.x0, dr = B.x1 - p.x, db = p.z - B.z0, df = B.z1 - p.z, mn = Math.min(dl, dr, db, df); if (mn === dl) p.x = B.x0; else if (mn === dr) p.x = B.x1; else if (mn === db) p.z = B.z0; else p.z = B.z1; } }
