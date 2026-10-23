@@ -12,10 +12,28 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    const errors=[];
    page.on('pageerror',e=>errors.push(e.message));
    await page.goto(process.env.UNFIRE_ENTRY_URL||'http://127.0.0.1:8765/audio/',{waitUntil:'domcontentloaded',timeout:45000});
-   await page.locator('#openBtn').click({timeout:12000});
+   assert.equal(await page.locator('#openBtn').count(),0,'2D butterfly button must not exist on website');
+   await page.waitForFunction(()=>!!document.getElementById('malFrame')?.contentWindow?.__mal?.S,
+     null,{timeout:120000,polling:250});
+   // Avoid expensive layout-stability waits in GitHub CPU-only WebGL;
+   // exercise the actual canvas pointerdown/up handler and 3D raycast.
+   const tapped=await page.evaluate(()=>{
+     const w=document.getElementById('malFrame').contentWindow;
+     const canvas=w.document.getElementById('cv');if(!canvas)return false;
+     const rect=canvas.getBoundingClientRect();
+     const x=rect.left+rect.width/2,y=rect.top+rect.height/2;
+     const p={bubbles:true,cancelable:true,pointerId:19,pointerType:'mouse',button:0,clientX:x,clientY:y};
+     canvas.dispatchEvent(new w.PointerEvent('pointerdown',{...p,buttons:1}));
+     w.dispatchEvent(new w.PointerEvent('pointerup',{...p,buttons:0}));
+     return true;
+   });
+   assert(tapped,'3D maletín canvas was not initialized');
+   await page.waitForFunction(()=>document.body.classList.contains('immOn'),null,{timeout:120000,polling:200});
    const instant=await page.evaluate(()=>({visible:document.body.classList.contains('immOn'),
-     fullWidth:document.getElementById('malFrame').getBoundingClientRect().width>=innerWidth-1}));
-   assert(instant.visible&&instant.fullWidth,'Fullscreen viewport must activate immediately on ABRIR, not after the lid opens');
+     fullWidth:document.getElementById('malFrame').getBoundingClientRect().width>=innerWidth-1,
+     noButtons:!document.querySelector('#openBtn')&&!document.getElementById('malFrame').contentDocument.querySelector('#directOpen')}));
+   assert(instant.visible&&instant.fullWidth&&instant.noButtons,
+     '3D case must open in fullscreen with no 2D overlay '+JSON.stringify(instant));
    await page.waitForFunction(()=>{
      const g=document.getElementById('malFrame')?.contentWindow;
      return !!g?.__UNFIRE_CASE_QA && g.__UNFIRE_CASE_QA.lid>0.94;
@@ -81,6 +99,22 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    });
    assert(choice.exploring&&choice.returned&&choice.caseVisible&&choice.lid>.94,
      'Case-to-avatar must be optional and reversible '+JSON.stringify(choice));
+   // MODO CINE: spectator camera must pass through the entire house, walls,
+   // ceilings, windows and furnishings without constraining the player robot.
+   const cinematic=await page.evaluate(()=>{
+     const g=document.getElementById('malFrame').contentWindow;
+     g.__roamAPI.enterRoam();
+     const rec=g.__REC;rec.set(true);
+     if(!rec.on)throw Error('Cinematic spectator mode did not start');
+     rec.p.set(76,24,93);rec.v.set(35,12,35);
+     const player=g.__roamAPI.ROAMS.p.clone();
+     rec.tick(.8);
+     const result={camera:[rec.p.x,rec.p.y,rec.p.z],playerUnchanged:player.distanceTo(g.__roamAPI.ROAMS.p)<.01};
+     rec.set(false);g.__roamAPI.exitRoam();
+     return result;
+   });
+   assert(cinematic.camera[0]>78&&cinematic.camera[1]>24&&cinematic.camera[2]>95&&cinematic.playerUnchanged,
+     'Cinematic spectator must traverse physical and architectural bounds without moving robot '+JSON.stringify(cinematic));
    // The first game has already been validated; release its expensive software
    // WebGL context before starting a second game in a CI worker.
    await page.close();
@@ -94,16 +128,19 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
    // input for tens of seconds. The website first-tap test above has already
    // tested click-before-boot, so test the direct URL after its engine is ready.
    await direct.waitForFunction(()=>!!window.__mal?.S,null,{timeout:120000,polling:250});
+   assert.equal(await direct.locator('#directOpen').count(),0,'Direct link may not show 2D opener');
    await direct.evaluate(()=>{
-     const button=document.getElementById('directOpen');
-     if(!button||button.hidden)throw Error('Direct maletin opener missing');
-     button.click();
+     const c=document.getElementById('cv');if(!c)throw Error('No direct 3D canvas');
+     const r=c.getBoundingClientRect();
+     const p={bubbles:true,cancelable:true,pointerId:19,pointerType:'mouse',button:0,clientX:r.left+r.width/2,clientY:r.top+r.height/2};
+     c.dispatchEvent(new PointerEvent('pointerdown',{...p,buttons:1}));
+     window.dispatchEvent(new PointerEvent('pointerup',{...p,buttons:0}));
    });
    await direct.waitForFunction(()=>Boolean(window.__UNFIRE_CASE_QA&&window.__UNFIRE_CASE_QA.lid>.94),null,{timeout:120000,polling:300});
    const directCheck=await direct.evaluate(()=>({
      viewportWidth:innerWidth,canvasWidth:document.getElementById('cv').getBoundingClientRect().width,
      cameraAspect:window.__mal.S.camera.aspect,
-     directOpenHidden:document.getElementById('directOpen').hidden,
+     directOpenHidden:!document.getElementById('directOpen'),
      roaming:window.__UNFIRE_CASE_QA.roam,
      caseVisible:window.__UNFIRE_CASE_QA.caseVisible,
      panoramaFov:window.__mal.S.camera.fov,
