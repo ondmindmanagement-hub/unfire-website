@@ -2,6 +2,8 @@
 const assert = require('node:assert/strict');
 const { chromium } = require('playwright');
 const base = process.env.UNFIRE_MOBILE_HEADER_URL || 'http://127.0.0.1:8769/';
+const siteUrl = new URL(base);
+siteUrl.searchParams.set('site','1'); // Test the corporate page, not the new game-first entry.
 const viewports = [
   [280,653],[320,568],[375,812],[390,844],[430,932],
   [568,320],[768,1024],[844,390],[920,650],[1024,768]
@@ -16,7 +18,7 @@ function separated(a,b,slack=1) {
     for(const [width,height] of viewports){
       const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:2,isMobile:width<=920,hasTouch:width<=920});
       try{
-        await page.goto(base,{waitUntil:'domcontentloaded',timeout:25000});
+        await page.goto(siteUrl.href,{waitUntil:'domcontentloaded',timeout:25000});
         await page.waitForFunction(()=>document.documentElement.classList.contains('unfire-nav-ready'),null,{timeout:10000});
         await page.waitForSelector('#ask-unfire-host',{timeout:12000});
         const closed=await page.evaluate(()=>{
