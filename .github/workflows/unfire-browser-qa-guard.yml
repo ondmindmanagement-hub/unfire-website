@@ -5,6 +5,9 @@ on:
     paths:
       - 'scripts/unfire-browser-qa-guard.cjs'
       - 'tests/unfire-browser-qa-guard.test.cjs'
+      - 'scripts/unfire-frame-metrics.cjs'
+      - 'tests/unfire-frame-metrics.test.cjs'
+      - 'tests/unfire-frame-profile-browser.cjs'
       - '.github/workflows/unfire-browser-qa-guard.yml'
   workflow_dispatch:
 
@@ -17,4 +20,4 @@ jobs:
       - name: Validate own-process cleanup and timeout behavior
         run: |
           node --check scripts/unfire-browser-qa-guard.cjs
-          node --test tests/unfire-browser-qa-guard.test.cjs
+          node --test tests/unfire-browser-qa-guard.test.cjs tests/unfire-frame-metrics.test.cjs
