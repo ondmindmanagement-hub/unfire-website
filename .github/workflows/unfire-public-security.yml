@@ -1,0 +1,24 @@
+name: Unfire public security baseline
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: public-security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  static-public-audit:
+    name: Scan public assets without secrets in logs
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Scan public tracked files
+        run: python3 scripts/check-public-security.py
+      - name: Review marketing/trademark declarations
+        run: python3 scripts/check-brand-metadata.py

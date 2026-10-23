@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=IM+Fell+English+SC&family=Michroma&family=Pirata+One&family=Righteous&family=Cormorant+SC:wght@700&family=Playfair+Display+SC:ital,wght@1,900&family=Black+Ops+One&family=Comfortaa:wght@700&family=Audiowide&family=Poiret+One&family=Orbitron:wght@800&family=Marcellus+SC&family=Bodoni+Moda:ital,wght@1,700&family=Bungee&family=Fraunces:ital,wght@1,700&family=Silkscreen:wght@700&family=VT323&family=New+Rocker&family=Special+Elite&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=IM+Fell+English+SC&family=Michroma&family=Pirata+One&family=Righteous&family=Cormorant+SC:wght@700&family=Playfair+Display+SC:ital,wght@1,900&family=Black+Ops+One&family=Comfortaa:wght@700&family=Audiowide&family=Poiret+One&family=Orbitron:wght@800&family=Marcellus+SC&family=Bodoni+Moda:ital,wght@1,700&family=Bungee&family=Fraunces:ital,wght@1,700&family=Silkscreen:wght@700&family=VT323&family=New+Rocker&family=Special+Elite&display=swap"></noscript>
 <link rel="preload" as="image" href="img/maletin-real-first-frame-desktop.webp" media="(min-width:601px)" fetchpriority="high">
-<link rel="preload" as="image" href="img/maletin-real-first-frame-mobile.webp" media="(max-width:600px)" fetchpriority="high">
+<link rel="preload" as="image" href="img/maletin-real-first-frame-mobile.webp?v=20261023-realworld2" media="(max-width:600px)" fetchpriority="high">
 <style>
 /* UNFIRE AUDIO — "El equipaje".
    Cada categoría vive en su propio contenedor: maletín de vuelo (inicio), flight case (instrumentos),
@@ -137,13 +137,27 @@ html.immOn,body.immOn{overflow:hidden!important;overscroll-behavior:none}body.im
 #unfireMobileTapHint{display:none}
 @media (max-width:600px) and (orientation:portrait){
   .hero-pin:not(.imm){height:calc(100svh - 62px)}
-  #unfireCaseFirstFrame img{transform:scale(1.08) translateY(-13%);transform-origin:center}
+  /* True portrait screenshot of the same live 3D desktop scene: no
+     framed rectangle, no geometric image stretching, no artificial zoom. */
+  #unfireCaseFirstFrame img{object-fit:cover;object-position:50% 50%;transform:none;transform-origin:center}
   #unfireMobileTapHint{display:block;position:absolute;left:50%;bottom:max(18svh,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:4;
     width:max-content;max-width:calc(100vw - 26px);box-sizing:border-box;padding:10px 14px;
     border-radius:999px;background:rgba(8,15,28,.84);border:1px solid rgba(175,201,235,.3);
     color:#f4f7fe;font:600 12px/1.3 "Instrument Sans",system-ui,sans-serif;
     text-align:center;pointer-events:none;box-shadow:0 8px 22px rgba(0,0,0,.32)}
   .hero-pin.scene-ready #unfireMobileTapHint,.hero-pin.web-return #unfireMobileTapHint,.hero-pin.imm #unfireMobileTapHint{display:none}
+}
+/* One gentle GPU-composited entrance for the genuine first frame on portrait phones.
+   It starts visible at full opacity, lands at the SAME final framing as the
+   stable static mobile rule above, and never animates the interactive iframe. */
+@keyframes unfireCaseArrival{
+  from{transform:scale(1.015)}
+  to{transform:none}
+}
+@media (max-width:600px) and (orientation:portrait) and (prefers-reduced-motion:no-preference){
+  .hero-pin:not(.scene-ready):not(.imm) #unfireCaseFirstFrame img{
+    animation:unfireCaseArrival .76s cubic-bezier(.2,.7,.24,1) both;
+  }
 }
 @media(prefers-reduced-motion:reduce){#unfireCaseFirstFrame,.hero-pin.scene-ready #unfireCaseFirstFrame{transition:none}}
 /* First interactive impression is the live 3D case, never a product advertisement. */
@@ -470,11 +484,11 @@ footer a{color:var(--soft)}
   <div class="hero-pin" id="heroPin">
     <!-- Actual gameplay captured from the live WebGL case; available before WebGL boots. -->
     <picture id="unfireCaseFirstFrame" role="button" tabindex="0" aria-label="Entrar al mundo Unfire Audio desde el maletín real">
-      <source media="(max-width:600px)" srcset="img/maletin-real-first-frame-mobile.webp">
+      <source media="(max-width:600px)" srcset="img/maletin-real-first-frame-mobile.webp?v=20261023-realworld2">
       <img src="img/maletin-real-first-frame-desktop.webp" width="1100" height="635" alt="Maletín 3D auténtico de Unfire Audio, cerrado sobre la mesa, con su mariposa" fetchpriority="high" loading="eager" decoding="sync">
     </picture>
     <span id="unfireMobileTapHint" aria-hidden="true">Pulsa el botón central para abrir</span>
-    <iframe id="malFrame" data-src="maletin/index.html?v=20261023crossdevicev1" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone; fullscreen" allowfullscreen></iframe>
+    <iframe id="malFrame" data-src="maletin/index.html?v=20261023casecuev1" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone; fullscreen" allowfullscreen></iframe>
     <a id="noWebglLink" href="#instrumentos">Explorar los instrumentos ↓</a>
     <div class="hero-copy" id="heroCopy">
       <img src="img/logo-unfire-256.webp" alt="" width="64" height="64" style="width:64px;height:64px;margin:0 auto 12px;filter:drop-shadow(0 0 18px rgba(61,139,255,.6))">
@@ -892,7 +906,7 @@ const UNFIRE_SCENE=(()=>{
   if(window.visualViewport)visualViewport.addEventListener('resize',recalibrate,{passive:true});
   const help=document.createElement('div');help.id='unfireGameHelp';
   help.style.cssText='display:none;position:absolute;z-index:30;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(91vw,330px);padding:13px;border:1px solid #83cfff;border-radius:16px;background:#081528f5;color:#eef7ff;text-align:center;font:600 12px/1.5 system-ui;box-shadow:0 12px 30px #000a';
-  help.innerHTML='Si el juego no aparece, prueba el modo compatible.<div style="display:flex;justify-content:center;gap:8px;margin-top:9px"><button id="unfireGameRetry" type="button" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;background:#174b80;color:white">REINTENTAR</button><a href="maletin/index.html?v=20261023crossdevicev1&quality=compact" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;color:white;text-decoration:none">JUGAR DIRECTO</a></div>';
+  help.innerHTML='Si el juego no aparece, prueba el modo compatible.<div style="display:flex;justify-content:center;gap:8px;margin-top:9px"><button id="unfireGameRetry" type="button" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;background:#174b80;color:white">REINTENTAR</button><a href="maletin/index.html?v=20261023casecuev1&quality=compact" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;color:white;text-decoration:none">JUGAR DIRECTO</a></div>';
   pin.appendChild(help);
   help.querySelector('#unfireGameRetry').onclick=()=>{help.style.display='none';start(true);};
   const fail=()=>{pin.classList.add('scene-error');pin.classList.remove('scene-ready');help.style.display='block';

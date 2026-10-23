@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023crossdevicev1" as="script"></head><body><title>UNFIRE Maletín</title>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023casecuev1" as="script"></head><body><title>UNFIRE Maletín</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
@@ -348,6 +348,7 @@ body.unfire-roaming #cv{touch-action:none}
   body #ctlDock,body:not(.unfire-roaming) #ctlDock{max-width:85px!important}
 }
 </style>
+<link rel="stylesheet" href="mobile-hud-guard.css?v=20261023hudlayout1">
 <canvas id="cv" aria-label="Maletín UNFIRE en 3D. Acerca la vista con la rueda para entrar"></canvas>
 <div class="hud" id="hud"><button id="zin" aria-label="Acercar">+</button><button id="zout" aria-label="Alejar">−</button><button id="home" aria-label="Volver al maletín">⟲</button><div class="crumb" id="crumb">MALETÍN</div></div>
 <div class="tip" id="tip"></div>
@@ -4834,5 +4835,6 @@ window.STORY_INIT = function (H) {
 
 </script>
 <script src="hyperwave-harmony.js?v=20261023harmony1"></script>
-<script src="game-engine-v50.js?v=20261023crossdevicev1"></script>
+<script src="game-engine-v50.js?v=20261023casecuev1"></script>
+<script src="mobile-hud-guard.js?v=20261023hudlayout1" defer></script>
 </body></html>
