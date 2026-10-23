@@ -36,4 +36,7 @@ jobs:
         run: node tests/maletin-mobile-rotation.cjs
 
       - name: Verify first-tap immersive entry and Nimbo HUD layout
-        run: node tests/maletin-entry-fullscreen.cjs
+        run: |
+          python3 -m http.server 8767 --bind 127.0.0.1 >/tmp/unfire-entry-http.log 2>&1 &
+          sleep 2
+          UNFIRE_ENTRY_URL=http://127.0.0.1:8767/audio/ node tests/maletin-entry-fullscreen.cjs
