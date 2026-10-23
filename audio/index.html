@@ -1009,7 +1009,10 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
       // Lid and camera start during the fullscreen zoom, not after it.
       enterGame();
     };
-    if(pin.animate&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+    // Mobile Safari: do not animate a transformed fullscreen WebGL iframe layer.
+    // The real 3D lid motion and captured first-frame fade remain unchanged.
+    const touchGPU=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    if(!touchGPU&&pin.animate&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
       const dx=before.left+before.width/2-after.left-after.width/2;
       const dy=before.top+before.height/2-after.top-after.height/2;
       const sx=Math.min(.90,Math.max(.2,before.width/Math.max(1,after.width)));
