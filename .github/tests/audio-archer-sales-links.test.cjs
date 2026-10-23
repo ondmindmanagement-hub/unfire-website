@@ -31,3 +31,8 @@ test('in-game ARCHER points to its own offer, never charges Todo UNFIRE bundle',
  assert.match(game,/game-engine-v50\.js\?v=20261023sales1/);
  assert.match(html,/maletin\/index\.html\?v=20261023sales1/);
 });
+
+test('demo purchase directs an iPhone/iPad to ARCHER for iOS rather than Mac-only edition',()=>{
+  assert.match(html,/const archerStoreUrl=\(\)=>\/iPad\|iPhone\|iPod\//);
+  assert.match(html,/window\.open\(archerStoreUrl\(\),'_blank','noopener'\)/);
+});

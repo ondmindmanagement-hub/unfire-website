@@ -1093,7 +1093,7 @@ function knobs(box,names,vals,cb){box.innerHTML='';names.forEach((n,i)=>{const i
 const sheet=$('#sheet');let stopScope=null,playing=false,tlT=null,sheetItem=null;
 function openFx(f,isArcher){sheet.style.setProperty('--led',f[4]);$('#sheetImg').src=isArcher?'img/archer.webp':`img/fx-${f[0]}.webp`;$('#sheetImg').alt='Interfaz de '+f[1];
   $('#sheetType').textContent=isArcher?'UNFAIR · Clipper':'UNFIRE · '+f[2];const t=$('#sheetTitle');t.textContent=f[1];if(isArcher)t.style.font='800 34px var(--display)';else face(t,f,38);
-  $('#sheetMotif').textContent=isArcher?'Gain, Threshold y Atmosphere. La versión completa está en el Mac App Store.':'Tema: '+f[3]+'. Collage de fotografías de archivo con LED en el contorno.';
+  $('#sheetMotif').textContent=isArcher?'Gain, Threshold y Atmosphere. Compra la versión terminada para Mac o iPhone/iPad en la App Store oficial.':'Tema: '+f[3]+'. Collage de fotografías de archivo con LED en el contorno.';
   sheetItem=isArcher?null:'fx-'+f[0];$('#sheetGet').textContent=isArcher?'App Store ↗':'+ A la bolsa';
   $('#sheetPrice').innerHTML=isArcher?'':STARTER.includes(f[0])?'<span style="color:var(--ok)">Gratis siempre</span>':`${eur(PRICES.fx)}<small>o los 20 por ${eur(PRICES.fx20)}</small>`;
   stopDemo();DEMO.load(f[8]);knobs($('#knobs'),f[6],DEF,(i,v)=>DEMO.setParam(i,v));DEF.forEach((v,i)=>DEMO.setParam(i,v));DEMO.setBypass(false);$('#byp').setAttribute('aria-pressed','false');$('#byp').textContent='Bypass';
@@ -1105,7 +1105,10 @@ $('#play').onclick=async()=>{if(playing){stopDemo();return}playing=true;$('#play
 $('#src').onchange=()=>{if(playing){DEMO.stop();DEMO.play($('#src').value,onEnd)}};
 $('#byp').onclick=e=>{const on=e.currentTarget.getAttribute('aria-pressed')!=='true';e.currentTarget.setAttribute('aria-pressed',on);e.currentTarget.textContent=on?'Bypass activo':'Bypass';DEMO.setBypass(on)};
 sheet.addEventListener('close',()=>{stopDemo();stopScope&&stopScope()});
-$('#sheetGet').onclick=()=>{if(!sheetItem){window.open('https://apps.apple.com/us/app/archer-by-unfire/id6812968924','_blank','noopener');return}Bag.add(sheetItem)};
+const archerStoreUrl=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)
+  ?'https://apps.apple.com/es/app/archer-for-iphone-ipad/id6822109610'
+  :'https://apps.apple.com/us/app/archer-by-unfire/id6812968924';
+$('#sheetGet').onclick=()=>{if(!sheetItem){window.open(archerStoreUrl(),'_blank','noopener');return}Bag.add(sheetItem)};
 document.querySelector('[data-archer]').onclick=()=>openFx(['archer','ARCHER','Clipper','','#c9d0d9','',['Gain','Threshold','Atmosphere'],'din','archer'],true);
 
 /* HYPERWAVE completo dentro de la página */
