@@ -65,6 +65,10 @@ test('do not propagate query parameters from payment links',()=>{
   p.PAY.hyper='https://buy.stripe.com/abc123?prefilled_email=example%40example.org';
   assert.equal(p.checkoutLinkFor(['hyper']),'');
 });
+test('game storefront FX20 product exists in bag and rejects unknown SKU',()=>{
+  assert.match(page, /fx20:\['FX20 · Pack de 20 efectos',PRICES\.fx20/);
+  assert.match(page, /if\(!Object\.prototype\.hasOwnProperty\.call\(ITEMS,k\)\)return/);
+});
 test('checkout UI keeps not-yet-launched products as enquiries',()=>{
   assert.match(page, /id="bagUnreleased"/);
   assert.match(page, /id="bagPayMethods" hidden/);

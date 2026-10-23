@@ -711,7 +711,7 @@ function checkoutLinkFor(keys){
   return keys.length===1?paymentLinkFor(keys[0]):'';
 }
 const eur=v=>v===0?'0 €':(Number.isInteger(v)?v:v.toFixed(2).replace('.',','))+' €';
-const ITEMS={hyper:['HYPERWAVE 2000',PRICES.hyper,0],synth:['Unfire Synthesizer (Mac)',PRICES.synth,PRICES.synth],todo:['Todo UNFIRE',PRICES.todo,PRICES.synth],starter:['Starter gratis (3 FX)',0,0],club:['UNFIRE Club · mensual',PRICES.clubM,PRICES.clubM],launch:['Aviso de lanzamiento',0,0]};
+const ITEMS={hyper:['HYPERWAVE 2000',PRICES.hyper,0],fx20:['FX20 · Pack de 20 efectos',PRICES.fx20,0],synth:['Unfire Synthesizer (Mac)',PRICES.synth,PRICES.synth],todo:['Todo UNFIRE',PRICES.todo,PRICES.synth],starter:['Starter gratis (3 FX)',0,0],club:['UNFIRE Club · mensual',PRICES.clubM,PRICES.clubM],launch:['Aviso de lanzamiento',0,0]};
 FX.forEach(f=>ITEMS['fx-'+f[0]]=['UNFIRE '+f[1],STARTER.includes(f[0])?0:PRICES.fx,0]);
 const DEF=[0.45,0.5,0.6];
 const FACE_STYLE={'Bodoni Moda':'italic 700','Fraunces':'italic 700','Playfair Display SC':'italic 900','Cinzel':'700','Cormorant SC':'700','Comfortaa':'700','Orbitron':'800','Silkscreen':'700'};
@@ -1081,7 +1081,7 @@ const Bag=(()=>{let items=store.get('unfire.bag',[]).filter(k=>ITEMS[k]);const b
     $('#bagPayMethods').hidden=!express;$('#bagUnreleased').hidden=!!express}
   function save(){store.set('unfire.bag',items);render()}
   render();btn.onclick=()=>$('#bag').showModal();
-  return{add(k){if(!items.includes(k))items.push(k);save();btn.classList.add('bump');setTimeout(()=>btn.classList.remove('bump'),400)}};
+  return{add(k){if(!Object.prototype.hasOwnProperty.call(ITEMS,k))return;if(!items.includes(k))items.push(k);save();btn.classList.add('bump');setTimeout(()=>btn.classList.remove('bump'),400)}};
 })();
 document.addEventListener('click',e=>{const a=e.target.closest('[data-add]');if(a)Bag.add(a.dataset.add)});
 $('#bagGo').onclick=()=>{$('#bag').close();getLic('Tu bolsa')};
