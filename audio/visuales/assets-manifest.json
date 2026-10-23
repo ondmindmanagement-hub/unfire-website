@@ -1,0 +1,790 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "origin": "Existing local Unfire Twenty SwiftUI ProcessorFace marketing exports, not AI mockups",
+  "photo_usage": "No human photographs or studio-photo compositing used in gallery; all illustrative covers excluded",
+  "customer_testimonials": false,
+  "license_ready_for_commercial_release": false,
+  "products": [
+    {
+      "index": 1,
+      "name": "RAZORA",
+      "slug": "razora",
+      "effect": "Clipper",
+      "source_folder": "01-razora",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/01-razora-icon.webp",
+          "size": 9330,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/01-razora/Profile-Square.png",
+          "sha256": "57976edf3b9fb1225ef868919c0b8317ebc325849763537ab52c385a0e949540",
+          "origin_sha256": "d792506b5926ed719d35e6c13dfeb512dcfacb603993d1de28012e179415bfbc",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/01-razora-ui.webp",
+          "size": 19004,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/01-razora/Actual-Live-UI-Dark.png",
+          "sha256": "290f8265019d5262a33b4f247166e6f6f9f05b6dcc85e001478a9fac632c0911",
+          "origin_sha256": "14b581f54594d23ea874b367086afee00776f7bd58ccd9d6eb23bff86908915f",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 2,
+      "name": "OVERTONES",
+      "slug": "overtones",
+      "effect": "Saturator",
+      "source_folder": "02-overtones",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/02-overtones-icon.webp",
+          "size": 15980,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/02-overtones/Profile-Square.png",
+          "sha256": "2fb5aa576d1ea489e023ac426a50154b40fb29446d4c8e23856003d1169c73eb",
+          "origin_sha256": "a3936f6fae18fe92a280c8470bd2e8b7e19dd18cc07bd692958864c71d7a22dc",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/02-overtones-ui.webp",
+          "size": 21572,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/02-overtones/Actual-Live-UI-Dark.png",
+          "sha256": "019a5250e050e86146e55a3a2cf29c898ea4e5921c5ed8d99cfb335d76f2c613",
+          "origin_sha256": "a187e0454baa280779ffc7ab685172ac54aeea579f5c45b4a5621db684d1f991",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 3,
+      "name": "AXIAL",
+      "slug": "axial",
+      "effect": "Delay",
+      "source_folder": "03-axial",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/03-axial-icon.webp",
+          "size": 10042,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/03-axial/Profile-Square.png",
+          "sha256": "9cd1a26723a88665413cf5c2e9ec16a854b97118496d99750dc6db695093e101",
+          "origin_sha256": "d211d35a033a580589828d06efb6d79026ba8919f56ba145f4a8bc774dea1638",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/03-axial-ui.webp",
+          "size": 19466,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/03-axial/Actual-Live-UI-Dark.png",
+          "sha256": "f428874077ef44bdead6a1d4665e3ea5fb4d9f3eb008da99672e0c1437098013",
+          "origin_sha256": "7693b02dc19b73d1168bd851ff730e7332e049a3300604b64873f3ccb0ee7751",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 4,
+      "name": "SHADOW",
+      "slug": "shadow",
+      "effect": "Reverb",
+      "source_folder": "04-shadow",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/04-shadow-icon.webp",
+          "size": 10486,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/04-shadow/Profile-Square.png",
+          "sha256": "c2ffb20a833a85d6cf91959da6c9b04b61d638d4ab9322a7ccc1235de6789dae",
+          "origin_sha256": "09e6e088bf3baca2fbd0a29180c50a40d0c9cf94c97b043a47d85c696b56f14f",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/04-shadow-ui.webp",
+          "size": 28068,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/04-shadow/Actual-Live-UI-Dark.png",
+          "sha256": "190bab21089642c14b07480e8bc4f881887341ebe6e3246ea53660be3430b2e9",
+          "origin_sha256": "ecd4da76fe1081b4a6a3cf30c94765b424cd49315b2a50242cfb3ae2c87b01d3",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 5,
+      "name": "VISCOSITY",
+      "slug": "viscosity",
+      "effect": "Compressor",
+      "source_folder": "05-viscosity",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/05-viscosity-icon.webp",
+          "size": 7958,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/05-viscosity/Profile-Square.png",
+          "sha256": "201950e4099f3a81b1dcd3399e6d4de097850ed9cf6a3629d9c2fb01d8542a09",
+          "origin_sha256": "9ddcf5cc1ec9b84effd3451bfceae1a40715e7b45fc1a87c6ee133ccdbf5c78f",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/05-viscosity-ui.webp",
+          "size": 17044,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/05-viscosity/Actual-Live-UI-Dark.png",
+          "sha256": "b7a6beb5830e33760a68a7c4fe2e4a8afc7fbac92ee4b1c30bc3e37110fbc411",
+          "origin_sha256": "fd0a11d57e8c2a4424a83a41e236948935a094b94fdbd2201321890618b5e3b4",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 6,
+      "name": "NOVATONAL",
+      "slug": "novatonal",
+      "effect": "Equalizer",
+      "source_folder": "06-novatonal",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/06-novatonal-icon.webp",
+          "size": 6626,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/06-novatonal/Profile-Square.png",
+          "sha256": "bf5b1a37926933f042f48c40af44cd8b498320c85eefb70cff85716458f2c28e",
+          "origin_sha256": "9e7acf31d7e699a4c49f32bb73a694308c5579fed86c60d32d113d582393e45a",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/06-novatonal-ui.webp",
+          "size": 18138,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/06-novatonal/Actual-Live-UI-Dark.png",
+          "sha256": "4c6decfc83f1475b64212f8bb734fc82ad8d7f65c5c5ae3f4a1ff83657032902",
+          "origin_sha256": "30a7b15d2b19edab37e99761861914c85388077db8c1f52103f0a43ada177b73",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 7,
+      "name": "MORPH",
+      "slug": "morph",
+      "effect": "Filter",
+      "source_folder": "07-morph",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/07-morph-icon.webp",
+          "size": 11692,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/07-morph/Profile-Square.png",
+          "sha256": "ba253b765875a6dc582316eb4a93dd39cfece00815f9cb5f4895ab7c28268009",
+          "origin_sha256": "f20179eef2a402d5af24587b0230543370529625bf060f3f15b9cdcc553bc415",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/07-morph-ui.webp",
+          "size": 15356,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/07-morph/Actual-Live-UI-Dark.png",
+          "sha256": "76e0775b59f5d6099bf69a2e08a72bd4ca1a8a455603d2797edd70fc5b8d5717",
+          "origin_sha256": "6b279deba3492bef2d4e1208999a9a2ad654499d29d8b090fb8b39e5193d4573",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 8,
+      "name": "BOUNDING",
+      "slug": "bounding",
+      "effect": "Limiter",
+      "source_folder": "08-bounding",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/08-bounding-icon.webp",
+          "size": 11776,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/08-bounding/Profile-Square.png",
+          "sha256": "c2015626a924dc7bcee487c9be5805f8a35c6b730c4d280e3113c0327639a322",
+          "origin_sha256": "80f8a4a4907c6daef15a8630aae29e2ef1edec7b3b4f6961f94ef27d251f73e7",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/08-bounding-ui.webp",
+          "size": 16392,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/08-bounding/Actual-Live-UI-Dark.png",
+          "sha256": "c0b4fb2f4c6599999abf14961d05d77ebf58ccf13f4d63390f045d37959fb5f5",
+          "origin_sha256": "f472cb6dfc642b9a3b99d98b1ceaf9e9a3835dacab311c0e10fae22deffa3484",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 9,
+      "name": "AIRFLOW",
+      "slug": "airflow",
+      "effect": "Chorus",
+      "source_folder": "09-airflow",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/09-airflow-icon.webp",
+          "size": 11102,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/09-airflow/Profile-Square.png",
+          "sha256": "5b5000a72dd17558cd972339038df3890813bce5179dec54697f0d512155d2ed",
+          "origin_sha256": "4fe26bcad9cb259846be70929364356fdd7c1fd5936efa0a37d82d2771237256",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/09-airflow-ui.webp",
+          "size": 25722,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/09-airflow/Actual-Live-UI-Dark.png",
+          "sha256": "9c726c94f74ece00cc760d7213b525c2a7a4e57892a92445da69a4fb34fda372",
+          "origin_sha256": "ae4173819ec09493e110fb6563725288e1169e37e43f817f71877d6844330985",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 10,
+      "name": "FLUX",
+      "slug": "flux",
+      "effect": "Flanger",
+      "source_folder": "10-flux",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/10-flux-icon.webp",
+          "size": 6520,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/10-flux/Profile-Square.png",
+          "sha256": "4b87ff7c76b17b8048b9729d5104db7579fa11ea83a3d672032ff2d4e2cc65e2",
+          "origin_sha256": "b2ba5f1ba406fbbcc5149535fee5eb1b2ca21cabf7732089266ea87f0de319f7",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/10-flux-ui.webp",
+          "size": 24024,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/10-flux/Actual-Live-UI-Dark.png",
+          "sha256": "cf5da90a1ba20254bca8e1d7f7b3bdf7c383519720264b2ae541a3b13ca4d7d2",
+          "origin_sha256": "176db035fb1d443fd60cc61977d95e04a8d6dd57eb15eed12f13486513953120",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 11,
+      "name": "PLUME",
+      "slug": "plume",
+      "effect": "Phaser",
+      "source_folder": "11-plume",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/11-plume-icon.webp",
+          "size": 9462,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/11-plume/Profile-Square.png",
+          "sha256": "54136f52d171042c7ad5264088058957847fec07a89c4ea47b4928fbde8fa403",
+          "origin_sha256": "fd5ee2086a8211a09be0563c3d6f98efe388024fb91870c66e55c2bc866d347d",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/11-plume-ui.webp",
+          "size": 29042,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/11-plume/Actual-Live-UI-Dark.png",
+          "sha256": "2c6564f83ce8abf7924896e60614348cd2f9528a273084e5417577b33443e1c7",
+          "origin_sha256": "5d809ce01ee0f88cfae16d7514385b5661e82f7b15939839f2fbd6a21208a197",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 12,
+      "name": "AZURE ORBIT",
+      "slug": "azure-orbit",
+      "effect": "Stereo Imager",
+      "source_folder": "12-azure-orbit",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/12-azure-orbit-icon.webp",
+          "size": 15396,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/12-azure-orbit/Profile-Square.png",
+          "sha256": "905dccd77c385bd65692bf7cbae6ab9429e6d96f69bd83baea3ad0d87b415f9f",
+          "origin_sha256": "d0b60d7ca8254ca64e039ab3a2bae6b4bbe817e1d942212e0cd112bfaa63dda9",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/12-azure-orbit-ui.webp",
+          "size": 23470,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/12-azure-orbit/Actual-Live-UI-Dark.png",
+          "sha256": "63a5ab23513dca2dfae81c9a54a0f6df840832d040ce5a430bdc533ce394ff54",
+          "origin_sha256": "fcdc9b2a876148a6398b0784db4494dc76807d133d2b68f7b29ce86b93530c28",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 13,
+      "name": "SCULPTOR POWER",
+      "slug": "sculptor-power",
+      "effect": "Transient Designer",
+      "source_folder": "13-sculptor-power",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/13-sculptor-power-icon.webp",
+          "size": 8824,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/13-sculptor-power/Profile-Square.png",
+          "sha256": "efb94d651ed232af1c048884382ccf2a1dfeae444d166c773849a362ebac9493",
+          "origin_sha256": "67a7c4c129f66efb3a60898eed80a7d841452796769c21ed16752d5aad1e7ec6",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/13-sculptor-power-ui.webp",
+          "size": 24836,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/13-sculptor-power/Actual-Live-UI-Dark.png",
+          "sha256": "b767b383a1b8b9093032ae320c5faa992fd1739b2d2e469ffaa3275009f11ec3",
+          "origin_sha256": "4a5e4d164351c02229ff06a60df2104529927c74fc655c535ac4f01cc26b9860",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 14,
+      "name": "SILKX",
+      "slug": "silkx",
+      "effect": "De-Esser",
+      "source_folder": "14-silkx",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/14-silkx-icon.webp",
+          "size": 10492,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/14-silkx/Profile-Square.png",
+          "sha256": "91a53b9a6c4b12c8cf99b9fb34f131fa379194e38a8b64637202b348edb32049",
+          "origin_sha256": "3a23bca34cee31b7c5fee3cae71f5b54990282a44d27f6c2da38ee542a2e609b",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/14-silkx-ui.webp",
+          "size": 16254,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/14-silkx/Actual-Live-UI-Dark.png",
+          "sha256": "60f34b023d58487739548eead2b23ab30986fd044154dcbee4e0fcb6cfb4135f",
+          "origin_sha256": "728232216065d417848043bb7a61bde6f279f42eaa0c2d6f7c73b1d1cad0d7cf",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 15,
+      "name": "SPARKS",
+      "slug": "sparks",
+      "effect": "Exciter",
+      "source_folder": "15-sparks",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/15-sparks-icon.webp",
+          "size": 7948,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/15-sparks/Profile-Square.png",
+          "sha256": "78c405602efcc6b3802317950c496018cd922d7b126cf1253a5e713c86562c3b",
+          "origin_sha256": "181ad25b3fa2a5f838a140e4db64dd34976df912a8a031d57d8ed78963599c31",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/15-sparks-ui.webp",
+          "size": 14954,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/15-sparks/Actual-Live-UI-Dark.png",
+          "sha256": "b78038f359c4f0028ee394dbee621119396cdaa81edb978c179741a49a49ad88",
+          "origin_sha256": "7d194713db47e2132b259829eeb48c48e49c60f44fb20075ba58c253e8167fbe",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 16,
+      "name": "SPRING CHROMA",
+      "slug": "spring-chroma",
+      "effect": "Pitch Shifter",
+      "source_folder": "16-spring-chroma",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/16-spring-chroma-icon.webp",
+          "size": 6610,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/16-spring-chroma/Profile-Square.png",
+          "sha256": "9bdff8dc6c5eac144cdc0f1309c0b096eb212492bee42de9dc123f7ca52bc92e",
+          "origin_sha256": "77a691e7f27d3b1c075f6de748686ad60f2a6989fb0de795a1e225e20454f0d3",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/16-spring-chroma-ui.webp",
+          "size": 22794,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/16-spring-chroma/Actual-Live-UI-Dark.png",
+          "sha256": "b426c53a3085c4f0da931fff3407f186f72bd2db9dc305124d3dcc7a828272e5",
+          "origin_sha256": "43a8d74bdd21e93c865e4799c00438cbe97f840b7c0bb2140448ea91a69912ce",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 17,
+      "name": "PIXELZ",
+      "slug": "pixelz",
+      "effect": "Granular",
+      "source_folder": "17-pixelz",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/17-pixelz-icon.webp",
+          "size": 11080,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/17-pixelz/Profile-Square.png",
+          "sha256": "358f0e60c042e611d9a0aa4fe06506c244784b6f152a65403460d6ceed4fbf0e",
+          "origin_sha256": "e43d54f3e9631059457dfc877a887bf4fe19d69972492d4df2803e6d142986e7",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/17-pixelz-ui.webp",
+          "size": 26586,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/17-pixelz/Actual-Live-UI-Dark.png",
+          "sha256": "aa59f2421c0c325fc8a9eec459aa384ebbf20d402510a22c163068ebf22f68be",
+          "origin_sha256": "87ebfd2192930bd526f8d2b4bc3047ed9289e3660390f74a45a40555d4aefdd9",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 18,
+      "name": "PULSE BITS",
+      "slug": "pulse-bits",
+      "effect": "Bitcrusher",
+      "source_folder": "18-pulse-bits",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/18-pulse-bits-icon.webp",
+          "size": 13284,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/18-pulse-bits/Profile-Square.png",
+          "sha256": "604203a2a2360ec674834b0d7b2a440b7170041e40874a579a995548f8ebc255",
+          "origin_sha256": "ff30e220a52d59324c411a4f46c93f98887ea5baecfdeea79e1236ba373b7dcc",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/18-pulse-bits-ui.webp",
+          "size": 17100,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/18-pulse-bits/Actual-Live-UI-Dark.png",
+          "sha256": "475c1ecd7080819fb3deb0968a2b2863b2072d33ce7ce124ac599728cc76c905",
+          "origin_sha256": "6d53dbd6883cfab40aa02e945b42453179fa945c5c3ee34aeb0d68af16575990",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 19,
+      "name": "AIRE",
+      "slug": "aire",
+      "effect": "Gate",
+      "source_folder": "19-aire",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/19-aire-icon.webp",
+          "size": 11166,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/19-aire/Profile-Square.png",
+          "sha256": "7398acaced3c4413efc6dfa3c8c3db64abf363798e0e62bfba923a733f836dd5",
+          "origin_sha256": "34fb686f4ad20c25e3fd76f2e7a23dcef17bfc581907fd7191f2712597b8547c",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/19-aire-ui.webp",
+          "size": 14056,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/19-aire/Actual-Live-UI-Dark.png",
+          "sha256": "b5b1eeda5819c07328d221f9e675bec433ce8d27c2e87bfd6b18952b91675292",
+          "origin_sha256": "9a0a5c03686055d2f7ed8ce7789222e5e70436198c291ac80d42b9c79c552f0d",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    },
+    {
+      "index": 20,
+      "name": "LOFI",
+      "slug": "lofi",
+      "effect": "Tape",
+      "source_folder": "20-lofi",
+      "available_for_purchase": false,
+      "release_status": "Muestra de ingeniería; distribución no aprobada",
+      "assets": {
+        "icon": {
+          "path": "real-ui/20-lofi-icon.webp",
+          "size": 6680,
+          "width": 512,
+          "height": 512,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/20-lofi/Profile-Square.png",
+          "sha256": "222269d8c5cc47a632a9246d6581ba0d631be6f2faa5bc3b2aeeaf7380fa264b",
+          "origin_sha256": "cbc5564f6ff9396d09af7790a1bc892b5bc71addb8cb2cc8feb62abd6f91c0ea",
+          "origin_pixels": [
+            1024,
+            1024
+          ],
+          "capture_type": "brand-symbol-no-text"
+        },
+        "ui": {
+          "path": "real-ui/20-lofi-ui.webp",
+          "size": 18972,
+          "width": 1280,
+          "height": 716,
+          "source": "UnfireTwenty/UnfireSingles/Marketing/20-lofi/Actual-Live-UI-Dark.png",
+          "sha256": "5f8f090ddceb39a91239fef5a462b69e842b3c4687b3920b07ce3fff5e8d22a3",
+          "origin_sha256": "ae0517d18e218630f04214135e4fced115d41fa7fb0dd534368dd0e9db131fef",
+          "origin_pixels": [
+            2540,
+            1420
+          ],
+          "capture_type": "native-NSHostingView-development-capture"
+        }
+      }
+    }
+  ]
+}
