@@ -45,7 +45,7 @@ const baseUrl = (process.env.UNFIRE_WORLD_TEST_URL || "http://127.0.0.1:48763").
       // not an exact animation duration on an emulated GPU.
       await page.waitForFunction(() => document.querySelector("#morph-output").textContent === "0 %", {timeout:5000});
       const image = await page.evaluate(async () => {
-        const response = await fetch("/audio/img/maletin-real-first-frame-desktop.webp");
+        const response = await fetch("/audio/img/maletin-real-first-frame-desktop.webp", {cache:"no-store"});
         const bytes = (await response.arrayBuffer()).byteLength;
         return {status:response.status,bytes};
       });
