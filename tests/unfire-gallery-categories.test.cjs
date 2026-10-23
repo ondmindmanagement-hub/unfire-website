@@ -55,12 +55,15 @@ const viewports = [
         assert.equal(summary.cards, 9);
         assert.equal(summary.images, 8); // KeyBridge intentionally uses a private, text-only research cover
         assert.equal(summary.emptyAlt, 0);
+        assert.equal(await page.locator('#apps .uf-gallery-card--control img').count(), 1, 'Control must use its original app icon');
+        assert.equal(await page.locator('#apps .uf-gallery-card--control a[href="/apps/unfire-control/"]').count(), 1, 'Control must offer product details');
+        assert.equal(await page.locator('#apps .uf-gallery-card img[src*="keybridge"]').count(), 0, 'Never restore the unpublished private device capture');
         assert.equal(summary.bodyOverflow, false, 'Horizontal overflow at ' + viewport.width);
         assert.equal(summary.cardsWithin, true, 'Cards spill out at ' + viewport.width + ': ' + JSON.stringify({outside:summary.outside,layout:summary.layout}));
         assert.equal(summary.categoryHeadersWithin, true, 'Category headings spill out at ' + viewport.width);
         assert.deepEqual(summary.nav, Object.keys(expected).map(x => '#' + x));
         assert.deepEqual(summary.groups, Object.entries(expected).map(([id,headings])=>({ id,headings })));
-        for (const status of ['Product preview', 'Development preview', 'App preview · original app icon', 'Lab prototype · not a production sign-in system']) {
+        for (const status of ['Product preview', 'Development preview', 'Original app icon · Development preview', 'Lab prototype · not a production sign-in system']) {
           assert(summary.tags.includes(status), 'Missing disclaimer ' + status);
         }
         assert(summary.footnote.includes('features and release status may change'));
