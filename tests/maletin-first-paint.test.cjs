@@ -5,9 +5,10 @@ const html=fs.readFileSync('audio/index.html','utf8');
 function check(name,pass){assert.ok(pass,name);console.log('PASS',name);}
 check('Actual real WebGL first-frame on initial DOM',html.includes('<picture id="unfireCaseFirstFrame"') &&
  html.includes('<iframe id="malFrame"') && html.indexOf('id="unfireCaseFirstFrame"')<html.indexOf('id="malFrame"'));
+const mobilePreload=html.match(/<link rel="preload" as="image" href="(img\\/maletin-real-first-frame-mobile\\.webp(?:\\?v=[^"]+)?)"/);
+const mobileSource=html.match(/<source media="\\(max-width:600px\\)" srcset="([^"]+)"/);
 check('Real game capture is immediately prioritized for both layouts',html.includes('as="image" href="img/maletin-real-first-frame-desktop.webp"') &&
- html.includes('as="image" href="img/maletin-real-first-frame-mobile.webp"') &&
- html.includes('<source media="(max-width:600px)" srcset="img/maletin-real-first-frame-mobile.webp">') &&
+ Boolean(mobilePreload&&mobileSource&&mobilePreload[1]===mobileSource[1]) &&
  html.includes('loading="eager" decoding="sync"'));
 check('Loading cover hides while SAME WebGL scene becomes ready',html.includes('.hero-pin.scene-ready #unfireCaseFirstFrame')&&
  html.includes('pointer-events:none')&&html.includes('.hero-pin:not(.scene-ready) .hero-copy{opacity:0!important;visibility:hidden!important}'));
