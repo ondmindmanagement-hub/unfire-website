@@ -91,6 +91,28 @@ const stubHtml=[
         assert.equal(rotated.entryCount,1,size.label+': rotation reopened case');
         assert.equal(rotated.mission,42,size.label+': rotation reset mission');
         assert.equal(rotated.iframeSrc,entered.iframeSrc,size.label+': rotation reloaded iframe');
+        // Rotate back to portrait (or landscape on desktop) without creating
+        // a second game instance, a navigation, or a second case-opening event.
+        await page.setViewportSize({width:size.width,height:size.height});
+        await page.waitForFunction(()=>{
+          const r=document.getElementById('malFrame').getBoundingClientRect();
+          return Math.abs(r.width-innerWidth)<2&&Math.abs(r.height-innerHeight)<2;
+        },null,{timeout:10000,polling:100});
+        const returned=await page.evaluate(()=>{
+          const fr=document.getElementById('malFrame');
+          return {
+            rotations:window.__qaAnimations.filter(a=>a.id==='malFrame').map(x=>x.duration),
+            mission:fr.contentWindow.__qaGameState.mission,
+            entryCount:fr.contentWindow.__qaMessages.filter(m=>m.entryStart).length,
+            src:fr.src
+          };
+        });
+        assert.equal(returned.rotations.length,2,size.label+': portrait return was not animated');
+        assert(returned.rotations.every(ms=>ms===320),size.label+': inconsistent rotation easing');
+        assert.equal(returned.mission,42,size.label+': returning to original rotation lost mission');
+        assert.equal(returned.entryCount,1,size.label+': returning to original rotation reopened case');
+        assert.equal(returned.src,entered.iframeSrc,size.label+': returning to original rotation reloaded game');
+
         assert.equal(page.url(),initialUrl,size.label+': rotation navigated');
         assert.equal(context.pages().length,initialCount,size.label+': rotation spawned tab');
         await frame.locator('#qaCase').click();
