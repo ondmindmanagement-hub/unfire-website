@@ -43,6 +43,7 @@ test('redirect forwards only ordinary campaign parameters',()=>{
 test('products, corporate escape route and replay remain accessible',()=>{
   assert.match(home,/<a class="unfire-audio-entry" href="\/audio\/" aria-label="Volver a jugar a Unfire Audio">/);
   assert.match(audio,/class="byu" href="\/\?site=1#apps"/);
+  assert.match(audio,/<a href="\/\?site=1#apps">Unfire<\/a>/);
   assert.match(audio,/id="unfireReturnPlay"/);
   assert.match(audio,/getElementById\('unfireReturnPlay'\)\.addEventListener\('click',resumeGame\)/);
   assert.match(audio,/getElementById\('instrumentos'\)/);
