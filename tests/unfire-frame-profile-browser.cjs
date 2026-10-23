@@ -26,48 +26,58 @@ const {summarizeFrames}=require('../scripts/unfire-frame-metrics.cjs');
     // Collect intervals only; avoid sending an extra request or changing the scene.
     // In hidden/background tabs RAF throttles; this page remains foreground.
     const probe=await page.evaluate(async ()=>{
-      const intervals=[],ms=6000;
+      const stage=window.__mal.S,renderer=stage.renderer;
+      const originalRender=renderer.render;
+      const renderedAt=[],rafAt=[];
+      const samplingMs=6000;
       const start=performance.now();
-      let last=null,first=null;
-      return await new Promise(resolve=>{
-        function frame(now){
-          if(first===null)first=now;
-          if(last!==null)intervals.push(now-last);
-          last=now;
-          if(now-first>=ms || intervals.length>=600){
-            const r=window.__mal?.S?.renderer;
-            resolve({
-              intervals,
-              visible:!document.hidden,
-              rendererInfo:r?.info?.render ? {
-                calls:r.info.render.calls,
-                triangles:r.info.render.triangles,
-                lines:r.info.render.lines
-              }:null,
-              qualityTier:window.__UNFIRE_AUTOCALIB?.tier||null,
-              maxDpr:window.__UNFIRE_AUTOCALIB?.maxDpr||null,
-              activeDpr:r?.getPixelRatio?.()||null
-            });
-            return;
+      // Count the final game scene-camera render, not merely browser RAF ticks.
+      // Other offscreen reflection passes have different cameras and are excluded.
+      renderer.render=function(scene,camera){
+        if(scene===stage.scene&&camera===stage.camera)renderedAt.push(performance.now());
+        return originalRender.apply(this,arguments);
+      };
+      try{
+        await new Promise(resolve=>{
+          function sample(now){
+            rafAt.push(now);
+            if(now-start>=samplingMs || rafAt.length>=600){resolve();return;}
+            requestAnimationFrame(sample);
           }
-          requestAnimationFrame(frame);
-        }
-        requestAnimationFrame(frame);
-      });
+          requestAnimationFrame(sample);
+        });
+      }finally{
+        renderer.render=originalRender;
+      }
+      const intervals=a=>a.slice(1).map((t,i)=>t-a[i]);
+      return {
+        renderIntervals:intervals(renderedAt),
+        rafIntervals:intervals(rafAt),
+        visible:!document.hidden,
+        rendererInfo:renderer.info?.render ? {
+          calls:renderer.info.render.calls,
+          triangles:renderer.info.render.triangles,
+          lines:renderer.info.render.lines
+        }:null,
+        qualityTier:window.__UNFIRE_AUTOCALIB?.tier||null,
+        maxDpr:window.__UNFIRE_AUTOCALIB?.maxDpr||null,
+        activeDpr:renderer.getPixelRatio?.()||null
+      };
     });
     const elapsedMs=Date.now()-started;
-    const metric=summarizeFrames(probe.intervals,Number(process.env.UNFIRE_PROFILE_TARGET_FPS||60));
+    const metric=summarizeFrames(probe.renderIntervals,Number(process.env.UNFIRE_PROFILE_TARGET_FPS||60));
+    const rafProxy=summarizeFrames(probe.rafIntervals,Number(process.env.UNFIRE_PROFILE_TARGET_FPS||60));
     // Emit diagnostics without enforcing an arbitrary FPS threshold in software-rendered CI.
     const output={
-      kind:'unfire-frame-profile-v1',source:'chromium-headless-diagnostic',
-      disclaimer:'Not a physical-device FPS or network-latency certification.',
+      kind:'unfire-frame-profile-v1',source:'game-scene-camera-render-calls-headless-diagnostic',
+      disclaimer:'WebGL render-call interval proxy; not display-present FPS, physical-device FPS or network-latency certification.',
       viewport:await page.evaluate(()=>({width:innerWidth,height:innerHeight})),
       qualityTier:probe.qualityTier,maxDpr:probe.maxDpr,activeDpr:probe.activeDpr,
-      visible:probe.visible,elapsedMs,metrics:metric,rendererInfo:probe.rendererInfo,pageErrors:errors
+      visible:probe.visible,elapsedMs,metrics:metric,rafProxy,rendererInfo:probe.rendererInfo,pageErrors:errors
     };
     console.log('UNFIRE_FRAME_PROFILE '+JSON.stringify(output));
     assert(probe.visible,'Page was backgrounded; metrics invalid');
-    assert(metric.samples>=2,'Insufficient RAF frames to calculate timing');
+    assert(metric.samples>=2,'Insufficient game scene render calls to calculate timing');
     assert.equal(errors.length,0,'Uncaught page errors during sample');
   }catch(error){
     console.error('[unfire-frame-profile]',error.stack||error);
