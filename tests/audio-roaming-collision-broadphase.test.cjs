@@ -73,9 +73,9 @@ test('runtime integrates interior, object-object world, floor and exterior ball 
   const html=fs.readFileSync(path.join(__dirname,'../audio/maletin/index.html'),'utf8');
   assert(html.includes('collision-nearby.js?v=20261023roamgrid1'));
   assert(html.indexOf('collision-nearby.js') < html.lastIndexOf('game-engine-v50.js?v='));
-  assert.match(engine,/UnfireCollisionNearby\.nearby\(window\.__OBST, p\.x, p\.z, 1\)/);
-  assert.match(engine,/UnfireCollisionNearby\.nearby\(OB, cx, cz, q\.r \+ 2\)/);
-  assert.match(engine,/UnfireCollisionNearby\.nearby\(OB, hp\.x, hp\.z, 1\)/);
-  assert.match(engine,/UnfireCollisionNearby\.nearby\(window\.__OBSTO, ROAMS\.p\.x, ROAMS\.p\.z, 1\)/);
-  assert.match(engine,/UnfireCollisionNearby\.nearby\(q\.out \? window\.__OBSTO : window\.__OBST, P\.x, P\.z, q\.r \+ 2\)/);
+  assert.match(engine,/COLLISION\(window\.__OBST, p\.x, p\.z, 1\)/);
+  assert.match(engine,/COLLISION\(OB, cx, cz, q\.r \+ 2\)/);
+  assert.match(engine,/COLLISION\(OB, hp\.x, hp\.z, 1\)/);
+  assert.match(engine,/COLLISION\(window\.__OBSTO, ROAMS\.p\.x, ROAMS\.p\.z, 1\)/);
+  assert.match(engine,/COLLISION\(q\.out \? window\.__OBSTO : window\.__OBST, P\.x, P\.z, q\.r \+ 2\)/);
 });
