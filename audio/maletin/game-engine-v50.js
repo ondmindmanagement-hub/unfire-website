@@ -177,7 +177,7 @@
   }
   // Original Claude procedural flight-case lid switch, restored directly from git 91346cf.
   // This REPLACES the newer replica; do not add any second button or a floating 2D CTA.
-  { const ringB = mesh(new THREE.TorusGeometry(0.42, 0.02, 10, 64).rotateX(H2), Y2K.led('#7fd0ff', 3)); ringB.position.set(0, HL + 0.05, 0.3); ringB.scale.setScalar(1.45); { const bz = mesh(new THREE.TorusGeometry(0.54, 0.08, 18, 64).rotateX(H2), CHROME); bz.position.set(0, HL + 0.03, 0.3); lid.add(bz); const dm = mesh(new THREE.SphereGeometry(0.5, 48, 20, 0, TAU, 0, 1.0), new THREE.MeshPhysicalMaterial({ color: 0x2a6dff, emissive: 0x2a6dff, emissiveIntensity: 0.6, roughness: 0.05, clearcoat: 1, transparent: true, opacity: 0.88 })); dm.scale.y = 0.42; dm.position.set(0, HL + 0.02, 0.3); lid.add(dm); const ec = Y2K.cnv(256, 256); G3.drawEmblem(ec.getContext('2d'), 256, '#ffffff'); const fc = new THREE.Mesh(new THREE.CircleGeometry(0.38, 40), new THREE.MeshBasicMaterial({ map: Y2K.toTex(ec, { color: true }), transparent: true, toneMapped: false })); fc.rotation.x = -H2; fc.position.set(0, HL + 0.235, 0.3); lid.add(fc); } lid.add(ringB); window.__ringB = ringB; }
+  { const ringB = mesh(new THREE.TorusGeometry(0.42, 0.02, 10, 64).rotateX(H2), Y2K.led('#7fd0ff', 3)); ringB.position.set(0, HL + 0.05, 0.3); ringB.scale.setScalar(1.45); { const bz = mesh(new THREE.TorusGeometry(0.54, 0.08, 18, 64).rotateX(H2), CHROME); bz.position.set(0, HL + 0.03, 0.3); lid.add(bz); const dm = mesh(new THREE.SphereGeometry(0.5, 48, 20, 0, TAU, 0, 1.0), new THREE.MeshPhysicalMaterial({ color: 0x2a6dff, emissive: 0x2a6dff, emissiveIntensity: 0.6, roughness: 0.05, clearcoat: 1, transparent: true, opacity: 0.88 })); dm.scale.y = 0.42; dm.position.set(0, HL + 0.02, 0.3); lid.add(dm); const ec = Y2K.cnv(256, 256); G3.drawEmblem(ec.getContext('2d'), 256, '#ffffff'); const fc = new THREE.Mesh(new THREE.CircleGeometry(0.38, 40), new THREE.MeshBasicMaterial({ map: Y2K.toTex(ec, { color: true }), transparent: true, toneMapped: false })); fc.rotation.x = -H2; fc.position.set(0, HL + 0.235, 0.3); lid.add(fc); window.__unfireOpenButtonParts=[ringB,bz,dm,fc]; } lid.add(ringB); window.__ringB = ringB; }
   // interior de la tapa: espuma de huevera + bolsillo de malla
   const lidFoam = mesh(new THREE.BoxGeometry(CW - 0.18, 0.05, CD - 0.18), CARB); lidFoam.position.y = 0.02; lid.add(lidFoam);
   const LX = (x) => (x + 2.65) / 5.3 * 2048, LY = (z) => (1.7 - z) / 3.4 * 1314, LK = 2048 / 5.3;
@@ -2171,7 +2171,7 @@
           try{const root=document.documentElement,fs=root.requestFullscreen||root.webkitRequestFullscreen;if(fs&&!document.fullscreenElement)fs.call(root).catch?.(()=>{});}catch(_){}
           // The standalone direct link also glides first, then opens slowly.
           entryDolly.active=true;entryDolly.from=view.dist;entryDolly.to=view.D0*.96;
-          entryDolly.elapsed=0;entryDolly.openAfter=true;view.gd=entryDolly.to;lidControlledByPlayer=true;
+          entryDolly.elapsed=0;entryDolly.openAfter=false;view.gd=entryDolly.to;lidControlledByPlayer=true;pTarget=1;
           return;
         }
         if (hitD) ALL = true;
@@ -2538,7 +2538,7 @@
       if(ROAMS.on)exitRoam();CASE_VIEW.on=false;
       // Glide toward the physical case, then open the lid in place. Never jump to robot camera.
       entryDolly.active=true;entryDolly.from=view.dist;entryDolly.to=view.D0*.96;
-      entryDolly.elapsed=0;entryDolly.openAfter=true;view.gd=entryDolly.to;
+      entryDolly.elapsed=0;entryDolly.openAfter=false;view.gd=entryDolly.to;pTarget=1;
       updateCarryUI();
     }
     if (d.unfire && d.p != null && !lidControlledByPlayer) pTarget = d.p; if (d.unfire && d.legacyCaseClose) closeCaseInGame(); if(d.unfire && d.releaseCaseControl){CAPS.cancel();lidControlledByPlayer=false;carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();} if (d.unfire && d.stop) { closeAll(true); stopAll(); ROOM.AMB.mute = true; } if (d.unfire && d.p > 0.5) ROOM.AMB.mute = false; if (d.unfire && 'vis' in d) { frameVisible = !!d.vis; if(frameVisible && ROOM.AMB)ROOM.AMB.mute=false; window.__gameVisible = frameVisible; ONLINE.voiceVisibility(frameVisible); } if (d.unfire && d.vis === false) { closeAll(true); setRobot(null); stopAll(); CINE.on = false; if (MEGA) megaOff(); CK.forEach((k) => { compG[k].userData.open = 0; compG[k].userData.t = 0; }); if (HW) { HW.T = 0; HW.u = 0; HW.tg = 0; } items.forEach((it) => { if (it.kind === 'mut') { it.tgt = 0; it.T = 0; } if (it.g) { it.on = 0; it.kk = 0; } if (it.W && it.home) { it.W.position.copy(it.home); it.W.rotation.set(0, 0, 0); it.retT = 0; } }); view.gd = view.D0; view.gx = 0; view.gz = 0.15; ORB.gaz = ORB.gde = 0; } if (d.unfire && d.audio) { try { UA.init(); } catch (er) {} } });
