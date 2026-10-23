@@ -143,4 +143,6 @@ chk('Showcase exhibition keeps player camera and avoids overlapping full-size pl
   game.includes('if (olds.length) { say(')&&
   !game.includes('noFocus: false, f: () => { hap(0.4); openT = 6;'));
 chk('PC screen shows mystery app icon',engine.includes("g.fillText('?', 14, 78)"));
+require('./maletin-flight-combos.test.cjs');
+require('./maletin-indoor-outdoor-perf.test.cjs');
 console.log('All staged structural tests PASSED; full gameplay and device performance still require browser QA.');
