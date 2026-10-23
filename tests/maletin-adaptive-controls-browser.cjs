@@ -52,7 +52,7 @@ function checkLayout(p,tag) {
       assert(!collides(a,b),tag+' touch overlap '+a.id+' vs '+b.id);
     for(const b of p.reserved)
       if(b.width*b.height<p.width*p.height*.44)
-        assert(!collides(a,b),tag+' HUD overlap '+a.id+' vs '+b.id);
+        assert(!collides(a,b),tag+' HUD overlap '+a.id+' vs '+b.id+' '+JSON.stringify({control:a,reserved:b,viewport:[p.width,p.height]}));
   }
 }
 async function exercise(spec) {
