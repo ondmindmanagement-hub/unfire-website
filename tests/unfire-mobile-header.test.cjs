@@ -52,7 +52,7 @@ function separated(a,b,slack=1) {
               overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth};
           });
           assert.ok(open.headerHeight>=240 && open.headerHeight<=400,`${width} expanded menu not in flow: ${open.headerHeight}`);
-          assert.equal(open.links.length,8);
+          assert.equal(open.links.length,9);
           assert.ok(open.overflow<=2,`${width} expanded horizontal overflow ${open.overflow}`);
           for(let j=0;j<open.links.length;j++){
             assert.ok(open.links[j].right<=width+1 && open.links[j].left>=-1,`${width} link ${j} offscreen`);
@@ -67,7 +67,7 @@ function separated(a,b,slack=1) {
           if(width===320 || width===390){
             await page.locator('#unfire-mobile-menu-toggle').click();
             await page.locator('#unfire-mobile-site-nav').evaluate((nav)=>{
-              const labels=['Compañía','Trabajar','Aplicaciones','Audio','Sistema','Escala','Fondos','Contacto'];
+              const labels=['Compañía','Trabajar','Aplicaciones','Juegos','Audio','Sistema','Escala','Fondos','Contacto'];
               Array.from(nav.querySelectorAll('a')).forEach((a,i)=>{a.textContent=labels[i]});
             });
             const spans=await page.locator('#unfire-mobile-site-nav a').evaluateAll(nodes=>nodes.map(a=>{
