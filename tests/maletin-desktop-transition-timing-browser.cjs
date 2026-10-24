@@ -49,12 +49,26 @@ const milestone = (label, details = {}) => console.log('TRANSITION_TIMING',
     // Diagnostic-only A/B: compact rendering uses the game's *existing* query
     // option. No product file or default quality setting is modified.
     if (process.env.UNFIRE_FORCE_COMPACT === '1') {
-      await page.route('**/audio/maletin/index.html*', route => {
-        const u = new URL(route.request().url());
-        u.searchParams.set('quality','compact');
-        return route.continue({url:u.toString()});
+      // The host assigns malFrame.src dynamically with quality=desktop. Override
+      // only that DOM assignment in the test before host scripts run, preserving
+      // desktop input/CSS and browser cache. Never touch game/product sources.
+      await page.addInitScript(() => {
+        const native = Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype,'src');
+        if (!native?.set || !native.get) return;
+        Object.defineProperty(HTMLIFrameElement.prototype,'src',{
+          configurable:true,
+          get() {return native.get.call(this);},
+          set(value) {
+            if (this.id === 'malFrame') {
+              const u = new URL(String(value),document.baseURI);
+              u.searchParams.set('quality','compact');
+              return native.set.call(this,u.toString());
+            }
+            return native.set.call(this,value);
+          }
+        });
       });
-      milestone('quality-override',{requested:'compact'});
+      milestone('quality-override',{requested:'compact',mechanism:'test-only iframe src assignment'});
     }
     milestone('goto:start');
     await page.goto(origin + '/audio/', {waitUntil:'domcontentloaded',timeout:30000});
@@ -112,6 +126,7 @@ const milestone = (label, details = {}) => console.log('TRANSITION_TIMING',
       window.__unfireDesktopSnapshot = get;
       return {x,y,box:[rect.x,rect.y,rect.width,rect.height],
         actualTier:w.__UNFIRE_AUTOCALIB?.tier || 'unknown',
+        frameSrc:f.src,
         closed:w.__UNFIRE_CASE_QA.closed,
         hostTarget:document.elementFromPoint(x,y)?.id,
         frameTarget:w.document.elementFromPoint(x-rect.left,y-rect.top)?.id};
