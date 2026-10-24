@@ -2511,25 +2511,46 @@
   const clock = new THREE.Clock(); let t = 0; const pend = { it: null, t: 0 }; let MEMO = null, LV = 0; let frameN = 0; let idleT = 0, lastPlaying = false, liftY = 0;
   const tb = new Uint8Array(1024), fb = new Uint8Array(512); let level = 0;
   let frameVisible = true, previousRenderAt = 0;
-  // Lower the drawing resolution ONCE only after sustained poor foreground FPS.
-  // UI, gameplay, audio, timings and scene composition remain untouched.
-  // Avoid oscillating pixel-ratio allocations that can themselves stall mobile GPUs.
-  const adaptivePerf={since:0,frames:0,reduced:false};
-  function protectSlowGPU(now){
-    if(!adaptivePerf.since){adaptivePerf.since=now;adaptivePerf.frames=0;return;}
-    adaptivePerf.frames++;
-    const elapsed=now-adaptivePerf.since;
-    if(elapsed<6000)return;
-    if(!adaptivePerf.reduced&&adaptivePerf.frames>=12&&elapsed/adaptivePerf.frames>48){
-      const current=S.renderer.getPixelRatio();
-      const safer=Math.max(0.65,Math.min(current,DEVICE.maxDpr)*0.78);
-      if(safer<current-0.08){
-        S.renderer.setPixelRatio(safer);
-        adaptivePerf.reduced=true;
-        document.documentElement.dataset.unfireAdaptiveQuality='on';
-      }
+  // One and only GPU resolution governor for indoor + outdoor gameplay.
+  // Keep UI/input/physics/audio and the suitcase untouched. Sampling happens inside
+  // the existing frame loop; never add polling, RAFs, textures or forced reloads.
+  const adaptivePerf={since:0,frames:0,slow:0,lastChange:0,zone:null};
+  function governGraphics(now,frameSeconds){
+    // Preserve the existing __perf telemetry contract (used by recovery/QA).
+    const initial=S.renderer.getPixelRatio();
+    const Q=window.__perf||(window.__perf={
+      a:LOWDEV?1/25:1/33,t:0,dpr:initial,max:Math.min(initial,DEVICE.maxDpr),f:0
+    });
+    Q.a=Q.a*0.88+frameSeconds*0.12;
+    Q.f=(Q.f||0)+1;
+    const target=LOWDEV?(DEVICE.tier==='compact'?1/24:1/30):(window.ATM_OUT?1/30:1/35);
+    window.__LOWFPS=Q.a>target*1.5;
+    if(S.renderer.shadowMap.enabled)
+      S.renderer.shadowMap.needsUpdate=Q.f%(window.ATM_OUT?7:4)===0;
+    S.renderer.shadowMap.autoUpdate=false;
+    const zone=window.ATM_OUT?'outside':'inside';
+    if(!adaptivePerf.since||adaptivePerf.zone!==zone){
+      adaptivePerf.since=now;adaptivePerf.frames=0;adaptivePerf.slow=0;adaptivePerf.zone=zone;
+      return;
     }
-    adaptivePerf.since=now;adaptivePerf.frames=0;
+    // Do not downgrade after an isolated texture compilation, orientation
+    // change or a throttled background frame. Require sustained slow frames.
+    adaptivePerf.frames++;
+    if(frameSeconds>target*1.32)adaptivePerf.slow++;
+    if(now-adaptivePerf.since<9000)return;
+    const sustained=adaptivePerf.frames>=20 &&
+      adaptivePerf.slow/adaptivePerf.frames>=0.7 && Q.a>target*1.32;
+    adaptivePerf.since=now;adaptivePerf.frames=0;adaptivePerf.slow=0;
+    if(!sustained||now-adaptivePerf.lastChange<14000)return;
+    const floor=Math.min(Q.max,LOWDEV?0.60:0.75);
+    const current=Math.min(S.renderer.getPixelRatio(),Q.max);
+    const next=Math.max(floor,Math.round((current-0.10)*100)/100);
+    if(next>=current-0.015)return;
+    S.renderer.setPixelRatio(next);
+    S.renderer.setSize(renderWidth||innerWidth,renderHeight||innerHeight,false);
+    Q.dpr=next;
+    adaptivePerf.lastChange=now;
+    document.documentElement.dataset.unfireAdaptiveQuality='on';
   }
   // Opening the website/direct-link case keeps the camera on the physical
   // maletín. Exploring as the robot is an explicit separate player choice.
@@ -2608,7 +2629,7 @@
   function frame(now) {
     // Park the heavy animation loop when hidden/out of the hero: never spend 60 callbacks/sec there.
     if (document.hidden || !frameVisible) {
-      previousRenderAt = 0; adaptivePerf.since=0; adaptivePerf.frames=0; clock.getDelta();
+      previousRenderAt = 0; adaptivePerf.since=0; adaptivePerf.frames=0; adaptivePerf.slow=0; clock.getDelta();
       setTimeout(() => requestAnimationFrame(frame), 180);
       return;
     }
@@ -2620,6 +2641,7 @@
     if (MAP.expandedOpen || (window.UNFIRE_COINS && window.UNFIRE_COINS.isOpen)) {
       clock.getDelta();
       previousRenderAt = 0;
+      adaptivePerf.since=0;adaptivePerf.frames=0;adaptivePerf.slow=0;
       if (MAP.expandedOpen) MAP.tick();
       return;
     }
@@ -2631,7 +2653,6 @@
     const foregroundFrameTime = previousRenderAt ? Math.min(6, Math.max(0.008, (now - previousRenderAt) / 1000)) : 1 / 30;
     const actualFrameTime = Math.min(0.18, foregroundFrameTime);
     previousRenderAt = now;
-    protectSlowGPU(now);
     const dt = Math.min(0.05, clock.getDelta()) * (window.__dts || 1); t += dt;
     // A packed case is inventory-only: no heavy model following or obscuring the camera.
     updateCarryUI();
@@ -2800,23 +2821,7 @@
           for (const B of COLLISION(q.out ? window.__OBSTO : window.__OBST, P.x, P.z, q.r + 2)) { const x0 = B.x0 + 1.1 - q.r, x1 = B.x1 - 1.1 + q.r, z0 = B.z0 + 1.1 - q.r, z1 = B.z1 - 1.1 + q.r; if (P.x > x0 && P.x < x1 && P.z > z0 && P.z < z1 && P.y - q.r < B.y1) { const dl = P.x - x0, dr = x1 - P.x, db = P.z - z0, df = z1 - P.z, mn = Math.min(dl, dr, db, df); if (mn === dl) { P.x = x0; q.v.x = -Math.abs(q.v.x) * 0.6; } else if (mn === dr) { P.x = x1; q.v.x = Math.abs(q.v.x) * 0.6; } else if (mn === db) { P.z = z0; q.v.z = -Math.abs(q.v.z) * 0.6; } else { P.z = z1; q.v.z = Math.abs(q.v.z) * 0.6; } } }
           const sp = Math.hypot(q.v.x, q.v.z); if (sp > 0.01) { const ax = V(q.v.z, 0, -q.v.x).normalize(); q.b.rotateOnWorldAxis(ax, sp * dt / q.r); } }
         for (let i = 0; i < BL.length; i++) for (let j = i + 1; j < BL.length; j++) { const a = BL[i], b = BL[j]; if (a.out !== b.out) continue; const d = a.b.position.distanceTo(b.b.position), R0 = a.r + b.r; if (d < R0 && d > 0.001) { const n = b.b.position.clone().sub(a.b.position).divideScalar(d), o = (R0 - d) / 2; a.b.position.addScaledVector(n, -o); b.b.position.addScaledVector(n, o); const rv = b.v.clone().sub(a.v).dot(n); if (rv < 0) { a.v.addScaledVector(n, rv * 0.9); b.v.addScaledVector(n, -rv * 0.9); } } } } catch (e) {} }
-    // Adaptive resolution compares actual frame time with the device's intended frame
-    // interval. The old 25/32-fps thresholds treated a healthy 25-fps mobile cap as
-    // overload; preserve sharpness and avoid repeated GPU allocations on phones.
-    { const Q = window.__perf || (window.__perf = { a: LOWDEV ? 1/25 : 1/33, t: 0, dpr: S.renderer.getPixelRatio(), max: Math.min(S.renderer.getPixelRatio(),DEVICE.maxDpr) });
-      Q.a=Q.a*0.88+actualFrameTime*0.12;Q.t+=dt;Q.f=(Q.f||0)+1;
-      const target=LOWDEV?(DEVICE.tier==='compact'?1/24:1/30):(window.ATM_OUT?1/30:1/35);
-      window.__LOWFPS=Q.a>target*1.5;
-      if(S.renderer.shadowMap.enabled)S.renderer.shadowMap.needsUpdate=Q.f%(window.ATM_OUT?7:4)===0;
-      if(Q.t>3){Q.t=0;let next=Q.dpr;
-        if(Q.a>target*1.32)next=Math.max(LOWDEV?0.60:0.70,Q.dpr-0.10);
-        else if(Q.a<target*1.08)next=Math.min(window.ATM_OUT?1:Q.max,Q.dpr+0.06);
-        next=Math.min(next,Q.max,DEVICE.maxDpr);
-        if(Math.abs(next-Q.dpr)>0.015){Q.dpr=next;S.renderer.setPixelRatio(next);
-          S.renderer.setSize(renderWidth||innerWidth,renderHeight||innerHeight,false);}
-        S.renderer.shadowMap.autoUpdate=false;
-      }
-    }
+    governGraphics(now,actualFrameTime);
     window.__idleT = ROAMS.moving || ROAMS.fly ? 0 : (window.__idleT || 0) + dt;
     if (window.__DOME) { const DM2 = window.__DOME; const near = ROAMS.on && window.ATM_OUT && (ROAMS.h || 0) > 20 && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 90; DM2.open += ((near ? 1 : 0) - DM2.open) * Math.min(1, dt * 2); DM2.PET.forEach((p, i) => { p.rotation.z = -DM2.open * (1.75 + Math.sin(i) * 0.05); }); if (DM2.open > 0.6 && window.ATM_OUT && ROAMS.on && Math.hypot(ROAMS.p.x - DM2.c.x, ROAMS.p.z - DM2.c.z) < 36 && -9 + (ROAMS.h || 0) < DM2.c.y - 1) { try { ATM.setOut(false); ROAMS.h = Math.min(ROAMS.h, 13); ROAMS.flyH = 12; say('🏠 Has entrado por la cúpula'); } catch (e) {} } }
     // sonido de mar y viento fuera (más fuerte en la orilla y en el agua, viento al volar alto)
