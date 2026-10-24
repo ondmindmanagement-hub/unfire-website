@@ -2098,6 +2098,14 @@
     };
     const FR=window.__FRIENDS||[];
     FR.forEach((b,i)=>add('friend-'+(b.name||i),b.name,b.w,19));
+    // Mutants already physically present on the case/table use world coordinates,
+    // so Story players can speak with them without entering Cinema mode.
+    const caseBots=bots();
+    caseBots.forEach((b,i)=>{
+      if(!b.W||!b.W.getWorldPosition||b.W.visible===false)return;
+      const p=b.W.getWorldPosition(V(0,0,0));
+      add('case-'+(b.name||i),b.name||('ROBOT '+(i+1)),{position:p,visible:true},ROAMS.mini?5:9);
+    });
     const grow=GROW.list||[];
     grow.forEach((b,i)=>add('grow-'+(b.w&&b.w.uuid||i),b.name||('ROBOT '+(i+1)),b.w,14));
     const sky=SKYBOTS.list||[];
