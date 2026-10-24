@@ -1108,6 +1108,70 @@
   if (!NANO_PHYSICS) throw new Error("NANO physics script must load before engine");
   const avatarProfile = () => NANO_PHYSICS.profile(!!ROAMS.mini);
   const ROAMS = { on: false, yaw: 0, pitch: -0.12, p: V(0, 8.5, 15), k: {} }; const roamB = document.createElement('button'); roamB.id = 'roamB'; roamB.textContent = '🚶 PASEAR'; roamB.style.cssText = 'position:fixed;right:14px;bottom:calc(9vh + 14px);z-index:40;border:2px solid #fff;border-radius:999px;padding:9px 14px;font:800 12px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);box-shadow:0 6px 18px #0008;cursor:pointer;display:none'; document.body.appendChild(roamB);
+
+  // ONE lightweight cinematic for the same robotic avatar at NANO scale.
+  // A reusable chest-launched mechanical sphere unfolds before the tiny robot
+  // becomes controllable. No additional game loop, network state or shaders.
+  const NANO_CINEMA = (() => {
+    let orb = null, upper = null, lower = null, halo = null, phase = null;
+    const smooth = (x) => { const u = Math.max(0, Math.min(1, x)); return u*u*(3-2*u); };
+    const build = () => {
+      if (orb) return;
+      orb = new THREE.Group();
+      const casing = new THREE.MeshStandardMaterial({ color: 0x244b9e, metalness: 0.85, roughness: 0.21, emissive: 0x062453, emissiveIntensity: 0.32 });
+      const pearl = new THREE.MeshStandardMaterial({ color: 0xe6ecff, metalness: 0.71, roughness: 0.19, emissive: 0x11285f, emissiveIntensity: 0.2 });
+      upper = new THREE.Mesh(new THREE.SphereGeometry(0.58, 16, 10, 0, TAU, 0, H2), casing);
+      lower = new THREE.Mesh(new THREE.SphereGeometry(0.58, 16, 10, 0, TAU, H2, H2), pearl);
+      const rim = new THREE.Mesh(new THREE.TorusGeometry(0.56, 0.035, 6, 32), Y2K.led('#87eaff', 1.2));
+      rim.rotation.x = H2; halo = rim;
+      orb.add(upper, lower, rim); orb.visible = false; S.scene.add(orb);
+    };
+    const busy = () => !!phase;
+    const cancel = () => { phase = null; if (orb) orb.visible = false; };
+    const start = () => {
+      if (phase || !ROAMS.on) return false;
+      build();
+      const a = ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy;
+      const foot = -8.9 + (ROAMS.h || 0);
+      const origin = V(ROAMS.p.x + Math.sin(a)*0.48, foot + 5.5, ROAMS.p.z - Math.cos(a)*0.48);
+      const goal = V(ROAMS.p.x, foot + 0.17, ROAMS.p.z);
+      phase = { t: 0, duration: 1.38, origin, goal, revealed: false, startedAt: performance.now() };
+      orb.position.copy(origin); orb.scale.setScalar(1);
+      upper.position.y = 0; lower.position.y = 0; upper.rotation.z = 0; lower.rotation.z = 0;
+      halo.scale.setScalar(1); orb.visible = true;
+      ROAMS.k = {}; ROAMS.tgt = null; ROAMS.touchStick = null;
+      return true;
+    };
+    const tick = (dt) => {
+      if (!phase) return;
+      const p = phase; const wallTime = Math.max(0, (performance.now() - p.startedAt) / 1000); p.t = Math.min(p.duration, Math.max(p.t + Math.max(0, Math.min(0.07, dt)), wallTime));
+      const u = p.t / p.duration, flight = smooth(u/0.61);
+      orb.position.lerpVectors(p.origin, p.goal, flight);
+      orb.position.y += Math.sin(Math.PI*flight)*0.68;
+      orb.rotation.y += Math.min(0.07, dt)*4;
+      const open = smooth((u-0.57)/0.32);
+      orb.scale.setScalar(0.78 - open*0.52);
+      upper.position.y = open*0.56; lower.position.y = -open*0.56;
+      upper.rotation.z = open*0.43; lower.rotation.z = -open*0.43;
+      halo.scale.setScalar(1 + 0.45*open);
+      if (!p.revealed && u >= 0.6) {
+        p.revealed = true;
+        ROAMS.mini = true; ROAMS.cp = null; ROAMS.ep = null;
+        ROAMS.flyH = ROAMS.h || 0; ROAMS.climbV = 0; ROAMS.vy = 0;
+      }
+      if (u >= 1) { orb.visible = false; phase = null; }
+    };
+    const avatarFactor = () => !phase || !phase.revealed ? 1 : Math.max(0.06, smooth((phase.t/phase.duration-0.58)/0.39));
+    // NANO cruise is comfortable in the huge exterior but never absurdly fast.
+    // This changes only NANO's movement response, not the ×1/×3/×8 selector.
+    const cruise = (raw, prop, shift, alt) => {
+      if (!ROAMS.mini || !ROAMS.fly || !window.ATM_OUT) return raw;
+      const level = Math.max(1, Math.min(8, Number.isFinite(prop) ? prop : 1));
+      const cap = 55 + 18*(level-1);
+      return Math.min(190, cap * (shift ? 1.16 : 1) * (alt ? 0.56 : 1));
+    };
+    return { busy, cancel, start, tick, avatarFactor, cruise };
+  })();
   const MIX = (() => { const d = document.createElement('div'); d.id = 'mix'; d.innerHTML = '<style>#mix{position:fixed;left:14px;top:10px;transform:scale(.88);transform-origin:top left;z-index:40;display:none;gap:6px;flex-direction:column;padding:10px 12px;border-radius:16px;background:linear-gradient(180deg,#eef6ff,#a9cdff);border:2px solid #fff;box-shadow:0 8px 22px #0009,0 0 18px #3d8bff88;font:700 11px Michroma,Arial;color:#0a1a3a}#mix.on{display:flex}#mix .row{display:flex;gap:6px;align-items:center}#mix button{border:0;border-radius:999px;padding:6px 10px;font:800 11px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);cursor:pointer}#mix button.off{background:linear-gradient(180deg,#b8c0d0,#6b7385);opacity:.8}#mix b{font:900 12px Orbitron,Arial;min-width:180px;text-align:center}</style><div class=row><button data-s=-1>◀</button><b id=mixN>—</b><button data-s=1>▶</button></div><div class=row><button data-m=drums>🥁 BATERÍA</button><button data-m=bass>🎸 BAJO</button><button data-m=chords>🎹 ACORDES</button><button data-m=lead>✨ MELODÍA</button><button data-p=1>🎹 OTRA MELODÍA</button></div><div class=row>TONALIDAD <select id=tonK><option value=-1>AUTO</option>' + ['DO', 'DO#', 'RE', 'RE#', 'MI', 'FA', 'FA#', 'SOL', 'SOL#', 'LA', 'LA#', 'SI'].map((n, i) => '<option value=' + i + '>' + n + '</option>').join('') + '</select> MODO <select id=tonM><option value=auto>SIGUE LA CANCIÓN</option><option value=mayor>MAYOR</option><option value=menor>MENOR</option><option value=dorico>DÓRICO</option><option value=penta>PENTATÓNICA</option><option value=blues>BLUES</option></select></div><div class=row style="font-size:9px;opacity:.8">Teclado: A S D F G H J K L = blancas · W E T Y U O P = negras · Z/X octava</div>'; document.body.appendChild(d); d.addEventListener('pointerdown', (e) => e.stopPropagation()); d.addEventListener('wheel', (e) => e.stopPropagation());
     d.onchange = (e) => { if (e.target.id === 'tonK') { TON.key = +e.target.value; if (TON.key >= 0) { RADIO.st.lockRoot = 45 + ((TON.key - 9 + 12) % 12); RADIO.st.root = RADIO.st.lockRoot; } else RADIO.st.lockRoot = null; } if (e.target.id === 'tonM') TON.mode = e.target.value; if (TON.mode !== 'auto' && TON.key < 0) { TON.key = 0; d.querySelector('#tonK').value = 0; } hap(0.2); }; d.onclick = (e) => { const b = e.target.closest('button'); if (!b) return; hap(0.25); if (b.dataset.p && HW) { HW.melSeed = (HW.melSeed || 0) + 1; HW.mel = null; say('🎹 Melodía nueva'); } if (b.dataset.s) { const n = RADIO.STYLES.length; RADIO.newSong(((RADIO.st.style + +b.dataset.s) % n + n) % n); } if (b.dataset.m) { const S2 = RADIO.st.stems || (RADIO.st.stems = { drums: 1, bass: 1, chords: 1, lead: 1 }); S2[b.dataset.m] = S2[b.dataset.m] ? 0 : 1; b.classList.toggle('off', !S2[b.dataset.m]); } };
     return { d, tick() { const on = RADIO.st.on && lidOpen > 0.95 && !ROAMS.on; d.classList.toggle('on', on); if (on) { const nm = RADIO.STYLES[RADIO.st.style].name; if (MIX.last !== nm) { MIX.last = nm; d.querySelector('#mixN').textContent = '♪ ' + nm; } } } }; })();
@@ -1213,7 +1277,7 @@
     cam.position.copy(REC.p); const c2 = Math.cos(REC.cpch); cam.lookAt(REC.p.x + Math.sin(REC.cy) * c2, REC.p.y + Math.sin(REC.cpch), REC.p.z - Math.cos(REC.cy) * c2); cam.near = 0.08; };
   function enterRoam() { if (ROAMS.on) return; ROAMS.on = true; document.body.classList.add('unfire-roaming'); ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
   function exitRoam() { if (REC.on) REC.set(false); if (!ROAMS.on) return;
-    CASE_VIEW.on=false;CAPS.cancel();carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
+    NANO_CINEMA.cancel();CASE_VIEW.on=false;CAPS.cancel();carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
  ROAMS.on = false; document.body.classList.remove('unfire-roaming'); ROAMS.cp = null; ROAMS.mini = false; ROAMS.freeRobotMode = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
   // First visit: the EXISTING PASEAR control blinks for exactly two seconds
   // once the physical lid has completely opened, then stays visible.
@@ -1764,29 +1828,30 @@
     g('onlInv').onclick = async () => { const l = ONLINE.link(), txt = '¡Ven a jugar conmigo a UNFIRE AUDIO! Sala: '; try { if (navigator.share) { await navigator.share({ title: 'UNFIRE AUDIO', text: txt, url: l }); return; } } catch (e) {} try { await navigator.clipboard.writeText(l); say('📨 Enlace copiado: ' + l + ' · pégalo a tus amigos'); } catch (e) { say('📨 Envía este enlace a tus amigos: ' + l); } }; }
   // ===== Reusable capsule inventory: pack, throw, deploy and collect without leaving roam =====
   const CAPS=(()=>{
-    let capsule=null, flight=0, start=null, target=null;
+    let capsule=null, flight=0, start=null, target=null, launchNano=false, upperShell=null, lowerShell=null, launchAt=0;
     const build=()=>{
       if(capsule)return;
       capsule=new THREE.Group();
       // Two low-poly hemispheres, created once and reused for every throw.
       const upper=new THREE.Mesh(new THREE.SphereGeometry(0.63,12,8,0,TAU,0,H2),new THREE.MeshStandardMaterial({color:0xff2fb0,metalness:0.35,roughness:0.34}));
       const lower=new THREE.Mesh(new THREE.SphereGeometry(0.63,12,8,0,TAU,H2,H2),new THREE.MeshStandardMaterial({color:0xeaf2ff,metalness:0.2,roughness:0.37}));
-      capsule.add(upper,lower);capsule.visible=false;S.scene.add(capsule);
+      upperShell=upper;lowerShell=lower;capsule.add(upper,lower);capsule.visible=false;S.scene.add(capsule);
     };
-    const cancel=()=>{flight=0;if(capsule)capsule.visible=false;};
+    const cancel=()=>{flight=0;launchAt=0;launchNano=false;if(capsule){capsule.visible=false;capsule.scale.setScalar(1);}if(upperShell)upperShell.position.y=0;if(lowerShell)lowerShell.position.y=0;};
     const pack=()=>{if(!ROAMS.on||!portableUnlocked())return false;cancel();closeCaseInGame();say('🎒 Maletín y objetos guardados en una cápsula. Pulsa G o LANZAR para desplegar.');return true;};
     const throwIt=()=>{
       if(!ROAMS.on||!portableUnlocked())return false;
       if(flight>0)return false;
       if(!carryingCase)return pack();
       build();
+      launchNano=!!ROAMS.mini;
       const yaw=ROAMS.cy==null?ROAMS.yaw:ROAMS.cy;
       const dirX=Math.sin(yaw),dirZ=-Math.cos(yaw);
       const floor=-8.9+(ROAMS.h||0);
-      start=V(ROAMS.p.x,floor+6.5,ROAMS.p.z);
+      start=V(ROAMS.p.x,floor+(launchNano ? 0.18 : 6.5),ROAMS.p.z);
       target=V(ROAMS.p.x+dirX*7,floor+(window.ATM_OUT?6.8:0.8),ROAMS.p.z+dirZ*7);
-      capsule.position.copy(start);capsule.rotation.set(0,0,0);
-      capsule.visible=true;flight=0.001;
+      capsule.position.copy(start);capsule.rotation.set(0,0,0);capsule.scale.setScalar(launchNano ? NANO_SCALE : 1);
+      capsule.visible=true;flight=0.001;launchAt=performance.now();
       say('🎒 ¡Cápsula lanzada!');hap(0.3);
       return true;
     };
@@ -1809,13 +1874,23 @@
       if(ROAMS.on && carryingCase && caseG.visible)caseG.visible=false;
       if(ROAMS.on && !carryingCase && !caseG.visible)caseG.visible=true;
       if(!flight||!capsule)return;
-      flight=Math.min(0.85,flight+Math.min(dt,0.06));
-      const u=flight/0.85;
+      const duration=launchNano ? 1.52 : 0.85;
+      const elapsed=Math.max(0,(performance.now()-launchAt)/1000);
+      flight=Math.min(duration,Math.max(flight+Math.min(dt,0.06),elapsed));
+      const u=flight/(launchNano ? 1.52 : 0.85);
+      const travel=launchNano ? Math.min(1,u/0.63) : u;
       capsule.position.set(
-        start.x+(target.x-start.x)*u,
-        start.y+(target.y-start.y)*u+3.2*Math.sin(Math.PI*u),
-        start.z+(target.z-start.z)*u
+        start.x+(target.x-start.x)*travel,
+        start.y+(target.y-start.y)*travel+(launchNano ? 0.8 : 3.2)*Math.sin(Math.PI*travel),
+        start.z+(target.z-start.z)*travel
       );
+      if(launchNano){
+        const grow=Math.max(0,Math.min(1,(u-0.60)/0.4));
+        const eased=grow*grow*(3-2*grow);
+        capsule.scale.setScalar(NANO_SCALE+(1-NANO_SCALE)*eased);
+        if(upperShell)upperShell.position.y=0.24*Math.max(0,(grow-0.7)/0.3);
+        if(lowerShell)lowerShell.position.y=-0.24*Math.max(0,(grow-0.7)/0.3);
+      }
       capsule.rotation.x+=dt*7;capsule.rotation.z+=dt*5;
       if(u>=1){
         cancel();openCaseInGame(target);
@@ -1985,7 +2060,7 @@
       // Optional help, never destroys quest progress or rewrites player save.
       if(!ROAMS.on)enterRoam();
       if(!window.ATM_OUT)ATM.setOut(true);
-      ROAMS.mini=false;ROAMS.cp=null;
+      NANO_CINEMA.cancel();ROAMS.mini=false;ROAMS.cp=null;
       if(quest.ev==='outside'){ROAMS.p.set(-30,4.5,110);ROAMS.h=4;}
       else{
         ROAMS.p.set(quest.x+Math.min(35,(quest.r||125)*0.4),4.5,quest.z);
@@ -1995,6 +2070,7 @@
       say('🧭 Nimbo: ¡Listo! Ya estás cerca del objetivo. Mira la estrella del mapa.');
     },
     robotMode: () => { if (!ROAMS.on) enterRoam(); if (CASE_VIEW.on) showRobotView();
+      if (NANO_CINEMA.busy()) return true;
       const futureMini = !ROAMS.mini;
       if (!futureMini) {
         const obstacles = window.ATM_OUT ? (window.__OBSTO || window.__buildObstOut()) : (window.__OBST || window.__buildObst());
@@ -2003,7 +2079,10 @@
         ROAMS.p.x = candidate.x; ROAMS.p.z = candidate.z;
       }
       ROAMS.freeRobotMode = true;
-      ROAMS.mini = futureMini; ROAMS.cp = null; ROAMS.ep = null; ROAMS.tgt = null; ROAMS.cy = ROAMS.yaw; ROAMS.k = {}; ROAMS.touchStick = null; ROAMS.flyH = ROAMS.h || 0; ROAMS.climbV = 0; ROAMS.vy = 0; say(ROAMS.mini ? '🔬 NANO ROBOT · tamaño idéntico a los minis del maletín · explora, corre y vuela' : '🧍 TAMAÑO NORMAL · misma posición y controles'); return ROAMS.mini; }, isNano: () => !!ROAMS.mini, toggleMap: () => MAP.toggle(),
+      const animated = futureMini && NANO_CINEMA.start();
+      if (!animated) ROAMS.mini = futureMini;
+      ROAMS.cp = null; ROAMS.ep = null; ROAMS.tgt = null; ROAMS.cy = ROAMS.yaw; ROAMS.k = {}; ROAMS.touchStick = null; ROAMS.flyH = ROAMS.h || 0; ROAMS.climbV = 0; ROAMS.vy = 0;
+      say(futureMini ? '🔬 NANO ROBOT · cápsula desplegándose desde el pecho · mismo robot a escala mini' : '🧍 TAMAÑO NORMAL · misma posición y controles'); return futureMini; }, isNano: () => !!ROAMS.mini, toggleMap: () => MAP.toggle(),
     focusHost: (who, soft) => { HOST.talk(); if (soft) { if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } return; } let p = HOST.pos; if (who !== 'NIMBO') { const B = bots(); if (B.length) { const it = B[(who.charCodeAt(0) + who.length) % B.length]; p = it.W.getWorldPosition(V(0, 0, 0)); try { cn(it).talk = true; setTimeout(() => { if (it.cn) it.cn.talk = false; }, 3000); } catch (e) {} } } if (ROAMS.on) { const d = V(cam.position.x - p.x, 0, cam.position.z - p.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const side = V(-d.z, 0, d.x); const q = V(p.x + d.x * 11 + side.x * 7, p.y + 5.5, p.z + d.z * 11 + side.z * 7); const lx = p.x - q.x, lz = p.z - q.z; ROAMS.tgt = { p: q, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(p.y + 1.5 - q.y, Math.hypot(lx, lz)) }; } else { view.gx = clamp(p.x * 0.7, -CW / 2 - 1, CW / 2 + 1); view.gz = clamp(p.z * 0.7, -CD / 2 - 1, CD / 2 + 2); view.gd = view.D0 * 0.85; } } }); } catch (e) { console.warn('story', e); }
   roamB.addEventListener('pointerdown', (e) => e.stopPropagation());
   // Same playable world for full-size and NANO robots, with scale-aware
@@ -2777,12 +2856,12 @@
     if (Math.abs(cam.fov - nextFov) > 0.005) {
       cam.fov = nextFov;
       cam.updateProjectionMatrix(); // FOV changes must reach the GPU, not only the property.
-    } window.__roam = ROAMS.on || view.gd > view.D0 * 1.2; if (ROAMS.on) { const K = CASE_VIEW.on ? {} : ROAMS.k; if (K.ArrowUp || K.ArrowDown) ROAMS.tgt = null; const fw = REC.on ? 0 : (K.ArrowUp || K.w ? 1 : 0) - ((K.ArrowDown || K.s) && !ROAMS.fly ? 1 : 0), sd2 = REC.on ? 0 : (K.ArrowRight || K.d ? 1 : 0) - (K.ArrowLeft || K.a ? 1 : 0); if (ROAMS.cy == null) ROAMS.cy = ROAMS.yaw; const GTA = ((ROAMS.mode || '3p') === '3p' || ROAMS.mode === '3pl' || ROAMS.mode === '2p'); ROAMS.run = false;
+    } window.__roam = ROAMS.on || view.gd > view.D0 * 1.2; if (ROAMS.on) { const K = CASE_VIEW.on || NANO_CINEMA.busy() ? {} : ROAMS.k; if (K.ArrowUp || K.ArrowDown) ROAMS.tgt = null; const fw = REC.on ? 0 : (K.ArrowUp || K.w ? 1 : 0) - ((K.ArrowDown || K.s) && !ROAMS.fly ? 1 : 0), sd2 = REC.on ? 0 : (K.ArrowRight || K.d ? 1 : 0) - (K.ArrowLeft || K.a ? 1 : 0); if (ROAMS.cy == null) ROAMS.cy = ROAMS.yaw; const GTA = ((ROAMS.mode || '3p') === '3p' || ROAMS.mode === '3pl' || ROAMS.mode === '2p'); ROAMS.run = false;
       if (fw || sd2) { ROAMS.tgt = null; ROOM.R.userData.camTrack = null; const ms = avatarProfile().speedScale; const SPD = (K.Shift ? 1.8 : K.Alt ? 0.5 : 1) * (window.ATM_OUT ? 1.55 : 0.78) * (ROAMS.perkV || 1);
-        if (GTA) { const dir = ROAMS.yaw + Math.atan2(sd2, fw), y0 = ROAMS.yaw; ROAMS.cy = angL(ROAMS.cy, dir, Math.min(1, dt * 10)); ROAMS.yaw = ROAMS.cy; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; let sl = 1; if (wet && window.__WAVE) { const dx2 = Math.sin(dir) * 4, dz2 = -Math.cos(dir) * 4; sl = clamp(1 - (window.__WAVE(ROAMS.p.x + dx2, ROAMS.p.z + dz2, t) - window.__WAVE(ROAMS.p.x, ROAMS.p.z, t)) * 0.22, 0.7, 1.6); } ROAMS.surfV = (ROAMS.surfV || 1) + (sl - (ROAMS.surfV || 1)) * Math.min(1, dt * 2); const vv = 34 * ms * SPD * (wet ? (ROAMS.board ? 1.9 * ROAMS.surfV : 1.15) : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 * (window.__PROP ? window.__PROP() : 1) : 1.4) : 1); ROAMS.run = vv > 18 * ms && !wet; ROAMS.wet = wet; ROAMS.vvS = ROAMS.fly ? (ROAMS.vvS || vv) + (vv - (ROAMS.vvS || vv)) * Math.min(1, dt * 2.5) : vv; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(dt * ROAMS.vvS, 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.yaw = y0; if (fw >= 0) ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * (sd2 ? 1.2 : 2.6))); }
-        else if (ROAMS.mode === '1p') { ROAMS.yaw += sd2 * dt * 2.0; ROAMS.cy = ROAMS.yaw; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : true) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; const vv = 34 * ms * SPD * (wet ? 2.0 : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 * (window.__PROP ? window.__PROP() : 1) : 1.4) : 1); ROAMS.run = vv > 18 * ms && !wet; ROAMS.wet = wet; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(fw * dt * vv * (fw < 0 ? 0.6 : 1), 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); } else { ROAMS.cy = ROAMS.yaw; roamMove(fw * dt * 44 * ms * SPD, sd2 * dt * 34 * ms * SPD); } } ROAMS.moving = !!(fw || sd2);
+        if (GTA) { const dir = ROAMS.yaw + Math.atan2(sd2, fw), y0 = ROAMS.yaw; ROAMS.cy = angL(ROAMS.cy, dir, Math.min(1, dt * 10)); ROAMS.yaw = ROAMS.cy; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; let sl = 1; if (wet && window.__WAVE) { const dx2 = Math.sin(dir) * 4, dz2 = -Math.cos(dir) * 4; sl = clamp(1 - (window.__WAVE(ROAMS.p.x + dx2, ROAMS.p.z + dz2, t) - window.__WAVE(ROAMS.p.x, ROAMS.p.z, t)) * 0.22, 0.7, 1.6); } ROAMS.surfV = (ROAMS.surfV || 1) + (sl - (ROAMS.surfV || 1)) * Math.min(1, dt * 2); const vv0 = 34 * ms * SPD * (wet ? (ROAMS.board ? 1.9 * ROAMS.surfV : 1.15) : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 * (window.__PROP ? window.__PROP() : 1) : 1.4) : 1); const vv = NANO_CINEMA.cruise(vv0, window.__PROP ? window.__PROP() : 1, !!K.Shift, !!K.Alt); ROAMS.run = vv > 18 * ms && !wet; ROAMS.wet = wet; ROAMS.vvS = ROAMS.fly ? (ROAMS.vvS || vv) + (vv - (ROAMS.vvS || vv)) * Math.min(1, dt * 2.5) : vv; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(dt * ROAMS.vvS, 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.yaw = y0; if (fw >= 0) ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * (sd2 ? 1.2 : 2.6))); }
+        else if (ROAMS.mode === '1p') { ROAMS.yaw += sd2 * dt * 2.0; ROAMS.cy = ROAMS.yaw; const wet = window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : true) && !(ROAMS.h > (ROAMS.fl || 0) + 8) && !ROAMS.fly; const vv0 = 34 * ms * SPD * (wet ? 2.0 : 1) * (ROAMS.fly ? (window.ATM_OUT ? 2.6 * (window.__PROP ? window.__PROP() : 1) : 1.4) : 1); const vv = NANO_CINEMA.cruise(vv0, window.__PROP ? window.__PROP() : 1, !!K.Shift, !!K.Alt); ROAMS.run = vv > 18 * ms && !wet; ROAMS.wet = wet; ROAMS.vvS = ROAMS.fly ? (ROAMS.vvS || vv) + (vv - (ROAMS.vvS || vv)) * Math.min(1, dt * 2.5) : vv; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(fw * dt * ROAMS.vvS * (fw < 0 ? 0.6 : 1), 0); ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); } else { ROAMS.cy = ROAMS.yaw; roamMove(fw * dt * 44 * ms * SPD, sd2 * dt * 34 * ms * SPD); } } ROAMS.moving = !!(fw || sd2);
       { if (ROAMS.h == null) { ROAMS.h = 0; ROAMS.vy = 0; } const fl = (() => { if (window.ATM_OUT) { if (Math.abs(ROAMS.p.x) < 82 && ROAMS.p.z > -18 && ROAMS.p.z < 98 && -8.9 + (ROAMS.h || 0) > 25) { const inDome = Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 37 && window.__DOME && window.__DOME.open > 0.6; if (!inDome) return 26.6 + 8.9 + 0.2; return 0; } if (window.__SKYDEV && (ROAMS.h || 0) > 40) { for (const o of window.__SKYDEV()) { if (!o.visible) continue; const s = o.scale.x, top = o.position.y + s * 0.45; if (Math.hypot(ROAMS.p.x - o.position.x, ROAMS.p.z - o.position.z) < s * 0.7 && top + 9 <= ROAMS.h + 2 && top + 9 > ROAMS.h - 60) { ROAMS.onDevN = o; return top + 9; } } } if (window.__WAVE && window.__LAND && !window.__LAND(ROAMS.p.x, ROAMS.p.z)) { return window.__WAVE(ROAMS.p.x, ROAMS.p.z, t) - (ROAMS.board ? -1.1 : 0.85); } let g = 0; for (const B of COLLISION(window.__OBSTO, ROAMS.p.x, ROAMS.p.z, 1)) if (B.y1 != null && ROAMS.p.x > B.x0 + 0.9 && ROAMS.p.x < B.x1 - 0.9 && ROAMS.p.z > B.z0 + 0.9 && ROAMS.p.z < B.z1 - 0.9 && B.y1 + 9 <= ROAMS.h + 0.6) g = Math.max(g, B.y1 + 9); return g; } if (!window.__OBST) return 0; let g = 0; const p = ROAMS.p; for (const B of COLLISION(window.__OBST, ROAMS.p.x, ROAMS.p.z, 1)) if (B.y1 != null && p.x > B.x0 + 0.9 && p.x < B.x1 - 0.9 && p.z > B.z0 + 0.9 && p.z < B.z1 - 0.9 && B.y1 + 8.9 <= ROAMS.h + 0.6 * (ROAMS.mini ? NANO_SCALE : 1)) g = Math.max(g, B.y1 + 8.9); return g; })(); ROAMS.fl = fl; { const o = ROAMS.onDevN; ROAMS.onDevN = null; const onTop = o && (ROAMS.h || 0) <= fl + 1.5; if (onTop) { if (ROAMS.devObj === o && ROAMS.devPrev) { ROAMS.p.x += o.position.x - ROAMS.devPrev.x; ROAMS.p.z += o.position.z - ROAMS.devPrev.z; } ROAMS.devObj = o; ROAMS.devPrev = o.position.clone(); if (ROAMS.landedOn !== o) { ROAMS.landedOn = o; let n = 0; try { n = (+localStorage.getItem('unfire_skyland') || 0) + 1; localStorage.setItem('unfire_skyland', String(n)); } catch (e) {} if (n % 3 === 0) { try { window.__REWARD('Has aterrizado en ' + n + ' plugins gigantes'); } catch (e) {} } else say(n % 3 === 0 ? '' : '🛬 ¡Aterrizaje en un plugin gigante! (' + n + ') · aterriza en 3 para completar la misión · mantén ESPACIO para despegar'); hap(0.5); } } else { ROAMS.devObj = null; if (!o) ROAMS.landedOn = (ROAMS.h || 0) > 60 ? ROAMS.landedOn : null; } } if (ROAMS.board && ROAMS.wet && K[' '] && ROAMS.spDown && performance.now() - ROAMS.spDown > 450 && !ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; ROAMS.trick = null; }
-        ROAMS.wet = !!window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !ROAMS.fly; ROAMS.wk = (ROAMS.wk || 0) + ((ROAMS.fly ? 1 : 0) - (ROAMS.wk || 0)) * Math.min(1, dt * 3); if (ROAMS.fly) { const miniFlight = avatarProfile().speedScale; const hov = Math.max(fl, (window.ATM_OUT ? 22 : 9)*miniFlight); ROAMS.flyT = (ROAMS.flyT || 0) + dt; const sink = window.ATM_OUT ? Math.min(420, 10 + (ROAMS.h || 0) * 0.14) : 5; ROAMS.climbV = K[' '] ? Math.min(Math.max(ROAMS.climbV || 0, 0) + dt * (window.ATM_OUT ? 150 : 22) * (ROAMS.perkF || 1), (window.ATM_OUT ? 380 : 12) * (ROAMS.perkF || 1)) : K.f ? -Math.min(window.ATM_OUT ? 1200 : 18, Math.abs(ROAMS.climbV || 0) + dt * 1500) : (K.s || K.ArrowDown) ? (ROAMS.climbV || 0) + (-Math.max(window.ATM_OUT ? 60 : 8, sink * 1.6) - (ROAMS.climbV || 0)) * Math.min(1, dt * 3) : (ROAMS.climbV || 0) * Math.max(0, 1 - dt * 4); // Vertical thrust follows the selected propulsion, while preserving fine landing control.
+        ROAMS.wet = !!window.ATM_OUT && !(window.__LAND ? window.__LAND(ROAMS.p.x, ROAMS.p.z) : Math.hypot(ROAMS.p.x, ROAMS.p.z) < 258) && !ROAMS.fly; ROAMS.wk = (ROAMS.wk || 0) + ((ROAMS.fly ? 1 : 0) - (ROAMS.wk || 0)) * Math.min(1, dt * 3); if (ROAMS.fly) { const miniFlight = ROAMS.mini && window.ATM_OUT ? Math.max(0.64, avatarProfile().speedScale) : avatarProfile().speedScale; const hov = Math.max(fl, (window.ATM_OUT ? 22 : 9)*miniFlight); ROAMS.flyT = (ROAMS.flyT || 0) + dt; const sink = window.ATM_OUT ? Math.min(420, 10 + (ROAMS.h || 0) * 0.14) : 5; ROAMS.climbV = K[' '] ? Math.min(Math.max(ROAMS.climbV || 0, 0) + dt * (window.ATM_OUT ? 150 : 22) * (ROAMS.perkF || 1), (window.ATM_OUT ? 380 : 12) * (ROAMS.perkF || 1)) : K.f ? -Math.min(window.ATM_OUT ? 1200 : 18, Math.abs(ROAMS.climbV || 0) + dt * 1500) : (K.s || K.ArrowDown) ? (ROAMS.climbV || 0) + (-Math.max(window.ATM_OUT ? 60 : 8, sink * 1.6) - (ROAMS.climbV || 0)) * Math.min(1, dt * 3) : (ROAMS.climbV || 0) * Math.max(0, 1 - dt * 4); // Vertical thrust follows the selected propulsion, while preserving fine landing control.
         const propLevel = window.ATM_OUT && window.__PROP ? clamp(window.__PROP(),1,8) : 1;
         const verticalBoost = window.ATM_OUT ? Math.min(3.1,1+(Math.sqrt(propLevel)-1)*0.62) : 1;
         const roof = window.__DOME;
@@ -2802,9 +2881,9 @@
           // through a closed dome when high thrust or a long frame is involved.
           if (ROAMS.vy<0) {
             const clearance=Math.max(0,ROAMS.h-fl);
-            const maxDown=domeApproach ? 18 : Math.min(650,Math.max(14,clearance*2.8));
+            const maxDown=domeApproach ? 18 : Math.min(ROAMS.mini ? 210 : 650,Math.max(14,clearance*2.8));
             ROAMS.vy=Math.max(ROAMS.vy,-maxDown);
-          } else ROAMS.vy=Math.min(ROAMS.vy,650);
+          } else ROAMS.vy=Math.min(ROAMS.vy,ROAMS.mini ? 230 : 650);
         }
         if (ROAMS.flyT > 1.2 && !K[' '] && ROAMS.flyH <= fl + 0.3 && ROAMS.h <= fl + 0.6) { ROAMS.fly = false; ROAMS.climbV = 0; say('🦶 Aterrizado'); } } else { ROAMS.flyH = null; ROAMS.vy -= dt * (ROAMS.h > fl + 40 ? 300 : avatarProfile().gravity); if (ROAMS.vy < -700) ROAMS.vy = -700; if (ROAMS.h < fl + 30 && ROAMS.vy < -40) ROAMS.vy += (-40 - ROAMS.vy) * Math.min(1, dt * 4); } ROAMS.h += ROAMS.vy * dt; const inDomeT = !window.ATM_OUT && Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 36; const top = window.ATM_OUT ? 8000 : inDomeT ? 60 : 14; if (ROAMS.h > top) { ROAMS.h = top; ROAMS.vy = Math.min(ROAMS.vy, 0); } if (ROAMS.h < fl) { ROAMS.h = ROAMS.wet ? ROAMS.h + (fl - ROAMS.h) * Math.min(1, dt * 10) : fl; ROAMS.vy = 0; } ROAMS.air = ROAMS.h > fl + 0.3; } { const CT = ROOM.R.userData.camTrack; if (CT && !(fw || sd2)) { const CD0 = ROOM.R.userData.camTrackDir; const d = CD0 ? V(CD0.x, 0, CD0.z) : V(cam.position.x - CT.x, 0, cam.position.z - CT.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const side = V(-d.z, 0, d.x); const p = V(CT.x + d.x * 12 + side.x * 9, CT.y + 2.2, CT.z + d.z * 12 + side.z * 9); const lx = CT.x - p.x, lz = CT.z - p.z; ROAMS.tgt = { p, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(CT.y - p.y, Math.hypot(lx, lz)) }; } } if (ROAMS.tgt) { const T0 = ROAMS.tgt; const dx = T0.p.x - ROAMS.p.x, dz = T0.p.z - ROAMS.p.z, d = Math.hypot(dx, dz); if (d > 1.2) { let dir = Math.atan2(dx, -dz); if ((ROAMS.stkN || 0) > 6) { if (!ROAMS.avoidS) ROAMS.avoidS = Math.random() < 0.5 ? 1 : -1; dir += ROAMS.avoidS * 1.2; } else if ((ROAMS.stkN || 0) === 0) ROAMS.avoidS = 0; ROAMS.cy = angL(ROAMS.cy == null ? dir : ROAMS.cy, dir, Math.min(1, dt * 8)); const sp = Math.min(d, (d > 25 ? 42 : 24) * dt * (window.ATM_OUT ? 1.6 : 1)); const y0 = ROAMS.yaw; ROAMS.yaw = ROAMS.cy; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(sp, 0); ROAMS.yaw = y0; ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.moving = true; ROAMS.run = d > 25; ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * 4)); } else { ROAMS.avoidS = 0; ROAMS.p.y += (T0.p.y - ROAMS.p.y) * 0.1; ROAMS.yaw = angL(ROAMS.yaw, T0.yaw, 0.1); } ROAMS.pitch += (T0.pitch - ROAMS.pitch) * 0.1; } if (K.q) ROAMS.yaw -= dt * 1.9; if (K.e) ROAMS.yaw += dt * 1.9; const cp = Math.cos(ROAMS.pitch); if (!ROAMS.av) { try { const r0 = ROBOT.build(Object.assign({}, MUTANTS.list[(ROAMS.myType == null ? 4 : ROAMS.myType) % MUTANTS.list.length], { n: ROAMS.myNum || 27 })); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); if (ROAMS.myCol && window.__tintAvatar) window.__tintAvatar(r0.root, ROAMS.myCol); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(10.5 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; S.scene.add(w); const WG = new THREE.Group(); const s0 = w.scale.x || 1; w.rotation.order = 'YXZ'; WG.position.set(0, 10.5 * 0.62 / s0, -1.0 / s0); let bodyMat = null; r0.root.traverse((o) => { if (!bodyMat && o.isMesh && o.material && o.material.color && (o.material.metalness || 0) > 0.3) bodyMat = o.material; }); const bladeM = bodyMat ? bodyMat : new THREE.MeshPhysicalMaterial({ color: 0xd8dde6, metalness: 0.9, roughness: 0.18, clearcoat: 1 }); const acc = new THREE.Color((MUTANTS.list[4 % MUTANTS.list.length].accent) || '#ff2a4a'); const tipM = new THREE.MeshStandardMaterial({ color: acc, emissive: acc, emissiveIntensity: 1.1, toneMapped: false });
           const wingM = new THREE.MeshPhysicalMaterial({ color: 0x3fd65a, metalness: 0.55, roughness: 0.22, clearcoat: 1, clearcoatRoughness: 0.1 }); const stripeM = new THREE.MeshPhysicalMaterial({ color: 0xf4f6fa, metalness: 0.7, roughness: 0.2, clearcoat: 1 });
@@ -2817,7 +2896,7 @@
             const eng = mesh(new THREE.CylinderGeometry(0.32, 0.4, 1.4, 14), stripeM); eng.rotation.x = Math.PI / 2; eng.position.set(sg * 2.2, -0.25, 0.2); hinge.add(eng); const glow = new THREE.Mesh(new THREE.CircleGeometry(0.28, 14), tipM); glow.position.set(sg * 2.2, -0.25, -0.52); glow.rotation.y = Math.PI; hinge.add(glow);
             return { root, hinge, sg, bl: [] }; };
           const wl = side(1), wr = side(-1); WG.add(wl.root, wr.root); WG.scale.setScalar(0.001 / s0); w.add(WG); const TH = new THREE.Group(); const thM = new THREE.MeshBasicMaterial({ color: 0x7fd6ff, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }); [-1, 1].forEach((sx) => { const piv = new THREE.Group(); piv.position.set(sx * 1.0 / s0, 0.05 / s0, 0); const c = new THREE.Mesh(new THREE.ConeGeometry(0.55 / s0, 3.2 / s0, 16, 1, true), thM); c.rotation.x = Math.PI; c.position.y = -1.6 / s0; piv.add(c); TH.add(piv); }); TH.visible = false; w.add(TH); const BRD = new THREE.Group(); { const bt = ((f) => { const c = Y2K.cnv(256, 64); f(c.getContext('2d')); return Y2K.toTex(c, { color: true }); })((g) => { g.fillStyle = '#fefefe'; g.fillRect(0, 0, 256, 64); g.fillStyle = '#ff2fb0'; g.fillRect(0, 26, 256, 12); g.fillStyle = '#3d8bff'; g.fillRect(0, 20, 256, 4); g.fillRect(0, 40, 256, 4); g.fillStyle = '#111'; g.font = '900 22px Impact'; g.fillText('UNFIRE 27', 90, 34); }); const bg = new THREE.SphereGeometry(1, 28, 12); const bm = new THREE.Mesh(bg, new THREE.MeshPhysicalMaterial({ map: bt, roughness: 0.25, clearcoat: 1 })); bm.scale.set(1.5 / s0, 0.2 / s0, 5.2 / s0); bm.castShadow = true; BRD.add(bm); const fin = new THREE.Mesh(new THREE.BoxGeometry(0.06 / s0, 0.5 / s0, 0.5 / s0), new THREE.MeshStandardMaterial({ color: 0x222222 })); fin.position.set(0, -0.35 / s0, 3.8 / s0); BRD.add(fin); } BRD.visible = false; w.add(BRD); if (ROAMS.myCol && window.__tintAvatar) { window.__tintAvatar(WG, ROAMS.myCol); window.__tintAvatar(BRD, ROAMS.myCol); } ROAMS.av = { w, r0, ph: 0, WG, wl, wr, TH, BRD }; } catch (e) { ROAMS.av = { w: null }; } }
-      const AV = ROAMS.av; const fx = Math.sin(ROAMS.yaw), fz = -Math.cos(ROAMS.yaw); const MODE = REC.on ? '3p' : ROAMS.mode === 'libre' ? '3p' : ROAMS.mode || '3p'; if ((MODE !== '3p' && MODE !== '3pl' && MODE !== '2p' && MODE !== '1p') ) { if (AV.w) AV.w.visible = false; const eye = MODE === '1p' && !ROAMS.mini ? (window.ATM_OUT ? -9 : -8.9) + 9.6 + (ROAMS.h || 0) : ROAMS.p.y; if (!ROAMS.cp) ROAMS.cp = cam.position.clone(); ROAMS.cp.lerp(V(ROAMS.p.x, eye, ROAMS.p.z), MODE === '1p' ? 0.5 : 0.25); cam.position.copy(ROAMS.cp); cam.lookAt(cam.position.x + fx * cp, cam.position.y + Math.sin(ROAMS.pitch), cam.position.z + fz * cp); cam.near = ROAMS.mini ? 0.006 : 0.1; } else { if (AV.w) { AV.w.visible = true; if (!AV.baseScale) AV.baseScale = AV.w.scale.x; AV.w.scale.setScalar(AV.baseScale*(ROAMS.mini?NANO_SCALE:1)); AV.w.position.set(ROAMS.p.x, -8.9 + (ROAMS.h || 0), ROAMS.p.z); if (AV.WG) { const k = ROAMS.wk || 0, s0 = AV.baseScale || 1; AV.WG.scale.setScalar(Math.max(0.001, Math.min(1, k * 3)) / s0); AV.WG.visible = k > 0.01; const fl2 = Math.sin(t * (ROAMS.moving ? 7 : 3)) * 0.18 * k; [AV.wl, AV.wr].forEach((S2) => { const kk = Math.max(0, Math.min(1, k * 1.4 - 0.2)), e = kk * kk * (3 - 2 * kk); S2.hinge.rotation.y = S2.sg * (1 - e) * 1.45; S2.hinge.rotation.z = S2.sg * ((1 - e) * -0.9 + e * 0.08 + fl2 * 0.25 - (AV.bank || 0) * 0.25 * S2.sg); S2.hinge.scale.setScalar(0.25 + 0.75 * Math.min(1, k * 1.3)); }); { const yr = ROAMS.cy - (AV.lyaw == null ? ROAMS.cy : AV.lyaw); AV.lyaw = ROAMS.cy; AV.bank = (AV.bank || 0) * 0.9 + Math.max(-0.6, Math.min(0.6, -Math.atan2(Math.sin(yr), Math.cos(yr)) * 8)) * 0.1; const tp = ROAMS.fly ? (ROAMS.moving ? 1.25 : ((ROAMS.climbV || 0) > 5 ? -0.05 : 0.12)) : 0; AV.tilt = (AV.tilt || 0) + (tp - (AV.tilt || 0)) * Math.min(1, dt * 3); AV.w.rotation.x = AV.tilt + (ROAMS.fly ? Math.sin(t * 2.3) * 0.04 + Math.sin(t * 5.1) * 0.015 : 0); AV.w.rotation.z = ROAMS.fly ? AV.bank + Math.sin(t * 1.7) * 0.05 : 0; if (AV.TH) { AV.TH.visible = k > 0.05; AV.TH.children.forEach((c, i) => { c.scale.set(1, (0.6 + Math.random() * 0.5 + ((ROAMS.climbV || 0) > 5 || ROAMS.moving ? 0.8 : 0)) * k, 1); }); } } if (ROAMS.wet && !ROAMS.fly) { AV.w.rotation.x = ROAMS.moving ? 0.22 : 0.05; AV.w.rotation.z = Math.sin(t * 1.7) * 0.07; } } const cyy = ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy; AV.w.rotation.y = Math.atan2(Math.sin(cyy), -Math.cos(cyy));
+      NANO_CINEMA.tick(dt); const AV = ROAMS.av; const fx = Math.sin(ROAMS.yaw), fz = -Math.cos(ROAMS.yaw); const MODE = REC.on ? '3p' : ROAMS.mode === 'libre' ? '3p' : ROAMS.mode || '3p'; if ((MODE !== '3p' && MODE !== '3pl' && MODE !== '2p' && MODE !== '1p') ) { if (AV.w) AV.w.visible = false; const eye = MODE === '1p' && !ROAMS.mini ? (window.ATM_OUT ? -9 : -8.9) + 9.6 + (ROAMS.h || 0) : ROAMS.p.y; if (!ROAMS.cp) ROAMS.cp = cam.position.clone(); ROAMS.cp.lerp(V(ROAMS.p.x, eye, ROAMS.p.z), MODE === '1p' ? 0.5 : 0.25); cam.position.copy(ROAMS.cp); cam.lookAt(cam.position.x + fx * cp, cam.position.y + Math.sin(ROAMS.pitch), cam.position.z + fz * cp); cam.near = ROAMS.mini ? 0.006 : 0.1; } else { if (AV.w) { AV.w.visible = true; if (!AV.baseScale) AV.baseScale = AV.w.scale.x; AV.w.scale.setScalar(AV.baseScale*(ROAMS.mini?NANO_SCALE:1)*NANO_CINEMA.avatarFactor()); AV.w.position.set(ROAMS.p.x, -8.9 + (ROAMS.h || 0), ROAMS.p.z); if (AV.WG) { const k = ROAMS.wk || 0, s0 = AV.baseScale || 1; AV.WG.scale.setScalar(Math.max(0.001, Math.min(1, k * 3)) / s0); AV.WG.visible = k > 0.01; const fl2 = Math.sin(t * (ROAMS.moving ? 7 : 3)) * 0.18 * k; [AV.wl, AV.wr].forEach((S2) => { const kk = Math.max(0, Math.min(1, k * 1.4 - 0.2)), e = kk * kk * (3 - 2 * kk); S2.hinge.rotation.y = S2.sg * (1 - e) * 1.45; S2.hinge.rotation.z = S2.sg * ((1 - e) * -0.9 + e * 0.08 + fl2 * 0.25 - (AV.bank || 0) * 0.25 * S2.sg); S2.hinge.scale.setScalar(0.25 + 0.75 * Math.min(1, k * 1.3)); }); { const yr = ROAMS.cy - (AV.lyaw == null ? ROAMS.cy : AV.lyaw); AV.lyaw = ROAMS.cy; AV.bank = (AV.bank || 0) * 0.9 + Math.max(-0.6, Math.min(0.6, -Math.atan2(Math.sin(yr), Math.cos(yr)) * 8)) * 0.1; const tp = ROAMS.fly ? (ROAMS.moving ? 1.25 : ((ROAMS.climbV || 0) > 5 ? -0.05 : 0.12)) : 0; AV.tilt = (AV.tilt || 0) + (tp - (AV.tilt || 0)) * Math.min(1, dt * 3); AV.w.rotation.x = AV.tilt + (ROAMS.fly ? Math.sin(t * 2.3) * 0.04 + Math.sin(t * 5.1) * 0.015 : 0); AV.w.rotation.z = ROAMS.fly ? AV.bank + Math.sin(t * 1.7) * 0.05 : 0; if (AV.TH) { AV.TH.visible = k > 0.05; AV.TH.children.forEach((c, i) => { c.scale.set(1, (0.6 + Math.random() * 0.5 + ((ROAMS.climbV || 0) > 5 || ROAMS.moving ? 0.8 : 0)) * k, 1); }); } } if (ROAMS.wet && !ROAMS.fly) { AV.w.rotation.x = ROAMS.moving ? 0.22 : 0.05; AV.w.rotation.z = Math.sin(t * 1.7) * 0.07; } } const cyy = ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy; AV.w.rotation.y = Math.atan2(Math.sin(cyy), -Math.cos(cyy));
         // SURF: tabla bajo los pies en el agua, postura de lado, trucos con ESPACIO (360, flip, grab, superman) y puntuación con récord
         { const surf = !!(window.ATM_OUT && ROAMS.wet && !ROAMS.fly && ROAMS.board); AV.bk = (AV.bk || 0) + ((surf || ROAMS.trick ? 1 : 0) - (AV.bk || 0)) * Math.min(1, dt * 5); if (AV.BRD) { AV.BRD.visible = AV.bk > 0.02; const e3 = AV.bk; AV.BRD.scale.set(e3, 1, Math.max(0.05, e3 * e3)); AV.BRD.rotation.y = (1 - e3) * 3.0; } AV.st = (AV.st || 0) + ((surf ? 1 : 0) - (AV.st || 0)) * Math.min(1, dt * 6); if (AV.r0 && AV.r0.root) AV.r0.root.rotation.y = AV.st * 1.25 * (1 - (ROAMS.trick && ROAMS.trick.k === 'SUPERMAN' ? 1 : 0)); window.__T = t; if (surf && window.__WAVE) { const W1 = window.__WAVE, px = ROAMS.p.x, pz = ROAMS.p.z, fx = Math.sin(cyy), fz = -Math.cos(cyy), e = 3; const sF = (W1(px + fx * e, pz + fz * e, t) - W1(px - fx * e, pz - fz * e, t)) / (2 * e), sS = (W1(px - fz * e, pz + fx * e, t) - W1(px + fz * e, pz - fx * e, t)) / (2 * e); AV.sp0 = (AV.sp0 || 0) + (Math.atan(sF) - (AV.sp0 || 0)) * Math.min(1, dt * 6); AV.sr0 = (AV.sr0 || 0) + (Math.atan(sS) - (AV.sr0 || 0)) * Math.min(1, dt * 6); AV.w.rotation.x = -AV.sp0 * 0.9; AV.w.rotation.z = (AV.bank || 0) * 1.6 + AV.sr0 * 0.9 + Math.sin(t * 1.3) * 0.04; }
           const TK = ROAMS.trick; if (TK) { TK.t += dt; const u = Math.min(1, TK.t / 0.95), e = u * u * (3 - 2 * u); if (TK.k === '360') AV.w.rotation.y += TK.sd * e * TAU; else if (TK.k === 'FLIP') AV.w.rotation.x += e * TAU; else if (TK.k === 'GRAB') AV.w.rotation.z += Math.sin(u * Math.PI) * 0.7 * TK.sd; else AV.w.rotation.x -= Math.sin(u * Math.PI) * 1.3;

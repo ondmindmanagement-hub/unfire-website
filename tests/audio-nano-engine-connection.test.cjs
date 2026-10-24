@@ -69,5 +69,5 @@ test('nano speed is usable and physics remains smaller than full-size',()=>{
  assert.ok(n.radius<p.radius);
  assert.match(eng,/avatarProfile\(\)\.speedScale/);
  assert.match(eng,/avatarProfile\(\)\.gravity/);
- assert.match(eng,/const miniFlight = avatarProfile\(\)\.speedScale/);
+ assert.match(eng,/const miniFlight = ROAMS\.mini && window\.ATM_OUT \? Math\.max\(0\.64, avatarProfile\(\)\.speedScale\) : avatarProfile\(\)\.speedScale/, 'nano accelerates only outdoors while preserving normal-size flight');
 });
