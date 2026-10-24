@@ -31,8 +31,8 @@ test('SW fetch events keep dynamic or cross-origin requests on normal network pa
     addEventListener(name, cb) { handlers[name] = cb; }
   };
   vm.runInNewContext(worker, {
-    self: fakeSelf, URL, Set, Response, caches: {open() {throw Error('not used');}},
-    fetch() {throw Error('not used');}
+    self: fakeSelf, URL, Set, Response, caches: {open() {return Promise.resolve({match() {return Promise.resolve(null);}});}},
+    fetch() {return Promise.resolve(new Response('ok', {status: 200}));}
   }, {filename: 'unfire-local-sw.js'});
   function intercepted(url, mode='cors', method='GET', headers={}) {
     let handled = false;
