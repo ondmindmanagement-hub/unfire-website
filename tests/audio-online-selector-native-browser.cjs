@@ -51,7 +51,7 @@ async function check(browser,v){
       window.addEventListener('wheel',()=>window.gameWheels++);
       window.addEventListener('touchmove',()=>window.gameTouches++);
       return {guard:document.getElementById('onl').dataset.garageScrollGuard,
-        cols:style.gridTemplateColumns.trim().split(/\\s+/).length,
+        cols:style.gridTemplateColumns.trim().split(' ').filter(Boolean).length,
         overflow:style.overflowY,touchAction:style.touchAction,
         client:list.clientHeight,total:list.scrollHeight,
         box:{x:box.x,y:box.y,right:box.right,bottom:box.bottom}};
