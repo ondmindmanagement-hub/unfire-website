@@ -2884,6 +2884,15 @@
     // Pause GPU draws while opaque overlays own the screen. On software WebGL
     // a background draw can otherwise starve CLOSE taps in the story menu.
     // Continue dispatching DOM input; resume the exact scene on close.
+    // Pause costly draws while the transient robot/settings panel is expanded.
+    // Its DOM pointer events continue normally; button clicks auto-dismiss it
+    // after 150ms, so NANO's visual transform resumes without losing progress.
+    const settingsHudOpen = document.getElementById('storyHud')?.classList.contains('cfgOn');
+    if (settingsHudOpen) {
+      clock.getDelta(); previousRenderAt = 0;
+      adaptivePerf.since=0; adaptivePerf.frames=0; adaptivePerf.slow=0;
+      return;
+    }
     const storyMenuOpen = document.getElementById('storyMenu')?.style.display === 'block';
     if (MAP.expandedOpen || (window.UNFIRE_COINS && window.UNFIRE_COINS.isOpen) || storyMenuOpen) {
       clock.getDelta();
