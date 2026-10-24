@@ -1,0 +1,129 @@
+{
+  "title": "Unfire: La Luna se ha quedado sin bajo",
+  "target_seconds": 1020,
+  "target_duration": "00:17:00",
+  "status": "SCRIPT_ONLY_NO_FILM",
+  "footage_source": "real Unfire WebGL only",
+  "scenes": [
+    {
+      "scene": 1,
+      "id": "NOTA_ROBADA",
+      "title": "La nota robada",
+      "start_seconds": 0,
+      "end_seconds": 120,
+      "duration_seconds": 120,
+      "take_target_seconds": 30,
+      "in_game_capture": true,
+      "audio": {
+        "record_live_dialogue": true,
+        "license_gate": "UK_BASS_WAVES_SYNC_CLEARANCE_REQUIRED"
+      },
+      "camera_mode": "gameplay_cinematic"
+    },
+    {
+      "scene": 2,
+      "id": "GIGANTE_INMOVIL",
+      "title": "El gigante que no camina",
+      "start_seconds": 120,
+      "end_seconds": 240,
+      "duration_seconds": 120,
+      "take_target_seconds": 30,
+      "in_game_capture": true,
+      "audio": {
+        "record_live_dialogue": true,
+        "license_gate": "UK_BASS_WAVES_SYNC_CLEARANCE_REQUIRED"
+      },
+      "camera_mode": "gameplay_cinematic"
+    },
+    {
+      "scene": 3,
+      "id": "DJ_CABINA",
+      "title": "La discoteca del pecho",
+      "start_seconds": 240,
+      "end_seconds": 365,
+      "duration_seconds": 125,
+      "take_target_seconds": 31,
+      "in_game_capture": true,
+      "audio": {
+        "record_live_dialogue": true,
+        "license_gate": "UK_BASS_WAVES_SYNC_CLEARANCE_REQUIRED"
+      },
+      "camera_mode": "in_cabin_only"
+    },
+    {
+      "scene": 4,
+      "id": "VIAJE_CONTINUO",
+      "title": "Un despegue sin cambiar de plano",
+      "start_seconds": 365,
+      "end_seconds": 485,
+      "duration_seconds": 120,
+      "take_target_seconds": 30,
+      "in_game_capture": true,
+      "audio": {
+        "record_live_dialogue": true,
+        "license_gate": "UK_BASS_WAVES_SYNC_CLEARANCE_REQUIRED"
+      },
+      "camera_mode": "in_cabin_only"
+    },
+    {
+      "scene": 5,
+      "id": "PUBLICO_LUNAR",
+      "title": "El público del lado oscuro",
+      "start_seconds": 485,
+      "end_seconds": 620,
+      "duration_seconds": 135,
+      "take_target_seconds": 33,
+      "in_game_capture": true,
+      "audio": {
+        "record_live_dialogue": true,
+        "license_gate": "UK_BASS_WAVES_SYNC_CLEARANCE_REQUIRED"
+      },
+      "camera_mode": "gameplay_cinematic"
+    },
+    {
+      "scene": 6,
+      "id": "CARRERA_LUNAR",
+      "title": "La carrera que no sabía terminar",
+      "start_seconds": 620,
+      "end_seconds": 810,
+      "duration_seconds": 190,
+      "take_target_seconds": 45,
+      "in_game_capture": true,
+      "audio": {
+        "record_live_dialogue": true,
+        "license_gate": "UK_BASS_WAVES_SYNC_CLEARANCE_REQUIRED"
+      },
+      "camera_mode": "noclip_multicamera"
+    },
+    {
+      "scene": 7,
+      "id": "CONSERJE_LLAVE",
+      "title": "El conserje y la llave",
+      "start_seconds": 810,
+      "end_seconds": 940,
+      "duration_seconds": 130,
+      "take_target_seconds": 32,
+      "in_game_capture": true,
+      "audio": {
+        "record_live_dialogue": true,
+        "license_gate": "UK_BASS_WAVES_SYNC_CLEARANCE_REQUIRED"
+      },
+      "camera_mode": "gameplay_cinematic"
+    },
+    {
+      "scene": 8,
+      "id": "ULTIMA_NOTA",
+      "title": "La última nota",
+      "start_seconds": 940,
+      "end_seconds": 1020,
+      "duration_seconds": 80,
+      "take_target_seconds": 20,
+      "in_game_capture": true,
+      "audio": {
+        "record_live_dialogue": true,
+        "license_gate": "UK_BASS_WAVES_SYNC_CLEARANCE_REQUIRED"
+      },
+      "camera_mode": "in_cabin_only"
+    }
+  ]
+}
