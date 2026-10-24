@@ -55,13 +55,31 @@
   function HGT(o) { const b = new THREE.Box3().setFromObject(o); return Math.max(0.001, b.max.y - b.min.y); }
   const cv = $('cv'), parentPost = (m) => { try { parent.postMessage(Object.assign({ unfire: 1 }, m), '*'); } catch (e) {} };
   const DEVICE=window.__UNFIRE_AUTOCALIB||{tier:'desktop',maxDpr:1.5,antialias:true};
-  const LOWDEV = DEVICE.tier!=='desktop'||((navigator.hardwareConcurrency||8)<=4);
+  let LOWDEV = DEVICE.tier!=='desktop'||((navigator.hardwareConcurrency||8)<=4);
   window.__LOWDEV=LOWDEV;window.__UNFIRE_ACTIVE_DEVICE=DEVICE;
+  // SwiftShader/llvmpipe are real software rasterizers: expensive physical materials
+  // and 2K shadow passes otherwise block input and the lid for many seconds.
+  // Read the renderer's actual driver, not the browser/OS or a QA-only flag.
+  function softwareWebGL(renderer) {
+    try {
+      const gl = renderer.getContext();
+      const info = gl.getExtension('WEBGL_debug_renderer_info');
+      const name = String(gl.getParameter(info ? info.UNMASKED_RENDERER_WEBGL : gl.RENDERER) || '');
+      return /swiftshader|llvmpipe|softpipe|lavapipe|software raster|mesa offscreen/i.test(name);
+    } catch (_) { return false; }
+  }
   // Broadphase returns candidate boxes only; the original exact response remains unchanged.
   const COLLISION = (boxes,x,z,pad) => window.UnfireCollisionNearby
     ? window.UnfireCollisionNearby.nearby(boxes,x,z,pad) : (boxes || []);
   const S = Y2K.stage(cv, { reflect: false, zoom: false, exposure: 0.98, shadow: 0.38,
     maxDpr: DEVICE.maxDpr, antialias: DEVICE.antialias, shadowResolution: LOWDEV?512:2048, fov: 30 });
+  if (softwareWebGL(S.renderer)) {
+    LOWDEV = true;
+    DEVICE.maxDpr = Math.min(DEVICE.maxDpr, 0.60);
+    S.renderer.setPixelRatio(Math.min(S.renderer.getPixelRatio(), DEVICE.maxDpr));
+    window.__LOWDEV = true;
+    document.documentElement.dataset.unfireSoftwareWebgl = 'low';
+  }
   if (LOWDEV) { S.renderer.shadowMap.enabled = false; }
   else { S.renderer.shadowMap.autoUpdate = false; S.renderer.shadowMap.needsUpdate = true; }
 
