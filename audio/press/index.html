@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#08090b">
 <meta name="robots" content="index, follow">
-<meta name="description" content="Unfire Audio is a free browser-based interactive 3D beta combining robots, music and digital play. Official press and creator information.">
+<meta name="description" content="Explore Unfire Audio with authentic in-game screenshots of the house interior, island exterior, and original robots. Official independent beta press kit.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Unfire Audio. Press and creators.">
 <meta property="og:description" content="An interactive 3D world. Free browser beta.">
@@ -47,6 +47,26 @@ small{color:var(--muted)}
 footer{border-top:1px solid var(--line);padding:32px 0;color:var(--muted);font-size:.85rem}
 @media(max-width:650px){.grid{grid-template-columns:1fr}dl{grid-template-columns:1fr;gap:4px}dt:not(:first-child){margin-top:10px}nav{min-height:62px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Game back-cover inspired composition. Every scene is a screenshot of the actual 3D engine. */
+.backcover{border-top:0;padding:3px 0 48px}
+.backcover-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin:0 0 20px}
+.backcover-head h2{font-size:clamp(1.8rem,4vw,3.15rem);line-height:1.09;font-weight:650;max-width:580px;margin:8px 0 0;letter-spacing:-.045em}
+.backcover-tag{font-size:.73rem;letter-spacing:.13em;text-transform:uppercase;color:#9eabbc}
+.scene-gallery{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}
+.scene-gallery .scene{grid-column:span 4;margin:0;position:relative;overflow:hidden;isolation:isolate;background:#121821;border:1px solid #313845;border-radius:16px}
+.scene-gallery .scene-hero{grid-column:span 12}
+.scene-gallery img{width:100%;height:100%;min-height:190px;object-fit:cover;aspect-ratio:16/9;display:block;border:0;border-radius:0}
+.scene-gallery .scene-hero img{min-height:260px;max-height:540px}
+.scene-gallery figcaption{position:absolute;bottom:0;left:0;right:0;margin:0;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:27px 16px 13px;background:linear-gradient(0deg,#030509df,#03050900);color:white;font-size:.82rem;font-weight:600;letter-spacing:.02em;text-shadow:0 1px 4px #000}
+.scene-gallery figcaption small{font-weight:500;color:#d6dfec;letter-spacing:.06em}
+.backcover-copy{margin:20px 0 8px;max-width:720px;font-size:1rem;color:var(--muted)}
+.backcover-note{font-size:.78rem;color:#98a4b5}
+.artwork{margin:8px 0 0}
+.artwork img{max-height:410px;object-fit:cover}
+.artwork figcaption{max-width:700px}
+@media(max-width:800px){.scene-gallery .scene{grid-column:span 6}.scene-gallery .scene-hero{grid-column:span 12}}
+@media(max-width:540px){.scene-gallery{gap:9px}.scene-gallery .scene{grid-column:span 12;border-radius:12px}.scene-gallery img{min-height:unset}.scene-gallery .scene-hero img{min-height:220px}.backcover-head{display:block}.scene-gallery figcaption{font-size:.79rem;padding:28px 12px 10px}}
 </style>
 </head>
 <body>
@@ -59,7 +79,19 @@ footer{border-top:1px solid var(--line);padding:32px 0;color:var(--muted);font-s
 <a class="button" href="../">Play free beta</a>
 <a class="button secondary" href="mailto:hello@unfire.technology?subject=Unfire%20Audio%20creator%20or%20press%20request">Contact Unfire</a>
 </div>
-<figure><img src="../img/unfire-mutants-share.webp" alt="Official Unfire Audio artwork from the game" width="1200" height="630" loading="eager" decoding="async"><figcaption>Official game asset. Further original gameplay captures can be requested by email.</figcaption></figure>
+<section class="backcover" id="gameplay" aria-labelledby="gallery-title">
+  <div class="backcover-head"><div><p class="eyebrow">A look inside the world</p><h2 id="gallery-title">Built to be explored.</h2></div><span class="backcover-tag">Actual gameplay captures</span></div>
+  <div class="scene-gallery" aria-label="Genuine Unfire Audio 3D gameplay screenshots">
+    <figure class="scene scene-hero"><img src="captures/03-house-exterior.jpg" width="1280" height="720" alt="Actual Unfire Audio gameplay showing the house from outside" loading="eager" decoding="async"><figcaption><span>Beyond the front door.</span><small>01 / EXTERIOR</small></figcaption></figure>
+    <figure class="scene"><img src="captures/01-inside-house.jpg" width="1280" height="720" alt="Actual Unfire Audio gameplay inside the house" loading="lazy" decoding="async"><figcaption><span>Step inside.</span><small>02 / INTERIOR</small></figcaption></figure>
+    <figure class="scene"><img src="captures/04-island-exploration.jpg" width="1280" height="720" alt="Actual Unfire Audio gameplay while exploring the island exterior" loading="lazy" decoding="async"><figcaption><span>Beyond the house.</span><small>03 / ISLAND</small></figcaption></figure>
+    <figure class="scene"><img src="captures/02-house-interior.jpg" width="1280" height="720" alt="Second genuine gameplay view of the house interior" loading="lazy" decoding="async"><figcaption><span>Another perspective.</span><small>04 / THE HOUSE</small></figcaption></figure>
+  </div>
+  <p class="backcover-copy">A house, a world beyond it, and robots with a story of their own. Move through the experience and discover what is waiting outside.</p>
+  <p class="backcover-note">Captured from the actual 3D game. These are in-game scenes, not AI-generated concepts or mock gameplay.</p>
+</section>
+<figure class="artwork"><img src="../img/unfire-mutants-share.webp" alt="Illustrated promotional artwork featuring Unfire Audio's robots, not a gameplay screenshot" width="1200" height="630" loading="lazy" decoding="async"><figcaption>Official character artwork. This promotional image is separate from the gameplay screenshots above.</figcaption></figure>
+
 <section aria-labelledby="facts-title">
 <h2 id="facts-title">At a glance.</h2>
 <dl>
