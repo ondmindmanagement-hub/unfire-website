@@ -54,7 +54,7 @@
     })).concat(EXTRAS);
     const root = document.createElement('div'); root.id = 'unfireCoinSystem'; root.innerHTML =
       '<style>\n' +
-      '#unfireCoinHud{position:fixed;z-index:43;top:calc(env(safe-area-inset-top) + 8px);left:max(12px,env(safe-area-inset-left));right:auto;display:none;align-items:center;gap:9px;border:1px solid #e7ba4f8e;border-radius:999px;background:#10192bee;color:#ffe38a;padding:7px 11px;font:800 12px system-ui;box-shadow:0 4px 19px #0006;cursor:pointer;min-height:38px}\n' +
+      '#unfireCoinHud{position:fixed;z-index:43;top:calc(env(safe-area-inset-top) + 78px);left:50%;right:auto;transform:translateX(-50%);display:none;align-items:center;gap:9px;border:1px solid #e7ba4f8e;border-radius:999px;background:#10192bee;color:#ffe38a;padding:7px 11px;font:800 12px system-ui;box-shadow:0 4px 19px #0006;cursor:pointer;min-height:38px}\n' +
       '#unfireCoinHud:focus-visible,#unfireCoinShop button:focus-visible{outline:3px solid #7fcbff;outline-offset:2px}\n' +
       '#unfireCoinShop{position:fixed;inset:0;z-index:98;background:#020816d8;display:none;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;font:13px system-ui;color:#eaf4ff}\n' +
       '#unfireCoinShop.open{display:flex}\n' +
@@ -65,8 +65,9 @@
       '#unfireCoinShop button{border:1px solid #4774aa;border-radius:12px;background:#1b3651;color:#fff;padding:11px;min-height:44px;cursor:pointer;font:700 12px system-ui;text-align:left}\n' +
       '#unfireCoinShop .items button[disabled]{opacity:.5;cursor:default}#unfireCoinShop small{display:block;color:#ffde7c;margin-top:6px}\n' +
       '#unfireCoinShop [data-close]{flex:none;background:#28445e}#unfireCoinShop .hint{color:#bdd3e7;font-size:12px;line-height:1.4}\n' +
+      'body:has(#wradio.expanded) #unfireCoinHud{visibility:hidden;pointer-events:none}\n' +
       'body.storyOn #unfireCoinHud,body.storyOn #unfireCoinShop{display:none!important}\n' +
-      '@media(max-height:480px){#unfireCoinHud{top:calc(env(safe-area-inset-top) + 4px);font-size:11px}#unfireCoinShop .panel{max-height:88dvh;padding:11px}}\n' +
+      '@media(max-height:480px){#unfireCoinHud{top:calc(env(safe-area-inset-top) + 58px);font-size:11px}#unfireCoinShop .panel{max-height:88dvh;padding:11px}}\n' +
       '@media(prefers-reduced-motion:reduce){#unfireCoinSystem *{animation:none!important;transition:none!important}}\n' +
       '</style><button id="unfireCoinHud" type="button" aria-label="Abrir tienda de monedas"><span aria-hidden="true">🟡</span><span data-wallet>0</span><span aria-hidden="true">＋</span></button>' +
       '<section id="unfireCoinShop" role="dialog" aria-modal="true" aria-label="Tienda de monedas" aria-hidden="true"><div class="panel"><div class="heading"><h2>🟡 Unfire Coins</h2><button data-close type="button" aria-label="Cerrar tienda">✕</button></div><div class="hint">Recoge monedas explorando y desbloquea cosas para tu partida individual. No cuesta dinero. No afecta al online.</div><p data-available aria-live="polite"></p><div data-products></div><p data-message aria-live="polite"></p></div></section>';
@@ -171,7 +172,7 @@
     if(current() && !window.ONLINE_ON?.()) ROAMS.myType=current().value;
     if(state.color && !window.ONLINE_ON?.())ROAMS.myCol=state.color;
     updateHud();draw(0);
-    return window.UNFIRE_COINS={tick,open,close,buy,get balance(){return state.balance;},
+    return window.UNFIRE_COINS={tick,open,close,buy,get isOpen(){return shop.classList.contains('open');},get balance(){return state.balance;},
       get owned(){return state.owned.slice();},get shopItems(){return entries.map(e=>({...e}));}};
   };
 })();

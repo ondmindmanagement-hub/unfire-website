@@ -20,6 +20,9 @@ assert.doesNotMatch(story, /if \(!SAVE\.met\) \{ intro\(\); return; \}/,
   'starting a mission must never force the optional introduction');
 assert.match(story, /id=\"mPlay\"/, 'History must offer a direct Start Story button');
 assert.match(story, /const KEY = 'unfire_save_v1'/, 'save key must remain backward compatible');
+assert.match(story, /#storyMenu\{position:fixed;inset:12vh 10vw;z-index:92;/,
+  'story menu must sit above z-index:70 mobile TALK/FLY/DOWN buttons and remain tappable');
+
 
 class MockElement {
   constructor(id) {

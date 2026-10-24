@@ -2485,12 +2485,14 @@
       return;
     }
     requestAnimationFrame(frame);
-    // GTA-style pause: when the 2D map covers the world, suspend expensive 3D
-    // updates, physics and GPU draws. Keep the frame clock warm for a safe resume.
-    if (MAP.expandedOpen) {
+    // Pause GPU draws and simulation while the full map or offline coin shop
+    // owns the screen. Otherwise slow software WebGL can block even a modal's
+    // CLOSE touch. All DOM button handlers stay responsive; closing resumes
+    // the same scene, player position, store and sound without a reload.
+    if (MAP.expandedOpen || (window.UNFIRE_COINS && window.UNFIRE_COINS.isOpen)) {
       clock.getDelta();
       previousRenderAt = 0;
-      MAP.tick();
+      if (MAP.expandedOpen) MAP.tick();
       return;
     }
     // Cap this heavy 3D scene to ~30-40fps; input events continue unthrottled.

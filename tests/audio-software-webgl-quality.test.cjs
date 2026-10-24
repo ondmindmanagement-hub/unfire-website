@@ -41,4 +41,6 @@ test('real software GPUs get a lower draw budget without changing controls and m
   assert.match(source, /ROAMS\.mini \? NANO_SCALE : 1/);
   assert.match(source, /window\.UNFIRE_COINS\.tick\(dt,t\)/);
   assert.match(source, /MAP\.expandedOpen/);
+  assert.match(source, /if \(MAP\.expandedOpen \|\| \(window\.UNFIRE_COINS && window\.UNFIRE_COINS\.isOpen\)\)/,
+    'the actual 3D loop must stop rendering while offline shop is open');
 });
