@@ -3,8 +3,10 @@ on:
   pull_request:
     paths:
       - 'audio/press/**'
+      - 'audio/art/**'
       - 'docs/audio-press-outreach-20261024.md'
       - 'tests/audio-press-page.test.cjs'
+      - 'tests/audio-art-page.test.cjs'
       - '.github/workflows/audio-press-page.yml'
   workflow_dispatch:
 jobs:
@@ -17,4 +19,6 @@ jobs:
         with:
           node-version: '22'
       - name: Validate press page and materials
-        run: node tests/audio-press-page.test.cjs
+        run: |
+          node tests/audio-press-page.test.cjs
+          node tests/audio-art-page.test.cjs
