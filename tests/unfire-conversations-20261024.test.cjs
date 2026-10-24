@@ -92,3 +92,36 @@ test('microphone opt-in, disabled gracefully if unsupported',()=>{
   assert.ok(api);
   assert.equal(nodes.get('ufMic').hidden,true);
 });
+
+test('five distinct giant sages and spontaneous combinations are not repetitive',()=>{
+ const {api}=load();
+ const names=[
+  {id:'titan-ship',name:'UMBRAL'},
+  {id:'titan-island',name:'BALUARTE'},
+  {id:'titan-0',name:'ECLIPSE'},
+  {id:'titan-1',name:'ASTRALIA'},
+  {id:'titan-2',name:'CRONOS'}];
+ const speech=[];
+ for(const npc of names){
+   const origin=api.answer(npc,'quién eres');
+   assert(origin.includes(npc.name),'independent biography for '+npc.id);
+   let previous=null;
+   const phrases=new Set();
+   for(let i=0;i<100;i++){
+     const next=api.oracleText(npc);
+     assert(next.length>55 && next.length<270);
+     assert.notEqual(next,previous);
+     phrases.add(next);previous=next;
+   }
+   assert.equal(phrases.size,100,'no repeated phrases during 100 encounters');
+   speech.push(api.answer(npc,'dime un secreto'));
+ }
+ assert.equal(new Set(speech).size,5,'giants have different secrets');
+});
+test('giant greeting overlay stays off controls, only speaks on proximity',()=>{
+ assert.match(script,/oracleInside=new Set\(\)/);
+ assert.match(script,/if\(closestGiant && !mode && !oracleInside\.has\(closestGiant\.id\)\)/);
+ assert.match(script,/subtitle\.style\.display='block'/);
+ assert.match(script,/#ufGiantSubtitle\{[^']*pointer-events:none/);
+ assert.match(engine,/g\.lunarShip\?'titan-ship':'titan-island'/);
+});
