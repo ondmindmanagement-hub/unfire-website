@@ -7,6 +7,7 @@ on:
       - 'docs/audio-press-outreach-20261024.md'
       - 'tests/audio-press-page.test.cjs'
       - 'tests/audio-art-page.test.cjs'
+      - 'tests/audio-press-art-browser.cjs'
       - '.github/workflows/audio-press-page.yml'
   workflow_dispatch:
 jobs:
@@ -22,3 +23,21 @@ jobs:
         run: |
           node tests/audio-press-page.test.cjs
           node tests/audio-art-page.test.cjs
+  browser-press-art:
+    needs: static-press-check
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium QA
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify real images, clicks and responsive layout
+        run: |
+          python3 -m http.server 8793 --bind 127.0.0.1 > /tmp/unfire-press-http.log 2>&1 &
+          sleep 2
+          node tests/audio-press-art-browser.cjs
