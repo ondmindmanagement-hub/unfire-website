@@ -1,0 +1,20 @@
+name: Audio Press Page
+on:
+  pull_request:
+    paths:
+      - 'audio/press/**'
+      - 'docs/audio-press-outreach-20261024.md'
+      - 'tests/audio-press-page.test.cjs'
+      - '.github/workflows/audio-press-page.yml'
+  workflow_dispatch:
+jobs:
+  static-press-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate press page and materials
+        run: node tests/audio-press-page.test.cjs
