@@ -1,0 +1,30 @@
+name: Unfire Games 2026 release QA
+on:
+  push:
+    paths:
+      - games/**
+      - index.html
+      - sitemap.xml
+      - tests/unfire-games-20261024.test.cjs
+      - .github/workflows/unfire-games-hub-release.yml
+  pull_request:
+    paths:
+      - games/**
+      - index.html
+      - sitemap.xml
+      - tests/unfire-games-20261024.test.cjs
+      - .github/workflows/unfire-games-hub-release.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-games-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Semantic, links and assets QA
+        run: node --test tests/unfire-games-20261024.test.cjs
