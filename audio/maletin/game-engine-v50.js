@@ -1360,7 +1360,7 @@
   // ===== MODO ONLINE: salas con código o enlace (P2P con PeerJS, sin servidor propio), personaje con color y tipo de robot elegidos =====
   const ONLINE = (() => { const COLS = ['#3d8bff', '#ff2fb0', '#2bd96b', '#ffd21a', '#ff7a1f', '#9b6bff', '#ffffff', '#222222']; const ALLT = [4, 1, 7, 10, 13, 16, 2, 5, 8, 11, 14, 17, 3, 6, 9, 12, 15, 18, 0, 19].filter((i) => i < MUTANTS.list.length); const PERK = [['equilibrado', 1, 1], ['⚡ corre más', 1.25, 1], ['🪽 vuela más rápido', 1, 1.5], ['🏄 surfista', 1.1, 1.1], ['🚀 turbo total', 1.35, 1.35], ['🌀 ágil', 1.15, 1.25]]; const unl = () => { let u = 0; try { u = +localStorage.getItem('unfire_unlock') || 0; } catch (e) {} return Math.min(ALLT.length, 2 + u); }; let TYPES = ALLT;
     let cfg = { name: '', col: '#3d8bff', type: 4, num: 27 }; try { Object.assign(cfg, JSON.parse(localStorage.getItem('unfire_onl') || '{}')); } catch (e) {}
-    let peer = null, conns = [], code = null, isHost = false, myId = null, sendT = 0; const R = {};
+    let peer = null, conns = [], code = null, isHost = false, myId = null, sendT = 0; const R = Object.create(null);
     // juego online «CAZA DE NOTAS»: 30 notas musicales brillantes repartidas por la isla (las mismas para todos); quien más coja, gana la ronda
     const NOTES = { list: [], round: 0, sc: 0, seed: 0, g: null, build(seed) { this.clear(); this.seed = seed; let s0 = seed * 9301 + 49297; const rr = () => ((s0 = (s0 * 16807) % 2147483647) / 2147483647); const tx = (() => { const c = Y2K.cnv(128, 128), q = c.getContext('2d'); q.fillStyle = '#fff'; q.font = '900 100px Arial'; q.textAlign = 'center'; q.textBaseline = 'middle'; q.shadowColor = '#5fe0ff'; q.shadowBlur = 18; q.fillText('♪', 64, 70); return new THREE.CanvasTexture(c); })(); this.g = new THREE.Group(); S.scene.add(this.g); for (let i = 0; i < 30; i++) { const a = rr() * TAU, r = 120 + rr() * 520, x = Math.cos(a) * r, z = Math.sin(a) * r; if (Math.abs(x) < 90 && z > -25 && z < 105) { i--; continue; } const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, color: new THREE.Color().setHSL(rr(), 0.9, 0.65), transparent: true, depthWrite: false })); sp.scale.set(7, 7, 1); sp.position.set(x, -2 + rr() * 30, z); this.g.add(sp); this.list.push({ sp, on: true }); } },
       clear() { if (this.g) S.scene.remove(this.g); this.g = null; this.list = []; },
@@ -1631,7 +1631,61 @@
       status();
       return { get on() { return enabled; }, bindPeer, tick, stop, disconnect, visibility };
     })();
-    function setup(c) { conns.push(c); c.on('data', (d) => { if (!d || !d.id || d.id === myId) return; if (d.nt != null) NOTES.take(d.nt, false); else if (d.bye) drop(d.id); else recv(d); if (isHost) conns.forEach((o) => { if (o !== c && o.open) try { o.send(d); } catch (e) {} }); }); c.on('close', () => { conns = conns.filter((x) => x !== c); if (isHost) { drop(c.peer); conns.forEach((o) => { try { o.send({ id: c.peer, bye: 1 }); } catch (e) {} }); } else { say('🌐 El anfitrión cerró la sala'); leave(); } }); }
+    // Validate untrusted PeerJS data *before* touching scene state, progress or relaying.
+    // Guest packets are bound to their connection on the host; guests receive
+    // already-relayed packets only through the existing host connection.
+    function safePacket(raw, c) {
+      try {
+        if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+        const id=raw.id;
+        if(typeof id!=='string'||id.length<1||id.length>96||
+           !/^[A-Za-z0-9_-]+$/.test(id)||
+           id==='__proto__'||id==='constructor'||id==='prototype')return null;
+        if(isHost&&id!==c.peer)return null;
+        if(raw.bye!=null)return raw.bye===1?{id,bye:1}:null;
+        if(raw.nt!=null)return Number.isInteger(raw.nt)&&raw.nt>=0&&raw.nt<30?
+          {id,nt:raw.nt}:null;
+        if(!Number.isInteger(raw.t)||raw.t<0||raw.t>=MUTANTS.list.length)return null;
+        if(!COLS.includes(raw.c))return null;
+        if(!Number.isFinite(raw.x)||!Number.isFinite(raw.z)||
+           !Number.isFinite(raw.h)||!Number.isFinite(raw.y))return null;
+        if(Math.abs(raw.x)>20000||Math.abs(raw.z)>20000||
+           raw.h<-100||raw.h>10000||Math.abs(raw.y)>1000000)return null;
+        if(raw.n!=null&&typeof raw.n!=='string')return null;
+        if(!R[id]&&Object.keys(R).length>=40)return null;
+        return {
+          id,n:String(raw.n||'Jugador').slice(0,20),c:raw.c,t:raw.t,
+          x:raw.x,z:raw.z,h:raw.h,y:raw.y,
+          sc:Number.isFinite(raw.sc)?Math.max(0,Math.min(99999,raw.sc)):0,
+          f:raw.f===1?1:0,o:raw.o===1?1:0,
+          m:raw.m===1?1:0,v:raw.v===1?1:0,q:raw.q===1?1:0
+        };
+      }catch(_){return null;}
+    }
+    function setup(c) {
+      conns.push(c);
+      let rateStart=0,rateCount=0;
+      c.on('data', (raw) => {
+        const now=performance.now();
+        if(!rateStart||now-rateStart>=1000){rateStart=now;rateCount=0;}
+        if(++rateCount>40)return;
+        const d=safePacket(raw,c);
+        if(!d||d.id===myId)return;
+        if(d.nt!=null)NOTES.take(d.nt,false);
+        else if(d.bye)drop(d.id);
+        else recv(d);
+        if(isHost)conns.forEach((o)=>{
+          if(o!==c&&o.open)try{o.send(d);}catch(e){}
+        });
+      });
+      c.on('close', () => {
+        conns=conns.filter((x)=>x!==c);
+        if(isHost){
+          drop(c.peer);
+          conns.forEach((o)=>{try{o.send({id:c.peer,bye:1});}catch(e){}});
+        }else{say('🌐 El anfitrión cerró la sala');leave();}
+      });
+    }
     function create() { if (joining) { msg('Primero termina o cancela el intento de conexión'); return; } save(); applyMe(); msg('Creando sala…'); load(() => { code = rnd(); isHost = true; peer = new Peer('unfire-sala-' + code); VOICE.bindPeer(peer); peer.on('open', (id) => { myId = id; started(); }); peer.on('connection', (c) => { c.on('open', () => setup(c)); }); peer.on('error', (e) => { if (e.type === 'unavailable-id') { try { peer.destroy(); } catch (er) {} create(); } else msg('Error online: ' + e.type); }); }); }
     // A remote connection may stall behind strict NATs or restricted Wi-Fi.
     // Keep the screen responsive, offer a retry and never leave a dangling Peer.
