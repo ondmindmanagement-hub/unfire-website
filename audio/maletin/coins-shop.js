@@ -172,7 +172,7 @@
     if(current() && !window.ONLINE_ON?.()) ROAMS.myType=current().value;
     if(state.color && !window.ONLINE_ON?.())ROAMS.myCol=state.color;
     updateHud();draw(0);
-    return window.UNFIRE_COINS={tick,open,close,buy,get balance(){return state.balance;},
+    return window.UNFIRE_COINS={tick,open,close,buy,get isOpen(){return shop.classList.contains('open');},get balance(){return state.balance;},
       get owned(){return state.owned.slice();},get shopItems(){return entries.map(e=>({...e}));}};
   };
 })();

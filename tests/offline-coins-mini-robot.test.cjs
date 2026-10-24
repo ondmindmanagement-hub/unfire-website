@@ -100,6 +100,7 @@ test('coin collection gives 1 coin only once per spawn; online yields none',()=>
 test('shop buys existing robot transform and one extra with persisted local balance',()=>{
   const x=makeContext(70);
   x.api.open();
+  assert.equal(x.api.isOpen,true,'shop exposes read-only open state for GPU pause');
   assert.equal(x.api.buy('robot-7'),true);
   assert.equal(x.ROAMS.myType,7);
   assert.equal(x.api.balance,50);
@@ -109,5 +110,7 @@ test('shop buys existing robot transform and one extra with persisted local bala
   assert.equal(JSON.parse(x.store.get('unfire_offline_coins_v1')).aura,'cyan');
   x.setOnline(true);
   assert.equal(x.api.buy('color-gold'),false);
+  x.api.close();
+  assert.equal(x.api.isOpen,false,'closing shop resumes the same 3D game');
   x.api.tick(0.033,1);
 });
