@@ -2122,9 +2122,10 @@
     const surf=SURFBOTS.list||[];
     surf.forEach((b,i)=>add('surf-'+i,b.name||('ROBOT SURFISTA '+(i+1)),b.w,36));
     const titans=TITANS.list||[];
-    ['UMBRAL','ASTRALIA','CRONOS'].forEach((name,i)=>{
+    ['ECLIPSE','ASTRALIA','CRONOS'].forEach((name,i)=>{
       if(titans[i])add('titan-'+i,name,titans[i].w,475,true);
     });
+    (window.__OUTGIANTS||[]).forEach((g,i)=>add(g.lunarShip?'titan-ship':'titan-island',g.lunarShip?'UMBRAL':'BALUARTE',g.w,g.lunarShip?43:23,true));
     const walkers=OUTTALK.list||[];
     walkers.forEach((g,i)=>(g.bots||[]).forEach((b,j)=>add('out-'+i+'-'+j,b.name,b.w,24)));
     if(HOST && HOST.visible && HOST.pos && ROAMS.on && !window.ATM_OUT)
