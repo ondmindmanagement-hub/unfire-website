@@ -1,0 +1,97 @@
+Escena,Acto,Escenario,Toma,Plano,Duracion_objetivo_seg,Cámara,Audio,Modo,Estado
+1,1,Mercado de la isla,A,Establecedor,39,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+1,1,Mercado de la isla,B,Diálogo,64,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+1,1,Mercado de la isla,C,Acción,54,"Travelling bajo entre robots, plugins y campanas; inserto del reloj XIII",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+1,1,Mercado de la isla,D,Reacción y corte,21,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+2,1,Casa del maletín,A,Establecedor,33,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+2,1,Casa del maletín,B,Diálogo,54,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+2,1,Casa del maletín,C,Acción,45,"Plano fijo ancho, macro de los enchufes y seguimiento de una nota cúbica",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+2,1,Casa del maletín,D,Reacción y corte,18,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+3,1,Lago de las constelaciones,A,Establecedor,41,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+3,1,Lago de las constelaciones,B,Diálogo,68,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+3,1,Lago de las constelaciones,C,Acción,57,"Plano bajo del gigante, reflejo de estrellas moviéndose en agua",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+3,1,Lago de las constelaciones,D,Reacción y corte,22,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+4,1,Discos de los plugins gigantes,A,Establecedor,35,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+4,1,Discos de los plugins gigantes,B,Diálogo,57,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+4,1,Discos de los plugins gigantes,C,Acción,48,"Cámara lateral de plataforma, rebote físico del disco y contrapicado de Ari",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+4,1,Discos de los plugins gigantes,D,Reacción y corte,19,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+5,1,Cementerio de relojes,A,Establecedor,40,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+5,1,Cementerio de relojes,B,Diálogo,66,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+5,1,Cementerio de relojes,C,Acción,55,Larga espera sobre los ojos de Cronos; gran angular con péndulos,Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+5,1,Cementerio de relojes,D,Reacción y corte,22,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+6,1,Colina del gigante negro y dorado,A,Establecedor,44,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+6,1,Colina del gigante negro y dorado,B,Diálogo,72,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+6,1,Colina del gigante negro y dorado,C,Acción,60,"Contrapicado sostenido: gigante fijo, círculos del pecho, señal del pie derecho",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+6,1,Colina del gigante negro y dorado,D,Reacción y corte,24,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+7,1,Pasillos de Umbral,A,Establecedor,38,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+7,1,Pasillos de Umbral,B,Diálogo,63,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+7,1,Pasillos de Umbral,C,Acción,52,"Plano largo siguiendo el ascensor y pasillo tubular, sin teletransporte",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+7,1,Pasillos de Umbral,D,Reacción y corte,21,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+8,1,Club del corazón de Umbral,A,Establecedor,52,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+8,1,Club del corazón de Umbral,B,Diálogo,86,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+8,1,Club del corazón de Umbral,C,Acción,72,Reveal circular del DJ y discoball; ventana real en el pecho,Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+8,1,Club del corazón de Umbral,D,Reacción y corte,28,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+9,2,Club y ventana circular de Umbral,A,Establecedor,52,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+9,2,Club y ventana circular de Umbral,B,Diálogo,86,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+9,2,Club y ventana circular de Umbral,C,Acción,72,"Plano secuencia de 4 min enteramente interior, cielo y suelo alejándose por el círculo",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+9,2,Club y ventana circular de Umbral,D,Reacción y corte,28,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+10,2,Espacio a través de la ventana,A,Establecedor,34,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+10,2,Espacio a través de la ventana,B,Diálogo,55,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+10,2,Espacio a través de la ventana,C,Acción,46,"Plano de enorme ballena metálica flotando, traslucencia del cristal y reflejo en visor",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+10,2,Espacio a través de la ventana,D,Reacción y corte,18,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+11,2,Club en gravedad reducida,A,Establecedor,37,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+11,2,Club en gravedad reducida,B,Diálogo,61,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+11,2,Club en gravedad reducida,C,Acción,51,Travelling flotante alrededor de piezas con masas y rebotes,Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+11,2,Club en gravedad reducida,D,Reacción y corte,20,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+12,2,Corredor de polvo cósmico,A,Establecedor,34,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+12,2,Corredor de polvo cósmico,B,Diálogo,55,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+12,2,Corredor de polvo cósmico,C,Acción,46,"Cristales suspendidos, cámara fija cuando el tiempo se congela",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+12,2,Corredor de polvo cósmico,D,Reacción y corte,18,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+13,2,"Ventana del pecho, aproximación",A,Establecedor,49,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+13,2,"Ventana del pecho, aproximación",B,Diálogo,81,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+13,2,"Ventana del pecho, aproximación",C,Acción,67,"Transición espacial continua, luna crece, hogar se encoge, mismos reflejos",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+13,2,"Ventana del pecho, aproximación",D,Reacción y corte,27,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+14,2,Terreno lunar 360 grados,A,Establecedor,41,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+14,2,Terreno lunar 360 grados,B,Diálogo,68,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+14,2,Terreno lunar 360 grados,C,Acción,57,"Salida por escotilla desde el interior, plano panorámico del horizonte lunar sin costuras",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+14,2,Terreno lunar 360 grados,D,Reacción y corte,22,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+15,2,Estadio lunar,A,Establecedor,39,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+15,2,Estadio lunar,B,Diálogo,64,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+15,2,Estadio lunar,C,Acción,54,"Seguimiento a Píxel con cámara diegética, público en plano general",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+15,2,Estadio lunar,D,Reacción y corte,21,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+16,2,Anillos del circuito lunar,A,Establecedor,52,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+16,2,Anillos del circuito lunar,B,Diálogo,86,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+16,2,Anillos del circuito lunar,C,Acción,72,"Gran plano, persecución lateral, cámara de Píxel, reacción orgánica del público",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+16,2,Anillos del circuito lunar,D,Reacción y corte,28,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+17,2,Mar de polvo cargado,A,Establecedor,46,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+17,2,Mar de polvo cargado,B,Diálogo,75,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+17,2,Mar de polvo cargado,C,Acción,63,Cámara baja rozando crestas de partículas; plano cenital de curvas,Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+17,2,Mar de polvo cargado,D,Reacción y corte,25,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+18,3,Cámara del campeonato,A,Establecedor,36,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+18,3,Cámara del campeonato,B,Diálogo,59,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+18,3,Cámara del campeonato,C,Acción,49,"Macro de la clave, pantalla de Píxel mostrando robo de aplausos",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+18,3,Cámara del campeonato,D,Reacción y corte,19,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+19,3,Cripta lunar de sonidos,A,Establecedor,50,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+19,3,Cripta lunar de sonidos,B,Diálogo,82,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+19,3,Cripta lunar de sonidos,C,Acción,69,Dolly lento entre cilindros de memorias; luz lechosa sin parpadeos,Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+19,3,Cripta lunar de sonidos,D,Reacción y corte,27,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+20,3,Club del pecho de Umbral,A,Establecedor,49,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+20,3,Club del pecho de Umbral,B,Diálogo,81,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+20,3,Club del pecho de Umbral,C,Acción,67,"Plano secuencia de música cortada, labios moviéndose, luces vivas sin sonido",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+20,3,Club del pecho de Umbral,D,Reacción y corte,27,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+21,3,Club silencioso,A,Establecedor,39,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+21,3,Club silencioso,B,Diálogo,64,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+21,3,Club silencioso,C,Acción,54,"Plano fijo largo, cuatro pulsos visuales; sin música durante 25 segundos completos",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+21,3,Club silencioso,D,Reacción y corte,21,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+22,3,Club y ventanal abierto,A,Establecedor,46,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+22,3,Club y ventanal abierto,B,Diálogo,75,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+22,3,Club y ventanal abierto,C,Acción,63,"Planos medios de pies torpes, contrapicados cromados, reacciones de robots",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+22,3,Club y ventanal abierto,D,Reacción y corte,25,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+23,3,Ventanal circular / espacio,A,Establecedor,52,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+23,3,Ventanal circular / espacio,B,Diálogo,86,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+23,3,Ventanal circular / espacio,C,Acción,72,"Secuencia espejo del despegue: planeta se acerca, Luna mengua, ballena escolta",Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+23,3,Ventanal circular / espacio,D,Reacción y corte,28,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
+24,3,Mercado de la isla / planeta desde la Luna,A,Establecedor,44,"Panorámica en movimiento bajo, no tapa rostros",Ambiente,Exterior/interior,PLANIFICADA - NO GRABADA
+24,3,Mercado de la isla / planeta desde la Luna,B,Diálogo,72,Contraplanos con línea de mirada continua,Voces separadas,Escena 3D,PLANIFICADA - NO GRABADA
+24,3,Mercado de la isla / planeta desde la Luna,C,Acción,60,Repetir travelling inicial invertido; cerrar con planeta sobre horizonte lunar,Foley y música con derechos verificados,Escena 3D,PLANIFICADA - NO GRABADA
+24,3,Mercado de la isla / planeta desde la Luna,D,Reacción y corte,24,Primeros planos + plano recurso sin repetir animaciones,Respiración y pausas,Escena 3D,PLANIFICADA - NO GRABADA
