@@ -95,7 +95,7 @@ test('integration, CSS mobile safe areas and atomic host/engine cache',()=>{
   assert.match(engine,/if \(expanded\.isOpen\) for \(const k in ROAMS\.k\)/);
   assert.match(engine,/if \(!MAP\.expandedOpen\) S\.renderer\.render\(S\.scene, cam\)/, 'no WebGL render while 2D map is open');
   assert.match(engine,/if \(MAP\.expandedOpen \|\| \(window\.UNFIRE_COINS && window\.UNFIRE_COINS\.isOpen\) \|\| storyMenuOpen\) \{[\s\S]*?clock\.getDelta\(\);[\s\S]*?if \(MAP\.expandedOpen\) MAP\.tick\(\);[\s\S]*?return;/, 'suspend heavy 3D updates under full map, modal shop or story menu');
-  assert.match(iframe,/expanded-map\.css\?v=20261024combinedqa1/);
+  assert.match(iframe,/expanded-map\.css\?v=20261024shippin1/);
   assert.match(iframe,/expanded-map\.js\?v=20261024shippin1/);
   assert.match(iframe,/game-engine-v50\.js\?v=20261024shippin1/);
   assert.match(host,/maletin\/index\.html\?v=20261024shippin1/);
@@ -123,4 +123,10 @@ test('minimap retains a ship indicator even when the robot is off the visible ci
  assert.match(engine,/const ship=\(window\.__OUTGIANTS\|\|\[\]\)\.find\(b=>b\.lunarShip\)/);
  assert.match(engine,/const scale=len>radius\?radius\/Math\.max\(1,len\):1/);
  assert.match(engine,/g\.fillText\('🛸',sx,sz\+1\)/);
+});
+
+test('locate-ship action cannot collide with footer legends in short landscape',()=>{
+ assert.match(css,/@media \(max-height:430px\) and \(orientation:landscape\) and \(max-width:740px\)/);
+ assert.match(css,/#ufMapLegend \{display:none\}/);
+ assert.match(css,/#ufMapShip\[hidden\]\{display:none!important\}/);
 });
