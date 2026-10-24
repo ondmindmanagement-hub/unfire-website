@@ -907,8 +907,8 @@ const ENGINES = (() => {
       else if (mode === 'chip') { const o = ctx.createOscillator(); o.setPeriodicWave(pulseWave()); o.frequency.value = f; oscs.push(o); }
       else if (mode === 'pad') { for (const [type, d] of [['sawtooth', -p.detune], ['sawtooth', p.detune], ['triangle', 0]]) { const o = ctx.createOscillator(); o.type = type; o.frequency.value = f; o.detune.value = d; oscs.push(o); } }
       else { // FM
-        const c = ctx.createOscillator(), mo = ctx.createOscillator(), mg = ctx.createGain(); c.frequency.value = f; mo.frequency.value = f * 3.5;
-        mg.gain.setValueAtTime(f * 6, t); mg.gain.setTargetAtTime(f * 0.4, t, 0.35); mo.connect(mg); mg.connect(c.frequency); mo.start(t); oscs.push(c); c._mod = mo;
+        const c = ctx.createOscillator(), mo = ctx.createOscillator(), mg = ctx.createGain(); c.frequency.value = f; mo.frequency.value = f * 2;
+        mg.gain.setValueAtTime(f * 2.2, t); mg.gain.setTargetAtTime(f * 0.22, t, 0.25); mo.connect(mg); mg.connect(c.frequency); mo.start(t); oscs.push(c); c._mod = mo;
       }
       const mix = ctx.createGain(); mix.gain.value = 1 / Math.sqrt(oscs.length);
       oscs.forEach((o) => { o.connect(mix); o.start(t); });
@@ -1632,7 +1632,7 @@ const VA = (() => {
     { name: 'Acid Line', wave: 'saw', detune: 0.04, cutoff: 0.22, reso: 0.86, env: 0.78, attack: 0.0, release: 0.12, delay: 0.3, reverb: 0.15, decay: 0.22, sustain: 0.25, drive: 0.65, oct: -1, arp: true },
     { name: 'Dream Pad', wave: 'super', detune: 0.62, cutoff: 0.46, reso: 0.1, env: 0.22, attack: 0.62, release: 0.75, delay: 0.32, reverb: 0.72, decay: 1.5, sustain: 0.9, drive: 0.1, oct: 0 },
     { name: 'Pluck Stab', wave: 'square', detune: 0.25, cutoff: 0.32, reso: 0.4, env: 0.88, attack: 0.0, release: 0.24, delay: 0.46, reverb: 0.3, decay: 0.2, sustain: 0.0, drive: 0.3, oct: 0 },
-    { name: 'FM Bells', wave: 'fm', detune: 0.2, cutoff: 0.9, reso: 0.05, env: 0.2, attack: 0.0, release: 0.62, delay: 0.3, reverb: 0.55, decay: 1.2, sustain: 0.0, drive: 0.0, oct: 1 },
+    { name: 'FM Bells', wave: 'fm', detune: 0.2, cutoff: 0.72, reso: 0.05, env: 0.2, attack: 0.01, release: 0.42, delay: 0.16, reverb: 0.28, decay: 0.8, sustain: 0.0, drive: 0.0, oct: 0 },
     { name: 'Sub Bass', wave: 'square', detune: 0.08, cutoff: 0.24, reso: 0.25, env: 0.25, attack: 0.0, release: 0.15, delay: 0.0, reverb: 0.05, decay: 0.4, sustain: 0.8, drive: 0.35, oct: -2 },
     { name: 'Crystal Arp', wave: 'fm', detune: 0.3, cutoff: 0.75, reso: 0.3, env: 0.5, attack: 0.0, release: 0.28, delay: 0.55, reverb: 0.5, decay: 0.3, sustain: 0.1, drive: 0.1, oct: 1, arp: true },
   ];
@@ -1667,8 +1667,8 @@ const VA = (() => {
     function applyFx() {
       const t = T0(); out.gain.setTargetAtTime(Math.pow(P.volume, 1.6) * 0.9, t, 0.03);
       const step = (60 / bpm) * 0.75; dl.delayTime.setTargetAtTime(step, t, 0.05); dr.delayTime.setTargetAtTime(step, t, 0.05);
-      dSend.gain.setTargetAtTime(P.delay * 0.55, t, 0.03); dfb.gain.setTargetAtTime(0.18 + P.delay * 0.4 + (P.ribbon != null ? P.ribbon * 0.25 : 0), t, 0.03); dOut.gain.value = 0.9;
-      rSend.gain.setTargetAtTime(P.reverb * 0.85, t, 0.03); rOut.gain.value = 0.8; dry.gain.value = 1;
+      dSend.gain.setTargetAtTime(P.delay * 0.38, t, 0.03); dfb.gain.setTargetAtTime(Math.min(0.43, 0.16 + P.delay * 0.23 + (P.ribbon != null ? P.ribbon * 0.08 : 0)), t, 0.03); dOut.gain.value = 0.65;
+      rSend.gain.setTargetAtTime(P.reverb * 0.48, t, 0.03); rOut.gain.value = 0.62; dry.gain.value = 1;
       setDrive(P.drive || 0);
     }
     applyFx();
@@ -1687,8 +1687,8 @@ const VA = (() => {
       if (P.wave === 'super') { [-1, -0.62, -0.3, 0, 0.3, 0.62, 1].forEach((k, i) => add('sawtooth', k * sp, i === 3 ? 0.32 : 0.2)); add('sine', -1200, 0.25); }
       else if (P.wave === 'saw') { add('sawtooth', -sp * 0.2, 0.5); add('sawtooth', sp * 0.2, 0.5); }
       else if (P.wave === 'square') { add('square', -sp * 0.15, 0.42); add('square', sp * 0.15, 0.42); add('square', -1200, 0.3); }
-      else { const car = add('sine', 0, 0.7), car2 = add('sine', sp * 0.1 + 1200, 0.12), m = ctx.createOscillator(), mg = ctx.createGain(); m.frequency.value = f * 3.5; m.detune.value = sp * 0.2; bend.connect(m.detune);
-        mg.gain.setValueAtTime(f * 7, t); mg.gain.setTargetAtTime(f * 0.6, t, 0.12 + P.decay * 0.25); m.connect(mg); mg.connect(car.frequency); mg.connect(car2.frequency); mods.push(m); }
+      else { const car = add('sine', 0, 0.7), car2 = add('sine', sp * 0.1 + 1200, 0.06), m = ctx.createOscillator(), mg = ctx.createGain(); m.frequency.value = f * 2; m.detune.value = sp * 0.2; bend.connect(m.detune);
+        mg.gain.setValueAtTime(f * 2.0, t); mg.gain.setTargetAtTime(f * 0.22, t, 0.08 + P.decay * 0.16); m.connect(mg); mg.connect(car.frequency); mg.connect(car2.frequency); mods.push(m); }
       lastF = f;
       const base = cutHz(effCut(), note), peak = Math.min(19500, base * Math.pow(2, P.env * 6)), A = 0.002 + Math.pow(P.attack, 3) * 2.5, R = 0.03 + P.release * P.release * 3;
       f1.Q.value = 0.7 + P.reso * 16; f2.Q.value = 0.6; f2.frequency.value = Math.min(19500, peak * 1.4);

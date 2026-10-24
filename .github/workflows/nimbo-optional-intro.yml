@@ -1,0 +1,16 @@
+name: Audio Nimbo Optional Introduction
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/index.html'
+      - 'tests/nimbo-optional-intro.test.cjs'
+      - '.github/workflows/nimbo-optional-intro.yml'
+  workflow_dispatch:
+jobs:
+  nimbo-intro:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate optional intro and save-state compatibility
+        run: node tests/nimbo-optional-intro.test.cjs

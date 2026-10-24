@@ -1,0 +1,27 @@
+name: Audio offline coins, mini robot and clear window
+on:
+  push:
+    branches: [feature/audio-coins-mini-roam-20261023]
+  pull_request:
+    paths:
+      - audio/maletin/coins-shop.js
+      - audio/maletin/game-engine-v50.js
+      - audio/maletin/index.html
+      - tests/offline-coins-mini-robot.test.cjs
+      - .github/workflows/audio-offline-coins-mini.yml
+jobs:
+  offline-coins-mini:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax
+        run: |
+          node --check audio/maletin/game-engine-v50.js
+          node --check audio/maletin/coins-shop.js
+      - name: Contracts and economy simulation
+        run: |
+          node --test tests/offline-coins-mini-robot.test.cjs tests/expanded-map.test.cjs tests/nimbo-optional-intro.test.cjs tests/maletin-thumb-reach.test.cjs

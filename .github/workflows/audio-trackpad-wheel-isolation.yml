@@ -1,0 +1,28 @@
+name: Audio Trackpad Wheel Isolation
+
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/garage-scroll-guard.js'
+      - 'audio/maletin/index.html'
+      - 'tests/audio-trackpad-wheel-isolation.test.cjs'
+      - '.github/workflows/audio-trackpad-wheel-isolation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  trackpad-isolation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check game engine syntax
+        run: node --check audio/maletin/game-engine-v50.js
+      - name: Wheel and garage regression tests
+        run: node --test tests/audio-trackpad-wheel-isolation.test.cjs

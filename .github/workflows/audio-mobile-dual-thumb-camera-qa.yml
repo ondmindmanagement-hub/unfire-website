@@ -1,0 +1,25 @@
+name: Audio mobile dual-thumb camera QA
+
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/thumb-reach.css'
+      - 'tests/audio-mobile-dual-thumb-camera.test.cjs'
+      - 'tests/maletin-thumb-reach.test.cjs'
+      - '.github/workflows/audio-mobile-dual-thumb-camera-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dual-thumb-camera:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate simultaneous touch camera and left-thumb reach
+        run: node tests/audio-mobile-dual-thumb-camera.test.cjs
+      - name: Preserve original portrait, landscape and safe-area contracts
+        run: node tests/maletin-thumb-reach.test.cjs

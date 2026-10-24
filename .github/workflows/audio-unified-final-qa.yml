@@ -1,0 +1,56 @@
+name: Unfire Audio Unified Final QA
+on:
+  push:
+    branches:
+      - 'qa/unfire-audio-unified-completion-20261024'
+  pull_request:
+    paths:
+      - 'audio/**'
+      - 'games/**'
+      - 'tests/audio-**'
+      - 'tests/expanded-map.test.cjs'
+      - 'tests/maletin-v50-browser.cjs'
+      - 'tests/offline-coins-mini-robot.test.cjs'
+      - '.github/workflows/audio-unified-final-qa.yml'
+permissions:
+  contents: read
+jobs:
+  static-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax of combined code
+        run: |
+          node --check audio/maletin/game-engine-v50.js
+          node --check audio/maletin/nano-physics.js
+          node --check audio/maletin/robot-customization.js
+          node --check tests/audio-nano-playable-browser.cjs
+      - name: Full combined focused regression suite
+        run: |
+          node --test \
+            tests/audio-nano-cinematic-regression.test.cjs \
+            tests/audio-robot-customizer.test.cjs \
+            tests/audio-mobile-dual-thumb-camera.test.cjs \
+            tests/audio-secondary-stage-candidate.test.cjs \
+            tests/audio-story-modal-frame-pause.test.cjs \
+            tests/audio-nano-engine-connection.test.cjs \
+            tests/offline-coins-mini-robot.test.cjs \
+            tests/expanded-map.test.cjs \
+            tests/audio-message-boundary.test.cjs \
+            tests/unfire-games-20261024.test.cjs
+      - name: Retain production security and maximal thrust
+        run: |
+          grep -Fq 'e.source!==fr.contentWindow||e.origin!==location.origin' audio/index.html
+          grep -Fq 'const LV = [1, 3, 8]' audio/maletin/game-engine-v50.js
+          grep -Fq 'NANO_CINEMA' audio/maletin/game-engine-v50.js
+          grep -Fq 'robot-customization.js' audio/maletin/index.html
+          grep -Fq 'href="/games/"' index.html
+          grep -Fq 'Y porque el 9 ya estaba elegido.' audio/maletin/index.html
+          test -s games/index.html
+          git diff --check

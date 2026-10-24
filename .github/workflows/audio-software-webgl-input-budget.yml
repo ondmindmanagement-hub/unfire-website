@@ -1,0 +1,25 @@
+name: Audio software WebGL input budget
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/audio-software-webgl-input-budget.test.cjs'
+      - '.github/workflows/audio-software-webgl-input-budget.yml'
+  push:
+    branches:
+      - qa/audio-final-reconcile-20261024
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  software-input:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          node --check audio/maletin/game-engine-v50.js
+          node tests/audio-software-webgl-input-budget.test.cjs

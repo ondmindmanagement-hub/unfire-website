@@ -1,0 +1,27 @@
+name: Audio one-robot customizer contracts
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/robot-customization.js'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'tests/audio-robot-customizer.test.cjs'
+      - '.github/workflows/audio-robot-customizer.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  customizer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate JS syntax and robot selector contracts
+        run: |
+          node --check audio/maletin/robot-customization.js
+          node --check audio/maletin/game-engine-v50.js
+          node --test tests/audio-robot-customizer.test.cjs
+          node --test tests/audio-online-selector-scroll.test.cjs tests/audio-trackpad-wheel-isolation.test.cjs tests/audio-garage-scroll-guard.test.cjs
