@@ -22,3 +22,5 @@ jobs:
         run: python3 scripts/check-public-security.py
       - name: Review marketing/trademark declarations
         run: python3 scripts/check-brand-metadata.py
+      - name: Protect iframe message trust boundary
+        run: node tests/audio-message-boundary.test.cjs
