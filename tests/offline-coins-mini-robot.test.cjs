@@ -14,17 +14,25 @@ test('ventanal retains only its perimeter, without white or wooden internal slat
   assert.doesNotMatch(ENGINE,/\[0\.25, WY1 - WY0, 0, \(WY0 \+ WY1\) \/ 2\]/);
   assert.match(ENGINE,/const sill = mesh\(/);
 });
-test('mini robot keeps free-roam coordinates, input modes and proportional mobility',()=>{
-  const robot=ENGINE.match(/robotMode: \(\) => \{(.+?)\}, toggleMap:/)?.[1];
+test('nano robot keeps free-roam coordinates, input modes and proportional mobility',()=>{
+  const robot=ENGINE.match(/robotMode: \(\) => \{(.+?)\}, isNano:/)?.[1];
   assert.ok(robot,'story robot mode remains exposed');
   assert.doesNotMatch(robot,/ROAMS\.p\.set\(/,'no teleport on size toggle');
   assert.match(robot,/ROAMS\.mini = !ROAMS\.mini/);
   assert.doesNotMatch(ENGINE,/ROAMS\.p\.x = clamp\(ROAMS\.p\.x, -12\.6, 12\.6\)/,'desk bounds removed');
-  assert.match(ENGINE,/const ms = ROAMS\.mini \? 0\.18 : 1/);
+  assert.match(ENGINE,/const ms = ROAMS\.mini \? NANO_SCALE : 1/);
+  assert.match(ENGINE,/const NANO_SCALE = 0\.24 \/ 10\.5/, 'nano robot is precisely the 0.24-unit model size of the minis inside the case');
+  assert.match(ENGINE,/isNano: \(\) => !!ROAMS\.mini/);
+  assert.match(ENGINE,/zone: window\.ATM_OUT \? 'island' : 'house'/, 'nano roaming uses actual world zone, not table-only map');
+  assert.doesNotMatch(ENGINE,/const mini = !!ROAMS\.mini, out = !!window\.ATM_OUT/, 'minimap no longer confuses nano with case-table');
+  assert.match(HTML,/id="stR"[^>]*aria-pressed="false"[^>]*>🔬 NANO ROBOT/, 'Nano control is in the configuration HUD');
+  assert.match(HTML,/id = 'cfgB'/, 'configuration gear remains present');
+  assert.match(HTML,/H\.isNano\(\)/, 'button state updates after exiting or changing mode');
+
   assert.match(ENGINE,/const GTA = \(\(ROAMS\.mode \|\| '3p'\) === '3p' \|\| ROAMS\.mode === '3pl'\)/);
-  assert.match(ENGINE,/AV\.w\.scale\.setScalar\(AV\.baseScale\*\(ROAMS\.mini\?0\.18:1\)\)/);
-  assert.match(ENGINE,/miniCameraRatio = ROAMS\.mini \? 0\.18 : 1/);
-  assert.match(ENGINE,/ROAMS\.fly\) \{ const miniFlight = ROAMS\.mini \? 0\.18 : 1/);
+  assert.match(ENGINE,/AV\.w\.scale\.setScalar\(AV\.baseScale\*\(ROAMS\.mini\?NANO_SCALE:1\)\)/);
+  assert.match(ENGINE,/miniCameraRatio = ROAMS\.mini \? NANO_SCALE : 1/);
+  assert.match(ENGINE,/ROAMS\.fly\) \{ const miniFlight = ROAMS\.mini \? NANO_SCALE : 1/);
 });
 test('offline coin module is loaded before engine and avoids payments / online sharing',()=>{
   assert.ok(HTML.indexOf('coins-shop.js')>0&&HTML.indexOf('coins-shop.js')<HTML.indexOf('<script src="game-engine-v50.js'));
