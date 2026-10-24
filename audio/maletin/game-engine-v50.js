@@ -2025,13 +2025,13 @@
     const MODES = { clean: [], ring: ['ring'], phase: ['ph'], crush: ['cr'], dub: ['dl'], sweep: ['sw'], stutter: ['st'], ringdub: ['ring', 'dl'], crushsweep: ['cr', 'sw'], phasedub: ['ph', 'dl'] };
     function setMode(m) { if (!built) return; const c = UA.ctx; try { inp.disconnect(); } catch (e) {} inp.connect(dry); [N.ring, N.ph[3], N.cr, N.dlLP, N.sw, N.st].forEach((n) => { try { n.disconnect(); } catch (e) {} }); if (N.dlLP) N.dlLP.connect(N.dlF); const chain = MODES[m] || []; let last = inp;
       chain.forEach((k) => { if (k === 'ring') { last.connect(N.ring); last = N.ring; } else if (k === 'ph') { last.connect(N.ph[0]); last = N.ph[3]; } else if (k === 'cr') { last.connect(N.cr); last = N.cr; } else if (k === 'dl') { last.connect(N.dl); last = N.dlLP; } else if (k === 'sw') { last.connect(N.sw); last = N.sw; } else if (k === 'st') { last.connect(N.st); last = N.st; } }); if (chain.length) last.connect(N.mix); cur = m; }
-    return { get node() { return build() ? inp : null; }, get mode() { return cur; }, makeup(v) { if (built) out.gain.setTargetAtTime(v, UA.ctx.currentTime, v > 1.2 ? 0.04 : 0.5); },
+    return { get node() { return build() ? inp : null; }, get mode() { return cur; }, makeup(v) { if (built) out.gain.setTargetAtTime(Math.min(0.90, Math.max(0.48, v * 0.48)), UA.ctx.currentTime, 0.25); },
       note(m) { const now = performance.now(); dens = Math.min(1, dens + 0.12); reg = reg * 0.8 + m * 0.2; lastN = now; },
       tick(dt, t, mega, lv) { if (!built) return; const c = UA.ctx, n = c.currentTime; dens = Math.max(0, dens - dt * 0.35); const playing = performance.now() - lastN < 2500;
-        nextT -= dt; if (nextT <= 0) { const pool = mega ? ['ring', 'phase', 'crush', 'dub', 'sweep', 'stutter', 'ringdub', 'crushsweep', 'phasedub'] : playing ? ['phase', 'dub', 'sweep', 'clean', 'phasedub'] : ['clean', 'dub', 'phase']; setMode(pool[Math.floor(Math.random() * pool.length)]); nextT = (60 / (RADIO.bpm || 120)) * 4 * (mega ? 4 : 8); }
-        const w = cur === 'clean' ? 0 : (mega ? 0.55 : 0.32) * (0.5 + dens * 0.6); wet.gain.setTargetAtTime(w, n, 0.3); dry.gain.setTargetAtTime(1 - w * 0.35, n, 0.3);
+        nextT -= dt; if (nextT <= 0) { const pool = mega ? ['clean', 'phase', 'dub', 'phasedub'] : playing ? ['clean', 'phase', 'dub', 'phasedub'] : ['clean', 'dub', 'phase']; // Musical effects only in demos: no ring/crush/resonant sweeps. setMode(pool[Math.floor(Math.random() * pool.length)]); nextT = (60 / (RADIO.bpm || 120)) * 4 * (mega ? 4 : 8); }
+        const w = cur === 'clean' ? 0 : (mega ? 0.18 : 0.13) * (0.5 + dens * 0.4); wet.gain.setTargetAtTime(w, n, 0.3); dry.gain.setTargetAtTime(1 - w * 0.35, n, 0.3);
         if (N.ringO) N.ringO.frequency.setTargetAtTime(110 * Math.pow(2, Math.round((reg - 48) / 12)) * (1 + Math.round(dens * 2) * 0.5), n, 0.2);
-        if (N.dl) N.dl.delayTime.setTargetAtTime((60 / (RADIO.bpm || 120)) * (dens > 0.6 ? 0.25 : 0.75), n, 0.1); if (N.dlF) N.dlF.gain.setTargetAtTime(dens > 0.6 ? 0.35 : 0.58, n, 0.3);
+        if (N.dl) N.dl.delayTime.setTargetAtTime((60 / (RADIO.bpm || 120)) * (dens > 0.6 ? 0.25 : 0.75), n, 0.1); if (N.dlF) N.dlF.gain.setTargetAtTime(dens > 0.6 ? 0.22 : 0.30, n, 0.3);
         if (N.swL) N.swL.frequency.setTargetAtTime(0.1 + dens * 0.6, n, 0.5); if (N.phL) N.phL.frequency.setTargetAtTime(0.2 + dens * 1.2, n, 0.5);
         if (cur === 'stutter' && RADIO.st.on) { const sd = 60 / (RADIO.bpm || 120) / 4, ph = (n / sd) % 2; N.st.gain.setTargetAtTime(ph < 1 ? 1 : 0.05, n, 0.004); } } }; })();
   function pickCtl(e) { if (!open.length) return null; ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam);
@@ -2063,11 +2063,11 @@
   function megaOn() { MEGA = true; window.__mega = true; try { window.UEV('mega'); } catch (e) {} try { HAND.show(true); } catch (e) {} openAllComp(); openComp('hw'); if (audioOk()) RADIO.start(); say('★ MEGA TRANSFORMACIÓN · todas las familias'); if (!hwSub && RADIO.onStep) hwSub = RADIO.onStep((st, tt, sd, bar, ch) => { if (!HW || (HW.T || 0) < 2.5 || !ch) return; const sec = RADIO.st.sec || 'drop'; if (sec === 'intro') return;
       // melodía generativa: motivo de 2 compases que se repite con variaciones, siempre sobre notas del acorde/escala
       const M = HW.mel || (HW.mel = {}); if (st === 0 && (bar % 2 === 0 || !M.rh)) { const RH = [[0, 3, 6, 8, 11, 14], [0, 2, 4, 7, 10, 12], [0, 6, 8, 10, 14], [0, 3, 7, 10, 12], [2, 4, 6, 10, 12, 15]]; const seed = (RADIO.st.style * 13 + Math.floor(bar / 8) * 7 + (HW.melSeed || 0) * 3) % RH.length; M.rh = RH[seed]; let d = 0; M.notes = M.rh.map((_, k) => { d += [0, 1, -1, 2, -2, 1][((seed + k) * 5 + bar) % 6]; return d; }); }
-      const k = M.rh.indexOf(st); if (k < 0) return; const sc = [0, 2, 3, 5, 7, 8, 10], base = ch[0] + 12, deg = M.notes[k] + (bar % 2 && k >= M.rh.length - 2 ? 2 : 0); const nt = SNAP(base + sc[((deg % 7) + 7) % 7] + 12 * Math.floor(deg / 7)); const dur = sd * (M.rh[k + 1] != null ? M.rh[k + 1] - st : 16 - st) * 0.9; hwPlay(nt, tt, Math.max(sd, dur));  });
+      const k = M.rh.indexOf(st); if (k < 0) return; const sc = (RADIO.scale && RADIO.scale()) || [0, 2, 3, 5, 7, 8, 10], base = ch[0] + 12, deg = M.notes[k] + (bar % 2 && k >= M.rh.length - 2 ? 2 : 0); const nt = SNAP(base + sc[((deg % 7) + 7) % 7] + 12 * Math.floor(deg / 7)); const dur = sd * (M.rh[k + 1] != null ? M.rh[k + 1] - st : 16 - st) * 0.9; hwPlay(nt, tt, Math.max(sd, dur));  });
     setTimeout(() => { items.filter((x) => x.kind === 'cap').forEach((it, i) => setTimeout(() => { const g = openGear(it, true); g.manual = 2; }, 300 + i * 260)); items.forEach((it) => { if (it.kind === 'mut') it.tgt = 3; if (it.kind === 'fx') it.on = 1; }); if (HW) HW.tg = 3.6;
       [1, 2].forEach((pg) => CAPPAGES[pg].slice(0, 3).forEach((spec, i) => setTimeout(() => { if (!MEGA) return; const dev = (spec.g3 ? GEAR3 : GEAR4).build(spec, kindOf(spec), Object.keys(ENGINES.PARAMS[spec.engine]).slice(0, 4).map((k) => k.toUpperCase())); dev.root.scale.setScalar(0.07); caseG.add(dev.root); flyers.push({ dev, a: ((pg - 1) * 6 + i) / 12 * TAU, m: 0 }); }, 5600 + (pg * 3 + i) * 450)));
       say('▶ Pulsa CINE para verlo como una peli'); }, 1800); }
-  let hwSub = null; function hwPlay(m, t0, dur) { if (!audioOk()) return; if (KV.size || performance.now() - (window.__kLast || 0) < 1800) return; { const v = vaSync(); if (v) { v.noteOn(m, 0.75, t0, 'm'); v.noteOff(m, t0 + dur, 'm'); return; } } const c = UA.ctx, g = c.createGain(), f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.setValueAtTime(4200, t0); f.frequency.exponentialRampToValueAtTime(1200, t0 + dur); g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.07, t0 + 0.02); g.gain.setTargetAtTime(0, t0 + dur * 0.7, 0.15); [-6, 6].forEach((d) => { const o = c.createOscillator(); o.type = 'sawtooth'; o.frequency.value = 440 * 2 ** ((m - 69) / 12); o.detune.value = d; o.connect(f); o.start(t0); o.stop(t0 + dur + 0.8); }); f.connect(g).connect(UA.bus.master); }
+  let hwSub = null; function hwPlay(m, t0, dur) { if (!audioOk() || !Number.isFinite(m) || (window.__WRADIO && window.__WRADIO.on && !RADIO.st.on)) return; if (KV.size || performance.now() - (window.__kLast || 0) < 1800) return; { const v = vaSync(); if (v) { v.noteOn(m, 0.42, t0, 'm'); v.noteOff(m, t0 + dur, 'm'); return; } } const c = UA.ctx, g = c.createGain(), f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.setValueAtTime(4200, t0); f.frequency.exponentialRampToValueAtTime(1200, t0 + dur); g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.032, t0 + 0.02); g.gain.setTargetAtTime(0, t0 + dur * 0.7, 0.15); [-6, 6].forEach((d) => { const o = c.createOscillator(); o.type = 'sawtooth'; o.frequency.value = 440 * 2 ** ((m - 69) / 12); o.detune.value = d; o.connect(f); o.start(t0); o.stop(t0 + dur + 0.8); }); f.connect(g).connect(UA.bus.master); }
   function megaOff() { window.__mega = false; try { HAND.show(false); } catch (e) {} if (hwSub) { hwSub(); hwSub = null; } MEGA = false; flyers.forEach((f) => { f.out = 1; }); items.forEach((it) => { if (it.W && it.home) { it.fly = 0; it.retT = 2.2; } }); open.forEach((g) => { const h = g.it.tok.position; g.dev.root.position.x = h.x; g.dev.root.position.z = h.z; g.dev.root.rotation.y = 0; }); say('Mega apagado'); }
   function superAll() { open.forEach((g) => { g.manual = 2; g.boost = 4; }); items.forEach((it) => { if (it.kind === 'mut') it.tgt = 3; }); if (HW && compG.hw.userData.open) HW.tg = 3.6; if (audioOk()) { RADIO.start(); RADIO.next(); } say('★ SÚPER TRANSFORMACIÓN'); }
   // ===== DIRECTOR DE CINE: escenas en grupo, emociones, voces y piano para ti =====
@@ -2076,7 +2076,27 @@
   let LASTCH = null;
   if (RADIO.onStep) RADIO.onStep((st, tt, sd, bar, ch) => { if (ch) LASTCH = ch; if (CINE.on && DRC.step) try { DRC.step(st, tt, sd, ch); } catch (e) {} });
   const TON = { key: -1, mode: 'auto' }; const MODES = { mayor: [0, 2, 4, 5, 7, 9, 11], menor: [0, 2, 3, 5, 7, 8, 10], dorico: [0, 2, 3, 5, 7, 9, 10], penta: [0, 3, 5, 7, 10], blues: [0, 3, 5, 6, 7, 10] };
-  function SNAP(m) { const ch = LASTCH, md = (n) => ((n % 12) + 12) % 12; const set = TON.mode !== 'auto' && TON.key >= 0 ? MODES[TON.mode].map((x) => md(x + TON.key)) : ch ? [...ch.map(md), md(ch[0] + 2)] : [0, 2, 4, 7, 9]; const fold = (x) => { while (x > 81) x -= 12; while (x < 33) x += 12; return x; }; for (let d = 0; d < 7; d++) { if (set.includes(md(m - d))) return fold(m - d); if (set.includes(md(m + d))) return fold(m + d); } return fold(m); }
+  function SNAP(m) {
+    // Follow the currently audible RADIO scale, not a fixed C/minor fallback.
+    // The selected transposer mode and key remain authoritative when explicitly set.
+    const md = (n) => ((n % 12) + 12) % 12;
+    const currentScale = (RADIO.scale && RADIO.scale()) || MODES.menor;
+    const steps = TON.mode !== 'auto' && TON.key >= 0 ? MODES[TON.mode] : currentScale;
+    const root = TON.key >= 0 ? TON.key : RADIO.st.root;
+    const set = new Set((steps || MODES.menor).map((x) => md(x + root)));
+    const chord = RADIO.st.on ? (LASTCH || RADIO.chordAt()) : null;
+    const chordSet = new Set((chord || []).map(md));
+    const fold = (x) => { while (x > 81) x -= 12; while (x < 33) x += 12; return x; };
+    let best = fold(m), score = Infinity;
+    for (let d = -6; d <= 6; d++) {
+      const note = fold(m + d);
+      if (!set.has(md(note))) continue;
+      // Closest scale tone wins; exact ties resolve to a chord tone.
+      const cost = Math.abs(d) - (chordSet.has(md(note)) ? 0.08 : 0);
+      if (cost < score) { score = cost; best = note; }
+    }
+    return best;
+  }
   const bots = () => items.filter((it) => it.kind === 'mut' && it.W && it.R);
   // ===== ROBOTS GIGANTES: crecen desde el maletín (≈2× el maletín), saltan al suelo y corren por la casa sin atravesar nada =====
   const GROW = (() => { let on = false; const G = []; const HT = 11.5, FL = -8.905;
