@@ -286,11 +286,12 @@
 
     // Speak spontaneously once on entering each giant's personal radius,
     // without requiring T/HABLAR or covering any touch controls.
-    let closestGiant=null,closestDistance=.79;
+    let closestGiant=null,closestDistance=Infinity;
     for(const npc of w.npcs||[])if(giants(npc.id)){
-      const d=distance(npc,w.player);
-      if(d<closestDistance){closestDistance=d;closestGiant=npc;}
-      if(d>1.27)oracleInside.delete(npc.id);
+      const d=Math.hypot(npc.x-w.player.x,npc.z-w.player.z);
+      const greetRadius=npc.id==='titan-ship'?48:npc.id==='titan-island'?31:105;
+      if(d<greetRadius&&d<closestDistance){closestDistance=d;closestGiant=npc;}
+      if(d>greetRadius*1.35)oracleInside.delete(npc.id);
     }
     if(closestGiant && !mode && !oracleInside.has(closestGiant.id)){
       oracleInside.add(closestGiant.id);

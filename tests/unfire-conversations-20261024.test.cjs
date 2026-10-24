@@ -132,3 +132,9 @@ test('wise giant greetings preserve encounter order on the device and avoid touc
  assert.match(script,/max-height:430px\) and \(orientation:landscape\)/);
  assert.match(script,/pointer-events:none/);
 });
+
+test('giant welcome is physical proximity, not the 475m manual conversation distance',()=>{
+ assert.match(script,/Math\.hypot\(npc\.x-w\.player\.x,npc\.z-w\.player\.z\)/);
+ assert.match(script,/npc\.id==='titan-ship'\?48/);
+ assert.match(script,/d<greetRadius&&d<closestDistance/);
+});
