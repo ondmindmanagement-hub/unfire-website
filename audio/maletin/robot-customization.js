@@ -130,17 +130,18 @@
   function apply(root,cfg,THREE){
     if(!root||!THREE)return;
     const a=normalize(cfg),texture=materialPattern(a.camo,THREE);
-    let index=0;
+    let index=0,usesPattern=false;
     root.traverse(o=>{
       if(!o.isMesh||!o.material)return;
       const source=Array.isArray(o.material)?o.material:[o.material];
       const next=source.map(mat=>{
         if(!mat||!mat.color||typeof mat.clone!=='function')return mat;
         const m=mat.clone();
+        m.userData=Object.assign({},m.userData,{unfireCustomMaterial:true});
         if(typeof m.metalness==='number')m.metalness=Math.max(.72,m.metalness);
         if(typeof m.roughness==='number')m.roughness=Math.min(.37,m.roughness);
         if(texture&&!m.map&&!m.transparent&&!m.emissiveMap&&typeof m.metalness==='number'){
-          m.map=texture;m.color.lerp(new THREE.Color(a.col),.2);
+          m.map=texture;m.userData.unfirePatternTexture=true;usesPattern=true;m.color.lerp(new THREE.Color(a.col),.2);
         }else if(typeof m.metalness==='number'){
           m.color.lerp(new THREE.Color(a.col),a.camo==='plain'?.38:.18);
         }
@@ -149,6 +150,7 @@
       });
       o.material=Array.isArray(o.material)?next:next[0];
     });
+    if(texture&&!usesPattern&&texture.dispose)texture.dispose();
     if(a.decal==='none'&&!a.image)return;
     const box=new THREE.Box3().setFromObject(root);
     const dims=box.getSize(new THREE.Vector3()),mid=box.getCenter(new THREE.Vector3());
@@ -158,6 +160,31 @@
     const plane=new THREE.Mesh(new THREE.PlaneGeometry(Math.max(.1,dims.x*.34),Math.max(.1,dims.y*.20)),mat);
     plane.name='unfire-personalized-sticker';plane.position.set(mid.x,box.min.y+dims.y*.57,box.max.z+.035);
     root.add(plane);
+  }
+  // Release only resources introduced by personalization, never shared robot assets.
+  function release(root) {
+    if(!root||typeof root.traverse!=='function')return;
+    const textures=new Set(),materials=new Set(),stickers=[];
+    root.traverse(o=>{
+      if(!o.isMesh)return;
+      if(o.name==='unfire-personalized-sticker'){
+        stickers.push(o);
+        if(o.material){if(o.material.map)textures.add(o.material.map);materials.add(o.material);}
+      }else{
+        const arr=Array.isArray(o.material)?o.material:[o.material];
+        for(const mat of arr){
+          if(!mat||!mat.userData||!mat.userData.unfireCustomMaterial)continue;
+          if(mat.userData.unfirePatternTexture&&mat.map)textures.add(mat.map);
+          materials.add(mat);
+        }
+      }
+    });
+    for(const o of stickers){
+      if(o.parent)o.parent.remove(o);
+      if(o.geometry&&o.geometry.dispose)o.geometry.dispose();
+    }
+    for(const material of materials)if(material.dispose)material.dispose();
+    for(const texture of textures)if(texture.dispose)texture.dispose();
   }
   function upload(file){
     return new Promise((resolve,reject)=>{
@@ -181,5 +208,5 @@
       im.src=url;
     });
   }
-  return {COLORS,CAMO,DECALS,normalize,panel,inject,apply,upload,css};
+  return {COLORS,CAMO,DECALS,normalize,panel,inject,apply,release,upload,css};
 });
