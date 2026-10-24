@@ -15,12 +15,12 @@ test('ventanal retains only its perimeter, without white or wooden internal slat
   assert.match(ENGINE,/const sill = mesh\(/);
 });
 test('nano robot keeps free-roam coordinates, input modes and proportional mobility',()=>{
-  const robot=ENGINE.match(/robotMode: \(\) => \{(.+?)\}, isNano:/)?.[1];
+  const robot=ENGINE.match(/robotMode: \(\) => \{([\s\S]+?)\}, isNano:/)?.[1];
   assert.ok(robot,'story robot mode remains exposed');
   assert.doesNotMatch(robot,/ROAMS\.p\.set\(/,'no teleport on size toggle');
-  assert.match(robot,/ROAMS\.mini = !ROAMS\.mini/);
+  assert.match(robot,/ROAMS\.mini = futureMini/);
   assert.doesNotMatch(ENGINE,/ROAMS\.p\.x = clamp\(ROAMS\.p\.x, -12\.6, 12\.6\)/,'desk bounds removed');
-  assert.match(ENGINE,/const ms = ROAMS\.mini \? NANO_SCALE : 1/);
+  assert.match(ENGINE,/const ms = avatarProfile\(\)\.speedScale/);
   assert.match(ENGINE,/const NANO_SCALE = 0\.24 \/ 10\.5/, 'nano robot is precisely the 0.24-unit model size of the minis inside the case');
   assert.match(ENGINE,/isNano: \(\) => !!ROAMS\.mini/);
   assert.match(ENGINE,/zone: window\.ATM_OUT \? 'island' : 'house'/, 'nano roaming uses actual world zone, not table-only map');
@@ -29,10 +29,10 @@ test('nano robot keeps free-roam coordinates, input modes and proportional mobil
   assert.match(HTML,/id = 'cfgB'/, 'configuration gear remains present');
   assert.match(HTML,/H\.isNano\(\)/, 'button state updates after exiting or changing mode');
 
-  assert.match(ENGINE,/const GTA = \(\(ROAMS\.mode \|\| '3p'\) === '3p' \|\| ROAMS\.mode === '3pl'\)/);
+  assert.match(ENGINE,/const GTA = \(\(ROAMS\.mode \|\| '3p'\) === '3p' \|\| ROAMS\.mode === '3pl' \|\| ROAMS\.mode === '2p'\)/);
   assert.match(ENGINE,/AV\.w\.scale\.setScalar\(AV\.baseScale\*\(ROAMS\.mini\?NANO_SCALE:1\)\)/);
   assert.match(ENGINE,/miniCameraRatio = ROAMS\.mini \? NANO_SCALE : 1/);
-  assert.match(ENGINE,/ROAMS\.fly\) \{ const miniFlight = ROAMS\.mini \? NANO_SCALE : 1/);
+  assert.match(ENGINE,/ROAMS\.fly\) \{ const miniFlight = avatarProfile\(\)\.speedScale/);
 });
 test('coin HUD lives centrally, clear of the radio and settings touch targets',()=>{
   assert.match(COINS, /#unfireCoinHud\{[^\n]*top:calc\(env\(safe-area-inset-top\) \+ 78px\);left:50%;right:auto;transform:translateX\(-50%\)/,

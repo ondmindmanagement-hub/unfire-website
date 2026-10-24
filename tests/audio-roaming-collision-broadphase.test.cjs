@@ -71,7 +71,7 @@ test('candidate selection has no timers, scene mutation, secondary render loop o
 test('runtime integrates interior, object-object world, floor and exterior ball collision', () => {
   const engine=fs.readFileSync(path.join(__dirname,'../audio/maletin/game-engine-v50.js'),'utf8');
   const html=fs.readFileSync(path.join(__dirname,'../audio/maletin/index.html'),'utf8');
-  assert(html.includes('collision-nearby.js?v=20261024storytop1'));
+  assert(html.includes('collision-nearby.js?v=20261024nanoPhysics2'));
   assert(html.indexOf('collision-nearby.js') < html.lastIndexOf('game-engine-v50.js?v='));
   assert.match(engine,/COLLISION\(window\.__OBST, p\.x, p\.z, 1\)/);
   assert.match(engine,/COLLISION\(OB, cx, cz, q\.r \+ 2\)/);
