@@ -1,0 +1,38 @@
+name: Unfire Game Cinema Mode V - Real Footage Capture
+on:
+  push:
+    branches: [film/unfire-preview-trailer-gameplay-20261024]
+    paths:
+      - 'film/cinema/20261024/**'
+      - '.github/workflows/unfire-native-cinema-capture.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  record-real-native-cine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium for authentic Three.js cinema capture
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+          ffmpeg -version | head -1
+      - name: Record genuinely moving built-in Cinema Mode V (nighttime)
+        env:
+          UNFIRE_CINE_SECONDS: '7'
+        run: node film/cinema/20261024/capture_native_cine.cjs
+      - name: Persist only review footage, never public
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: authentic-unfire-in-engine-night-cinema-footage-20261024
+          path: |
+            film/cinema/20261024/output/UNFIRE_CINE_REAL_NIGHT_TEST.mp4
+            film/cinema/20261024/output/CAPTURE_DIAGNOSTICS.json
+          retention-days: 14
+          if-no-files-found: error
