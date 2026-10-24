@@ -92,3 +92,13 @@ test('no stale review claims; links and accessibility present',()=>{
   assert.match(html,/\/apps\/pocket-capture\//);
   assert.match(html,/\/apps\/unfire-control\//);
 });
+
+test('Pocket Capture listing verified in both catalogue and product details',()=>{
+  const details=fs.readFileSync(path.join(__dirname,'../apps/pocket-capture/index.html'),'utf8');
+  assert.match(html,/https:\/\/apps\.apple\.com\/app\/id6823107299/);
+  assert.match(details,/https:\/\/apps\.apple\.com\/app\/id6823107299/);
+  assert.doesNotMatch(details,/review in progress|still undergoing review/i);
+  const guide=fs.readFileSync(path.join(__dirname,'../docs/app-store-categories-20261024.md'),'utf8');
+  assert.match(guide,/6823107299/);
+  assert.match(guide,/Public App Store verification/);
+});

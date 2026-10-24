@@ -13,11 +13,21 @@ The labels below are official English category names, but assignments are **prop
 | --- | --- | --- | --- | --- |
 | ARCHER Clipper | Mac | Music | Utilities | Audio clipper; published listing: https://apps.apple.com/app/id6812968924 |
 | ARCHER Mobile | iPhone / iPad | Music | Utilities | Touch clipper; public listing documented at https://apps.apple.com/app/id6822109610 |
-| Pocket Capture | iPhone / iPad | Music **if aimed at music recording**; otherwise Utilities | Productivity | Local audio recording, waveform/trim/export. **No verified public App Store URL or current ASC category**; avoid asserting that the latest build is on sale |
+| Pocket Capture | iPhone / iPad | Music (publicly observed) | No secondary observed in public search | Public App Store listing https://apps.apple.com/app/id6823107299 · 1.0.1 on 24 Oct 2026 |
 | BOLT | Mac | Developer Tools **if developer workflow is core**; otherwise Productivity | Utilities | Human-reviewed AI workflows; published listing: https://apps.apple.com/app/id6814615903 |
 | BOLT Mobile | iPhone / iPad | Developer Tools **if focused on reviewing development files**; otherwise Productivity | Utilities | Separate app, release and category; ASC status unverified |
 | Unfire Control | Mac | Utilities | Productivity | Gesture/voice control; development preview; no App Store availability claim |
-| Power Energy Prices | iPhone / iPad | Utilities | Reference | Electricity information; public listing: https://apps.apple.com/app/id6815880143 |
+| Power Energy Prices | iPhone / iPad | Utilities | Finance (publicly observed) | Electricity information; public listing: https://apps.apple.com/app/id6815880143 |
+
+## Public App Store verification — Spain, 24 October 2026
+Public Apple Search/Lookup JSON (not authenticated App Store Connect) returned the following **observed storefront genres**. These are evidence of public listing/category, not access to edit metadata:
+- **ARCHER Audio Clipper** · 6812968924 · primary Music; list: Music, Utilities · macOS · public 1.0.2.
+- **Archer for iPhone & iPad** · 6822109610 · primary Music; list: Music · iOS/iPadOS.
+- **BOLT: Trusted AI Bridge** · 6814615903 · primary Developer Tools; list: Developer Tools, Productivity · macOS · public 1.1.1.
+- **Power Energy Prices** · 6815880143 · primary Utilities; list: Utilities, Finance · iPhone/iPad.
+- **Unfire Pocket Capture** · 6823107299 · primary Music; list: Music · public 1.0.1, first listed on 24 October 2026.
+
+BOLT Mobile and Unfire Control **not confirmed** through public App Store Search; a zero search result is not evidence of account-level rejection or absence of a record.
 
 ## Prospective products: not presented as released
 - **Unfire Synthesizer**: Music primary; additional category only if it truly fits; prototype/development.
