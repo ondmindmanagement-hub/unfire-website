@@ -1,0 +1,31 @@
+name: Audio story modal GPU pause
+on:
+  push:
+    branches:
+      - fix/audio-story-menu-render-pause-20261024
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/audio-story-modal-frame-pause.test.cjs'
+      - '.github/workflows/audio-story-modal-frame-pause.yml'
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/audio-story-modal-frame-pause.test.cjs'
+      - '.github/workflows/audio-story-modal-frame-pause.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  modal-frame-pause:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and modal frame safety
+        run: |
+          node --check audio/maletin/game-engine-v50.js
+          node --check tests/audio-story-modal-frame-pause.test.cjs
+          node tests/audio-story-modal-frame-pause.test.cjs
