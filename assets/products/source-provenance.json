@@ -1,6 +1,6 @@
 {
   "source_collection": "Unfire_AppStore_Real_Captures_20261019/FINAL_PROFESSIONAL_MEDIA",
-  "policy": "Derivatives of local product-cover assets; no invented UI, screenshots or generated people.",
+  "policy": "Only existing app screenshots and original application icons are shown. No fabricated interfaces. Assets removed for privacy are excluded from this published manifest.",
   "images": [
     {
       "app_visual": "bolt-mac",
@@ -117,21 +117,6 @@
       "web_asset": "unfire-control-icon.webp",
       "bytes": 19614,
       "sha256": "039cf9b1f92d08bf9d0c5680a01b5729d5913fef333ef26bf378baf4c3cc0ec5"
-    },
-    {
-      "app_visual": "keybridge-iphone",
-      "source_original": "Unfire_AppStore_Real_Captures_20261019/FINAL_PROFESSIONAL_MEDIA/KeyBridge/iPhone/01_overview.png",
-      "original_size": [
-        1206,
-        2622
-      ],
-      "web_size": [
-        736,
-        1600
-      ],
-      "web_asset": "keybridge-iphone.webp",
-      "bytes": 33256,
-      "sha256": "c897bdb3b6514864a76dbdfc51ffefd20825ad3c213932b419f3313f649a1d09"
     }
   ]
 }

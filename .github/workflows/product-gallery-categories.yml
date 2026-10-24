@@ -18,7 +18,7 @@ jobs:
         run: |
           npm install --no-save playwright@1.56.1
           npx playwright install --with-deps chromium
-      - name: Check nine assets, four categories, prototype labels and responsive layouts
+      - name: Check nine cards, eight authentic images, four categories and responsive layouts
         run: |
           python3 -m http.server 8771 --bind 127.0.0.1 > /tmp/unfire-gallery-http.log 2>&1 &
           sleep 2
