@@ -1950,10 +1950,15 @@
   }
   const mouse = { nx: 0, ny: 0, in: false, t: 0, touch: false }; let wheelHold = 0;
   addEventListener('wheel', (e) => { if (CINE.on) CINE.on = false;
+    // All roaming modes: wheel/trackpad is never an avatar movement control.
+    // Leave native wheel scrolling to overlay menus; contain it on the 3D canvas.
+    if (ROAMS.on && !CASE_VIEW.on) {
+      if (e.target === cv || e.target === document.body || e.target === document.documentElement) e.preventDefault();
+      return;
+    }
     const p = cursorPoint(e), k = e.deltaMode ? 30 : 1, dy = e.deltaY * k, dx = e.deltaX * k;
     e.preventDefault();
     if (ROAMS.on && CASE_VIEW.on) { CASE_VIEW.dist=clamp(CASE_VIEW.dist+dy*0.013,window.ATM_OUT?6.8:5.4,window.ATM_OUT?17:14.5);return; }
-    if (ROAMS.on) { ROAMS.tgt = null; const ms = avatarProfile().speedScale; try { ROOM.R.userData.camTrack = null; } catch (e2) {} roamMove(-dy * 0.2 * ms, dx * 0.1 * ms); return; }
     if (lidOpen < 0.92) { parentPost({ scroll: dy, pass: 1 }); return; }
     ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const over = ray.intersectObject(caseG, true).length > 0;
     if (e.ctrlKey) { zoomBy(Math.exp(dy * 0.012), p); return; }                       // pellizco del touchpad
