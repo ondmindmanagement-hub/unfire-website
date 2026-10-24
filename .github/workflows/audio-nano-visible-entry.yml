@@ -1,0 +1,27 @@
+name: Audio Nano Visible Mode Entry
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'tests/audio-nano-visible-entry.test.cjs'
+      - '.github/workflows/audio-nano-visible-entry.yml'
+permissions:
+  contents: read
+jobs:
+  entry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check engine syntax and exercise real story entry
+        run: |
+          node --check audio/maletin/game-engine-v50.js
+          node --test tests/audio-nano-visible-entry.test.cjs
+      - name: Verify whitespace
+        run: git diff --check
