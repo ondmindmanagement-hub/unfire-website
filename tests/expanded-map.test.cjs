@@ -94,7 +94,16 @@ test('integration, CSS mobile safe areas and atomic host/engine cache',()=>{
   assert.match(engine,/const expanded = window\.UnfireExpandedMap/);
   assert.match(engine,/if \(expanded\.isOpen\) for \(const k in ROAMS\.k\)/);
   assert.match(engine,/if \(!MAP\.expandedOpen\) S\.renderer\.render\(S\.scene, cam\)/, 'no WebGL render while 2D map is open');
-  assert.match(engine,/if \(MAP\.expandedOpen \|\| \(window\.UNFIRE_COINS && window\.UNFIRE_COINS\.isOpen\)\) \{[\s\S]*?clock\.getDelta\(\);[\s\S]*?if \(MAP\.expandedOpen\) MAP\.tick\(\);[\s\S]*?return;/, 'suspend heavy 3D updates under full map or modal shop');
+  const pauseStart = engine.indexOf('    if (MAP.expandedOpen || ');
+  const pauseEnd = engine.indexOf('    // Cap this heavy 3D scene', pauseStart);
+  assert.ok(pauseStart > 0 && pauseEnd > pauseStart, 'modal render pause occurs before heavy 3D workload');
+  const pause = engine.slice(pauseStart, pauseEnd);
+  assert.match(pause,/MAP\.expandedOpen/);
+  assert.match(pause,/window\.UNFIRE_COINS\.isOpen/);
+  assert.match(pause,/storyMenu/);
+  assert.match(pause,/clock\.getDelta\(\)/);
+  assert.match(pause,/if \(MAP\.expandedOpen\) MAP\.tick\(\)/);
+  assert.match(pause,/return;/);
   assert.match(iframe,/expanded-map\.css\?v=20261024unified1/);
   assert.match(iframe,/expanded-map\.js\?v=20261024unified1/);
   assert.match(iframe,/game-engine-v50\.js\?v=20261024unified1/);
