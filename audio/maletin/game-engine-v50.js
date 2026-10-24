@@ -1430,17 +1430,17 @@
     return { tick(dt, t) { const out = !!window.ATM_OUT && ROAMS.on; if (!B) { if (!out || ((ROAMS.h || 0) < 110 && Math.hypot(ROAMS.p.x, ROAMS.p.z) < 240)) return; build(); } B.forEach((b) => { b.w.visible = out; }); if (!out) return; const devs = window.__SKYDEV ? window.__SKYDEV().filter((o) => o.visible && o.scale.x > 8) : [];
       B.forEach((b, i) => { b.t -= dt; if (!b.tg || !b.tg.parent || !b.tg.visible || (b.st === 'land' && b.t <= 0)) { const free = devs.filter((o) => !B.some((x) => x !== b && x.tg === o)); b.tg = free.length ? free[Math.floor(Math.random() * free.length)] : null; b.st = 'fly'; } let act = 'fly';
         if (b.tg) { const s = b.tg.scale.x, top = V(b.tg.position.x, b.tg.position.y + s * 0.45, b.tg.position.z); if (b.st === 'fly') { const d = top.clone().sub(b.w.position), L = d.length(); b.v.lerp(d.multiplyScalar(Math.min(70, L * 0.8 + 6) / Math.max(L, 0.001)), Math.min(1, dt * 1.5)); b.w.position.addScaledVector(b.v, dt); b.w.rotation.y = Math.atan2(b.v.x, b.v.z); if (L < 4) { b.st = 'land'; b.t = 10 + Math.random() * 8; try { window.__SKYPOKE && window.__SKYPOKE(b.tg); } catch (e) {} } } else { b.w.position.lerp(top, Math.min(1, dt * 6)); b.w.rotation.y += dt * 0.6; act = 'dance'; } }
-        b.r0.update(3.7, dt, { act, ph: t * 2 + i, mood: 'happy', beatPhase: t * 2 }); }); } }; })();
+        b.r0.update(3.7, dt, { act, ph: t * 2 + i, mood: 'happy', beatPhase: t * 2 }); }); }, get list() { return B || []; } }; })();
   // otros robots surfeando las olas en mar abierto, con sus tablas, trucos y espuma (recorridos en bucle que no se cruzan)
   const SURFBOTS = (() => { let B = null; const build = () => { B = []; const CL = [0xff2fb0, 0x3d8bff, 0xffd21a, 0x2bd96b]; for (let k = 0; k < (LOWDEV ? 2 : 3); k++) { try { const r0 = ROBOT.build(MUTANTS.list[(k * 7 + 4) % MUTANTS.list.length]); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); const bb = new THREE.Box3().setFromObject(r0.root); const s0 = 8 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001); w.scale.setScalar(s0); r0.root.position.y -= bb.min.y; r0.root.rotation.y = 1.25; const bd = new THREE.Mesh(new THREE.SphereGeometry(1, 24, 10), new THREE.MeshPhysicalMaterial({ color: CL[k], roughness: 0.25, clearcoat: 1 })); bd.scale.set(1.4 / s0, 0.18 / s0, 4.8 / s0); w.add(bd); w.visible = false; S.scene.add(w); B.push({ w, r0, r: 140 + k * 50, a: k * 2.1, sp: (k % 2 ? -1 : 1) * (26 + k * 4), jt: 4 + k * 3, tr: 0 }); } catch (e) {} } };
     return { tick(dt, t) { const out = !!window.ATM_OUT && ROAMS.on && cam.position.y < 700; if (!B) { if (!window.ATM_OUT || !ROAMS.on || Math.hypot(ROAMS.p.x, ROAMS.p.z) < 350) return; build(); } B.forEach((b) => (b.w.visible = out)); if (!out || !window.__WAVE) return; const W1 = window.__WAVE;
       B.forEach((b, i) => { b.a += b.sp / b.r * dt; const r = b.r + Math.sin(t * 0.21 + i) * 12, x = Math.cos(b.a) * r, z = 720 + Math.sin(b.a) * r; let y = -10.2 + W1(x, z, t) + 1.2; b.jt -= dt; if (b.jt <= 0 && !b.tr) b.tr = 0.001; let spin = 0; if (b.tr) { b.tr += dt; const u = b.tr / 1.1; y += Math.sin(Math.min(1, u) * Math.PI) * 14; spin = Math.min(1, u) * TAU; if (u >= 1) { b.tr = 0; b.jt = 6 + Math.random() * 6; try { window.__SPRAY(x, y, z, 50, 9, 12); } catch (e) {} } }
         const fx = -Math.sin(b.a) * Math.sign(b.sp), fz = Math.cos(b.a) * Math.sign(b.sp); b.w.position.set(x, y, z); b.w.rotation.set(-Math.atan((W1(x + fx * 3, z + fz * 3, t) - W1(x - fx * 3, z - fz * 3, t)) / 6) * 0.9, Math.atan2(fx, fz) + spin, Math.sin(t * 1.4 + i) * 0.12);
-        if (Math.random() < 0.5) try { window.__SPRAY(x - fx * 3, y - 0.5, z - fz * 3, 2, 3, 6); } catch (e) {} b.r0.update(3.7, dt, { act: null, ph: t, mood: 'happy' }); }); } }; })();
+        if (Math.random() < 0.5) try { window.__SPRAY(x - fx * 3, y - 0.5, z - fz * 3, 2, 3, 6); } catch (e) {} b.r0.update(3.7, dt, { act: null, ph: t, mood: 'happy' }); }); }, get list() { return B || []; } }; })();
   // titanes: robots gigantescos que caminan por el paisaje infinito del horizonte, tan altos que tocan el espacio
   const TITANS = (() => { let B = null; const build = () => { B = []; for (let k = 0; k < (LOWDEV ? 2 : 3); k++) { try { const r0 = ROBOT.build(MUTANTS.list[(k * 3 + 1) % MUTANTS.list.length]); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar((1500 + k * 300) / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; w.traverse((o) => { if (o.isMesh) { o.castShadow = false; o.receiveShadow = false; o.frustumCulled = false; } }); w.visible = false; S.scene.add(w); B.push({ w, r0, a: k * 2.1, R: 6300 + k * 450, sp: (k % 2 ? -1 : 1) * 0.004, wd: 0 }); } catch (e) {} } };
     return { tick(dt, t) { const out = !!window.ATM_OUT && ROAMS.on; if (!B) { if (!out || ((ROAMS.h || 0) < 650 && Math.hypot(ROAMS.p.x, ROAMS.p.z) < 1200)) return; build(); } B.forEach((b) => (b.w.visible = out)); if (!out) return; const cx = cam.position.x, cz = cam.position.z;
-      B.forEach((b, i) => { b.a += b.sp * dt; const x = cx * 0.3 + Math.cos(b.a) * b.R, z = cz * 0.3 + Math.sin(b.a) * b.R; b.w.position.set(x, -10, z); b.w.rotation.y = Math.atan2(-Math.sin(b.a) * Math.sign(b.sp), Math.cos(b.a) * Math.sign(b.sp)); b.wd += Math.abs(b.sp) * b.R * dt; if ((i + Math.floor(t * 20)) % 3 === 0) b.r0.update(3.7, dt * 3, { act: 'walk', ph: STEPPH(b.wd / b.w.scale.x, 3.7, false), mood: 'happy' }); }); } }; })();
+      B.forEach((b, i) => { b.a += b.sp * dt; const x = cx * 0.3 + Math.cos(b.a) * b.R, z = cz * 0.3 + Math.sin(b.a) * b.R; b.w.position.set(x, -10, z); b.w.rotation.y = Math.atan2(-Math.sin(b.a) * Math.sign(b.sp), Math.cos(b.a) * Math.sign(b.sp)); b.wd += Math.abs(b.sp) * b.R * dt; if ((i + Math.floor(t * 20)) % 3 === 0) b.r0.update(3.7, dt * 3, { act: 'walk', ph: STEPPH(b.wd / b.w.scale.x, 3.7, false), mood: 'happy' }); }); }, get list() { return B || []; } }; })();
   window.__STORYNAME = () => (STORY && STORY.save && STORY.save.name) || '';
   // MUNDO DE FONDO (solo paisaje, inalcanzable): titanes de varias alturas, megatitanes que tocan el espacio, dragones procedurales volando
   // y pantallas-collage con vídeos reales; todo se oscurece de noche y se aclara de día con la luz del cielo
@@ -1782,6 +1782,12 @@
            !/^[A-Za-z0-9_-]+$/.test(id)||
            id==='__proto__'||id==='constructor'||id==='prototype')return null;
         if(isHost&&id!==c.peer)return null;
+        // Text chat travels on the same short-lived P2P room connection.
+        if(raw.kind==='chat'){
+          if(typeof raw.text!=='string'||!raw.text.trim()||raw.text.length>180||/[\u0000-\u001f\u007f]/.test(raw.text))return null;
+          if(raw.n!=null&&typeof raw.n!=='string')return null;
+          return {id,kind:'chat',n:String(raw.n||'Jugador').slice(0,20),text:raw.text.trim()};
+        }
         if(raw.bye!=null)return raw.bye===1?{id,bye:1}:null;
         if(raw.nt!=null)return Number.isInteger(raw.nt)&&raw.nt>=0&&raw.nt<30?
           {id,nt:raw.nt}:null;
@@ -1812,13 +1818,20 @@
     function setup(c) {
       conns.push(c);
       let rateStart=0,rateCount=0;
+      let lastChatAt=0;
       c.on('data', (raw) => {
         const now=performance.now();
         if(!rateStart||now-rateStart>=1000){rateStart=now;rateCount=0;}
         if(++rateCount>40)return;
         const d=safePacket(raw,c);
         if(!d||d.id===myId)return;
-        if(d.nt!=null)NOTES.take(d.nt,false);
+        if(d.kind==='chat'){
+          // Serverless P2P; ignore floods before relaying to other room members.
+          if(lastChatAt&&now-lastChatAt<650)return;
+          lastChatAt=now;
+          try { window.UnfireConversations && window.UnfireConversations.receivePeer(d); } catch (_) {}
+        }
+        else if(d.nt!=null)NOTES.take(d.nt,false);
         else if(d.bye)drop(d.id);
         else recv(d);
         if(isHost)conns.forEach((o)=>{
@@ -1901,7 +1914,14 @@
       addEventListener('pagehide',()=>watcher.disconnect(),{once:true});
     }
     applyMe();
-    return { open(taller) { ui.classList.toggle('workshop',!!taller);ui.classList.add('on');paint(); $o('onN').value = cfg.name || (window.__STORYNAME && window.__STORYNAME()) || ''; $o('onNum').value = cfg.num || 27; msg(''); ui.querySelector('h3').textContent = taller ? '🔧 TALLER · personaliza tu robot' : '🌐 MODO ONLINE'; ui.querySelectorAll('.act').forEach((a, i) => (a.style.display = taller && i < 2 ? 'none' : 'flex')); ui.classList.add('on'); }, get on() { return !!code; }, get joining() { return !!joining; }, get audioPlayers() { return code ? Object.values(R) : []; }, voiceVisibility(v) { VOICE.visibility(v); },
+    return { sendChat(text) {
+        if(!code||!peer||!myId||typeof text!=='string')return false;
+        const q=text.trim();
+        if(!q||q.length>180)return false;
+        const d={id:myId,kind:'chat',n:String(cfg.name||'Jugador').slice(0,20),text:q};
+        conns.forEach((c)=>{if(c.open)try{c.send(d);}catch(_){}});
+        return true;
+      }, get myName(){return String(cfg.name||'Jugador').slice(0,20);}, open(taller) { ui.classList.toggle('workshop',!!taller);ui.classList.add('on');paint(); $o('onN').value = cfg.name || (window.__STORYNAME && window.__STORYNAME()) || ''; $o('onNum').value = cfg.num || 27; msg(''); ui.querySelector('h3').textContent = taller ? '🔧 TALLER · personaliza tu robot' : '🌐 MODO ONLINE'; ui.querySelectorAll('.act').forEach((a, i) => (a.style.display = taller && i < 2 ? 'none' : 'flex')); ui.classList.add('on'); }, get on() { return !!code; }, get joining() { return !!joining; }, get audioPlayers() { return code ? Object.values(R) : []; }, voiceVisibility(v) { VOICE.visibility(v); },
       tick(dt, t) { if (pending && ROAMS.on) { this.open(); $o('onCode').value = pending; msg('Te han invitado a la sala ' + pending + ' · elige tu robot y pulsa UNIRME'); pending = null; }
         if (!code || !peer) return; sendT -= dt; if (sendT <= 0 && myId) { sendT = 0.1; const d = { id: myId, n: cfg.name, c: cfg.col, t: cfg.type, ca:cfg.camo||'plain', de:cfg.image?'none':(cfg.decal||'none'), x: +ROAMS.p.x.toFixed(2), z: +ROAMS.p.z.toFixed(2), h: +(ROAMS.h || 0).toFixed(2), y: +((ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy)).toFixed(3), sc: NOTES.sc, f: ROAMS.fly ? 1 : 0, o: window.ATM_OUT ? 1 : 0, m: ROAMS.moving ? 1 : 0, v: VOICE.on ? 1 : 0, q: 1 }; conns.forEach((c) => { if (c.open) try { c.send(d); } catch (e) {} }); }
         if (NOTES.g) { NOTES.g.visible = !!window.ATM_OUT; const fy = -8.9 + (ROAMS.h || 0) + 5; NOTES.list.forEach((n, i) => { if (!n.on) return; n.sp.material.rotation = Math.sin(t * 2 + i) * 0.3; if (window.ATM_OUT && Math.abs(ROAMS.p.x - n.sp.position.x) < 7 && Math.abs(ROAMS.p.z - n.sp.position.z) < 7 && Math.abs(fy - n.sp.position.y) < 9) { NOTES.take(i, true); conns.forEach((c) => { if (c.open) try { c.send({ id: myId, nt: i }); } catch (e) {} }); upd(); } }); } NOTES.uT = (NOTES.uT || 0) - dt; if (NOTES.uT <= 0) { NOTES.uT = 1; upd(); } const now = performance.now(); Object.keys(R).forEach((id) => { const r = R[id], d = r.d; if (!d) return; if (now - r.last > 8000) { drop(id); return; } const vis = !!d.o === !!window.ATM_OUT; r.w.visible = r.tag.visible = vis; if (!vis) return; const tgt = V(d.x, -8.9 + d.h, d.z), mv = r.w.position.distanceTo(tgt); r.w.position.lerp(tgt, Math.min(1, dt * 8)); r.wd += Math.min(mv, 5); r.w.rotation.y = Math.atan2(Math.sin(d.y), -Math.cos(d.y)); r.tag.position.set(r.w.position.x, r.w.position.y + 13, r.w.position.z); r.r0.update(3.7, dt, { act: d.f ? 'fly' : d.m ? 'walk' : null, ph: d.m ? STEPPH(r.wd, 10.5, false) : t, mood: 'happy' }); }); VOICE.tick(dt); }, create, join, leave, link, saveMe() { save(); applyMe(); } };
@@ -2062,7 +2082,40 @@
     function bubble(grp, name, text) { text = window.T ? window.T(text) : text; const { c, tx, sp } = grp.bub, g = c.getContext('2d'); g.clearRect(0, 0, 512, 160); g.fillStyle = 'rgba(255,255,255,.94)'; g.strokeStyle = '#3d8bff'; g.lineWidth = 5; g.beginPath(); g.roundRect ? g.roundRect(4, 4, 504, 136, 26) : g.rect(4, 4, 504, 136); g.fill(); g.stroke(); g.fillStyle = '#ff2fb0'; g.font = '800 22px Orbitron, Arial'; g.fillText(name, 22, 34); g.fillStyle = '#0a1a3a'; g.font = '600 21px Arial'; const words = text.split(' '); let line = '', y = 66; for (const w0 of words) { if (g.measureText(line + w0).width > 470) { g.fillText(line, 22, y); line = ''; y += 26; if (y > 130) break; } line += w0 + ' '; } if (y <= 130) g.fillText(line, 22, y); tx.needsUpdate = true; sp.visible = true; }
     return { tick(dt, t) { const out = !!window.ATM_OUT && ROAMS.on; if (!G) { if (!out || Math.hypot(ROAMS.p.x, ROAMS.p.z) < 170) return; build(); } G.forEach((grp, gi) => { const aa = grp.a0 + Math.sin(t * 0.025 + gi * 1.7) * 0.16; const ox = grp.pos.x, oz = grp.pos.z; grp.pos.set(Math.cos(aa) * 214, -9, Math.sin(aa) * 214); const gmv = Math.hypot(grp.pos.x - ox, grp.pos.z - oz); grp.bots.forEach((b, j) => { b.w.visible = out; { const ta = aa + (j ? 0.022 : -0.022); const tx = Math.cos(ta) * 214, tz = Math.sin(ta) * 214; b.w.position.x = tx; b.w.position.z = tz; b.wd = (b.wd || 0) + gmv; b.w.rotation.y = gmv > 0.002 && b.talk <= 0 ? Math.atan2(grp.pos.x - ox, grp.pos.z - oz) : Math.atan2(grp.pos.x - tx, grp.pos.z - tz); } const fy = ROAMS.fly ? (ROAMS.h || 0) * 0.6 + Math.sin(t + j) * 2 : 0; b.w.position.y += (-9 + fy - b.w.position.y) * Math.min(1, dt * 2); if (out) { const dx = ROAMS.p.x - b.w.position.x, dz = ROAMS.p.z - b.w.position.z, dd = Math.hypot(dx, dz); if (dd < 3.6 && dd > 0.01 && (ROAMS.h || 0) < 8) { ROAMS.p.x += dx / dd * (3.6 - dd); ROAMS.p.z += dz / dd * (3.6 - dd); } } b.talk = Math.max(0, b.talk - dt); if (b.w.position.distanceToSquared(cam.position) < 160000 || b.talk > 0) b.r0.update(3.7, dt, { act: grp.fight > 0 ? 'fight' : b.talk > 0 ? 'talk' : ROAMS.fly ? 'fly' : gmv / Math.max(dt, 1e-3) > 0.3 ? 'walk' : 'look', ph: gmv / Math.max(dt, 1e-3) > 0.3 ? b.wd / (0.87 * 8.5) * 1.047 : t, mood: 'happy', talk: b.talk > 0 }); }); grp.bub.sp.visible = out && grp.bub.sp.visible; if (!out) return;
         grp.fight = Math.max(0, (grp.fight || 0) - dt); if (!grp.fight && Math.random() < dt * 0.01) { grp.fight = 4; const FL = ['¡Ese era MI tornillo!', '¡Retira lo que has dicho del autotune!', '¡El vinilo suena mejor y punto!', '¡Me has pisado el cable!', '¡Mi bajo es más grave que el tuyo!']; try { bubble(grp, grp.bots[0].name, FL[Math.floor(Math.random() * FL.length)]); grp.bub.sp.position.set(grp.bots[0].w.position.x, grp.bots[0].w.position.y + 13, grp.bots[0].w.position.z); } catch (e) {} } const d = Math.hypot(ROAMS.p.x - grp.pos.x, ROAMS.p.z - grp.pos.z); grp.t -= dt; if (grp.t > 0) return; const near = d < 32; const b = grp.bots[grp.who % grp.bots.length]; grp.who++; let text = window.__GENLINE ? window.__GENLINE(b.name) : '...'; if (Math.random() < 0.45) { const WL = ['¿Has visto la isla Haiku? Cerezos en flor, una pagoda y un monte nevado. Dicen que los koi bailan con el bajo.','Hay olas de verdad en el mar abierto. Coge una tabla en la SURF ZONE y pulsa ESPACIO para hacer trucos.','Mi récord de surf: un FLIP con combo ×3. ¿Te atreves a superarlo?','Desde el cielo el mundo no se acaba: islas de sueño, dunas y jardines hasta el horizonte.','Las columnas de la casa son las bobinas del casete. Y ojo, cuando pasas detrás de una… algo cambia.','La pirámide de Atlantis la han restaurado: piedra de verdad, escalinata y templo arriba.','Los plugins gigantes del cielo nacen como una célula y se van desplegando poquito a poco.','Dicen que el modo cine (V) es para grabar vídeos como los de los juegos. Yo ya hice uno.','Al atardecer el mar se pone dorado y la isla Haiku huele a cerezo.','El horizonte es infinito, pero hasta el borde del mapa solo llega quien vuela de verdad.']; text = WL[Math.floor(Math.random() * WL.length)]; } if (near && !SIDE.cur && !ROAMS.freeRobotMode && Math.random() < 0.3) { const ms = SIDE.offer(b.name); if (ms) text = '¡Eh, tú! ¿Me haces un favor? ' + ms + '. ¡Te espero!'; } else if (near && Math.random() < 0.6) { const nm = (STORY && STORY.save && STORY.save.name) || 'viajero'; text = ['¡Eh, ' + nm + '! ', 'Mira quién viene: ' + nm + '. ', nm + ', justo hablábamos de ti. ', '¡Hola, ' + nm + '! '][Math.floor(Math.random() * 4)] + text; } b.talk = Math.min(7, 1.5 + text.length * 0.05); grp.t = b.talk + 1.2 + (near ? 0.5 : 4 + Math.random() * 6); const bp = b.w.position; grp.bub.sp.position.set(bp.x, bp.y + 13, bp.z); if (d < 120) bubble(grp, b.name, text);
-        if (near && window.speechSynthesis && !speechSynthesis.speaking) { try { const u = new SpeechSynthesisUtterance(text); const VR = window.__voiceFor ? window.__voiceFor(b.name) : null; if (VR && VR.v) { u.voice = VR.v; u.lang = VR.v.lang; u.pitch = VR.pitch; u.rate = VR.rate; } else u.lang = 'es-ES'; speechSynthesis.speak(u); } catch (e) {} } }); } }; })();
+        if (near && window.speechSynthesis && !speechSynthesis.speaking) { try { const u = new SpeechSynthesisUtterance(text); const VR = window.__voiceFor ? window.__voiceFor(b.name) : null; if (VR && VR.v) { u.voice = VR.v; u.lang = VR.v.lang; u.pitch = VR.pitch; u.rate = VR.rate; } else u.lang = 'es-ES'; speechSynthesis.speak(u); } catch (e) {} } }); }, get list() { return G || []; } }; })();
+  // A read-only world snapshot for the optional, local conversation UI.
+  // No extra Three.js renderer, textures, NPC meshes, or frame-loop listeners.
+  window.__UNFIRE_DIALOGUE_WORLD = () => {
+    const npcs = [], seen = new Set(), player = {
+      x:ROAMS.p.x, y:-8.9+(ROAMS.h||0)+2, z:ROAMS.p.z
+    };
+    const add = (id,name,mesh,radius,giant=false) => {
+      if(!mesh || !mesh.position || mesh.visible===false || seen.has(id))return;
+      seen.add(id);
+      npcs.push({id, name:String(name||'ROBOT').slice(0,32),
+        x:mesh.position.x, y:mesh.position.y, z:mesh.position.z,
+        radius,giant});
+    };
+    const FR=window.__FRIENDS||[];
+    FR.forEach((b,i)=>add('friend-'+(b.name||i),b.name,b.w,19));
+    const grow=GROW.list||[];
+    grow.forEach((b,i)=>add('grow-'+(b.w&&b.w.uuid||i),b.name||('ROBOT '+(i+1)),b.w,14));
+    const sky=SKYBOTS.list||[];
+    sky.forEach((b,i)=>add('sky-'+i,b.name||('ROBOT DEL CIELO '+(i+1)),b.w,42));
+    const surf=SURFBOTS.list||[];
+    surf.forEach((b,i)=>add('surf-'+i,b.name||('ROBOT SURFISTA '+(i+1)),b.w,36));
+    const titans=TITANS.list||[];
+    ['UMBRAL','ASTRALIA','CRONOS'].forEach((name,i)=>{
+      if(titans[i])add('titan-'+i,name,titans[i].w,475,true);
+    });
+    const walkers=OUTTALK.list||[];
+    walkers.forEach((g,i)=>(g.bots||[]).forEach((b,j)=>add('out-'+i+'-'+j,b.name,b.w,24)));
+    if(HOST && HOST.pos && ROAMS.on && !window.ATM_OUT)
+      npcs.push({id:'nimbo',name:'NIMBO',x:HOST.pos.x,y:HOST.pos.y,z:HOST.pos.z,radius:22,giant:false});
+    return {roaming:!!ROAMS.on && !(window.__VIEW && window.__VIEW.on),
+      player,npcs,online:ONLINE.on,myName:ONLINE.myName,
+      sendChat:(message)=>ONLINE.sendChat(message)};
+  };
   // ===== MAPA: dónde estás y dónde está la misión (mesa en modo robot, casa o isla) =====
   const MAP = (() => { const c = document.createElement('canvas'); c.id = 'minimap'; c.width = c.height = 220; c.style.cssText = 'position:fixed;left:14px;top:62px;z-index:41;width:180px;height:180px;border-radius:50%;border:3px solid #9fd0ff;box-shadow:0 8px 24px rgba(0,20,80,.45);display:none;background:#06102e'; document.body.appendChild(c); const g = c.getContext('2d'); let on = true, tt = 0;
     // This canvas stays the lightweight circular HUD. The expanded map is a lazy 2D dialog.
