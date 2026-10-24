@@ -71,6 +71,12 @@
   // Broadphase returns candidate boxes only; the original exact response remains unchanged.
   const COLLISION = (boxes,x,z,pad) => window.UnfireCollisionNearby
     ? window.UnfireCollisionNearby.nearby(boxes,x,z,pad) : (boxes || []);
+  // Apply the touch-device framebuffer cap BEFORE WebGL allocation: no
+  // mid-boot resize or second governor, keeping startup memory predictable.
+  if (LOWDEV && DEVICE.touch) {
+    const bootDpr = DEVICE.tier === 'compact' ? 0.70 : 0.85;
+    DEVICE.maxDpr = Math.min(DEVICE.maxDpr, bootDpr);
+  }
   const S = Y2K.stage(cv, { reflect: false, zoom: false, exposure: 0.98, shadow: 0.38,
     maxDpr: DEVICE.maxDpr, antialias: DEVICE.antialias, shadowResolution: LOWDEV?512:2048, fov: 30 });
   if (softwareWebGL(S.renderer)) {
@@ -79,13 +85,6 @@
     S.renderer.setPixelRatio(Math.min(S.renderer.getPixelRatio(), DEVICE.maxDpr));
     window.__LOWDEV = true;
     document.documentElement.dataset.unfireSoftwareWebgl = 'low';
-  }
-  // Limit the *first* mobile framebuffer before texture compilation; the existing
-  // single FPS governor may only reduce it further, never fight a second scaler.
-  if (LOWDEV && DEVICE.touch) {
-    const bootDpr = DEVICE.tier === 'compact' ? 0.70 : 0.85;
-    DEVICE.maxDpr = Math.min(DEVICE.maxDpr, bootDpr);
-    S.renderer.setPixelRatio(Math.min(S.renderer.getPixelRatio(), DEVICE.maxDpr));
   }
   if (LOWDEV) { S.renderer.shadowMap.enabled = false; }
   else { S.renderer.shadowMap.autoUpdate = false; S.renderer.shadowMap.needsUpdate = true; }
