@@ -93,7 +93,7 @@
 @media (pointer:coarse) and (orientation:portrait) and (max-width:420px) {
   body.unfire-roaming {
     --uf-thumb-side:clamp(10px, 3vw, 17px);
-    --uf-joy-inset:clamp(34px, 9vw, 50px);
+    --uf-joy-inset:clamp(17px, calc(14vw - 28px), 34px);
     --uf-joy-rise:clamp(68px, 12dvh, 112px);
     --uf-thumb-rise:clamp(40px, 8.7dvh, 86px);
     --uf-thumb-action-w:clamp(84px, 24vw, 105px);
