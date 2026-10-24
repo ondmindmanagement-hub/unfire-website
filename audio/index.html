@@ -511,7 +511,7 @@ footer a{color:var(--soft)}
       <img src="img/maletin-real-first-frame-desktop.webp" width="1100" height="635" alt="Maletín 3D auténtico de Unfire Audio, cerrado sobre la mesa, con su mariposa" fetchpriority="high" loading="eager" decoding="sync">
     </picture>
     <span id="unfireMobileTapHint" aria-hidden="true">Pulsa el botón central para abrir</span>
-    <iframe id="malFrame" data-src="maletin/index.html?v=20261024lunar1" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone; fullscreen" allowfullscreen></iframe>
+    <iframe id="malFrame" data-src="maletin/index.html?v=20261024filmrec1" loading="eager" fetchpriority="high" title="Maletín UNFIRE en 3D: baja para abrirlo y entra con la rueda" allow="autoplay; microphone; fullscreen" allowfullscreen></iframe>
     <a id="noWebglLink" href="#instrumentos">Explorar los instrumentos ↓</a>
     <div class="hero-copy" id="heroCopy">
       <img src="img/logo-unfire-256.webp" alt="" width="64" height="64" style="width:64px;height:64px;margin:0 auto 12px;filter:drop-shadow(0 0 18px rgba(61,139,255,.6))">
@@ -929,7 +929,7 @@ const UNFIRE_SCENE=(()=>{
   if(window.visualViewport)visualViewport.addEventListener('resize',recalibrate,{passive:true});
   const help=document.createElement('div');help.id='unfireGameHelp';
   help.style.cssText='display:none;position:absolute;z-index:30;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(91vw,330px);padding:13px;border:1px solid #83cfff;border-radius:16px;background:#081528f5;color:#eef7ff;text-align:center;font:600 12px/1.5 system-ui;box-shadow:0 12px 30px #000a';
-  help.innerHTML='Si el juego no aparece, prueba el modo compatible.<div style="display:flex;justify-content:center;gap:8px;margin-top:9px"><button id="unfireGameRetry" type="button" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;background:#174b80;color:white">REINTENTAR</button><a href="maletin/index.html?v=20261024lunar1&quality=compact" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;color:white;text-decoration:none">JUGAR DIRECTO</a></div>';
+  help.innerHTML='Si el juego no aparece, prueba el modo compatible.<div style="display:flex;justify-content:center;gap:8px;margin-top:9px"><button id="unfireGameRetry" type="button" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;background:#174b80;color:white">REINTENTAR</button><a href="maletin/index.html?v=20261024filmrec1&quality=compact" style="padding:10px;border:1px solid #8fd0ff;border-radius:12px;color:white;text-decoration:none">JUGAR DIRECTO</a></div>';
   pin.appendChild(help);
   help.querySelector('#unfireGameRetry').onclick=()=>{help.style.display='none';start(true);};
   const fail=()=>{pin.classList.add('scene-error');pin.classList.remove('scene-ready');help.style.display='block';
