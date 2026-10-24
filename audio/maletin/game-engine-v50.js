@@ -1444,7 +1444,7 @@
         portraitCtx.putImageData(img,0,0);
         return portraitCanvas.toDataURL('image/png');
       }finally{
-        if(r0)previewWrap.remove(r0.root);
+        if(r0){previewWrap.remove(r0.root);if(ROBOT_STYLE)ROBOT_STYLE.release(r0.root);}
         S.renderer.setRenderTarget(prevTarget);S.renderer.setViewport(previousViewport);
         S.renderer.setScissor(previousScissor);S.renderer.setScissorTest(previousScissorTest);
         S.renderer.setClearColor(previousClear,previousAlpha);
@@ -1488,7 +1488,7 @@
     $o('onT').onclick=e=>{
       const nav=e.target.closest('[data-step]');
       if(nav){const total=Math.max(1,Math.min(ALLT.length,unl())),at=Math.max(0,ALLT.indexOf(cfg.type));
-        const step=Number(nav.dataset.step)===-1?-1:1;cfg.type=ALLT[(at+step+total)%total];repaint();return;}
+        const step=Number(nav.dataset.step)===-1?-1:1;cfg.type=ALLT[(at+step+total)%total];repaint();const next=$o('onT').querySelector('[data-step="'+step+'"]');if(next){try{next.focus({preventScroll:true});}catch(_){next.focus();}}return;}
       if(!ROBOT_STYLE)return;
       const camo=e.target.closest('[data-camo]'),decal=e.target.closest('[data-decal]'),clear=e.target.closest('[data-image-clear]');
       if(camo){cfg.camo=camo.dataset.camo;Object.assign(cfg,ROBOT_STYLE.normalize(cfg));repaint();}
@@ -1502,7 +1502,7 @@
     });
     addEventListener('unfire:avatars-unlocked',()=>{if(ui.classList.contains('on'))paint();});
     const save = () => { cfg.name = ($o('onN').value || '').trim().slice(0, 14) || 'Jugador'; cfg.num = Math.max(0, Math.min(99, parseInt($o('onNum').value, 10) || 27)); try { localStorage.setItem('unfire_onl', JSON.stringify(cfg)); } catch (e) {} };
-    function applyMe() { ROAMS.myType = cfg.type; ROAMS.myCol = cfg.col; ROAMS.myNum = cfg.num || 27; ROAMS.myStyle = ROBOT_STYLE ? ROBOT_STYLE.normalize(cfg) : null; const pk = PERK[Math.max(0, ALLT.indexOf(cfg.type)) % PERK.length]; ROAMS.perkV = pk[1]; ROAMS.perkF = pk[2]; if (ROAMS.av && ROAMS.av.w) { S.scene.remove(ROAMS.av.w); } ROAMS.av = null; }
+    function applyMe() { ROAMS.myType = cfg.type; ROAMS.myCol = cfg.col; ROAMS.myNum = cfg.num || 27; ROAMS.myStyle = ROBOT_STYLE ? ROBOT_STYLE.normalize(cfg) : null; const pk = PERK[Math.max(0, ALLT.indexOf(cfg.type)) % PERK.length]; ROAMS.perkV = pk[1]; ROAMS.perkF = pk[2]; if (ROAMS.av && ROAMS.av.w) { if(ROBOT_STYLE&&ROAMS.av.r0)ROBOT_STYLE.release(ROAMS.av.r0.root); S.scene.remove(ROAMS.av.w); } ROAMS.av = null; }
     const tint = (o, col) => { const C = new THREE.Color(col); o.traverse((m) => { if (m.isMesh && m.name!=='unfire-personalized-sticker' && m.material && m.material.color) { m.material = m.material.clone(); m.material.color.lerp(C, 0.6); } }); };
     window.__tintAvatar = tint;
     window.__applyRobotStyle = root => { if(ROBOT_STYLE) ROBOT_STYLE.apply(root,cfg,THREE); };
@@ -1762,7 +1762,7 @@
       });
     }
     function leave() { clearJoining(); VOICE.stop(); NOTES.clear(); try { conns.forEach((c) => { try { c.send({ id: myId, bye: 1 }); } catch (e) {} c.close(); }); peer && peer.destroy(); } catch (e) {} conns = []; peer = null; code = null; hud.style.display = 'none'; Object.keys(R).forEach(drop); }
-    function drop(id) { VOICE.disconnect(id); const r = R[id]; if (!r) return; S.scene.remove(r.w); S.scene.remove(r.tag); delete R[id]; if (code) upd(); }
+    function drop(id) { VOICE.disconnect(id); const r = R[id]; if (!r) return; if(ROBOT_STYLE&&r.r0)ROBOT_STYLE.release(r.r0.root); S.scene.remove(r.w); S.scene.remove(r.tag); delete R[id]; if (code) upd(); }
     function recv(d) { const style=ROBOT_STYLE?ROBOT_STYLE.normalize({col:d.c,camo:d.ca,decal:d.decal||d.de}):null; let r = R[d.id]; if (!r || r.t !== d.t || r.c !== d.c || (style && (r.ca!==style.camo || r.de!==style.decal))) { if (r) drop(d.id); try { const r0 = ROBOT.build(Object.assign({}, MUTANTS.list[d.t % MUTANTS.list.length])); r0.update(3.7, 0.016, {}); if(style)ROBOT_STYLE.apply(r0.root,style,THREE); const w = new THREE.Group(); w.add(r0.root); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(10.5 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; tint(w, d.c); S.scene.add(w); const cv = document.createElement('canvas'); cv.width = 256; cv.height = 64; const g = cv.getContext('2d'); g.fillStyle = 'rgba(8,14,40,.8)'; g.beginPath(); g.roundRect ? g.roundRect(2, 8, 252, 48, 24) : g.rect(2, 8, 252, 48); g.fill(); g.fillStyle = d.c; g.font = '900 28px Arial'; g.textAlign = 'center'; g.fillText(String(d.n || 'Jugador').slice(0, 14), 128, 43); const tag = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cv), depthTest: false, transparent: true })); tag.scale.set(8, 2, 1); S.scene.add(tag); w.position.set(d.x, -8.9 + d.h, d.z); r = R[d.id] = { w, r0, tag, t: d.t, c: d.c, ca:style&&style.camo, de:style&&style.decal, p: V(d.x, -8.9 + d.h, d.z), wd: 0 }; upd(); if (!d.q) say('👋 ' + (d.n || 'Alguien') + ' ha entrado en la sala'); } catch (e) { return; } } r.d = d; r.last = performance.now(); }
     let pending = null; try { pending = new URLSearchParams(parent.location.search).get('room'); } catch (e) {} if (!pending) try { pending = new URLSearchParams(location.search).get('room'); } catch (e) {}
     window.__REWARD = (why) => { let u = 0; try { u = (+localStorage.getItem('unfire_unlock') || 0) + 1; localStorage.setItem('unfire_unlock', String(u)); } catch (e) {} const k = Math.min(ALLT.length - 1, 1 + u), nm = (MUTANTS.list[ALLT[k]] || {}).name || 'ROBOT'; say('🏆 ' + why + ' · 🎁 ¡Nueva transformación desbloqueada: ' + nm + ' (' + PERK[k % PERK.length][0] + ')! Cámbiala en ⚙ › 🔧 TALLER'); hap(1); try { if (window.__SPRAY) window.__SPRAY(ROAMS.p.x, -8.9 + (ROAMS.h || 0) + 6, ROAMS.p.z, 120, 10, 20); } catch (e) {} };
