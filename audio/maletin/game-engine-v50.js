@@ -79,9 +79,10 @@
   }
   const S = Y2K.stage(cv, { reflect: false, zoom: false, exposure: 0.98, shadow: 0.38,
     maxDpr: DEVICE.maxDpr, antialias: DEVICE.antialias, shadowResolution: LOWDEV?512:2048, fov: 30 });
-  if (softwareWebGL(S.renderer)) {
+  const SOFTWARE_WEBGL = softwareWebGL(S.renderer);
+  if (SOFTWARE_WEBGL) {
     LOWDEV = true;
-    DEVICE.maxDpr = Math.min(DEVICE.maxDpr, 0.60);
+    DEVICE.maxDpr = Math.min(DEVICE.maxDpr, 0.50);
     S.renderer.setPixelRatio(Math.min(S.renderer.getPixelRatio(), DEVICE.maxDpr));
     window.__LOWDEV = true;
     document.documentElement.dataset.unfireSoftwareWebgl = 'low';
@@ -2891,7 +2892,10 @@
       if (MAP.expandedOpen) MAP.tick();
       return;
     }
-    // Cap this heavy 3D scene to ~30-40fps; input events continue unthrottled.
+    // Software rasterizers can monopolize the main thread even at 24fps.
+    // Limit draw frequency (not pointer/touch handlers) so UI can return from modals.
+    if (SOFTWARE_WEBGL && previousRenderAt && now - previousRenderAt < 80) return;
+    // Cap this heavy 3D scene to ~30-40fps on accelerated hardware; input remains unthrottled.
     if (previousRenderAt && now - previousRenderAt < (LOWDEV ? (DEVICE.tier==='compact' ? 42 : 33) : window.ATM_OUT ? 33 : 28)) return;
     // Case/camera animations must use real foreground elapsed time even if
     // WebGL renders only a few frames per second. Physics keeps its bounded
