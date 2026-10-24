@@ -1,0 +1,26 @@
+name: Audio NANO live-engine connection QA
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/nano-physics.js'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'audio/index.html'
+      - 'tests/audio-nano-engine-connection.test.cjs'
+      - 'tests/offline-coins-mini-robot.test.cjs'
+      - '.github/workflows/audio-nano-engine-connection.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  nano-engine-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify source syntax, mobility, controls and cache atomicity
+        run: |
+          node --check audio/maletin/nano-physics.js
+          node --check audio/maletin/game-engine-v50.js
+          node --check tests/audio-nano-engine-connection.test.cjs
+          node --test tests/audio-nano-physics.test.cjs tests/audio-nano-engine-connection.test.cjs tests/offline-coins-mini-robot.test.cjs tests/nimbo-optional-intro.test.cjs tests/audio-roaming-collision-broadphase.test.cjs tests/expanded-map.test.cjs tests/audio-case-hotfix-cache.test.cjs

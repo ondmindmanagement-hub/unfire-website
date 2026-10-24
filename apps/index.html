@@ -1,6 +1,21 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
+<script id="ufAdaptiveBoot">(function(){
+  try {
+    var coarse=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    var memory=Number(navigator.deviceMemory||0), cores=Number(navigator.hardwareConcurrency||0);
+    var unknown=!memory&&!cores&&Math.min(innerWidth,innerHeight)<400;
+    if(coarse&&((memory>0&&memory<=4)||(cores>0&&cores<=4)||unknown))
+      document.documentElement.classList.add('uf-load-pending');
+    // A network failure must never leave a permanent overlay.
+    setTimeout(function(){document.documentElement.classList.remove('uf-load-pending');},9000);
+  } catch(e) {}
+})();</script>
+<link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261023adaptive1">
+<script defer src="/assets/js/unfire-adaptive-loading.js?v=20261023adaptive1"></script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'">
@@ -22,6 +37,14 @@
 <link rel="stylesheet" href="/assets/css/unfire-compact-system-20261019.css?v=2">
 </head>
 <body>
+<div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
+  <div class="uf-load-card">
+    <span class="uf-load-emblem" aria-hidden="true"></span>
+    <strong class="uf-load-brand" translate="no">UNFIRE</strong>
+    <span class="uf-load-label" id="ufAdaptiveLabel">Preparing the experience…</span>
+  </div>
+</div>
+
 <header><div class="wrap"><a class="brand" href="/"><span class="notranslate" translate="no">Unfire</span></a><a class="back" href="/contact/">Contact <span class="notranslate" translate="no">Unfire</span> →</a></div></header>
 <main class="wrap">
 <section class="hero"><div class="eyebrow"><span class="notranslate" translate="no">Unfire</span> / Products</div><h1>One ecosystem.<br>Distinct possibilities.</h1><p class="lead">Explore software built around distinct needs, connected by a shared approach to design, capability and reliability. Each family can grow without losing its identity.</p><p style="margin-top:26px"><a href="/early-access/" style="font-size:14px;font-weight:650;color:#c8dfff">Request free early-access evaluation or a research pilot →</a></p><nav class="subnav" aria-label="Product families"><a href="#audio">Audio</a><a href="#intelligence">Intelligence</a><a href="#control">Control</a><a href="#utilities">Utilities</a></nav></section>
