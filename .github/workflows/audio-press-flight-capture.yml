@@ -27,7 +27,7 @@ jobs:
         id: inventory
         run: |
           missing=0
-          for name in 05-sky-flight-day.jpg 06-sky-flight-sunset.jpg 07-sky-flight-night.jpg; do
+          for name in 08-sky-flight-panorama.jpg 09-night-flight-panorama.jpg; do
             asset="audio/press/captures/$name"
             if [ ! -s "$asset" ]; then
               missing=1
@@ -43,7 +43,7 @@ jobs:
         if: success()
         with:
           name: real-day-sunset-night-flight
-          path: audio/press/captures/0[567]-sky-flight-*.jpg
+          path: audio/press/captures/0[89]-*.jpg
           retention-days: 7
       - name: Save authentic captures only to isolated review branch
         if: steps.inventory.outputs.missing == '1'
@@ -52,7 +52,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add audio/press/captures/0[567]-sky-flight-*.jpg
+          git add audio/press/captures/0[89]-*.jpg
           if ! git diff --cached --quiet; then
             git commit -m 'docs(audio): capture genuine day sunset and night flight'
             git push origin "HEAD:$HEAD_BRANCH"
