@@ -1362,7 +1362,7 @@
     let cfg = { name: '', col: '#3d8bff', type: 4, num: 27, camo: 'plain', decal: 'none', image: '' }; try { Object.assign(cfg, JSON.parse(localStorage.getItem('unfire_onl') || '{}')); } catch (e) {}
     const ROBOT_STYLE = window.UnfireRobotCustom;
     if (ROBOT_STYLE) Object.assign(cfg, ROBOT_STYLE.normalize(cfg));
-    let peer = null, conns = [], code = null, isHost = false, myId = null, sendT = 0; const R = {};
+    let peer = null, conns = [], code = null, isHost = false, myId = null, sendT = 0; const R = Object.create(null);
     // juego online «CAZA DE NOTAS»: 30 notas musicales brillantes repartidas por la isla (las mismas para todos); quien más coja, gana la ronda
     const NOTES = { list: [], round: 0, sc: 0, seed: 0, g: null, build(seed) { this.clear(); this.seed = seed; let s0 = seed * 9301 + 49297; const rr = () => ((s0 = (s0 * 16807) % 2147483647) / 2147483647); const tx = (() => { const c = Y2K.cnv(128, 128), q = c.getContext('2d'); q.fillStyle = '#fff'; q.font = '900 100px Arial'; q.textAlign = 'center'; q.textBaseline = 'middle'; q.shadowColor = '#5fe0ff'; q.shadowBlur = 18; q.fillText('♪', 64, 70); return new THREE.CanvasTexture(c); })(); this.g = new THREE.Group(); S.scene.add(this.g); for (let i = 0; i < 30; i++) { const a = rr() * TAU, r = 120 + rr() * 520, x = Math.cos(a) * r, z = Math.sin(a) * r; if (Math.abs(x) < 90 && z > -25 && z < 105) { i--; continue; } const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, color: new THREE.Color().setHSL(rr(), 0.9, 0.65), transparent: true, depthWrite: false })); sp.scale.set(7, 7, 1); sp.position.set(x, -2 + rr() * 30, z); this.g.add(sp); this.list.push({ sp, on: true }); } },
       clear() { if (this.g) S.scene.remove(this.g); this.g = null; this.list = []; },
@@ -1657,7 +1657,65 @@
       status();
       return { get on() { return enabled; }, bindPeer, tick, stop, disconnect, visibility };
     })();
-    function setup(c) { conns.push(c); c.on('data', (d) => { if (!d || !d.id || d.id === myId) return; if (d.nt != null) NOTES.take(d.nt, false); else if (d.bye) drop(d.id); else recv(d); if (isHost) conns.forEach((o) => { if (o !== c && o.open) try { o.send(d); } catch (e) {} }); }); c.on('close', () => { conns = conns.filter((x) => x !== c); if (isHost) { drop(c.peer); conns.forEach((o) => { try { o.send({ id: c.peer, bye: 1 }); } catch (e) {} }); } else { say('🌐 El anfitrión cerró la sala'); leave(); } }); }
+    function safePacket(raw, c) {
+      try {
+        if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+        const id=raw.id;
+        if(typeof id!=='string'||id.length<1||id.length>96||
+           !/^[A-Za-z0-9_-]+$/.test(id)||
+           id==='__proto__'||id==='constructor'||id==='prototype')return null;
+        if(isHost&&id!==c.peer)return null;
+        if(raw.bye!=null)return raw.bye===1?{id,bye:1}:null;
+        if(raw.nt!=null)return Number.isInteger(raw.nt)&&raw.nt>=0&&raw.nt<30?
+          {id,nt:raw.nt}:null;
+        if(!Number.isInteger(raw.t)||raw.t<0||raw.t>=MUTANTS.list.length)return null;
+        if(!COLS.includes(raw.c))return null;
+        if(!Number.isFinite(raw.x)||!Number.isFinite(raw.z)||
+           !Number.isFinite(raw.h)||!Number.isFinite(raw.y))return null;
+        if(Math.abs(raw.x)>20000||Math.abs(raw.z)>20000||
+           raw.h<-100||raw.h>10000||Math.abs(raw.y)>1000000)return null;
+        if(raw.n!=null&&typeof raw.n!=='string')return null;
+        if(!R[id]&&Object.keys(R).length>=40)return null;
+        const safeCamo=['plain','carbon','arctic','urban','desert','digital','neon'];
+        const safeDecal=['none','star','bolt','heart','smile','wave'];
+        if(raw.ca!=null&&(typeof raw.ca!=='string'||!safeCamo.includes(raw.ca)))return null;
+        if(raw.de!=null&&(typeof raw.de!=='string'||!safeDecal.includes(raw.de)))return null;
+        const packet={
+          id,n:String(raw.n||'Jugador').slice(0,20),c:raw.c,t:raw.t,
+          x:raw.x,z:raw.z,h:raw.h,y:raw.y,
+          sc:Number.isFinite(raw.sc)?Math.max(0,Math.min(99999,raw.sc)):0,
+          f:raw.f===1?1:0,o:raw.o===1?1:0,
+          m:raw.m===1?1:0,v:raw.v===1?1:0,q:raw.q===1?1:0
+        };
+        if(raw.ca!=null)packet.ca=raw.ca;
+        if(raw.de!=null)packet.de=raw.de;
+        return packet;
+      }catch(_){return null;}
+    }
+    function setup(c) {
+      conns.push(c);
+      let rateStart=0,rateCount=0;
+      c.on('data', (raw) => {
+        const now=performance.now();
+        if(!rateStart||now-rateStart>=1000){rateStart=now;rateCount=0;}
+        if(++rateCount>40)return;
+        const d=safePacket(raw,c);
+        if(!d||d.id===myId)return;
+        if(d.nt!=null)NOTES.take(d.nt,false);
+        else if(d.bye)drop(d.id);
+        else recv(d);
+        if(isHost)conns.forEach((o)=>{
+          if(o!==c&&o.open)try{o.send(d);}catch(e){}
+        });
+      });
+      c.on('close', () => {
+        conns=conns.filter((x)=>x!==c);
+        if(isHost){
+          drop(c.peer);
+          conns.forEach((o)=>{try{o.send({id:c.peer,bye:1});}catch(e){}});
+        }else{say('🌐 El anfitrión cerró la sala');leave();}
+      });
+    }
     function create() { if (joining) { msg('Primero termina o cancela el intento de conexión'); return; } save(); applyMe(); msg('Creando sala…'); load(() => { code = rnd(); isHost = true; peer = new Peer('unfire-sala-' + code); VOICE.bindPeer(peer); peer.on('open', (id) => { myId = id; started(); }); peer.on('connection', (c) => { c.on('open', () => setup(c)); }); peer.on('error', (e) => { if (e.type === 'unavailable-id') { try { peer.destroy(); } catch (er) {} create(); } else msg('Error online: ' + e.type); }); }); }
     // A remote connection may stall behind strict NATs or restricted Wi-Fi.
     // Keep the screen responsive, offer a retry and never leave a dangling Peer.
@@ -2778,7 +2836,7 @@
             ROAMS.vy=Math.max(ROAMS.vy,-maxDown);
           } else ROAMS.vy=Math.min(ROAMS.vy,650);
         }
-        if (ROAMS.flyT > 1.2 && !K[' '] && ROAMS.flyH <= fl + 0.3 && ROAMS.h <= fl + 0.6) { ROAMS.fly = false; ROAMS.climbV = 0; say('🦶 Aterrizado'); } } else { ROAMS.flyH = null; ROAMS.vy -= dt * (ROAMS.h > fl + 40 ? 300 : avatarProfile().gravity); if (ROAMS.vy < -700) ROAMS.vy = -700; if (ROAMS.h < fl + 30 && ROAMS.vy < -40) ROAMS.vy += (-40 - ROAMS.vy) * Math.min(1, dt * 4); } ROAMS.h += ROAMS.vy * dt; const inDomeT = !window.ATM_OUT && Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 36; const top = window.ATM_OUT ? 8000 : inDomeT ? 60 : 14; if (inDomeT && -8.9 + (ROAMS.h || 0) > 30 && ROAMS.fly) { try { ATM.setOut(true); if (window.__DOME) window.__DOME.open = 1; ROAMS.flyH = ROAMS.h; say('🪽 ¡Has salido volando por la cúpula!'); } catch (e) {} } if (ROAMS.h > top) { ROAMS.h = top; ROAMS.vy = Math.min(ROAMS.vy, 0); } if (ROAMS.h < fl) { ROAMS.h = ROAMS.wet ? ROAMS.h + (fl - ROAMS.h) * Math.min(1, dt * 10) : fl; ROAMS.vy = 0; } ROAMS.air = ROAMS.h > fl + 0.3; } { const CT = ROOM.R.userData.camTrack; if (CT && !(fw || sd2)) { const CD0 = ROOM.R.userData.camTrackDir; const d = CD0 ? V(CD0.x, 0, CD0.z) : V(cam.position.x - CT.x, 0, cam.position.z - CT.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const side = V(-d.z, 0, d.x); const p = V(CT.x + d.x * 12 + side.x * 9, CT.y + 2.2, CT.z + d.z * 12 + side.z * 9); const lx = CT.x - p.x, lz = CT.z - p.z; ROAMS.tgt = { p, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(CT.y - p.y, Math.hypot(lx, lz)) }; } } if (ROAMS.tgt) { const T0 = ROAMS.tgt; const dx = T0.p.x - ROAMS.p.x, dz = T0.p.z - ROAMS.p.z, d = Math.hypot(dx, dz); if (d > 1.2) { let dir = Math.atan2(dx, -dz); if ((ROAMS.stkN || 0) > 6) { if (!ROAMS.avoidS) ROAMS.avoidS = Math.random() < 0.5 ? 1 : -1; dir += ROAMS.avoidS * 1.2; } else if ((ROAMS.stkN || 0) === 0) ROAMS.avoidS = 0; ROAMS.cy = angL(ROAMS.cy == null ? dir : ROAMS.cy, dir, Math.min(1, dt * 8)); const sp = Math.min(d, (d > 25 ? 42 : 24) * dt * (window.ATM_OUT ? 1.6 : 1)); const y0 = ROAMS.yaw; ROAMS.yaw = ROAMS.cy; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(sp, 0); ROAMS.yaw = y0; ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.moving = true; ROAMS.run = d > 25; ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * 4)); } else { ROAMS.avoidS = 0; ROAMS.p.y += (T0.p.y - ROAMS.p.y) * 0.1; ROAMS.yaw = angL(ROAMS.yaw, T0.yaw, 0.1); } ROAMS.pitch += (T0.pitch - ROAMS.pitch) * 0.1; } if (K.q) ROAMS.yaw -= dt * 1.9; if (K.e) ROAMS.yaw += dt * 1.9; const cp = Math.cos(ROAMS.pitch); if (!ROAMS.av) { try { const r0 = ROBOT.build(Object.assign({}, MUTANTS.list[(ROAMS.myType == null ? 4 : ROAMS.myType) % MUTANTS.list.length], { n: ROAMS.myNum || 27 })); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); if (ROAMS.myCol && window.__tintAvatar) window.__tintAvatar(r0.root, ROAMS.myCol); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(10.5 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; S.scene.add(w); const WG = new THREE.Group(); const s0 = w.scale.x || 1; w.rotation.order = 'YXZ'; WG.position.set(0, 10.5 * 0.62 / s0, -1.0 / s0); let bodyMat = null; r0.root.traverse((o) => { if (!bodyMat && o.isMesh && o.material && o.material.color && (o.material.metalness || 0) > 0.3) bodyMat = o.material; }); const bladeM = bodyMat ? bodyMat : new THREE.MeshPhysicalMaterial({ color: 0xd8dde6, metalness: 0.9, roughness: 0.18, clearcoat: 1 }); const acc = new THREE.Color((MUTANTS.list[4 % MUTANTS.list.length].accent) || '#ff2a4a'); const tipM = new THREE.MeshStandardMaterial({ color: acc, emissive: acc, emissiveIntensity: 1.1, toneMapped: false });
+        if (ROAMS.flyT > 1.2 && !K[' '] && ROAMS.flyH <= fl + 0.3 && ROAMS.h <= fl + 0.6) { ROAMS.fly = false; ROAMS.climbV = 0; say('🦶 Aterrizado'); } } else { ROAMS.flyH = null; ROAMS.vy -= dt * (ROAMS.h > fl + 40 ? 300 : avatarProfile().gravity); if (ROAMS.vy < -700) ROAMS.vy = -700; if (ROAMS.h < fl + 30 && ROAMS.vy < -40) ROAMS.vy += (-40 - ROAMS.vy) * Math.min(1, dt * 4); } ROAMS.h += ROAMS.vy * dt; const inDomeT = !window.ATM_OUT && Math.hypot(ROAMS.p.x, ROAMS.p.z - 40) < 36; const top = window.ATM_OUT ? 8000 : inDomeT ? 60 : 14; if (ROAMS.h > top) { ROAMS.h = top; ROAMS.vy = Math.min(ROAMS.vy, 0); } if (ROAMS.h < fl) { ROAMS.h = ROAMS.wet ? ROAMS.h + (fl - ROAMS.h) * Math.min(1, dt * 10) : fl; ROAMS.vy = 0; } ROAMS.air = ROAMS.h > fl + 0.3; } { const CT = ROOM.R.userData.camTrack; if (CT && !(fw || sd2)) { const CD0 = ROOM.R.userData.camTrackDir; const d = CD0 ? V(CD0.x, 0, CD0.z) : V(cam.position.x - CT.x, 0, cam.position.z - CT.z); if (d.lengthSq() < 0.01) d.set(0, 0, 1); d.normalize(); const side = V(-d.z, 0, d.x); const p = V(CT.x + d.x * 12 + side.x * 9, CT.y + 2.2, CT.z + d.z * 12 + side.z * 9); const lx = CT.x - p.x, lz = CT.z - p.z; ROAMS.tgt = { p, yaw: Math.atan2(lx, -lz), pitch: Math.atan2(CT.y - p.y, Math.hypot(lx, lz)) }; } } if (ROAMS.tgt) { const T0 = ROAMS.tgt; const dx = T0.p.x - ROAMS.p.x, dz = T0.p.z - ROAMS.p.z, d = Math.hypot(dx, dz); if (d > 1.2) { let dir = Math.atan2(dx, -dz); if ((ROAMS.stkN || 0) > 6) { if (!ROAMS.avoidS) ROAMS.avoidS = Math.random() < 0.5 ? 1 : -1; dir += ROAMS.avoidS * 1.2; } else if ((ROAMS.stkN || 0) === 0) ROAMS.avoidS = 0; ROAMS.cy = angL(ROAMS.cy == null ? dir : ROAMS.cy, dir, Math.min(1, dt * 8)); const sp = Math.min(d, (d > 25 ? 42 : 24) * dt * (window.ATM_OUT ? 1.6 : 1)); const y0 = ROAMS.yaw; ROAMS.yaw = ROAMS.cy; const ox = ROAMS.p.x, oz = ROAMS.p.z; roamMove(sp, 0); ROAMS.yaw = y0; ROAMS.wd = (ROAMS.wd || 0) + Math.hypot(ROAMS.p.x - ox, ROAMS.p.z - oz); ROAMS.moving = true; ROAMS.run = d > 25; ROAMS.yaw = angL(ROAMS.yaw, ROAMS.cy, Math.min(1, dt * 4)); } else { ROAMS.avoidS = 0; ROAMS.p.y += (T0.p.y - ROAMS.p.y) * 0.1; ROAMS.yaw = angL(ROAMS.yaw, T0.yaw, 0.1); } ROAMS.pitch += (T0.pitch - ROAMS.pitch) * 0.1; } if (K.q) ROAMS.yaw -= dt * 1.9; if (K.e) ROAMS.yaw += dt * 1.9; const cp = Math.cos(ROAMS.pitch); if (!ROAMS.av) { try { const r0 = ROBOT.build(Object.assign({}, MUTANTS.list[(ROAMS.myType == null ? 4 : ROAMS.myType) % MUTANTS.list.length], { n: ROAMS.myNum || 27 })); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); if (ROAMS.myCol && window.__tintAvatar) window.__tintAvatar(r0.root, ROAMS.myCol); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(10.5 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; S.scene.add(w); const WG = new THREE.Group(); const s0 = w.scale.x || 1; w.rotation.order = 'YXZ'; WG.position.set(0, 10.5 * 0.62 / s0, -1.0 / s0); let bodyMat = null; r0.root.traverse((o) => { if (!bodyMat && o.isMesh && o.material && o.material.color && (o.material.metalness || 0) > 0.3) bodyMat = o.material; }); const bladeM = bodyMat ? bodyMat : new THREE.MeshPhysicalMaterial({ color: 0xd8dde6, metalness: 0.9, roughness: 0.18, clearcoat: 1 }); const acc = new THREE.Color((MUTANTS.list[4 % MUTANTS.list.length].accent) || '#ff2a4a'); const tipM = new THREE.MeshStandardMaterial({ color: acc, emissive: acc, emissiveIntensity: 1.1, toneMapped: false });
           const wingM = new THREE.MeshPhysicalMaterial({ color: 0x3fd65a, metalness: 0.55, roughness: 0.22, clearcoat: 1, clearcoatRoughness: 0.1 }); const stripeM = new THREE.MeshPhysicalMaterial({ color: 0xf4f6fa, metalness: 0.7, roughness: 0.2, clearcoat: 1 });
           const side = (sg) => { const root = new THREE.Group(); const pod = mesh(new THREE.CylinderGeometry(0.42, 0.55, 1.5, 16), bodyMat || stripeM); pod.rotation.z = Math.PI / 2; pod.position.x = sg * 0.55; root.add(pod);
             const hinge = new THREE.Group(); hinge.position.x = sg * 0.9; root.add(hinge);
