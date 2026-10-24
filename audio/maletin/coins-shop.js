@@ -14,9 +14,19 @@
     owned: Array.isArray(saved.owned) ? [...new Set(saved.owned.filter(v => typeof v === 'string'))].slice(0,100) : initial.owned.slice() };
   const persist = () => write(SAVE_KEY, state);
   const day = () => { const d = new Date(); return [d.getFullYear(),d.getMonth()+1,d.getDate()].join('-'); };
-  const date = day(), prev = read(CLAIM_KEY, {});
+  const prev = read(CLAIM_KEY, {});
+  const dayKey = value => { const parts = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(String(value || '')); return parts ? Number(parts[1])*10000 + Number(parts[2])*100 + Number(parts[3]) : 0; };
+  // Never replenish coins by moving the local clock backwards within a session or reopening the page.
+  let date = dayKey(prev.date) > dayKey(day()) ? prev.date : day();
   const claimed = new Set(prev.date === date && Array.isArray(prev.ids) ? prev.ids.filter(v => Number.isInteger(v) && v >= 0 && v < 40) : []);
   const persistClaims = () => write(CLAIM_KEY, { date, ids: [...claimed] });
+  function rolloverClaims() {
+    const today = day();
+    if (dayKey(today) <= dayKey(date)) return;
+    date = today;
+    claimed.clear();
+    persistClaims();
+  }
   const MORPH_ORDER = [4,1,7,10,13,16,2,5,8,11,14,17,3,6,9,12,15,18,0,19];
   const EXTRAS = [
     { id:'aura-cyan', title:'Aura azul neón', price:12, group:'Efectos', kind:'aura', value:'cyan' },
@@ -138,6 +148,8 @@
     lamp.position.set(-17,-7.5,-11);lamp.visible=false;S.scene.add(lamp);
     function tick(dt,t) {
       frame++;
+      // A cheap periodic check also handles long-running sessions that cross local midnight.
+      if(frame%90===0) rolloverClaims();
       if(frame%20===0) updateHud();
       const on=active();
       if(!on&&shop.classList.contains('open'))close();
@@ -151,7 +163,7 @@
           state.balance=Math.min(MAX_BALANCE,state.balance+(state.bonus?2:1));persist();updateHud();
         }
       }
-      glow.visible=on&&!!state.aura;print.visible=on&&state.footprint&&!!ROAMS.moving;lamp.visible=!!state.deco;
+      glow.visible=on&&!!state.aura;print.visible=on&&state.footprint&&!!ROAMS.moving;lamp.visible=on&&!!state.deco;
       if(glow.visible){glow.material.color.set(state.aura==='pink'?0xff52b9:0x54dfff);glow.scale.setScalar(ROAMS.mini?0.4:1.2);glow.position.set(ROAMS.p.x,-8.9+(ROAMS.h||0)+0.14,ROAMS.p.z);}
       if(print.visible){print.scale.setScalar(ROAMS.mini?0.3:1.5);print.position.set(ROAMS.p.x,-8.9+(ROAMS.h||0)+0.07,ROAMS.p.z+0.55);print.material.opacity=0.3+0.3*Math.sin(t*9);}
     }
