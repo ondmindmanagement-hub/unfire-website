@@ -1,0 +1,62 @@
+name: Audio Press Real Sky and Night Flight
+on:
+  pull_request:
+    paths:
+      - 'audio/press/**'
+      - 'tests/audio-press-flight-capture.cjs'
+      - '.github/workflows/audio-press-flight-capture.yml'
+permissions:
+  contents: write
+jobs:
+  capture-real-aerial-gameplay:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 19
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated browser on GitHub runner only
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Confirm three original JPG captures exist
+        id: inventory
+        run: |
+          missing=0
+          for name in 05-sky-flight-day.jpg 06-sky-flight-sunset.jpg 09-night-flight-panorama.jpg; do
+            asset="audio/press/captures/$name"
+            if [ ! -s "$asset" ]; then
+              missing=1
+              break
+            fi
+            file -b "$asset" | grep -q 'JPEG image data' || exit 1
+          done
+          echo "missing=$missing" >> "$GITHUB_OUTPUT"
+      - name: Capture original outdoor flight and native night cycle
+        if: steps.inventory.outputs.missing == '1'
+        run: node tests/audio-press-flight-capture.cjs
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: real-day-sunset-night-flight
+          path: |
+            audio/press/captures/05-sky-flight-day.jpg
+            audio/press/captures/06-sky-flight-sunset.jpg
+            audio/press/captures/09-night-flight-panorama.jpg
+          retention-days: 7
+      - name: Save authentic captures only to isolated review branch
+        if: steps.inventory.outputs.missing == '1'
+        env:
+          HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add audio/press/captures/05-sky-flight-day.jpg audio/press/captures/06-sky-flight-sunset.jpg audio/press/captures/09-night-flight-panorama.jpg
+          if ! git diff --cached --quiet; then
+            git commit -m 'docs(audio): capture genuine day sunset and night flight'
+            git push origin "HEAD:$HEAD_BRANCH"
+          fi
