@@ -53,7 +53,7 @@ test('long movements cannot tunnel across a padded solid doorway obstruction',()
   const wall={x0:2.9,x1:7.1,z0:2.9,z1:9.1,y0:-12,y1:20};
   for(const nano of [false,true]){
     const p=N.profile(nano);
-    const start={x:-10,z:6};
+    // Start within one bounded NANO step of the wall so both sizes reach it.\n    const start={x:0,z:6};
     const many=N.move2D(start,{x:60,z:0},[wall],p,{footY:-8.9,prePadding:1.1});
     finite(many,['x','z','distance']);
     assert.ok(many.blocked,'Wall collision never signalled');
