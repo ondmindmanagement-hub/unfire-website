@@ -37,3 +37,14 @@ test('real existing creative asset and public contact link',()=>{
   assert.match(page,/mailto:hello@unfire\.technology/);
   assert.doesNotMatch(page,/\b\d+[KkMm]?\+? players\b|\b\d+[KkMm]?\+? jugadores\b/i,'do not fabricate users');
 });
+
+test('the public beta has authentic OG previews and voluntary share without tracking',()=>{
+  assert.match(page,/<meta property="og:image" content="https:\/\/unfire\.technology\/audio\/img\/unfire-mutants-share\.webp">/);
+  assert.match(page,/<meta name="twitter:card" content="summary_large_image">/);
+  assert.match(page,/<meta property="og:url" content="https:\/\/unfire\.technology\/audio\/beta\/">/);
+  assert.match(page,/<button[^>]+id="share"[^>]+data-t="share"/);
+  assert.match(page,/navigator\.share\(/);
+  assert.match(page,/navigator\.clipboard\.writeText\(link\)/);
+  assert.match(page,/id="shareStatus" role="status" aria-live="polite"/);
+  assert.doesNotMatch(page,/google-analytics|gtag\(|umami|plausible|localStorage|sessionStorage|document\.cookie|fetch\(|sendBeacon|XMLHttpRequest/i);
+});
