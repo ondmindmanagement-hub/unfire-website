@@ -15,7 +15,7 @@ const safeClose = (fn, ms = 5000) =>
   Promise.race([Promise.resolve().then(fn).then(() => true, () => false),
     pause(ms).then(() => false)]);
 
-let server, browser, context, page;
+let server, browser, context, page, cdp, profileRunning = false;
 const errors = [];
 const milestone = (label, details = {}) => console.log('TRANSITION_TIMING',
   JSON.stringify({label, at:now(), ...details}));
@@ -30,6 +30,22 @@ const milestone = (label, details = {}) => console.log('TRANSITION_TIMING',
       isMobile:false,hasTouch:false,deviceScaleFactor:1});
     page = await context.newPage();
     page.on('pageerror', err => errors.push(String(err.message).slice(0, 250)));
+    // Capture Chrome long tasks from the first moment of top document AND iframe load.
+    // Separate arrays are created in each same-origin frame by Playwright addInitScript.
+    await page.addInitScript(() => {
+      window.__unfireLongTasks = [];
+      if (typeof PerformanceObserver === 'undefined') return;
+      try {
+        const po = new PerformanceObserver(list => {
+          for (const entry of list.getEntries()) {
+            const arr = window.__unfireLongTasks;
+            if (arr.length >= 160) arr.shift();
+            arr.push({start:Math.round(entry.startTime), duration:Math.round(entry.duration)});
+          }
+        });
+        po.observe({entryTypes:['longtask']});
+      } catch (_) {}
+    });
     milestone('goto:start');
     await page.goto(origin + '/audio/', {waitUntil:'domcontentloaded',timeout:30000});
     milestone('goto:done');
@@ -96,6 +112,17 @@ const milestone = (label, details = {}) => console.log('TRANSITION_TIMING',
     assert.equal(before.hostTarget,'malFrame','Real click must hit game iframe');
     assert.equal(before.frameTarget,'cv','Real click must reach canvas');
 
+    // Sample desktop main-thread JavaScript while clicking. This is diagnostic
+    // only: sampling errors must not alter pass/fail of the original 25s contract.
+    try {
+      cdp = await context.newCDPSession(page);
+      await cdp.send('Profiler.enable');
+      await cdp.send('Profiler.setSamplingInterval',{interval:2000});
+      await cdp.send('Profiler.start');
+      profileRunning = true;
+    } catch (e) {
+      milestone('profiler:unavailable',{reason:String(e.message).slice(0,150)});
+    }
     const t0=Date.now();
     milestone('mouse-click:start');
     await page.mouse.click(before.x,before.y);
@@ -115,8 +142,40 @@ const milestone = (label, details = {}) => console.log('TRANSITION_TIMING',
       t.stopped=true; clearInterval(t.timer);
       return {state:s,events:t.events.slice(-20),changes:t.changes.slice(-30),
         heartbeatCount:t.heartbeats,rafCount:t.rafCount,
-        rafMaxGapMs:Math.round(t.rafMaxGap), wallMs:Date.now()-t.epoch};
+        rafMaxGapMs:Math.round(t.rafMaxGap), wallMs:Date.now()-t.epoch,
+        // Separate browser performance observers; long tasks over 50ms each.
+        longTasksHost:(window.__unfireLongTasks||[]).slice(-40),
+        longTasksFrame:(document.getElementById('malFrame')?.contentWindow?.__unfireLongTasks||[]).slice(-40)};
     });
+    if (profileRunning && cdp) {
+      try {
+        const {profile}=await cdp.send('Profiler.stop');
+        profileRunning=false;
+        const byId=new Map((profile.nodes||[]).map(node=>[node.id,node]));
+        const weighted=new Map();
+        let coveredMs=0;
+        for (let i=0;i<(profile.samples||[]).length;i++) {
+          const node=byId.get(profile.samples[i]);
+          if(!node)continue;
+          const dt=(profile.timeDeltas?.[i]||2000)/1000;
+          coveredMs+=dt;
+          const frame=node.callFrame||{};
+          const key=(frame.functionName||'(anonymous)')+' @ '+(frame.url||'internal').split('/').slice(-2).join('/')+':'+(frame.lineNumber||0);
+          weighted.set(key,(weighted.get(key)||0)+dt);
+        }
+        milestone('cpu-profile',{
+          samples:profile.samples?.length||0,
+          sampledMs:Math.round(coveredMs),
+          topSelfMs:[...weighted.entries()].sort((a,b)=>b[1]-a[1]).slice(0,15)
+            .map(([functionName,ms])=>({functionName,ms:Math.round(ms)}))
+        });
+      } catch(e) {milestone('cpu-profile:error',{reason:String(e.message).slice(0,200)});}
+    }
+    const summarize = arr => ({count:arr.length, totalMs:arr.reduce((sum,x)=>sum+x.duration,0),
+      longest:arr.slice().sort((a,b)=>b.duration-a.duration).slice(0,12)});
+    milestone('longtasks',{host:summarize(outcome.longTasksHost),iframe:summarize(outcome.longTasksFrame)});
+    delete outcome.longTasksHost;
+    delete outcome.longTasksFrame;
     milestone('diagnostic', {outcome, errors});
     assert.equal(waitError,null,'Original 25s opening contract timed out: '+waitError);
     assert.equal(outcome.state.immersive,true,'Game must enter immersive state');
@@ -128,6 +187,7 @@ const milestone = (label, details = {}) => console.log('TRANSITION_TIMING',
     console.error('TRANSITION_TIMING_FAIL',e.stack||e);
     process.exitCode=1;
   } finally {
+    if(profileRunning && cdp) try {await cdp.send('Profiler.stop');}catch(_){}
     if(context) await safeClose(() => context.close(),4000);
     if(browser) {
       const child=typeof browser.process==='function'?browser.process():null;
