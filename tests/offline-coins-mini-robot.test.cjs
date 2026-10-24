@@ -34,13 +34,15 @@ test('nano robot keeps free-roam coordinates, input modes and proportional mobil
   assert.match(ENGINE,/miniCameraRatio = ROAMS\.mini \? NANO_SCALE : 1/);
   assert.match(ENGINE,/ROAMS\.fly\) \{ const miniFlight = ROAMS\.mini && window\.ATM_OUT \? Math\.max\(0\.64, avatarProfile\(\)\.speedScale\) : avatarProfile\(\)\.speedScale/, 'nano uses a proportional but usable vertical cruise policy');
 });
-test('coin HUD lives centrally, clear of the radio and settings touch targets',()=>{
-  assert.match(COINS, /#unfireCoinHud\{[^\n]*top:calc\(env\(safe-area-inset-top\) \+ 78px\);left:50%;right:auto;transform:translateX\(-50%\)/,
-    'wallet must be below the left radio and clear of the right settings button');
-  assert.match(COINS, /@media\(max-height:480px\)\{#unfireCoinHud\{top:calc\(env\(safe-area-inset-top\) \+ 58px\);/,
-    'short landscape central wallet must not cover the minimap');
-  assert.match(COINS, /body:has\(#wradio\.expanded\) #unfireCoinHud\{visibility:hidden;pointer-events:none\}/,
-    'expanded radio temporarily owns the upper HUD, without click-through wallet');
+test('coin HUD stays directly above minimap, clear of central play and other mobile buttons',()=>{
+  assert(COINS.includes('@media(pointer:coarse){#unfireCoinHud{top:calc(env(safe-area-inset-top) + 65px);left:calc(env(safe-area-inset-left) + 96px)'),
+    'wallet anchored top-left above minimap');
+  assert(COINS.includes('@media(max-width:420px){#unfireCoinHud{left:calc(env(safe-area-inset-left) + 84px);max-width:60px'),
+    'narrow portrait wallet remains compact');
+  assert(COINS.includes('@media(max-height:480px){#unfireCoinHud{top:calc(env(safe-area-inset-top) + 60px)'),
+    'short landscape wallet above minimap');
+  assert(COINS.includes('body:has(#wradio.expanded) #unfireCoinHud{visibility:hidden;pointer-events:none}'),
+    'expanded radio hides wallet');
 });
 
 test('offline coin module is loaded before engine and avoids payments / online sharing',()=>{

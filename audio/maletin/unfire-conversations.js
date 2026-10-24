@@ -108,12 +108,12 @@
 
   const css = document.createElement('style');
   css.textContent = [
-    '#ufNear{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:calc(155px + env(safe-area-inset-bottom));z-index:57;display:none;max-width:min(50vw,220px);padding:10px 13px;border:1px solid #8ccaff;border-radius:18px;background:#0b2036ee;color:#f8fcff;font:700 12px/1.4 system-ui;box-shadow:0 6px 22px #0008;cursor:pointer}',
+    '#ufNear{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:calc(58px + env(safe-area-inset-bottom));z-index:57;display:none;max-width:min(36vw,168px);padding:9px 11px;border:1px solid #8ccaff;border-radius:18px;background:#0b2036ee;color:#f8fcff;font:700 12px/1.4 system-ui;box-shadow:0 6px 22px #0008;cursor:pointer}',
     '#ufNear.on{display:block}',
     '#ufRoomButton{border:1px solid #9cd9ff;border-radius:11px;background:#123860;color:white;font:700 12px system-ui;padding:8px}',
-    '#ufDialogs{position:fixed;inset:0;z-index:94;display:none;align-items:flex-end;justify-content:center;pointer-events:none;padding:max(10px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));box-sizing:border-box}',
+    '#ufDialogs{position:fixed;inset:0;z-index:94;display:none;align-items:flex-start;justify-content:flex-end;pointer-events:none;padding:max(10px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));box-sizing:border-box}',
     '#ufDialogs.on{display:flex}',
-    '#ufDialogs .ufCard{pointer-events:auto;width:min(520px,100%);max-height:min(65dvh,480px);display:flex;flex-direction:column;overflow:hidden;background:#09182df2;color:#f1f7ff;border:1px solid #74b8fb;border-radius:20px;box-shadow:0 20px 70px #000c;font:14px/1.45 system-ui,sans-serif}',
+    '#ufDialogs .ufCard{pointer-events:auto;width:min(400px,100%);max-height:min(48dvh,360px);display:flex;flex-direction:column;overflow:hidden;background:#09182df2;color:#f1f7ff;border:1px solid #74b8fb;border-radius:20px;box-shadow:0 20px 70px #000c;font:14px/1.45 system-ui,sans-serif}',
     '#ufDialogs header{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid #79aff344}',
     '#ufDialogs header strong{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
     '#ufDialogs button{color:#f8fcff;background:#21518a;border:1px solid #547bae;border-radius:10px;padding:7px 10px;cursor:pointer}',
@@ -125,8 +125,10 @@
     '#ufDialogs form{display:flex;gap:6px;padding:10px;border-top:1px solid #79aff344}',
     '#ufDialogs input{flex:1;min-width:0;background:#e9f4ff;color:#102542;border:0;border-radius:9px;padding:10px;font:14px system-ui}',
     '#ufDialogs .ufHint{font-size:11px;opacity:.78;padding:0 14px 8px}',
-    '@media(max-height:520px){#ufDialogs .ufCard{max-height:87dvh}}',
-    '@media(max-width:500px){#ufNear{bottom:calc(150px + env(safe-area-inset-bottom));font-size:11px}#ufDialogs .ufCard{max-height:54dvh}#ufDialogs header{padding:9px}#ufDialogs form{padding:7px}}'
+    '@media(max-height:520px){#ufDialogs .ufCard{max-height:calc(100dvh - 24px)}}',
+    '@media(pointer:coarse){#ufNear{display:none!important}#ufDialogs{align-items:flex-end;justify-content:center}#ufDialogs .ufCard{max-height:min(48dvh,360px)}#ufDialogs header{padding:9px}#ufDialogs form{padding:7px}}',
+    'body:has(#ufDialogs.on) #unfireFly,body:has(#ufDialogs.on) #unfireDown,body:has(#ufDialogs.on) #unfireTalk,body:has(#ufDialogs.on) #unfireTouchPad,body:has(#ufDialogs.on) #ctlDock,body:has(#ufDialogs.on) #wradio,body:has(#ufDialogs.on) #minimap,body:has(#ufDialogs.on) #unfireCoinHud,body:has(#ufDialogs.on) #onlHud{visibility:hidden!important;pointer-events:none!important}',
+    '@media(pointer:coarse) and (orientation:landscape){#ufDialogs .ufCard{max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px)}}'
   ].join('\n');
   document.head.appendChild(css);
 
@@ -220,7 +222,13 @@
     chip.classList.toggle('on', !!best && !mode);
     if (best) chip.textContent = '💬 ' + best.name.slice(0, 23);
     const talk = gi('unfireTalk');
-    if (talk && best && !talk.dataset.ufDialogHint) { talk.dataset.ufDialogHint = '1'; talk.title = tr('Hablar con el robot más cercano', 'Talk to nearest robot'); }
+    if (talk) {
+      // Reuse the existing right-thumb action. Never stack a duplicate speech button.
+      const label = tr('💬 HABLAR', '💬 TALK');
+      if (talk.textContent !== label) talk.textContent = label;
+      talk.title = best ? tr('Hablar con ', 'Talk to ') + best.name : tr('Hablar con un robot cercano', 'Talk to a nearby robot');
+      talk.setAttribute('aria-label', talk.title);
+    }
     let button = gi('ufRoomButton');
     const hud = gi('onlHud');
     if (!button && hud) {

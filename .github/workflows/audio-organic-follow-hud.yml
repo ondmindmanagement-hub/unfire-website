@@ -1,0 +1,43 @@
+name: Unfire Audio organic followers and HUD
+on:
+  pull_request:
+    paths:
+      - 'audio/index.html'
+      - 'audio/maletin/companion-natural-flight.js'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'audio/maletin/unfire-conversations.js'
+      - 'audio/maletin/coins-shop.js'
+      - 'tests/audio-companion-natural-and-hud.test.cjs'
+      - 'tests/audio-companion-hud-browser.cjs'
+      - '.github/workflows/audio-organic-follow-hud.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          node --check audio/maletin/game-engine-v50.js
+          node --check audio/maletin/companion-natural-flight.js
+          node --check audio/maletin/unfire-conversations.js
+          node --check audio/maletin/coins-shop.js
+          node --test tests/audio-companion-natural-and-hud.test.cjs tests/unfire-conversations-20261024.test.cjs tests/audio-nano-engine-connection.test.cjs tests/offline-coins-day-isolation.test.cjs tests/offline-coins-mini-robot.test.cjs
+  layout-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+          node tests/audio-companion-hud-browser.cjs
