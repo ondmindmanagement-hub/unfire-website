@@ -9,7 +9,7 @@ var path=location.pathname.replace(/\/+$/,'').replace(/\/index\.html$/,'')||'/';
 var mode=path.endsWith('/audio/maletin')?'engine':path.endsWith('/audio')?'audio':'site';
 // Network hints are optional (Safari may not expose them). Never guess a
 // connection speed or delay gameplay on unknown networks.
-var connection=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+var connection=typeof navigator==='object'&&navigator?(navigator.connection||navigator.mozConnection||navigator.webkitConnection):null;
 var slowNetwork=!!(connection&&(connection.saveData||/^(slow-2g|2g)$/.test(String(connection.effectiveType||''))));
 var low=root.classList.contains('uf-load-pending')||(mode!=='site'&&slowNetwork);
 var en=mode==='site'&&root.lang.toLowerCase().startsWith('en');
