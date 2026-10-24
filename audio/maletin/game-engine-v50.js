@@ -1135,7 +1135,7 @@
       const foot = -8.9 + (ROAMS.h || 0);
       const origin = V(ROAMS.p.x + Math.sin(a)*0.48, foot + 5.5, ROAMS.p.z - Math.cos(a)*0.48);
       const goal = V(ROAMS.p.x, foot + 0.17, ROAMS.p.z);
-      phase = { t: 0, duration: 1.38, origin, goal, revealed: false };
+      phase = { t: 0, duration: 1.38, origin, goal, revealed: false, startedAt: performance.now() };
       orb.position.copy(origin); orb.scale.setScalar(1);
       upper.position.y = 0; lower.position.y = 0; upper.rotation.z = 0; lower.rotation.z = 0;
       halo.scale.setScalar(1); orb.visible = true;
@@ -1144,7 +1144,7 @@
     };
     const tick = (dt) => {
       if (!phase) return;
-      const p = phase; p.t = Math.min(p.duration, p.t + Math.max(0, Math.min(0.07, dt)));
+      const p = phase; const wallTime = Math.max(0, (performance.now() - p.startedAt) / 1000); p.t = Math.min(p.duration, Math.max(p.t + Math.max(0, Math.min(0.07, dt)), wallTime));
       const u = p.t / p.duration, flight = smooth(u/0.61);
       orb.position.lerpVectors(p.origin, p.goal, flight);
       orb.position.y += Math.sin(Math.PI*flight)*0.68;
@@ -1828,7 +1828,7 @@
     g('onlInv').onclick = async () => { const l = ONLINE.link(), txt = '¡Ven a jugar conmigo a UNFIRE AUDIO! Sala: '; try { if (navigator.share) { await navigator.share({ title: 'UNFIRE AUDIO', text: txt, url: l }); return; } } catch (e) {} try { await navigator.clipboard.writeText(l); say('📨 Enlace copiado: ' + l + ' · pégalo a tus amigos'); } catch (e) { say('📨 Envía este enlace a tus amigos: ' + l); } }; }
   // ===== Reusable capsule inventory: pack, throw, deploy and collect without leaving roam =====
   const CAPS=(()=>{
-    let capsule=null, flight=0, start=null, target=null, launchNano=false, upperShell=null, lowerShell=null;
+    let capsule=null, flight=0, start=null, target=null, launchNano=false, upperShell=null, lowerShell=null, launchAt=0;
     const build=()=>{
       if(capsule)return;
       capsule=new THREE.Group();
@@ -1837,7 +1837,7 @@
       const lower=new THREE.Mesh(new THREE.SphereGeometry(0.63,12,8,0,TAU,H2,H2),new THREE.MeshStandardMaterial({color:0xeaf2ff,metalness:0.2,roughness:0.37}));
       upperShell=upper;lowerShell=lower;capsule.add(upper,lower);capsule.visible=false;S.scene.add(capsule);
     };
-    const cancel=()=>{flight=0;launchNano=false;if(capsule){capsule.visible=false;capsule.scale.setScalar(1);}if(upperShell)upperShell.position.y=0;if(lowerShell)lowerShell.position.y=0;};
+    const cancel=()=>{flight=0;launchAt=0;launchNano=false;if(capsule){capsule.visible=false;capsule.scale.setScalar(1);}if(upperShell)upperShell.position.y=0;if(lowerShell)lowerShell.position.y=0;};
     const pack=()=>{if(!ROAMS.on||!portableUnlocked())return false;cancel();closeCaseInGame();say('🎒 Maletín y objetos guardados en una cápsula. Pulsa G o LANZAR para desplegar.');return true;};
     const throwIt=()=>{
       if(!ROAMS.on||!portableUnlocked())return false;
@@ -1851,7 +1851,7 @@
       start=V(ROAMS.p.x,floor+(launchNano ? 0.18 : 6.5),ROAMS.p.z);
       target=V(ROAMS.p.x+dirX*7,floor+(window.ATM_OUT?6.8:0.8),ROAMS.p.z+dirZ*7);
       capsule.position.copy(start);capsule.rotation.set(0,0,0);capsule.scale.setScalar(launchNano ? NANO_SCALE : 1);
-      capsule.visible=true;flight=0.001;
+      capsule.visible=true;flight=0.001;launchAt=performance.now();
       say('🎒 ¡Cápsula lanzada!');hap(0.3);
       return true;
     };
@@ -1874,7 +1874,9 @@
       if(ROAMS.on && carryingCase && caseG.visible)caseG.visible=false;
       if(ROAMS.on && !carryingCase && !caseG.visible)caseG.visible=true;
       if(!flight||!capsule)return;
-      flight=Math.min(launchNano ? 1.52 : 0.85,flight+Math.min(dt,0.06));
+      const duration=launchNano ? 1.52 : 0.85;
+      const elapsed=Math.max(0,(performance.now()-launchAt)/1000);
+      flight=Math.min(duration,Math.max(flight+Math.min(dt,0.06),elapsed));
       const u=flight/(launchNano ? 1.52 : 0.85);
       const travel=launchNano ? Math.min(1,u/0.63) : u;
       capsule.position.set(
