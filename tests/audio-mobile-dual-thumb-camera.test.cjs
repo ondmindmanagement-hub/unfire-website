@@ -86,6 +86,8 @@ for (const token of [
   'body.unfire-roaming #unfireTouchPad'
 ]) assert(css.includes(token), 'missing ergonomic rule: ' + token);
 assert(css.includes('env(safe-area-inset-left') && css.includes('env(safe-area-inset-bottom'));
+assert(engine.includes('if (on && pid === null) { const c = Math.max(0, (pad.clientWidth - knob.offsetWidth) / 2);'),
+  'joystick thumb must stay centered at rest after size/orientation changes');
 assert(css.includes('@media (pointer:coarse) and (orientation:portrait)'));
 assert(css.includes('@media (pointer:coarse) and (orientation:landscape)'));
 assert(!css.includes('@import'), 'control stylesheet must stay local');
