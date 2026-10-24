@@ -98,7 +98,7 @@ test('existing cinematic loader is finite, lightweight and accessible',()=>{
 });
 
 test('explicit network hints only; Safari unknown and fast links are not guessed slow',()=>{
-  const a=loader.indexOf('var connection=navigator.connection');
+  const a=loader.indexOf('var connection=typeof navigator');
   const b=loader.indexOf('var en=',a);
   assert.ok(a>0&&b>a);
   function low(network,mode='engine'){
