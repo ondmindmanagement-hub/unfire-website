@@ -1,0 +1,26 @@
+name: Audio garage real-browser input QA
+on:
+  pull_request:
+    paths:
+      - 'tests/audio-garage-native-browser.cjs'
+      - '.github/workflows/audio-garage-native-browser.yml'
+      - 'audio/maletin/garage-scroll-guard.js'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  garage-real-dom:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax and prior garage unit contracts
+        run: |
+          node --check tests/audio-garage-native-browser.cjs
+          node --test tests/audio-garage-scroll-guard.test.cjs
+      - name: Install isolated Chromium runtime
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify native scrolling and isolation across four viewports
+        run: node tests/audio-garage-native-browser.cjs
