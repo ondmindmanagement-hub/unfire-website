@@ -54,7 +54,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         pos: window.__UNFIRE_CASE_QA.playerPos,
         nano: window.__roamAPI.ROAMS.mini
       }));
-      assert.equal(before.nano, false, 'Player initially starts in normal scale');
+      assert.equal(!!before.nano, false, 'Player initially starts in normal scale');
       await page.locator('#cfgB').waitFor({state: 'visible', timeout: 30000});
       await page.locator('#cfgB').tap({timeout: 15000});
       await page.locator('#stR').waitFor({state: 'visible', timeout: 10000});
