@@ -1297,4 +1297,5 @@ section::before{content:"";position:absolute;left:8px;top:-14px;width:120px;heig
 h1,h2{text-shadow:0 0 18px rgba(61,139,255,.35)}
 </style>
 <script>/* música: baja al salir del maletín a la web, vuelve al entrar */(()=>{const f=document.getElementById('malFrame'),h=document.getElementById('hero');if(!f||!h||!('IntersectionObserver' in window))return;let last=null;const send=(d)=>{if(d===last)return;last=d;try{f.contentWindow.postMessage({unfireDuck:d},'*')}catch(e){}};new IntersectionObserver((es)=>{es.forEach((e)=>send(e.intersectionRatio<0.35&&!document.body.classList.contains('immOn')))},{threshold:[0,0.35,0.6,1]}).observe(h)})();</script>
+<script defer src="js/play-metrics.js"></script>
 </body></html>
