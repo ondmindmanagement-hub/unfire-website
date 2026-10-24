@@ -959,7 +959,7 @@ const UA = (() => {
       src.buffer = o.reverse ? reversed(z) : z.b;
       src.playbackRate.value = Math.pow(2, (midi - z.root + (o.detune || 0) / 100) / 12) * (o.rate || 1);
       const g = ctx.createGain();
-      const amp = (o.gain ?? 1) * (0.3 + 0.7 * (o.vel ?? 0.8));
+      const amp = (o.gain ?? 1) * (0.3 + 0.7 * (o.vel ?? 0.8)) * ((window.__mega && /^(bells|chimes|glock|glass|vibesbow|xylo|balafon)$/.test(this.key)) ? 0.42 : 1);
       const atk = o.attack ?? 0.003;
       g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(amp, t + atk);
       src.connect(g); g.connect(o.dest || this.dest);
@@ -979,8 +979,13 @@ const UA = (() => {
     if (!z) return;
     const src = ctx.createBufferSource(); src.buffer = o.reverse ? reversed(z) : z.b;
     src.playbackRate.value = o.rate || 1;
-    const g = ctx.createGain(); g.gain.value = o.gain ?? 1;
-    if (o.decay) { g.gain.setValueAtTime(o.gain ?? 1, t); g.gain.setTargetAtTime(0, t + o.decay * 0.3, o.decay / 3); }
+    const g = ctx.createGain();
+    // Per-source true-peak trims: verified CC0 drums stay intact, no re-encoding.
+    const peakTrim = key === 'st_kick' ? 0.79 : key === 'st_snare' ? 0.85 : 1;
+    const metalTrim = window.__mega && /^(anvil|cowbell|gong|triangle|agogo|bb_bell|bb_ride|bb_crash)$/.test(key) ? 0.55 : 1;
+    const hitGain = (o.gain ?? 1) * peakTrim * metalTrim;
+    g.gain.value = hitGain;
+    if (o.decay) { g.gain.setValueAtTime(hitGain, t); g.gain.setTargetAtTime(0, t + o.decay * 0.3, o.decay / 3); }
     src.connect(g); g.connect(dest); src.start(t, o.reverse ? 0 : z.off);
     if (o.decay) src.stop(t + o.decay * 2 + 0.1);
     src.onended = () => g.disconnect();
@@ -1635,8 +1640,8 @@ const ENGINES = (() => {
       else if (mode === 'chip') { const o = ctx.createOscillator(); o.setPeriodicWave(pulseWave()); o.frequency.value = f; oscs.push(o); }
       else if (mode === 'pad') { for (const [type, d] of [['sawtooth', -p.detune], ['sawtooth', p.detune], ['triangle', 0]]) { const o = ctx.createOscillator(); o.type = type; o.frequency.value = f; o.detune.value = d; oscs.push(o); } }
       else { // FM
-        const c = ctx.createOscillator(), mo = ctx.createOscillator(), mg = ctx.createGain(); c.frequency.value = f; mo.frequency.value = f * 3.5;
-        mg.gain.setValueAtTime(f * 6, t); mg.gain.setTargetAtTime(f * 0.4, t, 0.35); mo.connect(mg); mg.connect(c.frequency); mo.start(t); oscs.push(c); c._mod = mo;
+        const c = ctx.createOscillator(), mo = ctx.createOscillator(), mg = ctx.createGain(); c.frequency.value = f; mo.frequency.value = f * 2;
+        mg.gain.setValueAtTime(f * 2.2, t); mg.gain.setTargetAtTime(f * 0.22, t, 0.25); mo.connect(mg); mg.connect(c.frequency); mo.start(t); oscs.push(c); c._mod = mo;
       }
       const mix = ctx.createGain(); mix.gain.value = 1 / Math.sqrt(oscs.length);
       oscs.forEach((o) => { o.connect(mix); o.start(t); });
@@ -2940,11 +2945,11 @@ const RADIO = (() => {
     { name: 'Techno de Detroit', city: 'Detroit', bpm: 128, scale: 'minor', progs: [[0, 0, 5, 3], [0, 6, 0, 5]], kit: 'edm', sc: 0.3, swing: 0,
       dr: { k: [P('X...X...X...X...')], s: [P('....X.......X...')], h: [P('xxXxxxXxxxXxxxXx')], o: [P('..x...x...x...x.')], r: [P('..x...x...x...x.')] }, bass: 'sub', chords: 'stab', crh: [2, 5, 10, 13], ext: 1, lead: { kind: 'va', rh: 'arp8' }, va: 3, lva: 7, fx: { verb: 0.3, dly: 0.35 } },
     { name: 'Trap de Atlanta', city: 'Atlanta', bpm: 140, scale: 'minor', progs: [[0, 5, 3, 4], [0, 0, 5, 6], [0, 1, 0, 5]], kit: 'trap', sc: 0, swing: 0,
-      dr: { k: [P('X......x..X.....'), P('X.....X...X..x..'), P('X......X.x......')], s: [P('........X.......')], h: [P('x.x.x.x.x.x.x.x.'), P('x.xxx.x.x.x.xx.x')], o: [P('..............x.')], rolls: true }, bass: '808', chords: 'pad', ext: 0, lead: { kind: 'smp', ins: 'bells', rh: 'trap' }, va: 5, lva: 5, fx: { verb: 0.35, dly: 0.3 } },
+      dr: { k: [P('X......x..X.....'), P('X.....X...X..x..'), P('X......X.x......')], s: [P('........X.......')], h: [P('x.x.x.x.x.x.x.x.'), P('x.xxx.x.x.x.xx.x')], o: [P('..............x.')], rolls: true }, bass: '808', chords: 'pad', ext: 0, lead: { kind: 'smp', ins: 'vibes', rh: 'trap' }, va: 5, lva: 5, fx: { verb: 0.35, dly: 0.3 } },
     { name: 'Drill de Nueva York', city: 'Nueva York', bpm: 142, scale: 'minor', progs: [[0, 5, 6, 4], [0, 1, 5, 4]], kit: 'trap', sc: 0, swing: 0,
       dr: { k: [P('X.........X..x..'), P('X.....x...X.....')], s: [P('........X.....x.'), P('........X......x')], h: [P('x..x..x.x..x..x.'), P('x..x.x..x..x..xx')], o: [], rolls: true, rim: [P('...x..........x.')] }, bass: 'drill', chords: 'pad', ext: 0, lead: { kind: 'smp', ins: 'piano', rh: 'drill' }, va: 3, lva: 4, fx: { verb: 0.38, dly: 0.2 } },
     { name: 'Memphis oscuro', city: 'Memphis', bpm: 136, scale: 'minor', progs: [[0, 1, 0, 5], [0, 0, 1, 0]], kit: 'trap', sc: 0, swing: 0, crackle: 0.5,
-      dr: { k: [P('X.....X...X.....'), P('X..x......X..x..')], s: [P('........X.......')], h: [P('x.x.x.x.x.x.x.x.')], o: [], cb: [P('x..x..x...x.x...'), P('x..x..x..x..x.x.')], rolls: true }, bass: '808', chords: 'pad', ext: 0, lead: { kind: 'smp', ins: 'glock', rh: 'trap' }, va: 5, lva: 4, fx: { verb: 0.4, dly: 0.25 } },
+      dr: { k: [P('X.....X...X.....'), P('X..x......X..x..')], s: [P('........X.......')], h: [P('x.x.x.x.x.x.x.x.')], o: [], cb: [P('x..x..x...x.x...'), P('x..x..x..x..x.x.')], rolls: true }, bass: '808', chords: 'pad', ext: 0, lead: { kind: 'smp', ins: 'piano', rh: 'trap' }, va: 5, lva: 4, fx: { verb: 0.4, dly: 0.25 } },
     { name: 'Boom bap noventero', city: 'El Bronx', bpm: 90, scale: 'dorian', progs: [[0, 3, 4, 3], [0, 3, 0, 4], [0, 5, 1, 4]], kit: 'lofi', sc: 0.1, swing: 0.2, crackle: 0.8,
       dr: { k: [P('X......x..X.....'), P('X.....x...X..x..'), P('X......x.xX.....')], s: [P('....X.......X...'), P('....X.......X..o')], h: [P('x.x.x.x.x.x.x.x.'), P('x.x.xxx.x.x.x.xo')], o: [P('..............x.')] }, bass: 'walk', bins: 'upright', chords: 'jazz', crh: [0, 7], ext: 2, lead: { kind: 'smp', ins: 'vibes', rh: 'sparse' }, va: 3, lva: 5, fx: { verb: 0.22, dly: 0.12 } },
     { name: 'Soul de los 70', city: 'Filadelfia', bpm: 94, scale: 'major', progs: [[1, 4, 0, 5], [0, 3, 1, 4], [3, 2, 1, 4]], kit: 'soul', sc: 0.08, swing: 0.12, crackle: 0.25,
@@ -3118,7 +3123,7 @@ const RADIO = (() => {
     chime(t) { // sonido de apertura que nunca desafina: con la radio generativa sigue su acorde; con canciones de verdad o en silencio es un brillo sin nota
       const now = ctx.currentTime; if (now - (st.lastChime || -9) < 0.9) return; st.lastChime = now;
       const songOn = !!(window.__WRADIO && window.__WRADIO.on);
-      if (st.on && !songOn) { const ch = chordAt(st.bar); ch.concat([ch[0] + 12]).forEach((m, k) => smp('bells', m + 24, t + k * 0.09, { vel: 0.4, dur: 1.1, gain: 0.22 })); return; }
+      if (st.on && !songOn) { const ch = chordAt(st.bar); [ch[0], ch[2]].forEach((m, k) => smp('vibes', m + 12, t + k * 0.11, { vel: 0.32, dur: 0.8, gain: 0.14 })); return; }
       const n = ctx.createBufferSource(), b = ctx.createBuffer(1, ctx.sampleRate * 1.2, ctx.sampleRate), d = b.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1);
       n.buffer = b; const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 3; f.frequency.setValueAtTime(3500, t); f.frequency.exponentialRampToValueAtTime(9000, t + 1.0); const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(songOn ? 0.035 : 0.05, t + 0.08); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.15); n.connect(f); f.connect(g); g.connect(U.bus.master); n.start(t); },
     servo(t, up = true) {
@@ -4129,7 +4134,7 @@ const VA = (() => {
     { name: 'Acid Line', wave: 'saw', detune: 0.04, cutoff: 0.22, reso: 0.86, env: 0.78, attack: 0.0, release: 0.12, delay: 0.3, reverb: 0.15, decay: 0.22, sustain: 0.25, drive: 0.65, oct: -1, arp: true },
     { name: 'Dream Pad', wave: 'super', detune: 0.62, cutoff: 0.46, reso: 0.1, env: 0.22, attack: 0.62, release: 0.75, delay: 0.32, reverb: 0.72, decay: 1.5, sustain: 0.9, drive: 0.1, oct: 0 },
     { name: 'Pluck Stab', wave: 'square', detune: 0.25, cutoff: 0.32, reso: 0.4, env: 0.88, attack: 0.0, release: 0.24, delay: 0.46, reverb: 0.3, decay: 0.2, sustain: 0.0, drive: 0.3, oct: 0 },
-    { name: 'FM Bells', wave: 'fm', detune: 0.2, cutoff: 0.9, reso: 0.05, env: 0.2, attack: 0.0, release: 0.62, delay: 0.3, reverb: 0.55, decay: 1.2, sustain: 0.0, drive: 0.0, oct: 1 },
+    { name: 'FM Bells', wave: 'fm', detune: 0.2, cutoff: 0.72, reso: 0.05, env: 0.2, attack: 0.01, release: 0.42, delay: 0.16, reverb: 0.28, decay: 0.8, sustain: 0.0, drive: 0.0, oct: 0 },
     { name: 'Sub Bass', wave: 'square', detune: 0.08, cutoff: 0.24, reso: 0.25, env: 0.25, attack: 0.0, release: 0.15, delay: 0.0, reverb: 0.05, decay: 0.4, sustain: 0.8, drive: 0.35, oct: -2 },
     { name: 'Crystal Arp', wave: 'fm', detune: 0.3, cutoff: 0.75, reso: 0.3, env: 0.5, attack: 0.0, release: 0.28, delay: 0.55, reverb: 0.5, decay: 0.3, sustain: 0.1, drive: 0.1, oct: 1, arp: true },
     { name: 'Coro Aah', wave: 'vox', vowel: 'a', detune: 0.5, cutoff: 0.8, reso: 0.05, env: 0.1, attack: 0.35, release: 0.7, delay: 0.25, reverb: 0.75, decay: 1.2, sustain: 0.9, drive: 0.05, oct: 0 },
@@ -4138,7 +4143,7 @@ const VA = (() => {
     { name: 'Wobble Bass', wave: 'saw', detune: 0.1, cutoff: 0.2, reso: 0.7, env: 0.6, attack: 0.0, release: 0.15, delay: 0.1, reverb: 0.1, decay: 0.3, sustain: 0.6, drive: 0.7, oct: -1, glide: 0.04 },
     { name: 'Chip 2000', wave: 'square', detune: 0.0, cutoff: 0.95, reso: 0.0, env: 0.1, attack: 0.0, release: 0.1, delay: 0.4, reverb: 0.2, decay: 0.2, sustain: 0.6, drive: 0.0, oct: 1 },
     { name: 'Reese Oscuro', wave: 'super', detune: 0.35, cutoff: 0.3, reso: 0.35, env: 0.2, attack: 0.05, release: 0.3, delay: 0.15, reverb: 0.25, decay: 0.8, sustain: 0.9, drive: 0.5, oct: -1 },
-    { name: 'Campanas de Cristal', wave: 'fm', detune: 0.4, cutoff: 0.95, reso: 0.0, env: 0.1, attack: 0.0, release: 0.9, delay: 0.45, reverb: 0.7, decay: 1.6, sustain: 0.0, drive: 0.0, oct: 2 },
+    { name: 'Campanas de Cristal', wave: 'fm', detune: 0.25, cutoff: 0.7, reso: 0.0, env: 0.1, attack: 0.01, release: 0.5, delay: 0.17, reverb: 0.3, decay: 0.8, sustain: 0.0, drive: 0.0, oct: 1 },
     { name: 'Brass Stab', wave: 'saw', detune: 0.3, cutoff: 0.35, reso: 0.2, env: 0.75, attack: 0.03, release: 0.2, delay: 0.25, reverb: 0.3, decay: 0.35, sustain: 0.4, drive: 0.35, oct: 0 },
   ];
   const WAVE_NAME = { super: 'SUPSAW', saw: 'SAW', square: 'SQUARE', fm: 'FM' };
@@ -4172,8 +4177,8 @@ const VA = (() => {
     function applyFx() {
       const t = T0(); out.gain.setTargetAtTime(Math.pow(P.volume, 1.6) * 0.9, t, 0.03);
       const step = (60 / bpm) * 0.75; dl.delayTime.setTargetAtTime(step, t, 0.05); dr.delayTime.setTargetAtTime(step, t, 0.05);
-      dSend.gain.setTargetAtTime(P.delay * 0.55, t, 0.03); dfb.gain.setTargetAtTime(0.18 + P.delay * 0.4 + (P.ribbon != null ? P.ribbon * 0.25 : 0), t, 0.03); dOut.gain.value = 0.9;
-      rSend.gain.setTargetAtTime(P.reverb * 0.85, t, 0.03); rOut.gain.value = 0.8; dry.gain.value = 1;
+      dSend.gain.setTargetAtTime(P.delay * 0.38, t, 0.03); dfb.gain.setTargetAtTime(Math.min(0.43, 0.16 + P.delay * 0.23 + (P.ribbon != null ? P.ribbon * 0.08 : 0)), t, 0.03); dOut.gain.value = 0.65;
+      rSend.gain.setTargetAtTime(P.reverb * 0.48, t, 0.03); rOut.gain.value = 0.62; dry.gain.value = 1;
       setDrive(P.drive || 0);
     }
     applyFx();
@@ -4193,8 +4198,8 @@ const VA = (() => {
       else if (P.wave === 'saw') { add('sawtooth', -sp * 0.2, 0.5); add('sawtooth', sp * 0.2, 0.5); }
       else if (P.wave === 'square') { add('square', -sp * 0.15, 0.42); add('square', sp * 0.15, 0.42); add('square', -1200, 0.3); }
       else if (P.wave === 'vox') { const VF = { a: [[800, 1], [1150, 0.5], [2900, 0.25]], o: [[450, 1], [800, 0.6], [2830, 0.15]], e: [[400, 1], [1700, 0.55], [2600, 0.3]] }[P.vowel || 'a']; const src = ctx.createGain(); [-sp * 0.3, 0, sp * 0.3].forEach((d) => { const o = ctx.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = d; bend.connect(o.detune); lfoAmt.connect(o.detune); const g0 = ctx.createGain(); g0.gain.value = 0.33; o.connect(g0); g0.connect(src); oscs.push(o); }); const vib = ctx.createOscillator(), vg2 = ctx.createGain(); vib.frequency.value = 5.2; vg2.gain.value = 9; vib.connect(vg2); oscs.forEach((o) => vg2.connect(o.detune)); mods.push(vib); VF.forEach(([hz, a]) => { const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = hz; bp.Q.value = 9; const ga = ctx.createGain(); ga.gain.value = a * 2.4; src.connect(bp); bp.connect(ga); ga.connect(mix); }); }
-      else { const car = add('sine', 0, 0.7), car2 = add('sine', sp * 0.1 + 1200, 0.12), m = ctx.createOscillator(), mg = ctx.createGain(); m.frequency.value = f * 3.5; m.detune.value = sp * 0.2; bend.connect(m.detune);
-        mg.gain.setValueAtTime(f * 7, t); mg.gain.setTargetAtTime(f * 0.6, t, 0.12 + P.decay * 0.25); m.connect(mg); mg.connect(car.frequency); mg.connect(car2.frequency); mods.push(m); }
+      else { const car = add('sine', 0, 0.7), car2 = add('sine', sp * 0.1 + 1200, 0.06), m = ctx.createOscillator(), mg = ctx.createGain(); m.frequency.value = f * 2; m.detune.value = sp * 0.2; bend.connect(m.detune);
+        mg.gain.setValueAtTime(f * 2.0, t); mg.gain.setTargetAtTime(f * 0.22, t, 0.08 + P.decay * 0.16); m.connect(mg); mg.connect(car.frequency); mg.connect(car2.frequency); mods.push(m); }
       lastF = f;
       const base = cutHz(effCut(), note), peak = Math.min(19500, base * Math.pow(2, P.env * 6)), A = 0.002 + Math.pow(P.attack, 3) * 2.5, R = 0.03 + P.release * P.release * 3;
       f1.Q.value = 0.7 + P.reso * 16; f2.Q.value = 0.6; f2.frequency.value = Math.min(19500, peak * 1.4);
