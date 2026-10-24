@@ -126,9 +126,14 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         localStorage.getItem('unfire_save_v1') || '{"name":"","met":false}'
       ).met), false, 'Opening history does not force Nimbo onboarding');
       await page.locator('#mX').tap({timeout: 12000});
+      await page.locator('#storyMenu').waitFor({state: 'hidden', timeout: 12000});
       console.log('NANO_OPTIONAL_STORY_PASS');
 
-      await page.locator('#cfgB').tap({timeout: 12000});
+      // Settings may remain open after the story dialog closes. Do not toggle it
+      // closed just before trying the Nano return control on a touch device.
+      if (!(await page.locator('#stR').isVisible())) {
+        await page.locator('#cfgB').tap({timeout: 12000});
+      }
       await page.locator('#stR').tap({timeout: 12000});
       await page.waitForFunction(() => !window.__roamAPI.ROAMS.mini, null,
         {timeout: 15000, polling: 100});
