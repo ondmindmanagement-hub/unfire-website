@@ -1,0 +1,26 @@
+name: Audio Gacha Near Interaction
+
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/audio-gacha-near-interaction.test.cjs'
+      - '.github/workflows/audio-gacha-near-interaction.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  near-interaction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check engine JavaScript syntax
+        run: node --check audio/maletin/game-engine-v50.js
+      - name: Gacha near/far regression
+        run: node --test tests/audio-gacha-near-interaction.test.cjs
