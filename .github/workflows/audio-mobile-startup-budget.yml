@@ -1,0 +1,31 @@
+name: Audio mobile startup budget
+on:
+  push:
+    branches:
+      - perf/audio-mobile-startup-budget-20261024
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/audio-mobile-startup-budget.test.cjs'
+      - '.github/workflows/audio-mobile-startup-budget.yml'
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/audio-mobile-startup-budget.test.cjs'
+      - '.github/workflows/audio-mobile-startup-budget.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  first-frame:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify engine syntax and low-cost mobile contracts
+        run: |
+          node --check audio/maletin/game-engine-v50.js
+          node --check tests/audio-mobile-startup-budget.test.cjs
+          node tests/audio-mobile-startup-budget.test.cjs
