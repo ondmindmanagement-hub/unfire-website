@@ -1,0 +1,32 @@
+name: Audio progressive local cache QA
+
+on:
+  push:
+    branches:
+      - feature/audio-progressive-local-cache-20261024
+  pull_request:
+    branches:
+      - main
+      - qa/audio-final-reconcile-20261024
+    paths:
+      - 'audio/maletin/unfire-local-sw.js'
+      - 'audio/maletin/unfire-local-bootstrap.js'
+      - 'audio/maletin/index.html'
+      - 'tests/audio-progressive-local-cache.test.cjs'
+      - '.github/workflows/audio-progressive-local-cache.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  local-cache-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check audio/maletin/unfire-local-sw.js
+      - run: node --check audio/maletin/unfire-local-bootstrap.js
+      - run: node --test tests/audio-progressive-local-cache.test.cjs
