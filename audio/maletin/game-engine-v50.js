@@ -2688,11 +2688,11 @@
       return;
     }
     requestAnimationFrame(frame);
-    // Pause GPU draws and simulation while the full map or offline coin shop
-    // owns the screen. Otherwise slow software WebGL can block even a modal's
-    // CLOSE touch. All DOM button handlers stay responsive; closing resumes
-    // the same scene, player position, store and sound without a reload.
-    if (MAP.expandedOpen || (window.UNFIRE_COINS && window.UNFIRE_COINS.isOpen)) {
+    // Pause GPU draws while opaque overlays own the screen. On software WebGL
+    // a background draw can otherwise starve CLOSE taps in the story menu.
+    // Continue dispatching DOM input; resume the exact scene on close.
+    const storyMenuOpen = document.getElementById('storyMenu')?.style.display === 'block';
+    if (MAP.expandedOpen || (window.UNFIRE_COINS && window.UNFIRE_COINS.isOpen) || storyMenuOpen) {
       clock.getDelta();
       previousRenderAt = 0;
       adaptivePerf.since=0;adaptivePerf.frames=0;adaptivePerf.slow=0;
