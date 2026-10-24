@@ -81,12 +81,12 @@ test('Step budget truncates huge delta rather than tunneling through 0.2-unit ob
 test('A landed nano can fly, hover when released, descend, and land without sinking', () => {
   const p = phys.profile(true);
   let s = { h: 0, vy: 0 };
-  for (let n = 0; n < 90; n++) s = phys.updateVertical(s, { fly: true, up: 1, floor: 0, ceiling: 6 }, p, 1/60);
+  for (let n = 0; n < 90; n++) s = phys.updateVertical(s, { fly: true, up: 1, floor: 0, ceiling: 30 }, p, 1/60);
   const ascended = s.h;
-  assert.ok(ascended > 1 && ascended < 6-p.height);
-  for (let n = 0; n < 90; n++) s = phys.updateVertical(s, { fly: true, floor: 0, ceiling: 6 }, p, 1/60);
+  assert.ok(ascended > 1 && ascended < 30-p.height);
+  for (let n = 0; n < 90; n++) s = phys.updateVertical(s, { fly: true, floor: 0, ceiling: 30 }, p, 1/60);
   assert.ok(s.h >= ascended - 0.25 && s.h <= ascended + 1, 'release must hover');
-  for (let n = 0; n < 240; n++) s = phys.updateVertical(s, { fly: true, down: 1, floor: 0, ceiling: 6 }, p, 1/60);
+  for (let n = 0; n < 240; n++) s = phys.updateVertical(s, { fly: true, down: 1, floor: 0, ceiling: 30 }, p, 1/60);
   assert.equal(s.h, 0);
   assert.equal(s.vy, 0);
   assert.ok(s.grounded);
