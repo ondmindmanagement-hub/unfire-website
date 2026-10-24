@@ -27,6 +27,7 @@ class MockElement {
     this.innerHTML = '';
     this.style = {};
     this.textContent = '';
+    this.attrs = {};
     this.classList = { toggle() {}, add() {}, remove() {} };
     this.childrenBySelector = {};
   }
@@ -37,6 +38,7 @@ class MockElement {
   }
   querySelectorAll() { return []; }
   addEventListener() {}
+  setAttribute(k, v) { this.attrs[k] = String(v); }
   appendChild() {}
 }
 function simulate(saved) {
@@ -61,12 +63,12 @@ function simulate(saved) {
     setInterval() { return 1; }, clearInterval() {},
   };
   vm.runInNewContext(story, ctx);
-  const calls = [];
+  const calls = []; let nano = false;
   const guide = window.STORY_INIT({
     showHost(v) { calls.push(['host', v]); },
     say(msg) { calls.push(['say', msg]); },
     duck() {}, cinema() {}, focusHost() {},
-    robotMode() { return false; }, toggleMap() {},
+    robotMode() { nano = !nano; return nano; }, isNano() { return nano; }, toggleMap() {},
   });
   const hud = dom.get('storyHud'), menu = dom.get('storyMenu');
   assert.ok(hud && menu);
@@ -77,6 +79,17 @@ function simulate(saved) {
   hud.querySelector('#stM').onclick();
   return { guide, hud, menu, calls, data, window };
 }
+const nanoConfig = simulate();
+const modeButton = nanoConfig.hud.querySelector('#stR');
+assert.equal(modeButton.attrs['aria-pressed'], 'false', 'initial nano state is inactive');
+modeButton.onclick();
+assert.equal(modeButton.textContent, '🧍 TAMAÑO NORMAL', 'configuration toggles nano on');
+assert.equal(modeButton.attrs['aria-pressed'], 'true', 'screen reader gets active nano state');
+modeButton.onclick();
+assert.equal(modeButton.textContent, '🔬 NANO ROBOT', 'configuration toggles nano off');
+assert.equal(modeButton.attrs['aria-pressed'], 'false', 'screen reader gets inactive nano state');
+assert.equal(nanoConfig.guide.active, false, 'transform does not launch Nimbo onboarding');
+assert.equal(nanoConfig.guide.save.name, '', 'transform never forces player name');
 const fresh = simulate();
 assert.match(fresh.menu.innerHTML, /CONOCER A NIMBO/, 'new players can choose introduction later');
 assert.equal(fresh.data.has('unfire_save_v1'), false, 'entry must not write a save');
