@@ -1,0 +1,22 @@
+name: Audio secondary-stage GPU budget
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/index.html'
+      - 'tests/maletin-secondary-stage-budget.test.cjs'
+      - '.github/workflows/audio-secondary-stage-budget.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-budget:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          node --check tests/maletin-secondary-stage-budget.test.cjs
+          node tests/maletin-secondary-stage-budget.test.cjs
