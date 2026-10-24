@@ -10,7 +10,7 @@ const PAGE_URL = new URL('./index.html', self.registration.scope).href;
 const MAX_ASSETS = 48;
 const MAX_BYTES_PER_ASSET = 1024 * 1024;
 const STATIC_PATHS = ['/audio/maletin/', '/audio/js/', '/audio/img/', '/assets/'];
-const STATIC_FILE = /\\.(?:js|mjs|css|wasm|png|jpe?g|webp|avif|svg|woff2?|ttf|otf)$/i;
+const STATIC_FILE = /\.(?:js|mjs|css|wasm|png|jpe?g|webp|avif|svg|woff2?|ttf|otf)$/i;
 const ALLOWED_QUERY = new Set(['v', 'rev', 'version', 'hash']);
 function isLocalStatic(request, url) {
   if (request.method !== 'GET' || url.origin !== self.location.origin) return false;
