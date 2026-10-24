@@ -1,0 +1,30 @@
+name: Maletin desktop transition timing diagnostic
+
+on:
+  pull_request:
+    paths:
+      - 'tests/maletin-desktop-transition-timing-browser.cjs'
+      - '.github/workflows/maletin-desktop-transition-timing.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: maletin-desktop-timing-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  desktop-transition-timing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate diagnostic syntax
+        run: node --check tests/maletin-desktop-transition-timing-browser.cjs
+      - name: Install headless Chromium on hosted runner
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Measure real first desktop click and opening transition
+        run: node tests/maletin-desktop-transition-timing-browser.cjs
