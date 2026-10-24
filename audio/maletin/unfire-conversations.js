@@ -11,7 +11,7 @@
   const memories = new Map();
   const giantLore = [
     {
-      name: 'UMBRAL, EL GUARDIÁN DE LA PRIMERA NOCHE',
+      name: 'ECLIPSE, EL TESTIGO DE LAS SOMBRAS',
       origin: 'Antes de que existieran las islas, una estrella dejó de emitir luz. En su silencio nací yo, Umbral. Mi armadura está hecha de aquella última sombra.',
       secret: 'Hay una puerta bajo las mareas que nunca aparece en los mapas. Solo se abre cuando cesa toda música y aún puedes oír tu propio pulso.',
       path: 'Recorrí siete cielos buscando la voz de quien encendió el primer faro. Cada vez que hallaba una respuesta, el firmamento cambiaba de forma.',
@@ -35,6 +35,63 @@
       end: 'Todo final contiene un comienzo, pero no todos los comienzos merecen ser apresurados.'
     }
   ];
+  const shipLore={
+    name:'UMBRAL, EL NAVÍO QUE ESCUCHA',origin:'Mi corazón es una cabina y mi pecho, una ventana. He viajado más lejos de lo que recuerdan las estrellas.',
+    secret:'Hay dos entradas a mi memoria. Una está junto al pie derecho y la otra en mi pecho. Ambas llevan al mismo destino.',
+    path:'He visto a la Luna sonreír sin boca y a las ballenas cantar en el vacío. Ninguna repitió la misma canción.',
+    task:'Entra en mi pecho. El DJ conoce la canción que permitirá encontrar el camino hasta la Luna.',
+    end:'Mi cuerpo permanecerá quieto mientras el viaje continúe en tus ojos.'};
+  const islandLore={
+    name:'BALUARTE, EL SABIO QUE CAMINA',origin:'Mis pasos son lentos porque llevo un recuerdo de cada piedra que he pisado.',
+    secret:'Una de mis huellas termina exactamente donde comenzó el primer océano. Todavía no he encontrado la otra.',
+    path:'Mi sombra ha cruzado cientos de mapas, aunque ninguno consiguió dibujarme completo.',
+    task:'Sigue el agua y escucha la marea antes de competir. La velocidad no compensa un rumbo equivocado.',
+    end:'Cuando comprendas el silencio entre las olas, volveremos a hablar.'};
+  const oracleOpeners=[
+    'Viajero, hay una pregunta que todavía no ha nacido.',
+    'Has pasado junto a un secreto que estaba esperándote.',
+    'No camines tan deprisa: incluso las sombras guardan memoria.',
+    'Las estrellas me piden que te diga algo, pero nunca mencionan tu nombre.',
+    'El hierro envejece. Los misterios no conocen esa costumbre.',
+    '¿Has oído a una montaña contener la respiración?',
+    'Tu sombra acaba de reconocer un lugar al que jamás has ido.',
+    'Los relojes mienten cuando están asustados.'
+  ];
+  const oracleClues=[
+    'En el cielo existe una puerta que parece una nota sostenida.',
+    'La Luna conserva un eco que aún no ha encontrado su origen.',
+    'Hay discos gigantes que recuerdan cada giro aunque nadie los mire.',
+    'La isla es mucho más antigua que cualquiera de sus mapas.',
+    'Los robots pequeños saben verdades que los gigantes olvidamos.',
+    'Debajo de algunas canciones habita un segundo océano.',
+    'Una ballena de metal guarda una constelación dentro del vientre.',
+    'El gran espejo del pecho contempla el futuro y no el pasado.',
+    'La última carrera comenzará justo después del primer silencio.',
+    'El universo guarda sus llaves en lugares que parecen ventanas.',
+    'A veces la música termina para que una historia pueda empezar.'
+  ];
+  const oracleClosers=[
+    'No me creas todavía: observa.',
+    'Guarda esa pista y nunca te faltará camino.',
+    'Si lo cuentas muy alto, quizá desaparezca.',
+    'Pregúntame cuando las estrellas cambien de lugar.',
+    'Hasta un gigante puede equivocarse sobre la eternidad.',
+    'Hay respuestas que sólo funcionan dichas en voz baja.',
+    'La paciencia también es una forma de viajar.',
+    'Algunas puertas sólo se abren al regresar.',
+    'El universo parece vacío porque guarda las sorpresas en los bordes.',
+    'La verdad espera, pero nunca toca dos veces.'
+  ];
+  const oracleVisits=new Map(),oracleInside=new Set();
+  function oracleText(npc){
+    const id=String(npc.id||npc.name||'titan');
+    const n=oracleVisits.get(id)||0;oracleVisits.set(id,n+1);
+    const seed=hash(id);
+    const i=(n+(seed%oracleOpeners.length))%oracleOpeners.length;
+    const j=(Math.floor(n/oracleOpeners.length)+(seed%oracleClues.length))%oracleClues.length;
+    const k=(Math.floor(n/(oracleOpeners.length*oracleClues.length))+(seed%oracleClosers.length))%oracleClosers.length;
+    return oracleOpeners[i]+' '+oracleClues[j]+' '+oracleClosers[k];
+  }
   const origins = [
     'Me ensamblaron con las piezas de una radio que solo recibía señales del futuro.',
     'Nací en una cápsula olvidada bajo el suelo de ajedrez de la casa.',
@@ -63,7 +120,7 @@
     'La máquina de bolas ha entregado una cápsula que nadie recuerda haber ganado.',
     'Detrás de cierto espejo hay una habitación hecha de ecos.'
   ];
-  const giants = (id) => /^titan-\d+$/.test(id);
+  const giants = (id) => /^titan-(?:\d+|ship|island)$/.test(id);
   function hash(str) { let h = 2166136261; for (const ch of str) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; }
   function answer(npc, query) {
     const id = String(npc.id || npc.name || 'robot');
@@ -73,7 +130,7 @@
     m.turn++;
     let reply;
     if (giants(id)) {
-      const lore = giantLore[Number(id.split('-')[1]) % giantLore.length];
+      const lore = id==='titan-ship'?shipLore:id==='titan-island'?islandLore:giantLore[Number(id.split('-')[1]) % giantLore.length];
       if (/nombre|qui[eé]n|who|name|eres/.test(q)) reply = 'Me llaman ' + lore.name + '. ' + lore.origin;
       else if (/secret|ocult|mister|clave|puerta|hidden/.test(q)) reply = lore.secret;
       else if (/misi[oó]n|ayuda|pista|busc|qu[eé] hago|help|quest/.test(q)) reply = lore.task;
@@ -128,6 +185,8 @@
     '@media(max-height:520px){#ufDialogs .ufCard{max-height:calc(100dvh - 24px)}}',
     '@media(pointer:coarse){#ufNear{display:none!important}#ufDialogs{align-items:flex-end;justify-content:center}#ufDialogs .ufCard{max-height:min(48dvh,360px)}#ufDialogs header{padding:9px}#ufDialogs form{padding:7px}}',
     'body:has(#ufDialogs.on) #unfireFly,body:has(#ufDialogs.on) #unfireDown,body:has(#ufDialogs.on) #unfireTalk,body:has(#ufDialogs.on) #unfireTouchPad,body:has(#ufDialogs.on) #ctlDock,body:has(#ufDialogs.on) #wradio,body:has(#ufDialogs.on) #minimap,body:has(#ufDialogs.on) #unfireCoinHud,body:has(#ufDialogs.on) #onlHud{visibility:hidden!important;pointer-events:none!important}',
+    '#ufGiantSubtitle{position:fixed;left:max(10px,env(safe-area-inset-left));top:calc(253px + env(safe-area-inset-top));bottom:auto;z-index:48;display:none;max-width:min(300px,58vw);padding:9px 11px;border:1px solid #83cfff88;border-radius:14px;background:#061a2be8;color:#e8f4ff;pointer-events:none;font:600 12px/1.38 system-ui;box-shadow:0 5px 17px #0008}',
+    '@media(max-height:430px) and (orientation:landscape){#ufGiantSubtitle{top:calc(125px + env(safe-area-inset-top));max-height:90px;overflow:hidden}}',
     '@media(pointer:coarse) and (orientation:landscape){#ufDialogs .ufCard{max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px)}}'
   ].join('\n');
   document.head.appendChild(css);
@@ -138,6 +197,9 @@
   panel.id = 'ufDialogs';
   panel.innerHTML = '<section class="ufCard" role="dialog" aria-modal="true" aria-label="Conversaciones de Unfire"><header><strong id="ufDlgTitle"></strong><button id="ufSpeak" type="button" title="Activar o silenciar respuestas habladas">🔊</button><button id="ufClose" type="button" aria-label="Cerrar">✕</button></header><div id="ufLog" class="ufLog" role="log" aria-live="polite"></div><form id="ufForm" autocomplete="off"><input id="ufText" maxlength="180" aria-label="Escribir mensaje" placeholder="Escribe un mensaje…" required><button id="ufMic" type="button" title="Hablar por micrófono">🎤</button><button id="ufSend" type="submit">➤</button></form><div id="ufHint" class="ufHint"></div></section>';
   document.body.append(chip, panel);
+  const subtitle=document.createElement('div');subtitle.id='ufGiantSubtitle';subtitle.setAttribute('role','status');subtitle.setAttribute('aria-live','polite');
+  document.body.appendChild(subtitle);
+  let subtitleUntil=0;
   const log = gi('ufLog'), input = gi('ufText'), hint = gi('ufHint');
   let mode = '', selected = null, nearby = null, scene = null, voiceEnabled = true, listening = null, lastSend = 0, lastPeer = new Map();
   const recognize = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -207,6 +269,9 @@
     return Math.hypot(planar, vertical) / Math.max(1, npc.radius || 14);
   }
   function poll() {
+    const now=Date.now();
+    if(subtitleUntil && now>subtitleUntil){subtitle.style.display='none';subtitleUntil=0;}
+    if(window.__UNFIRE_LUNAR && window.__UNFIRE_LUNAR.active){chip.classList.remove('on');return;}
     const w = world();
     if (!w || !w.roaming || !w.player) {
       chip.classList.remove('on'); if (mode) close(); return;
@@ -217,6 +282,23 @@
     for (const bot of w.npcs || []) {
       const d = distance(bot, w.player);
       if (d < dMin) { best = bot; dMin = d; }
+    }
+
+    // Speak spontaneously once on entering each giant's personal radius,
+    // without requiring T/HABLAR or covering any touch controls.
+    let closestGiant=null,closestDistance=Infinity;
+    for(const npc of w.npcs||[])if(giants(npc.id)){
+      const d=Math.hypot(npc.x-w.player.x,npc.z-w.player.z);
+      const greetRadius=npc.id==='titan-ship'?48:npc.id==='titan-island'?31:105;
+      if(d<greetRadius&&d<closestDistance){closestDistance=d;closestGiant=npc;}
+      if(d>greetRadius*1.35)oracleInside.delete(npc.id);
+    }
+    if(closestGiant && !mode && !oracleInside.has(closestGiant.id)){
+      oracleInside.add(closestGiant.id);
+      const text=oracleText(closestGiant);
+      subtitle.textContent='✧ '+closestGiant.name+': '+text;
+      subtitle.style.display='block';subtitleUntil=now+6600;
+      say(text,closestGiant.name);
     }
     nearby = best;
     chip.classList.toggle('on', !!best && !mode);
@@ -271,6 +353,7 @@
   setInterval(poll, 360);
 
   window.UnfireConversations = Object.freeze({
+    oracleText,
     answer,
     distance,
     receivePeer(packet) {

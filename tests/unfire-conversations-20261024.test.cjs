@@ -34,7 +34,7 @@ function load(){
   return {api:window.UnfireConversations,nodes,window,intervals};
 }
 test('loaded after engine, retaining existing cinematic NPC UI',()=>{
-  assert.match(html,/game-engine-v50\.js\?v=20261024walkfix1"><\/script>\s*<script src="unfire-conversations\.js\?v=20261024organic1"/);
+  assert.match(html,/game-engine-v50\.js\?v=20261024walkfix2"><\/script>\s*<script src="unfire-conversations\.js\?v=20261024oracle1"/);
   assert.match(engine,/const OUTTALK\s*=/);
   assert.match(engine,/window\.__UNFIRE_DIALOGUE_WORLD\s*=/);
 });
@@ -91,4 +91,50 @@ test('microphone opt-in, disabled gracefully if unsupported',()=>{
   const {api,nodes}=load();
   assert.ok(api);
   assert.equal(nodes.get('ufMic').hidden,true);
+});
+
+test('five distinct giant sages and spontaneous combinations are not repetitive',()=>{
+ const {api}=load();
+ const names=[
+  {id:'titan-ship',name:'UMBRAL'},
+  {id:'titan-island',name:'BALUARTE'},
+  {id:'titan-0',name:'ECLIPSE'},
+  {id:'titan-1',name:'ASTRALIA'},
+  {id:'titan-2',name:'CRONOS'}];
+ const speech=[];
+ for(const npc of names){
+   const origin=api.answer(npc,'quién eres');
+   assert(origin.includes(npc.name),'independent biography for '+npc.id);
+   let previous=null;
+   const phrases=new Set();
+   for(let i=0;i<100;i++){
+     const next=api.oracleText(npc);
+     assert(next.length>55 && next.length<270);
+     assert.notEqual(next,previous);
+     phrases.add(next);previous=next;
+   }
+   assert.equal(phrases.size,100,'no repeated phrases during 100 encounters');
+   speech.push(api.answer(npc,'dime un secreto'));
+ }
+ assert.equal(new Set(speech).size,5,'giants have different secrets');
+});
+test('giant greeting overlay stays off controls, only speaks on proximity',()=>{
+ assert.match(script,/oracleInside=new Set\(\)/);
+ assert.match(script,/if\(closestGiant && !mode && !oracleInside\.has\(closestGiant\.id\)\)/);
+ assert.match(script,/subtitle\.style\.display='block'/);
+ assert.match(script,/#ufGiantSubtitle\{[^']*pointer-events:none/);
+ assert.match(engine,/g\.lunarShip\?'titan-ship':'titan-island'/);
+});
+
+test('wise giant greetings preserve encounter order on the device and avoid touching controls',()=>{
+ assert.match(script,/oracleVisits\.set\(id,n\+1\)/);
+ assert.match(script,/#ufGiantSubtitle\{position:fixed;[^']*top:calc\(253px/);
+ assert.match(script,/max-height:430px\) and \(orientation:landscape\)/);
+ assert.match(script,/pointer-events:none/);
+});
+
+test('giant welcome is physical proximity, not the 475m manual conversation distance',()=>{
+ assert.match(script,/Math\.hypot\(npc\.x-w\.player\.x,npc\.z-w\.player\.z\)/);
+ assert.match(script,/npc\.id==='titan-ship'\?48/);
+ assert.match(script,/d<greetRadius&&d<closestDistance/);
 });

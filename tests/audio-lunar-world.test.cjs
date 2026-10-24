@@ -41,8 +41,8 @@ test('single shared 3D scene, moon layers and finite geometry budget, free nocli
 });
 test('host, engine and lunar module are cache coherent without dropping prior modules',()=>{
  assert.match(html,/lunar-world\.js\?v=20261024lunar1/);
- assert.match(html,/game-engine-v50\.js\?v=20261024walkfix1/);
- assert.match(host,/maletin\/index\.html\?v=20261024walkfix1/);
- assert.match(html,/unfire-conversations\.js\?v=20261024organic1/);
+ assert.match(html,/game-engine-v50\.js\?v=20261024walkfix2/);
+ assert.match(host,/maletin\/index\.html\?v=20261024walkfix2/);
+ assert.match(html,/unfire-conversations\.js\?v=20261024oracle1/);
  assert.match(html,/companion-natural-flight\.js\?v=20261024organic1/);
 });
