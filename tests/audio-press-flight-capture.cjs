@@ -13,7 +13,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const scenes = [
   {file:'08-sky-flight-panorama.jpg', phase:0.27, pos:[-245, 4.5, 365], altitude:215, yaw:0.52, pitch:0.12, lighting:'day'},
   {file:'09-night-flight-panorama.jpg', phase:0.76, pos:[-270, 4.5, 440], altitude:240, yaw:0.58, pitch:0.20, lighting:'night'}
-]
+];
 
 (async () => {
   fs.mkdirSync(output, {recursive:true});
