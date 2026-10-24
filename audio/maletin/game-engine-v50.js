@@ -2641,6 +2641,7 @@
     if (MAP.expandedOpen || (window.UNFIRE_COINS && window.UNFIRE_COINS.isOpen)) {
       clock.getDelta();
       previousRenderAt = 0;
+      adaptivePerf.since=0;adaptivePerf.frames=0;adaptivePerf.slow=0;
       if (MAP.expandedOpen) MAP.tick();
       return;
     }
