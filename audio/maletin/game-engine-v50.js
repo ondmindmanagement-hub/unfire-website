@@ -451,12 +451,12 @@
       [[-14, 30, 0xffd21a], [10, 34, 0x3d8bff], [30, -2, 0xb6ff3b]].forEach(([x, z, c]) => { const b = mesh(new THREE.SphereGeometry(2.4, 28, 18), new THREE.MeshPhysicalMaterial({ color: c, roughness: 0.3, clearcoat: 1 })); b.scale.set(1, 0.6, 1); b.position.set(x, FY + 1.4, z); R.add(b); });
       const rug2 = new THREE.Mesh(new THREE.CircleGeometry(9, 48), new THREE.MeshStandardMaterial({ map: cnv(256, 256, (g) => { g.fillStyle = '#ff7a1f'; g.fillRect(0, 0, 256, 256); for (let k = 0; k < 8; k++) { g.strokeStyle = k % 2 ? '#ffd21a' : '#ff2fb0'; g.lineWidth = 9; g.beginPath(); g.arc(128, 128, 16 + k * 14, 0, TAU); g.stroke(); } }), roughness: 1 })); rug2.rotation.x = -H2; rug2.position.set(-36, FY + 0.03, 36); R.add(rug2); }
     // fuera: robots gigantes paseando, ballenas voladoras y barcos en el lago
-    try { const OUTG = new THREE.Group(); OUTG.userData.noCollide = true; R.add(OUTG); const giants = window.__OUTGIANTS = [3, 8].map((k, i) => { const r0 = ROBOT.build(MUTANTS.list[k % MUTANTS.list.length]); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar((i ? 70 : 26) / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; w.position.set(i === 1 ? 135 : -60, FY - 0.1, i === 1 ? -58 : -90); if (i === 1) w.rotation.y = 0.45; OUTG.add(w); return { w, r0, sp: 2 + i, d: i ? -1 : 1, lunarShip:i === 1, h:i ? 70 : 26 }; });
+    try { const OUTG = new THREE.Group(); OUTG.userData.noCollide = true; R.add(OUTG); const giants = window.__OUTGIANTS = [3, 8].map((k, i) => { const r0 = ROBOT.build(MUTANTS.list[k % MUTANTS.list.length]); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar((i ? 70 : 26) / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; w.position.set(-60 + i * 50, FY - 0.1, -90 - i * 8); OUTG.add(w); return { w, r0, sp: 2 + i, d: i ? -1 : 1 }; });
       const wT = Y2K.toTex((() => { const c = Y2K.cnv(512, 256), g = c.getContext('2d'); const gr = g.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, '#2c4a7a'); gr.addColorStop(0.55, '#3d6aa8'); gr.addColorStop(0.62, '#dfe8f2'); gr.addColorStop(1, '#f2f6fa'); g.fillStyle = gr; g.fillRect(0, 0, 512, 256); g.strokeStyle = 'rgba(80,100,130,.35)'; g.lineWidth = 2; for (let y = 170; y < 256; y += 9) { g.beginPath(); g.moveTo(0, y); g.lineTo(512, y); g.stroke(); } for (let i = 0; i < 400; i++) { g.fillStyle = `rgba(255,255,255,${Math.random() * 0.12})`; g.fillRect(Math.random() * 512, Math.random() * 140, 3, 2); } return c; })(), { color: true });
       const whaleM = new THREE.MeshPhysicalMaterial({ map: wT, roughness: 0.45, clearcoat: 0.6 }); const prof = [[0, -9], [1.2, -8.3], [2.6, -6.5], [3.4, -3], [3.5, 0], [3.0, 3], [2.0, 5.6], [1.0, 7.4], [0.45, 9.5], [0.3, 10.5]].map(([r, y]) => new THREE.Vector2(r, y));
       const whales = [0, 1].map((i) => { const w = new THREE.Group(); const bodyG = new THREE.LatheGeometry(prof, 36); bodyG.rotateZ(H2); const b = mesh(bodyG, whaleM); b.scale.set(1, 0.85, 1); w.add(b); const tail = new THREE.Group(); tail.position.x = -10.4; w.add(tail); for (const sz of [-1, 1]) { const f = mesh(new THREE.SphereGeometry(1, 16, 10), whaleM); f.scale.set(1.6, 0.18, 3.2); f.position.set(-0.8, 0, sz * 2.4); f.rotation.y = sz * 0.5; tail.add(f); } for (const sz of [-1, 1]) { const pf = mesh(new THREE.SphereGeometry(1, 16, 10), whaleM); pf.scale.set(2.2, 0.15, 0.8); pf.position.set(3.5, -2.2, sz * 3.2); pf.rotation.set(sz * 0.5, sz * 0.6, -0.3); w.add(pf); } for (const sz of [-1, 1]) { const e = mesh(new THREE.SphereGeometry(0.22, 10, 8), new THREE.MeshStandardMaterial({ color: 0x0a0a10 })); e.position.set(6.6, -0.6, sz * 2.45); w.add(e); } w.position.set(-50 + i * 70, 45 + i * 14, -40 + i * 50); OUTG.add(w); return { w, tl: tail, ph: i * 3 }; });
       const boats = [0, 1, 2].map((i) => { const b = new THREE.Group(); const hull = mesh(rbox(3, 0.8, 1.2, 0.3), new THREE.MeshStandardMaterial({ color: [0xffffff, 0xff2a4a, 0xffd21a][i] })); b.add(hull); const sail = mesh(new THREE.ConeGeometry(1, 3, 3), new THREE.MeshStandardMaterial({ color: 0xffffff, side: THREE.DoubleSide })); sail.position.y = 1.9; sail.scale.z = 0.1; b.add(sail); b.position.set(-30 + i * 25, -0.8, -20 - i * 3); OUTG.add(b); return { b, s: 1 + i * 0.4 }; });
-      anim.push((dt, t, lv) => { giants.forEach((G2, gi) => { if (G2.lunarShip) { G2.wd = 0; G2.r0.update(3.7, dt, { act:'look', ph:t*0.15, mood:'star' }); return; } const rr = gi ? 166 : 146, sp = (gi ? 7 : 5.5); G2.a = (G2.a == null ? gi * 2.4 : G2.a) + dt * sp / rr * (gi ? -1 : 1); G2.w.position.x = Math.cos(G2.a) * rr; G2.w.position.z = Math.sin(G2.a) * rr; { const sg = gi ? -1 : 1; G2.w.rotation.y = Math.atan2(-Math.sin(G2.a) * sg, Math.cos(G2.a) * sg); } G2.sp = sp; G2.wd = (G2.wd || 0) + dt * G2.sp; if (!G2.h) G2.h = HGT(G2.w); G2.r0.update(3.7, dt, { act: 'walk', ph: STEPPH(G2.wd, G2.h), mood: 'happy' }); }); whales.forEach((W) => { W.w.position.x += dt * 3; if (W.w.position.x > 110) W.w.position.x = -110; W.w.position.y += Math.sin(t * 0.5 + W.ph) * 0.02; W.tl.rotation.z = Math.sin(t * 1.2 + W.ph) * 0.35; W.w.rotation.z = Math.sin(t * 1.2 + W.ph - 1) * 0.06; }); boats.forEach((B) => { B.b.position.x += dt * B.s; if (B.b.position.x > 40) B.b.position.x = -40; B.b.rotation.z = Math.sin(t * 1.3 + B.s) * 0.06; }); }); } catch (e) { console.warn('fuera', e); }
+      anim.push((dt, t, lv) => { giants.forEach((G2, gi) => { const rr = gi ? 166 : 146, sp = (gi ? 7 : 5.5); G2.a = (G2.a == null ? gi * 2.4 : G2.a) + dt * sp / rr * (gi ? -1 : 1); G2.w.position.x = Math.cos(G2.a) * rr; G2.w.position.z = Math.sin(G2.a) * rr; { const sg = gi ? -1 : 1; G2.w.rotation.y = Math.atan2(-Math.sin(G2.a) * sg, Math.cos(G2.a) * sg); } G2.sp = sp; G2.wd = (G2.wd || 0) + dt * G2.sp; if (!G2.h) G2.h = HGT(G2.w); G2.r0.update(3.7, dt, { act: 'walk', ph: STEPPH(G2.wd, G2.h), mood: 'happy' }); }); whales.forEach((W) => { W.w.position.x += dt * 3; if (W.w.position.x > 110) W.w.position.x = -110; W.w.position.y += Math.sin(t * 0.5 + W.ph) * 0.02; W.tl.rotation.z = Math.sin(t * 1.2 + W.ph) * 0.35; W.w.rotation.z = Math.sin(t * 1.2 + W.ph - 1) * 0.06; }); boats.forEach((B) => { B.b.position.x += dt * B.s; if (B.b.position.x > 40) B.b.position.x = -40; B.b.rotation.z = Math.sin(t * 1.3 + B.s) * 0.06; }); }); } catch (e) { console.warn('fuera', e); }
   }
   // ===== resto de la habitación: suelo de tarima, alfombra, paredes laterales, techo con estrellas, puerta y muebles =====
   function ROOMX(R, WM, o) { const { RX, RZ, FY, CY, RH, WZ, DY, cnv } = o; const SM = (t, r = 0.7) => new THREE.MeshStandardMaterial({ map: t, roughness: r });
@@ -1434,7 +1434,6 @@
       tick() { if (!cur || !ROAMS.on || ROAMS.freeRobotMode) return; const d = Math.hypot(ROAMS.p.x - cur.x, ROAMS.p.z - cur.z), hy = -9 + (ROAMS.h || 0); if (d < (cur.y > 150 ? 90 : 34) && hy >= cur.y - 30) { const t0 = cur.t; cur = null; try { localStorage.removeItem('unfire_side_active'); } catch (e) {} try { window.__REWARD('Misión cumplida: «' + t0 + '»'); } catch (e) { say('🏆 ¡Misión cumplida!'); } } } }; })(); setInterval(() => { try { if (!SIDE.cur && ROAMS.on && window.ATM_OUT && !ROAMS.mini && !ROAMS.freeRobotMode) { SIDE.nT = (SIDE.nT || 0) + 1; if (SIDE.nT >= 5) { SIDE.nT = 0; SIDE.offer('NIMBO'); } } } catch (e) {} }, 5000); window.__SIDEM = SIDE;
   // ===== FUERA: grupos de artilugios charlando entre ellos; si te acercas te hablan a ti =====
   // robots que viven en el cielo: vuelan de un plugin gigante a otro, aterrizan encima, bailan y lo hacen transformarse
-  const LUNAR = window.UnfireLunarWorld && window.UnfireLunarWorld.create({THREE,S,ROAMS,LOWDEV,say,WRADIO,REC});
   const SKYBOTS = (() => { let B = null; const build = () => { B = []; for (let k = 0; k < (LOWDEV ? 2 : 4); k++) { try { const r0 = ROBOT.build(MUTANTS.list[(k * 5 + 2) % MUTANTS.list.length]); const w = new THREE.Group(); w.add(r0.root); r0.update(3.7, 0.016, {}); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(12 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; w.position.set(Math.cos(k * 1.6) * 400, 300 + k * 200, Math.sin(k * 1.6) * 400); w.visible = false; S.scene.add(w); B.push({ w, r0, st: 'fly', tg: null, t: 0, v: V(0, 0, 0) }); } catch (e) {} } };
     return { tick(dt, t) { const out = !!window.ATM_OUT && ROAMS.on; if (!B) { if (!out || ((ROAMS.h || 0) < 110 && Math.hypot(ROAMS.p.x, ROAMS.p.z) < 240)) return; build(); } B.forEach((b) => { b.w.visible = out; }); if (!out) return; const devs = window.__SKYDEV ? window.__SKYDEV().filter((o) => o.visible && o.scale.x > 8) : [];
       B.forEach((b, i) => { b.t -= dt; if (!b.tg || !b.tg.parent || !b.tg.visible || (b.st === 'land' && b.t <= 0)) { const free = devs.filter((o) => !B.some((x) => x !== b && x.tg === o)); b.tg = free.length ? free[Math.floor(Math.random() * free.length)] : null; b.st = 'fly'; } let act = 'fly';
@@ -2125,7 +2124,7 @@
     ['ECLIPSE','ASTRALIA','CRONOS'].forEach((name,i)=>{
       if(titans[i])add('titan-'+i,name,titans[i].w,475,true);
     });
-    (window.__OUTGIANTS||[]).forEach((g,i)=>add(g.lunarShip?'titan-ship':'titan-island',g.lunarShip?'UMBRAL':'BALUARTE',g.w,g.lunarShip?43:23,true));
+    (window.__OUTGIANTS||[]).forEach((g,i)=>add(i?'titan-island-roamer':'titan-island','BALUARTE',g.w,23,true));
     const walkers=OUTTALK.list||[];
     walkers.forEach((g,i)=>(g.bots||[]).forEach((b,j)=>add('out-'+i+'-'+j,b.name,b.w,24)));
     if(HOST && HOST.visible && HOST.pos && ROAMS.on && !window.ATM_OUT)
@@ -2140,8 +2139,7 @@
     const expanded = window.UnfireExpandedMap ? window.UnfireExpandedMap.create(() => ({
       zone: window.ATM_OUT ? 'island' : 'house',
       x: ROAMS.p.x, z: ROAMS.p.z, yaw: ROAMS.yaw,
-      objective: (STORY && STORY.obj) || (window.ATM_OUT && SIDE.cur ? { x:SIDE.cur.x, z:SIDE.cur.z, mini:false } : null),
-      ship: (() => { const g=(window.__OUTGIANTS||[]).find(t=>t.lunarShip); return g&&g.w&&g.w.position ? {x:g.w.position.x,z:g.w.position.z} : null; })()
+      objective: (STORY && STORY.obj) || (window.ATM_OUT && SIDE.cur ? { x:SIDE.cur.x, z:SIDE.cur.z, mini:false } : null)
     }), () => { for (const k in ROAMS.k) ROAMS.k[k] = 0; }) : null;
     c.tabIndex = 0; c.setAttribute('role','button');
     c.setAttribute('aria-label','Abrir el mapa grande');
@@ -2160,21 +2158,6 @@
       g.strokeStyle = 'rgba(160,220,255,.7)'; g.lineWidth = 2; const rect = (x0, z0, x1, z1, f) => { const [a, b] = P(x0, z0), [c2, d] = P(x1, z1); if (f) { g.fillStyle = f; g.fillRect(a, b, c2 - a, d - b); } g.strokeRect(a, b, c2 - a, d - b); };
       if (mini) { rect(-13, -7.45, 13, 5.05, 'rgba(217,185,138,.35)'); rect(-2.9, -1.95, 2.9, 1.95, 'rgba(180,190,210,.6)'); } else if (out) { g.fillStyle = 'rgba(63,207,90,.35)'; const [a, b] = P(0, 0); g.beginPath(); g.arc(a, b, 270 * S0, 0, Math.PI * 2); g.fill(); rect(-80, -16, 80, 96, 'rgba(220,240,255,.5)'); [[600, 0, 340, 'rgba(230,225,215,.55)'], [80, -500, 190, 'rgba(232,201,138,.6)'], [-760, -760, 250, 'rgba(255,190,215,.6)'], [-420, 120, 70, 'rgba(160,230,110,.5)'], [300, 420, 60, 'rgba(255,255,255,.5)'], [-360, -380, 80, 'rgba(192,139,255,.5)']].forEach(([x, z, r, c]) => { const [a2, b2] = P(x, z); g.fillStyle = c; g.beginPath(); g.arc(a2, b2, r * S0, 0, Math.PI * 2); g.fill(); }); } else { rect(-80, -16, 80, 96, 'rgba(220,240,255,.12)'); rect(-13, -7.5, 13, 5, 'rgba(217,185,138,.5)'); [[44, 8, '#ff2a4a'], [38, 44, '#3d8bff'], [-38, 40, '#2a3c8a'], [-8, 92, '#c0c0c0'], [-48, 56, '#f4f1ea'], [48, 56, '#f4f1ea']].forEach(([x, z, col]) => { const [a, b] = P(x, z); g.fillStyle = col; g.beginPath(); g.arc(a, b, 4, 0, Math.PI * 2); g.fill(); }); }
       const ob = (STORY && STORY.obj) || (out && SIDE.cur ? { x: SIDE.cur.x, z: SIDE.cur.z } : null); if (ob && (!!ob.mini === mini || !mini)) { const [a, b] = P(ob.x, ob.z), pul = 6 + Math.sin(performance.now() / 200) * 2; g.fillStyle = '#ffd21a'; g.beginPath(); for (let i = 0; i < 10; i++) { const an = -Math.PI / 2 + i * Math.PI / 5, r = i % 2 ? pul * 0.45 : pul; g.lineTo(a + Math.cos(an) * r, b + Math.sin(an) * r); } g.fill(); }
-      // A permanent compass marker for the ONE stationary moon spaceship.
-      // Off-map compass pin sticks to the inner edge to guide the player.
-      if(out){
-        const ship=(window.__OUTGIANTS||[]).find(b=>b.lunarShip);
-        if(ship && ship.w && ship.w.position){
-          const [mx,mz]=P(ship.w.position.x,ship.w.position.z);
-          const dx=mx-110,dz=mz-110,len=Math.hypot(dx,dz),radius=86;
-          const scale=len>radius?radius/Math.max(1,len):1;
-          const sx=110+dx*scale,sz=110+dz*scale;
-          g.save();g.beginPath();g.arc(sx,sz,12,0,Math.PI*2);
-          g.fillStyle='#081d32';g.strokeStyle='#ffcf65';g.lineWidth=2.2;g.fill();g.stroke();
-          g.font='17px Apple Color Emoji,Segoe UI Emoji,sans-serif';g.textAlign='center';g.textBaseline='middle';
-          g.fillText('🛸',sx,sz+1);g.restore();
-        }
-      }
       const [px, pz] = ROAMS.on ? P(cam.position.x, cam.position.z) : P(0, 6); g.save(); g.translate(px, pz); g.rotate(ROAMS.on ? ROAMS.yaw : Math.PI); g.fillStyle = '#b6ff3b'; g.beginPath(); g.moveTo(0, -9); g.lineTo(6, 6); g.lineTo(0, 3); g.lineTo(-6, 6); g.fill(); g.restore(); g.restore(); g.fillStyle = '#fff'; g.font = '700 12px Orbitron, Arial'; g.textAlign = 'center'; g.fillText(mini ? 'LA MESA' : out ? 'LA ISLA' : 'LA CASA', 110, 24); } }; })();
   addEventListener('keydown', (e) => { if (e.target && e.target.tagName === 'INPUT') return; if (e.key === 'm' || e.key === 'M') MAP.toggle(); if ((e.key === 'c' || e.key === 'C') && ROAMS.on) camB.onclick({ stopPropagation() {} }); });
   // ===== SALIR A LA WEB: cierra el juego, cierra el maletín y baja a la página normal =====
@@ -2999,7 +2982,7 @@
     const foregroundFrameTime = previousRenderAt ? Math.min(6, Math.max(0.008, (now - previousRenderAt) / 1000)) : 1 / 30;
     const actualFrameTime = Math.min(0.18, foregroundFrameTime);
     previousRenderAt = now;
-    const dt = Math.min(0.05, clock.getDelta()) * (window.__dts || 1); t += dt; if (LUNAR) LUNAR.preTick();
+    const dt = Math.min(0.05, clock.getDelta()) * (window.__dts || 1); t += dt;
     // A packed case is inventory-only: no heavy model following or obscuring the camera.
     updateCarryUI();
     { const stowed = (!HW || ((HW.u || 0) < 0.03 && (HW.T || 0) < 0.05)) && CK.every((k) => compG[k].userData.t < 0.04) && !open.length && !items.some((it) => (it.kind === 'mut' && it.T > 0.05) || (it.kk || 0) > 0.05 || it.retT > 0) && !flyers.length;
@@ -3303,8 +3286,6 @@
       cam.lookAt(caseG.position.x,caseG.position.y+0.4,caseG.position.z);
       cam.near=0.05;const panoramic=window.ATM_OUT;cam.fov=panoramic?(cam.aspect<1?Math.min(70,56+(1-cam.aspect)*18):56):(cam.aspect<1?Math.min(62,48+(1-cam.aspect)*24):48);cam.updateProjectionMatrix();
     }
-    // Dedicated lunar/ship layers reuse the same renderer without duplicating WebGL.
-    if (LUNAR) LUNAR.tick(dt,t);
     // An opaque 2D map covers the scene: skip WebGL rendering behind it.
     if (!MAP.expandedOpen) S.renderer.render(S.scene, cam);
   }
