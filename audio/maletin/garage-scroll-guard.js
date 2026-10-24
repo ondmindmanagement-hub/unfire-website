@@ -22,6 +22,35 @@
       scrollbar-width:thin; scrollbar-color:#7dbfff transparent;
       padding:5px 5px 12px 3px;
     }
+    /* The same picker is used before joining/creating an ONLINE room. */
+    #onl.on:not(.workshop) .b {
+      box-sizing:border-box; max-height:calc(100dvh - 24px);
+      overflow-y:auto; overscroll-behavior:contain;
+      -webkit-overflow-scrolling:touch; touch-action:pan-y;
+    }
+    #onl.on:not(.workshop) #onT {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(105px,1fr));
+      gap:8px; align-content:start;
+      min-height:min(24dvh,150px); max-height:min(39dvh,340px);
+      overflow-y:auto; overflow-x:hidden; overscroll-behavior:contain;
+      touch-action:pan-y; -webkit-overflow-scrolling:touch;
+      scrollbar-width:thin; scrollbar-color:#7dbfff transparent;
+      padding:6px 4px 10px;
+    }
+    #onl.on:not(.workshop) #onT .robotCard {
+      min-width:0; white-space:normal; overflow-wrap:anywhere;
+      padding:8px 6px; min-height:58px;
+    }
+    #onl.on:not(.workshop) #onT .robotCard:focus-visible {
+      outline:3px solid #82f2ff; outline-offset:1px;
+    }
+    @media(max-width:650px) {
+      #onl.on:not(.workshop) #onT {grid-template-columns:repeat(2,minmax(0,1fr));max-height:35dvh;}
+    }
+    @media(max-height:450px) and (orientation:landscape) {
+      #onl.on:not(.workshop) .b {max-height:calc(100dvh - 12px);}
+      #onl.on:not(.workshop) #onT {min-height:62px;max-height:35dvh;}
+    }
     #onl.on.workshop #onT::-webkit-scrollbar { width:7px; }
     #onl.on.workshop #onT::-webkit-scrollbar-thumb { background:#669ed0; border-radius:10px; }
     #onl.on.workshop .robotCard { transition:border-color .15s ease, background-color .15s ease; }
@@ -41,7 +70,8 @@
     list.setAttribute('role','region');
     list.setAttribute('tabindex','0');
     list.setAttribute('aria-label','Galería de robots. Desplázate hacia arriba o abajo para verlos todos.');
-    const open=()=>ui.classList.contains('on')&&ui.classList.contains('workshop');
+    // Workshop and room selection share #onl/#onT, but only Workshop adds .workshop.
+    const open=()=>ui.classList.contains('on');
     // Native panel scroll must survive; the game's global wheel handler must not receive it.
     ui.addEventListener('wheel',event=>{
       if(ui.classList.contains('on')&&event.target&&ui.contains(event.target)) event.stopPropagation();
@@ -49,7 +79,7 @@
     ui.addEventListener('touchmove',event=>{
       if(open()&&event.target&&ui.contains(event.target)) event.stopPropagation();
     },{passive:true});
-    // paint() rebuilds the robot list; preserve scroll and keyboard focus after selection.
+    // paint() rebuilds the list in both story/workshop and Online; keep scroll and focus.
     const preserve=event=>{
       if(!open()) return;
       const button=event.target&&event.target.closest&&event.target.closest('button[data-t]');
