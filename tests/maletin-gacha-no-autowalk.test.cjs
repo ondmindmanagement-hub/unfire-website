@@ -18,7 +18,7 @@ const call = (entry, roams) => pick(rayFor(entry.o), Infinity, [entry], roams, T
 test('gacha machine and prize pedestal opt out of player auto-route', () => {
   assert.match(engine, /picks\.push\(\{ o: gm, f: go, noFocus: true \}\)/);
   assert.match(engine, /picks\.push\(\{ o: ped, noFocus: true, f:/);
-  assert.match(engine, /const go = \(\) => \{ if \(phase !== 'idle' && phase !== 'show'\) \{ queued = true; return; \} ROAMS\.tgt = null;/);
+  assert.match(engine, /const go = \(\) => \{ ROAMS\.tgt = null; if \(phase !== 'idle' && phase !== 'show'\) \{ queued = true; return; \}/);
   assert.match(engine, /o: ped, noFocus: true, f: \(\) => \{ ROAMS\.tgt = null;/);
   for (const kind of ['machine', 'pedestal']) {
     const ROAMS = { on: true, tgt: { p: V(30, 0, 10) } };
