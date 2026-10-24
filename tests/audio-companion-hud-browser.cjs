@@ -17,7 +17,7 @@ const css=normal+'\n'+extra+'\n'+coinCss+'\n'+conversationCss+
 '\n#stO{position:fixed;top:9px;left:50%;transform:translateX(-50%);width:55vw;max-width:55vw;padding:6px;box-sizing:border-box}' +
 '\n#unfireCoinHud{display:flex}';
 const fixture='<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>'+css+'</style></head><body class="unfire-roaming">'+
-'<div id="minimap"></div><div id="stO">Objetivo de misión</div><div id="ctlDock"></div><div id="wradio" style="position:fixed;display:flex;z-index:74"><button id="wrOn">📻 RADIO</button><button>⏭</button></div>'+
+'<div id="minimap"></div><div id="stO">Objetivo de misión</div><div id="ctlDock"></div><div id="wradio" style="position:fixed;left:14px;bottom:14px;top:auto;display:flex;z-index:74"><button id="wrOn">📻 RADIO</button><button>⏭</button></div>'+
 '<div id="unfireTouchPad" style="position:fixed;left:18px;bottom:18px;width:130px;height:130px;display:block"><span id="unfireTouchKnob"></span></div>'+
 '<button id="unfireFly" style="display:block">VOLAR</button><button id="unfireTalk" style="display:block">HABLAR</button><button id="unfireDown" style="display:block">BAJAR</button>'+
 '<button id="ufNear" class="on">💬 BOMBO</button>'+
