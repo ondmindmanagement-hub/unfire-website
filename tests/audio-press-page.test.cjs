@@ -1,0 +1,22 @@
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
+
+const root = path.resolve(__dirname, "..");
+const press = fs.readFileSync(path.join(root, "audio/press/index.html"), "utf8");
+const brief = fs.readFileSync(path.join(root, "docs/audio-press-outreach-20261024.md"), "utf8");
+const forbiddenPunctuation = String.fromCharCode(0x2014);
+assert.equal(press.includes(forbiddenPunctuation), false, "Press page must use compact punctuation");
+assert.equal(brief.includes(forbiddenPunctuation), false, "Media brief must use compact punctuation");
+assert.match(press, /<title>Unfire Audio\. Press and creators\.<\/title>/);
+assert.match(press, /<html lang="en">/);
+assert.match(press, /lang="es"/);
+assert.match(press, /href="\.\.\/"/);
+assert.match(press, /mailto:hello@unfire\.technology/);
+assert.match(press, /https:\/\/unfire\.technology\/audio\//);
+assert.match(press, /Public early beta/);
+assert.match(press, /Free to try/);
+assert.equal(press.includes("<script"), false, "Press page must remain script-free");
+assert.equal(/(?:Omar Bar[oó]|gen9g9|Baró Tudela)/i.test(press), false, "No personal identifying content in press page");
+assert.equal(fs.existsSync(path.join(root, "audio/img/unfire-mutants-share.webp")), true, "Press artwork must reference an actual repo asset");
+console.log("UNFIRE_PRESS_PAGE_PASS");
