@@ -2114,7 +2114,10 @@
   cv.addEventListener('pointerdown', (e) => {
     if (e.pointerType === 'touch') {
       activeTouchPointers.add(e.pointerId);
-      if (e.isPrimary === false || activeTouchPointers.size !== 1) { drag = null; return; }
+      // isPrimary belongs to the whole touchscreen: the joystick can own the first finger.
+      // Permit the only finger that began on the camera canvas even when it is non-primary.
+      // Multiple fingers on the canvas still cancel camera drag (pinch/tap safety).
+      if (activeTouchPointers.size !== 1) { drag = null; return; }
     }
     if (CINE.on && e.isTrusted) { CINE.on = false; say('Control manual'); }
     if (MV) { MV.drag = true; try { cv.setPointerCapture(e.pointerId); } catch (er) {} return; }
