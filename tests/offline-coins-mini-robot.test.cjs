@@ -30,9 +30,9 @@ test('nano robot keeps free-roam coordinates, input modes and proportional mobil
   assert.match(HTML,/H\.isNano\(\)/, 'button state updates after exiting or changing mode');
 
   assert.match(ENGINE,/const GTA = \(\(ROAMS\.mode \|\| '3p'\) === '3p' \|\| ROAMS\.mode === '3pl' \|\| ROAMS\.mode === '2p'\)/);
-  assert.match(ENGINE,/AV\.w\.scale\.setScalar\(AV\.baseScale\*\(ROAMS\.mini\?NANO_SCALE:1\)\)/);
+  assert.match(ENGINE,/AV\.w\.scale\.setScalar\(AV\.baseScale\*\(ROAMS\.mini\?NANO_SCALE:1\)\*NANO_CINEMA\.avatarFactor\(\)\)/, 'avatar remains the actual robot while unfolding from its chest sphere');
   assert.match(ENGINE,/miniCameraRatio = ROAMS\.mini \? NANO_SCALE : 1/);
-  assert.match(ENGINE,/ROAMS\.fly\) \{ const miniFlight = avatarProfile\(\)\.speedScale/);
+  assert.match(ENGINE,/ROAMS\.fly\) \{ const miniFlight = ROAMS\.mini && window\.ATM_OUT \? Math\.max\(0\.64, avatarProfile\(\)\.speedScale\) : avatarProfile\(\)\.speedScale/, 'nano uses a proportional but usable vertical cruise policy');
 });
 test('coin HUD lives centrally, clear of the radio and settings touch targets',()=>{
   assert.match(COINS, /#unfireCoinHud\{[^\n]*top:calc\(env\(safe-area-inset-top\) \+ 78px\);left:50%;right:auto;transform:translateX\(-50%\)/,
