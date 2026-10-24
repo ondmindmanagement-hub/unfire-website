@@ -2028,7 +2028,7 @@
     return { get node() { return build() ? inp : null; }, get mode() { return cur; }, makeup(v) { if (built) out.gain.setTargetAtTime(Math.min(0.90, Math.max(0.48, v * 0.48)), UA.ctx.currentTime, 0.25); },
       note(m) { const now = performance.now(); dens = Math.min(1, dens + 0.12); reg = reg * 0.8 + m * 0.2; lastN = now; },
       tick(dt, t, mega, lv) { if (!built) return; const c = UA.ctx, n = c.currentTime; dens = Math.max(0, dens - dt * 0.35); const playing = performance.now() - lastN < 2500;
-        nextT -= dt; if (nextT <= 0) { const pool = mega ? ['clean', 'phase', 'dub', 'phasedub'] : playing ? ['clean', 'phase', 'dub', 'phasedub'] : ['clean', 'dub', 'phase']; // Musical effects only in demos: no ring/crush/resonant sweeps. setMode(pool[Math.floor(Math.random() * pool.length)]); nextT = (60 / (RADIO.bpm || 120)) * 4 * (mega ? 4 : 8); }
+        nextT -= dt; if (nextT <= 0) { const pool = mega ? ['clean', 'phase', 'dub', 'phasedub'] : playing ? ['clean', 'phase', 'dub', 'phasedub'] : ['clean', 'dub', 'phase']; /* Musical effects only in demos: no ring/crush/resonant sweeps. */ setMode(pool[Math.floor(Math.random() * pool.length)]); nextT = (60 / (RADIO.bpm || 120)) * 4 * (mega ? 4 : 8); }
         const w = cur === 'clean' ? 0 : (mega ? 0.18 : 0.13) * (0.5 + dens * 0.4); wet.gain.setTargetAtTime(w, n, 0.3); dry.gain.setTargetAtTime(1 - w * 0.35, n, 0.3);
         if (N.ringO) N.ringO.frequency.setTargetAtTime(110 * Math.pow(2, Math.round((reg - 48) / 12)) * (1 + Math.round(dens * 2) * 0.5), n, 0.2);
         if (N.dl) N.dl.delayTime.setTargetAtTime((60 / (RADIO.bpm || 120)) * (dens > 0.6 ? 0.25 : 0.75), n, 0.1); if (N.dlF) N.dlF.gain.setTargetAtTime(dens > 0.6 ? 0.22 : 0.30, n, 0.3);
