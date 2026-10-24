@@ -1,0 +1,31 @@
+name: Audio Nano playable interaction QA
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'audio/maletin/expanded-map.js'
+      - 'audio/maletin/expanded-map.css'
+      - 'audio/maletin/coins-shop.js'
+      - 'tests/audio-nano-playable-browser.cjs'
+      - '.github/workflows/audio-nano-playable-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  playable-nano:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax and prior game contracts
+        run: |
+          node --check tests/audio-nano-playable-browser.cjs
+          node --check audio/maletin/game-engine-v50.js
+          node --test tests/offline-coins-mini-robot.test.cjs tests/expanded-map.test.cjs tests/nimbo-optional-intro.test.cjs tests/offline-coins-day-isolation.test.cjs
+      - name: Install isolated browser runtime
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Play actual 3D game on simulated phone with Nano, world map, shop and missions
+        run: node tests/audio-nano-playable-browser.cjs
