@@ -1,0 +1,26 @@
+name: Unfire Games site QA
+on:
+  push:
+    paths:
+      - games/**
+      - tests/unfire-games-landing.test.cjs
+      - .github/workflows/unfire-games-site.yml
+  pull_request:
+    paths:
+      - games/**
+      - tests/unfire-games-landing.test.cjs
+      - .github/workflows/unfire-games-site.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-games-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check games page and local assets
+        run: node --test tests/unfire-games-landing.test.cjs

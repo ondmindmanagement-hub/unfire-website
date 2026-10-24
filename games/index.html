@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080b10">
+  <meta name="description" content="Unfire Games: juega gratis a UNFIRE Mutants, descubre salas online y conoce las opciones para instalar el juego web en tu ordenador.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://unfire.technology/games/">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Unfire Games">
+  <meta property="og:title" content="Unfire Games · Play free">
+  <meta property="og:description" content="Play UNFIRE Mutants free in your browser. Discover online rooms and future desktop releases.">
+  <meta property="og:url" content="https://unfire.technology/games/">
+  <meta property="og:image" content="https://unfire.technology/audio/img/unfire-mutants-share.webp">
+  <title translate="no">Unfire Games — Juegos gratuitos</title>
+  <style>
+    :root{color-scheme:dark;--bg:#080b10;--surface:#10151e;--surface2:#141c27;--text:#f3f7ff;--muted:#a6b4c4;--stroke:rgba(198,224,243,.15);--accent:#9deafb;--max:1152px}
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:95px}
+    body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    body::before{content:"";position:absolute;inset:0 0 auto;height:760px;pointer-events:none;background:radial-gradient(ellipse 52% 35% at 78% 24%,rgba(67,138,186,.14),transparent 85%),radial-gradient(ellipse 50% 30% at 24% 8%,rgba(68,112,165,.11),transparent 75%)}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+    .wrap{width:min(var(--max),calc(100% - 48px));margin-inline:auto}
+    .skip{position:absolute;z-index:300;top:-100px;left:16px;background:#fff;color:#111;padding:12px 16px;border-radius:9px}
+    .skip:focus{top:12px}
+    .site-header{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--stroke);background:rgba(8,11,16,.91);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+    .header-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .wordmark{font-size:14px;font-weight:800;letter-spacing:.17em;white-space:nowrap}
+    .wordmark strong{color:var(--accent)}
+    .nav{display:flex;align-items:center;gap:clamp(12px,2vw,24px)}
+    .nav a{font-size:13px;color:var(--muted);white-space:nowrap}
+    .nav a:hover,.nav a:focus-visible{color:#fff}
+    .lang{display:flex;border:1px solid var(--stroke);border-radius:999px;padding:3px;gap:2px;flex:none}
+    .lang button{padding:5px 9px;border:0;border-radius:999px;color:var(--muted);background:transparent;font-size:12px;font-weight:700;cursor:pointer}
+    .lang button[aria-pressed="true"]{background:#eaf7ff;color:#091018}
+    .hero{position:relative;padding:clamp(56px,8vw,106px) 0 74px;display:grid;grid-template-columns:1.06fr 1fr;align-items:center;gap:clamp(28px,6vw,80px)}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;margin:0 0 22px;font-size:12px;letter-spacing:.21em;font-weight:800;color:var(--accent)}
+    .eyebrow::before{content:"";width:8px;height:8px;background:var(--accent);border-radius:50%;box-shadow:0 0 20px rgba(157,234,251,.55)}
+    h1,h2,h3,p{margin-top:0}
+    h1{font-size:clamp(43px,5.8vw,75px);line-height:1.07;font-weight:780;letter-spacing:-.065em;margin-bottom:22px;max-width:650px}
+    .intro{font-size:clamp(16px,1.6vw,19px);line-height:1.7;color:var(--muted);max-width:530px;margin-bottom:29px}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+    .button{display:inline-flex;min-height:49px;align-items:center;justify-content:center;padding:12px 22px;border-radius:12px;border:1px solid var(--stroke);font-size:14px;font-weight:700;transition:transform .18s ease,background .18s ease}
+    .button:hover{transform:translateY(-2px)}
+    .button.primary{background:var(--accent);border-color:var(--accent);color:#071017}
+    .button.secondary{background:rgba(235,245,255,.065)}
+    .fine{font-size:12px;line-height:1.7;color:var(--muted);margin:19px 0 0}
+    .hero-art{position:relative;overflow:hidden;aspect-ratio:5/4;border:1px solid rgba(200,228,244,.2);border-radius:24px;background:radial-gradient(circle at 50% 36%,#21384e,#0e141e 65%);box-shadow:0 32px 75px rgba(0,0,0,.28)}
+    .hero-art img{width:100%;height:100%;display:block;object-fit:cover}
+    .art-label{position:absolute;bottom:18px;left:18px;right:18px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border:1px solid rgba(255,255,255,.22);background:rgba(3,8,12,.8);border-radius:11px;backdrop-filter:blur(10px);font-size:12px;letter-spacing:.08em}
+    .art-label b{font-size:13px}
+    .art-label span{color:#b6eefa}
+    .section{position:relative;padding:72px 0;border-top:1px solid var(--stroke)}
+    .section-heading{max-width:740px;margin-bottom:28px}
+    .section-kicker{font-size:12px;color:var(--accent);font-weight:800;letter-spacing:.17em;margin-bottom:12px}
+    h2{font-size:clamp(28px,3.7vw,44px);line-height:1.16;letter-spacing:-.043em;margin-bottom:15px}
+    h3{font-size:18px;line-height:1.32;letter-spacing:-.015em;margin-bottom:11px}
+    .lead{color:var(--muted);max-width:740px}
+    .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .card{padding:26px;border-radius:18px;background:linear-gradient(135deg,rgba(27,39,55,.77),rgba(15,22,31,.85));border:1px solid var(--stroke)}
+    .card p{color:var(--muted);font-size:14px;margin:0}
+    .card .number{font-size:12px;font-weight:800;letter-spacing:.18em;color:var(--accent);margin:0 0 20px}
+    .split{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
+    .panel{border:1px solid var(--stroke);background:var(--surface);padding:32px;border-radius:20px;min-width:0}
+    .panel.accent{background:linear-gradient(145deg,#142430,#0f151e 78%)}
+    .steps{padding-left:21px;color:var(--muted);margin-bottom:22px}
+    .steps li+li{margin-top:12px}
+    .steps strong{color:var(--text)}
+    .notice{border:1px solid rgba(157,234,251,.23);border-radius:11px;background:rgba(157,234,251,.055);padding:13px 16px;color:#c6e2eb;font-size:13px;line-height:1.65}
+    .muted{color:var(--muted)}
+    .platforms{display:flex;flex-wrap:wrap;gap:10px}
+    .platform{border:1px solid var(--stroke);background:#121a24;border-radius:10px;padding:11px 15px;font-size:14px;color:#c2d1df}
+    .site-footer{border-top:1px solid var(--stroke);padding:28px 0 42px}
+    .footer-inner{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px}
+    .footer-inner p,.footer-inner a{color:var(--muted);font-size:12px}
+    .footer-links{display:flex;flex-wrap:wrap;gap:18px}
+    .sr-only{position:absolute;clip:rect(0,0,0,0);height:1px;width:1px;overflow:hidden;white-space:nowrap}
+    @media(max-width:900px){.nav a:not(.nav-keep){display:none}.hero{grid-template-columns:1fr;padding-top:60px}.hero-art{max-width:720px;width:100%}.split{grid-template-columns:1fr}}
+    @media(max-width:640px){.wrap{width:min(var(--max),calc(100% - 32px))}.header-inner{min-height:64px;gap:10px}.wordmark{font-size:12px;letter-spacing:.1em}.nav{gap:9px}.nav a.nav-keep{display:none}.hero{gap:28px;padding:46px 0 55px}.hero-art{aspect-ratio:5/4}.actions{align-items:stretch}.actions .button{flex:1 1 100%}.section{padding:52px 0}.cards{grid-template-columns:1fr}.card,.panel{padding:23px}.art-label{bottom:10px;left:10px;right:10px;padding:9px 11px;font-size:10px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}.button:hover{transform:none}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content" data-es="Ir al contenido" data-en="Skip to content">Ir al contenido</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="wordmark" href="./" aria-label="Unfire Games"><span translate="no" class="notranslate">UNFIRE <strong>GAMES</strong></span></a>
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="#game" data-es="El juego" data-en="The game">El juego</a>
+        <a href="#online" data-es="Online" data-en="Online">Online</a>
+        <a href="#install" data-es="Instalar" data-en="Install">Instalar</a>
+        <a class="nav-keep notranslate" href="../?site=1" translate="no">Unfire ↗</a>
+      </nav>
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button type="button" data-set-lang="es" aria-pressed="true" lang="es">ES</button>
+        <button type="button" data-set-lang="en" aria-pressed="false" lang="en">EN</button>
+      </div>
+    </div>
+  </header>
+  <main id="content">
+    <section class="wrap hero" id="game" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow notranslate" translate="no">UNFIRE GAMES / FREE TO PLAY</p>
+        <h1 id="hero-title" data-es="Un universo para jugar. Gratis." data-en="A universe to play. Free.">Un universo para jugar. Gratis.</h1>
+        <p class="intro"><span data-es="Entra a " data-en="Enter ">Entra a </span><span translate="no" class="notranslate">UNFIRE Mutants</span><span data-es=", nuestro mundo 3D de robots, exploración, música, cápsulas y aventuras. Juega directamente desde tu navegador, sin pagar." data-en=", our 3D world of robots, exploration, music, capsules and adventures. Play directly in your browser, for free.">, nuestro mundo 3D de robots, exploración, música, cápsulas y aventuras. Juega directamente desde tu navegador, sin pagar.</span></p>
+        <div class="actions">
+          <a class="button primary" href="../audio/" data-es="Jugar gratis ↗" data-en="Play free ↗">Jugar gratis ↗</a>
+          <a class="button secondary" href="#install" data-es="Jugar desde el ordenador" data-en="Play on a computer">Jugar desde el ordenador</a>
+        </div>
+        <p class="fine" data-es="El juego web está disponible sin descarga. El modo online requiere conexión y una sala activa." data-en="The browser game requires no download. Online play needs an internet connection and an active room.">El juego web está disponible sin descarga. El modo online requiere conexión y una sala activa.</p>
+      </div>
+      <div class="hero-art">
+        <img src="../audio/img/unfire-mutants-share.webp" translate="no" alt="Arte original de UNFIRE Mutants utilizado en la web del juego" width="1200" height="960" decoding="async" fetchpriority="high">
+        <div class="art-label"><b translate="no" class="notranslate">UNFIRE MUTANTS</b><span data-es="JUEGO 3D · GRATIS" data-en="3D GAME · FREE">JUEGO 3D · GRATIS</span></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="experience-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker" data-es="DESCUBRE" data-en="EXPLORE">DESCUBRE</p>
+          <h2 id="experience-title" data-es="Tu aventura empieza aquí." data-en="Your adventure starts here.">Tu aventura empieza aquí.</h2>
+          <p class="lead" data-es="Un único lugar para descubrir nuestros juegos y entrar directamente en ellos." data-en="One place to discover and jump directly into our games.">Un único lugar para descubrir nuestros juegos y entrar directamente en ellos.</p>
+        </div>
+        <div class="cards">
+          <article class="card"><p class="number">01 / PLAY</p><h3 data-es="Acceso gratuito" data-en="Free access">Acceso gratuito</h3><p data-es="Entra sin compra obligatoria y explora desde un navegador compatible." data-en="Jump in without a required purchase and explore using a compatible browser.">Entra sin compra obligatoria y explora desde un navegador compatible.</p></article>
+          <article class="card"><p class="number">02 / EXPLORE</p><h3 data-es="Mundo 3D" data-en="3D world">Mundo 3D</h3><p><span data-es="Robots, misiones, música y sorpresas dentro del universo " data-en="Robots, missions, music and surprises in the ">Robots, misiones, música y sorpresas dentro del universo </span><span translate="no" class="notranslate">UNFIRE Mutants</span><span data-es="." data-en=" universe.">.</span></p></article>
+          <article class="card"><p class="number">03 / CONNECT</p><h3 data-es="Salas entre jugadores" data-en="Player rooms">Salas entre jugadores</h3><p data-es="El juego incluye salas temporales P2P para jugar con otra persona. La conexión depende del anfitrión y la red." data-en="The game includes temporary peer-to-peer rooms to play with another person. Connectivity depends on the host and network.">El juego incluye salas temporales P2P para jugar con otra persona. La conexión depende del anfitrión y la red.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="online" aria-labelledby="online-title">
+      <div class="wrap split">
+        <div class="panel accent">
+          <p class="section-kicker">ONLINE / MULTIPLAYER</p>
+          <h2 id="online-title" data-es="Juega con otra persona." data-en="Play together.">Juega con otra persona.</h2>
+          <p class="lead" data-es="Abre el juego y utiliza su menú online para crear una sala o entrar en la de otra persona. El sistema actual conecta participantes mediante salas temporales P2P, no un servidor permanente." data-en="Open the game and use its online menu to create or join a room. The current system connects players through temporary peer-to-peer rooms, not a permanent game server.">Abre el juego y utiliza su menú online para crear una sala o entrar en la de otra persona. El sistema actual conecta participantes mediante salas temporales P2P, no un servidor permanente.</p>
+          <a href="../audio/" class="button primary" data-es="Abrir juego y menú online ↗" data-en="Open game and online menu ↗">Abrir juego y menú online ↗</a>
+        </div>
+        <div class="panel">
+          <h3 data-es="Qué debes saber" data-en="Good to know">Qué debes saber</h3>
+          <p class="muted" data-es="Para conectarse, los participantes necesitan internet y una sala activa. Algunas redes, navegadores o desconexiones del anfitrión pueden impedir o interrumpir una partida." data-en="Players need internet and an active room. Certain networks, browsers or host disconnects can prevent or interrupt a session.">Para conectarse, los participantes necesitan internet y una sala activa. Algunas redes, navegadores o desconexiones del anfitrión pueden impedir o interrumpir una partida.</p>
+          <div class="notice" data-es="Estado: multijugador en validación. Aún faltan pruebas completas de reconexión y dispositivos físicos." data-en="Status: multiplayer under validation. Full reconnection and real-device tests are still pending.">Estado: multijugador en validación. Aún faltan pruebas completas de reconexión y dispositivos físicos.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="install" aria-labelledby="install-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker">DESKTOP / INSTALL</p>
+          <h2 id="install-title" data-es="Juega desde tu ordenador." data-en="Play on your computer.">Juega desde tu ordenador.</h2>
+          <p class="lead" data-es="Puedes abrir el juego gratuitamente desde Windows, macOS o Linux en un navegador compatible. Si tu navegador ofrece la instalación de sitios como aplicación, podrás tener un acceso directo independiente." data-en="You can open the game for free on Windows, macOS or Linux in a compatible browser. If your browser offers website installation as an app, you can add a standalone shortcut.">Puedes abrir el juego gratuitamente desde Windows, macOS o Linux en un navegador compatible. Si tu navegador ofrece la instalación de sitios como aplicación, podrás tener un acceso directo independiente.</p>
+        </div>
+        <div class="split">
+          <div class="panel">
+            <h3 data-es="Instalación de la versión web" data-en="Install the web version">Instalación de la versión web</h3>
+            <ol class="steps">
+              <li><strong data-es="Abre el juego" data-en="Open the game">Abre el juego</strong><span data-es=" desde Chrome, Edge o un navegador compatible." data-en=" in Chrome, Edge or another compatible browser."> desde Chrome, Edge o un navegador compatible.</span></li>
+              <li><strong data-es="Busca la opción de instalación" data-en="Look for an install option">Busca la opción de instalación</strong><span data-es=" del navegador, si aparece. En Safari para macOS, comprueba la opción Añadir al Dock." data-en=" in your browser, if offered. In Safari for macOS, check the Add to Dock option."> del navegador, si aparece. En Safari para macOS, comprueba la opción Añadir al Dock.</span></li>
+              <li><strong data-es="Abre el acceso creado" data-en="Launch the new shortcut">Abre el acceso creado</strong><span data-es=" para volver al juego cuando quieras." data-en=" to return to the game whenever you want."> para volver al juego cuando quieras.</span></li>
+            </ol>
+            <a href="../audio/" class="button secondary" data-es="Abrir versión web ↗" data-en="Open web version ↗">Abrir versión web ↗</a>
+          </div>
+          <div class="panel">
+            <h3 data-es="Descargas nativas" data-en="Native downloads">Descargas nativas</h3>
+            <p class="muted" data-es="Las compilaciones de escritorio con instaladores para macOS y Windows todavía no están publicadas ni verificadas. No ofrecemos archivos .dmg o .exe falsos." data-en="Desktop builds with macOS and Windows installers have not yet been published or verified. No placeholder .dmg or .exe downloads are offered.">Las compilaciones de escritorio con instaladores para macOS y Windows todavía no están publicadas ni verificadas. No ofrecemos archivos .dmg o .exe falsos.</p>
+            <div class="notice" data-es="La instalación web no significa que el juego funcione sin conexión. Para jugar online siempre necesitarás internet." data-en="Installing the web shortcut does not mean the game works offline. Online play always requires an internet connection.">La instalación web no significa que el juego funcione sin conexión. Para jugar online siempre necesitarás internet.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="distribution" aria-labelledby="distribution-title">
+      <div class="wrap">
+        <p class="section-kicker" data-es="JUEGOS PARA TODOS" data-en="GAMES FOR EVERYONE">JUEGOS PARA TODOS</p>
+        <h2 id="distribution-title" data-es="Más plataformas, la misma aventura gratuita." data-en="More platforms, the same free adventure.">Más plataformas, la misma aventura gratuita.</h2>
+        <p class="lead" data-es="Nuestro objetivo es distribuir el juego en diferentes plataformas de videojuegos. Las siguientes están en evaluación; todavía no afirmamos que el juego esté publicado allí." data-en="We aim to distribute the game through additional gaming platforms. The following are being evaluated; we are not claiming any live listings yet.">Nuestro objetivo es distribuir el juego en diferentes plataformas de videojuegos. Las siguientes están en evaluación; todavía no afirmamos que el juego esté publicado allí.</p>
+        <div class="platforms" aria-label="Plataformas en evaluación">
+          <span class="platform">itch.io</span>
+          <span class="platform">Newgrounds</span>
+          <span class="platform">Poki</span>
+          <span class="platform">CrazyGames</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p><span translate="no" class="notranslate">© 2026 Unfire Games</span> · <span data-es="Una iniciativa de " data-en="An ">Una iniciativa de </span><span class="notranslate" translate="no">Unfire</span><span data-es="." data-en=" initiative.">.</span></p>
+      <div class="footer-links">
+        <a href="../?site=1" translate="no" class="notranslate">Unfire</a>
+        <a href="../privacy.html" data-es="Privacidad" data-en="Privacy">Privacidad</a>
+        <a href="../terms.html" data-es="Términos" data-en="Terms">Términos</a>
+        <a href="../contact/" data-es="Contacto" data-en="Contact">Contacto</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+  (function(){
+    "use strict";
+    function setLanguage(lang){
+      var next=lang==="en"?"en":"es";
+      document.documentElement.lang=next;
+      document.querySelectorAll("[data-es][data-en]").forEach(function(el){
+        el.textContent=el.getAttribute("data-"+next);
+      });
+      document.querySelectorAll("[data-set-lang]").forEach(function(el){
+        el.setAttribute("aria-pressed",String(el.getAttribute("data-set-lang")===next));
+      });
+      document.title=next==="en"?"Unfire Games — Free games":"Unfire Games — Juegos gratuitos";
+      var meta=document.querySelector('meta[name="description"]');
+      if(meta)meta.content=next==="en"
+        ?"Unfire Games: play UNFIRE Mutants for free, explore online rooms and learn how to install the web game on a computer."
+        :"Unfire Games: juega gratis a UNFIRE Mutants, descubre salas online y conoce las opciones para instalar el juego web en tu ordenador.";
+    }
+    document.querySelectorAll("[data-set-lang]").forEach(function(button){
+      button.addEventListener("click",function(){setLanguage(button.getAttribute("data-set-lang"));});
+    });
+    if(/^en\b/i.test(navigator.language||""))setLanguage("en");
+  }());
+  </script>
+</body>
+</html>
