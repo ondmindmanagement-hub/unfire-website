@@ -7,7 +7,11 @@ panel.dataset.initialized='1';
 var text=doc.getElementById('ufAdaptiveLabel');
 var path=location.pathname.replace(/\/+$/,'').replace(/\/index\.html$/,'')||'/';
 var mode=path.endsWith('/audio/maletin')?'engine':path.endsWith('/audio')?'audio':'site';
-var low=root.classList.contains('uf-load-pending');
+// Network hints are optional (Safari may not expose them). Never guess a
+// connection speed or delay gameplay on unknown networks.
+var connection=typeof navigator==='object'&&navigator?(navigator.connection||navigator.mozConnection||navigator.webkitConnection):null;
+var slowNetwork=!!(connection&&(connection.saveData||/^(slow-2g|2g)$/.test(String(connection.effectiveType||''))));
+var low=root.classList.contains('uf-load-pending')||(mode!=='site'&&slowNetwork);
 var en=mode==='site'&&root.lang.toLowerCase().startsWith('en');
 var phase='',lastDisplay=0,lastRecovery=-15000,watchStart=0,suspect=0;
 var isHidden=doc.hidden,beatAt=performance.now(),ended=false,gameStarted=false;
