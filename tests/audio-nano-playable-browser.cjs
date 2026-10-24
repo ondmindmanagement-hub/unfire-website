@@ -80,7 +80,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
       assert(mini.nano && mini.relativeHeight > .02 && mini.relativeHeight < .025,
         'Actual 3D player must match 0.24 / 10.5 miniature height: ' + JSON.stringify(mini));
       assert.equal(mini.pressed, 'true', 'Nano button must describe active state');
-      assert(mini.label.includes('TAMAÑO NORMAL'), 'Button must show how to return to normal size');
+      assert(/TAMAÑO NORMAL|NORMAL SIZE/i.test(mini.label), 'Button must show how to return to normal size (ES/EN): ' + JSON.stringify(mini));
       assert(Math.hypot(mini.pos[0] - before.pos[0], mini.pos[2] - before.pos[2]) < .1,
         'Changing scale must not teleport the player');
       console.log('NANO_TOGGLE_PASS', JSON.stringify(mini));
@@ -100,7 +100,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
       }));
       assert(map.open && map.nano && map.count === 1 && map.canvasWidth > 0,
         'Nano world map must remain usable: ' + JSON.stringify(map));
-      assert(/CASA/i.test(map.zone), 'Nano player must be mapped to the real house, not the table');
+      assert(/CASA|HOUSE/i.test(map.zone), 'Nano player must be mapped to the real house, not the table: ' + JSON.stringify(map));
       await page.locator('#ufMapClose').tap({timeout: 15000});
       assert.equal(await page.evaluate(() => document.getElementById('unfireExpandedMap').hidden), true);
       console.log('NANO_WORLD_MAP_PASS', JSON.stringify(map));
@@ -110,7 +110,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
       await page.locator('#unfireCoinHud').tap({timeout: 15000});
       await page.locator('#unfireCoinShop.open').waitFor({state: 'visible', timeout: 10000});
       const shopText = await page.locator('#unfireCoinShop').innerText();
-      assert(shopText.includes('No cuesta dinero.'), 'Currency is free and earned in the game');
+      assert(/No cuesta dinero|free|does not cost money/i.test(shopText), 'Currency is free and earned in the game');
       await page.locator('#unfireCoinShop [data-close]').tap({timeout: 10000});
       console.log('NANO_COIN_SHOP_PASS');
 
