@@ -81,11 +81,3 @@ body.unfire-map-open #unfireDown{visibility:hidden!important;pointer-events:none
 @media(prefers-reduced-motion:reduce){
  #unfireExpandedMap *{animation:none!important;transition:none!important}
 }
-/* Short landscape screens need the controls, not a fourth legend row. */
-@media (max-height:430px) and (orientation:landscape) and (max-width:740px) {
- #ufMapLegend {display:none}
- #ufMapFooter {justify-content:center}
- #ufMapTools {width:100%;justify-content:center;gap:5px}
- #ufMapTools button {font-size:10px;min-height:36px;padding:4px 8px}
-}
-#ufMapShip[hidden]{display:none!important}
