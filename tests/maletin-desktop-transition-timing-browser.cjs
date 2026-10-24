@@ -46,6 +46,16 @@ const milestone = (label, details = {}) => console.log('TRANSITION_TIMING',
         po.observe({entryTypes:['longtask']});
       } catch (_) {}
     });
+    // Diagnostic-only A/B: compact rendering uses the game's *existing* query
+    // option. No product file or default quality setting is modified.
+    if (process.env.UNFIRE_FORCE_COMPACT === '1') {
+      await page.route('**/audio/maletin/index.html*', route => {
+        const u = new URL(route.request().url());
+        u.searchParams.set('quality','compact');
+        return route.continue({url:u.toString()});
+      });
+      milestone('quality-override',{requested:'compact'});
+    }
     milestone('goto:start');
     await page.goto(origin + '/audio/', {waitUntil:'domcontentloaded',timeout:30000});
     milestone('goto:done');
@@ -101,11 +111,14 @@ const milestone = (label, details = {}) => console.log('TRANSITION_TIMING',
       window.__unfireDesktopTrace = trace;
       window.__unfireDesktopSnapshot = get;
       return {x,y,box:[rect.x,rect.y,rect.width,rect.height],
+        actualTier:w.__UNFIRE_AUTOCALIB?.tier || 'unknown',
         closed:w.__UNFIRE_CASE_QA.closed,
         hostTarget:document.elementFromPoint(x,y)?.id,
         frameTarget:w.document.elementFromPoint(x-rect.left,y-rect.top)?.id};
     });
     milestone('before',before);
+    assert.equal(before.actualTier,process.env.UNFIRE_FORCE_COMPACT === '1' ? 'compact':'desktop',
+      'A/B experiment must use the requested actual engine quality tier');
     assert(before.closed === true,'Lid must begin closed');
     assert(before.x > 2 && before.x < 1278 && before.y > 2 && before.y < 798,
       '3D butterfly coordinates must be visible on desktop');
