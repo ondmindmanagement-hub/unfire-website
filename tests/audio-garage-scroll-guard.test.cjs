@@ -49,3 +49,12 @@ test('changing robot color preserves the previously viewed rows',async()=>{
 test('repeated installation adds no duplicate handlers',()=>{
   const x=fake();assert.equal(install(x.doc),true);assert.equal(install(x.doc),false);assert.equal(x.styles.length,1);
 });
+
+test('garage module is loaded only after game engine and with isolated version tag',()=>{
+  const fs=require('node:fs'), path=require('node:path');
+  const html=fs.readFileSync(path.join(__dirname,'../audio/maletin/index.html'),'utf8');
+  const engine=html.indexOf('<script src="game-engine-v50.js?v=');
+  const garage=html.indexOf('<script src="garage-scroll-guard.js?v=20261024garage1" defer>');
+  assert.ok(engine>=0 && garage>engine);
+  assert.equal(html.split('garage-scroll-guard.js?v=20261024garage1').length-1,1);
+});
