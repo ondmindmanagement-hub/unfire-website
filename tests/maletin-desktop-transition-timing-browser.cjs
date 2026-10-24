@@ -114,7 +114,7 @@ const milestone = (label, details = {}) => console.log('TRANSITION_TIMING',
 
     // Sample desktop main-thread JavaScript while clicking. This is diagnostic
     // only: sampling errors must not alter pass/fail of the original 25s contract.
-    try {
+    if (process.env.UNFIRE_ENABLE_CPU_PROFILE === '1') try {
       cdp = await context.newCDPSession(page);
       await cdp.send('Profiler.enable');
       await cdp.send('Profiler.setSamplingInterval',{interval:2000});
@@ -124,7 +124,7 @@ const milestone = (label, details = {}) => console.log('TRANSITION_TIMING',
       milestone('profiler:unavailable',{reason:String(e.message).slice(0,150)});
     }
     const t0=Date.now();
-    milestone('mouse-click:start');
+    milestone('mouse-click:start',{cpuProfiler:profileRunning});
     await page.mouse.click(before.x,before.y);
     milestone('mouse-click:done',{clickAwaitMs:Date.now()-t0});
 
