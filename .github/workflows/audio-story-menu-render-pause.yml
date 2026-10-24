@@ -1,0 +1,21 @@
+name: Audio Story Menu Render Pause
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'tests/audio-story-menu-render-pause.test.cjs'
+      - '.github/workflows/audio-story-menu-render-pause.yml'
+permissions:
+  contents: read
+jobs:
+  story-render-pause:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check audio/maletin/game-engine-v50.js
+      - run: node --test tests/audio-story-menu-render-pause.test.cjs

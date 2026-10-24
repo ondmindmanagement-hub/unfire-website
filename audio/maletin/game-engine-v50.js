@@ -2638,7 +2638,7 @@
     // owns the screen. Otherwise slow software WebGL can block even a modal's
     // CLOSE touch. All DOM button handlers stay responsive; closing resumes
     // the same scene, player position, store and sound without a reload.
-    if (MAP.expandedOpen || (window.UNFIRE_COINS && window.UNFIRE_COINS.isOpen)) {
+    if (MAP.expandedOpen || (window.UNFIRE_COINS && window.UNFIRE_COINS.isOpen) || document.getElementById("storyMenu")?.style.display === "block") {
       clock.getDelta();
       previousRenderAt = 0;
       adaptivePerf.since=0;adaptivePerf.frames=0;adaptivePerf.slow=0;
