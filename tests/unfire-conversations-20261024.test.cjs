@@ -34,7 +34,7 @@ function load(){
   return {api:window.UnfireConversations,nodes,window,intervals};
 }
 test('loaded after engine, retaining existing cinematic NPC UI',()=>{
-  assert.match(html,/game-engine-v50\.js\?v=20261024shippin1"><\/script>\s*<script src="unfire-conversations\.js\?v=20261024organic1"/);
+  assert.match(html,/game-engine-v50\.js\?v=20261024oracle1"><\/script>\s*<script src="unfire-conversations\.js\?v=20261024oracle1"/);
   assert.match(engine,/const OUTTALK\s*=/);
   assert.match(engine,/window\.__UNFIRE_DIALOGUE_WORLD\s*=/);
 });
@@ -124,4 +124,11 @@ test('giant greeting overlay stays off controls, only speaks on proximity',()=>{
  assert.match(script,/subtitle\.style\.display='block'/);
  assert.match(script,/#ufGiantSubtitle\{[^']*pointer-events:none/);
  assert.match(engine,/g\.lunarShip\?'titan-ship':'titan-island'/);
+});
+
+test('wise giant greetings preserve encounter order on the device and avoid touching controls',()=>{
+ assert.match(script,/oracleVisits\.set\(id,n\+1\)/);
+ assert.match(script,/#ufGiantSubtitle\{position:fixed;[^']*top:calc\(253px/);
+ assert.match(script,/max-height:430px\) and \(orientation:landscape\)/);
+ assert.match(script,/pointer-events:none/);
 });
