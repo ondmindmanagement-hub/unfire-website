@@ -16,7 +16,7 @@ const sleep=(n)=>new Promise(ok=>setTimeout(ok,n));
      try{
        const page=await context.newPage(),errors=[];
        page.on('pageerror',e=>errors.push(e.message));
-       await page.goto('http://127.0.0.1:'+PORT+'/audio/maletin/index.html?quality=compact',{waitUntil:'domcontentloaded',timeout:30000});
+       await page.goto('http://127.0.0.1:'+PORT+'/audio/maletin/index.html?quality=compact',{waitUntil:'commit',timeout:65000});
        await page.waitForFunction(()=>window.__mal&&window.__roamAPI&&window.UnfireLunarWorld,{timeout:100000});
        await page.evaluate(()=>{
          window.__mal.setP(1);window.__roamAPI.enterRoam();
