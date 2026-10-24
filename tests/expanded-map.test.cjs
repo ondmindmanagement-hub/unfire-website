@@ -37,7 +37,7 @@ function fixture(w,h) {
   const win={devicePixelRatio:3,addEventListener:(k,fn)=>{(handlers.get(k)||handlers.set(k,[]).get(k)).push(fn);}};
   const ctx={window:win,document:doc,Map,Math,Date,Array,Number,String};
   vm.runInNewContext(js,ctx);
-  const state={zone:'island',x:40,z:80,yaw:1.2,objective:{x:600,z:0}};
+  const state={zone:'island',x:40,z:80,yaw:1.2,objective:{x:600,z:0},ship:{x:135,z:-58}};
   const api=win.UnfireExpandedMap.create(()=>state,()=>{state.onOpen=(state.onOpen||0)+1;});
   return {win,doc,api,draws,selectors,classNames,state,handlers,container};
 }
@@ -96,11 +96,31 @@ test('integration, CSS mobile safe areas and atomic host/engine cache',()=>{
   assert.match(engine,/if \(!MAP\.expandedOpen\) S\.renderer\.render\(S\.scene, cam\)/, 'no WebGL render while 2D map is open');
   assert.match(engine,/if \(MAP\.expandedOpen \|\| \(window\.UNFIRE_COINS && window\.UNFIRE_COINS\.isOpen\) \|\| storyMenuOpen\) \{[\s\S]*?clock\.getDelta\(\);[\s\S]*?if \(MAP\.expandedOpen\) MAP\.tick\(\);[\s\S]*?return;/, 'suspend heavy 3D updates under full map, modal shop or story menu');
   assert.match(iframe,/expanded-map\.css\?v=20261024combinedqa1/);
-  assert.match(iframe,/expanded-map\.js\?v=20261024combinedqa1/);
-  assert.match(iframe,/game-engine-v50\.js\?v=20261024filmrec1/);
-  assert.match(host,/maletin\/index\.html\?v=20261024filmrec1/);
+  assert.match(iframe,/expanded-map\.js\?v=20261024shippin1/);
+  assert.match(iframe,/game-engine-v50\.js\?v=20261024shippin1/);
+  assert.match(host,/maletin\/index\.html\?v=20261024shippin1/);
   assert.match(css,/safe-area-inset-top/);
   assert.match(css,/max-height:430px/);
   assert.match(css,/touch-action:none/);
   assert.match(css,/body\.unfire-map-open #unfireTouchPad/);
+});
+
+test('actual spaceship position renders as 🛸 and the map can center on the ship',()=>{
+ const f=fixture(390,660);f.api.show();
+ const markers=f.draws.filter(d=>d.method==='fillText'&&d.args[0]==='🛸');
+ assert(markers.length>=1,'ship emoji drawn');
+ const button=f.selectors.get('#ufMapShip');
+ assert(button,'accessible locate spaceship action exists');
+ assert.equal(button.hidden,false,'visible outdoors');
+ const n=f.draws.length;button.fire('click');
+ assert(f.draws.length>n,'locating ship updates map');
+ assert.match(js,/ship\.x/);
+ assert.match(engine,/t\.lunarShip/);
+ f.state.zone='house';f.api.hide();f.api.show();
+ assert.equal(button.hidden,true,'no exterior marker indoors');
+});
+test('minimap retains a ship indicator even when the robot is off the visible circle',()=>{
+ assert.match(engine,/const ship=\(window\.__OUTGIANTS\|\|\[\]\)\.find\(b=>b\.lunarShip\)/);
+ assert.match(engine,/const scale=len>radius\?radius\/Math\.max\(1,len\):1/);
+ assert.match(engine,/g\.fillText\('🛸',sx,sz\+1\)/);
 });

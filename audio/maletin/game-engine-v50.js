@@ -2139,7 +2139,8 @@
     const expanded = window.UnfireExpandedMap ? window.UnfireExpandedMap.create(() => ({
       zone: window.ATM_OUT ? 'island' : 'house',
       x: ROAMS.p.x, z: ROAMS.p.z, yaw: ROAMS.yaw,
-      objective: (STORY && STORY.obj) || (window.ATM_OUT && SIDE.cur ? { x:SIDE.cur.x, z:SIDE.cur.z, mini:false } : null)
+      objective: (STORY && STORY.obj) || (window.ATM_OUT && SIDE.cur ? { x:SIDE.cur.x, z:SIDE.cur.z, mini:false } : null),
+      ship: (() => { const g=(window.__OUTGIANTS||[]).find(t=>t.lunarShip); return g&&g.w&&g.w.position ? {x:g.w.position.x,z:g.w.position.z} : null; })()
     }), () => { for (const k in ROAMS.k) ROAMS.k[k] = 0; }) : null;
     c.tabIndex = 0; c.setAttribute('role','button');
     c.setAttribute('aria-label','Abrir el mapa grande');
@@ -2158,6 +2159,21 @@
       g.strokeStyle = 'rgba(160,220,255,.7)'; g.lineWidth = 2; const rect = (x0, z0, x1, z1, f) => { const [a, b] = P(x0, z0), [c2, d] = P(x1, z1); if (f) { g.fillStyle = f; g.fillRect(a, b, c2 - a, d - b); } g.strokeRect(a, b, c2 - a, d - b); };
       if (mini) { rect(-13, -7.45, 13, 5.05, 'rgba(217,185,138,.35)'); rect(-2.9, -1.95, 2.9, 1.95, 'rgba(180,190,210,.6)'); } else if (out) { g.fillStyle = 'rgba(63,207,90,.35)'; const [a, b] = P(0, 0); g.beginPath(); g.arc(a, b, 270 * S0, 0, Math.PI * 2); g.fill(); rect(-80, -16, 80, 96, 'rgba(220,240,255,.5)'); [[600, 0, 340, 'rgba(230,225,215,.55)'], [80, -500, 190, 'rgba(232,201,138,.6)'], [-760, -760, 250, 'rgba(255,190,215,.6)'], [-420, 120, 70, 'rgba(160,230,110,.5)'], [300, 420, 60, 'rgba(255,255,255,.5)'], [-360, -380, 80, 'rgba(192,139,255,.5)']].forEach(([x, z, r, c]) => { const [a2, b2] = P(x, z); g.fillStyle = c; g.beginPath(); g.arc(a2, b2, r * S0, 0, Math.PI * 2); g.fill(); }); } else { rect(-80, -16, 80, 96, 'rgba(220,240,255,.12)'); rect(-13, -7.5, 13, 5, 'rgba(217,185,138,.5)'); [[44, 8, '#ff2a4a'], [38, 44, '#3d8bff'], [-38, 40, '#2a3c8a'], [-8, 92, '#c0c0c0'], [-48, 56, '#f4f1ea'], [48, 56, '#f4f1ea']].forEach(([x, z, col]) => { const [a, b] = P(x, z); g.fillStyle = col; g.beginPath(); g.arc(a, b, 4, 0, Math.PI * 2); g.fill(); }); }
       const ob = (STORY && STORY.obj) || (out && SIDE.cur ? { x: SIDE.cur.x, z: SIDE.cur.z } : null); if (ob && (!!ob.mini === mini || !mini)) { const [a, b] = P(ob.x, ob.z), pul = 6 + Math.sin(performance.now() / 200) * 2; g.fillStyle = '#ffd21a'; g.beginPath(); for (let i = 0; i < 10; i++) { const an = -Math.PI / 2 + i * Math.PI / 5, r = i % 2 ? pul * 0.45 : pul; g.lineTo(a + Math.cos(an) * r, b + Math.sin(an) * r); } g.fill(); }
+      // A permanent compass marker for the ONE stationary moon spaceship.
+      // Off-map compass pin sticks to the inner edge to guide the player.
+      if(out){
+        const ship=(window.__OUTGIANTS||[]).find(b=>b.lunarShip);
+        if(ship && ship.w && ship.w.position){
+          const [mx,mz]=P(ship.w.position.x,ship.w.position.z);
+          const dx=mx-110,dz=mz-110,len=Math.hypot(dx,dz),radius=86;
+          const scale=len>radius?radius/Math.max(1,len):1;
+          const sx=110+dx*scale,sz=110+dz*scale;
+          g.save();g.beginPath();g.arc(sx,sz,12,0,Math.PI*2);
+          g.fillStyle='#081d32';g.strokeStyle='#ffcf65';g.lineWidth=2.2;g.fill();g.stroke();
+          g.font='17px Apple Color Emoji,Segoe UI Emoji,sans-serif';g.textAlign='center';g.textBaseline='middle';
+          g.fillText('🛸',sx,sz+1);g.restore();
+        }
+      }
       const [px, pz] = ROAMS.on ? P(cam.position.x, cam.position.z) : P(0, 6); g.save(); g.translate(px, pz); g.rotate(ROAMS.on ? ROAMS.yaw : Math.PI); g.fillStyle = '#b6ff3b'; g.beginPath(); g.moveTo(0, -9); g.lineTo(6, 6); g.lineTo(0, 3); g.lineTo(-6, 6); g.fill(); g.restore(); g.restore(); g.fillStyle = '#fff'; g.font = '700 12px Orbitron, Arial'; g.textAlign = 'center'; g.fillText(mini ? 'LA MESA' : out ? 'LA ISLA' : 'LA CASA', 110, 24); } }; })();
   addEventListener('keydown', (e) => { if (e.target && e.target.tagName === 'INPUT') return; if (e.key === 'm' || e.key === 'M') MAP.toggle(); if ((e.key === 'c' || e.key === 'C') && ROAMS.on) camB.onclick({ stopPropagation() {} }); });
   // ===== SALIR A LA WEB: cierra el juego, cierra el maletín y baja a la página normal =====

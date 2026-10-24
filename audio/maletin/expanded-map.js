@@ -34,8 +34,8 @@
         + '<button type="button" id="ufMapClose" aria-label="Cerrar mapa">✕ <span>CERRAR</span></button></header>'
         + '<div id="ufMapSurface"><canvas id="ufMapCanvas" aria-label="Mapa con tu posición y la misión activa"></canvas>'
         + '<div id="ufMapBadge">LA CASA</div></div>'
-        + '<footer id="ufMapFooter"><div id="ufMapLegend"><span>◆ JUGADOR</span><span>★ MISIÓN</span><span>● LUGARES</span></div>'
-        + '<div id="ufMapTools"><button type="button" id="ufMapMinus" aria-label="Alejar mapa">−</button>'
+        + '<footer id="ufMapFooter"><div id="ufMapLegend"><span>◆ JUGADOR</span><span>★ MISIÓN</span><span>● LUGARES</span><span>🛸 ROBOT-NAVE</span></div>'
+        + '<div id="ufMapTools"><button type="button" id="ufMapShip" aria-label="Centrar mapa en el robot-nave" title="Localizar el robot-nave">🛸 NAVE</button><button type="button" id="ufMapMinus" aria-label="Alejar mapa">−</button>'
         + '<button type="button" id="ufMapCenter">⌖ CENTRAR</button>'
         + '<button type="button" id="ufMapPlus" aria-label="Acercar mapa">+</button></div></footer>'
         + '<p id="ufMapHelp">Arrastra para explorar · pellizca o usa +/− para ampliar · Esc para cerrar</p></section>';
@@ -49,6 +49,12 @@
       root.querySelector('#ufMapMinus').addEventListener('click', () => changeZoom(.75));
       root.querySelector('#ufMapPlus').addEventListener('click', () => changeZoom(1.3));
       root.querySelector('#ufMapCenter').addEventListener('click', centerPlayer);
+      root.querySelector('#ufMapShip').addEventListener('click', () => {
+        const s=read(),ship=s.ship;
+        if(s.zone!=='island'||!ship||!Number.isFinite(ship.x)||!Number.isFinite(ship.z))return;
+        centerX=ship.x;centerZ=ship.z;zoom=3;
+        dirty=true;paint();
+      });
       root.addEventListener('click', e => e.stopPropagation());
       for (const eventName of ['pointerdown','pointermove','pointerup','pointercancel','touchstart','touchend']) {
         root.addEventListener(eventName, e => e.stopPropagation());
@@ -215,6 +221,21 @@
             const x=Math.cos(a)*r,y=Math.sin(a)*r;i?g.lineTo(x,y):g.moveTo(x,y);}
           g.closePath();g.fill();g.stroke();g.restore();
           textLabel('MISIÓN',obj.x,obj.z+16/scale,'#ffe484');
+        }
+      }
+      // The ship pin reads live coordinates from the actual stationary titan, not
+      // a duplicated hardcoded marker, and never appears indoors or on the Moon.
+      const ship=s.ship;
+      const shipButton=root.querySelector('#ufMapShip');
+      if(shipButton)shipButton.hidden=!(zone==='island'&&ship&&Number.isFinite(ship.x)&&Number.isFinite(ship.z));
+      if(zone==='island'&&ship&&Number.isFinite(ship.x)&&Number.isFinite(ship.z)){
+        const [mx,mz]=P(ship.x,ship.z);
+        if(mx>16&&mx<w-16&&mz>20&&mz<h-20){
+          g.save();g.beginPath();g.arc(mx,mz,15,0,Math.PI*2);
+          g.fillStyle='#081d32';g.strokeStyle='#ffcf65';g.lineWidth=2.3;g.fill();g.stroke();
+          g.font='21px Apple Color Emoji,Segoe UI Emoji,sans-serif';g.textAlign='center';g.textBaseline='middle';
+          g.fillText('🛸',mx,mz+1);g.restore();
+          if(mx>60&&mx<w-60&&mz<h-50)textLabel('ROBOT-NAVE',ship.x,ship.z+27/scale,'#ffe4ab');
         }
       }
       const player=P(Number(s.x)||0,Number(s.z)||0);
