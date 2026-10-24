@@ -16,8 +16,16 @@ concurrency:
 
 jobs:
   desktop-transition-timing:
+    name: desktop-${{ matrix.tier }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        tier: [desktop, compact]
+    env:
+      UNFIRE_FORCE_COMPACT: ${{ matrix.tier == 'compact' && '1' || '0' }}
     steps:
       - uses: actions/checkout@v4
       - name: Validate diagnostic syntax
