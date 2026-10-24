@@ -1,0 +1,27 @@
+name: Audio Nano Cinematic and Capsule Regression
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/nano-physics.js'
+      - 'tests/audio-nano-cinematic-regression.test.cjs'
+      - '.github/workflows/audio-nano-cinematic-regression.yml'
+permissions:
+  contents: read
+jobs:
+  nano-cinema:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate actual engine syntax
+        run: node --check audio/maletin/game-engine-v50.js
+      - name: Test NANO transformation, tabletop, flight and capsule
+        run: node --test tests/audio-nano-cinematic-regression.test.cjs tests/audio-nano-physics.test.cjs tests/audio-nano-motion-invariants.test.cjs
+      - name: Verify no merge conflict markers or whitespace faults
+        run: git diff --check
