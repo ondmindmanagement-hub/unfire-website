@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#060813">
+<meta name="robots" content="noindex,follow">
+<meta name="description" content="Prueba gratis la beta de UNFIRE Mutants desde tu PC. Robots, exploración y sorpresas en un mundo 3D. Sin instalación.">
+<title>UNFIRE Mutants — beta gratuita para PC</title>
+<link rel="canonical" href="https://unfire.technology/audio/beta/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Unfire">
+<meta property="og:title" content="UNFIRE Mutants | Beta gratuita para PC">
+<meta property="og:description" content="Un mundo 3D. Robots que se transforman. Explora la beta gratuita en tu navegador, sin instalar nada.">
+<meta property="og:url" content="https://unfire.technology/audio/beta/">
+<meta property="og:image" content="https://unfire.technology/audio/img/unfire-mutants-share.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="UNFIRE Mutants, universo 3D con robots">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UNFIRE Mutants | Free browser beta">
+<meta name="twitter:description" content="Your world. Your robots. Play free in your browser on PC.">
+<meta name="twitter:image" content="https://unfire.technology/audio/img/unfire-mutants-share.webp">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" as="image" href="../img/unfire-mutants-share.webp" fetchpriority="high">
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color-scheme:dark;--bg:#060813;--fg:#f6f8ff;--muted:#aab5cf;--cyan:#8ce9ff;--pink:#ff86d3}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;min-height:100dvh;color:var(--fg);background:radial-gradient(ellipse 62vw 40vh at 100% 0%,#182047 0%,transparent 100%),radial-gradient(ellipse 40vw 40vh at 0% 90%,#34143b 0%,transparent 100%),var(--bg)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:4px}
+.shell{width:min(1160px,calc(100% - 40px));margin:auto}
+header{display:flex;align-items:center;gap:14px;justify-content:space-between;min-height:78px;border-bottom:1px solid #ffffff1f}
+.brand{font-weight:850;letter-spacing:.09em;text-decoration:none;font-size:clamp(1.05rem,2vw,1.4rem)}
+.brand small{display:block;color:var(--muted);font-size:.56rem;letter-spacing:.25em;margin-top:5px}
+.lang{display:flex;gap:4px;padding:4px;border-radius:999px;border:1px solid #ffffff36}
+.lang button{border:0;color:#e1e8f8;background:transparent;font:700 .78rem/1 system-ui,sans-serif;border-radius:999px;padding:8px 13px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:#e8f7ff;color:#06121f}
+main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(24px,5vw,74px);min-height:min(760px,calc(100dvh - 150px));padding-block:clamp(52px,7vw,96px)}
+.kicker{display:inline-flex;align-items:center;gap:9px;color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:.7rem}
+.kicker::before{content:'';width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 14px #8ce9ff99}
+h1{font-size:clamp(2.9rem,6.5vw,6.6rem);line-height:.98;letter-spacing:-.065em;margin:22px 0 22px;font-weight:900}
+h1 span{display:block;color:var(--cyan)}
+.subtitle{font-size:clamp(1.03rem,1.7vw,1.28rem);line-height:1.65;color:#d6dcef;max-width:46ch}
+.cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:30px}
+.play{display:inline-flex;text-align:center;align-items:center;justify-content:center;min-height:54px;border-radius:12px;padding:14px 24px;background:linear-gradient(110deg,var(--cyan),#d1f7ff);color:#071123;font-weight:900;text-decoration:none;box-shadow:0 12px 35px #44d2ff30;transition:transform .18s}
+.play:hover{transform:translateY(-2px)}
+.feedback,.share{font-weight:600;text-decoration:none;color:#f2eafa;padding:12px}
+.share{border:0;background:none;cursor:pointer;font:600 .96rem/1.4 system-ui,sans-serif}
+.share:hover,.share:focus-visible,.feedback:hover{text-decoration:underline}
+#shareStatus{color:var(--cyan);font-size:.82rem;font-weight:650}
+.help{margin-top:28px;color:var(--muted);font-size:.88rem;line-height:1.65;max-width:51ch}
+kbd{border:1px solid #ffffff36;background:#161a2e;border-radius:4px;padding:2px 6px;font:650 .8rem/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;color:#eff3ff}
+.art{position:relative;min-width:0}
+.art::before{content:'';position:absolute;inset:-12px;border:1px solid #ffffff30;border-radius:24px;pointer-events:none}
+.art img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:14px;background:#0f1328;box-shadow:0 28px 110px #0008}
+.art figcaption{margin:15px 0 0;color:#b5c0da;font-size:.75rem;text-align:center}
+footer{border-top:1px solid #ffffff20;color:#9dabc7;padding:24px 0 34px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:.78rem}
+footer a{text-decoration:none;color:#dce9ff}
+@media(max-width:780px){main{grid-template-columns:1fr;min-height:auto;padding-block:44px}.art{grid-row:2;width:min(100%,560px);margin:8px auto 0}h1{font-size:clamp(3.1rem,11vw,5rem)}}
+@media(prefers-reduced-motion:reduce){.play{transition:none}}
+</style>
+</head>
+<body>
+<header class="shell">
+  <a href="/audio/" class="brand" translate="no">UNFIRE <small>MUTANTS / AUDIO</small></a>
+  <nav class="lang" aria-label="Language / Idioma">
+    <button type="button" data-language="es" aria-pressed="true" lang="es">ES</button>
+    <button type="button" data-language="en" aria-pressed="false" lang="en">EN</button>
+  </nav>
+</header>
+<main class="shell" id="main">
+  <section aria-labelledby="title">
+    <div class="kicker" data-t="badge">BETA PÚBLICA · GRATIS</div>
+    <h1 id="title"><span data-t="headline1">Tu mundo.</span><span data-t="headline2">Tus robots.</span></h1>
+    <p class="subtitle" data-t="subtitle">Explora un universo 3D, descubre robots transformables y encuentra tus propios secretos. Juega desde tu PC en el navegador, sin instalar nada.</p>
+    <div class="cta">
+      <a id="play" class="play" href="/audio/?utm_source=unfire_beta&amp;utm_medium=owned&amp;utm_campaign=pc_public_beta" data-t="play">▶ ENTRAR A JUGAR GRATIS</a>
+      <a class="feedback" href="mailto:hello@unfire.technology?subject=UNFIRE%20Mutants%20Beta%20Feedback" data-t="feedback">Enviar feedback ↗</a>
+      <button class="share" type="button" id="share" data-t="share">Compartir ↗</button>
+      <span id="shareStatus" role="status" aria-live="polite"></span>
+    </div>
+    <p class="help"><strong data-t="controlsLabel">Controles básicos PC:</strong> <kbd>WASD</kbd> <span data-t="move">moverte</span> · <span data-t="mouse">arrastrar ratón para mirar</span> · <kbd>Shift</kbd> <span data-t="run">correr</span> · <kbd>Espacio</kbd> <span data-t="fly">volar</span> · <kbd>M</kbd> <span data-t="map">mapa</span>.</p>
+    <p class="help" data-t="disclaimer">Versión beta en desarrollo: puedes encontrar errores o cambios. Para una mejor experiencia usa un navegador actualizado en PC. El acceso al juego es gratuito.</p>
+  </section>
+  <figure class="art">
+    <img src="../img/unfire-mutants-share.webp" alt="Material visual del universo 3D UNFIRE Mutants" width="1000" height="750" loading="eager" decoding="async">
+    <figcaption data-t="caption">Una imagen auténtica del universo de UNFIRE Mutants.</figcaption>
+  </figure>
+</main>
+<footer class="shell">
+  <span data-t="footer">Beta pública gratuita · Algunas funciones siguen en desarrollo.</span>
+  <a href="/audio/" data-t="back">Volver a Unfire Audio ↗</a>
+</footer>
+<script>
+(function(){
+  'use strict';
+  const copy={
+    es:{badge:'BETA PÚBLICA · GRATIS',headline1:'Tu mundo.',headline2:'Tus robots.',subtitle:'Explora un universo 3D, descubre robots transformables y encuentra tus propios secretos. Juega desde tu PC en el navegador, sin instalar nada.',play:'▶ ENTRAR A JUGAR GRATIS',feedback:'Enviar feedback ↗',share:'Compartir ↗',controlsLabel:'Controles básicos PC:',move:'moverte',mouse:'arrastrar ratón para mirar',run:'correr',fly:'volar',map:'mapa',disclaimer:'Versión beta en desarrollo: puedes encontrar errores o cambios. Para una mejor experiencia usa un navegador actualizado en PC. El acceso al juego es gratuito.',caption:'Una imagen auténtica del universo de UNFIRE Mutants.',footer:'Beta pública gratuita · Algunas funciones siguen en desarrollo.',back:'Volver a Unfire Audio ↗'},
+    en:{badge:'PUBLIC BETA · FREE',headline1:'Your world.',headline2:'Your robots.',subtitle:'Explore a 3D world, discover transforming robots and uncover secrets. Play on your PC in a web browser. No installation required.',play:'▶ PLAY FREE IN YOUR BROWSER',feedback:'Send feedback ↗',share:'Share ↗',controlsLabel:'Basic PC controls:',move:'move',mouse:'drag mouse to look',run:'run',fly:'fly',map:'map',disclaimer:'This beta is still in development. You may encounter bugs or changes. For the best experience, use an up-to-date desktop browser. Access to the game is free.',caption:'An authentic glimpse of the UNFIRE Mutants universe.',footer:'Free public beta · Some features are still in development.',back:'Back to Unfire Audio ↗'}
+  };
+  function setLang(lang){
+    const l=lang==='en'?'en':'es';document.documentElement.lang=l;
+    document.querySelectorAll('[data-t]').forEach(el=>{const key=el.getAttribute('data-t');if(copy[l][key])el.textContent=copy[l][key]});
+    document.querySelectorAll('[data-language]').forEach(el=>el.setAttribute('aria-pressed',String(el.getAttribute('data-language')===l)));
+    document.title=l==='en'?'UNFIRE Mutants — free PC beta':'UNFIRE Mutants — beta gratuita para PC';
+  }
+  document.querySelectorAll('[data-language]').forEach(el=>el.addEventListener('click',()=>setLang(el.getAttribute('data-language'))));
+  if(/^en(?:-|$)/i.test(navigator.language||''))setLang('en');
+  document.getElementById('share').addEventListener('click',async()=>{
+    const link='https://unfire.technology/audio/beta/';
+    const en=document.documentElement.lang==='en';
+    if(typeof navigator.share==='function'){
+      try{
+        await navigator.share({title:'UNFIRE Mutants',text:en?'Your world. Your robots. Free browser beta.':'Tu mundo. Tus robots. Beta gratuita en navegador.',url:link});
+        return;
+      }catch(error){if(error&&error.name==='AbortError')return;}
+    }
+    try{
+      await navigator.clipboard.writeText(link);
+      document.getElementById('shareStatus').textContent=en?'Link copied':'Enlace copiado';
+    }catch(_){
+      document.getElementById('shareStatus').textContent=link;
+    }
+  });
+})();
+</script>
+</body>
+</html>
