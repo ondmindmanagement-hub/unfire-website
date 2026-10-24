@@ -4024,9 +4024,21 @@ main .uf-hero-title {
 .unfire-audio-entry{display:inline-flex;align-items:center;justify-content:center;gap:.5em;padding:10px 15px;margin:0 0 22px;border:1px solid currentColor;border-radius:999px;text-decoration:none;font-size:clamp(12px,1vw,14px);font-weight:600;letter-spacing:.015em;transition:opacity .2s,transform .2s}
 .unfire-audio-entry:hover{opacity:.8;transform:translateY(-2px)}
 </style>
+<style id="unfire-games-home-preview">
+#games.unfire-games-home{padding:clamp(70px,8vw,106px) 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+#games .unfire-games-home-layout{display:grid;grid-template-columns:.84fr 1.16fr;gap:clamp(28px,5vw,72px);align-items:center}
+#games .unfire-games-home-copy h2{font-size:clamp(32px,3.9vw,56px);line-height:1.08;letter-spacing:-.035em;font-weight:630;max-width:560px;margin-bottom:16px}
+#games .unfire-games-home-copy p{font-size:15px;line-height:1.75;color:#a6a6b1;max-width:470px;margin:0 0 24px}
+#games .unfire-games-home-copy .eyebrow{font-size:11px;letter-spacing:.16em;margin-bottom:16px}
+#games .unfire-games-home-copy .unfire-games-home-cta{display:inline-flex;align-items:center;min-height:44px;padding:11px 20px;border-radius:999px;border:1px solid #e9eaee;background:#e9eaee;color:#111;font-size:13px;font-weight:620;text-decoration:none}
+#games .unfire-games-home-visual{display:block;position:relative;overflow:hidden;min-width:0;border-radius:18px;border:1px solid #272c33;background:#0c101a;aspect-ratio:16/10}
+#games .unfire-games-home-visual img{width:100%;height:100%;display:block;object-fit:cover}
+#games .unfire-games-home-visual span{position:absolute;bottom:0;left:0;right:0;padding:26px 16px 14px;font-size:12px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.85))}
+@media(max-width:760px){#games .unfire-games-home-layout{grid-template-columns:1fr}#games .unfire-games-home-visual{aspect-ratio:16/9}}
+</style>
 </head>
 <body>
-<div id="unfire-clean-header-v2"><div class="unfire-clean-mainbar"><div class="unfire-clean-inner"><a class="unfire-clean-brand notranslate" data-unfire-move="header-brand" href="#top" translate="no"><img translate="no" alt="Unfire" class="unfire-header-logo" src="assets/logo/unfire-logo-white.png"/><span class="unfire-header-name notranslate" translate="no"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no">Unfire</span></span></a><button id="unfire-mobile-menu-toggle" class="unfire-mobile-menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="unfire-mobile-site-nav" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 8h16M4 16h16"/></svg></button><nav id="unfire-mobile-site-nav" aria-label="Main navigation" class="unfire-clean-nav" data-unfire-move="header-navigation"><a href="#company">Company</a><a href="#work">Work</a><a href="/apps/">Apps</a><a href="/audio/" class="notranslate" translate="no">Audio</a><a href="#system">System</a><a href="#scale">Scale</a><a href="#funding">Funding</a><a href="/contact/">Contact</a>
+<div id="unfire-clean-header-v2"><div class="unfire-clean-mainbar"><div class="unfire-clean-inner"><a class="unfire-clean-brand notranslate" data-unfire-move="header-brand" href="#top" translate="no"><img translate="no" alt="Unfire" class="unfire-header-logo" src="assets/logo/unfire-logo-white.png"/><span class="unfire-header-name notranslate" translate="no"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no">Unfire</span></span></a><button id="unfire-mobile-menu-toggle" class="unfire-mobile-menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="unfire-mobile-site-nav" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 8h16M4 16h16"/></svg></button><nav id="unfire-mobile-site-nav" aria-label="Main navigation" class="unfire-clean-nav" data-unfire-move="header-navigation"><a href="#company">Company</a><a href="#work">Work</a><a href="/apps/">Apps</a><a href="/games/" class="notranslate" translate="no">Games</a><a href="/audio/" class="notranslate" translate="no">Audio</a><a href="#system">System</a><a href="#scale">Scale</a><a href="#funding">Funding</a><a href="/contact/">Contact</a>
 </nav></div></div></div>
 <script id="unfire-mobile-nav-controller">
 (function(){
@@ -4065,7 +4077,7 @@ main .uf-hero-title {
 <div id="unfire-brand-stack"><a class="brand notranslate" data-unfire-move="brand" href="#top" translate="no"><span class="notranslate unfire-brand-lock" translate="no">Unfire</span></a></div>
 <nav class="nav-links" data-unfire-move="navigation">
 <a href="#company">Company</a>
-<a href="#work">Work</a><a href="/apps/">Apps</a><a href="/audio/" class="notranslate" translate="no">Audio</a>
+<a href="#work">Work</a><a href="/apps/">Apps</a><a href="/games/" class="notranslate" translate="no">Games</a><a href="/audio/" class="notranslate" translate="no">Audio</a>
 <a href="#system">System</a>
 <a href="#scale">Scale</a>
 <a class="unfire-lava-secondary" href="#funding">Funding</a>
@@ -4256,6 +4268,21 @@ main .uf-hero-title {
 </div>
 </div>
 <p class="uf-gallery-footnote">Imagery comes from actual <span class="notranslate" translate="no">Unfire</span> product assets and interface captures. Previews and prototypes are identified; features and release status may change.</p>
+</div>
+</section>
+
+<section id="games" class="unfire-games-home" aria-labelledby="unfire-games-home-title">
+<div class="wrap unfire-games-home-layout">
+  <div class="unfire-games-home-copy">
+    <div class="eyebrow"><span translate="no" class="notranslate">Unfire Games</span></div>
+    <h2 id="unfire-games-home-title">A world to explore.</h2>
+    <p>Enter the free 3D robot world, explore real gameplay scenes, and discover the interactive sound of <span translate="no" class="notranslate">HYPERWAVE 2000</span>. Part of the <span translate="no" class="notranslate">Unfire Audio</span> family.</p>
+    <a class="unfire-games-home-cta" href="/games/">Explore Games <span aria-hidden="true">↗</span></a>
+  </div>
+  <a href="/games/" class="unfire-games-home-visual" aria-label="View Unfire Games and authentic gameplay screenshots">
+    <img src="/audio/press/captures/09-night-flight-panorama.jpg" width="1280" height="720" loading="lazy" decoding="async" alt="Authentic Unfire game scene: a flying robot above illuminated islands at night">
+    <span>Actual in-game capture · Unfire Audio</span>
+  </a>
 </div>
 </section>
 
