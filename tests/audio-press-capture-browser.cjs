@@ -36,9 +36,20 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
       await page.addStyleTag({content:`
         #hud,#tip,#ctlDock,#cfgB,#minimap,#stO,#unfireTouchPad,#unfireTouchKnob,
         #unfireFly,#unfireTalk,#unfireDown,#unfireCarryCase,#unfireExitGame,
-        #wradio,#unfireCoinHud,#atmBtn,#onlB,#storyHud,#unfireGarageScrollStyle,
+        #wradio,#unfireCoinHud,#atmBtn,#onlB,#storyHud,#story,#storyMenu,#intro,\n        #nimboIntro,#unfireGarageScrollStyle,
         #unfireAdaptiveLoader{visibility:hidden!important}
       `});
+      // Screenshots of the world should not be dominated by a first-run tutorial.
+      // Hide only DOM dialogue overlays; keep 3D meshes, light and scenery untouched.
+      await page.evaluate(()=>{
+        const label=/NIMBO\\s*[·-]\\s*(YOUR GUIDE|TU GUÍA)/i;
+        for(const el of document.querySelectorAll('body *')){
+          if(el.children.length>0 || !label.test((el.textContent||'').trim()))continue;
+          const panel=el.closest('.box,[role="dialog"],[id*="intro" i]')||el.parentElement?.parentElement;
+          if(panel && panel!==document.body && !panel.contains(document.getElementById('cv')))
+            panel.style.setProperty('visibility','hidden','important');
+        }
+      });
       async function shot(file){
         await sleep(2300);
         assert.equal(errors.length,0,'JavaScript errors in real game: '+errors.join('; '));
@@ -62,8 +73,9 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
         b.click();
       });
       await page.waitForFunction(()=>window.ATM_OUT===true,null,{timeout:25000});
+      await page.evaluate(()=>{const r=window.__roamAPI.ROAMS;r.p.set(-48,4.5,175);r.yaw=2.52;r.pitch=-0.13;});
       await shot('03-house-exterior.jpg');
-      await page.evaluate(()=>{const r=window.__roamAPI.ROAMS;r.p.set(-35,4.5,140);r.yaw=2.25;r.pitch=-0.1;});
+      await page.evaluate(()=>{const r=window.__roamAPI.ROAMS;r.p.set(-15,4.5,185);r.yaw=2.06;r.pitch=-0.10;});
       await shot('04-island-exploration.jpg');
       assert.equal(errors.length,0,errors.join('; '));
     }finally{await context.close();}
