@@ -11,8 +11,9 @@ const PORT = 8789;
 const output = path.resolve(__dirname, '../audio/press/captures');
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const scenes = [
-  {file:'08-sky-flight-panorama.jpg', phase:0.27, pos:[-245, 4.5, 365], altitude:215, yaw:0.52, pitch:0.12, lighting:'day'},
-  {file:'09-night-flight-panorama.jpg', phase:0.76, pos:[-270, 4.5, 440], altitude:240, yaw:0.58, pitch:0.20, lighting:'night'}
+  {file:'05-sky-flight-day.jpg', phase:0.27, pos:[-120, 4.5, 215], altitude:116, yaw:0.51, pitch:0.13, mode:'3p', lighting:'day'},
+  {file:'06-sky-flight-sunset.jpg', phase:0.49, pos:[-105, 4.5, 195], altitude:91, yaw:0.45, pitch:0.11, mode:'3p', lighting:'sunset'},
+  {file:'09-night-flight-panorama.jpg', phase:0.76, pos:[-270, 4.5, 440], altitude:240, yaw:0.58, pitch:0.20, mode:'3pl', lighting:'night'}
 ];
 
 (async () => {
@@ -58,7 +59,7 @@ const scenes = [
       for (const scene of scenes) {
         await page.evaluate(s=>{
           const r=window.__roamAPI.ROAMS;
-          r.k={};r.tgt=null;r.on=true;r.mode='3pl';r.mini=false;
+          r.k={};r.tgt=null;r.on=true;r.mode=s.mode;r.mini=false;
           r.p.set(...s.pos);r.h=s.altitude;r.flyH=s.altitude;r.fly=true;
           r.flyT=2;r.climbV=0;r.vy=0;r.wk=1;r.moving=false;
           r.yaw=s.yaw;r.cy=s.yaw;r.pitch=s.pitch;r.cp=null;
