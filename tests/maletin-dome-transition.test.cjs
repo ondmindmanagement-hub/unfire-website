@@ -119,3 +119,8 @@ test('door locomotion and collision entry points stay in the active motor', () =
   assert.match(engine, /window\.__warmOutsideObstacles/);
   assert.match(engine, /__UNFIRE_AUTOCALIB/, 'device-based rendering budget remains available');
 });
+
+test('only dome-controlled transition can switch indoor/outdoor at the roof', () => {
+  assert.doesNotMatch(engine, /if \(inDomeT &&[^\n]+ATM\.setOut\(true\)/);
+  assert.match(logic, /dome\.open > 0\.6 && radius < 34/);
+});
