@@ -1,0 +1,21 @@
+name: Audio PC beta entry QA
+on:
+  pull_request:
+    paths:
+      - 'audio/beta/**'
+      - 'tests/audio-beta-desktop-entry.test.cjs'
+      - '.github/workflows/audio-beta-desktop-entry.yml'
+  workflow_dispatch:
+jobs:
+  static-pc-gateway:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify standalone beta gateway, PC link, ES/EN and no analytics
+        run: node --test tests/audio-beta-desktop-entry.test.cjs
