@@ -29,5 +29,7 @@ if [[ ! -d node_modules/playwright ]]; then
 fi
 echo "Recording real engine Cinema mode with a new Chrome profile."
 NODE_PATH="$ROOT/node_modules" node "$HERE/record_cine_mac.cjs" "$GAME" "$OUT"
-echo "Native GPU capture finished: $OUT"
+echo "Cinematic camera shots finished. Recording independent continuous robot gameplay."
+NODE_PATH="$ROOT/node_modules" node "$HERE/record_gameplay_mac.cjs" "$GAME" "$OUT"
+echo "Both real-game video sources captured to: $OUT"
 echo "Files have NOT been published."
