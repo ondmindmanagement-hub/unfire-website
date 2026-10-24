@@ -57,6 +57,12 @@ test('house doorway remains traversable when using the full-sized collider radiu
  assert.match(eng,/Math\.hypot\(dx, dz\) \+ P\.radius \+ 1\.2/);
 });
 
+test('flight wings scale with mini avatar and gait speed avoids animation aliasing',()=>{
+ assert.match(eng,/s0 = AV\.baseScale \|\| 1; AV\.WG\.scale\.setScalar/);
+ assert.doesNotMatch(eng,/s0 = AV\.w\.scale\.x \|\| 1; AV\.WG\.scale\.setScalar/);
+ assert.match(eng,/STEPPH\(ROAMS\.wd \|\| 0, 10\.5\*\(ROAMS\.mini\?avatarProfile\(\)\.speedScale:1\), ROAMS\.run\)/);
+});
+
 test('nano speed is usable and physics remains smaller than full-size',()=>{
  const n=phys.profile(true),p=phys.profile(false);
  assert.ok(n.walkSpeed>6&&n.walkSpeed<p.walkSpeed);
