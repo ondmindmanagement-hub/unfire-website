@@ -2109,6 +2109,14 @@
         ROAMS.p.x = candidate.x; ROAMS.p.z = candidate.z;
       }
       ROAMS.freeRobotMode = true;
+      // Nano must be a VISIBLE controllable robot, not an invisible first-person
+      // camera or a free-film spectator. Keep ordinary camera choice untouched
+      // until the user actually selects NANO from the story HUD.
+      if (futureMini) {
+        if (REC.on) REC.set(false);
+        ROAMS.mode = '3p';
+        camB.textContent = '🎥 VISTA: 3ª PERSONA (C)';
+      }
       const animated = futureMini && NANO_CINEMA.start();
       if (!animated) ROAMS.mini = futureMini;
       ROAMS.cp = null; ROAMS.ep = null; ROAMS.tgt = null; ROAMS.cy = ROAMS.yaw; ROAMS.k = {}; ROAMS.touchStick = null; ROAMS.flyH = ROAMS.h || 0; ROAMS.climbV = 0; ROAMS.vy = 0;
