@@ -1,0 +1,30 @@
+name: Audio single GPU budget and cinematic loader
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'assets/css/unfire-adaptive-loading.css'
+      - 'assets/js/unfire-adaptive-loading.js'
+      - 'tests/audio-gpu-budget-cinematic.test.cjs'
+      - '.github/workflows/audio-gpu-budget-cinematic.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cpu-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and deterministic adaptive graphics policy
+        run: |
+          node --check audio/maletin/game-engine-v50.js
+          node --check assets/js/unfire-adaptive-loading.js
+          node --check tests/audio-gpu-budget-cinematic.test.cjs
+          node --test tests/audio-gpu-budget-cinematic.test.cjs
+      - name: Existing gameplay contracts
+        run: |
+          node --test tests/nimbo-optional-intro.test.cjs tests/audio-roaming-collision-broadphase.test.cjs tests/audio-roaming-prewarm.test.cjs

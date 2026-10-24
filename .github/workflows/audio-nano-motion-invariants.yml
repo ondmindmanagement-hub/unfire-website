@@ -1,0 +1,27 @@
+name: Audio nano movement invariants
+
+on:
+  pull_request:
+    paths:
+      - 'tests/audio-nano-motion-invariants.test.cjs'
+      - 'audio/maletin/nano-physics.js'
+      - '.github/workflows/audio-nano-motion-invariants.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: audio-nano-invariants-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  nano-motion-invariants:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify deterministic tests are syntactically valid
+        run: node --check tests/audio-nano-motion-invariants.test.cjs
+      - name: Check movement, flight, cameras, collisions and morphs
+        run: node --test tests/audio-nano-motion-invariants.test.cjs
