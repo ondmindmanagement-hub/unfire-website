@@ -34,11 +34,13 @@ test('nano robot keeps free-roam coordinates, input modes and proportional mobil
   assert.match(ENGINE,/miniCameraRatio = ROAMS\.mini \? NANO_SCALE : 1/);
   assert.match(ENGINE,/ROAMS\.fly\) \{ const miniFlight = ROAMS\.mini \? NANO_SCALE : 1/);
 });
-test('coin HUD is reachable above the minimap and never underneath the settings gear',()=>{
-  assert.match(COINS, /#unfireCoinHud\{[^\n]*top:calc\(env\(safe-area-inset-top\) \+ 8px\);left:max\(12px,env\(safe-area-inset-left\)\);right:auto;/,
-    'wallet must sit in free top-left space, not under right-side gear');
-  assert.match(COINS, /@media\(max-height:480px\)\{#unfireCoinHud\{top:calc\(env\(safe-area-inset-top\) \+ 4px\);/,
-    'short landscape HUD must leave minimap clear');
+test('coin HUD lives centrally, clear of the radio and settings touch targets',()=>{
+  assert.match(COINS, /#unfireCoinHud\{[^\n]*top:calc\(env\(safe-area-inset-top\) \+ 78px\);left:50%;right:auto;transform:translateX\(-50%\)/,
+    'wallet must be below the left radio and clear of the right settings button');
+  assert.match(COINS, /@media\(max-height:480px\)\{#unfireCoinHud\{top:calc\(env\(safe-area-inset-top\) \+ 58px\);/,
+    'short landscape central wallet must not cover the minimap');
+  assert.match(COINS, /body:has\(#wradio\.expanded\) #unfireCoinHud\{visibility:hidden;pointer-events:none\}/,
+    'expanded radio temporarily owns the upper HUD, without click-through wallet');
 });
 
 test('offline coin module is loaded before engine and avoids payments / online sharing',()=>{
