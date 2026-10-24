@@ -64,7 +64,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
       });
       await page.waitForFunction(() => {
         const a = window.__roamAPI.ROAMS.av;
-        return !!(a?.w && a.baseScale && a.w.scale.x / a.baseScale < 0.03);
+        return !!(a?.w && a.baseScale && a.w.scale.x / a.baseScale > 0.02 && a.w.scale.x / a.baseScale < 0.025);
       }, null, {timeout: 20000, polling: 150});
       const mini = await page.evaluate(() => {
         const r = window.__roamAPI.ROAMS;
