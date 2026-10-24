@@ -421,6 +421,8 @@ body.unfire-roaming #cv{touch-action:none}
   window.__LANG = L;
   window.__setLang = (l) => { try { localStorage.setItem('unfire_lang', l); } catch (e) {} location.reload(); };
   const EN = {
+    // Línea del diálogo de ARI: texto y voz sintetizada comparten traducción.
+    'Y porque el 9 ya estaba elegido.': 'And because 9 was already taken.',
     // interfaz y avisos
     '🚶 PASEAR': '🚶 WALK', '↩ VOLVER AL MALETÍN': '↩ BACK TO THE CASE', '⏏ SALIR A LA WEB': '⏏ BACK TO THE WEBSITE', '🤖 UNFIRE CONTROL': '🤖 UNFIRE CONTROL',
     '🎥 VISTA: 3ª PERSONA (C)': '🎥 VIEW: 3RD PERSON (C)', '🎥 VISTA: ': '🎥 VIEW: ', '3ª PERSONA': '3RD PERSON', '3ª LEJOS': '3RD FAR', '1ª PERSONA': '1ST PERSON', 'DRON': 'DRONE', '🎒 SACAR MALETÍN (G)': '🎒 PULL OUT CASE (G)', '🔧 TALLER': '🔧 WORKSHOP', '🌐 ONLINE': '🌐 ONLINE', '🌐 MODO ONLINE': '🌐 ONLINE MODE', 'Tu nombre': 'Your name', 'Escribe tu nombre': 'Type your name', 'Color de tu robot': 'Your robot colour', 'Tipo de robot transformable': 'Transformable robot type', '✨ CREAR SALA': '✨ CREATE ROOM', '➜ UNIRME': '➜ JOIN', 'CÓDIGO': 'CODE', 'CERRAR': 'CLOSE', '📨 INVITAR': '📨 INVITE', 'Creando sala…': 'Creating room…', 'Esa sala no existe o el anfitrión se ha ido': 'That room does not exist or the host left', 'El código tiene 5 letras o números': 'The code has 5 letters or numbers', '🏄 TABLA: NO (B)': '🏄 BOARD: OFF (B)', '🏄 ¡Estás en el agua! Pulsa TABLA (o B) para surfear': '🏄 You are in the water! Press BOARD (or B) to surf', '🏄 TABLA: SÍ (B)': '🏄 BOARD: ON (B)', '🏄 Tabla activada · en el agua: ESPACIO = truco (mantén para volar)': '🏄 Board on · in the water: SPACE = trick (hold to fly)', '🪽 Tabla guardada · ESPACIO vuelve a ser volar': '🪽 Board stowed · SPACE flies again', '¿Has visto la isla Haiku? Cerezos en flor, una pagoda y un monte nevado. Dicen que los koi bailan con el bajo.': 'Have you seen Haiku Island? Cherry blossoms, a pagoda and a snowy mountain. They say the koi dance to the bass.', 'Hay olas de verdad en el mar abierto. Coge una tabla en la SURF ZONE y pulsa ESPACIO para hacer trucos.': 'There are real waves out in the open sea. Grab a board at the SURF ZONE and press SPACE for tricks.', 'Mi récord de surf: un FLIP con combo ×3. ¿Te atreves a superarlo?': 'My surf record: a FLIP with a ×3 combo. Dare to beat it?', 'Desde el cielo el mundo no se acaba: islas de sueño, dunas y jardines hasta el horizonte.': 'From the sky the world never ends: dream islands, dunes and gardens all the way to the horizon.', 'Las columnas de la casa son las bobinas del casete. Y ojo, cuando pasas detrás de una… algo cambia.': 'The house columns are the cassette reels. And watch out, when you pass behind one… something changes.', 'La pirámide de Atlantis la han restaurado: piedra de verdad, escalinata y templo arriba.': 'The Atlantis pyramid has been restored: real stone, a grand staircase and a temple on top.', 'Los plugins gigantes del cielo nacen como una célula y se van desplegando poquito a poco.': 'The giant sky plugins are born as a cell and unfold little by little.', 'Dicen que el modo cine (V) es para grabar vídeos como los de los juegos. Yo ya hice uno.': 'They say cinema mode (V) is for recording videos like in games. I already made one.', 'Al atardecer el mar se pone dorado y la isla Haiku huele a cerezo.': 'At sunset the sea turns gold and Haiku Island smells of cherry blossom.', 'El horizonte es infinito, pero hasta el borde del mapa solo llega quien vuela de verdad.': 'The horizon is infinite, but only true flyers reach the edge of the map.', 'Cruza los torii de la isla Haiku hasta la pagoda': 'Walk through the Haiku Island torii to the pagoda', 'Sube a la cima nevada del monte de la isla Haiku': 'Climb the snowy peak on Haiku Island', 'Surfea una ola grande en mar abierto': 'Surf a big wave in the open sea', '🌊 ¡Wipeout! Casi…': '🌊 Wipeout! So close…', '🎬 MODO CINE (V)': '🎬 CINEMA MODE (V)', 'MODO CINE · WASD · Q/E · arrastra · V salir': 'CINEMA MODE · WASD · Q/E · drag · V exit', '✕ SALIR': '✕ EXIT',
@@ -1924,19 +1926,26 @@ const G3 = (() => {
 
   // ---------- Escena ----------
   function createStage(canvas) {
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: false, powerPreference: 'high-performance' });
+    // This renderer is separate from the main world. Reuse its device profile
+    // instead of allocating a second full-resolution/shadowed WebGL scene on mobile.
+    const stageBudget = window.__UNFIRE_AUTOCALIB || { tier: 'desktop', maxDpr: 1.5 };
+    const stageCompact = stageBudget.tier === 'compact';
+    const stageBalanced = stageBudget.tier === 'balanced';
+    const stageDpr = Math.min(window.devicePixelRatio || 1, stageBudget.maxDpr || 1.5);
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: !stageCompact, alpha: true, preserveDrawingBuffer: false, powerPreference: stageCompact ? 'default' : 'high-performance' });
     renderer.setClearColor(0x000000, 0);
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.08;
-    renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    renderer.shadowMap.enabled = !stageCompact; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.setPixelRatio(stageDpr);
     const scene = new THREE.Scene();
     const pmrem = new THREE.PMREMGenerator(renderer);
     scene.environment = pmrem.fromScene(studioScene(), 0.02).texture;
     const camera = new THREE.PerspectiveCamera(27, 1, 0.1, 100);
     camera.position.set(0, 1.35, 7.8);
-    const key = new THREE.DirectionalLight(0xffffff, 1.9); key.position.set(3.5, 7, 5); key.castShadow = true;
-    key.shadow.mapSize.set(2048, 2048); key.shadow.camera.left = -6; key.shadow.camera.right = 6; key.shadow.camera.top = 6; key.shadow.camera.bottom = -6;
+    const key = new THREE.DirectionalLight(0xffffff, 1.9); key.position.set(3.5, 7, 5); key.castShadow = !stageCompact;
+    const stageShadowMapSize = stageCompact ? 512 : stageBalanced ? 1024 : 2048;
+    key.shadow.mapSize.set(stageShadowMapSize, stageShadowMapSize); key.shadow.camera.left = -6; key.shadow.camera.right = 6; key.shadow.camera.top = 6; key.shadow.camera.bottom = -6;
     key.shadow.radius = 6; key.shadow.bias = -0.0004; key.shadow.normalBias = 0.02;
     scene.add(key);
     const rim = new THREE.DirectionalLight(0xbfd8ff, 1.1); rim.position.set(-5, 3, -4); scene.add(rim);
@@ -4481,7 +4490,7 @@ window.ROOMC = function (D) {
       [['LEO', 'Quiero aprender a producir música.'], ['ARI', 'Pues abre el maletín y toca cualquier cosa. Todo suena.'], ['GEMI', 'Y si suena mal, súbele la reverb. Truco de los 2000.']],
       [['GEMI', 'La isla Haiku huele a cerezo.'], ['ARI', 'Y el desierto huele a arena caliente y a bajo de 808.'], ['LEO', 'Yo huelo a aceite de motor. Es mi perfume.']],
       [['ARI', 'Hoy he volado hasta las nubes de verdad.'], ['LEO', '¿Y qué hay arriba?'], ['ARI', 'Más nubes. Y luego el espacio. Y luego… silencio.'], ['GEMI', 'El silencio también es música, dicen.']],
-      [['LEO', '¿Por qué el número del jefe es el 27?'], ['GEMI', 'Porque es Acuario. Los Acuario no eligen números normales.'], ['ARI', 'Y porque el 5 ya estaba cogido.']],
+      [['LEO', '¿Por qué el número del jefe es el 27?'], ['GEMI', 'Porque es Acuario. Los Acuario no eligen números normales.'], ['ARI', 'Y porque el 9 ya estaba elegido.']],
       [['GEMI', 'Mañana quiero montar un concierto en la azotea.'], ['ARI', 'Yo traigo los altavoces.'], ['LEO', 'Yo traigo el ego.'], ['GEMI', 'Eso ya lo traes siempre.']],
       [['ARI', 'He encontrado un tiburón dando vueltas cerca del desierto.'], ['LEO', '¿Te mordió?'], ['ARI', 'No. Solo quería escuchar la radio.']],
       [['LEO', 'Cuando sea mayor quiero ser un sintetizador.'], ['GEMI', 'Ya eres medio sintetizador.'], ['LEO', 'Quiero ser uno entero. Con teclado y todo.']],
@@ -4870,6 +4879,7 @@ window.STORY_INIT = function (H) {
 <script src="expanded-map.js?v=20261024combinedqa1"></script>
 <script src="coins-shop.js?v=20261024combinedqa1"></script>
 <script src="nano-physics.js?v=20261024combinedqa1"></script>
+<script src="robot-customization.js?v=20261024robotselect1"></script>
 <script src="game-engine-v50.js?v=20261024combinedqa1"></script>
 <script src="garage-scroll-guard.js?v=20261024combinedqa1" defer></script>
 <script src="mobile-hud-guard.js?v=20261023hudlayout1" defer></script>
