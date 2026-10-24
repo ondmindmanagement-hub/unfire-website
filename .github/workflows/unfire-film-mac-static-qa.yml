@@ -1,0 +1,32 @@
+name: Unfire Film Mac Capture - Static QA
+on:
+  push:
+    branches:
+      - film/unfire-preview-trailer-gameplay-20261024
+    paths:
+      - 'film/mac/20261024/**'
+      - '.github/workflows/unfire-film-mac-static-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate-capture-scripts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check native capture scripts syntax (without running WebGL)
+        run: |
+          node --check film/mac/20261024/record_cine_mac.cjs
+          node --check film/mac/20261024/record_gameplay_mac.cjs
+          bash -n film/mac/20261024/run_mac_capture.command
+      - name: Check no fake/still assets and separate exports
+        run: |
+          grep -q 'window.__REC.set(true)' film/mac/20261024/record_cine_mac.cjs
+          grep -q 'window.__REC.set(false)' film/mac/20261024/record_gameplay_mac.cjs
+          grep -q 'UNFIRE_GAMEPLAY_REAL_CONTINUO.mp4' film/mac/20261024/record_gameplay_mac.cjs
+          grep -q 'MediaRecorder' film/mac/20261024/record_cine_mac.cjs
+          ! grep -Eq 'drawImage|createElement\(.*img|screenshot\(' film/mac/20261024/record_cine_mac.cjs
