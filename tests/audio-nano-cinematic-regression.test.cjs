@@ -25,13 +25,13 @@ function cinematicContext(){
   const end=engine.indexOf('  const MIX =',start);
   assert(start>0&&end>start,'NANO morph must be owned by existing engine, ahead of MIX');
   const world={on:true,mini:false,fly:true,h:5,yaw:0,cy:0,p:{x:0,z:10},k:{w:1}};
-  const items=[];
+  const items=[];let monotonicMs=0;
   const context={THREE:fakeThree,Y2K:{led:()=>({})},ROAMS:world,
     S:{scene:{add(o){items.push(o);}}},
     V:(...x)=>new Vec(...x),TAU:Math.PI*2,H2:Math.PI/2,
-    window:{ATM_OUT:true}};
+    window:{ATM_OUT:true},performance:{now:()=>monotonicMs}};
   const cinema=vm.runInNewContext(engine.slice(start,end)+'\n NANO_CINEMA;',context,{timeout:900});
-  return {cinema,world,items};
+  return {cinema,world,items,advance:ms=>{monotonicMs+=ms;}};
 }
 test('nano dimensions equal miniature case robots, and remain collision-sized',()=>{
   const n=Physics.profile(true),normal=Physics.profile(false);
@@ -61,6 +61,15 @@ test('sphere starts at full robot chest, physically moves and unfolds into the v
   assert.equal(sphere.visible,false,'sphere hidden once one playable nano is fully revealed');
   assert.equal(cinema.avatarFactor(),1);
   assert.equal(items.length,1,'subsequent frames never create a new mesh collection');
+});
+test('one slow rendering frame does not stretch the nano cinematic into a long freeze',()=>{
+  const {cinema,world,items,advance}=cinematicContext();
+  assert.equal(cinema.start(),true);
+  advance(1900); // the GPU was blocked for 1.9s between frames
+  cinema.tick(0.05);
+  assert.equal(world.mini,true,'time-based transition must still activate nano');
+  assert.equal(cinema.busy(),false,'cinematic must complete on the next available frame');
+  assert.equal(items[0].visible,false,'no stuck chest shell after a frame stall');
 });
 test('nano-only sky flight responds to x1 x3 x8 without excessive cruise speed',()=>{
   const {cinema,world}=cinematicContext();
