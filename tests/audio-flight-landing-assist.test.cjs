@@ -7,7 +7,7 @@ const vm = require('node:vm');
 const source = fs.readFileSync(path.join(__dirname,'../audio/maletin/game-engine-v50.js'),'utf8');
 
 function createRig() {
-  const begin=source.indexOf('  { const LV = [1, 3, 8, 20];');
+  const begin=source.indexOf('  { const LV = [1, 3, 8];');
   const end=source.indexOf('  // líneas de velocidad',begin);
   assert.ok(begin>0 && end>begin,'Found isolated flight UI block');
   const elements=new Map();
@@ -32,18 +32,18 @@ function createRig() {
     up:()=>elements.get('prUp').onclick(),down:()=>elements.get('prDn').onclick()};
 }
 
-test('selector never exposes x45 and preserves x20 as the maximum',()=>{
+test('selector never exposes x45 and preserves x8 as the maximum',()=>{
   const rig=createRig();
   for(let i=0;i<12;i++)rig.up();
-  assert.ok(rig.advance(2.5)>19.5);
+  assert.ok(rig.advance(2.5)>7.5);
   rig.hud();
-  assert.match(rig.elements.get('prT').textContent,/PROPULSIÓN x20/);
+  assert.match(rig.elements.get('prT').textContent,/PROPULSIÓN x8/);
   assert.doesNotMatch(rig.elements.get('prT').textContent,/x45/);
 });
 
 test('flight slows smoothly before the main island and recovers the stored selection when leaving',()=>{
   const r=createRig();for(let i=0;i<3;i++)r.up();
-  const full=r.advance(3);assert.ok(full>19);
+  const full=r.advance(3);assert.ok(full>7.2);
   r.ROAMS.p.x=1260;r.ROAMS.p.z=0;r.ROAMS.h=38;
   const halfway=r.advance(0.4);assert.ok(halfway<full&&halfway>0);
   r.ROAMS.p.x=40;r.ROAMS.p.z=0;
@@ -51,8 +51,8 @@ test('flight slows smoothly before the main island and recovers the stored selec
   assert.ok(slowed<4, 'at the shore it is slow enough for approach');
   r.hud();assert.match(r.elements.get('prT').textContent,/cerca x/);
   r.ROAMS.p.x=3500;r.ROAMS.p.z=2800;
-  const restored=r.advance(3);assert.ok(restored>19.5);
-  r.hud();assert.match(r.elements.get('prT').textContent,/PROPULSIÓN x20/);
+  const restored=r.advance(3);assert.ok(restored>7.5);
+  r.hud();assert.match(r.elements.get('prT').textContent,/PROPULSIÓN x8/);
 });
 
 test('the house, secondary islands and raised approach are handled without sudden values',()=>{
@@ -65,7 +65,7 @@ test('the house, secondary islands and raised approach are handled without sudde
     assert.ok(r.advance(1)>speed, 'restore begins on exit');
   }
   r.ROAMS.p.x=0;r.ROAMS.p.z=0;r.ROAMS.h=1600;
-  assert.ok(r.advance(3)>19, 'high transit altitude preserves selected thrust');
+  assert.ok(r.advance(3)>7.2, 'high transit altitude preserves selected thrust');
 });
 
 test('flight off resets only effective speed, not the selected value',()=>{
@@ -73,14 +73,14 @@ test('flight off resets only effective speed, not the selected value',()=>{
   r.ROAMS.p.x=0;r.ROAMS.p.z=40;r.advance(2);
   r.ROAMS.fly=false;assert.equal(r.window.__PROP(),1);
   r.ROAMS.p.x=4500;r.ROAMS.p.z=4500;r.ROAMS.fly=true;
-  assert.ok(r.advance(3)>19);
+  assert.ok(r.advance(3)>7.2);
 });
 
 test('1p and 3p both apply the same propulsor during outdoor flight; trackpad and case untouched',()=>{
   assert.match(source,/if \(GTA\)[\s\S]*?2\.6 \* \(window\.__PROP \? window\.__PROP\(\) : 1\)/);
   assert.match(source,/else if \(ROAMS\.mode === '1p'\)[^\n]*?2\.6 \* \(window\.__PROP \? window\.__PROP\(\) : 1\)/);
-  assert.match(source,/const LV = \[1, 3, 8, 20\]/);
-  assert.doesNotMatch(source,/const LV = \[1, 3, 8, 20, 45\]/);
+  assert.match(source,/const LV = \[1, 3, 8\]/);
+  assert.doesNotMatch(source,/const LV = \[1, 3, 8, 45\]/);
   assert.match(source,/outsideName\.rotation\.y=Math\.PI;/);
   assert.match(source,/side:THREE\.FrontSide/);
   assert.match(source,/g\.fillText\('SALIDA', 128, 140\)/,'inside door still says SALIDA');
