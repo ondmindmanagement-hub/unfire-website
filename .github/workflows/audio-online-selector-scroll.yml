@@ -1,0 +1,23 @@
+name: Audio Online Selector Input Priority
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/garage-scroll-guard.js'
+      - 'tests/audio-online-selector-scroll.test.cjs'
+      - '.github/workflows/audio-online-selector-scroll.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  online-selector:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate selector, garage and trackpad isolation
+        run: |
+          node --check audio/maletin/garage-scroll-guard.js
+          node --test tests/audio-online-selector-scroll.test.cjs tests/audio-garage-scroll-guard.test.cjs tests/audio-trackpad-wheel-isolation.test.cjs
