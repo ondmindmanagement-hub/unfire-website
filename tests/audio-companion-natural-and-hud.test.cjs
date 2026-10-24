@@ -48,9 +48,9 @@ test('HTML loads natural-flight before friends and engine; ambient robots cannot
 });
 test('coin HUD above minimap, duplicate mobile NPC talk hidden, focus modal hides controls',()=>{
  const coins=read('coins-shop.js'),talk=read('unfire-conversations.js');
- assert.match(coins,/#unfireCoinHud\{position:fixed;z-index:43;top:calc\(env\(safe-area-inset-top\) \+ 8px\);left:max\(7px,env\(safe-area-inset-left\)\)/);
+ assert(coins.includes('@media(pointer:coarse){#unfireCoinHud{top:calc(env(safe-area-inset-top) + 65px);left:calc(env(safe-area-inset-left) + 96px)'), 'coin dock to the right of map');
  assert.doesNotMatch(coins,/#unfireCoinHud\{[^\n]*left:50%/);
- assert.match(coins,/@media\(max-width:420px\)\{#unfireCoinHud\{max-width:60px/);
+ assert(coins.includes('@media(max-width:420px){#unfireCoinHud{left:calc(env(safe-area-inset-left) + 84px)'), 'compact coin on phones');
  assert.match(talk,/@media\(pointer:coarse\)\{#ufNear\{display:none!important/);
  assert.match(talk,/talk\.textContent !== label/);
  assert.match(talk,/body:has\(#ufDialogs\.on\) #unfireFly/);

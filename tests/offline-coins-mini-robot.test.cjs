@@ -35,11 +35,11 @@ test('nano robot keeps free-roam coordinates, input modes and proportional mobil
   assert.match(ENGINE,/ROAMS\.fly\) \{ const miniFlight = ROAMS\.mini && window\.ATM_OUT \? Math\.max\(0\.64, avatarProfile\(\)\.speedScale\) : avatarProfile\(\)\.speedScale/, 'nano uses a proportional but usable vertical cruise policy');
 });
 test('coin HUD stays directly above minimap, clear of central play and other mobile buttons',()=>{
-  assert(COINS.includes('top:calc(env(safe-area-inset-top) + 8px);left:max(7px,env(safe-area-inset-left));right:auto;transform:none'),
+  assert(COINS.includes('@media(pointer:coarse){#unfireCoinHud{top:calc(env(safe-area-inset-top) + 65px);left:calc(env(safe-area-inset-left) + 96px)'),
     'wallet anchored top-left above minimap');
-  assert(COINS.includes('@media(max-width:420px){#unfireCoinHud{max-width:60px'),
+  assert(COINS.includes('@media(max-width:420px){#unfireCoinHud{left:calc(env(safe-area-inset-left) + 84px);max-width:60px'),
     'narrow portrait wallet remains compact');
-  assert(COINS.includes('@media(max-height:480px){#unfireCoinHud{top:calc(env(safe-area-inset-top) + 7px)'),
+  assert(COINS.includes('@media(max-height:480px){#unfireCoinHud{top:calc(env(safe-area-inset-top) + 60px)'),
     'short landscape wallet above minimap');
   assert(COINS.includes('body:has(#wradio.expanded) #unfireCoinHud{visibility:hidden;pointer-events:none}'),
     'expanded radio hides wallet');

@@ -68,8 +68,9 @@
       'body:has(#wradio.expanded) #unfireCoinHud{visibility:hidden;pointer-events:none}\n' +
       'body.storyOn #unfireCoinHud,body.storyOn #unfireCoinShop{display:none!important}\n' +
       'body:has(#ufDialogs.on) #unfireCoinHud,body:has(#unfireCoinShop.open) #unfireCoinHud{visibility:hidden;pointer-events:none}\n' +
-      '@media(max-width:420px){#unfireCoinHud{max-width:60px;gap:2px;padding:4px 6px}#unfireCoinHud span:last-child{display:none}}\n' +
-      '@media(max-height:480px){#unfireCoinHud{top:calc(env(safe-area-inset-top) + 7px);font-size:10px;min-height:30px}#unfireCoinShop .panel{max-height:88dvh;padding:11px}}\n' +
+      '@media(pointer:coarse){#unfireCoinHud{top:calc(env(safe-area-inset-top) + 65px);left:calc(env(safe-area-inset-left) + 96px)}}\n' +
+      '@media(max-width:420px){#unfireCoinHud{left:calc(env(safe-area-inset-left) + 84px);max-width:60px;gap:2px;padding:4px 6px}#unfireCoinHud span:last-child{display:none}}\n' +
+      '@media(max-height:480px){#unfireCoinHud{top:calc(env(safe-area-inset-top) + 60px);font-size:10px;min-height:30px}#unfireCoinShop .panel{max-height:88dvh;padding:11px}}\n' +
       '@media(prefers-reduced-motion:reduce){#unfireCoinSystem *{animation:none!important;transition:none!important}}\n' +
       '</style><button id="unfireCoinHud" type="button" aria-label="Abrir tienda de monedas"><span aria-hidden="true">🟡</span><span data-wallet>0</span><span aria-hidden="true">＋</span></button>' +
       '<section id="unfireCoinShop" role="dialog" aria-modal="true" aria-label="Tienda de monedas" aria-hidden="true"><div class="panel"><div class="heading"><h2>🟡 Unfire Coins</h2><button data-close type="button" aria-label="Cerrar tienda">✕</button></div><div class="hint">Recoge monedas explorando y desbloquea cosas para tu partida individual. No cuesta dinero. No afecta al online.</div><p data-available aria-live="polite"></p><div data-products></div><p data-message aria-live="polite"></p></div></section>';

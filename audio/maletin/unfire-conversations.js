@@ -224,7 +224,7 @@
     const talk = gi('unfireTalk');
     if (talk) {
       // Reuse the existing right-thumb action. Never stack a duplicate speech button.
-      const label = best ? '💬 ' + best.name.slice(0, 12) : tr('💬 HABLAR', '💬 TALK');
+      const label = tr('💬 HABLAR', '💬 TALK');
       if (talk.textContent !== label) talk.textContent = label;
       talk.title = best ? tr('Hablar con ', 'Talk to ') + best.name : tr('Hablar con un robot cercano', 'Talk to a nearby robot');
       talk.setAttribute('aria-label', talk.title);

@@ -17,7 +17,7 @@ const css=normal+'\n'+extra+'\n'+coinCss+'\n'+conversationCss+
 '\n#stO{position:fixed;top:9px;left:50%;transform:translateX(-50%);width:55vw;max-width:55vw;padding:6px;box-sizing:border-box}' +
 '\n#unfireCoinHud{display:flex}';
 const fixture='<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>'+css+'</style></head><body class="unfire-roaming">'+
-'<div id="minimap"></div><div id="stO">Objetivo de misión</div><div id="ctlDock"></div>'+
+'<div id="minimap"></div><div id="stO">Objetivo de misión</div><div id="ctlDock"></div><div id="wradio" style="position:fixed;display:flex;z-index:74"><button id="wrOn">📻 RADIO</button><button>⏭</button></div>'+
 '<div id="unfireTouchPad" style="position:fixed;left:18px;bottom:18px;width:130px;height:130px;display:block"><span id="unfireTouchKnob"></span></div>'+
 '<button id="unfireFly" style="display:block">VOLAR</button><button id="unfireTalk" style="display:block">HABLAR</button><button id="unfireDown" style="display:block">BAJAR</button>'+
 '<button id="ufNear" class="on">💬 BOMBO</button>'+
@@ -40,21 +40,23 @@ const overlaps=(a,b)=>a.left<b.right-1&&b.left<a.right-1&&a.top<b.bottom-1&&b.to
     const page=await ctx.newPage();await page.setContent(fixture);
     const r=await page.evaluate(()=>{
      const out={};
-     for(const id of ['minimap','stO','unfireCoinHud','ufNear','unfireFly','unfireTalk','unfireDown','unfireTouchPad']){
+     for(const id of ['minimap','stO','wradio','unfireCoinHud','ufNear','unfireFly','unfireTalk','unfireDown','unfireTouchPad']){
       const el=document.getElementById(id),q=el.getBoundingClientRect(),s=getComputedStyle(el);
       out[id]={left:q.left,right:q.right,top:q.top,bottom:q.bottom,display:s.display,visibility:s.visibility};
      }
      return out;
     });
     assert(r.unfireCoinHud.right<=width-6,name+': coin outside viewport');
-    assert(r.unfireCoinHud.bottom<=r.minimap.top-3,name+': coin overlaps minimap');
+    assert(!overlaps(r.unfireCoinHud,r.minimap),name+': coin overlaps minimap');
+    assert(!overlaps(r.unfireCoinHud,r.wradio),name+': coin overlaps radio');
     assert(!overlaps(r.unfireCoinHud,r.stO),name+': coin overlaps objective');
-    assert(r.unfireCoinHud.left<width*.25,name+': coin obstructs center');
+    assert(r.unfireCoinHud.left<width*.34,name+': coin obstructs center');
     if(mobile){
       assert.equal(r.ufNear.display,'none',name+': duplicate robot conversation button');
       assert(!overlaps(r.unfireCoinHud,r.unfireTalk),name+': coin overlaps talk');
       assert(!overlaps(r.unfireCoinHud,r.unfireFly),name+': coin overlaps fly');
       assert(!overlaps(r.unfireTalk,r.unfireFly),name+': talk overlaps fly');
+      assert(!overlaps(r.unfireTalk,r.unfireDown),name+': talk overlaps DOWN');
     }
     await page.evaluate(()=>document.getElementById('ufDialogs').classList.add('on'));
     const dialog=await page.evaluate(()=>{
