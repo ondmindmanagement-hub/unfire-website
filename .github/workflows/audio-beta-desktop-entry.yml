@@ -1,0 +1,68 @@
+name: Audio PC beta entry QA
+on:
+  pull_request:
+    paths:
+      - 'audio/beta/**'
+      - 'tests/audio-beta-desktop-entry.test.cjs'
+      - 'tests/audio-beta-desktop-entry-browser.cjs'
+      - '.github/workflows/audio-beta-desktop-entry.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: audio-pc-beta-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  static-pc-gateway:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify standalone beta gateway, PC link, ES/EN and no analytics
+        run: node --test tests/audio-beta-desktop-entry.test.cjs
+  browser-gateway:
+    needs: static-pc-gateway
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium test runtime
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Run campaign visual, language and click-routing smoke QA
+        run: |
+          python3 -m http.server 8792 --bind 127.0.0.1 > /tmp/unfire-beta-http.log 2>&1 &
+          sleep 2
+          node tests/audio-beta-desktop-entry-browser.cjs
+
+  windows-chromium:
+    needs: static-pc-gateway
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium for Windows browser QA
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+      - name: Test desktop PC beta entry on Windows Chromium
+        shell: pwsh
+        run: |
+          $server = Start-Process -FilePath python -ArgumentList '-m','http.server','8792','--bind','127.0.0.1' -PassThru -NoNewWindow
+          try {
+            Start-Sleep -Seconds 3
+            node tests/audio-beta-desktop-entry-browser.cjs
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          } finally {
+            Stop-Process -Id $server.Id -ErrorAction SilentlyContinue
+          }
