@@ -34,7 +34,7 @@ function load(){
   return {api:window.UnfireConversations,nodes,window,intervals};
 }
 test('loaded after engine, retaining existing cinematic NPC UI',()=>{
-  assert.match(html,/game-engine-v50\.js\?v=20261024nomoons1"><\/script>\s*<script src="unfire-conversations\.js\?v=20261024nomoons1"/);
+  assert.match(html,/game-engine-v50\.js\?v=20261024nomoonswalk1"><\/script>\s*<script src="unfire-conversations\.js\?v=20261024nomoons1"/);
   assert.match(engine,/const OUTTALK\s*=/);
   assert.match(engine,/window\.__UNFIRE_DIALOGUE_WORLD\s*=/);
 });
