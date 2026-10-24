@@ -39,6 +39,14 @@ const {chromium} = require('playwright');
       assert.equal(await page.locator('[data-language="en"]').getAttribute('aria-pressed'),'true');
       await page.getByRole('button',{name:'ES'}).click();
       assert.equal(await page.locator('html').getAttribute('lang'),'es');
+      // Exercise organic referral sharing without opening an external UI or touching OS clipboard.
+      await page.evaluate(()=>{
+        Object.defineProperty(navigator,'share',{value:undefined,configurable:true});
+        Object.defineProperty(navigator,'clipboard',{value:{writeText:async link=>{window.__copiedLink=link;}},configurable:true});
+      });
+      await page.locator('#share').click();
+      await page.waitForFunction(()=>window.__copiedLink==='https://unfire.technology/audio/beta/',null,{timeout:3000});
+      assert.equal(await page.locator('#shareStatus').innerText(),'Enlace copiado');
       const play=page.locator('#play');
       await play.scrollIntoViewIfNeeded();
       if(l.hasTouch)await play.tap();else await play.click();
