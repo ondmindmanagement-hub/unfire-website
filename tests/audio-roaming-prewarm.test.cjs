@@ -37,7 +37,7 @@ function harness(opts={}) {
   const jobs=[];
   let clock=0;
   const ctx={
-    ROOM,ROAMS,document,window,LOWDEV:true,
+    ROOM,ROAMS,document,window,LOWDEV:opts.lowdev!==false,
     THREE:{Box3:Box,Vector3:Vector,AdditiveBlending:2},
     V:(x,y,z)=>new Vector(x,y,z),
     setTimeout(fn){jobs.push(fn);return jobs.length;},
@@ -64,6 +64,11 @@ test('prewarm builds movable props and full obstacles without changing hitboxes'
   assert.equal(b.z0,28.9); assert.equal(b.z1,33.1);
   assert.equal(b.y1,-.8);
 });
+test('desktop prewarms the same complete collision boxes in short slices',()=>{
+  const h=harness({lowdev:false}); h.flush();
+  assert.equal(h.window.__PROPS.length,1);
+  assert.equal(h.window.__OBST.length,1);
+});
 test('prewarm never commits partial collision data when walking starts',()=>{
   const h=harness();
   assert.equal(h.jobs.length,1);
@@ -83,7 +88,7 @@ test('original complete collision fallback still exists in active gameplay',()=>
   assert.match(engine,/window\.__OBST = window\.__buildObst\(\)/);
   assert.match(engine,/roomPrewarmRequested = true/);
   assert.match(engine,/lidOpen > 0\.985 && !entryDolly\.active/);
-  assert.match(engine,/setTimeout\(prewarmRoamingProps, 500\)/);
+  assert.match(engine,/setTimeout\(prewarmRoamingProps, 120\)/);
   assert.match(fragment,/performance\.now\(\) \+ 2\.5/);
   assert.match(fragment,/!ROAMS\.on && !window\.__OBST && !document\.hidden/);
 });
