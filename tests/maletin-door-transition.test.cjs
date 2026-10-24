@@ -5,6 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const { test } = require('node:test');
+const NANO_PHYSICS = require('../audio/maletin/nano-physics.js');
 
 const enginePath = process.env.UNFIRE_ENGINE_PATH ||
   path.join(__dirname, '..', 'audio', 'maletin', 'game-engine-v50.js');
@@ -31,7 +32,9 @@ function scene({ outside = false, x = -30, z = 92, yaw = Math.PI, obstacles = []
   } };
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const move = vm.runInNewContext('(' + roamMoveSource + ')',
-    { ROAMS, window, ATM, clamp, console });
+    { ROAMS, window, ATM, clamp, console, NANO_PHYSICS,
+      avatarProfile: () => NANO_PHYSICS.profile(Boolean(ROAMS.mini)),
+      COLLISION: boxes => boxes });
   return { move, ROAMS, window, exits };
 }
 

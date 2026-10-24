@@ -1,0 +1,32 @@
+name: Audio expanded map UI QA
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/expanded-map.js'
+      - 'audio/maletin/expanded-map.css'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'audio/index.html'
+      - 'tests/expanded-map*.cjs'
+      - '.github/workflows/audio-expanded-map.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  map-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check browser module and map behavior
+        run: |
+          node --check audio/maletin/expanded-map.js
+          node --check audio/maletin/game-engine-v50.js
+          node --test tests/expanded-map.test.cjs
+          node tests/audio-case-hotfix-cache.test.cjs
+      - name: Install isolated mobile viewport browser
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify seven small-screen, tablet and desktop layouts with no WebGL
+        run: node tests/expanded-map-browser.cjs

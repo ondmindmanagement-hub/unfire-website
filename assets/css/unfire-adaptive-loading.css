@@ -1,0 +1,10 @@
+/* Adaptive startup and stall feedback: no assets, canvas or blocking controls. */
+#ufAdaptiveLoader{box-sizing:border-box;position:fixed;inset:0;z-index:2147483000;display:none;place-items:center;padding:max(18px,env(safe-area-inset-top,0px)) max(18px,env(safe-area-inset-right,0px)) max(18px,env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));background:rgba(3,6,13,.95);color:#f5f7ff;text-align:center;pointer-events:none;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+html.uf-load-pending #ufAdaptiveLoader,#ufAdaptiveLoader[data-active="true"]{display:grid}
+#ufAdaptiveLoader[data-phase="recovery"]{background:rgba(3,6,13,.76)}
+#ufAdaptiveLoader .uf-load-card{width:min(90vw,340px);max-width:100%;display:grid;justify-items:center;gap:14px;padding:22px 18px;border-radius:18px;border:1px solid rgba(119,166,247,.32);background:rgba(10,16,31,.9);box-shadow:0 12px 36px rgba(0,0,0,.24)}
+#ufAdaptiveLoader .uf-load-emblem{width:26px;height:26px;border:2px solid rgba(147,191,255,.28);border-top-color:#9cc8ff;border-radius:50%;animation:uf-load-spin 1.2s linear infinite}
+#ufAdaptiveLoader .uf-load-brand{font-size:12px;letter-spacing:.28em;font-weight:750;color:#dce9ff}
+#ufAdaptiveLoader .uf-load-label{font-size:13px;line-height:1.5;letter-spacing:.01em;color:#c8d3e7}
+@keyframes uf-load-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#ufAdaptiveLoader .uf-load-emblem{animation:none;border-color:#9cc8ff}}
