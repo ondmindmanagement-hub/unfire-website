@@ -11,6 +11,11 @@ function harness({balance=0,claimedDate=null,claimedIds=[]}={}) {
   class ClockDate extends Date {
     constructor(...args) { super(...(args.length ? args : [clock.ms])); }
     static now() { return clock.ms; }
+    // The app deliberately uses the player's LOCAL calendar. Keep the mocked
+    // calendar on UTC for this deterministic midnight test across CI/Europe/Madrid.
+    getFullYear() { return this.getUTCFullYear(); }
+    getMonth() { return this.getUTCMonth(); }
+    getDate() { return this.getUTCDate(); }
   }
   class El {
     constructor() {
