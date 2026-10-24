@@ -2124,7 +2124,7 @@
     ['ECLIPSE','ASTRALIA','CRONOS'].forEach((name,i)=>{
       if(titans[i])add('titan-'+i,name,titans[i].w,475,true);
     });
-    (window.__OUTGIANTS||[]).forEach((g,i)=>add(g.lunarShip?'titan-ship':'titan-island',g.lunarShip?'UMBRAL':'BALUARTE',g.w,g.lunarShip?43:23,true));
+    (window.__OUTGIANTS||[]).forEach((g,i)=>add(i?'titan-island-roamer':'titan-island','BALUARTE',g.w,23,true));
     const walkers=OUTTALK.list||[];
     walkers.forEach((g,i)=>(g.bots||[]).forEach((b,j)=>add('out-'+i+'-'+j,b.name,b.w,24)));
     if(HOST && HOST.visible && HOST.pos && ROAMS.on && !window.ATM_OUT)

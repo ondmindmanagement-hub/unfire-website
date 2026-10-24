@@ -35,12 +35,6 @@
       end: 'Todo final contiene un comienzo, pero no todos los comienzos merecen ser apresurados.'
     }
   ];
-  const shipLore={
-    name:'UMBRAL, EL NAVÍO QUE ESCUCHA',origin:'Mi corazón es una cabina y mi pecho, una ventana. He viajado más lejos de lo que recuerdan las estrellas.',
-    secret:'Hay dos entradas a mi memoria. Una está junto al pie derecho y la otra en mi pecho. Ambas llevan al mismo destino.',
-    path:'He visto a la Luna sonreír sin boca y a las ballenas cantar en el vacío. Ninguna repitió la misma canción.',
-    task:'Entra en mi pecho. El DJ conoce la canción que permitirá encontrar el camino hasta la Luna.',
-    end:'Mi cuerpo permanecerá quieto mientras el viaje continúe en tus ojos.'};
   const islandLore={
     name:'BALUARTE, EL SABIO QUE CAMINA',origin:'Mis pasos son lentos porque llevo un recuerdo de cada piedra que he pisado.',
     secret:'Una de mis huellas termina exactamente donde comenzó el primer océano. Todavía no he encontrado la otra.',
@@ -130,7 +124,7 @@
     m.turn++;
     let reply;
     if (giants(id)) {
-      const lore = id==='titan-ship'?shipLore:id==='titan-island'?islandLore:giantLore[Number(id.split('-')[1]) % giantLore.length];
+      const lore = id.startsWith('titan-island')?islandLore:giantLore[Number(id.split('-')[1]) % giantLore.length];
       if (/nombre|qui[eé]n|who|name|eres/.test(q)) reply = 'Me llaman ' + lore.name + '. ' + lore.origin;
       else if (/secret|ocult|mister|clave|puerta|hidden/.test(q)) reply = lore.secret;
       else if (/misi[oó]n|ayuda|pista|busc|qu[eé] hago|help|quest/.test(q)) reply = lore.task;
@@ -289,7 +283,7 @@
     let closestGiant=null,closestDistance=Infinity;
     for(const npc of w.npcs||[])if(giants(npc.id)){
       const d=Math.hypot(npc.x-w.player.x,npc.z-w.player.z);
-      const greetRadius=npc.id==='titan-ship'?48:npc.id==='titan-island'?31:105;
+      const greetRadius=npc.id.startsWith('titan-island')?31:105;
       if(d<greetRadius&&d<closestDistance){closestDistance=d;closestGiant=npc;}
       if(d>greetRadius*1.35)oracleInside.delete(npc.id);
     }
