@@ -16,8 +16,8 @@ test('isolated NANO size-aware physics is loaded before the live game engine',()
 });
 
 test('cache identifiers agree for iframe, physics script and engine',()=>{
- const v='20261024nanogarage1';
- assert.match(host,/maletin\/index\.html\?v=20261024nanogarage1/);
+ const v='20261024unified1';
+ assert.match(host,/maletin\/index\.html\?v=20261024unified1/);
  assert.ok(page.includes('nano-physics.js?v='+v));
  assert.ok(page.includes('game-engine-v50.js?v='+v));
  assert.ok(page.includes('expanded-map.js?v='+v));

@@ -54,7 +54,7 @@ test('garage module is loaded only after game engine and with isolated version t
   const fs=require('node:fs'), path=require('node:path');
   const html=fs.readFileSync(path.join(__dirname,'../audio/maletin/index.html'),'utf8');
   const engine=html.indexOf('<script src="game-engine-v50.js?v=');
-  const garage=html.indexOf('<script src="garage-scroll-guard.js?v=20261024nanogarage1" defer>');
+  const garage=html.indexOf('<script src="garage-scroll-guard.js?v=20261024unified1" defer>');
   assert.ok(engine>=0 && garage>engine);
-  assert.equal(html.split('garage-scroll-guard.js?v=20261024nanogarage1').length-1,1);
+  assert.equal(html.split('garage-scroll-guard.js?v=20261024unified1').length-1,1);
 });
