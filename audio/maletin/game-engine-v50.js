@@ -71,6 +71,12 @@
   // Broadphase returns candidate boxes only; the original exact response remains unchanged.
   const COLLISION = (boxes,x,z,pad) => window.UnfireCollisionNearby
     ? window.UnfireCollisionNearby.nearby(boxes,x,z,pad) : (boxes || []);
+  // Apply the touch-device framebuffer cap BEFORE WebGL allocation: no
+  // mid-boot resize or second governor, keeping startup memory predictable.
+  if (LOWDEV && DEVICE.touch) {
+    const bootDpr = DEVICE.tier === 'compact' ? 0.70 : 0.85;
+    DEVICE.maxDpr = Math.min(DEVICE.maxDpr, bootDpr);
+  }
   const S = Y2K.stage(cv, { reflect: false, zoom: false, exposure: 0.98, shadow: 0.38,
     maxDpr: DEVICE.maxDpr, antialias: DEVICE.antialias, shadowResolution: LOWDEV?512:2048, fov: 30 });
   if (softwareWebGL(S.renderer)) {
@@ -105,11 +111,34 @@
   const PLUCK = CARB;
   const VELVET = CARB;
   const RUBBER = M.rubber, CHROME = M.chrome;
-  const ALU = (() => { const c = Y2K.cnv(1024, 1024), g = c.getContext('2d'); g.fillStyle = '#8c9199'; g.fillRect(0, 0, 1024, 1024);
-    for (let i = 0; i < 14000; i++) { const v = 105 + Math.random() * 110 | 0; g.fillStyle = `rgba(${v},${v},${v + 6},${0.06 + Math.random() * 0.12})`; g.fillRect(Math.random() * 1024, Math.random() * 1024, 30 + Math.random() * 420, 1); }
-    g.lineWidth = 1; for (let i = 0; i < 70; i++) { g.strokeStyle = `rgba(${Math.random() < 0.5 ? '255,255,255' : '30,30,34'},${0.06 + Math.random() * 0.1})`; g.beginPath(); const x = Math.random() * 1024, y = Math.random() * 1024; g.moveTo(x, y); g.quadraticCurveTo(x + (Math.random() - 0.5) * 80, y + (Math.random() - 0.5) * 30, x + (Math.random() - 0.5) * 160, y + (Math.random() - 0.5) * 50); g.stroke(); }
-    for (let i = 0; i < 25; i++) { const x = Math.random() * 1024, y = Math.random() * 1024, r = 6 + Math.random() * 20, gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, 'rgba(60,60,64,.18)'); gr.addColorStop(1, 'rgba(60,60,64,0)'); g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2); }
-    const col = Y2K.toTex(c, { color: true, repeat: [2, 2] }), rou = Y2K.toTex(c, { repeat: [2, 2] }); col.anisotropy = rou.anisotropy = 8;
+  // Two material maps share this canvas; halve mobile resolution and drawing work
+  // before the first frame, retaining brushed aluminum normals and metalness.
+  const ALU = (() => {
+    const aluSize = LOWDEV ? 512 : 1024, aluScale = aluSize / 1024;
+    const c = Y2K.cnv(aluSize, aluSize), g = c.getContext('2d');
+    g.fillStyle = '#8c9199'; g.fillRect(0, 0, aluSize, aluSize);
+    for (let i = 0, n = LOWDEV ? 3000 : 14000; i < n; i++) {
+      const v = 105 + Math.random() * 110 | 0;
+      g.fillStyle = `rgba(${v},${v},${v + 6},${0.06 + Math.random() * 0.12})`;
+      g.fillRect(Math.random() * aluSize, Math.random() * aluSize, (30 + Math.random() * 420) * aluScale, Math.max(0.5, aluScale));
+    }
+    g.lineWidth = Math.max(0.5, aluScale);
+    for (let i = 0, n = LOWDEV ? 24 : 70; i < n; i++) {
+      g.strokeStyle = `rgba(${Math.random() < 0.5 ? '255,255,255' : '30,30,34'},${0.06 + Math.random() * 0.1})`;
+      g.beginPath();
+      const x = Math.random() * aluSize, y = Math.random() * aluSize; g.moveTo(x, y);
+      g.quadraticCurveTo(x + (Math.random() - 0.5) * 80 * aluScale, y + (Math.random() - 0.5) * 30 * aluScale,
+        x + (Math.random() - 0.5) * 160 * aluScale, y + (Math.random() - 0.5) * 50 * aluScale);
+      g.stroke();
+    }
+    for (let i = 0, n = LOWDEV ? 9 : 25; i < n; i++) {
+      const x = Math.random() * aluSize, y = Math.random() * aluSize, r = (6 + Math.random() * 20) * aluScale;
+      const gr = g.createRadialGradient(x, y, 0, x, y, r);
+      gr.addColorStop(0, 'rgba(60,60,64,.18)'); gr.addColorStop(1, 'rgba(60,60,64,0)');
+      g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2);
+    }
+    const col = Y2K.toTex(c, { color: true, repeat: [2, 2] }), rou = Y2K.toTex(c, { repeat: [2, 2] });
+    col.anisotropy = rou.anisotropy = LOWDEV ? 2 : 8;
     return new THREE.MeshPhysicalMaterial({ color: 0xf0f3f7, map: col, metalness: 0.62, roughness: 0.34, roughnessMap: rou, bumpMap: rou, bumpScale: 0.0015, clearcoat: 0.35, clearcoatRoughness: 0.35 }); })();
   FOAM.copy(ALU); FOAM.color.set(0xaeb7c4);
 
@@ -527,7 +556,30 @@
     const OUT = new THREE.Group(); R.add(OUT); const skyDay = cnv(1024, 512, (g) => { const s = g.createLinearGradient(0, 0, 0, 512); s.addColorStop(0, '#0f7bff'); s.addColorStop(0.6, '#8fd8ff'); s.addColorStop(1, '#f0fcff'); g.fillStyle = s; g.fillRect(0, 0, 1024, 512); });
     const skyNight = cnv(1024, 512, (g) => { const s = g.createLinearGradient(0, 0, 0, 512); s.addColorStop(0, '#030616'); s.addColorStop(1, '#1b2a6b'); g.fillStyle = s; g.fillRect(0, 0, 1024, 512); for (let i = 0; i < 260; i++) { g.fillStyle = `rgba(255,255,255,${Math.random()})`; g.fillRect(Math.random() * 1024, Math.random() * 360, 2, 2); } g.fillStyle = '#fffbe0'; g.beginPath(); g.arc(760, 110, 34, 0, TAU); g.fill(); });
     const skyM = new THREE.MeshBasicMaterial({ map: skyDay, toneMapped: false }); skyM.side = THREE.BackSide; skyM.depthWrite = false; const sky = new THREE.Mesh(new THREE.SphereGeometry(280, 32, 16), skyM); sky.position.set(0, -20, 0); OUT.add(sky); window.__SKY = sky; sky.frustumCulled = false; S.camera.far = 90000; S.camera.updateProjectionMatrix();
-    const grassT = cnv(1024, 1024, (g) => { g.fillStyle = '#4bb84f'; g.fillRect(0, 0, 1024, 1024); for (let i = 0; i < 26000; i++) { const x = Math.random() * 1024, y = Math.random() * 1024, l = 30 + Math.random() * 30; g.fillStyle = `hsl(${95 + Math.random() * 40},${45 + Math.random() * 25}%,${l}%)`; g.fillRect(x, y, 1 + Math.random() * 2, 3 + Math.random() * 6); } for (let i = 0; i < 60; i++) { const x = Math.random() * 1024, y = Math.random() * 1024, r = 20 + Math.random() * 70; const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, 'rgba(120,95,60,.35)'); gr.addColorStop(1, 'rgba(120,95,60,0)'); g.fillStyle = gr; g.fillRect(x - r, y - r, 2 * r, 2 * r); } for (let i = 0; i < 400; i++) { g.fillStyle = ['#fff', '#ffd21a', '#ff7ad9', '#b6a0ff'][i % 4]; g.beginPath(); g.arc(Math.random() * 1024, Math.random() * 1024, 1.6 + Math.random() * 1.6, 0, 7); g.fill(); } }); grassT.wrapS = grassT.wrapT = THREE.RepeatWrapping; grassT.repeat.set(26, 26); grassT.anisotropy = 8;
+    // Procedural landscape was being fully painted at boot even on iPhones.
+    // Keep the same pattern/colors and world geometry, but allocate fewer pixels.
+    const grassSize = LOWDEV ? 512 : 1024, grassScale = grassSize / 1024;
+    const grassT = cnv(grassSize, grassSize, (g) => {
+      g.fillStyle = '#4bb84f'; g.fillRect(0, 0, grassSize, grassSize);
+      for (let i = 0, n = LOWDEV ? 6500 : 26000; i < n; i++) {
+        const x = Math.random() * grassSize, y = Math.random() * grassSize, l = 30 + Math.random() * 30;
+        g.fillStyle = `hsl(${95 + Math.random() * 40},${45 + Math.random() * 25}%,${l}%)`;
+        g.fillRect(x, y, Math.max(0.5, (1 + Math.random() * 2) * grassScale), Math.max(1, (3 + Math.random() * 6) * grassScale));
+      }
+      for (let i = 0, n = LOWDEV ? 18 : 60; i < n; i++) {
+        const x = Math.random() * grassSize, y = Math.random() * grassSize, r = (20 + Math.random() * 70) * grassScale;
+        const gr = g.createRadialGradient(x, y, 0, x, y, r);
+        gr.addColorStop(0, 'rgba(120,95,60,.35)'); gr.addColorStop(1, 'rgba(120,95,60,0)');
+        g.fillStyle = gr; g.fillRect(x - r, y - r, 2 * r, 2 * r);
+      }
+      for (let i = 0, n = LOWDEV ? 120 : 400; i < n; i++) {
+        g.fillStyle = ['#fff', '#ffd21a', '#ff7ad9', '#b6a0ff'][i % 4];
+        g.beginPath(); g.arc(Math.random() * grassSize, Math.random() * grassSize,
+          (1.6 + Math.random() * 1.6) * grassScale, 0, 7); g.fill();
+      }
+    });
+    grassT.wrapS = grassT.wrapT = THREE.RepeatWrapping; grassT.repeat.set(26, 26);
+    grassT.anisotropy = LOWDEV ? 2 : 8;
     const ground = new THREE.Mesh(new THREE.CircleGeometry(235, 96), new THREE.MeshStandardMaterial({ map: grassT, roughness: 0.95 })); ground.rotation.x = -H2; ground.position.y = DY - 9.0; ground.userData.noCollide = true; OUT.add(ground);
     // ===== mar de sueño: pirámide, moái, árboles gigantes que suben al cielo =====
     const EXT0 = OUT.children.length; try { const stoneT = (base, dark) => cnv(512, 512, (g) => { g.fillStyle = base; g.fillRect(0, 0, 512, 512); for (let i = 0; i < 9000; i++) { g.fillStyle = `rgba(${dark},${Math.random() * 0.25})`; g.fillRect(Math.random() * 512, Math.random() * 512, 2 + Math.random() * 5, 2 + Math.random() * 5); } g.strokeStyle = `rgba(${dark},.35)`; g.lineWidth = 3; for (let y = 0; y < 512; y += 32) { g.beginPath(); g.moveTo(0, y); g.lineTo(512, y); g.stroke(); for (let x = (y / 32) % 2 ? 0 : 32; x < 512; x += 64) { g.beginPath(); g.moveTo(x, y); g.lineTo(x, y + 32); g.stroke(); } } });
@@ -563,7 +615,7 @@
       window.__LAND = (x, z) => { if (Math.hypot(x, z) < 256) return true; if (Math.hypot(x + 760, z + 760) < 262) return true; const d = Math.hypot(x - AX, z - AZ); if (d < 140 || (d > 170 && d < 230) || (d > 255 && d < 340)) return true; if (Math.abs(z) < 11 && x > 222 && x < AX) return true; if (Math.hypot(x - DX, z - DZ) < DR) return true; const sx = x - 55, sz = z + 305; const cx2 = sx * Math.cos(0.1) + sz * Math.sin(0.1), cz2 = -sx * Math.sin(0.1) + sz * Math.cos(0.1); if (Math.abs(cx2) < 20 && Math.abs(cz2) < 60) return true; return false; }; } catch (e) { console.warn('mar', e); } window.__EXT = OUT.children.slice(EXT0);
     { const sand = new THREE.Mesh(new THREE.RingGeometry(230, 262, 96, 1), new THREE.MeshStandardMaterial({ color: 0xf2dfa8, roughness: 1 })); sand.rotation.x = -H2; sand.position.y = DY - 9.25; sand.userData.noCollide = true; OUT.add(sand); { const BC = [0xff2fb0, 0x3d8bff, 0xffd21a, 0x2bd96b, 0xffffff, 0xff7a1f]; const bg = new THREE.SphereGeometry(1, 20, 10);  const sg = cnv(256, 128, (g) => { g.fillStyle = '#3a2a1a'; g.fillRect(0, 0, 256, 128); g.fillStyle = '#ffd21a'; g.font = '900 34px Impact'; g.fillText('SURF ZONE', 40, 52); g.fillStyle = '#fff'; g.font = '700 18px Arial'; g.fillText('🏄 TABLA (B) · ESPACIO = truco', 12, 90); }); const pl = new THREE.Mesh(new THREE.PlaneGeometry(9, 4.5), new THREE.MeshStandardMaterial({ map: sg })); pl.position.set(Math.cos(1.2) * 240, DY - 9 + 6, Math.sin(1.2) * 240); pl.lookAt(0, DY - 3, 0); OUT.add(pl); const post = mesh(new THREE.CylinderGeometry(0.25, 0.25, 6, 8), new THREE.MeshStandardMaterial({ color: 0x5a3a22 })); post.position.set(Math.cos(1.2) * 240.4, DY - 9 + 3, Math.sin(1.2) * 240.4); OUT.add(post); }
       const seaU = { t: { value: 0 } }; const WAVE = (x, z, t) => { const r = Math.hypot(x, z), a = Math.min(1, Math.max(0, (r - 250) / 90)); const sm = (a, b, v) => { const k = Math.min(1, Math.max(0, (v - a) / (b - a))); return k * k * (3 - 2 * k); }; let mk = 1; for (const [ix, iz, ir] of [[600, 0, 345], [80, -500, 195], [-420, 120, 75], [300, 420, 65], [-360, -380, 85], [-760, -760, 260]]) mk *= sm(ir + 15, ir + 120, Math.hypot(x - ix, z - iz)); const sw = mk * Math.min(1, Math.max(0, (r - 330) / 220)) * (1 - Math.min(1, Math.max(0, (r - 1250) / 250))); const ph = r * 0.021 + t * 1.25, cr = Math.sin(ph); return mk * a * (Math.sin(x * 0.045 + t * 1.1) * 1.1 + Math.sin(z * 0.06 - t * 1.4 + x * 0.02) * 0.8 + Math.sin((x + z) * 0.11 + t * 2.1) * 0.35) + sw * (Math.pow(cr * 0.5 + 0.5, 2.6) * 11 - 3.2 + Math.sin(x * 0.013 + z * 0.009 - t * 0.9) * 2.4 + Math.pow(Math.max(0, Math.sin(x * 0.006 - z * 0.011 + t * 0.6)), 6) * 6); }; window.__WAVE = WAVE;
-      const seaG = new THREE.PlaneGeometry(3200, 3200, window.__LOWDEV ? 220 : 320, window.__LOWDEV ? 220 : 320); const sea = new THREE.Mesh(seaG, new THREE.ShaderMaterial({ uniforms: seaU, vertexShader: 'uniform float t; varying vec3 vW; varying float vH; varying vec3 vN; float H(vec2 p){ float r = length(p); float a = clamp((r - 250.0) / 90.0, 0.0, 1.0); float mk = 1.0; mk *= smoothstep(360.0, 465.0, length(p - vec2(600.0, 0.0))); mk *= smoothstep(210.0, 315.0, length(p - vec2(80.0, -500.0))); mk *= smoothstep(90.0, 195.0, length(p - vec2(-420.0, 120.0))); mk *= smoothstep(80.0, 185.0, length(p - vec2(300.0, 420.0))); mk *= smoothstep(100.0, 205.0, length(p - vec2(-360.0, -380.0))); mk *= smoothstep(275.0, 380.0, length(p - vec2(-760.0, -760.0))); float sw = mk * clamp((r - 330.0) / 220.0, 0.0, 1.0) * (1.0 - clamp((r - 1250.0) / 250.0, 0.0, 1.0)); float cr = sin(r * 0.021 + t * 1.25); return mk * a * (sin(p.x * 0.045 + t * 1.1) * 1.1 + sin(p.y * 0.06 - t * 1.4 + p.x * 0.02) * 0.8 + sin((p.x + p.y) * 0.11 + t * 2.1) * 0.35) + sw * (pow(cr * 0.5 + 0.5, 2.6) * 11.0 - 3.2 + sin(p.x * 0.013 + p.y * 0.009 - t * 0.9) * 2.4 + pow(max(0.0, sin(p.x * 0.006 - p.y * 0.011 + t * 0.6)), 6.0) * 6.0); } void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vec2 p = w.xz; float h = H(p); w.y += h; vH = h; float e = 1.5; vN = normalize(vec3(H(p - vec2(e, 0.0)) - H(p + vec2(e, 0.0)), 2.0 * e, H(p - vec2(0.0, e)) - H(p + vec2(0.0, e)))); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }', fragmentShader: 'uniform float t; varying vec3 vW; varying float vH; varying vec3 vN; void main(){ float r = length(vW.xz); float w = sin(vW.x * 0.08 + t * 1.3) * sin(vW.z * 0.07 - t * 1.1) * 0.5 + 0.5; vec3 deep = vec3(0.015, 0.17, 0.36), shallow = vec3(0.16, 0.72, 0.74); vec3 c = mix(shallow, deep, smoothstep(260.0, 520.0, r)); vec3 V0 = normalize(cameraPosition - vW); vec3 L = normalize(vec3(0.4, 0.8, 0.3)); float sp = pow(max(dot(reflect(-L, vN), V0), 0.0), 60.0); float fr = pow(1.0 - max(dot(vN, V0), 0.0), 3.0); c = c * (0.75 + 0.35 * dot(vN, L)) + vec3(1.0) * sp * 0.8 + vec3(0.7, 0.85, 1.0) * fr * 0.35; c += vec3(1.0) * smoothstep(1.4, 2.2, vH) * 0.3 * (1.0 - smoothstep(330.0, 450.0, r)); c += vec3(1.0) * smoothstep(0.0, 10.0, 268.0 - r) * smoothstep(250.0, 262.0, r) * (0.5 + 0.5 * sin(r * 1.5 - t * 3.0)); c += vec3(1.0) * pow(w, 18.0) * 0.1; c += vec3(0.95) * smoothstep(8.0, 10.5, vH) * 0.35; c = mix(c, vec3(0.02, 0.21, 0.44), smoothstep(900.0, 1400.0, r) * 0.6); gl_FragColor = vec4(c, (1.0 - smoothstep(1150.0, 1580.0, r)) * mix(0.5, 0.96, smoothstep(270.0, 680.0, r))); }', transparent: true })); sea.rotation.x = -H2; sea.position.y = DY - 10.2; sea.userData.noCollide = true; sea.frustumCulled = false; OUT.add(sea); anim.push((dt, t) => { seaU.t.value = t; });
+      const seaG = new THREE.PlaneGeometry(3200, 3200, window.__LOWDEV ? 120 : 320, window.__LOWDEV ? 120 : 320); const sea = new THREE.Mesh(seaG, new THREE.ShaderMaterial({ uniforms: seaU, vertexShader: 'uniform float t; varying vec3 vW; varying float vH; varying vec3 vN; float H(vec2 p){ float r = length(p); float a = clamp((r - 250.0) / 90.0, 0.0, 1.0); float mk = 1.0; mk *= smoothstep(360.0, 465.0, length(p - vec2(600.0, 0.0))); mk *= smoothstep(210.0, 315.0, length(p - vec2(80.0, -500.0))); mk *= smoothstep(90.0, 195.0, length(p - vec2(-420.0, 120.0))); mk *= smoothstep(80.0, 185.0, length(p - vec2(300.0, 420.0))); mk *= smoothstep(100.0, 205.0, length(p - vec2(-360.0, -380.0))); mk *= smoothstep(275.0, 380.0, length(p - vec2(-760.0, -760.0))); float sw = mk * clamp((r - 330.0) / 220.0, 0.0, 1.0) * (1.0 - clamp((r - 1250.0) / 250.0, 0.0, 1.0)); float cr = sin(r * 0.021 + t * 1.25); return mk * a * (sin(p.x * 0.045 + t * 1.1) * 1.1 + sin(p.y * 0.06 - t * 1.4 + p.x * 0.02) * 0.8 + sin((p.x + p.y) * 0.11 + t * 2.1) * 0.35) + sw * (pow(cr * 0.5 + 0.5, 2.6) * 11.0 - 3.2 + sin(p.x * 0.013 + p.y * 0.009 - t * 0.9) * 2.4 + pow(max(0.0, sin(p.x * 0.006 - p.y * 0.011 + t * 0.6)), 6.0) * 6.0); } void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vec2 p = w.xz; float h = H(p); w.y += h; vH = h; float e = 1.5; vN = normalize(vec3(H(p - vec2(e, 0.0)) - H(p + vec2(e, 0.0)), 2.0 * e, H(p - vec2(0.0, e)) - H(p + vec2(0.0, e)))); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }', fragmentShader: 'uniform float t; varying vec3 vW; varying float vH; varying vec3 vN; void main(){ float r = length(vW.xz); float w = sin(vW.x * 0.08 + t * 1.3) * sin(vW.z * 0.07 - t * 1.1) * 0.5 + 0.5; vec3 deep = vec3(0.015, 0.17, 0.36), shallow = vec3(0.16, 0.72, 0.74); vec3 c = mix(shallow, deep, smoothstep(260.0, 520.0, r)); vec3 V0 = normalize(cameraPosition - vW); vec3 L = normalize(vec3(0.4, 0.8, 0.3)); float sp = pow(max(dot(reflect(-L, vN), V0), 0.0), 60.0); float fr = pow(1.0 - max(dot(vN, V0), 0.0), 3.0); c = c * (0.75 + 0.35 * dot(vN, L)) + vec3(1.0) * sp * 0.8 + vec3(0.7, 0.85, 1.0) * fr * 0.35; c += vec3(1.0) * smoothstep(1.4, 2.2, vH) * 0.3 * (1.0 - smoothstep(330.0, 450.0, r)); c += vec3(1.0) * smoothstep(0.0, 10.0, 268.0 - r) * smoothstep(250.0, 262.0, r) * (0.5 + 0.5 * sin(r * 1.5 - t * 3.0)); c += vec3(1.0) * pow(w, 18.0) * 0.1; c += vec3(0.95) * smoothstep(8.0, 10.5, vH) * 0.35; c = mix(c, vec3(0.02, 0.21, 0.44), smoothstep(900.0, 1400.0, r) * 0.6); gl_FragColor = vec4(c, (1.0 - smoothstep(1150.0, 1580.0, r)) * mix(0.5, 0.96, smoothstep(270.0, 680.0, r))); }', transparent: true })); sea.rotation.x = -H2; sea.position.y = DY - 10.2; sea.userData.noCollide = true; sea.frustumCulled = false; OUT.add(sea); anim.push((dt, t) => { seaU.t.value = t; });
       const isl = (x, z, r, col) => { const g0 = new THREE.Group(); g0.position.set(x, DY - 9.6, z); g0.userData.noCollide = true; OUT.add(g0); const top = new THREE.Mesh(new THREE.SphereGeometry(1, 40, 16, 0, TAU, 0, H2 * 0.6), new THREE.MeshStandardMaterial({ color: col, roughness: 0.85 })); top.scale.set(r, r * 0.35, r); top.position.y = -r * 0.35 * Math.cos(H2 * 0.6) + 0.4; g0.add(top); const bch = new THREE.Mesh(new THREE.CylinderGeometry(r * 1.08, r * 1.12, 1.2, 40), new THREE.MeshStandardMaterial({ color: 0xf2dfa8, roughness: 1 })); g0.add(bch); for (let k = 0; k < 5; k++) { const a = k * 1.3 + x, tr = new THREE.Group(); tr.position.set(Math.cos(a) * r * 0.5, r * 0.35 * (Math.cos(Math.asin(0.5)) - Math.cos(H2 * 0.6)) + 0.4 - 0.5, Math.sin(a) * r * 0.5); g0.add(tr); const tk = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.9, 12, 8), new THREE.MeshStandardMaterial({ color: 0x8a5a32 })); tk.position.y = 6; tr.add(tk); for (let q = 0; q < 6; q++) { const lf = new THREE.Mesh(new THREE.SphereGeometry(1, 10, 6), new THREE.MeshStandardMaterial({ color: 0x2bd96b })); lf.scale.set(6, 0.6, 1.8); lf.position.set(Math.cos(q) * 4, 12, Math.sin(q) * 4); lf.rotation.y = -q; tr.add(lf); } } };
       isl(-420, 120, 70, 0x9fe36a); isl(300, 420, 60, 0xffffff); isl(-360, -380, 80, 0xc08bff); }
     // ===== ISLA HAIKU: un jardín japonés enorme (cerezos en flor, monte nevado, pagoda, torii, farolillos de piedra, estanque koi, puente rojo, bambú y jardín zen) =====
