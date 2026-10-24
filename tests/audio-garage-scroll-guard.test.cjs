@@ -2,14 +2,14 @@
 const test=require('node:test');
 const assert=require('node:assert/strict');
 const {install,CSS}=require('../audio/maletin/garage-scroll-guard.js');
-function fake(){
+function fake(workshop=true){
   const el=id=>({id,dataset:{},scrollTop:0,attrs:{},listeners:new Map(),
     addEventListener(t,f,opts){this.listeners.set(t+':'+!!(opts&&(opts===true||opts.capture)),f);},
     setAttribute(k,v){this.attrs[k]=v;},querySelectorAll(){return[];},
     contains(x){return x===this||x===list||x===colors||x?.parent===this;}
   });
   const ui=el('onl'),list=el('onT'),colors=el('onC');
-  ui.classList={contains:k=>k==='on'||k==='workshop'};
+  ui.classList={contains:k=>k==='on'||(k==='workshop'&&workshop)};
   const styles=[];
   const doc={
     getElementById:id=>({onl:ui,onT:list,onC:colors})[id]||null,
@@ -46,6 +46,39 @@ test('changing robot color preserves the previously viewed rows',async()=>{
   list.scrollTop=0;await new Promise(queueMicrotask);
   assert.equal(list.scrollTop,278);
 });
+
+test('Online room robot picker has its own touch and wheel scroll, without game movement',()=>{
+  const {doc,ui,list}=fake(false);assert.equal(install(doc),true);
+  assert.match(CSS,/#onl\\.on:not\\(\\.workshop\\) #onT/);
+  assert.match(CSS,/overscroll-behavior:contain/);
+  let blockedWheel=0,blockedTouch=0,defaultPrevented=0;
+  ui.listeners.get('wheel:false')({
+    target:list,stopPropagation(){blockedWheel++;},preventDefault(){defaultPrevented++;}
+  });
+  ui.listeners.get('touchmove:false')({
+    target:list,stopPropagation(){blockedTouch++;},preventDefault(){defaultPrevented++;}
+  });
+  assert.equal(blockedWheel,1);
+  assert.equal(blockedTouch,1);
+  assert.equal(defaultPrevented,0);
+});
+
+test('Online robot selection preserves scroll after repaint and restores focus',async()=>{
+  const {doc,list}=fake(false);install(doc);list.scrollTop=415;
+  const next={dataset:{t:'8'},focused:false,focus(){this.focused=true;}};
+  list.querySelectorAll=()=>[next];
+  list.listeners.get('click:true')({target:{closest:()=>({dataset:{t:'8'}})}});
+  list.scrollTop=0;await new Promise(queueMicrotask);
+  assert.equal(list.scrollTop,415);assert.equal(next.focused,true);
+});
+
+test('Online color selection preserves visible robot rows',async()=>{
+  const {doc,list,colors}=fake(false);install(doc);list.scrollTop=209;
+  colors.listeners.get('click:true')({target:{closest:()=>null}});
+  list.scrollTop=0;await new Promise(queueMicrotask);
+  assert.equal(list.scrollTop,209);
+});
+
 test('repeated installation adds no duplicate handlers',()=>{
   const x=fake();assert.equal(install(x.doc),true);assert.equal(install(x.doc),false);assert.equal(x.styles.length,1);
 });
