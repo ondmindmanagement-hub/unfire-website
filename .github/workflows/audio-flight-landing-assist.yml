@@ -1,0 +1,27 @@
+name: Audio flight approach and exterior signage
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/audio-flight-landing-assist.test.cjs'
+      - '.github/workflows/audio-flight-landing-assist.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  flight-approach:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax and flight/door interaction contracts
+        run: |
+          node --check audio/maletin/game-engine-v50.js
+          node --check tests/audio-flight-landing-assist.test.cjs
+          node --test tests/audio-flight-landing-assist.test.cjs
+      - name: Existing game regression checks
+        run: |
+          node --test tests/audio-nano-physics.test.cjs tests/nimbo-optional-intro.test.cjs tests/maletin-door-transition.test.cjs
