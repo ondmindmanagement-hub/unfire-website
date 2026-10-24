@@ -78,7 +78,7 @@ for (const token of [
   '--uf-joy-rise: clamp(62px, 11dvh, 135px);',
   '--uf-joy-inset:clamp(36px, 7vw, 112px);',
   '--uf-joy-rise:clamp(31px, 9dvh, 100px);',
-  '--uf-joy-inset:clamp(34px, 9vw, 50px);',
+  '--uf-joy-inset:clamp(17px, calc(14vw - 28px), 34px);',
   '--uf-joy-rise:clamp(68px, 12dvh, 112px);',
   '--uf-joy-rise:clamp(30px, 8dvh, 46px);',
   'left:calc(var(--uf-thumb-safe-l) + var(--uf-joy-inset))!important;',
@@ -91,16 +91,18 @@ assert(engine.includes('if (on && pid === null) { const c = Math.max(0, (pad.cli
 assert(css.includes('@media (pointer:coarse) and (orientation:portrait)'));
 assert(css.includes('@media (pointer:coarse) and (orientation:landscape)'));
 assert(!css.includes('@import'), 'control stylesheet must stay local');
-const portraitX = clamp(34, portrait.w * 0.09, 50);
+const portraitX = clamp(17, portrait.w * 0.14 - 28, 34);
 const portraitBottom = clamp(68, portrait.h * 0.12, 112);
 const landscapeX = clamp(36, landscape.w * 0.07, 112);
 const landscapeBottom = clamp(30, landscape.h * 0.08, 46);
 const tabletX = clamp(28, tablet.w * 0.055, 78);
 const tabletBottom = clamp(62, tablet.h * 0.11, 135);
-assert(portraitX > 30 && portraitBottom > 65);
+assert(portraitX > 24 && portraitBottom > 65);
 assert(landscapeX > 35 && landscapeBottom >= 30);
 assert(tabletX > 40 && tabletBottom > 120);
-assert(portraitX + 104 < portrait.w / 2, 'portrait joystick blocks the screen centre');
+assert(portraitX + 104 < portrait.w * 0.35, 'portrait joystick leaves its left-side play area');
+assert(clamp(17, 320 * 0.14 - 28, 34) + 320 * 0.29 < 320 * 0.35,
+  '320px phone joystick must remain in the reachable left 35%');
 assert(landscapeX + 94 < landscape.w / 2, 'landscape joystick blocks the screen centre');
 assert(tabletX + 140 < tablet.w / 2, 'tablet joystick blocks the screen centre');
 console.log('PASS mobile dual-thumb: joystick-held camera, secondary touch, touch safety and reach in 3 layouts');
