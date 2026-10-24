@@ -1,0 +1,21 @@
+name: Audio sea ambience public backport
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/maletin-door-audio-prewarm.test.cjs'
+      - '.github/workflows/audio-sea-ambience-main-backport.yml'
+permissions:
+  contents: read
+jobs:
+  sea-ambience:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check audio/maletin/game-engine-v50.js
+      - run: node --test tests/maletin-door-audio-prewarm.test.cjs tests/maletin-door-transition.test.cjs
+      - run: node tests/maletin-v50.test.cjs

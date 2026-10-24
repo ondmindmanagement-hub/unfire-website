@@ -1,0 +1,43 @@
+/* Adaptive startup and stall feedback: no assets, canvas or blocking controls. */
+#ufAdaptiveLoader{box-sizing:border-box;position:fixed;inset:0;z-index:2147483000;display:none;place-items:center;padding:max(18px,env(safe-area-inset-top,0px)) max(18px,env(safe-area-inset-right,0px)) max(18px,env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));background:rgba(3,6,13,.95);color:#f5f7ff;text-align:center;pointer-events:none;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+html.uf-load-pending #ufAdaptiveLoader,#ufAdaptiveLoader[data-active="true"]{display:grid}
+#ufAdaptiveLoader[data-phase="recovery"]{background:rgba(3,6,13,.76)}
+#ufAdaptiveLoader .uf-load-card{width:min(90vw,340px);max-width:100%;display:grid;justify-items:center;gap:14px;padding:22px 18px;border-radius:18px;border:1px solid rgba(119,166,247,.32);background:rgba(10,16,31,.9);box-shadow:0 12px 36px rgba(0,0,0,.24)}
+#ufAdaptiveLoader .uf-load-emblem{width:26px;height:26px;border:2px solid rgba(147,191,255,.28);border-top-color:#9cc8ff;border-radius:50%;animation:uf-load-spin 1.2s linear infinite}
+#ufAdaptiveLoader .uf-load-brand{font-size:12px;letter-spacing:.28em;font-weight:750;color:#dce9ff}
+#ufAdaptiveLoader .uf-load-label{font-size:13px;line-height:1.5;letter-spacing:.01em;color:#c8d3e7}
+@keyframes uf-load-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#ufAdaptiveLoader .uf-load-emblem{animation:none;border-color:#9cc8ff}}
+
+/* Cinematic loading using only paint/compositor-friendly 2D shapes.
+   No video, external font, WebGL or fake progress percentage. */
+#ufAdaptiveLoader{isolation:isolate;background:linear-gradient(180deg,#03060d 0%,#08142a 52%,#03060d 100%)}
+#ufAdaptiveLoader::before,#ufAdaptiveLoader::after{
+  content:'';position:absolute;left:0;right:0;height:clamp(14px,12dvh,90px);
+  pointer-events:none;background:#000;z-index:0
+}
+#ufAdaptiveLoader::before{top:0;border-bottom:1px solid rgba(112,172,255,.18)}
+#ufAdaptiveLoader::after{bottom:0;border-top:1px solid rgba(112,172,255,.18)}
+#ufAdaptiveLoader .uf-load-card{
+  position:relative;isolation:isolate;overflow:hidden;z-index:1;
+  width:min(88vw,380px);box-sizing:border-box;
+  border:1px solid rgba(137,196,255,.45);border-radius:20px;
+  background:linear-gradient(155deg,#101e35 0%,#0a1021 55%,#102541 100%);
+  box-shadow:0 16px 36px rgba(0,0,0,.42);padding:clamp(16px,3vw,28px)
+}
+#ufAdaptiveLoader .uf-load-card::after{
+  content:'';width:min(72%,235px);height:2px;border-radius:100%;
+  background:linear-gradient(90deg,transparent,#80d9ff,transparent);
+  opacity:.8;animation:uf-load-glide 2.7s ease-in-out infinite alternate
+}
+#ufAdaptiveLoader .uf-load-brand{font-size:clamp(11px,2vw,14px);letter-spacing:.35em}
+#ufAdaptiveLoader .uf-load-label{font-size:clamp(12px,2vw,14px);max-width:30ch;text-wrap:balance}
+#ufAdaptiveLoader[data-phase="recovery"]{background:rgba(3,6,13,.76)}
+@keyframes uf-load-glide{from{transform:translateX(-20%);opacity:.35}to{transform:translateX(20%);opacity:1}}
+@media(prefers-reduced-motion:reduce){
+  #ufAdaptiveLoader .uf-load-card::after{animation:none}
+}
+@media(max-height:420px) and (orientation:landscape){
+  #ufAdaptiveLoader::before,#ufAdaptiveLoader::after{height:10px}
+  #ufAdaptiveLoader .uf-load-card{gap:8px;padding:12px 16px;max-height:calc(100dvh - 30px)}
+}

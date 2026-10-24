@@ -1,0 +1,23 @@
+name: Audio offline coin day and isolation QA
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/coins-shop.js'
+      - 'tests/offline-coins-day-isolation.test.cjs'
+      - '.github/workflows/audio-offline-coins-day-isolation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-coin-regression:
+    runs-on: ubuntu-latest
+    env:
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JavaScript syntax
+        run: |
+          node --check audio/maletin/coins-shop.js
+          node --check tests/offline-coins-day-isolation.test.cjs
+      - name: Test daily rollover and offline separation
+        run: node --test tests/offline-coins-day-isolation.test.cjs

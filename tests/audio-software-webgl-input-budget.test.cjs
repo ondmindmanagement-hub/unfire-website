@@ -1,0 +1,17 @@
+'use strict';
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const engine = fs.readFileSync(path.join(__dirname, '../audio/maletin/game-engine-v50.js'), 'utf8');
+assert.match(engine, /const SOFTWARE_WEBGL = softwareWebGL\(S\.renderer\);/, 'Detect actual GL renderer, never infer from QA or user agent');
+assert.match(engine, /if \(SOFTWARE_WEBGL\) \{[\s\S]{0,180}maxDpr, 0\.50\)/, 'Software GPU receives reduced pixel budget');
+assert.match(engine, /if \(SOFTWARE_WEBGL && previousRenderAt && now - previousRenderAt < 80\) return;/, 'Software draws at most once per 80ms');
+assert.match(engine, /if \(MAP\.expandedOpen \|\| \(window\.UNFIRE_COINS && window\.UNFIRE_COINS\.isOpen\) \|\| storyMenuOpen\)/, 'Opaque overlays pause GPU draws');
+assert.match(engine, /const foregroundFrameTime = previousRenderAt \? Math\.min\(6, Math\.max\(0\.008, \(now - previousRenderAt\) \/ 1000\)\) : 1 \/ 30;/, 'Animation progression keeps elapsed time when rendering is throttled');
+assert.doesNotMatch(engine, /navigator\.userAgent[^;\n]*SOFTWARE_WEBGL/, 'Software fallback never uses an artificial browser identifier');
+assert.match(engine, /const settingsHudOpen = document\.getElementById\('storyHud'\)\?\.classList\.contains\('cfgOn'\);/, 'Pause renderer when robot settings are visible');
+assert.match(engine, /if \(settingsHudOpen\) \{\s*clock\.getDelta\(\); previousRenderAt = 0;[\s\S]{0,160}return;\s*\}/, 'Controls panel does not spend WebGL input budget');
+const html = fs.readFileSync(path.join(__dirname, '../audio/maletin/index.html'), 'utf8');
+assert.match(html, /hud\.classList\.toggle\('cfgOn'\)/, 'Physical UI button expands settings');
+assert.match(html, /setTimeout\(\(\) => hud\.classList\.remove\('cfgOn'\), 150\)/, 'Settings button click dismisses HUD so 3D continues');
+console.log('SOFTWARE_INPUT_BUDGET_PASS: real rasterizer, DPR, draw cap, modal pause and elapsed animation time');

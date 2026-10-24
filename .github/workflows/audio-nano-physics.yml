@@ -1,0 +1,22 @@
+name: Audio NANO physical mobility contracts
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/nano-physics.js'
+      - 'tests/audio-nano-physics.test.cjs'
+      - 'docs/nano-robot-integration.md'
+      - '.github/workflows/audio-nano-physics.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  physics-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Node syntax / isolated physical tests
+        run: |
+          node --check audio/maletin/nano-physics.js
+          node --check tests/audio-nano-physics.test.cjs
+          node --test tests/audio-nano-physics.test.cjs
