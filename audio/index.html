@@ -793,8 +793,8 @@ const PRICES={fx:9,fx20:49,hyper:59,synth:29,todo:99,clubM:6.99,clubY:59};
       esa clave a READY_FOR_SALE. Mientras tanto, todo sigue como consulta por correo.
    Para cada FX individual usar una clave diferente: 'fx-razora', 'fx-overtones', etc.
    No usar un mismo enlace generico para productos distintos ni para una bolsa mixta. */
-const PAY={fx20:'',hyper:'',synth:'',todo:'',clubM:'',clubY:''};
-const READY_FOR_SALE=new Set([]); // Ningun producto del catalogo web esta validado para cobro aun.
+const PAY={fx20:'',hyper:'https://buy.stripe.com/fZufZh11y4GgeFW9IZbsc00',synth:'',todo:'',clubM:'',clubY:''};
+const READY_FOR_SALE=new Set(['hyper']); // HYPERWAVE 2000 1.0.0: instalador firmado y notarizado, enlace LIVE revisado (59 EUR, IVA incluido), entrega en /audio/gracias/.
 const NONPAYABLE_PRODUCTS=new Set(['starter','launch']); // Evitar cobrar por las demos o el aviso.
 const paymentKey=k=>k==='club'?'clubM':k;
 function paymentLinkFor(k){

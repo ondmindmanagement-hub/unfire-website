@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://unfire.technology/sitemap.xml
+Disallow: /audio/gracias/
+Disallow: /audio/descargas/
