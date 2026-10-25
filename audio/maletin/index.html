@@ -13,7 +13,7 @@
 })();</script>
 <link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261024combinedqa1">
 <script defer src="/assets/js/unfire-adaptive-loading.js?v=20261024combinedqa1"></script>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261024nomoons1" as="script"></head><body>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261025sound1" as="script"></head><body>
 <div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
   <div class="uf-load-card">
     <span class="uf-load-emblem" aria-hidden="true"></span>
@@ -373,7 +373,7 @@ body.unfire-roaming #cv{touch-action:none}
 </style>
 <link rel="stylesheet" href="mobile-hud-guard.css?v=20261023hudlayout1">
 <link rel="stylesheet" href="thumb-reach.css?v=20261023thumb1">
-<link rel="stylesheet" href="expanded-map.css?v=20261024nomoons1">
+<link rel="stylesheet" href="expanded-map.css?v=20261025sound1">
 <canvas id="cv" aria-label="Maletín UNFIRE en 3D. Acerca la vista con la rueda para entrar"></canvas>
 <div class="hud" id="hud"><button id="zin" aria-label="Acercar">+</button><button id="zout" aria-label="Alejar">−</button><button id="home" aria-label="Volver al maletín">⟲</button><div class="crumb" id="crumb">MALETÍN</div></div>
 <div class="tip" id="tip"></div>
@@ -434,6 +434,7 @@ body.unfire-roaming #cv{touch-action:none}
     '🎬 MODO VISTA · toca o pulsa Esc para salir': '🎬 VIEW MODE · tap or press Esc to exit', '🎬 MODO VISTA': '🎬 VIEW MODE',
     '🌍 Estás fuera · la isla entera es tuya': '🌍 You are outside · the whole island is yours', '🌍 SALIR FUERA': '🌍 GO OUTSIDE', '🏠 VOLVER DENTRO': '🏠 GO BACK INSIDE',
     '🔒 En unos días podrás salir a la isla. ¡Prepárate!': '🔒 In a few days you will be able to go out to the island. Get ready!',
+    '👋 Nimbo: vale, me quedo aquí. Llámame con 🤖 o tocándome cuando me necesites.': '👋 Nimbo: OK, I will stay here. Call me with 🤖 or tap me when you need me.', '🤖 Nimbo: ¡voy volando!': '🤖 Nimbo: flying over!', '🤖 Nimbo: ¡contigo! Te aviso de secretos, te saco si te atascas y de noche te ilumino.': '🤖 Nimbo: with you! I will point out secrets, pull you out if you get stuck and light the way at night.', '🤖 Nimbo: ¡agárrate! Te saco de ahí.': '🤖 Nimbo: hold on! Getting you out of there.', '🤖 NIMBO: VEN': '🤖 NIMBO: COME', '🤖 NIMBO: VETE': '🤖 NIMBO: LEAVE',
     '👋 Nimbo: te dejo explorar a tu aire. Si me buscas, estaré por aquí.': '👋 Nimbo: I will let you explore. If you need me, I will be around.',
     '🎯 Misión de ': '🎯 Mission from ', ' (mira la estrella del mapa)': ' (look for the star on the map)', '🏆 ¡Misión cumplida! «': '🏆 Mission complete! «', '» · ': '» · ', ' te debe una': ' owes you one',
     '¡Eh, tú! ¿Me haces un favor? ': 'Hey, you! Can you do me a favor? ', '. ¡Te espero!': '. I will wait for you!', 'Tengo una para ti: ': 'I have one for you: ', '. ¡Ve!': '. Go!', 'Primero acaba la que llevas, que te veo venir.': 'Finish the one you have first. I can see right through you.',
@@ -3517,7 +3518,7 @@ const ROBOT = (() => {
         if (st.playing) { J.upperL.g.rotation.x += Math.sin(b * Math.PI) * 0.3 * rob; J.upperR.g.rotation.x -= Math.sin(b * Math.PI) * 0.3 * rob * (1 - sup); }
         if (st.react > 0 && !st.act) { J.upperL.g.rotation.z -= st.react * 1.6; J.foreL.g.rotation.x -= st.react * 1.2; J.hips.g.position.y += st.react * 0.25; }
       }
-      if (st.act !== curAct) { actW -= dt * 2.5; if (actW <= 0) { actW = 0; curAct = st.act || null; } } else actW = Math.min(1, actW + dt * 2.5);
+      if (st.act !== curAct && (st.act === 'walk' || st.act === 'run') && (curAct === 'walk' || curAct === 'run')) curAct = st.act; if (st.act !== curAct) { actW -= dt * 4; if (actW <= 0) { actW = 0; curAct = st.act || null; } } else actW = Math.min(1, actW + dt * 4);
       if (curAct && rob > 0) { let p = st.ph != null ? st.ph : now, sn = Math.sin, k = rob * ease.smooth(actW), R = (n, ax, v) => { const j = J[n]; if (j) j.g.rotation[ax] += v * k; }, Y = (v) => { J.hips.g.position.y += v * k; }, A = curAct, B = st.beatPhase != null ? st.beatPhase : now * 1.7;
         if (A === 'run') { const w = p * 10; R('thighL', 'x', sn(w) * 0.85); R('thighR', 'x', -sn(w) * 0.85); R('shinL', 'x', Math.max(0, sn(w + 1.6)) * 1.2); R('shinR', 'x', Math.max(0, -sn(w + 1.6)) * 1.2); R('upperL', 'x', -sn(w) * 0.8); R('upperR', 'x', sn(w) * 0.8); R('foreL', 'x', 1.1); R('foreR', 'x', 1.1); R('chest', 'x', 0.22); R('head', 'x', -0.15); Y(Math.abs(sn(w)) * 0.06); }
         else if (A === 'walk') { const w = p * 6; R('thighL', 'x', sn(w) * 0.45); R('thighR', 'x', -sn(w) * 0.45); R('shinL', 'x', Math.max(0, sn(w + 1.6)) * 0.6); R('shinR', 'x', Math.max(0, -sn(w + 1.6)) * 0.6); R('upperL', 'x', -sn(w) * 0.4); R('upperR', 'x', sn(w) * 0.4); R('foreL', 'x', 0.4); R('foreR', 'x', 0.4); Y(Math.abs(sn(w)) * 0.025); }
@@ -4883,13 +4884,13 @@ window.STORY_INIT = function (H) {
 </script>
 <script src="door-cinema.js?v=20261023doorcine1"></script>
 <script src="collision-nearby.js?v=20261024combinedqa1"></script>
-<script src="expanded-map.js?v=20261024nomoons1"></script>
+<script src="expanded-map.js?v=20261025sound1"></script>
 <script src="coins-shop.js?v=20261024organic1"></script>
 <script src="nano-physics.js?v=20261024combinedqa1"></script>
 <script src="robot-customization.js?v=20261024robotselect1"></script>
 <script src="cinema-export.js?v=20261024filmrec1"></script>
-<script src="game-engine-v50.js?v=20261024nomoons1"></script>
-<script src="unfire-conversations.js?v=20261024nomoons1"></script>
+<script src="game-engine-v50.js?v=20261025sound1"></script>
+<script src="unfire-conversations.js?v=20261025sound1"></script>
 <script src="garage-scroll-guard.js?v=20261024combinedqa1" defer></script>
 <script src="mobile-hud-guard.js?v=20261023hudlayout1" defer></script>
 </body></html>
