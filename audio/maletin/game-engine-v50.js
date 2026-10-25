@@ -1336,10 +1336,10 @@
     REC.p.x=clamp(REC.p.x,-90000,90000);REC.p.y=clamp(REC.p.y,-90000,90000);REC.p.z=clamp(REC.p.z,-90000,90000);
     if (!REC.cq) { REC.cy = REC.yaw; REC.cpch = REC.pitch; REC.cq = 1; } REC.cy = angL(REC.cy, REC.yaw, Math.min(1, dt * 6)); REC.cpch += (REC.pitch - REC.cpch) * Math.min(1, dt * 6);
     cam.position.copy(REC.p); const c2 = Math.cos(REC.cpch); cam.lookAt(REC.p.x + Math.sin(REC.cy) * c2, REC.p.y + Math.sin(REC.cpch), REC.p.z - Math.cos(REC.cy) * c2); cam.near = 0.08; };
-  function enterRoam() { if (ROAMS.on) return; ROAMS.on = true; document.body.classList.add('unfire-roaming'); ROAMS.p.set(0, 4.5, 24); ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
+  function enterRoam() { if (ROAMS.on) return; ROAMS.k = {}; ROAMS.tgt = null; ROAMS.touchStick = null; ROAMS.on = true; document.body.classList.add('unfire-roaming'); ROAMS.p.set(0, 4.5, 24); try { if (!cv.hasAttribute('tabindex')) cv.tabIndex = 0; cv.focus({ preventScroll: true }); } catch (_) {} ROAMS.yaw = 0; ROAMS.pitch = -0.05; roamB.textContent = '↩ VOLVER AL MALETÍN'; say('🎮 W A S D / flechas: andar · ratón (arrastra): cámara · Q/E: girar · Shift: correr · C: cámara · M: mapa'); }
   function exitRoam() { if (REC.on) REC.set(false); if (!ROAMS.on) return;
     NANO_CINEMA.cancel();CASE_VIEW.on=false;CAPS.cancel();carryingCase=false;caseG.visible=true;caseG.scale.setScalar(1);caseG.position.copy(originalCasePosition);caseG.rotation.y=0;updateCarryUI();
- ROAMS.on = false; document.body.classList.remove('unfire-roaming'); ROAMS.cp = null; ROAMS.mini = false; ROAMS.freeRobotMode = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
+ ROAMS.on = false; ROAMS.k = {}; document.body.classList.remove('unfire-roaming'); ROAMS.cp = null; ROAMS.mini = false; ROAMS.freeRobotMode = false; if (ROAMS.av && ROAMS.av.w) ROAMS.av.w.visible = false; if (window.__RBsave) { window.__RB = window.__RBsave; window.__RBsave = null; } try { ATM.st.out = false; } catch (e) {} roamB.textContent = '🚶 PASEAR'; view.gd = view.D0; view.gx = 0; view.gz = 0.15; }
   // First visit: the EXISTING PASEAR control blinks for exactly two seconds
   // once the physical lid has completely opened, then stays visible.
   let firstCaseWalkHint=false;
@@ -2246,9 +2246,10 @@
       const btn = (txt, css) => { const b = document.createElement('button'); b.textContent = txt; b.style.cssText = 'position:fixed;z-index:70;display:none;border:2px solid #fff;border-radius:999px;padding:14px 18px;font:900 14px Orbitron,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);box-shadow:0 6px 18px #0008;touch-action:none;' + css; document.body.appendChild(b); return b; };
       const fly = btn('🪽 VOLAR', 'right:18px;bottom:24px'), talk = btn('💬 HABLAR', 'right:18px;bottom:90px'), down = btn('⬇ BAJAR', 'right:150px;bottom:24px'); fly.id='unfireFly'; talk.id='unfireTalk'; down.id='unfireDown'; down.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); ROAMS.k.s = 1; }); ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => down.addEventListener(ev, () => { ROAMS.k.s = 0; }));
       let pid = null, cx = 0, cy = 0; const setK = (dx, dy) => { const K = ROAMS.k, d = 0.3; K.w = dy < -d ? 1 : 0; K.s = dy > d ? 1 : 0; K.a = dx < -d ? 1 : 0; K.d = dx > d ? 1 : 0; const center = (pad.clientWidth - knob.offsetWidth) / 2, radius = Math.max(1, pad.clientWidth * .30); knob.style.left = center + dx * radius + 'px'; knob.style.top = center + dy * radius + 'px'; };
-      pad.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); if (pid !== null) return; pid = e.pointerId; const r = pad.getBoundingClientRect(); cx = r.left + r.width / 2; cy = r.top + r.height / 2; pad.setPointerCapture(pid); });
-      pad.addEventListener('pointermove', (e) => { if (e.pointerId !== pid) return; e.stopPropagation(); let dx = (e.clientX - cx) / Math.max(1, pad.clientWidth * .42), dy = (e.clientY - cy) / Math.max(1, pad.clientHeight * .42); const l = Math.hypot(dx, dy); if (l > 1) { dx /= l; dy /= l; } setK(dx, dy); });
-      const up = (e) => { if (e.pointerId !== pid) return; pid = null; setK(0, 0); }; pad.addEventListener('pointerup', up); pad.addEventListener('pointercancel', up); const resetTouch = () => { pid=null; setK(0,0); ROAMS.k[' '] = 0; }; addEventListener('blur',resetTouch); addEventListener('orientationchange',resetTouch); document.addEventListener('visibilitychange',()=>{if(document.hidden)resetTouch();});
+      pad.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); if (pid !== null) return; pid = e.pointerId; const r = pad.getBoundingClientRect(); cx = r.left + r.width / 2; cy = r.top + r.height / 2; pad.setPointerCapture(pid); applyPointer(e); });
+      const applyPointer = (e) => { let dx = (e.clientX - cx) / Math.max(1, pad.clientWidth * .42), dy = (e.clientY - cy) / Math.max(1, pad.clientHeight * .42); const l = Math.hypot(dx, dy); if (l > 1) { dx /= l; dy /= l; } setK(dx, dy); };
+      pad.addEventListener('pointermove', (e) => { if (e.pointerId !== pid) return; e.stopPropagation(); applyPointer(e); });
+      const up = (e) => { if (e.pointerId !== pid) return; pid = null; try { pad.releasePointerCapture(e.pointerId); } catch (_) {} setK(0, 0); }; pad.addEventListener('pointerup', up); pad.addEventListener('pointercancel', up); const resetTouch = () => { pid=null; setK(0,0); ROAMS.k[' '] = 0; }; addEventListener('blur',resetTouch); addEventListener('orientationchange',resetTouch); document.addEventListener('visibilitychange',()=>{if(document.hidden)resetTouch();});
       fly.addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); if (ROAMS.board && ROAMS.wet && !ROAMS.fly && window.ATM_OUT) { dispatchEvent(new KeyboardEvent('keydown', { key: ' ' })); return; } if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; } ROAMS.k[' '] = 1; }); ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => fly.addEventListener(ev, () => { ROAMS.k[' '] = 0; }));
       talk.addEventListener('pointerdown', (e) => { e.stopPropagation(); const c = document.getElementById('chat'); c.classList.add('on'); const i = document.getElementById('chatq'); i.placeholder = 'Habla con el robot que tengas más cerca… (Enter)'; setTimeout(() => i.focus(), 30); });
       setInterval(() => { const on = ROAMS.on && !(window.__VIEW && window.__VIEW.on); [pad, fly, talk].forEach((el) => (el.style.display = on ? 'block' : 'none')); down.style.display = on && ROAMS.fly ? 'block' : 'none'; if (on && pid === null) { const c = Math.max(0, (pad.clientWidth - knob.offsetWidth) / 2); knob.style.left = c + 'px'; knob.style.top = c + 'px'; } }, 300); } }
@@ -2358,6 +2359,7 @@
   }
   addEventListener('keydown', (e) => { if (!ROAMS.on || (e.target && e.target.tagName === 'INPUT')) return; if (e.key === 'Escape') { if (CASE_VIEW.on) showRobotView(); else exitRoam(); return; } if (CASE_VIEW.on) return; const k = e.key.length === 1 ? e.key.toLowerCase() : e.key; if (k === 'Shift' || k === 'Alt') ROAMS.k[k] = 1; if (k === 'b' && !e.repeat && window.ATM_OUT) { window.__surfToggle && window.__surfToggle(); e.preventDefault(); e.stopImmediatePropagation(); return; } if (k === ' ' && !e.repeat && !ROAMS.mini && window.ATM_OUT && ROAMS.wet && !ROAMS.fly && ROAMS.board) { ROAMS.spDown = performance.now(); ROAMS.k[' '] = 1; if (!ROAMS.air && !ROAMS.trick) { const wv0 = window.__WAVE ? window.__WAVE(ROAMS.p.x, ROAMS.p.z, window.__T || 0) : 0; ROAMS.vy = Math.min(66, 30 + Math.max(0, wv0) * 3.4); try { window.__SPRAY && window.__SPRAY(ROAMS.p.x, -8.9 + (ROAMS.h || 0), ROAMS.p.z, 40, 8, 14); } catch (e2) {} const KD = ['360', 'FLIP', 'GRAB', 'SUPERMAN']; ROAMS.trick = { t: 0, k: KD[Math.floor(Math.random() * KD.length)], sd: Math.random() < 0.5 ? 1 : -1 }; } e.preventDefault(); e.stopImmediatePropagation(); return; } if (k === ' ' && !e.repeat) { const now = performance.now(); if (!ROAMS.fly) { ROAMS.fly = true; ROAMS.climbV = 0; ROAMS.flyT = 0; say('🪽 Transformación · MANTÉN ESPACIO para subir · suéltalo y te quedas flotando · S o ↓ para bajar · F en picado · W hacia delante'); } ROAMS.lastSp = now; ROAMS.k[' '] = 1; } if (k === 'f') ROAMS.k.f = 1; if (k.startsWith('Arrow') || 'wasdqe'.includes(k) || k === ' ') { ROAMS.k[k] = 1; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
   addEventListener('keyup', (e) => { ROAMS.k[e.key.length === 1 ? e.key.toLowerCase() : e.key] = 0; });
+  addEventListener('blur', () => { for (const k in ROAMS.k) ROAMS.k[k] = 0; });
   function fitD0() { const vf = (cam.fov * Math.PI) / 360, hf = Math.atan(Math.tan(vf) * cam.aspect); view.D0 = Math.max((CW / 2 + 0.5) / Math.tan(hf), (CD / 2 + 1.3) / Math.tan(vf)) * 1.02; if (view.gd > view.D0 || view.gd === view.dist && view.dist >= view.D0 - 0.01) { view.gd = view.D0; } }
   // Combine the iPhone device budget with rotation-safe backbuffer sizing.
   let renderWidth=0, renderHeight=0, queuedResize=0;
@@ -3075,10 +3077,10 @@
       }
     } CASE_SOUND.sync(pNow,pTarget,lidControlledByPlayer); setLid(pNow); updateRoamButtonHint();
     // Only prewarm after the physical lid has finished opening and WebGL is ready.
-    if (LOWDEV && !roomPrewarmRequested && !ROAMS.on && !document.hidden &&
+    if (!roomPrewarmRequested && !ROAMS.on && !document.hidden &&
         frameVisible && lidOpen > 0.985 && !entryDolly.active) {
       roomPrewarmRequested = true;
-      setTimeout(prewarmRoamingProps, 500);
+      setTimeout(prewarmRoamingProps, 120);
     } oledSet(lidOpen < 0.03 ? 'CERRADO' : gateK > 0.95 ? 'ABIERTO' : 'ABRIENDO'); if (lidOpen < 0.6) CK.forEach((k) => (compG[k].userData.open = 0));
     const busy = (k) => open.some((g) => g.it.comp === k && g.m > 0.04) || items.some((it) => it.comp === k && ((it.kind === 'mut' && it.T > 0.04) || (it.g && (it.kk || 0) > 0.04))) || (k === 'hw' && HW && ((HW.T || 0) > 0.05 || (HW.u || 0) > 0.03));
     CK.forEach((k) => { if (compG[k].userData.open && lidOpen > 0.95) return; open.forEach((g) => { if (g.it.comp === k && !g.closing) { g.it.was = 1; g.closing = true; g.pin = false; g.manual = 0; } }); items.forEach((it) => { if (it.comp !== k) return; if (it.kind === 'mut' && it.tgt) { it.was = it.tgt; it.tgt = 0; } if (it.g && it.on) { it.was = 1; it.on = 0; } }); if (k === 'hw' && HW) HW.tg = 0; if (SEL && ((SEL.type === 'cap' && SEL.g.it.comp === k) || (SEL.it && SEL.it.comp === k) || (SEL.type === 'hw' && k === 'hw'))) SEL = null; });
@@ -3461,7 +3463,7 @@
     setTimeout(scanSlice, 26);
   }
   function prewarmRoamingProps() {
-    if (!LOWDEV || ROAMS.on || window.__PROPS || document.hidden) return;
+    if (ROAMS.on || window.__PROPS || document.hidden) return;
     const roots = ROOM.R.children.slice(), found = [];
     const bounds = new THREE.Box3(), size = new THREE.Vector3(), center = new THREE.Vector3();
     let index = 0;
