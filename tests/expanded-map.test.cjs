@@ -95,10 +95,10 @@ test('integration, CSS mobile safe areas and atomic host/engine cache',()=>{
   assert.match(engine,/if \(expanded\.isOpen\) for \(const k in ROAMS\.k\)/);
   assert.match(engine,/if \(!MAP\.expandedOpen\) S\.renderer\.render\(S\.scene, cam\)/, 'no WebGL render while 2D map is open');
   assert.match(engine,/if \(MAP\.expandedOpen \|\| \(window\.UNFIRE_COINS && window\.UNFIRE_COINS\.isOpen\) \|\| storyMenuOpen\) \{[\s\S]*?clock\.getDelta\(\);[\s\S]*?if \(MAP\.expandedOpen\) MAP\.tick\(\);[\s\S]*?return;/, 'suspend heavy 3D updates under full map, modal shop or story menu');
-  assert.match(iframe,/expanded-map\.css\?v=20261025prize1/);
-  assert.match(iframe,/expanded-map\.js\?v=20261025prize1/);
-  assert.match(iframe,/game-engine-v50\.js\?v=20261025prize1/);
-  assert.match(host,/maletin\/index\.html\?v=20261025prize1/);
+  assert.match(iframe,/expanded-map\.css\?v=20261025walkfix1/);
+  assert.match(iframe,/expanded-map\.js\?v=20261025walkfix1/);
+  assert.match(iframe,/game-engine-v50\.js\?v=20261025walkfix1/);
+  assert.match(host,/maletin\/index\.html\?v=20261025walkfix1/);
   assert.match(css,/safe-area-inset-top/);
   assert.match(css,/max-height:430px/);
   assert.match(css,/touch-action:none/);
