@@ -9,7 +9,7 @@ const engine = fs.readFileSync(
   path.join(__dirname, '..', 'audio', 'maletin', 'game-engine-v50.js'),
   'utf8'
 );
-const avatar = engine.match(/GS\.foot\(AV,[^\n]*AV\.r0\.update\(3\.7, dt, \{/);
+const avatar = engine.match(/GS\.foot\(AV,[^\n]*AV\.r0\.update\(3\.7, dt, \{[^\n]*mood:/);
 assert.ok(avatar, 'Avatar audio + animation updates must exist in the engine');
 assert.match(avatar[0], /ROAMS\.wet \|\| !ROAMS\.moving \? null/,
   'Gliding across water must not emit walking footsteps');
