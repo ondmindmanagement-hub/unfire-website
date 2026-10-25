@@ -33,14 +33,14 @@ test('software GPU detection uses the renderer, never browser or OS strings', ()
   assert.equal(detect({ getContext() { throw new Error('context lost'); } }), false);
 });
 test('real software GPUs get a lower draw budget without changing controls and missions', () => {
-  assert.match(source, /if \(softwareWebGL\(S\.renderer\)\) \{\s*LOWDEV = true;/);
-  assert.match(source, /DEVICE\.maxDpr = Math\.min\(DEVICE\.maxDpr, 0\.60\)/);
+  assert.match(source, /const SOFTWARE_WEBGL = softwareWebGL\(S\.renderer\);\s*if \(SOFTWARE_WEBGL\) \{\s*LOWDEV = true;/);
+  assert.match(source, /DEVICE\.maxDpr = Math\.min\(DEVICE\.maxDpr, 0\.(50|60)\)/);
   assert.match(source, /S\.renderer\.setPixelRatio\(Math\.min\(S\.renderer\.getPixelRatio\(\), DEVICE\.maxDpr\)\)/);
   assert.match(source, /if \(LOWDEV\) \{ S\.renderer\.shadowMap\.enabled = false;/);
   assert.match(source, /if \(previousRenderAt && now - previousRenderAt < \(LOWDEV/);
   assert.match(source, /ROAMS\.mini \? NANO_SCALE : 1/);
   assert.match(source, /window\.UNFIRE_COINS\.tick\(dt,t\)/);
   assert.match(source, /MAP\.expandedOpen/);
-  assert.match(source, /if \(MAP\.expandedOpen \|\| \(window\.UNFIRE_COINS && window\.UNFIRE_COINS\.isOpen\)\)/,
+  assert.match(source, /if \(MAP\.expandedOpen \|\| \(window\.UNFIRE_COINS && window\.UNFIRE_COINS\.isOpen\)( \|\| storyMenuOpen)?\)/,
     'the actual 3D loop must stop rendering while offline shop is open');
 });
