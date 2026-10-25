@@ -13,7 +13,7 @@
 })();</script>
 <link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261024combinedqa1">
 <script defer src="/assets/js/unfire-adaptive-loading.js?v=20261024combinedqa1"></script>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261025sound1" as="script"></head><body>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261025prize1" as="script"></head><body>
 <div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
   <div class="uf-load-card">
     <span class="uf-load-emblem" aria-hidden="true"></span>
@@ -373,7 +373,7 @@ body.unfire-roaming #cv{touch-action:none}
 </style>
 <link rel="stylesheet" href="mobile-hud-guard.css?v=20261023hudlayout1">
 <link rel="stylesheet" href="thumb-reach.css?v=20261023thumb1">
-<link rel="stylesheet" href="expanded-map.css?v=20261025sound1">
+<link rel="stylesheet" href="expanded-map.css?v=20261025prize1">
 <canvas id="cv" aria-label="Maletín UNFIRE en 3D. Acerca la vista con la rueda para entrar"></canvas>
 <div class="hud" id="hud"><button id="zin" aria-label="Acercar">+</button><button id="zout" aria-label="Alejar">−</button><button id="home" aria-label="Volver al maletín">⟲</button><div class="crumb" id="crumb">MALETÍN</div></div>
 <div class="tip" id="tip"></div>
@@ -434,6 +434,7 @@ body.unfire-roaming #cv{touch-action:none}
     '🎬 MODO VISTA · toca o pulsa Esc para salir': '🎬 VIEW MODE · tap or press Esc to exit', '🎬 MODO VISTA': '🎬 VIEW MODE',
     '🌍 Estás fuera · la isla entera es tuya': '🌍 You are outside · the whole island is yours', '🌍 SALIR FUERA': '🌍 GO OUTSIDE', '🏠 VOLVER DENTRO': '🏠 GO BACK INSIDE',
     '🔒 En unos días podrás salir a la isla. ¡Prepárate!': '🔒 In a few days you will be able to go out to the island. Get ready!',
+    'Primero lo importante: el maletín viaja en una cápsula de bolsillo. Botón, lanzamiento… ¡y POP! Así lo puedes sacar donde quieras: en casa, fuera o en una sala online.': 'First things first: the case travels in a pocket capsule. Button, throw… and POP! You can bring it out anywhere: at home, outside or in an online room.',
     '👋 Nimbo: vale, me quedo aquí. Llámame con 🤖 o tocándome cuando me necesites.': '👋 Nimbo: OK, I will stay here. Call me with 🤖 or tap me when you need me.', '🤖 Nimbo: ¡voy volando!': '🤖 Nimbo: flying over!', '🤖 Nimbo: ¡contigo! Te aviso de secretos, te saco si te atascas y de noche te ilumino.': '🤖 Nimbo: with you! I will point out secrets, pull you out if you get stuck and light the way at night.', '🤖 Nimbo: ¡agárrate! Te saco de ahí.': '🤖 Nimbo: hold on! Getting you out of there.', '🤖 NIMBO: VEN': '🤖 NIMBO: COME', '🤖 NIMBO: VETE': '🤖 NIMBO: LEAVE',
     '👋 Nimbo: te dejo explorar a tu aire. Si me buscas, estaré por aquí.': '👋 Nimbo: I will let you explore. If you need me, I will be around.',
     '🎯 Misión de ': '🎯 Mission from ', ' (mira la estrella del mapa)': ' (look for the star on the map)', '🏆 ¡Misión cumplida! «': '🏆 Mission complete! «', '» · ': '» · ', ' te debe una': ' owes you one',
@@ -4755,7 +4756,7 @@ window.STORY_INIT = function (H) {
   const lv = (a, b, c) => [a, b, c][SAVE.level] || b;
   const CH = [
     { t: 'El segundo que se quedó dormido', steps: [
-      { say: [['NIMBO', 'feliz', () => '¡Hola, ' + N() + '! Bienvenido a la Cápsula del Sueño. Pon cómodo el cerebro, que esto va a dar vueltas.'], ['NIMBO', 'misterio', () => 'Te cuento el lío. La noche del treinta y uno de diciembre de mil novecientos noventa y nueve, a las once, cincuenta y nueve y cincuenta y nueve, este maletín se tragó un segundo. Uno solo. Y desde entonces aquí dentro nunca llega el año dos mil.'], ['NIMBO', 'risa', () => 'Por eso los robots siguen con la moda de entonces. No es estilo: es que no se pueden cambiar de ropa.'], ['NIMBO', 'serio', () => 'Ese segundo se rompió en doce pedacitos, uno por cada familia del zodiaco. Si los recuperamos, el tiempo vuelve a fluir. Y de paso, aprendes a usar todo esto como un maestro.']] },
+      { say: [['NIMBO', 'feliz', () => '¡Hola, ' + N() + '! Bienvenido a la Cápsula del Sueño. Pon cómodo el cerebro, que esto va a dar vueltas.'], ['NIMBO', 'feliz', () => { try { window.__CAPSULE_POP && window.__CAPSULE_POP(); } catch (e) {} return 'Primero lo importante: el maletín viaja en una cápsula de bolsillo. Botón, lanzamiento… ¡y POP! Así lo puedes sacar donde quieras: en casa, fuera o en una sala online.'; }], ['NIMBO', 'misterio', () => 'Te cuento el lío. La noche del treinta y uno de diciembre de mil novecientos noventa y nueve, a las once, cincuenta y nueve y cincuenta y nueve, este maletín se tragó un segundo. Uno solo. Y desde entonces aquí dentro nunca llega el año dos mil.'], ['NIMBO', 'risa', () => 'Por eso los robots siguen con la moda de entonces. No es estilo: es que no se pueden cambiar de ropa.'], ['NIMBO', 'serio', () => 'Ese segundo se rompió en doce pedacitos, uno por cada familia del zodiaco. Si los recuperamos, el tiempo vuelve a fluir. Y de paso, aprendes a usar todo esto como un maestro.']] },
       { say: [['NIMBO', 'feliz', () => lv('Primero, despierta al HYPERWAVE: es el sinte del centro. Tócalo para que se despliegue.', 'Despierta al HYPERWAVE, el sinte del centro.', 'HYPERWAVE. Ya sabes.')]], wait: { ev: 'hwopen' }, hint: 'Toca el HYPERWAVE para desplegarlo', at: [0, -0.3], mini: 1 },
       { say: [['NIMBO', 'duda', () => lv('Ahora toca cuatro notas con el teclado de tu ordenador: las letras A, S, D, F, G, H, J, K son las teclas blancas, y W, E, T, Y, U las negras. Tranquilo: suene lo que suene, siempre suena bien.', 'Toca cuatro notas con el teclado del ordenador. A S D F… y las negras en W E T Y U.', 'Cuatro notas. Teclado del ordenador.')]], wait: { ev: 'hwkey', n: 4 }, hint: 'Toca 4 notas (A S D F G H J K)', at: [0, -0.3], mini: 1 },
       { say: [['NIMBO', 'grito', () => '¡Eso! ¿Lo has oído? Ese brillo era el primer pedacito del segundo perdido: el de Piscis. Los de Piscis sueñan tan fuerte que a veces se les olvida despertarse.'], ['NIMBO', 'risa', () => 'Yo una vez me soñé a mí mismo soñando. Me desperté dos veces. Fue agotador.'], ['NIMBO', 'feliz', () => 'Capítulo uno, completado. Lo guardo para que no se nos escape otro segundo.']], end: true },
@@ -4804,7 +4805,7 @@ window.STORY_INIT = function (H) {
     ] },
     { t: "Acuario y el año que por fin llegó", steps: [
       { say: [["NIMBO", 'misterio', "Ya casi está. Sube a la gran pirámide de Atlantis y reúne los fragmentos del segundo perdido."]], wait: { ev: 'reach', x: 600, z: 0, r: 125, h: 90 }, hint: "Vuelve a Atlantis para completar la historia.", at: [600, 0] },
-      { say: [["ESCORPIO", 'feliz', "El segundo perdido ha vuelto. La música continúa y ahora el tiempo también. Enhorabuena."]], end: true }
+      { say: [["ESCORPIO", 'feliz', () => { setTimeout(() => { try { window.__PRIZE && window.__PRIZE(); } catch (e) {} }, 3500); return "El segundo perdido ha vuelto. La música continúa y ahora el tiempo también. Enhorabuena."; }]], end: true }
     ] },
   ];
 
@@ -4884,13 +4885,13 @@ window.STORY_INIT = function (H) {
 </script>
 <script src="door-cinema.js?v=20261023doorcine1"></script>
 <script src="collision-nearby.js?v=20261024combinedqa1"></script>
-<script src="expanded-map.js?v=20261025sound1"></script>
+<script src="expanded-map.js?v=20261025prize1"></script>
 <script src="coins-shop.js?v=20261024organic1"></script>
 <script src="nano-physics.js?v=20261024combinedqa1"></script>
 <script src="robot-customization.js?v=20261024robotselect1"></script>
 <script src="cinema-export.js?v=20261024filmrec1"></script>
-<script src="game-engine-v50.js?v=20261025sound1"></script>
-<script src="unfire-conversations.js?v=20261025sound1"></script>
+<script src="game-engine-v50.js?v=20261025prize1"></script>
+<script src="unfire-conversations.js?v=20261025prize1"></script>
 <script src="garage-scroll-guard.js?v=20261024combinedqa1" defer></script>
 <script src="mobile-hud-guard.js?v=20261023hudlayout1" defer></script>
 </body></html>
