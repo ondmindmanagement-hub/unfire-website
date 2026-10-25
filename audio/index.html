@@ -743,6 +743,7 @@ document.getElementById('shareGame').addEventListener('click',async function(){
     <h4>9. Ley aplicable</h4><p>Ley española. Si eres consumidor, conservas los derechos que te da la ley de tu país.</p>
   </div>
   <label class="check"><input type="checkbox" id="agree"> He leído y acepto la licencia de uso de UNFIRE AUDIO.</label>
+<label class="check" id="waiveRow" hidden><input type="checkbox" id="waive"> Solicito que la descarga del contenido digital empiece de inmediato y reconozco que, una vez empezada, pierdo mi derecho de desistimiento de 14 días. Vendedor: Omar Baró (persona física, marca Unfire, Barcelona) · <a href="/refunds.html" target="_blank" rel="noopener">devoluciones</a> · <a href="/terms.html" target="_blank" rel="noopener">condiciones</a>.</label>
   <button class="btn btn-gel" type="button" id="doGet" disabled>Continuar</button>
   <p class="over" id="getMsg" hidden>Se abrirá una consulta por correo. No se realizará ningún cargo ni se confirmará un pedido hasta que la versión compatible con tu sistema esté validada y disponible.</p>
 </div></dialog>
@@ -1263,11 +1264,12 @@ document.querySelectorAll('button[data-add]').forEach(add=>{
 /* ================= Licencia ================= */
 const lic=$('#lic');
 let licenseSelection=null;
-function getLic(what,selected=null){licenseSelection=selected;$('#licFor').textContent='Licencia · '+what;$('#agree').checked=false;$('#doGet').disabled=true;$('#getMsg').hidden=true;$('#doGet').textContent=checkoutLinkFor(selected||store.get('unfire.bag',[]))?'Ir al pago seguro':'Continuar';lic.showModal()}
-$('#agree').onchange=e=>$('#doGet').disabled=!e.target.checked;
+function getLic(what,selected=null){licenseSelection=selected;$('#licFor').textContent='Licencia · '+what;$('#agree').checked=false;$('#doGet').disabled=true;$('#getMsg').hidden=true;const payNow=!!checkoutLinkFor(selected||store.get('unfire.bag',[]));$('#doGet').textContent=payNow?'Ir al pago seguro':'Continuar';$('#waiveRow').hidden=!payNow;$('#waive').checked=false;lic.showModal()}
+const licOk=()=>{$('#doGet').disabled=!$('#agree').checked||(!$('#waiveRow').hidden&&!$('#waive').checked)};$('#agree').onchange=licOk;$('#waive').onchange=licOk;
 $('#doGet').onclick=()=>{
   const ks=(licenseSelection||store.get('unfire.bag',[])).filter(k=>ITEMS[k]);
   const url=checkoutLinkFor(ks);
+  if(url&&!$('#waive').checked)return;
   if(url){
     // Leave fullscreen/iframes. Stripe handles authentication, wallets, 3DS and receipts.
     location.assign(url);
