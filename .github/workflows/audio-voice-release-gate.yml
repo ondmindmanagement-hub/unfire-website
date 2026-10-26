@@ -1,0 +1,27 @@
+name: Game neural voices release gate
+
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/vox/**'
+      - 'audio/maletin/index.html'
+      - 'tests/audio-voice-release-gate.test.cjs'
+      - '.github/workflows/audio-voice-release-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-complete-cast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check tests/audio-voice-release-gate.test.cjs
+      - run: node --test tests/audio-voice-release-gate.test.cjs

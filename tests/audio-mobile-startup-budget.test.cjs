@@ -14,6 +14,7 @@ const segment = (from, until) => {
 const gpu = segment("  const DEVICE=window.__UNFIRE_AUTOCALIB", "  S.controls.enabled = false;");
 const alu = segment("  const ALU = (() => {", "  FOAM.copy(ALU)");
 const grass = segment("    const grassSize =", "    const ground =");
+const seaBudget = segment("      const seaSegments =", "      const seaG = new THREE.PlaneGeometry");
 const sea = segment("      const seaG = new THREE.PlaneGeometry", "sea.rotation.x");
 
 // The same mobile profile is used by recent iPhones and older devices.
@@ -34,7 +35,16 @@ assert.match(grass,/LOWDEV \? 6500 : 26000/);
 assert.match(grass,/LOWDEV \? 18 : 60/);
 assert.match(grass,/LOWDEV \? 120 : 400/);
 assert.match(grass,/grassT\.repeat\.set\(26, 26\)/);
-assert.match(sea,/window\.__LOWDEV \? 120 : 320, window\.__LOWDEV \? 120 : 320/);
+assert.match(sea,/new THREE\.PlaneGeometry\(3200, 3200, seaSegments, seaSegments\)/);
+const seaExpression = seaBudget.match(/const seaSegments = ([^;]+);/)?.[1];
+assert.ok(seaExpression, 'Tier-based ocean vertex budget exists');
+const seaSegments = (low, tier, software) => vm.runInNewContext(seaExpression, {
+  LOWDEV: low, DEVICE: { tier }, SOFTWARE_WEBGL: software
+});
+assert.equal(seaSegments(false, 'desktop', false), 272);
+assert.equal(seaSegments(true, 'balanced', false), 112);
+assert.equal(seaSegments(true, 'compact', false), 96);
+assert.equal(seaSegments(true, 'desktop', true), 64);
 assert.match(sea,/vertexShader:/, 'Ocean shader remains intact');
 
 // Execute exact budget definitions from the game (not reimplemented estimates).
@@ -55,7 +65,7 @@ for(const [low,tier,aluExpected,grassExpected,dprExpected] of [
   assert.equal(budgets.grassSize,grassExpected);
   assert.equal(budgets.bootDpr,dprExpected);
 }
-const oldSeaVertices=221*221, newSeaVertices=121*121;
+const oldSeaVertices=221*221, newSeaVertices=(seaSegments(true, 'compact', false)+1)**2;
 assert.ok(newSeaVertices/oldSeaVertices<0.31,'Mobile sea cuts >69% vertex count');
 assert.ok((512*512)/(1024*1024)===0.25,'Each reduced canvas uses 25% texels');
 assert.doesNotMatch(gpu,/requestAnimationFrame|setInterval/,'No added governor loop');

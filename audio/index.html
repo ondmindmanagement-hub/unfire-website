@@ -1020,8 +1020,16 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
     immersive();
     fullscreenFromGesture();
     const after=pin.getBoundingClientRect();
+    // Mobile-only authentic studio ident. Prepare game concurrently; send
+    // entryStart only after ident (or Skip), never when returning to a save.
+    const mobileIntro=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    let introReady=!mobileIntro||!window.UNFIRE_GAME_INTRO;
+    if(!introReady){
+      try{window.UNFIRE_GAME_INTRO.play(pin).then(()=>{introReady=true;begin();},()=>{introReady=true;begin();});}
+      catch(_){introReady=true;}
+    }
     const begin=()=>{
-      if(!entryTransition)return;
+      if(!entryTransition||!introReady)return;
       if(!UNFIRE_SCENE.isReady()){
         if(!loadingIntent){
           loadingIntent=true;
