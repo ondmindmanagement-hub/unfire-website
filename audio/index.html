@@ -756,6 +756,7 @@ document.getElementById('shareGame').addEventListener('click',async function(){
 <script src="js/fxdemo.js"></script>
 <script src="js/catalog.js"></script>
 <script src="js/capat.js"></script>
+<script src="mobile-game-intro.js?v=20261026ident1"></script>
 <script>
 function capSvg(c,o){const t=o?'translate(0 -26) rotate(-24 50 50)':'';return 'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="g" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="${c}"/><stop offset="1" stop-color="#111"/></radialGradient><linearGradient id="p" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#9aa3b2"/></linearGradient></defs><path d="M12 52a38 38 0 0 0 76 0z" fill="url(#p)"/><g transform="${t}"><path d="M12 48a38 38 0 0 1 76 0z" fill="url(#g)"/></g><rect x="10" y="47" width="80" height="6" rx="3" fill="#cfd6e0" stroke="#5a6372" stroke-width=".8"/>${o?'<circle cx="50" cy="66" r="9" fill="'+c+'" opacity=".9"/><circle cx="47" cy="63" r="3" fill="#fff"/>':''}</svg>`)}
 
@@ -1020,8 +1021,16 @@ const Mal=(()=>{const fr=$('#malFrame'),hero=$('#hero'),hc=$('#heroCopy');let lp
     immersive();
     fullscreenFromGesture();
     const after=pin.getBoundingClientRect();
+    // Mobile-only authentic studio ident. Prepare game concurrently; send
+    // entryStart only after ident (or Skip), never when returning to a save.
+    const mobileIntro=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    let introReady=!mobileIntro||!window.UNFIRE_GAME_INTRO;
+    if(!introReady){
+      try{window.UNFIRE_GAME_INTRO.play(pin).then(()=>{introReady=true;begin();},()=>{introReady=true;begin();});}
+      catch(_){introReady=true;}
+    }
     const begin=()=>{
-      if(!entryTransition)return;
+      if(!entryTransition||!introReady)return;
       if(!UNFIRE_SCENE.isReady()){
         if(!loadingIntent){
           loadingIntent=true;
