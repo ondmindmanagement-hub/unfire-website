@@ -325,6 +325,10 @@ article.inst.flip .media{order:2}
 .card:hover .led{opacity:1}
 .card .shot{aspect-ratio:3/2;display:grid;place-items:center;border-radius:10px;background:radial-gradient(closest-side,color-mix(in srgb,var(--led) 18%,transparent),transparent 80%);position:relative}
 .card .shot img{width:100%;height:100%;object-fit:contain;transition:opacity .35s,transform .35s}
+/* Only two FX20 previews need image-specific correction: keep all source artwork intact. */
+#fx-viscosity .shot img{filter:brightness(1.08) contrast(1.04)}
+#fx-axial .shot img{transform:scale(1.075)}
+
 .card .shot img.b{position:absolute;inset:0;opacity:0}
 .card:hover .shot img.b,.card.flip .shot img.b{opacity:1}
 .card:hover .shot img.a,.card.flip .shot img.a{opacity:0}
@@ -1128,7 +1132,10 @@ $('[data-price="synth"]').innerHTML=`${eur(PRICES.synth)}<small>Mac · iPhone/iP
 const fxGrid=$('#fxGrid'),lcd=$('#rackLcd');
 FX.forEach(f=>{const b=document.createElement('button');b.type='button';b.className='card';b.id='fx-'+f[0];b.dataset.cat=f[7];b.style.setProperty('--led',f[4]);
   const free=STARTER.includes(f[0]);
-  b.innerHTML=`<span class="led"></span><div class="shot"><img src="img/fx-${f[0]}-s.webp" alt="Interfaz de UNFIRE ${f[1]}" width="560" height="363" loading="lazy"></div><div class="meta"><span class="name"></span><span class="type">${f[2]}</span></div><p class="motif">${f[3]}</p><div class="row"><span class="${free?'free':''}">${free?'Gratis siempre':eur(PRICES.fx)}</span><span>▶ Demo</span></div>`;
+  // Selective 2x display sources: VISCOSITY's meter/knobs and AXIAL's small portrait UI.
+  const artRev=['viscosity','bounding'].includes(f[0])?'?v=20261024-ratio-trim':'';
+  const crisp=['viscosity','axial'].includes(f[0])?` srcset="img/fx-${f[0]}-s.webp${artRev} 560w, img/fx-${f[0]}.webp${artRev} 1000w" sizes="(max-width:760px) 42vw, (max-width:1080px) 28vw, 21vw"`:'';
+  b.innerHTML=`<span class="led"></span><div class="shot"><img src="img/fx-${f[0]}-s.webp${artRev}"${crisp} alt="Interfaz de UNFIRE ${f[1]}" width="560" height="363" loading="lazy"></div><div class="meta"><span class="name"></span><span class="type">${f[2]}</span></div><p class="motif">${f[3]}</p><div class="row"><span class="${free?'free':''}">${free?'Gratis siempre':eur(PRICES.fx)}</span><span>▶ Demo</span></div>`;
   face(b.querySelector('.name'),f,21);b.onclick=()=>openFx(f);
   b.addEventListener('pointerenter',()=>{Field.setTint(f[4]);lcd.textContent=`${f[1]} · ${f[2].toUpperCase()}`});
   b.addEventListener('pointerleave',()=>Field.setTint(null));fxGrid.append(b)});
@@ -1185,7 +1192,7 @@ function knobs(box,names,vals,cb){box.innerHTML='';names.forEach((n,i)=>{const i
 
 /* Ficha de efecto con demo */
 const sheet=$('#sheet');let stopScope=null,playing=false,tlT=null,sheetItem=null;
-function openFx(f,isArcher){sheet.style.setProperty('--led',f[4]);$('#sheetImg').src=isArcher?'img/archer.webp':`img/fx-${f[0]}.webp`;$('#sheetImg').alt='Interfaz de '+f[1];
+function openFx(f,isArcher){sheet.style.setProperty('--led',f[4]);$('#sheetImg').src=isArcher?'img/archer.webp':`img/fx-${f[0]}.webp${['viscosity','bounding'].includes(f[0])?'?v=20261024-ratio-trim':''}`;$('#sheetImg').alt='Interfaz de '+f[1];
   $('#sheetType').textContent=isArcher?'UNFAIR · Clipper':'UNFIRE · '+f[2];const t=$('#sheetTitle');t.textContent=f[1];if(isArcher)t.style.font='800 34px var(--display)';else face(t,f,38);
   $('#sheetMotif').textContent=isArcher?'Gain, Threshold y Atmosphere. Compra la versión terminada para Mac o iPhone/iPad en la App Store oficial.':'Tema: '+f[3]+'. Collage de fotografías de archivo con LED en el contorno.';
   sheetItem=isArcher?null:'fx-'+f[0];$('#sheetGet').textContent=isArcher?'App Store ↗':'+ A la bolsa';
