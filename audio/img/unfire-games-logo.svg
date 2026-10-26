@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="UNFIRE GAMES">
+<defs>
+<linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".42" stop-color="#dfe7ff"/><stop offset=".5" stop-color="#7f8fbf"/><stop offset=".58" stop-color="#f3f6ff"/><stop offset=".82" stop-color="#9fe9ff"/><stop offset="1" stop-color="#ff7ad9"/></linearGradient>
+<linearGradient id="neon" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#39f3ff"/><stop offset=".55" stop-color="#8a5cff"/><stop offset="1" stop-color="#ff3fb4"/></linearGradient>
+<radialGradient id="core" cx=".5" cy=".55" r=".6"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#9fe9ff"/><stop offset="1" stop-color="#3a2aa8"/></radialGradient>
+<filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<g transform="translate(320 122)" filter="url(#glow)">
+<path d="M0-92 L80-46 L80 46 L0 92 L-80 46 L-80-46 Z" fill="#0d0830" stroke="url(#neon)" stroke-width="8" stroke-linejoin="round"/>
+<path d="M0-70 L61-35 L61 35 L0 70 L-61 35 L-61-35 Z" fill="none" stroke="#ffffff" stroke-opacity=".18" stroke-width="2"/>
+<path d="M2-54 C30-22 44-2 36 26 C30 47 14 58 0 58 C-20 58-38 42-38 20 C-38 0-24-12-16-30 C-12-8 0-2 6 2 C10-18 4-36 2-54 Z" fill="url(#core)"/>
+<path d="M-10 4 L22 22 L-10 40 Z" fill="#0d0830"/>
+</g>
+<text x="320" y="282" text-anchor="middle" font-family="Orbitron, 'Arial Black', Arial, sans-serif" font-weight="900" font-size="74" letter-spacing="6" fill="url(#chrome)" stroke="#2a0b6e" stroke-width="2.5" paint-order="stroke">UNFIRE</text>
+<text x="320" y="334" text-anchor="middle" font-family="Orbitron, Arial, sans-serif" font-weight="800" font-size="30" letter-spacing="18" fill="#bff8ff">GAMES</text>
+</svg>

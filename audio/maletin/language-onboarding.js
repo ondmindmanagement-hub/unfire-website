@@ -25,6 +25,7 @@
  function first(){
   if(supported.includes(stored())||supported.includes(param.get('lang')))return;
   if(navigator.webdriver&&param.get('languageQA')!=='1')return;
+  if(window.UNFIRE_INTRO&&window.UNFIRE_INTRO.active)return; // the Y2K Robots opening asks for the language
   style();
   const el=document.createElement('section');
   el.id='ufLangFirst';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');
@@ -34,8 +35,8 @@
    '<h2 id="uflTitle">Selecciona idioma</h2>',
    '<p>Choose your language · Elige tu idioma</p>',
    '<div class="ufl-pair" role="group" aria-label="Language / Idioma">',
-   '<button type="button" data-lang="es">Español</button>',
-   '<button type="button" data-lang="en">English</button></div>',
+   '<button type="button" data-lang="en">English</button>',
+   '<button type="button" data-lang="es">Español</button></div>',
    '<button class="ufl-start" type="button" id="ufLangContinue">CONTINUAR</button>',
    '<p>Podrás cambiarlo en Configuración · Change later in Settings</p></div>'
   ].join('');
@@ -62,7 +63,7 @@
   label.textContent=window.__LANG==='en'?'🌐 Language':'🌐 Idioma';
   const sel=document.createElement('select');sel.id='ufLangSelect';
   sel.setAttribute('aria-label','Language / Idioma');
-  sel.innerHTML='<option value="es">Español</option><option value="en">English</option>';
+  sel.innerHTML='<option value="en">English</option><option value="es">Español</option>';
   sel.value=supported.includes(window.__LANG)?window.__LANG:(stored()||pick());
   sel.addEventListener('pointerdown',e=>e.stopPropagation());
   sel.addEventListener('click',e=>e.stopPropagation());
