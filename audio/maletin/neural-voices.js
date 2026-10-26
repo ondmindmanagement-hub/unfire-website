@@ -3,6 +3,8 @@
 // con la voz del personaje; si no (frases dinámicas con nombres, etc.), usa la voz del sistema.
 (() => {
   const SS = window.speechSynthesis; if (!SS || window.__NEURAL_VOX) return;
+  // navegadores automatizados (QA/CI sin altavoz): se mantiene la voz del sistema tal cual
+  if (navigator.webdriver && !/[?&]neuralvox=1/.test(location.search)) return;
   let MAN = null;
   fetch('vox/manifest.json?v=20261026a').then((r) => r.json()).then((j) => { MAN = {}; for (const L in j) MAN[L] = new Set(j[L]); }).catch(() => {});
   const norm = (s) => String(s || '').replace(/\s+/g, ' ').trim();
@@ -19,11 +21,14 @@
   const call = (fn) => { try { fn && fn({}); } catch (e) {} };
   const next = () => {
     cur = null; const it = Q.shift(); if (!it) return;
-    cur = it; const a = it.a;
-    a.onended = () => { call(it.u.onend); next(); };
-    a.onerror = () => { cur = null; orig(it.u); next(); };
+    cur = it; const a = it.a; let done = false;
+    // red de seguridad: si el audio no avisa de que ha terminado (sin altavoz, pestaña en segundo plano...), la frase se da por dicha igualmente
+    const finish = (ok) => { if (done) return; done = true; clearTimeout(guard); if (ok) call(it.u.onend); else { cur = null; orig(it.u); } next(); };
+    const guard = setTimeout(() => { try { a.pause(); } catch (e) {} finish(true); }, 1800 + Math.min(14000, String(it.u.text || '').length * 95));
+    a.onended = () => finish(true);
+    a.onerror = () => finish(false);
     call(it.u.onstart);
-    a.play().catch(() => { a.onerror(); });
+    a.play().catch(() => finish(false));
   };
   SS.cancel = () => { Q.length = 0; if (cur) { try { cur.a.pause(); } catch (e) {} cur = null; } origCancel(); };
   SS.speak = (u) => {
