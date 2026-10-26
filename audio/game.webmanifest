@@ -1,7 +1,7 @@
 {
   "name": "Unfire Audio",
   "short_name": "Unfire Audio",
-  "description": "Juego 3D Unfire Audio",
+  "description": "Juego gratuito de aventura y exploración 3D con robots transformables, vuelo, misiones y secretos.",
   "start_url": "./",
   "scope": "./",
   "id": "/audio/",
