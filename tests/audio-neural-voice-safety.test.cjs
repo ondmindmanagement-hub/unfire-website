@@ -45,7 +45,7 @@ function harness(opts = {}) {
     clearTimeout(id) { timeouts.delete(id); },
     addEventListener() {},
     fetch(url) {
-      if (opts.rejectFetch) return Promise.reject(new Error('offline'));
+      if (opts.rejectFetch || (opts.rejectSlots && url.includes('slots'))) return Promise.reject(new Error('offline'));
       return Promise.resolve({
         ok: true,
         json: () => Promise.resolve(url.includes('slots') ? slots : manifest)
@@ -133,6 +133,14 @@ async function main() {
   await settle();
   assert.equal(interrupted.ended, 1, 'Failed audio must complete without OS voice');
   assert.equal(failed.origCalls.filter(x => x.startsWith('speak ')).length, 0);
+
+  const noSlotIndex = harness({ rejectSlots: true });
+  await settle();
+  assert.equal(noSlotIndex.win.__NEURAL_VOX.ready, true);
+  const stillVoiced = noSlotIndex.speak('Te cuento el lío.', 'NIMBO');
+  assert.equal(noSlotIndex.calls.length, 1, 'Missing optional slot index must not mute Nimbo');
+  noSlotIndex.flush();
+  assert.equal(stillVoiced.ended, 1);
 
   const noNetwork = harness({ rejectFetch: true });
   await settle();
