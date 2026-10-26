@@ -28,8 +28,19 @@
         const pending = context.resume(); if (pending?.catch) pending.catch(() => {});
       }
     } catch (_) { return { cue() {}, close() {} }; }
-    const cue = (second) => {
-      if (!context || context.state !== 'running') return;
+    const cue = (second, retried = false) => {
+      if (!context) return;
+      if (context.state !== 'running') {
+        // Safari may briefly suspend AudioContext even during a valid tap.
+        // Resume once and play the ident cue only if permission is granted.
+        if (!retried) {
+          try {
+            const p = context.resume();
+            if (p?.then) p.then(() => cue(second, true), () => {});
+          } catch (_) {}
+        }
+        return;
+      }
       try {
         const time = context.currentTime + .02;
         const notes = second ? [[293.66,0,.23],[440,.20,.39]] : [[174.61,0,.19],[261.63,.17,.34]];
