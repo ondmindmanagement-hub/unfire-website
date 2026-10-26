@@ -110,9 +110,9 @@ async function main() {
   const special = {
     text: 'Frase no presente en ES/e',
     started: 0, ended: 0,
-    onstart() { this.started++; },
-    onend() { this.ended++; }
   };
+  special.onstart = () => { special.started++; };
+  special.onend = () => { special.ended++; };
   hE.win.__voiceFor('UNFIRE');
   const originalHash = hE.win.__NEURAL_VOX.hash;
   assert.equal(originalHash('Te cuento el lío.'), hash('Te cuento el lío.'));
