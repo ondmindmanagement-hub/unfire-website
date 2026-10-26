@@ -69,17 +69,19 @@
   sel.addEventListener('change',()=>{
    if(!supported.includes(sel.value)||sel.value===window.__LANG)return;
    save(sel.value);
-   if(typeof window.__setLang==='function')window.__setLang(sel.value);
-   else commit(sel.value);
+   commit(sel.value);
   });
   group.append(label,sel);hud.appendChild(group);
   return true;
  }
  function init(){
+  // Correct the original wall-toggle too: an old ?lang=es query must not
+  // override a newly chosen value saved by that existing game control.
+  window.__setLang=(lang)=>commit(lang);
   first();
   if(!settings()){
-   let retries=45;
-   const again=()=>{if(settings()||--retries===0)return;setTimeout(again,400)};
+   let retries=150;
+   const again=()=>{if(settings()||--retries===0)return;setTimeout(again,1200)};
    again();
   }
  }
