@@ -7,7 +7,7 @@ const intro = fs.readFileSync('audio/maletin/game-intro.js', 'utf8');
 const lang = fs.readFileSync('audio/maletin/language-onboarding.js', 'utf8');
 test('Y2K Robots opening: studio, logos, title, then language with English first', () => {
   assert.ok(page.indexOf('game-intro.js') > 0 && page.indexOf('game-intro.js') < page.indexOf('language-onboarding.js'));
-  for (const s of ['unfire-games-logo.svg', 'logo-unfire-256.webp', 'emblem-butterfly.webp', 'Y2K<br>ROBOTS']) assert.ok(intro.includes(s), s);
+  for (const s of ['unfire-dragon-transparent.png', 'logo-unfire-256.webp', 'emblem-butterfly.webp', 'Y2K<br>ROBOTS']) assert.ok(intro.includes(s), s);
   assert.ok(intro.indexOf('data-lang="en"') < intro.indexOf('data-lang="es"'), 'English listed first');
   assert.match(intro, /navigator\.webdriver/, 'automated QA browsers skip the opening');
   assert.match(lang, /UNFIRE_INTRO&&window\.UNFIRE_INTRO\.active/, 'first-run dialog defers to the opening');

@@ -24,7 +24,8 @@
   @keyframes y2kdrift{to{transform:translate(2%,-2%) scale(1.05)}}
   #y2kIntro .stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 10% 20%,#fff,transparent),radial-gradient(1px 1px at 30% 70%,#fff,transparent),radial-gradient(1.5px 1.5px at 70% 30%,#cfe,transparent),radial-gradient(1px 1px at 85% 80%,#fff,transparent),radial-gradient(1px 1px at 50% 50%,#fdf,transparent),radial-gradient(1px 1px at 60% 90%,#fff,transparent);background-size:340px 340px;opacity:.55}
   #y2kIntro .studio{font-weight:900;letter-spacing:.42em;font-size:clamp(20px,5.2vw,54px);text-indent:.42em;text-shadow:0 0 30px rgba(140,120,255,.55)}
-  #y2kIntro .studio .ug{display:block;width:min(84vw,62vh,640px);height:auto;margin:0 auto}
+  #y2kIntro .studio .ug{display:block;width:min(56vw,44vh,340px);height:auto;margin:0 auto .3em;filter:drop-shadow(0 0 30px rgba(255,120,60,.55)) drop-shadow(0 0 60px rgba(140,90,255,.35))}
+  #y2kIntro .studio .ugt{display:block;text-align:center;background:linear-gradient(180deg,#fff 0%,#dfe7ff 42%,#7f8fbf 50%,#f3f6ff 58%,#9fe9ff 82%,#ff7ad9 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
   #y2kIntro .studio small{display:block;margin-top:.9em;font-size:.32em;letter-spacing:.6em;opacity:.65;text-align:center}
   #y2kIntro .logos{display:flex;align-items:center;gap:clamp(22px,6vw,70px)}
   #y2kIntro .logos img{width:clamp(84px,19vw,190px);height:auto;filter:drop-shadow(0 0 26px rgba(130,110,255,.7))}
@@ -53,7 +54,7 @@
   const font = document.createElement('link'); font.rel = 'stylesheet'; font.href = 'https://fonts.googleapis.com/css2?family=Orbitron:wght@800;900&display=swap';
   const el = document.createElement('div'); el.id = 'y2kIntro'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Y2K Robots');
   el.innerHTML = `<div class="bg"></div><div class="stars"></div>
-    <div class="st" data-s="studio"><div class="studio" translate="no"><img class="ug" src="../img/unfire-games-logo.svg" alt="UNFIRE GAMES"><small>PRESENTS</small></div></div>
+    <div class="st" data-s="studio"><div class="studio" translate="no"><img class="ug" src="../../unfire-dragon-transparent.png" alt=""><span class="ugt">UNFIRE GAMES</span><small>PRESENTS</small></div></div>
     <div class="st" data-s="logos"><div class="logos">
       <figure><img src="../img/logo-unfire-256.webp" alt="UNFIRE AUDIO"><figcaption translate="no">UNFIRE AUDIO</figcaption></figure>
       <div class="sep"></div>
