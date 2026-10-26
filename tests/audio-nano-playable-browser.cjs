@@ -46,10 +46,34 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         return !!b && b.style.display === 'block'
           && window.__UNFIRE_CASE_QA.lid >= .998;
       }, null, {timeout: 30000, polling: 150});
-      await page.locator('#roamB').tap({timeout: 25000});
-      await page.waitForFunction(() => window.__UNFIRE_CASE_QA.roam, null, {
-        timeout: 20000, polling: 100
+      // Record input events only in browser QA to identify a lost first tap.
+      await page.evaluate(() => {
+        window.__unfireQaTapEvents = [];
+        const b = document.getElementById('roamB');
+        for (const type of ['pointerdown', 'pointerup', 'click']) {
+          b.addEventListener(type, () => window.__unfireQaTapEvents.push(type), {capture: true});
+        }
       });
+      await page.locator('#roamB').tap({timeout: 25000});
+      try {
+        await page.waitForFunction(() => window.__UNFIRE_CASE_QA.roam, null, {
+          timeout: 20000, polling: 100
+        });
+      } catch (error) {
+        const diagnostic = await page.evaluate(() => {
+          const b = document.getElementById('roamB');
+          const r = b.getBoundingClientRect();
+          const top = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+          return {
+            events: window.__unfireQaTapEvents, roam: window.__UNFIRE_CASE_QA.roam,
+            closed: window.__UNFIRE_CASE_QA.closed, lid: window.__UNFIRE_CASE_QA.lid,
+            visible: getComputedStyle(b).display, topId: top?.id, topTag: top?.tagName,
+            bodyClass: document.body.className
+          };
+        });
+        console.error('NANO_FIRST_WALK_DIAGNOSTIC', JSON.stringify(diagnostic));
+        throw error;
+      }
       const before = await page.evaluate(() => ({
         pos: window.__UNFIRE_CASE_QA.playerPos,
         nano: window.__roamAPI.ROAMS.mini
