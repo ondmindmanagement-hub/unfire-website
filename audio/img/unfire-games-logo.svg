@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-label="UNFIRE GAMES">
 <defs>
 <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".42" stop-color="#dfe7ff"/><stop offset=".5" stop-color="#7f8fbf"/><stop offset=".58" stop-color="#f3f6ff"/><stop offset=".82" stop-color="#9fe9ff"/><stop offset="1" stop-color="#ff7ad9"/></linearGradient>
-<linearGradient id="fur" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9b6ff"/><stop offset="1" stop-color="#8a6cf0"/></linearGradient>
+<linearGradient id="fur" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb347"/><stop offset="1" stop-color="#f07a1a"/></linearGradient>
 <linearGradient id="cush" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#39f3ff"/><stop offset=".5" stop-color="#8a5cff"/><stop offset="1" stop-color="#ff3fb4"/></linearGradient>
 <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 </defs>
@@ -13,12 +13,12 @@
 <path d="M-118 46 C-122 4 -84 -22 -30 -24 C34 -26 104 -14 118 28 C122 44 110 52 92 52 L-100 52 C-112 52 -118 50 -118 46 Z" fill="url(#fur)" stroke="#2a0b6e" stroke-width="5"/>
 <!-- tail curled -->
 <path d="M110 34 C150 30 160 -4 140 -20 C130 -28 122 -18 132 -10 C144 0 134 20 106 22" fill="none" stroke="#2a0b6e" stroke-width="16" stroke-linecap="round"/>
-<path d="M110 34 C150 30 160 -4 140 -20 C130 -28 122 -18 132 -10 C144 0 134 20 106 22" fill="none" stroke="#b9a3ff" stroke-width="9" stroke-linecap="round"/>
+<path d="M110 34 C150 30 160 -4 140 -20 C130 -28 122 -18 132 -10 C144 0 134 20 106 22" fill="none" stroke="#ffa53a" stroke-width="9" stroke-linecap="round"/>
 <!-- head -->
 <g transform="translate(-62 -34)">
 <path d="M-50 -18 L-44 -66 L-14 -42 Z" fill="url(#fur)" stroke="#2a0b6e" stroke-width="5" stroke-linejoin="round"/>
 <path d="M50 -18 L44 -66 L14 -42 Z" fill="url(#fur)" stroke="#2a0b6e" stroke-width="5" stroke-linejoin="round"/>
-<path d="M-40 -26 L-38 -50 L-22 -38 Z" fill="#ff9be0"/><path d="M40 -26 L38 -50 L22 -38 Z" fill="#ff9be0"/>
+<path d="M-40 -26 L-38 -50 L-22 -38 Z" fill="#ffd0a0"/><path d="M40 -26 L38 -50 L22 -38 Z" fill="#ffd0a0"/><ellipse cx="0" cy="18" rx="26" ry="16" fill="#ffe2b8"/>
 <ellipse cx="0" cy="0" rx="62" ry="50" fill="url(#fur)" stroke="#2a0b6e" stroke-width="5"/>
 <!-- fluffy fringe -->
 <path d="M-26 -46 C-18 -60 -6 -52 0 -62 C6 -52 18 -60 26 -46" fill="none" stroke="#2a0b6e" stroke-width="5" stroke-linecap="round"/>
@@ -35,8 +35,8 @@
 <rect x="52" y="-18" width="22" height="34" rx="9" fill="#0d0830" stroke="#39f3ff" stroke-width="5"/>
 </g>
 <!-- paws -->
-<ellipse cx="-20" cy="46" rx="22" ry="12" fill="#d6c8ff" stroke="#2a0b6e" stroke-width="4"/>
-<ellipse cx="30" cy="46" rx="22" ry="12" fill="#d6c8ff" stroke="#2a0b6e" stroke-width="4"/>
+<ellipse cx="-20" cy="46" rx="22" ry="12" fill="#ffe2b8" stroke="#2a0b6e" stroke-width="4"/>
+<ellipse cx="30" cy="46" rx="22" ry="12" fill="#ffe2b8" stroke="#2a0b6e" stroke-width="4"/>
 <!-- zzz -->
 <text x="20" y="-74" font-family="Orbitron, Arial Black, Arial" font-weight="900" font-size="26" fill="#bff8ff" opacity=".9">z</text>
 <text x="40" y="-96" font-family="Orbitron, Arial Black, Arial" font-weight="900" font-size="20" fill="#bff8ff" opacity=".7">z</text>
