@@ -21,7 +21,7 @@
   const call = (fn) => { try { fn && fn({}); } catch (e) {} };
   const next = () => {
     cur = null; const it = Q.shift(); if (!it) return;
-    cur = it; const a = it.a; let done = false;
+    if (!it.a) { next(); return; } cur = it; const a = it.a; let done = false;
     // red de seguridad: si el audio no avisa de que ha terminado (sin altavoz, pestaña en segundo plano...), la frase se da por dicha igualmente
     const finish = (ok) => { if (done) return; done = true; clearTimeout(guard); if (ok) call(it.u.onend); else { cur = null; orig(it.u); } next(); };
     const guard = setTimeout(() => { try { a.pause(); } catch (e) {} finish(true); }, 1800 + Math.min(14000, String(it.u.text || '').length * 95));
@@ -40,6 +40,8 @@
         const a = new Audio(`vox/${L}/${slotFor(who)}/${k}.mp3`); a.preload = 'auto'; a.volume = Math.max(0, Math.min(1, u.volume == null ? 1 : u.volume));
         Q.push({ a, u }); if (!cur) next(); return;
       }
+      // sin grabación: no se mezcla con la voz del sistema; la frase queda en su bocadillo y el flujo sigue igual
+      if (MAN) { const it = { a: null, u }; call(u.onstart); Q.push(it); setTimeout(() => { const i = Q.indexOf(it); if (i >= 0) Q.splice(i, 1); call(u.onend); }, 900 + Math.min(9000, String(u.text || '').length * 55)); return; }
     } catch (e) {}
     return orig(u);
   };
