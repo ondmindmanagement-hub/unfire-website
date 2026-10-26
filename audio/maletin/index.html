@@ -4835,7 +4835,7 @@ window.STORY_INIT = function (H) {
   const $ = (q) => d.querySelector(q);
   let active = false, queue = [], speaking = false, waitEv = null, waitN = 0, hostShown = false;
   let inStory = false; function show(on) { document.body.classList.toggle('storyOn', on); d.classList.toggle('on', on); d.classList.toggle('cine', on && inStory); active = on; if (!on) inStory = false; H.cinema(on && inStory); }
-  function line(who, emo, text, cb) { const c = CAST[who] || CAST.NIMBO; $('.nm').textContent = who === 'NIMBO' ? 'NIMBO · TU GUÍA' : who; $('.nm').style.background = c.col; $('.ch').innerHTML = '<button class="alt" id="stSkip">SIGUIENTE ▸</button>'; const tx = $('.tx'); tx.textContent = ''; let k = 0, fin = false; const tw = setInterval(() => { k += 2; tx.textContent = text.slice(0, k); if (k >= text.length) clearInterval(tw); }, 28);
+  function line(who, emo, text, cb) { if (window.__LANG === 'en' && typeof window.T === 'function') text = window.T(text); const c = CAST[who] || CAST.NIMBO; $('.nm').textContent = who === 'NIMBO' ? 'NIMBO · TU GUÍA' : who; $('.nm').style.background = c.col; $('.ch').innerHTML = '<button class="alt" id="stSkip">SIGUIENTE ▸</button>'; const tx = $('.tx'); tx.textContent = ''; let k = 0, fin = false; const tw = setInterval(() => { k += 2; tx.textContent = text.slice(0, k); if (k >= text.length) clearInterval(tw); }, 28);
     const go = () => { if (fin) return; fin = true; clearInterval(tw); tx.textContent = text; try { speechSynthesis.cancel(); } catch (e) {} H.duck(0); cb(); }; $('#stSkip').onclick = go; H.focusHost(who); voice(who, text, emo, () => setTimeout(go, 500)); }
   function play(lines, then) { show(true); let i = 0; const nx = () => { if (i >= lines.length) { then && then(); return; } const [w, e, f] = lines[i++]; line(w, e, typeof f === 'function' ? f() : f, nx); }; nx(); }
   function choices(list) { $('.ch').innerHTML = ''; list.forEach(([t, f, alt]) => { const b = document.createElement('button'); b.textContent = t; if (alt) b.className = 'alt'; b.onclick = () => { try { speechSynthesis.cancel(); } catch (e) {} f(); }; $('.ch').appendChild(b); }); }
@@ -4902,7 +4902,7 @@ window.STORY_INIT = function (H) {
 <script src="game-engine-v50.js?v=20261026voces1"></script>
 <script src="unfire-conversations.js?v=20261026voces1"></script>
 <script src="idle-dance.js?v=20261026voces1"></script>
-<script src="neural-voices.js?v=20261026voces3"></script>
+<script src="neural-voices.js?v=20261026voicesafety1"></script>
 <script src="garage-scroll-guard.js?v=20261024combinedqa1" defer></script>
 <script src="mobile-hud-guard.js?v=20261023hudlayout1" defer></script>
 <style id="unfireLayoutFix20261026">

@@ -1,0 +1,29 @@
+name: Audio neural voice asset and playback QA
+
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/neural-voices.js'
+      - 'audio/maletin/vox/**'
+      - 'tests/audio-neural-voice-safety.test.cjs'
+      - '.github/workflows/audio-neural-voice-safety.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Voice files and browser API contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check audio/maletin/neural-voices.js
+      - run: node --check tests/audio-neural-voice-safety.test.cjs
+      - run: node --test tests/audio-neural-voice-safety.test.cjs
