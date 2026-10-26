@@ -52,6 +52,14 @@
     ],
     join: ['¡Fiesta sin avisar! Me apunto.', 'Si bailas tú, bailamos todos.', 'Esto en la azotea sonaría el doble de bien.', 'Vale, pero yo llevo el ritmo.'],
   };
+  const LINES_EN = {
+    inside: ['They say the dome opens if you fly right under it… worth checking.', "That case on the table won't stop buzzing. Something wants out.", 'Ari counted the paintings again. She says there is one more than yesterday.', 'If I got tiny, maybe I could fit where nobody looks…', 'The radio is acting strange today. Like it wants someone to listen.', 'What if I invite someone? Online mode is bound to be a party.', 'That capsule machine keeps staring at me. I think it owes me a surprise.', 'Nimbo says that out on the island, things happen that you cannot hear in here.'],
+    outside: ['The sea is perfect for surfing today… with a board, of course.', 'Those titans on the horizon… are they getting closer, or is it just me?', 'From the clouds you must be able to see the whole island.', 'Smells like a storm. And an 808 bass far, far away.', 'Someone has built a stage out there. You can hear it from here.', 'The whales are flying low today. Something is about to happen.'],
+    nano: ['From down here, the house looks like an entire city.', 'Not even the dust specks take me seriously.', 'If anyone stomps, I go flying. Literally.', 'I bet there are secrets you can only see at this size.'],
+    join: ['Surprise party! Count me in.', 'If you dance, we all dance.', 'This would sound twice as good on the roof.', 'Fine, but I keep the beat.'],
+  };
+  const EN = window.__LANG === 'en';
+  if (EN) { Object.assign(LINES, LINES_EN); const NM = { clasico: 'CLASSIC', fiesta: 'PARTY', giro: 'SPIN', saludo: 'WAVE', boxeo: 'BOXING' }; STYLES.forEach((s) => { if (NM[s.id]) s.name = NM[s.id]; }); }
   const pick = (arr) => { let i = Math.floor(Math.random() * arr.length); if (arr.length > 1 && i === S.lastLine) i = (i + 1) % arr.length; S.lastLine = i; return arr[i]; };
 
   // ---------- burbuja de texto sobre tu robot ----------
@@ -99,11 +107,11 @@
 #ufDanceBtn{position:fixed;right:14px;bottom:calc(9vh + 198px);z-index:55;display:none;border:1px solid #c9b8ff;background:linear-gradient(180deg,#8f7bff,#4b35d6);color:#fff;border-radius:10px;padding:7px 11px;font:700 11px system-ui;cursor:pointer}`;
     document.head.appendChild(st);
     ui = document.createElement('div'); ui.id = 'ufDance';
-    ui.innerHTML = '<b>BAILES · 1–7 · J para cerrar</b>' + STYLES.map((s, i) => `<button data-i="${i}">${s.icon} ${i + 1} · ${s.name}</button>`).join('');
+    ui.innerHTML = (EN ? '<b>DANCES · 1–7 · J to close</b>' : '<b>BAILES · 1–7 · J para cerrar</b>') + STYLES.map((s, i) => `<button data-i="${i}">${s.icon} ${i + 1} · ${s.name}</button>`).join('');
     ui.addEventListener('pointerdown', (e) => e.stopPropagation());
     ui.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; choose(+b.dataset.i); });
     document.body.appendChild(ui);
-    btn = document.createElement('button'); btn.id = 'ufDanceBtn'; btn.type = 'button'; btn.textContent = '💃 BAILAR (J)';
+    btn = document.createElement('button'); btn.id = 'ufDanceBtn'; btn.type = 'button'; btn.textContent = EN ? '💃 DANCE (J)' : '💃 BAILAR (J)';
     btn.addEventListener('pointerdown', (e) => e.stopPropagation());
     btn.onclick = (e) => { e.stopPropagation(); togglePicker(); };
     document.body.appendChild(btn);
