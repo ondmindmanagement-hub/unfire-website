@@ -104,7 +104,7 @@
 #ufDance.on{display:flex}#ufDance b{width:100%;text-align:center;letter-spacing:.12em;font-size:11px;color:#c9c0ff;margin-bottom:2px}
 #ufDance button{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;border-radius:11px;padding:8px 10px;font:800 12px system-ui;cursor:pointer;min-width:74px}
 #ufDance button.sel{background:linear-gradient(180deg,#8f7bff,#5b45ff);border-color:#cfc6ff}
-#ufDanceBtn{position:fixed;right:14px;bottom:calc(9vh + 198px);z-index:55;display:none;border:1px solid #c9b8ff;background:linear-gradient(180deg,#8f7bff,#4b35d6);color:#fff;border-radius:10px;padding:7px 11px;font:700 11px system-ui;cursor:pointer}`;
+#ufDanceBtn{position:fixed;right:14px;bottom:calc(9vh + 198px);z-index:55;pointer-events:auto;display:none;border:1px solid #c9b8ff;background:linear-gradient(180deg,#8f7bff,#4b35d6);color:#fff;border-radius:10px;padding:7px 11px;font:700 11px system-ui;cursor:pointer} #ctlDock #ufDanceBtn{position:static!important;right:auto;bottom:auto}`;
     document.head.appendChild(st);
     ui = document.createElement('div'); ui.id = 'ufDance';
     ui.innerHTML = (EN ? '<b>DANCES · 1–7 · J to close</b>' : '<b>BAILES · 1–7 · J para cerrar</b>') + STYLES.map((s, i) => `<button data-i="${i}">${s.icon} ${i + 1} · ${s.name}</button>`).join('');
@@ -115,6 +115,9 @@
     btn.addEventListener('pointerdown', (e) => e.stopPropagation());
     btn.onclick = (e) => { e.stopPropagation(); togglePicker(); };
     document.body.appendChild(btn);
+    // vive dentro de la columna de controles (#ctlDock) para que nunca se monte encima de otro botón
+    const dockIt = () => { const dk = document.getElementById('ctlDock'); if (dk && btn.parentNode !== dk) dk.insertBefore(btn, dk.firstChild); return !!dk; };
+    if (!dockIt()) { const iv = setInterval(() => { if (dockIt()) clearInterval(iv); }, 500); }
   }
   function refreshUI() { if (!ui) return; ui.querySelectorAll('button').forEach((b) => b.classList.toggle('sel', +b.dataset.i === S.style && S.on)); }
   function togglePicker(force) { mkUI(); S.picker = force != null ? force : !S.picker; ui.classList.toggle('on', S.picker); if (S.picker && !S.on) start(false); if (!S.picker && S.on && !S.auto) {} refreshUI(); }

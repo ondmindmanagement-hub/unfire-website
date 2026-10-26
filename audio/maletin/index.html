@@ -423,6 +423,7 @@ body.unfire-roaming #cv{touch-action:none}
   window.__LANG = L;
   window.__setLang = (l) => { try { localStorage.setItem('unfire_lang', l); } catch (e) {} location.reload(); };
   const EN = {
+    '🔒 CÁPSULA · MISIÓN 3': '🔒 CAPSULE · MISSION 3', '🎒 CÁPSULA (G)': '🎒 CAPSULE (G)', '🎒 DESPLEGANDO…': '🎒 DEPLOYING…', '🎒 LANZAR CÁPSULA': '🎒 THROW CAPSULE', '🎒 RECUPERAR EN CÁPSULA': '🎒 RECALL TO CAPSULE', '🎒 GUARDAR EN CÁPSULA': '🎒 STORE IN CAPSULE', 'Disponible desde la tercera misión': 'Available from the third mission', 'Guardar o lanzar el maletín con su cápsula': 'Store or throw the case with its capsule', 'Configuración': 'Settings', 'Transformarte en Nano Robot': 'Turn into a Nano Robot',
     // Línea del diálogo de ARI: texto y voz sintetizada comparten traducción.
     'Y porque el 9 ya estaba elegido.': 'And because 9 was already taken.',
     // interfaz y avisos
@@ -4904,4 +4905,19 @@ window.STORY_INIT = function (H) {
 <script src="neural-voices.js?v=20261026a"></script>
 <script src="garage-scroll-guard.js?v=20261024combinedqa1" defer></script>
 <script src="mobile-hud-guard.js?v=20261023hudlayout1" defer></script>
+<style id="unfireLayoutFix20261026">
+/* Revisión de diseño 26-oct: nada se monta encima de nada en móvil, iPad y Mac */
+@media (pointer:coarse) and (orientation:landscape){
+  html body #cfgB#cfgB{top:calc(env(safe-area-inset-top) + 6px)!important}
+  html body #ctlDock#ctlDock{top:calc(env(safe-area-inset-top) + 56px)!important;bottom:auto!important;flex-direction:column!important;height:auto!important;max-height:none!important;overflow:visible!important;flex-wrap:nowrap!important;gap:4px!important}
+  html body #ctlDock#ctlDock button{min-height:30px!important;max-height:32px;padding:2px 7px!important;font-size:9px!important;line-height:1.1!important}
+}
+@media (pointer:coarse) and (orientation:portrait){
+  html body #ctlDock#ctlDock{top:calc(env(safe-area-inset-top) + 112px)!important;bottom:auto!important;flex-direction:column!important;height:auto!important;max-height:none!important;overflow:visible!important;gap:4px!important}
+  html body #ctlDock#ctlDock button{min-height:30px!important;max-height:34px}
+}
+@media (pointer:fine){
+  html body #ufNear#ufNear{right:auto!important;left:50%!important;transform:translateX(-50%);bottom:calc(12vh + env(safe-area-inset-bottom))!important}
+}
+</style>
 </body></html>
