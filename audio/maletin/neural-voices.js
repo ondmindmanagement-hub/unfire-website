@@ -43,7 +43,7 @@
     fetch(root + 'slots.json?v=20261026voicesafety1').then((r) => {
       if (!r.ok) throw new Error('voice slot manifest unavailable');
       return r.json();
-    })
+    }).catch(() => ({ es: { e: [] } })) // optional index must not mute EN or other ES voices
   ]).then(([phrases, slots]) => {
     catalogue.en = new Set(Array.isArray(phrases.en) ? phrases.en : []);
     catalogue.es = new Set(Array.isArray(phrases.es) ? phrases.es : []);
