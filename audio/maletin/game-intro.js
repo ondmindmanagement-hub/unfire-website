@@ -24,7 +24,7 @@
   @keyframes y2kdrift{to{transform:translate(2%,-2%) scale(1.05)}}
   #y2kIntro .stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 10% 20%,#fff,transparent),radial-gradient(1px 1px at 30% 70%,#fff,transparent),radial-gradient(1.5px 1.5px at 70% 30%,#cfe,transparent),radial-gradient(1px 1px at 85% 80%,#fff,transparent),radial-gradient(1px 1px at 50% 50%,#fdf,transparent),radial-gradient(1px 1px at 60% 90%,#fff,transparent);background-size:340px 340px;opacity:.55}
   #y2kIntro .studio{font-weight:900;letter-spacing:.42em;font-size:clamp(20px,5.2vw,54px);text-indent:.42em;text-shadow:0 0 30px rgba(140,120,255,.55)}
-  #y2kIntro .studio .ug{display:block;width:min(70vw,52vh,520px);height:auto;margin:0 auto}
+  #y2kIntro .studio .ug{display:block;width:min(84vw,62vh,640px);height:auto;margin:0 auto}
   #y2kIntro .studio small{display:block;margin-top:.9em;font-size:.32em;letter-spacing:.6em;opacity:.65;text-align:center}
   #y2kIntro .logos{display:flex;align-items:center;gap:clamp(22px,6vw,70px)}
   #y2kIntro .logos img{width:clamp(84px,19vw,190px);height:auto;filter:drop-shadow(0 0 26px rgba(130,110,255,.7))}
