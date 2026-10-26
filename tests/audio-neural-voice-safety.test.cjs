@@ -86,6 +86,9 @@ async function main() {
         assert.ok(fs.existsSync(path.join(root, 'vox', lang, voice, k + '.mp3')), 'Missing ' + lang + '/' + voice + '/' + k);
   }
 
+  const spanishNPC = harness({ language: 'es' });
+  for (const name of ['ESCORPIO','LIBRA','TAURO','VIRGO','ACUARIO','GUSTAVO','ECLIPSE'])
+    assert.ok('abcd'.includes(spanishNPC.win.__NEURAL_VOX.slotFor(name)), 'Spanish NPC must not land in sparse e slot');
   const h = harness();
   await settle();
   assert.equal(h.win.__NEURAL_VOX.ready, true);
