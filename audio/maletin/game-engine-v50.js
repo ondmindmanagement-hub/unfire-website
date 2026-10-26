@@ -89,6 +89,222 @@
   }
   if (LOWDEV) { S.renderer.shadowMap.enabled = false; }
   else { S.renderer.shadowMap.autoUpdate = false; S.renderer.shadowMap.needsUpdate = true; }
+  // LIGHTFIX: el número de luces del escenario se mantiene constante (luces "proxy" en la raíz),
+  // así encender/apagar/ocultar luces dentro o fuera de casa ya no recompila todos los shaders.
+  (function lightFix() {
+    const T = THREE, HID = 31, scene = S.scene, map = new Map(), pend = new Set(), pool = { P: [], S: [], D: [], H: [], A: [] };
+    const box = new T.Group(); box.name = 'unfireLightProxies'; box.userData.noCollide = true; scene.add(box);
+    const kind = (l) => l.isPointLight ? 'P' : l.isSpotLight ? 'S' : l.isDirectionalLight ? 'D' : l.isHemisphereLight ? 'H' : l.isAmbientLight ? 'A' : null;
+    function mk(k) {
+      const p = k === 'P' ? new T.PointLight(0xffffff, 0) : k === 'S' ? new T.SpotLight(0xffffff, 0) : k === 'D' ? new T.DirectionalLight(0xffffff, 0) : k === 'H' ? new T.HemisphereLight(0xffffff, 0x000000, 0) : new T.AmbientLight(0xffffff, 0);
+      p.userData.__lfProxy = true; p.matrixAutoUpdate = false; p.castShadow = false;
+      if (p.target) { p.target.userData.__lfProxy = true; p.target.matrixAutoUpdate = false; box.add(p.target); }
+      box.add(p); return p;
+    }
+    [['P', 6], ['S', 2], ['D', 1], ['H', 1]].forEach(([k, n]) => { for (let i = 0; i < n; i++) pool[k].push(mk(k)); });
+    function want(l) { return l && l.isLight && !l.userData.__lfProxy && !l.castShadow && kind(l) && !map.has(l); }
+    function rootOf(o) { while (o.parent) o = o.parent; return o; }
+    function adopt(l) {
+      const k = kind(l), p = pool[k].pop() || mk(k);
+      l.userData.__lfMask = l.layers.mask; l.layers.set(HID); map.set(l, p);
+    }
+    function release(l, p) { p.intensity = 0; pool[kind(l)].push(p); if (l.userData.__lfMask != null) l.layers.mask = l.userData.__lfMask; map.delete(l); }
+    const add0 = T.Object3D.prototype.add;
+    T.Object3D.prototype.add = function (...objs) {
+      const r = add0.apply(this, objs);
+      if (this !== box) for (const o of objs) { if (!o || o.userData?.__lfProxy) continue; if (o.isLight) { if (want(o)) pend.add(o); } else if (o.children && o.children.length) o.traverse((c) => { if (want(c)) pend.add(c); }); }
+      return r;
+    };
+    scene.traverse((c) => { if (want(c)) pend.add(c); });
+    let frames = 0; const MINSPARE = { P: 4, S: 1, D: 1, H: 1, A: 0 };
+    function sync() {
+      if (pend.size) for (const l of pend) { const r = rootOf(l); if (r === scene) { if (want(l)) adopt(l); pend.delete(l); } else if (r.isScene || pend.size > 400) pend.delete(l); }
+      if (++frames < 40) for (const k in MINSPARE) while (pool[k].length < MINSPARE[k]) pool[k].push(mk(k));
+      for (const [l, p] of map) {
+        let o = l, vis = true; while (o.parent) { if (!o.visible) vis = false; o = o.parent; }
+        if (o !== scene || !l.isLight) { release(l, p); if (o !== scene && l.parent) pend.add(l); continue; }
+        if (!vis || !l.visible || !(l.intensity > 0)) { p.intensity = 0; continue; }
+        p.intensity = l.intensity; p.color.copy(l.color);
+        p.matrix.copy(l.matrixWorld); p.matrixWorldNeedsUpdate = true;
+        if (l.distance !== undefined) { p.distance = l.distance; p.decay = l.decay; }
+        if (l.isSpotLight) { p.angle = l.angle; p.penumbra = l.penumbra; }
+        if (l.isHemisphereLight) p.groundColor.copy(l.groundColor);
+        if (p.target) { p.target.matrix.copy(l.target.matrixWorld); p.target.matrixWorldNeedsUpdate = true; }
+      }
+    }
+    // Matrices "sucias": solo se recalcula la matriz de los objetos que de verdad se han movido (antes: los ~11.000 cada frame).
+    const MC = new WeakMap(); let LCAM = null, FR = 0, NOW = 0, lastScan = 0;
+    // Además, lo que está oculto (p. ej. el mundo de fuera mientras estás dentro) no se recalcula; al reaparecer se pone al día.
+    const _om = new T.Matrix4();
+    function upd(o, d, f) {
+      if (o.__lfS || o.__lfF) { f = true; o.__lfS = false; o.__lfF = false; }
+      if (o.matrixAutoUpdate) {
+        const p = o.position, q = o.quaternion, k = o.scale; let c = o.__lfC;
+        if (c === undefined) { c = o.__lfC = new Float64Array(10); c[0] = NaN; }
+        if (c[0] !== p.x || c[1] !== p.y || c[2] !== p.z || c[3] !== q.x || c[4] !== q.y || c[5] !== q.z || c[6] !== q.w || c[7] !== k.x || c[8] !== k.y || c[9] !== k.z) {
+          c[0] = p.x; c[1] = p.y; c[2] = p.z; c[3] = q.x; c[4] = q.y; c[5] = q.z; c[6] = q.w; c[7] = k.x; c[8] = k.y; c[9] = k.z;
+          o.matrix.compose(p, q, k); d = true;
+        }
+      }
+      // (getWorldPosition deja matrixWorldNeedsUpdate=true en toda la cadena; con matrixAutoUpdate ya lo cubre la comparación de arriba)
+      if ((!o.matrixAutoUpdate && o.matrixWorldNeedsUpdate) || o.__lfPar !== o.parent) { o.__lfPar = o.parent; d = true; }
+      else o.matrixWorldNeedsUpdate = false;
+      if (d || f) {
+        let moved = d; if (!d) _om.copy(o.matrixWorld);
+        if (o.parent === null) o.matrixWorld.copy(o.matrix); else o.matrixWorld.multiplyMatrices(o.parent.matrixWorld, o.matrix);
+        if (!d) { const a = _om.elements, b = o.matrixWorld.elements; for (let i = 0; i < 16; i++) if (a[i] !== b[i]) { moved = true; break; } }
+        o.matrixWorldNeedsUpdate = false;
+        if (o.isCamera) o.matrixWorldInverse.copy(o.matrixWorld).invert();
+        if (moved) { d = true; o.__lfT = NOW; if (o.__lfB) dissolve(o.__lfB); }
+      }
+      const ch = o.children; if (!ch.length) return;
+      if (!o.visible && o !== scene) { o.__lfS = true; return; }
+      for (let i = 0; i < ch.length; i++) upd(ch[i], d, f);
+    }
+    scene.updateMatrixWorld = function (force) { upd(this, !!force, false); };
+    // Si alguien llama a updateMatrix() por su cuenta (p. ej. gira la cámara un momento para calcular algo y la deja como estaba),
+    // la caché se pone al día y en el siguiente frame se recalcula de verdad: nunca queda una matriz vieja.
+    const um0 = T.Object3D.prototype.updateMatrix;
+    T.Object3D.prototype.updateMatrix = function () {
+      um0.call(this); const c = this.__lfC;
+      if (c !== undefined) { const p = this.position, q = this.quaternion, k = this.scale; c[0] = p.x; c[1] = p.y; c[2] = p.z; c[3] = q.x; c[4] = q.y; c[5] = q.z; c[6] = q.w; c[7] = k.x; c[8] = k.y; c[9] = k.z; this.__lfF = true; }
+    };
+    // Objetos diminutos en pantalla (< ~2 px) no se dibujan: menos llamadas de dibujo fuera de casa. Se revisa por tandas.
+    const CULL = 1 << HID, KEEP = new WeakMap(), _v = new T.Vector3(); let list = [], li = 0, lt = 0, TH = 1;
+    // Muchos robots/aparatos llevan frustumCulled=false (se dibujaban aunque estuvieran detrás de la cámara): aquí se descartan con una esfera holgada.
+    let nofc = []; const FKEEP = new WeakMap(), _fr = new T.Frustum(), _pm = new T.Matrix4(), _sp = new T.Sphere();
+    function relist() { list = []; nofc = []; scene.traverse((o) => { if (!o.isMesh || o.isInstancedMesh || !o.geometry || o.__lfB) return; if (o.frustumCulled !== false) { if (!o.isSkinnedMesh) list.push(o); } else if (!o.isSkinnedMesh && !o.userData.__lfProxy) { const g = o.geometry; if (!g.boundingSphere) g.computeBoundingSphere(); if (g.boundingSphere && g.boundingSphere.radius * o.matrixWorld.getMaxScaleOnAxis() < 400) nofc.push(o); } }); }
+    function fcull(cam) {
+      if (cam.parent === null) cam.updateMatrixWorld();
+      _fr.setFromProjectionMatrix(_pm.multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse));
+      const fpx = cam.isPerspectiveCamera ? (S.renderer.domElement.height / 2) / Math.tan((cam.fov * Math.PI) / 360) / Math.max(cam.zoom || 1, 1e-3) : 0, ce = cam.matrixWorld.elements, cx = ce[12], cy = ce[13], cz = ce[14];
+      for (let i = 0; i < nofc.length; i++) {
+        const o = nofc[i]; if (o.__lfB) continue; const bs = o.geometry.boundingSphere; if (!bs) continue;
+        _sp.center.copy(bs.center).applyMatrix4(o.matrixWorld); _sp.radius = bs.radius * o.matrixWorld.getMaxScaleOnAxis() * 1.6 + 1.5;
+        const dx = _sp.center.x - cx, dy = _sp.center.y - cy, dz = _sp.center.z - cz, dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        const out = !_fr.intersectsSphere(_sp) || (fpx > 0 && dist > 2 && ((_sp.radius - 1.5) / 1.6) * fpx / dist < TH), off = FKEEP.has(o);
+        if (out && !off) { FKEEP.set(o, o.layers.mask); o.layers.mask = CULL; }
+        else if (!out && off) { o.layers.mask = FKEEP.get(o); FKEEP.delete(o); }
+      }
+    }
+    function cull(cam) {
+      if (!cam || !cam.isPerspectiveCamera) return;
+      if (++lt % 120 === 1) relist();
+      const f = (S.renderer.domElement.height / 2) / Math.tan((cam.fov * Math.PI) / 360) / Math.max(cam.zoom || 1, 1e-3);
+      const cp = cam.matrixWorld.elements, cx = cp[12], cy = cp[13], cz = cp[14];
+      const n = Math.min(list.length, 2500);
+      for (let j = 0; j < n; j++) {
+        if (li >= list.length) li = 0; const o = list[li++]; if (o.__lfB) continue; const g = o.geometry;
+        if (!g.boundingSphere) g.computeBoundingSphere(); const bs = g.boundingSphere; if (!bs) continue;
+        const e = o.matrixWorld.elements; _v.copy(bs.center).applyMatrix4(o.matrixWorld);
+        const sc = Math.sqrt(Math.max(e[0] * e[0] + e[1] * e[1] + e[2] * e[2], e[4] * e[4] + e[5] * e[5] + e[6] * e[6], e[8] * e[8] + e[9] * e[9] + e[10] * e[10]));
+        const dx = _v.x - cx, dy = _v.y - cy, dz = _v.z - cz, dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        const tiny = dist > 1 && (bs.radius * sc * f) / dist < TH;
+        const off = o.layers.mask === CULL && KEEP.has(o);
+        if (tiny && !off) { KEEP.set(o, o.layers.mask); o.layers.mask = CULL; }
+        else if (!tiny && off) { o.layers.mask = KEEP.get(o); KEEP.delete(o); }
+      }
+    }
+    // LOTES: los objetos quietos que comparten material se dibujan juntos (una llamada de dibujo en vez de decenas).
+    // Los originales siguen ahí (colisiones, clics); si uno se mueve, cambia o se oculta por separado, su lote se deshace al instante.
+    const BOXB = new T.Group(); BOXB.name = 'unfireBatches'; BOXB.userData.noCollide = true; scene.add(BOXB);
+    const CLS = new Set(), OBR = T.Object3D.prototype.onBeforeRender, _nm = new T.Matrix3(), _w = new T.Vector3(), AOK = { position: 1, normal: 1, uv: 1, color: 1 };
+    let queue = [], built = 0;
+    function okMesh(o) {
+      if (!o.isMesh || o.isInstancedMesh || o.isSkinnedMesh || o.__lfB || o.userData.__lfProxy || o.frustumCulled === false || o.renderOrder !== 0) return false;
+      const m = o.material, g = o.geometry;
+      if (!m || Array.isArray(m) || m.transparent || m.isShaderMaterial || !g || !g.isBufferGeometry) return false;
+      if (o.morphTargetInfluences || o.onBeforeRender !== OBR || o.customDepthMaterial || o.customDistanceMaterial) return false;
+      if (g.morphAttributes && Object.keys(g.morphAttributes).length) return false;
+      if (g.drawRange.start !== 0 || g.drawRange.count !== Infinity) return false;
+      const p = g.attributes.position; if (!p || p.isInterleavedBufferAttribute || p.itemSize !== 3 || p.count > 20000) return false;
+      for (const k in g.attributes) { const a = g.attributes[k]; if (!AOK[k] || a.isInterleavedBufferAttribute) return false; }
+      if (g.index && g.index.isInterleavedBufferAttribute) return false;
+      return o.matrixWorld.determinant() > 0;
+    }
+    function walk(o) { let v = true, a = null, b = null, p = o; while (p.parent) { if (!p.visible) v = false; b = a; a = p; p = p.parent; } return { v, root: p, dom: b || a }; }
+    function sig(g) { return Object.keys(g.attributes).sort().map((k) => k + g.attributes[k].itemSize).join(','); }
+    function scanBatches() {
+      const B = new Map();
+      scene.traverse((o) => {
+        if (!okMesh(o)) return; const need = 3000 * Math.pow(2, Math.min(o.__lfN || 0, 5)); if (NOW - (o.__lfT || 0) < need) return;
+        const w = walk(o); if (!w.v || w.root !== scene) return;
+        const e = o.matrixWorld.elements, cell = Math.floor(e[12] / 48) + ':' + Math.floor(e[13] / 48) + ':' + Math.floor(e[14] / 48);
+        const key = o.material.uuid + '|' + sig(o.geometry) + '|' + o.castShadow + o.receiveShadow + '|' + (w.dom ? w.dom.id : 0) + '|' + cell;
+        let L = B.get(key); if (!L) B.set(key, (L = [])); L.push(o);
+      });
+      queue = [];
+      for (const L of B.values()) { if (L.length < 2) continue; let cur = [], nv = 0; for (const o of L) { const c = o.geometry.attributes.position.count; if (cur.length && (cur.length >= 96 || nv + c > 60000)) { if (cur.length > 1) queue.push(cur); cur = []; nv = 0; } cur.push(o); nv += c; } if (cur.length > 1) queue.push(cur); }
+    }
+    function build(M) {
+      M = M.filter((o) => okMesh(o) && walk(o).root === scene); if (M.length < 2) return;
+      const g0 = M[0].geometry, keys = Object.keys(g0.attributes); let nv = 0, ni = 0;
+      for (const o of M) { const g = o.geometry; nv += g.attributes.position.count; ni += g.index ? g.index.count : g.attributes.position.count; }
+      const out = {}; keys.forEach((k) => (out[k] = new Float32Array(nv * g0.attributes[k].itemSize)));
+      const idx = nv > 65535 ? new Uint32Array(ni) : new Uint16Array(ni); let vo = 0, io = 0;
+      for (const o of M) {
+        const g = o.geometry, P = g.attributes.position, n = P.count, mw = o.matrixWorld; _nm.getNormalMatrix(mw);
+        for (let i = 0; i < n; i++) { _w.set(P.getX(i), P.getY(i), P.getZ(i)).applyMatrix4(mw); const j = (vo + i) * 3; out.position[j] = _w.x; out.position[j + 1] = _w.y; out.position[j + 2] = _w.z; }
+        if (out.normal) { const N = g.attributes.normal; for (let i = 0; i < n; i++) { _w.set(N.getX(i), N.getY(i), N.getZ(i)).applyMatrix3(_nm).normalize(); const j = (vo + i) * 3; out.normal[j] = _w.x; out.normal[j + 1] = _w.y; out.normal[j + 2] = _w.z; } }
+        for (const k of keys) { if (k === 'position' || k === 'normal') continue; const A = g.attributes[k], s = A.itemSize, D = out[k]; const G = [A.getX, A.getY, A.getZ, A.getW]; for (let i = 0; i < n; i++) for (let c = 0; c < s; c++) D[(vo + i) * s + c] = G[c].call(A, i); }
+        if (g.index) { const I = g.index.array; for (let i = 0; i < I.length; i++) idx[io++] = I[i] + vo; } else for (let i = 0; i < n; i++) idx[io++] = vo + i;
+        vo += n;
+      }
+      const geo = new T.BufferGeometry(); keys.forEach((k) => geo.setAttribute(k, new T.BufferAttribute(out[k], g0.attributes[k].itemSize, false)));
+      geo.setIndex(new T.BufferAttribute(idx, 1)); geo.computeBoundingSphere(); geo.computeBoundingBox();
+      const px = new T.Mesh(geo, M[0].material); px.matrixAutoUpdate = false; px.castShadow = M[0].castShadow; px.receiveShadow = M[0].receiveShadow; px.raycast = () => {}; px.userData.__lfProxy = true; px.userData.noCollide = true;
+      const cl = { M, px, mat: M.map((o) => o.material), geo: M.map((o) => o.geometry), ver: M.map((o) => o.geometry.attributes.position.version), mask: [] };
+      M.forEach((o, i) => { cl.mask[i] = KEEP.has(o) ? KEEP.get(o) : o.layers.mask; KEEP.delete(o); o.layers.mask = CULL; o.__lfB = cl; });
+      BOXB.add(px); CLS.add(cl); built++;
+    }
+    function dissolve(cl) {
+      if (!CLS.has(cl)) return; CLS.delete(cl);
+      cl.M.forEach((o, i) => { o.layers.mask = cl.mask[i]; o.__lfB = null; o.__lfT = NOW; o.__lfN = (o.__lfN || 0) + 1; });
+      BOXB.remove(cl.px); cl.px.geometry.dispose();
+    }
+    function batchFrame() {
+      for (const cl of CLS) {
+        let v0 = null, bad = false;
+        for (let i = 0; i < cl.M.length; i++) {
+          const o = cl.M[i]; if (o.material !== cl.mat[i] || o.geometry !== cl.geo[i] || o.geometry.attributes.position.version !== cl.ver[i]) { bad = true; break; }
+          let v = o.visible, p = o; while (p.parent) { p = p.parent; if (!p.visible) v = false; }
+          if (p !== scene || (v0 !== null && v !== v0)) { bad = true; break; } v0 = v;
+        }
+        if (bad) dissolve(cl); else cl.px.visible = !!v0;
+      }
+      if (NOW - lastScan > 2500) { lastScan = NOW; scanBatches(); }
+      const t0 = performance.now(); while (queue.length && performance.now() - t0 < 3) build(queue.pop());
+    }
+    const RC = T.Raycaster.prototype;
+    ['intersectObject', 'intersectObjects'].forEach((k) => { const f = RC[k]; RC[k] = function (...a) { const m0 = this.layers.mask; this.layers.mask = m0 | CULL; try { return f.apply(this, a); } finally { this.layers.mask = m0; } }; });
+    // Al sacar algo de la escena se le devuelve su estado normal (por si se usa en otra escena, p. ej. la vista del maletín).
+    const rem0 = T.Object3D.prototype.remove;
+    T.Object3D.prototype.remove = function (...objs) {
+      for (const o of objs) { if (!o || !o.traverse || o.userData?.__lfProxy || this === box || this === BOXB) continue; try { o.traverse((c) => {
+        if (c.__lfB) dissolve(c.__lfB);
+        if (FKEEP.has(c)) { c.layers.mask = FKEEP.get(c); FKEEP.delete(c); }
+        if (KEEP.has(c) && c.layers.mask === CULL) { c.layers.mask = KEEP.get(c); KEEP.delete(c); }
+        if (map.has(c)) release(c, map.get(c));
+      }); } catch (e) {} }
+      return rem0.apply(this, objs);
+    };
+    const r0 = S.renderer.render;
+    S.renderer.render = function (sc, cam) {
+      const main = sc === scene && this.getRenderTarget() === null;
+      if (sc === scene) { try { sync(); if (main) { LCAM = cam; FR++; NOW = performance.now(); if (window.__LFOFF) { [...list, ...nofc].forEach((o) => { if (FKEEP.has(o)) { o.layers.mask = FKEEP.get(o); FKEEP.delete(o); } if (KEEP.has(o) && o.layers.mask === CULL) { o.layers.mask = KEEP.get(o); KEEP.delete(o); } }); [...CLS].forEach(dissolve); } else { batchFrame(); cull(cam); if (cam && cam.isCamera) fcull(cam); } } } catch (e) { console.warn('[unfire perf]', e); } }
+      const x = r0.call(this, sc, cam);
+      // Umbral adaptativo: si hay demasiadas llamadas de dibujo, se ocultan antes los detalles lejanos más pequeños.
+      // Los shaders ya compilados no se tiran aunque se borre su material: al volver a entrar no hay que recompilar.
+      if (main && FR % 30 === 1) { const P = this.info.programs; if (P) for (let i = 0; i < P.length; i++) if (!P[i].__keep) { P[i].__keep = true; P[i].usedTimes++; } }
+      if (main) { const c = this.info.render.calls; TH = Math.min(3, Math.max(0.8, TH * (c > 2400 ? 1.04 : c < 1600 ? 0.985 : 1))); }
+      return x;
+    };
+    // El motor de audio se prepara durante la carga (en pausa hasta el primer toque/tecla); antes se creaba al cruzar la puerta y congelaba ~1-2 s.
+    const uaInit = () => { try { if (typeof UA !== 'undefined') UA.init(); } catch (e) {} };
+    setTimeout(uaInit, 1200);
+    ['keydown', 'touchstart', 'pointerdown'].forEach((ev) => addEventListener(ev, uaInit, { once: true, capture: true, passive: true }));
+    window.__LIGHTFIX = { lastCam: () => LCAM, why: () => { const cam = LCAM, F = new T.Frustum(); if (cam) { cam.updateWorldMatrix(true, false); F.setFromProjectionMatrix(new T.Matrix4().multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse)); } let frIn = 0, frStale = 0; const r = { tiny: 0, fr: 0, bat: 0, other: 0, vis: 0, prox: 0, proxVis: 0 }; scene.traverse((o) => { if (!o.isMesh) return; let v = true; for (let p = o; p; p = p.parent) if (!p.visible) v = false; if (o.userData.__lfProxy) { r.prox++; if (v) r.proxVis++; return; } if (!v) return; r.vis++; if (o.layers.mask !== CULL) return; if (o.__lfB) r.bat++; else if (FKEEP.has(o)) { r.fr++; const m0 = o.matrixWorld.clone(); o.updateWorldMatrix(true, false); let df = 0; for (let i = 0; i < 16; i++) df = Math.max(df, Math.abs(m0.elements[i] - o.matrixWorld.elements[i])); if (df > 0.01) frStale++; const sp = new T.Sphere().copy(o.geometry.boundingSphere).applyMatrix4(o.matrixWorld); if (cam && F.intersectsSphere(sp)) frIn++; } else if (KEEP.has(o)) r.tiny++; else r.other++; }); r.TH = TH; r.frIn = frIn; r.frStale = frStale; r.cam = cam && [cam.uuid.slice(0, 4), cam.parent ? cam.parent.type : null, cam.fov]; return r; }, dbg: () => { const r = { mesh: 0, ok: 0, stat: 0, vis: 0, FR, why: {} }; const W = (o) => { const m = o.material, g = o.geometry; if (o.__lfB) return 'batched'; if (o.isInstancedMesh) return 'inst'; if (o.isSkinnedMesh) return 'skin'; if (o.frustumCulled === false) return 'nofc'; if (o.renderOrder) return 'ro'; if (Array.isArray(m)) return 'arr'; if (m.transparent) return 'transp'; if (m.isShaderMaterial) return 'shader'; if (o.morphTargetInfluences) return 'morph'; if (o.onBeforeRender !== OBR) return 'obr'; if (g.drawRange.count !== Infinity) return 'range'; const P = g.attributes.position; if (P.count > 20000) return 'big'; for (const k in g.attributes) if (!AOK[k] || g.attributes[k].isInterleavedBufferAttribute) return 'attr:' + k; if (o.matrixWorld.determinant() <= 0) return 'det'; return 'other'; }; scene.traverse((o) => { if (!o.isMesh || !walk(o).v) return; r.mesh++; if (!okMesh(o)) { const w = W(o); r.why[w] = (r.why[w] || 0) + 1; return; } r.ok++; if (NOW - (o.__lfT || 0) >= 3000) { r.stat++; if (walk(o).v) r.vis++; } }); return r; }, scene, renderer: S.renderer, stats: () => ({ TH, clusters: CLS.size, batched: [...CLS].reduce((n, c) => n + c.M.length, 0), queue: queue.length, built, kinds: [...map.keys()].reduce((m, l) => (m[kind(l)] = (m[kind(l)] || 0) + 1, m), {}), adopted: map.size, pending: pend.size, spare: Object.fromEntries(Object.entries(pool).map(([k, v]) => [k, v.length])) }) };
+  })();
 
 
   S.controls.enabled = false; S.controls.dispose();
@@ -456,7 +672,7 @@
       const whaleM = new THREE.MeshPhysicalMaterial({ map: wT, roughness: 0.45, clearcoat: 0.6 }); const prof = [[0, -9], [1.2, -8.3], [2.6, -6.5], [3.4, -3], [3.5, 0], [3.0, 3], [2.0, 5.6], [1.0, 7.4], [0.45, 9.5], [0.3, 10.5]].map(([r, y]) => new THREE.Vector2(r, y));
       const whales = [0, 1].map((i) => { const w = new THREE.Group(); const bodyG = new THREE.LatheGeometry(prof, 36); bodyG.rotateZ(H2); const b = mesh(bodyG, whaleM); b.scale.set(1, 0.85, 1); w.add(b); const tail = new THREE.Group(); tail.position.x = -10.4; w.add(tail); for (const sz of [-1, 1]) { const f = mesh(new THREE.SphereGeometry(1, 16, 10), whaleM); f.scale.set(1.6, 0.18, 3.2); f.position.set(-0.8, 0, sz * 2.4); f.rotation.y = sz * 0.5; tail.add(f); } for (const sz of [-1, 1]) { const pf = mesh(new THREE.SphereGeometry(1, 16, 10), whaleM); pf.scale.set(2.2, 0.15, 0.8); pf.position.set(3.5, -2.2, sz * 3.2); pf.rotation.set(sz * 0.5, sz * 0.6, -0.3); w.add(pf); } for (const sz of [-1, 1]) { const e = mesh(new THREE.SphereGeometry(0.22, 10, 8), new THREE.MeshStandardMaterial({ color: 0x0a0a10 })); e.position.set(6.6, -0.6, sz * 2.45); w.add(e); } w.position.set(-50 + i * 70, 45 + i * 14, -40 + i * 50); OUTG.add(w); return { w, tl: tail, ph: i * 3 }; });
       const boats = [0, 1, 2].map((i) => { const b = new THREE.Group(); const hull = mesh(rbox(3, 0.8, 1.2, 0.3), new THREE.MeshStandardMaterial({ color: [0xffffff, 0xff2a4a, 0xffd21a][i] })); b.add(hull); const sail = mesh(new THREE.ConeGeometry(1, 3, 3), new THREE.MeshStandardMaterial({ color: 0xffffff, side: THREE.DoubleSide })); sail.position.y = 1.9; sail.scale.z = 0.1; b.add(sail); b.position.set(-30 + i * 25, -0.8, -20 - i * 3); OUTG.add(b); return { b, s: 1 + i * 0.4 }; });
-      anim.push((dt, t, lv) => { giants.forEach((G2, gi) => { const rr = gi ? 166 : 146, sp = (gi ? 7 : 5.5); G2.a = (G2.a == null ? gi * 2.4 : G2.a) + dt * sp / rr * (gi ? -1 : 1); G2.w.position.x = Math.cos(G2.a) * rr; G2.w.position.z = Math.sin(G2.a) * rr; { const sg = gi ? -1 : 1; G2.w.rotation.y = Math.atan2(-Math.sin(G2.a) * sg, Math.cos(G2.a) * sg); } G2.sp = sp; G2.wd = (G2.wd || 0) + dt * G2.sp; if (!G2.h) G2.h = HGT(G2.w); G2.r0.update(3.7, dt, { act: 'walk', ph: STEPPH(G2.wd, G2.h), mood: 'happy' }); try { GS.foot(G2, STEPPH(G2.wd, G2.h), 'walk', G2.w.position, 'out', true); } catch (e) {} }); whales.forEach((W) => { W.w.position.x += dt * 3; if (W.w.position.x > 110) W.w.position.x = -110; W.w.position.y += Math.sin(t * 0.5 + W.ph) * 0.02; W.tl.rotation.z = Math.sin(t * 1.2 + W.ph) * 0.35; W.w.rotation.z = Math.sin(t * 1.2 + W.ph - 1) * 0.06; }); boats.forEach((B) => { B.b.position.x += dt * B.s; if (B.b.position.x > 40) B.b.position.x = -40; B.b.rotation.z = Math.sin(t * 1.3 + B.s) * 0.06; }); }); } catch (e) { console.warn('fuera', e); }
+      anim.push((dt, t, lv) => { giants.forEach((G2, gi) => { const rr = gi ? 166 : 146, sp = (gi ? 7 : 5.5); G2.a = (G2.a == null ? gi * 2.4 : G2.a) + dt * sp / rr * (gi ? -1 : 1); G2.w.position.x = Math.cos(G2.a) * rr; G2.w.position.z = Math.sin(G2.a) * rr; { const sg = gi ? -1 : 1; G2.w.rotation.y = Math.atan2(-Math.sin(G2.a) * sg, Math.cos(G2.a) * sg); } G2.sp = sp; G2.wd = (G2.wd || 0) + dt * G2.sp; if (!G2.h) G2.h = HGT(G2.w); if (window.ATM_OUT) { G2.r0.update(3.7, dt, { act: 'walk', ph: STEPPH(G2.wd, G2.h), mood: 'happy' }); try { GS.foot(G2, STEPPH(G2.wd, G2.h), 'walk', G2.w.position, 'out', true); } catch (e) {} } }); whales.forEach((W) => { W.w.position.x += dt * 3; if (W.w.position.x > 110) W.w.position.x = -110; W.w.position.y += Math.sin(t * 0.5 + W.ph) * 0.02; W.tl.rotation.z = Math.sin(t * 1.2 + W.ph) * 0.35; W.w.rotation.z = Math.sin(t * 1.2 + W.ph - 1) * 0.06; }); boats.forEach((B) => { B.b.position.x += dt * B.s; if (B.b.position.x > 40) B.b.position.x = -40; B.b.rotation.z = Math.sin(t * 1.3 + B.s) * 0.06; }); }); } catch (e) { console.warn('fuera', e); }
   }
   // ===== resto de la habitación: suelo de tarima, alfombra, paredes laterales, techo con estrellas, puerta y muebles =====
   function ROOMX(R, WM, o) { const { RX, RZ, FY, CY, RH, WZ, DY, cnv } = o; const SM = (t, r = 0.7) => new THREE.MeshStandardMaterial({ map: t, roughness: r });
