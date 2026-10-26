@@ -17,7 +17,9 @@
     if (slotMap[n]) return slotMap[n];
     let h = 0;
     for (const ch of n) h = (h * 33 + ch.charCodeAt(0)) | 0;
-    return 'acbe'[Math.abs(h) % 4];
+    // Unknown NPCs use complete ES cast slots; avoid the partial ES/e library.
+    const variants = window.__LANG === 'en' ? 'acbe' : 'acbd';
+    return variants[Math.abs(h) % variants.length];
   };
   const normalize = (s) => String(s || '').replace(/\s+/g, ' ').trim();
   const hash = (s) => {
