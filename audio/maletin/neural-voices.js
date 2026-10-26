@@ -36,11 +36,11 @@
   let esSlotE = new Set();
   let catalogueReady = false;
   Promise.all([
-    fetch(root + 'manifest.json?v=20261026voicesafety1').then((r) => {
+    fetch(root + 'manifest.json?v=20261026all1').then((r) => {
       if (!r.ok) throw new Error('voice manifest unavailable');
       return r.json();
     }),
-    fetch(root + 'slots.json?v=20261026voicesafety1').then((r) => {
+    fetch(root + 'slots.json?v=20261026all1').then((r) => {
       if (!r.ok) throw new Error('voice slot manifest unavailable');
       return r.json();
     }).catch(() => ({ es: { e: [] } })) // optional index must not mute EN or other ES voices

@@ -70,9 +70,9 @@ async function settle() {
   for (let i = 0; i < 8; i++) await Promise.resolve();
 }
 async function main() {
-  assert.equal(manifest.en.length, 332, 'Unexpected EN voice manifest');
-  assert.equal(manifest.es.length, 323, 'Unexpected ES voice manifest');
-  assert.equal(slots.es.e.length, 43, 'ES/e recordings must be enumerated');
+  assert.ok(manifest.en.length >= 765, 'Unexpected EN voice manifest');
+  assert.ok(manifest.es.length >= 758, 'Unexpected ES voice manifest');
+  assert.equal(slots.es.e.length, manifest.es.length, 'ES/e recordings must be enumerated');
   assert.equal(new Set(slots.es.e).size, slots.es.e.length, 'No duplicate slot keys');
   for (const k of slots.es.e) {
     assert.ok(manifest.es.includes(k), 'ES/e key must be in shared manifest: ' + k);

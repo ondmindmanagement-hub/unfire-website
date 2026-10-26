@@ -1,64 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="UNFIRE GAMES">
 <defs>
 <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".42" stop-color="#dfe7ff"/><stop offset=".5" stop-color="#7f8fbf"/><stop offset=".58" stop-color="#f3f6ff"/><stop offset=".82" stop-color="#9fe9ff"/><stop offset="1" stop-color="#ff7ad9"/></linearGradient>
-<linearGradient id="cush" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#39f3ff"/><stop offset=".5" stop-color="#8a5cff"/><stop offset="1" stop-color="#ff3fb4"/></linearGradient>
-<filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-<radialGradient id="orV" cx=".35" cy=".25" r=".95"><stop offset="0" stop-color="#ffd08a"/><stop offset=".3" stop-color="#ffa53a"/><stop offset=".75" stop-color="#e8741a"/><stop offset="1" stop-color="#b9540c"/></radialGradient>
-<radialGradient id="crV" cx=".4" cy=".25" r=".9"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#fff0d8"/><stop offset="1" stop-color="#e9c99a"/></radialGradient>
-<radialGradient id="eyeV" cx=".4" cy=".3" r=".8"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe6f2"/></radialGradient>
-<radialGradient id="noseV" cx=".4" cy=".3" r=".8"><stop offset="0" stop-color="#ff9aac"/><stop offset="1" stop-color="#d9405e"/></radialGradient>
-<radialGradient id="spec" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b1"/><feGaussianBlur stdDeviation="12" result="b2"/><feMerge><feMergeNode in="b2"/><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="halo" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="14"/></filter>
 </defs>
-<g transform="translate(320 176)" stroke-linejoin="round" stroke-linecap="round">
-<!-- cushion -->
-<ellipse cx="0" cy="70" rx="160" ry="34" fill="url(#cush)" filter="url(#glow)"/>
-<ellipse cx="0" cy="62" rx="146" ry="23" fill="#2a1677" stroke="#120a2e" stroke-width="5"/>
-<ellipse cx="-30" cy="56" rx="80" ry="8" fill="#4b33c0" opacity=".7"/>
-<!-- tail -->
-<path d="M108 44 C150 44 170 14 156 -10 C150 -22 136 -20 138 -8 C140 4 132 22 104 30" fill="url(#orV)" stroke="#120a2e" stroke-width="7"/>
-<path d="M150 -2 C152 10 142 24 120 32" fill="none" stroke="#c45f0c" stroke-width="6"/>
-<!-- body: chunky loaf -->
-<path d="M-126 58 L-126 20 C-126 -12 -100 -30 -60 -32 L60 -34 C100 -34 124 -14 126 16 L126 58 Z" fill="url(#orV)" stroke="#120a2e" stroke-width="7"/>
-<path d="M-118 56 L-118 30 C-80 44 60 46 118 26 L118 56 Z" fill="#cf6512"/>
-<path d="M-60 -24 C-20 -28 40 -28 86 -22" fill="none" stroke="#ffc173" stroke-width="7" opacity=".85"/>
-<ellipse cx="-50" cy="-12" rx="46" ry="12" fill="url(#spec)" opacity=".7"/>
-<!-- crossed paws -->
-<path d="M-40 60 C-62 60 -66 40 -48 36 L6 36 C22 36 24 58 6 60 Z" fill="url(#crV)" stroke="#120a2e" stroke-width="6"/>
-<path d="M0 64 C-20 64 -22 46 -6 42 L50 42 C66 42 68 62 50 64 Z" fill="url(#crV)" stroke="#120a2e" stroke-width="6"/>
-<path d="M30 46 l0 14 M42 46 l0 14" stroke="#120a2e" stroke-width="3.5"/>
-<!-- head: squarish, comic -->
-<g transform="translate(-66 -54)">
-<!-- ears -->
-<path d="M-62 -34 L-56 -96 L-10 -62 Z" fill="url(#orV)" stroke="#120a2e" stroke-width="7"/>
-<path d="M62 -34 L56 -96 L10 -62 Z" fill="url(#orV)" stroke="#120a2e" stroke-width="7"/>
-<path d="M-50 -46 L-47 -80 L-24 -60 Z" fill="#ff9e8a"/>
-<path d="M50 -46 L47 -80 L24 -60 Z" fill="#ff9e8a"/>
-<!-- head block with cheek tufts -->
-<path d="M-70 -40 C-72 -66 -48 -72 0 -72 C48 -72 72 -66 70 -40 L72 6 L86 14 L70 22 L78 32 L60 34 C50 48 28 54 0 54 C-28 54 -50 48 -60 34 L-78 32 L-70 22 L-86 14 L-72 6 Z" fill="url(#orV)" stroke="#120a2e" stroke-width="7"/>
-<!-- cel shadow -->
-<path d="M-62 28 C-40 44 40 44 62 28 L60 34 C50 48 28 54 0 54 C-28 54 -50 48 -60 34 Z" fill="#cf6512"/>
-<path d="M-44 -60 C-20 -66 20 -66 44 -60" fill="none" stroke="#ffc173" stroke-width="7" opacity=".9"/>
-<ellipse cx="-26" cy="-50" rx="26" ry="12" fill="url(#spec)"/><ellipse cx="40" cy="-8" rx="10" ry="16" fill="url(#spec)" opacity=".5"/>
-<!-- tuft on top (spiky comic hair) -->
-<path d="M-14 -70 L-8 -92 L2 -72 L12 -90 L16 -70" fill="url(#orV)" stroke="#120a2e" stroke-width="6"/>
-<!-- muzzle -->
-<path d="M-34 14 C-34 -2 -16 -6 0 4 C16 -6 34 -2 34 14 C34 32 18 40 0 40 C-18 40 -34 32 -34 14 Z" fill="url(#crV)" stroke="#120a2e" stroke-width="5"/>
-<!-- half-lidded smug eyes -->
-<path d="M-50 -22 C-48 -36 -18 -38 -14 -22 C-14 -10 -24 -6 -32 -6 C-42 -6 -50 -12 -50 -22 Z" fill="url(#eyeV)" stroke="#120a2e" stroke-width="5"/>
-<path d="M50 -22 C48 -36 18 -38 14 -22 C14 -10 24 -6 32 -6 C42 -6 50 -12 50 -22 Z" fill="url(#eyeV)" stroke="#120a2e" stroke-width="5"/>
-<circle cx="-28" cy="-16" r="7" fill="#120a2e"/><circle cx="28" cy="-16" r="7" fill="#120a2e"/>
-<circle cx="-25" cy="-19" r="2.2" fill="#fff"/><circle cx="31" cy="-19" r="2.2" fill="#fff"/>
-<path d="M-52 -24 C-44 -30 -20 -30 -12 -24 L-12 -20 C-24 -26 -40 -26 -52 -20 Z" fill="url(#orV)" stroke="#120a2e" stroke-width="5"/>
-<path d="M52 -24 C44 -30 20 -30 12 -24 L12 -20 C24 -26 40 -26 52 -20 Z" fill="url(#orV)" stroke="#120a2e" stroke-width="5"/>
-<!-- nose + smirk -->
-<path d="M-8 6 L8 6 L0 14 Z" fill="url(#noseV)" stroke="#120a2e" stroke-width="4"/>
-<path d="M0 14 L0 20 C-6 28 -16 26 -18 20 M0 20 C8 28 20 26 24 16" fill="none" stroke="#120a2e" stroke-width="4.5"/>
-<!-- whiskers -->
-<path d="M-36 18 L-84 10 M-36 26 L-82 30 M36 18 L84 10 M36 26 L82 30" stroke="#120a2e" stroke-width="3"/>
-<!-- comic sweat-free chill sparkle -->
-<path d="M64 -78 l4 10 l10 4 l-10 4 l-4 10 l-4 -10 l-10 -4 l10 -4 Z" fill="#fff" stroke="#120a2e" stroke-width="2.5"/>
+<!-- soft aura -->
+<ellipse cx="320" cy="170" rx="150" ry="160" fill="#bff8ff" opacity=".28" filter="url(#halo)"/><ellipse cx="320" cy="200" rx="60" ry="120" fill="#ffffff" opacity=".35" filter="url(#halo)"/>
+<!-- arcane circle conjured above the hands -->
+<g transform="translate(320 64)" fill="none" stroke="#ffffff" filter="url(#glow)">
+<circle r="46" stroke-width="3"/>
+<circle r="36" stroke-width="1.5" stroke-dasharray="4 5"/>
+<g stroke-width="2.5"><path d="M0 -46 L0 -36 M0 46 L0 36 M-46 0 L-36 0 M46 0 L36 0 M-32 -32 L-26 -26 M32 32 L26 26 M-32 32 L-26 26 M32 -32 L26 -26"/></g>
+<circle r="22" stroke-width="2"/><path d="M-22 0 A22 22 0 0 1 22 0" stroke-width="2" stroke-dasharray="2 4"/>
+<circle r="7" fill="#ffffff"/>
 </g>
+<!-- hooded high mage silhouette, white -->
+<g fill="#ffffff" filter="url(#glow)">
+<!-- hood + head -->
+<path d="M320 104 C302 104 290 118 290 136 C290 150 296 160 304 168 L336 168 C344 160 350 150 350 136 C350 118 338 104 320 104 Z"/>
+<!-- shoulders and robe falling to the ground -->
+<path d="M300 164 C286 170 276 182 272 196 L258 300 C256 312 264 318 276 318 L364 318 C376 318 384 312 382 300 L368 196 C364 182 354 170 340 164 Z"/>
+<!-- left arm raised, palm open toward the sigil -->
+<path d="M282 182 C268 168 258 146 262 126 C264 116 272 112 278 118 L284 124 C282 140 290 160 302 172 Z"/>
+<path d="M262 126 C258 114 262 104 270 102 C276 101 280 106 278 114 L276 122 Z"/>
+<!-- right arm raised -->
+<path d="M358 182 C372 168 382 146 378 126 C376 116 368 112 362 118 L356 124 C358 140 350 160 338 172 Z"/>
+<path d="M378 126 C382 114 378 104 370 102 C364 101 360 106 362 114 L364 122 Z"/>
+<!-- flowing robe hem tails -->
+<path d="M258 300 C240 310 230 318 220 318 L276 318 Z" opacity=".85"/>
+<path d="M382 300 C400 310 410 318 420 318 L364 318 Z" opacity=".85"/>
 </g>
-<text x="320" y="338" text-anchor="middle" font-family="Orbitron, 'Arial Black', Arial, sans-serif" font-weight="900" font-size="74" letter-spacing="6" fill="url(#chrome)" stroke="#120a2e" stroke-width="3" paint-order="stroke">UNFIRE</text>
-<text x="320" y="390" text-anchor="middle" font-family="Orbitron, Arial, sans-serif" font-weight="800" font-size="30" letter-spacing="18" fill="#bff8ff">GAMES</text>
+<!-- energy streams from palms to the circle -->
+<g stroke="#bff8ff" stroke-width="2" fill="none" filter="url(#glow)" opacity=".9">
+<path d="M272 104 C280 90 290 84 300 80"/><path d="M368 104 C360 90 350 84 340 80"/>
+</g>
+<text x="320" y="370" text-anchor="middle" font-family="Orbitron, 'Arial Black', Arial, sans-serif" font-weight="900" font-size="66" letter-spacing="6" fill="url(#chrome)" stroke="#120a2e" stroke-width="3" paint-order="stroke">UNFIRE</text>
+<text x="320" y="410" text-anchor="middle" font-family="Orbitron, Arial, sans-serif" font-weight="800" font-size="26" letter-spacing="18" fill="#bff8ff">GAMES</text>
 </svg>
