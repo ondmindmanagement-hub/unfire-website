@@ -2594,7 +2594,13 @@
     const wasZoomed=zoomed();fitD0();if(!ROAMS.on&&!CASE_VIEW.on&&!VIEW.on&&!wasZoomed)view.dist=view.gd=view.D0;
     window.__unfireViewport={width:w,height:h,orientation:w>=h?'landscape':'portrait'};
   }
-  function queueResize(){if(queuedResize)cancelAnimationFrame(queuedResize);queuedResize=requestAnimationFrame(()=>{queuedResize=0;resize();});}
+  // A resize must not wait for the next WebGL animation frame. On devices using
+  // software rendering, GPU frames can take seconds and starve rotation updates.
+  // Coalesce bursts into one ordinary task while keeping renderer sizing exact.
+  function queueResize(){
+    if(queuedResize)return;
+    queuedResize=setTimeout(()=>{queuedResize=0;resize();},0);
+  }
   addEventListener('resize',queueResize,{passive:true});
   addEventListener('orientationchange',()=>setTimeout(queueResize,120),{passive:true});
   if(window.visualViewport)window.visualViewport.addEventListener('resize',queueResize,{passive:true});
