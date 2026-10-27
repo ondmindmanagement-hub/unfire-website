@@ -3007,6 +3007,23 @@
     else if (SEL.type === 'dev') { const it = SEL.it; if (a === 'next') { if (it.on) parentPost(it.kind === 'fx' ? { open: 'fx', id: it.id } : { open: it.kind }); it.on = 1; } if (a === 'back' || a === 'close') { it.on = 0; SEL = null; } if (a === 'move') MV = { o: it.g }; }
     $('tb').querySelectorAll('button').forEach((b) => b.classList.toggle('on', !!MV && b.dataset.a === 'move')); }
   $('tb').addEventListener('pointerdown', (e) => e.stopPropagation()); $('tb').onclick = (e) => { const a = e.target.closest('[data-a]'); if (a) act(a.dataset.a); };
+  // The painted lid is one large entry target, not only its tiny butterfly mesh.
+  // Raycast materials may miss decals or thin edges on Safari/software WebGL.
+  // Intersect the physical lid plane in case-local coordinates instead; empty
+  // table/background and UI outside the case remain non-interactive.
+  function closedCaseLidHit(e) {
+    if (!caseG.visible || carryingCase) return false;
+    ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+    ray.setFromCamera(ndc, cam);
+    caseG.updateWorldMatrix(true, false);
+    const lidPlane = new THREE.Plane(V(0, 1, 0), -(caseG.position.y + HL + 0.10));
+    const point = ray.ray.intersectPlane(lidPlane, V(0, 0, 0));
+    if (!point) return false;
+    caseG.worldToLocal(point);
+    return Math.abs(point.x) <= CW * 0.5 + 0.12 &&
+           Math.abs(point.z) <= CD * 0.5 + 0.12;
+  }
+  let closedCaseActivatedAt = -Infinity;
   function onClick(e) {
     // A real click on the unfolded case switches to its usable overhead camera.
     if(ROAMS.on&&!CASE_VIEW.on&&!carryingCase&&caseG.visible&&pTarget>0.5){
@@ -3019,7 +3036,8 @@
       }
     }
     { const pc = lidOpen > 0.5 ? pickCtl(e) : null; if (pc && !pc.c) { SEL = { type: 'cap', g: pc.g }; activate(pc.g); return; } }
-    if (lidOpen < 0.5) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const hitD = ray.intersectObject(dragon, true).length; if (hitD || ray.intersectObject(caseG, true).length) {
+    if (lidOpen < 0.5) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); const hitD = ray.intersectObject(dragon, true).length; if (hitD || ray.intersectObject(caseG, true).length || closedCaseLidHit(e)) {
+        closedCaseActivatedAt = performance.now();
         if(parent!==window&&!window.__unfireCaseEntryStarted){
           try{if(typeof parent.__UNFIRE_ENTER_CASE==='function'){parent.__UNFIRE_ENTER_CASE();return;}}catch(_){}
           parentPost({entryRequest:true});return;
@@ -3054,7 +3072,15 @@
     
   }
   function flyTo(it) { const lap = it.laptop; view.gx = it.pos.x; view.gz = it.pos.z + (lap ? -0.3 : 0.02); view.gd = it.kind === 'cap' ? 1.3 : it.kind === 'mut' ? 1.25 : it.kind === 'fx' ? 1.1 : lap ? 2.0 : 1.6; }
-  function hover(e) { { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); { const hl = lidOpen > 0.5 ? ray.intersectObject(lidArt, false)[0] : null; const hp = hl ? hl.point : ray.ray.intersectPlane(plane, V(0, 0, 0)); if (hp) { HOVL.position.copy(hp); if (hl) HOVL.position.add(hl.face.normal.clone().transformDirection(lidArt.matrixWorld).multiplyScalar(0.3)); else HOVL.position.y += 0.35; } HOVB = null; if (lidOpen > 0.9) { const bh = ray.intersectObjects(btns.map((b) => b.g), true)[0]; if (bh) HOVB = btns.find((b) => { let p = bh.object; while (p) { if (p === b.g) return true; p = p.parent; } return false; }) || null; } } const objs = lidOpen > 0.9 ? items.filter((it) => it.g && it.g.visible).map((it) => it.g) : []; const h = objs.length && ray.intersectObjects(objs, true)[0]; HOV = h ? items.find((it) => { let p = h.object; while (p) { if (p === it.g) return true; p = p.parent; } return false; }) : null; } if (lidOpen < 0.5) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); cv.style.cursor = ray.intersectObject(caseG, true).length ? 'pointer' : 'default'; return; } const c = pickCtl(e); cv.style.cursor = c && c.c ? (c.c.type === 'knob' ? 'ns-resize' : 'pointer') : zoomed() ? 'grab' : 'default'; }
+  // Safari may deliver a native click even if a WebGL frame/iframe transition
+  // swallowed the pointerup. Honor that single click, but never invoke twice
+  // after the normal pointerup path has already requested case entry.
+  cv.addEventListener('click', (e) => {
+    if (!e.isTrusted || lidOpen >= 0.5 || pTarget > 0.5 ||
+        performance.now() - closedCaseActivatedAt < 350) return;
+    if (closedCaseLidHit(e)) onClick(e);
+  });
+  function hover(e) { { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); { const hl = lidOpen > 0.5 ? ray.intersectObject(lidArt, false)[0] : null; const hp = hl ? hl.point : ray.ray.intersectPlane(plane, V(0, 0, 0)); if (hp) { HOVL.position.copy(hp); if (hl) HOVL.position.add(hl.face.normal.clone().transformDirection(lidArt.matrixWorld).multiplyScalar(0.3)); else HOVL.position.y += 0.35; } HOVB = null; if (lidOpen > 0.9) { const bh = ray.intersectObjects(btns.map((b) => b.g), true)[0]; if (bh) HOVB = btns.find((b) => { let p = bh.object; while (p) { if (p === b.g) return true; p = p.parent; } return false; }) || null; } } const objs = lidOpen > 0.9 ? items.filter((it) => it.g && it.g.visible).map((it) => it.g) : []; const h = objs.length && ray.intersectObjects(objs, true)[0]; HOV = h ? items.find((it) => { let p = h.object; while (p) { if (p === it.g) return true; p = p.parent; } return false; }) : null; } if (lidOpen < 0.5) { ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, cam); cv.style.cursor = (ray.intersectObject(caseG, true).length || closedCaseLidHit(e)) ? 'pointer' : 'default'; return; } const c = pickCtl(e); cv.style.cursor = c && c.c ? (c.c.type === 'knob' ? 'ns-resize' : 'pointer') : zoomed() ? 'grab' : 'default'; }
 
   // Tiny, bounded footsteps for the walking avatar and nearby house robots.
   // Reuse one 30ms buffer; no sample downloads, background loops, new AudioContexts or autoplay.
