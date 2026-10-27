@@ -130,6 +130,12 @@
     const n = m.seen[topic] = (m.seen[topic] || 0) + 1;
     return pool[(hash(id + topic) + n - 1) % pool.length][lang()];
   }
+  // Giants keep their names in the player's language.
+  function shown(npc) {
+    const id = String(npc && npc.id || ''), E = EN();
+    if (!E || !giants(id)) return String(npc && npc.name || 'ROBOT');
+    return id.startsWith('titan-island') ? E.islandLore.name : E.giantLore[Number(id.split('-')[1]) % giantLore.length].name;
+  }
   function answer(npc, query) {
     const id = String(npc.id || npc.name || 'robot');
     const name = String(npc.name || 'ROBOT').slice(0, 32);
@@ -211,7 +217,7 @@
   chip.id = 'ufNear'; chip.type = 'button'; chip.setAttribute('aria-label', tr('Hablar con robot cercano', 'Talk to nearby robot'));
   const panel = document.createElement('div');
   panel.id = 'ufDialogs';
-  panel.innerHTML = '<section class="ufCard" role="dialog" aria-modal="true" aria-label="Conversaciones de Unfire"><header><strong id="ufDlgTitle"></strong><button id="ufSpeak" type="button" title="Activar o silenciar respuestas habladas">🔊</button><button id="ufClose" type="button" aria-label="Cerrar">✕</button></header><div id="ufLog" class="ufLog" role="log" aria-live="polite"></div><form id="ufForm" autocomplete="off"><input id="ufText" maxlength="180" aria-label="Escribir mensaje" placeholder="Escribe un mensaje…" required><button id="ufMic" type="button" title="Hablar por micrófono">🎤</button><button id="ufSend" type="submit">➤</button></form><div id="ufHint" class="ufHint"></div></section>';
+  panel.innerHTML = '<section class="ufCard" role="dialog" aria-modal="true" aria-label="' + tr('Conversaciones de Unfire', 'Unfire conversations') + '"><header><strong id="ufDlgTitle"></strong><button id="ufSpeak" type="button" title="' + tr('Activar o silenciar respuestas habladas', 'Turn spoken replies on or off') + '">🔊</button><button id="ufClose" type="button" aria-label="' + tr('Cerrar', 'Close') + '">✕</button></header><div id="ufLog" class="ufLog" role="log" aria-live="polite"></div><form id="ufForm" autocomplete="off"><input id="ufText" maxlength="180" aria-label="' + tr('Escribir mensaje', 'Write a message') + '" placeholder="' + tr('Escribe un mensaje…', 'Write a message…') + '" required><button id="ufMic" type="button" title="' + tr('Hablar por micrófono', 'Speak with the microphone') + '">🎤</button><button id="ufSend" type="submit">➤</button></form><div id="ufHint" class="ufHint"></div></section>';
   document.body.append(chip, panel);
   const subtitle=document.createElement('div');subtitle.id='ufGiantSubtitle';subtitle.setAttribute('role','status');subtitle.setAttribute('aria-live','polite');
   document.body.appendChild(subtitle);
@@ -242,12 +248,12 @@
     if (!w || !w.roaming || (kind === 'players' && !w.online)) return false;
     mode = kind; selected = kind === 'npc' ? target : null;
     log.replaceChildren();
-    gi('ufDlgTitle').textContent = kind === 'players' ? tr('💬 Chat de la sala', '💬 Room chat') : '🤖 ' + target.name;
+    gi('ufDlgTitle').textContent = kind === 'players' ? tr('💬 Chat de la sala', '💬 Room chat') : '🤖 ' + shown(target);
     hint.textContent = kind === 'players' ? tr('Chat temporal para los jugadores conectados. No se guarda.', 'Temporary chat for connected players. Not saved.') : tr('Conversación local con este robot. Pregunta por su historia o sus secretos.', 'Local conversation with this robot. Ask about its past or secrets.');
     gi('ufMic').style.display = kind === 'players' ? 'none' : '';
     gi('ufSpeak').style.display = kind === 'players' ? 'none' : '';
     panel.classList.add('on'); input.value = ''; input.placeholder = kind === 'players' ? tr('Mensaje a la sala…', 'Message to room…') : tr('Pregunta al robot…', 'Ask the robot…');
-    if (kind === 'npc') { const first = giants(target.id) ? tline('giantOpen') : tline('open'); entry(target.name, first, false); say(first, target.name); }
+    if (kind === 'npc') { const first = giants(target.id) ? tline('giantOpen') : tline('open'); entry(shown(target), first, false); say(first, target.name); }
     if (window.matchMedia && !matchMedia('(pointer:coarse)').matches) input.focus();
     return true;
   }
@@ -268,14 +274,14 @@
     if (!text || !w || !w.roaming || now - lastSend < 800) return;
     lastSend = now; input.value = '';
     if (mode === 'players') {
-      if (!w.online || typeof w.sendChat !== 'function' || !w.sendChat(text)) { entry('Sistema', 'No estás conectado a una sala.', false); return; }
-      entry(w.myName || 'Tú', text, true);
+      if (!w.online || typeof w.sendChat !== 'function' || !w.sendChat(text)) { entry(tr('Sistema', 'System'), tr('No estás conectado a una sala.', 'You are not connected to a room.'), false); return; }
+      entry(w.myName || tr('Tú', 'You'), text, true);
     } else if (mode === 'npc' && selected) {
       const current = w.npcs && w.npcs.find((n) => n.id === selected.id);
-      if (!current || distance(current, w.player) > 1.4) { entry('Sistema', 'Acércate otra vez para continuar.', false); return; }
-      entry('Tú', text, true);
+      if (!current || distance(current, w.player) > 1.4) { entry(tr('Sistema', 'System'), tr('Acércate otra vez para continuar.', 'Come closer again to continue.'), false); return; }
+      entry(tr('Tú', 'You'), text, true);
       const response = answer(current, text);
-      entry(current.name, response, false); say(response, current.name);
+      entry(shown(current), response, false); say(response, current.name);
     }
   }
   function distance(npc, player) {
@@ -312,7 +318,7 @@
     if(closestGiant && !mode && !oracleInside.has(closestGiant.id)){
       oracleInside.add(closestGiant.id);
       const text=oracleText(closestGiant);
-      subtitle.textContent='✧ '+closestGiant.name+': '+text;
+      subtitle.textContent='✧ '+shown(closestGiant)+': '+text;
       subtitle.style.display='block';subtitleUntil=now+6600;
       say(text,closestGiant.name);
     }
@@ -348,10 +354,10 @@
     try {
       const rec = new recognize(); listening = rec; rec.lang = window.__LANG === 'en' ? 'en-US' : 'es-ES'; rec.interimResults = false; rec.maxAlternatives = 1;
       rec.onresult = (e) => { if (listening !== rec) return; input.value = clean(e.results[0][0].transcript); listening = null; send(); };
-      rec.onerror = () => { if (listening === rec) listening = null; hint.textContent = 'Micrófono no disponible. Puedes escribir.'; };
+      rec.onerror = () => { if (listening === rec) listening = null; hint.textContent = tr('Micrófono no disponible. Puedes escribir.', 'Microphone not available. You can type.'); };
       rec.onend = () => { if (listening === rec) listening = null; };
       rec.start();
-    } catch (_) { listening = null; hint.textContent = 'Micrófono no disponible. Puedes escribir.'; }
+    } catch (_) { listening = null; hint.textContent = tr('Micrófono no disponible. Puedes escribir.', 'Microphone not available. You can type.'); }
   };
   panel.addEventListener('keydown', (e) => { e.stopPropagation(); if (e.key === 'Escape') { e.preventDefault(); close(); } });
   panel.addEventListener('pointerdown', (e) => e.stopPropagation());
