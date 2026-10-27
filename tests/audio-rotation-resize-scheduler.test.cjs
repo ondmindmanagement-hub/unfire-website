@@ -26,7 +26,7 @@ test('a burst of mobile orientation events results in one exact resize and suppo
   assert.equal(calls,2);
 });
 test('resize retains exact screen and renderer geometry, quality cap and orientation',()=>{
-  assert.match(engine,/const w=Math\.max\(1,Math\.round\(document\.documentElement\.clientWidth \|\| innerWidth\)\)/);
+  assert.match(engine,/const w=Math\.max\(1,Math\.round\(innerWidth \|\| document\.documentElement\.clientWidth\)\)/);
   assert.match(engine,/S\.renderer\.setSize\(w,h,false\);cam\.aspect=w\/h;cam\.updateProjectionMatrix\(\)/);
   assert.match(engine,/window\.__unfireViewport=\{width:w,height:h,orientation:w>=h\?'landscape':'portrait'\}/);
   assert.match(engine,/addEventListener\('orientationchange',\(\)=>setTimeout\(queueResize,120\)/);

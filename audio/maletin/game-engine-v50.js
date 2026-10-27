@@ -2778,7 +2778,9 @@
   // Combine the iPhone device budget with rotation-safe backbuffer sizing.
   let renderWidth=0, renderHeight=0, queuedResize=0;
   function resize() {
-    const w=Math.max(1,Math.round(document.documentElement.clientWidth || innerWidth));
+    // Match the CSS viewport and browser rotation events, not the document width
+    // (which can temporarily retain a stale scrollbar/old orientation width).
+    const w=Math.max(1,Math.round(innerWidth || document.documentElement.clientWidth));
     const h=Math.max(1,Math.round(innerHeight || document.documentElement.clientHeight));
     const budget=window.__UNFIRE_AUTOCALIB;
     if(budget&&S.renderer.getPixelRatio()>budget.maxDpr)S.renderer.setPixelRatio(budget.maxDpr);
