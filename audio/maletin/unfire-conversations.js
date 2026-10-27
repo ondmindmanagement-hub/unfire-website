@@ -9,6 +9,9 @@
   const tr = (es, en) => window.__LANG === 'en' ? en : es;
   const clean = (text) => String(text == null ? '' : text).replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, MAX_TEXT);
   const memories = new Map();
+  // Room chat is between friends, but offensive words are still masked (ES/EN).
+  const BAD = /\b(put[ao]s?|mierda|cabr[oó]n(es)?|gilipollas|imb[eé]cil(es)?|idiota|subnormal|maric[oó]n(es)?|zorra|polla|co[ñn]o|follar|joder|hostia|fuck\w*|shit\w*|bitch\w*|cunt|dick|pussy|nigg\w*|fag\w*|retard\w*|whore|slut|bastard|asshole)\b/gi;
+  const tidy = (t) => String(t).replace(BAD, (w) => w[0] + '*'.repeat(Math.max(2, w.length - 1)));
   const giantLore = [
     {
       name: 'ECLIPSE, EL TESTIGO DE LAS SOMBRAS',
@@ -380,7 +383,8 @@
     distance,
     receivePeer(packet) {
       if (!packet || packet.kind !== 'chat' || typeof packet.id !== 'string' || typeof packet.text !== 'string') return;
-      const text = clean(packet.text);
+      if (window.__ONL_MUTED && window.__ONL_MUTED.has(packet.id)) return; // muted / reported players are blocked
+      const text = tidy(clean(packet.text));
       if (!text || text.length > MAX_TEXT) return;
       const now = Date.now(), prev = lastPeer.get(packet.id) || 0;
       if (now - prev < 700) return;

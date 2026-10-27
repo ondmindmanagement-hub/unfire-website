@@ -1,6 +1,6 @@
 <!doctype html><html><head>
 <!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
-<script src="app-mode.js?v=20261026app1"></script>
+<script src="app-mode.js?v=20261027app2"></script>
 <script id="ufAdaptiveBoot">(function(){
   try {
     var coarse=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
@@ -14,7 +14,7 @@
 })();</script>
 <link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261024combinedqa1">
 <script defer src="/assets/js/unfire-adaptive-loading.js?v=20261024combinedqa1"></script>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261027voz2" as="script"></head><body>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261027rev3" as="script"></head><body>
 <div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
   <div class="uf-load-card">
     <span class="uf-load-emblem" aria-hidden="true"></span>
@@ -374,7 +374,7 @@ body.unfire-roaming #cv{touch-action:none}
 </style>
 <link rel="stylesheet" href="mobile-hud-guard.css?v=20261023hudlayout1">
 <link rel="stylesheet" href="thumb-reach.css?v=20261023thumb1">
-<link rel="stylesheet" href="expanded-map.css?v=20261027voz2">
+<link rel="stylesheet" href="expanded-map.css?v=20261027rev3">
 <canvas id="cv" aria-label="Maletín UNFIRE en 3D. Acerca la vista con la rueda para entrar"></canvas>
 <div class="hud" id="hud"><button id="zin" aria-label="Acercar">+</button><button id="zout" aria-label="Alejar">−</button><button id="home" aria-label="Volver al maletín">⟲</button><div class="crumb" id="crumb">MALETÍN</div></div>
 <div class="tip" id="tip"></div>
@@ -425,6 +425,7 @@ body.unfire-roaming #cv{touch-action:none}
   window.__LANG = L;
   window.__setLang = (l) => { try { localStorage.setItem('unfire_lang', l); } catch (e) {} location.reload(); };
   const EN = {
+    "¡Desde aquí arriba se ve toda la isla!": "You can see the whole island from up here!", "HYPERWAVE 2000 es un sinte entero. Se toca aquí mismo.": "HYPERWAVE 2000 is a full synth. You play it right here.", "¡Y cada cápsula esconde una sorpresa!": "And every capsule hides a surprise!", "¡Hola, humano! Pregúntame por HYPERWAVE, los efectos o la isla.": "Hello, human! Ask me about HYPERWAVE, the effects or the island.", "Bip bup… eso aún no lo sé. Pregúntame por HYPERWAVE, los efectos o la isla.": "Beep boop… I don't know that yet. Ask me about HYPERWAVE, the effects or the island.", "Créditos y licencias": "Credits and licences",
     "Disponible desde la tercera misión de la historia": "Available from the third story mission", "MALETÍN": "CASE", "Atrás": "Back", "Cerrar y guardar": "Close and save", "Pega un enlace de YouTube o escribe qué buscar": "Paste a YouTube link or type what to search", "Volumen de la radio": "Radio volume", "Pulsa para permitir el micrófono y escuchar jugadores cercanos": "Tap to allow the microphone and hear nearby players", "🔧 TALLER · personaliza tu robot": "🔧 WORKSHOP · customise your robot", "🔧 TALLER": "🔧 WORKSHOP", "TALLER": "WORKSHOP", "ÁRTICO": "ARCTIC", "NEÓN": "NEON", "URBANO": "URBAN", "DESIERTO": "DESERT", "CARBONO": "CARBON", "CARBON": "CARBON", "♥ CORAZÓN": "♥ HEART", "CORAZÓN": "HEART", "★ ESTRELLA": "★ STAR", "ESTRELLA": "STAR", "ϟ RAYO": "ϟ BOLT", "RAYO": "BOLT", "☺ SONRISA": "☺ SMILE", "SONRISA": "SMILE", "≈ OLA": "≈ WAVE", "OLA": "WAVE", "— NINGUNA": "— NONE", "NINGUNA": "NONE", "+ MI IMAGEN": "+ MY IMAGE", "MI IMAGEN": "MY IMAGE", "PEGATINA": "STICKER", "CAMUFLAJE · METALIZADO": "CAMO · METALLIC", "CAMUFLAJE": "CAMO", "METALIZADO": "METALLIC", "Tipo de robot transformable": "Transformable robot type", "La imagen se guarda solo en este dispositivo. No se envía al modo online.": "The image is only saved on this device. It is never sent to online mode.", "★ MISIÓN": "★ MISSION", "Arrastra para explorar · pellizca o usa +/− para ampliar · Esc para cerrar": "Drag to explore · pinch or use +/− to zoom · Esc to close", "Baja sobre una compuerta para abrirla · fuera = todas · o pulsa OPEN ALL": "Move down onto a hatch to open it · outside = all · or press OPEN ALL", "Baja sobre una compuerta para abrirla · fuera = todas · o pulsa ABRIR TODO": "Move down onto a hatch to open it · outside = all · or press OPEN ALL",
     '🔒 CÁPSULA · MISIÓN 3': '🔒 CAPSULE · MISSION 3', '🎒 CÁPSULA (G)': '🎒 CAPSULE (G)', '🎒 DESPLEGANDO…': '🎒 DEPLOYING…', '🎒 LANZAR CÁPSULA': '🎒 THROW CAPSULE', '🎒 RECUPERAR EN CÁPSULA': '🎒 RECALL TO CAPSULE', '🎒 GUARDAR EN CÁPSULA': '🎒 STORE IN CAPSULE', 'Disponible desde la tercera misión': 'Available from the third mission', 'Guardar o lanzar el maletín con su cápsula': 'Store or throw the case with its capsule', 'Configuración': 'Settings', 'Transformarte en Nano Robot': 'Turn into a Nano Robot',
     // Línea del diálogo de ARI: texto y voz sintetizada comparten traducción.
@@ -4903,15 +4904,15 @@ window.STORY_INIT = function (H) {
 <script src="music-arbiter.js?v=20261027mus1"></script>
 <script src="door-cinema.js?v=20261023doorcine1"></script>
 <script src="collision-nearby.js?v=20261024combinedqa1"></script>
-<script src="expanded-map.js?v=20261027voz2"></script>
+<script src="expanded-map.js?v=20261027rev3"></script>
 <script src="coins-shop.js?v=20261024organic1"></script>
 <script src="nano-physics.js?v=20261024combinedqa1"></script>
 <script src="robot-customization.js?v=20261024robotselect1"></script>
 <script src="cinema-export.js?v=20261024filmrec1"></script>
 <script src="conversation-lines.js?v=20261027talk1"></script>
-<script src="game-engine-v50.js?v=20261027voz2"></script>
-<script src="unfire-conversations.js?v=20261027talk1"></script>
-<script src="idle-dance.js?v=20261027voz2"></script>
+<script src="game-engine-v50.js?v=20261027rev3"></script>
+<script src="unfire-conversations.js?v=20261027rev3"></script>
+<script src="idle-dance.js?v=20261027rev3"></script>
 <script src="neural-voices.js?v=20261027es2"></script>
 <script src="garage-scroll-guard.js?v=20261024combinedqa1" defer></script>
 <script src="mobile-hud-guard.js?v=20261023hudlayout1" defer></script>
