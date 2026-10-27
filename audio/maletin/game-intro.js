@@ -87,7 +87,10 @@
     const s = stages[i]; show(s); canSkip = Date.now() + 550;
     el.querySelector('.tap').style.display = s === 'lang' ? 'none' : '';
     if (s === 'lang') { setTimeout(() => { try { el.querySelector('[data-lang="en"]').focus({ preventScroll: true }); } catch (_) {} }, 300); return; }
-    timer = setTimeout(next, DUR[s]);
+    // Count only time the player can actually see (frames that paint), so a busy first load never skips the logos.
+    let seen = 0, last = 0; const my = i;
+    const tick = (t) => { if (i !== my || !el.isConnected) return; if (last) seen += Math.min(t - last, 50); last = t; if (seen >= DUR[s]) next(); else requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
   };
   el.addEventListener('click', (e) => {
     const b = e.target.closest('[data-lang]'); if (b) { choose(b.dataset.lang); return; }
