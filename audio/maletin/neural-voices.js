@@ -41,11 +41,11 @@
   let esSlots = {};
   let catalogueReady = false;
   Promise.all([
-    fetch(root + 'manifest.json?v=20261027es1').then((r) => {
+    fetch(root + 'manifest.json?v=20261027es2').then((r) => {
       if (!r.ok) throw new Error('voice manifest unavailable');
       return r.json();
     }),
-    fetch(root + 'slots.json?v=20261027es1').then((r) => {
+    fetch(root + 'slots.json?v=20261027es2').then((r) => {
       if (!r.ok) throw new Error('voice slot manifest unavailable');
       return r.json();
     }).catch(() => ({})) // optional index must not mute EN or other ES voices
@@ -144,7 +144,7 @@
     return null;
   };
   const clip = (url, volume) => {
-    const a = new Audio(root + url + '.mp3?v=20261027es1');
+    const a = new Audio(root + url + '.mp3?v=20261027es2');
     a.preload = 'auto';
     a.volume = volume;
     return a;
