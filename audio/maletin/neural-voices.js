@@ -12,16 +12,21 @@
   const originalCancel = SS.cancel.bind(SS);
   const root = 'vox/';
   const slotMap = { ARI: 'a', LEO: 'b', GEMI: 'c', NIMBO: 'd', UNFIRE: 'e' };
+  // Castilian cast (same voices as the approved Spanish trailer); every robot keeps one voice.
+  const GIANTS = /BALUARTE|ECLIPSE|ASTRALIA|CRONOS|TIT[AÁ]N|GIGANTE|CAPRICORNIO/;
   const slotFor = (name) => {
     const n = String(name || '').toUpperCase();
     if (slotMap[n]) return slotMap[n];
+    if (window.__LANG !== 'en' && GIANTS.test(n)) return 'i';
     let h = 0;
     for (const ch of n) h = (h * 33 + ch.charCodeAt(0)) | 0;
-    // Unknown NPCs use complete ES cast slots; avoid the partial ES/e library.
-    const variants = window.__LANG === 'en' ? 'acbe' : 'acbd';
+    const variants = window.__LANG === 'en' ? 'acb' : 'fghjkc';
     return variants[Math.abs(h) % variants.length];
   };
   const normalize = (s) => String(s || '').replace(/\s+/g, ' ').trim();
+  // Must match canon() in the Spanish voice generator: emoji and symbols are not spoken.
+  const canon = (s) => normalize(String(s || '').replace(/[^\p{L}\p{N}_\s¿?¡!.,;:…'"()%-]/gu, ' ')).replace(/^[\s,;:-]+|[\s,;:-]+$/g, '');
+  const sentences = (s) => (s.match(/[^.!?…]+(?:[.!?…]+|$)/g) || []).map((p) => canon(p)).filter((p) => /[\p{L}\p{N}]/u.test(p));
   const hash = (s) => {
     let h = 7;
     for (let i = 0; i < s.length; i++) h = (Math.imul(h, 31) + s.charCodeAt(i)) | 0;
@@ -33,21 +38,21 @@
   // 43 of those phrases have a dedicated UNFIRE (slot e) recording.
   // A slot-specific allow-list avoids requesting the 280 non-existent assets.
   const catalogue = { en: new Set(), es: new Set() };
-  let esSlotE = new Set();
+  let esSlots = {};
   let catalogueReady = false;
   Promise.all([
-    fetch(root + 'manifest.json?v=20261026all1').then((r) => {
+    fetch(root + 'manifest.json?v=20261027es1').then((r) => {
       if (!r.ok) throw new Error('voice manifest unavailable');
       return r.json();
     }),
-    fetch(root + 'slots.json?v=20261026all1').then((r) => {
+    fetch(root + 'slots.json?v=20261027es1').then((r) => {
       if (!r.ok) throw new Error('voice slot manifest unavailable');
       return r.json();
-    }).catch(() => ({ es: { e: [] } })) // optional index must not mute EN or other ES voices
+    }).catch(() => ({})) // optional index must not mute EN or other ES voices
   ]).then(([phrases, slots]) => {
     catalogue.en = new Set(Array.isArray(phrases.en) ? phrases.en : []);
     catalogue.es = new Set(Array.isArray(phrases.es) ? phrases.es : []);
-    esSlotE = new Set(Array.isArray(slots?.es?.e) ? slots.es.e : []);
+    for (const [k, v] of Object.entries(slots?.es || {})) esSlots[k] = new Set(Array.isArray(v) ? v : []);
     catalogueReady = true;
   }).catch(() => { catalogueReady = true; /* safe, caption-only on failed load */ });
 
@@ -93,17 +98,25 @@
       item.guard = setTimeout(finish, 600 + Math.min(4200, String(item.utterance.text || '').length * 45));
       return;
     }
-    const audio = item.audio;
-    audio.onended = finish;
-    audio.onerror = finish; // stay silent rather than switching to OS speech
+    const list = item.audios && item.audios.length ? item.audios : [item.audio];
+    let idx = 0;
     item.guard = setTimeout(() => {
-      try { audio.pause(); } catch (_) {}
+      try { item.audio.pause(); } catch (_) {}
       finish();
     }, 7000 + Math.min(33000, String(item.utterance.text || '').length * 135));
-    try {
-      const result = audio.play();
-      if (result && typeof result.catch === 'function') result.catch(finish);
-    } catch (_) { finish(); }
+    const playNext = () => {
+      if (completed || current !== item) return;
+      if (idx >= list.length) { finish(); return; }
+      const audio = list[idx++];
+      item.audio = audio;
+      audio.onended = () => { if (idx < list.length) setTimeout(playNext, 90); else finish(); };
+      audio.onerror = () => playNext(); // a missing sentence stays silent, the rest still plays
+      try {
+        const result = audio.play();
+        if (result && typeof result.catch === 'function') result.catch(finish);
+      } catch (_) { finish(); }
+    };
+    playNext();
   };
 
   SS.cancel = () => {
@@ -122,25 +135,53 @@
     }
     originalCancel();
   };
+  const ES_FALLBACK = { f: 'fd', g: 'ga', h: 'hc', i: 'ie', j: 'jb', k: 'ka', c: 'ca', a: 'a', b: 'b', d: 'd', e: 'e' };
+  const esClip = (slot, text) => {
+    const key = hash(text);
+    for (const s2 of (ES_FALLBACK[slot] || slot) + 'de') if (esSlots[s2] && esSlots[s2].has(key)) return 'es/' + s2 + '/' + key;
+    // Slot index unavailable: the shared manifest still lists the core cast (a-e).
+    if (!Object.keys(esSlots).length && catalogue.es.has(key)) return 'es/' + ('abcde'.includes(slot) ? slot : 'd') + '/' + key;
+    return null;
+  };
+  const clip = (url, volume) => {
+    const a = new Audio(root + url + '.mp3?v=20261027es1');
+    a.preload = 'auto';
+    a.volume = volume;
+    return a;
+  };
   SS.speak = (utterance) => {
     if (!utterance) return;
-    let audio = null;
+    const audios = [];
     try {
       const lang = window.__LANG === 'en' ? 'en' : 'es';
-      let phrase = normalize(utterance.text);
-      if (lang === 'en' && typeof window.T === 'function') phrase = normalize(window.T(phrase));
-      const key = hash(phrase);
+      const vol = Math.max(0, Math.min(1, utterance.volume == null ? 1 : utterance.volume));
       const name = Date.now() - speakerAt <= 2000 ? speaker : 'UNFIRE';
       const slot = slotFor(name);
-      const exists = catalogueReady && catalogue[lang].has(key) &&
-        (lang !== 'es' || slot !== 'e' || esSlotE.has(key));
-      if (exists) {
-        audio = new Audio(root + lang + '/' + slot + '/' + key + '.mp3');
-        audio.preload = 'auto';
-        audio.volume = Math.max(0, Math.min(1, utterance.volume == null ? 1 : utterance.volume));
+      if (lang === 'es') {
+        // The player's own name is shown in the caption but not spoken: the recorded
+        // lines are the pieces around it, exactly as they are written in the game.
+        let nm = '';
+        try { nm = normalize(window.__STORYNAME && window.__STORYNAME()); } catch (_) {}
+        const text = String(utterance.text || '');
+        const pieces = nm && nm.length > 1 && text.includes(nm) ? text.split(nm) : [text];
+        for (const piece of pieces) {
+          const whole = esClip(slot, canon(piece));
+          if (whole) { audios.push(clip(whole, vol)); continue; }
+          // Lines built at runtime (names, chapters, chat): play sentence by sentence.
+          for (const p of sentences(piece)) { const u = esClip(slot, p); if (u) audios.push(clip(u, vol)); }
+        }
+      } else if (catalogueReady) {
+        let phrase = normalize(utterance.text);
+        if (typeof window.T === 'function') phrase = normalize(window.T(phrase));
+        const key = hash(phrase);
+        if (catalogue.en.has(key)) audios.push(clip('en/' + slot + '/' + key, vol));
+        else {
+          const parts = (phrase.match(/[^.!?…]+(?:[.!?…]+|$)/g) || []).map(normalize).filter((p) => /\w/.test(p)).map(hash);
+          if (parts.length && parts.every((k) => catalogue.en.has(k))) parts.forEach((k) => audios.push(clip('en/' + slot + '/' + k, vol)));
+        }
       }
     } catch (_) { /* no audio means caption-only; gameplay still advances */ }
-    queue.push({ utterance, audio, guard: null });
+    queue.push({ utterance, audios, audio: audios[0] || null, guard: null });
     pump();
   };
   try {

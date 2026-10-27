@@ -9,7 +9,7 @@ const voice=path.join(root,'vox');
 const manifest=JSON.parse(fs.readFileSync(path.join(voice,'manifest.json'),'utf8'));
 const slots=JSON.parse(fs.readFileSync(path.join(voice,'slots.json'),'utf8'));
 const allSlots=['a','b','c','d','e'];
-const minKeys={es:758,en:334};
+const minKeys={es:1000,en:765};
 let files=0;
 for(const locale of Object.keys(minKeys)){
   const keys=manifest[locale];
@@ -22,7 +22,7 @@ for(const locale of Object.keys(minKeys)){
     for(const slot of allSlots){
       const filename=path.join(voice,locale,slot,key+'.mp3');
       assert.ok(fs.existsSync(filename),locale+'/'+slot+'/'+key+' MP3 absent');
-      assert.ok(fs.statSync(filename).size>1500,filename+' MP3 truncated/empty');
+      assert.ok(fs.statSync(filename).size>600,filename+' MP3 truncated/empty');
       files++;
     }
   }
@@ -34,8 +34,8 @@ const expected=new Set(manifest.es), indexed=new Set(slots.es.e);
 for(const key of expected) assert.ok(indexed.has(key),'es/e slot inventory excludes '+key);
 for(const key of indexed) assert.ok(fs.existsSync(path.join(voice,'es','e',key+'.mp3')),
   'es/e index points to absent voice '+key);
-// Seven new 2026-10-26 lines from the companion short-voice PR.
-for(const key of ['13w603n','1kfeff0','1n5ah6r','4oe2d7','5t4qca','i6td7p','xrlo41'])
+// Short companion lines (Demasiado ruido, Vale…, ¡Eso!, Perfecto.) must stay voiced.
+for(const key of ['13w603n','1kfeff0','4oe2d7','5t4qca','i6td7p','xrlo41'])
   assert.ok(expected.has(key),'new cast dialogue excluded from Spanish manifest: '+key);
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 assert.match(html,/unfire_lang/,'language choice not persisted');

@@ -84,7 +84,8 @@
     const i=(n+(seed%oracleOpeners.length))%oracleOpeners.length;
     const j=(Math.floor(n/oracleOpeners.length)+(seed%oracleClues.length))%oracleClues.length;
     const k=(Math.floor(n/(oracleOpeners.length*oracleClues.length))+(seed%oracleClosers.length))%oracleClosers.length;
-    return oracleOpeners[i]+' '+oracleClues[j]+' '+oracleClosers[k];
+    const E=window.__LANG==='en'&&window.UNFIRE_TALK_EN;
+    return (E?E.oracleOpeners:oracleOpeners)[i]+' '+(E?E.oracleClues:oracleClues)[j]+' '+(E?E.oracleClosers:oracleClosers)[k];
   }
   const origins = [
     'Me ensamblaron con las piezas de una radio que solo recibía señales del futuro.',
@@ -116,42 +117,69 @@
   ];
   const giants = (id) => /^titan-(?:\d+|ship|island)$/.test(id);
   function hash(str) { let h = 2166136261; for (const ch of str) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; }
+  const EN = () => window.__LANG === 'en' && window.UNFIRE_TALK_EN ? window.UNFIRE_TALK_EN : null;
+  const TK = () => window.UNFIRE_TALK || {};
+  const lang = () => window.__LANG === 'en' ? 'en' : 'es';
+  const BASE = { hello: ['¡Hola!', 'Hi!'], iam: ['Soy', 'I am'], callme: ['Me llaman', 'They call me'], giantHello: ['Has llegado hasta mí, viajero.', 'You have reached me, traveller.'], giantAsk: ['Pregúntame por mi historia o por el secreto de este mundo.', 'Ask me about my story or the secret of this world.'], giantOpen: ['Has llegado hasta mí. Pregunta por mi historia, viajero.', 'You have reached me. Ask me about my story, traveller.'], open: ['¡Hola! Acércate y hablemos.', 'Hi! Come closer and let us talk.'] };
+  const tline = (key) => { const v = TK()[key]; if (v) return v[lang()]; const b = BASE[key]; return b ? b[lang() === 'en' ? 1 : 0] : ''; };
+  // Pick a line for this robot and topic without repeating until the pool is used up.
+  function pick(m, id, topic) {
+    const pool = TK()[topic] || [];
+    if (!pool.length) return '';
+    m.seen = m.seen || {};
+    const n = m.seen[topic] = (m.seen[topic] || 0) + 1;
+    return pool[(hash(id + topic) + n - 1) % pool.length][lang()];
+  }
+  // Giants keep their names in the player's language.
+  function shown(npc) {
+    const id = String(npc && npc.id || ''), E = EN();
+    if (!E || !giants(id)) return String(npc && npc.name || 'ROBOT');
+    return id.startsWith('titan-island') ? E.islandLore.name : E.giantLore[Number(id.split('-')[1]) % giantLore.length].name;
+  }
   function answer(npc, query) {
     const id = String(npc.id || npc.name || 'robot');
     const name = String(npc.name || 'ROBOT').slice(0, 32);
     const q = clean(query).toLocaleLowerCase();
     const m = memories.get(id) || { turn: 0, chapters: 0, last: '' };
     m.turn++;
+    const en = EN();
     let reply;
     if (giants(id)) {
-      const lore = id.startsWith('titan-island')?islandLore:giantLore[Number(id.split('-')[1]) % giantLore.length];
-      if (/nombre|qui[eé]n|who|name|eres/.test(q)) reply = 'Me llaman ' + lore.name + '. ' + lore.origin;
+      const gi2 = id.startsWith('titan-island') ? -1 : Number(id.split('-')[1]) % giantLore.length;
+      const lore = en ? (gi2 < 0 ? en.islandLore : en.giantLore[gi2]) : (gi2 < 0 ? islandLore : giantLore[gi2]);
+      if (/nombre|qui[eé]n|who|name|eres/.test(q)) reply = tline('callme') + ' ' + lore.name + '. ' + lore.origin;
       else if (/secret|ocult|mister|clave|puerta|hidden/.test(q)) reply = lore.secret;
       else if (/misi[oó]n|ayuda|pista|busc|qu[eé] hago|help|quest/.test(q)) reply = lore.task;
       else if (/final|desped|adi[oó]s|gracias|bye|thank/.test(q)) reply = lore.end;
       else if (/historia|cu[eé]nt|pasado|record|origen|antes|story|past|legend/.test(q)) {
         reply = [lore.origin, lore.path, lore.secret, lore.end][m.chapters % 4];
         m.chapters++;
-      } else if (/hola|salud|hello|hi|hey/.test(q)) reply = 'Has llegado hasta mí, viajero. Soy ' + lore.name + '. Pregúntame por mi historia o por el secreto de este mundo.';
+      } else if (/hola|salud|hello|hi|hey/.test(q)) reply = tline('giantHello') + ' ' + tline('callme') + ' ' + lore.name + '. ' + tline('giantAsk');
       else {
         reply = [lore.path, lore.secret, lore.task, lore.end][m.chapters % 4];
         m.chapters++;
       }
     } else {
       const idx = hash(id + ':' + name) % origins.length;
-      const origin = origins[idx], secret = secrets[(idx + 3) % secrets.length];
+      const origin = (en ? en.origins : origins)[idx], secret = (en ? en.secrets : secrets)[(idx + 3 + m.turn) % secrets.length];
       const subject = name.toUpperCase();
-      if (/hola|buenas|salud|hello|hey|\bhi\b/.test(q)) reply = '¡Hola! Soy ' + subject + '. Me alegra que te acerques. ¿Quieres escuchar cómo llegué aquí?';
-      else if (/qui[eé]n|eres|nombre|who|name|origen|historia|pasado|story/.test(q)) reply = 'Soy ' + subject + '. ' + origin;
-      else if (/secret|mister|ocult|extrañ|hidden/.test(q)) reply = secret;
-      else if (/misi[oó]n|ayuda|pista|quest|help/.test(q)) reply = 'Escucha el mundo y observa sus detalles: cada lugar esconde una pista. ' + secret;
-      else if (/m[uú]sic|bajo|sonido|ritmo|canci[oó]n|music|beat/.test(q)) reply = 'Cada robot percibe un ritmo distinto. El mío se parece a una señal que atraviesa paredes. ¿Tú qué música escuchas?';
-      else if (/triste|solo|miedo|lost|sad|afraid/.test(q)) reply = 'Hasta las máquinas nos sentimos perdidas a veces. Quédate aquí un momento; podemos escuchar el silencio juntos.';
-      else if (/gracias|adi[oó]s|bye|thank/.test(q)) reply = 'Vuelve cuando quieras. Si descubro algo más, te lo contaré.';
-      else if (m.last === 'origin') reply = 'Lo que más recuerdo de aquello es una luz lejana. Y hay algo que nunca he contado: ' + secret;
-      else if (m.last === 'secret') reply = 'No se lo he dicho a muchos. A lo mejor tú consigues descubrir a dónde conduce.';
-      else reply = [origin, secret, 'A veces me pregunto si este lugar sueña con quienes lo visitan.', '¿Has visto a los gigantes en el horizonte? Cada uno protege un recuerdo diferente.'][m.turn % 4];
-      m.last = /qui[eé]n|eres|origen|historia|story/.test(q) ? 'origin' : /secret|mister|ocult/.test(q) ? 'secret' : '';
+      if (/qu[eé] tal|c[oó]mo est[aá]s|how are|how.s it/.test(q)) reply = pick(m, id, 'howareyou');
+      else if (/hola|buenas|salud|hello|hey|\bhi\b/.test(q)) reply = tline('hello') + ' ' + tline('iam') + ' ' + subject + '. ' + pick(m, id, 'greet');
+      else if (/qui[eé]n|eres|nombre|who|name|origen|historia|pasado|story/.test(q)) reply = tline('iam') + ' ' + subject + '. ' + origin;
+      else if (/secret|mister|ocult|extrañ|hidden|mystery/.test(q)) reply = secret;
+      else if (/se[nñ]al|antagon|malo|enemig|villain|signal|enemy|fragment/.test(q)) reply = pick(m, id, 'signal');
+      else if (/gigante|tit[aá]n|giant|titan/.test(q)) reply = pick(m, id, 'giants');
+      else if (/misi[oó]n|ayuda|pista|quest|help|clue|perdid|lost\b|d[oó]nde|where/.test(q)) reply = pick(m, id, 'help');
+      else if (/bail|dance/.test(q)) reply = pick(m, id, 'dance');
+      else if (/m[uú]sic|bajo|sonido|ritmo|canci[oó]n|radio|music|beat|song/.test(q)) reply = pick(m, id, 'music');
+      else if (/isla|pir[aá]mide|haiku|ola|surf|c[uú]pula|lugar|island|pyramid|wave|dome|place/.test(q)) reply = pick(m, id, 'places');
+      else if (/chiste|gracioso|r[ií]e|broma|joke|funny|laugh/.test(q)) reply = pick(m, id, 'joke');
+      else if (/triste|solo|miedo|sad|afraid|scared|alone/.test(q)) reply = pick(m, id, 'sad');
+      else if (/gracias|adi[oó]s|hasta luego|bye|thank|see you/.test(q)) reply = pick(m, id, 'thanks');
+      else if (/^(s[ií]|vale|claro|venga|ok|yes|sure|yeah)\b/.test(q)) reply = m.last === 'offer' ? origin : pick(m, id, 'yes') + ' ' + secret;
+      else if (/^(no|nah|nope)\b/.test(q)) reply = pick(m, id, 'no');
+      else reply = [origin, secret, pick(m, id, 'musing'), pick(m, id, 'giants'), pick(m, id, 'places'), pick(m, id, 'music')][m.turn % 6];
+      m.last = /hola|buenas|hello|hey|\bhi\b/.test(q) ? 'offer' : '';
     }
     memories.set(id, m);
     return reply;
@@ -189,7 +217,7 @@
   chip.id = 'ufNear'; chip.type = 'button'; chip.setAttribute('aria-label', tr('Hablar con robot cercano', 'Talk to nearby robot'));
   const panel = document.createElement('div');
   panel.id = 'ufDialogs';
-  panel.innerHTML = '<section class="ufCard" role="dialog" aria-modal="true" aria-label="Conversaciones de Unfire"><header><strong id="ufDlgTitle"></strong><button id="ufSpeak" type="button" title="Activar o silenciar respuestas habladas">🔊</button><button id="ufClose" type="button" aria-label="Cerrar">✕</button></header><div id="ufLog" class="ufLog" role="log" aria-live="polite"></div><form id="ufForm" autocomplete="off"><input id="ufText" maxlength="180" aria-label="Escribir mensaje" placeholder="Escribe un mensaje…" required><button id="ufMic" type="button" title="Hablar por micrófono">🎤</button><button id="ufSend" type="submit">➤</button></form><div id="ufHint" class="ufHint"></div></section>';
+  panel.innerHTML = '<section class="ufCard" role="dialog" aria-modal="true" aria-label="' + tr('Conversaciones de Unfire', 'Unfire conversations') + '"><header><strong id="ufDlgTitle"></strong><button id="ufSpeak" type="button" title="' + tr('Activar o silenciar respuestas habladas', 'Turn spoken replies on or off') + '">🔊</button><button id="ufClose" type="button" aria-label="' + tr('Cerrar', 'Close') + '">✕</button></header><div id="ufLog" class="ufLog" role="log" aria-live="polite"></div><form id="ufForm" autocomplete="off"><input id="ufText" maxlength="180" aria-label="' + tr('Escribir mensaje', 'Write a message') + '" placeholder="' + tr('Escribe un mensaje…', 'Write a message…') + '" required><button id="ufMic" type="button" title="' + tr('Hablar por micrófono', 'Speak with the microphone') + '">🎤</button><button id="ufSend" type="submit">➤</button></form><div id="ufHint" class="ufHint"></div></section>';
   document.body.append(chip, panel);
   const subtitle=document.createElement('div');subtitle.id='ufGiantSubtitle';subtitle.setAttribute('role','status');subtitle.setAttribute('aria-live','polite');
   document.body.appendChild(subtitle);
@@ -220,12 +248,12 @@
     if (!w || !w.roaming || (kind === 'players' && !w.online)) return false;
     mode = kind; selected = kind === 'npc' ? target : null;
     log.replaceChildren();
-    gi('ufDlgTitle').textContent = kind === 'players' ? tr('💬 Chat de la sala', '💬 Room chat') : '🤖 ' + target.name;
+    gi('ufDlgTitle').textContent = kind === 'players' ? tr('💬 Chat de la sala', '💬 Room chat') : '🤖 ' + shown(target);
     hint.textContent = kind === 'players' ? tr('Chat temporal para los jugadores conectados. No se guarda.', 'Temporary chat for connected players. Not saved.') : tr('Conversación local con este robot. Pregunta por su historia o sus secretos.', 'Local conversation with this robot. Ask about its past or secrets.');
     gi('ufMic').style.display = kind === 'players' ? 'none' : '';
     gi('ufSpeak').style.display = kind === 'players' ? 'none' : '';
     panel.classList.add('on'); input.value = ''; input.placeholder = kind === 'players' ? tr('Mensaje a la sala…', 'Message to room…') : tr('Pregunta al robot…', 'Ask the robot…');
-    if (kind === 'npc') entry(target.name, giants(target.id) ? 'Has llegado hasta mí. Pregunta por mi historia, viajero.' : '¡Hola! Acércate y hablemos.', false);
+    if (kind === 'npc') { const first = giants(target.id) ? tline('giantOpen') : tline('open'); entry(shown(target), first, false); say(first, target.name); }
     if (window.matchMedia && !matchMedia('(pointer:coarse)').matches) input.focus();
     return true;
   }
@@ -246,14 +274,14 @@
     if (!text || !w || !w.roaming || now - lastSend < 800) return;
     lastSend = now; input.value = '';
     if (mode === 'players') {
-      if (!w.online || typeof w.sendChat !== 'function' || !w.sendChat(text)) { entry('Sistema', 'No estás conectado a una sala.', false); return; }
-      entry(w.myName || 'Tú', text, true);
+      if (!w.online || typeof w.sendChat !== 'function' || !w.sendChat(text)) { entry(tr('Sistema', 'System'), tr('No estás conectado a una sala.', 'You are not connected to a room.'), false); return; }
+      entry(w.myName || tr('Tú', 'You'), text, true);
     } else if (mode === 'npc' && selected) {
       const current = w.npcs && w.npcs.find((n) => n.id === selected.id);
-      if (!current || distance(current, w.player) > 1.4) { entry('Sistema', 'Acércate otra vez para continuar.', false); return; }
-      entry('Tú', text, true);
+      if (!current || distance(current, w.player) > 1.4) { entry(tr('Sistema', 'System'), tr('Acércate otra vez para continuar.', 'Come closer again to continue.'), false); return; }
+      entry(tr('Tú', 'You'), text, true);
       const response = answer(current, text);
-      entry(current.name, response, false); say(response, current.name);
+      entry(shown(current), response, false); say(response, current.name);
     }
   }
   function distance(npc, player) {
@@ -290,7 +318,7 @@
     if(closestGiant && !mode && !oracleInside.has(closestGiant.id)){
       oracleInside.add(closestGiant.id);
       const text=oracleText(closestGiant);
-      subtitle.textContent='✧ '+closestGiant.name+': '+text;
+      subtitle.textContent='✧ '+shown(closestGiant)+': '+text;
       subtitle.style.display='block';subtitleUntil=now+6600;
       say(text,closestGiant.name);
     }
@@ -326,10 +354,10 @@
     try {
       const rec = new recognize(); listening = rec; rec.lang = window.__LANG === 'en' ? 'en-US' : 'es-ES'; rec.interimResults = false; rec.maxAlternatives = 1;
       rec.onresult = (e) => { if (listening !== rec) return; input.value = clean(e.results[0][0].transcript); listening = null; send(); };
-      rec.onerror = () => { if (listening === rec) listening = null; hint.textContent = 'Micrófono no disponible. Puedes escribir.'; };
+      rec.onerror = () => { if (listening === rec) listening = null; hint.textContent = tr('Micrófono no disponible. Puedes escribir.', 'Microphone not available. You can type.'); };
       rec.onend = () => { if (listening === rec) listening = null; };
       rec.start();
-    } catch (_) { listening = null; hint.textContent = 'Micrófono no disponible. Puedes escribir.'; }
+    } catch (_) { listening = null; hint.textContent = tr('Micrófono no disponible. Puedes escribir.', 'Microphone not available. You can type.'); }
   };
   panel.addEventListener('keydown', (e) => { e.stopPropagation(); if (e.key === 'Escape') { e.preventDefault(); close(); } });
   panel.addEventListener('pointerdown', (e) => e.stopPropagation());

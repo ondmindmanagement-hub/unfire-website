@@ -9,7 +9,8 @@ const script=fs.readFileSync(path.join(root,'audio/maletin/unfire-conversations.
 const engine=fs.readFileSync(path.join(root,'audio/maletin/game-engine-v50.js'),'utf8');
 const html=fs.readFileSync(path.join(root,'audio/maletin/index.html'),'utf8');
 
-function load(){
+const lines=fs.readFileSync(path.join(root,'audio/maletin/conversation-lines.js'),'utf8');
+function load(opts={}){
   const nodes=new Map(),intervals=[];
   class Node{
     constructor(){
@@ -28,13 +29,14 @@ function load(){
     nodes.set(id,new Node());
   const document={head:new Node(),body:new Node(),createElement:()=>new Node(),
     getElementById:id=>nodes.get(id)||null,addEventListener(){}};
-  const window={__LANG:'es',addEventListener(){},matchMedia:()=>({matches:true})};
+  const window={__LANG:opts.lang||'es',addEventListener(){},matchMedia:()=>({matches:true})};
+  vm.runInNewContext(lines,{window},{filename:'conversation-lines.js'});
   vm.runInNewContext(script,{document,window,Date,Map,Set,Math,Object,
     setInterval:fn=>intervals.push(fn)},{filename:'unfire-conversations.js'});
   return {api:window.UnfireConversations,nodes,window,intervals};
 }
 test('loaded after engine, retaining existing cinematic NPC UI',()=>{
-  assert.match(html,/game-engine-v50\.js\?v=20261026voces1"><\/script>\s*<script src="unfire-conversations\.js\?v=20261026voces1"/);
+  assert.match(html,/conversation-lines\.js\?v=\w+"><\/script>\s*<script src="game-engine-v50\.js\?v=\w+"><\/script>\s*<script src="unfire-conversations\.js\?v=\w+"/);
   assert.match(engine,/const OUTTALK\s*=/);
   assert.match(engine,/window\.__UNFIRE_DIALOGUE_WORLD\s*=/);
 });
@@ -66,6 +68,20 @@ test('all other NPC identifiers can converse with follow-up memory',()=>{
     assert.ok(api.answer(n,'¿Tienes secretos?').length>20);
     assert.ok(api.answer(n,'¿y después?').length>20);
   }
+});
+test('robots answer many topics in Castilian and in English, without repeating',()=>{
+  const {api}=load(),n={id:'out-1-0',name:'VOLTIO'};
+  const topics=['¿Qué tal estás?','Cuéntame un chiste','¿Qué música te gusta?','¿Qué es la señal?','¿Dónde está la pirámide?','Háblame de los gigantes','Ayuda, estoy perdido','¿Bailamos?','Estoy triste','Gracias, adiós'];
+  const answers=topics.map(q=>api.answer(n,q));
+  for(const a of answers)assert.ok(a.length>15,a);
+  assert.equal(new Set(answers).size,answers.length);
+  const jokes=[1,2,3].map(()=>api.answer(n,'otro chiste'));
+  assert.equal(new Set(jokes).size,3,'no repeated jokes in a row');
+  const en=load({lang:'en'}).api;
+  assert.match(en.answer(n,'hello'),/^Hi! I am VOLTIO\./);
+  assert.match(en.answer(n,'tell me a joke'),/[A-Za-z]/);
+  assert.doesNotMatch(en.answer(n,'who are you?'),/[áéíóúñ¿¡]/);
+  assert.doesNotMatch(en.answer({id:'titan-1',name:'T'},'tell me your story'),/[áéíóúñ¿¡]/);
 });
 test('proximity distinguishes ordinary bots and giant robots',()=>{
   const {api}=load(),p={x:0,y:800,z:0};
