@@ -1753,7 +1753,7 @@
       }`;
       ui.appendChild(st);}
 
-    const hud = document.createElement('div'); hud.id = 'onlHud'; hud.innerHTML = '<span id="onlT"></span><button id="onlInv">📨 INVITAR</button><button id="onlMic" type="button" aria-pressed="false" aria-label="Activar micrófono del chat de proximidad">🎤 ACTIVAR VOZ</button><button class="q" id="onlQ">✕</button>'; document.body.appendChild(hud); hud.addEventListener('pointerdown', (e) => e.stopPropagation());
+    const hud = document.createElement('div'); hud.id = 'onlHud'; hud.innerHTML = '<span id="onlT"></span><button id="onlInv">📨 INVITAR</button><button id="onlMic" type="button" aria-pressed="false" aria-label="Activar micrófono del chat de voz">🎤 ACTIVAR VOZ</button><button id="onlMute" type="button" aria-pressed="false" style="display:none">🎙️ MI MICRO</button><button id="onlVM" type="button" title="Con quién hablas">👥 SALA</button><button id="onlPl" type="button" title="Jugadores · silenciar">🔊 JUGADORES</button><div id="onlPlist" style="display:none;position:absolute;right:0;top:calc(100% + 6px);min-width:220px;max-height:50vh;overflow:auto;background:rgba(6,12,34,.95);border:2px solid #5fe0ff;border-radius:14px;padding:8px;font:700 12px Arial;color:#fff;z-index:95"></div><button class="q" id="onlQ">✕</button>'; document.body.appendChild(hud); hud.addEventListener('pointerdown', (e) => e.stopPropagation());
     const $o = (id) => document.getElementById(id), msg = (t) => { $o('onMsg').textContent = window.T ? window.T(t) : t; };
     // Portraits are captured from actual 3D robot models, one per idle frame.
     // Reuse the game's WebGL renderer/one tiny render target; no additional WebGL context.
@@ -1862,13 +1862,18 @@
     const load = (cb) => { if (window.Peer) return cb(); const s = document.createElement('script'); s.src = 'vendor/peerjs.min.js'; s.onload = cb; s.onerror = () => msg('No se pudo conectar con el servidor online. Revisa tu conexión.'); document.head.appendChild(s); };
     const rnd = () => Array.from({ length: 5 }, () => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random() * 32)]).join('');
     const link = () => { let base = ''; try { base = parent.location.origin + parent.location.pathname; } catch (e) { base = location.origin + location.pathname; } return base + '?room=' + code; };
-    const started = () => { ui.classList.remove('on'); hud.style.display = 'flex'; NOTES.sc = 0; NOTES.build([...code].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) % 100000); upd(); say('🌐 Sala ' + code + ' lista · pulsa 📨 INVITAR para traer a tus amigos'); hap(0.5); };
+    const started = () => { ui.classList.remove('on'); hud.style.display = 'flex'; /* friends in the same room talk straight away */ setTimeout(() => { try { if (!VOICE.on) VOICE.start(); } catch (e) {} }, 400); NOTES.sc = 0; NOTES.build([...code].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) % 100000); upd(); say('🌐 Sala ' + code + ' lista · pulsa 📨 INVITAR para traer a tus amigos'); hap(0.5); };
     const upd = () => { const rk = [[cfg.name || 'Tú', NOTES.sc]].concat(Object.values(R).map((r) => [r.d ? r.d.n : '?', r.d ? r.d.sc || 0 : 0])).sort((a, b) => b[1] - a[1]).slice(0, 3).map((x, i) => ['🥇', '🥈', '🥉'][i] + x[0] + ' ' + x[1]).join(' '); $o('onlT').textContent = '🌐 ' + code + ' · ' + (Object.keys(R).length + 1) + '👥 · ♪ ' + rk; };
     // PeerJS WebRTC voice is opt-in: the room never requests a mic on join.
     // Audio is spatialised locally only; no microphone media is stored in the game.
     const VOICE = (() => {
       let local = null, enabled = false, starting = false, generation = 0, elapsed = 0;
-      const calls = new Map(), audio = new Map(), retry = new Map(), LIMIT = 6;
+      const calls = new Map(), audio = new Map(), retry = new Map(), LIMIT = 8;
+      // Room voice ("SALA"): everyone in your private room hears you wherever they are,
+      // like a party chat. "CERCA": only players close to you, with distance volume.
+      let mode = 'room'; try { mode = localStorage.getItem('unfire_voice_mode') === 'near' ? 'near' : 'room'; } catch (_) {}
+      const muted = new Set(); let selfMuted = false;
+      const nameOf = (id) => { const r = R[id]; return String((r && r.d && r.d.n) || 'Jugador').slice(0, 20); };
       const button = $o('onlMic');
       const status = (text) => {
         if (!button) return;
@@ -1878,7 +1883,8 @@
       };
       const inRange = (id, padding = 0) => {
         const r = R[id];
-        if (!r || !r.d || !ROAMS.on || !!r.d.o !== !!window.ATM_OUT) return false;
+        if (mode === 'room') return !!(r && r.d && !muted.has(id));
+        if (!r || !r.d || !ROAMS.on || !!r.d.o !== !!window.ATM_OUT || muted.has(id)) return false;
         if (!Number.isFinite(+r.d.x) || !Number.isFinite(+r.d.z)) return false;
         const distance = Math.hypot(r.d.x - ROAMS.p.x, r.d.z - ROAMS.p.z, (r.d.h || 0) - (ROAMS.h || 0));
         return distance <= (window.ATM_OUT ? 92 : 35) + padding;
@@ -1980,9 +1986,10 @@
           const distance = Math.hypot(dx, dz, (r.d.h || 0) - (ROAMS.h || 0));
           const max = window.ATM_OUT ? 92 : 35;
           const near = window.ATM_OUT ? 12 : 6;
-          const volume = distance < near ? 0.83 : 0.83 * Math.pow(Math.max(0, 1 - (distance - near) / (max - near)), 2);
+          const prox = distance < near ? 0.83 : 0.83 * Math.pow(Math.max(0, 1 - (distance - near) / (max - near)), 2);
+          const volume = muted.has(id) ? 0 : mode === 'room' ? Math.max(0.6, prox) : prox;
           n.gain.gain.setTargetAtTime(volume, UA.ctx.currentTime, 0.12);
-          if (n.pan) n.pan.pan.setTargetAtTime(Math.max(-0.75, Math.min(0.75, dx / 18)), UA.ctx.currentTime, 0.18);
+          if (n.pan) n.pan.pan.setTargetAtTime(mode === 'room' && distance > max ? 0 : Math.max(-0.75, Math.min(0.75, dx / 18)), UA.ctx.currentTime, 0.18);
         }
         if (calls.size >= LIMIT) return;
         for (const id of Object.keys(R)) {
@@ -1998,9 +2005,22 @@
         }
       }
       button.onclick = () => { if (enabled || starting) stop(); else start(); };
+      const tr2 = (es, en) => window.__LANG === 'en' ? en : es;
+      const muteB = $o('onlMute'), modeB = $o('onlVM'), plB = $o('onlPl'), list = $o('onlPlist');
+      const paintMode = () => { modeB.textContent = mode === 'room' ? tr2('👥 SALA', '👥 ROOM') : tr2('📍 CERCA', '📍 NEARBY'); modeB.title = mode === 'room' ? tr2('Toda tu sala te oye, estés donde estés', 'Everyone in your room hears you, wherever they are') : tr2('Solo te oyen los jugadores que tienes cerca', 'Only nearby players hear you'); };
+      const paintMute = () => { muteB.style.display = enabled ? '' : 'none'; muteB.textContent = selfMuted ? tr2('🔇 MI MICRO', '🔇 MY MIC') : tr2('🎙️ MI MICRO', '🎙️ MY MIC'); muteB.setAttribute('aria-pressed', selfMuted ? 'true' : 'false'); };
+      function paintList() {
+        const ids = Object.keys(R).filter((id) => R[id] && R[id].d);
+        list.innerHTML = ids.length ? '' : '<div style="opacity:.8;padding:6px">' + tr2('Aún no hay más jugadores en la sala.', 'No other players in the room yet.') + '</div>';
+        ids.forEach((id) => { const row = document.createElement('div'); row.style.cssText = 'display:flex;align-items:center;gap:8px;justify-content:space-between;padding:5px 2px'; const nm = document.createElement('span'); nm.textContent = (R[id].d.v ? '🎙️ ' : '🔈 ') + nameOf(id); const b = document.createElement('button'); b.type = 'button'; b.textContent = muted.has(id) ? tr2('🔇 SILENCIADO', '🔇 MUTED') : tr2('🔊 SILENCIAR', '🔊 MUTE'); b.style.cssText = 'border:0;border-radius:999px;padding:5px 9px;font:800 11px Arial;cursor:pointer;background:' + (muted.has(id) ? '#ff5470' : '#5fe0ff'); b.onclick = (e) => { e.stopPropagation(); if (muted.has(id)) muted.delete(id); else { muted.add(id); disconnect(id); } paintList(); }; row.append(nm, b); list.appendChild(row); });
+      }
+      modeB.onclick = (e) => { e.stopPropagation(); mode = mode === 'room' ? 'near' : 'room'; try { localStorage.setItem('unfire_voice_mode', mode); } catch (_) {} paintMode(); for (const id of [...calls.keys()]) if (!inRange(id, 22)) disconnect(id); };
+      muteB.onclick = (e) => { e.stopPropagation(); selfMuted = !selfMuted; paintMute(); visibility(window.__gameVisible !== false); };
+      plB.onclick = (e) => { e.stopPropagation(); const open = list.style.display === 'none'; list.style.display = open ? 'block' : 'none'; if (open) paintList(); };
+      paintMode(); setInterval(() => { paintMute(); if (list.style.display !== 'none') paintList(); }, 1500);
       function visibility(vis) {
         const active = !!vis && !document.hidden && enabled;
-        if (local) local.getAudioTracks().forEach((track) => { track.enabled = active; });
+        if (local) local.getAudioTracks().forEach((track) => { track.enabled = active && !selfMuted; });
         if (!active) for (const n of audio.values()) {
           try { n.gain.gain.setTargetAtTime(0, UA.ctx.currentTime, 0.03); } catch (_) {}
         }
@@ -2008,7 +2028,7 @@
       document.addEventListener('visibilitychange', () => visibility(window.__gameVisible !== false));
       addEventListener('pagehide', stop);
       status();
-      return { get on() { return enabled; }, bindPeer, tick, stop, disconnect, visibility };
+      return { get on() { return enabled; }, bindPeer, tick, stop, start, disconnect, visibility };
     })();
     function safePacket(raw, c) {
       try {
