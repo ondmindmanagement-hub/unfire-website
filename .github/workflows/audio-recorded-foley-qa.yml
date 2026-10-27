@@ -1,0 +1,32 @@
+name: Unfire Recorded SFX and Flight QA
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/media/sfx-real/**'
+      - 'audio/media-credits.html'
+      - 'tests/audio-real-recorded-flight.test.cjs'
+      - '.github/workflows/audio-recorded-foley-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/media/sfx-real/**'
+      - 'audio/media-credits.html'
+      - 'tests/audio-real-recorded-flight.test.cjs'
+jobs:
+  recorded-sfx:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Real recordings, licensing, no SFX synthesis, cameras
+        run: |
+          node --check audio/maletin/game-engine-v50.js
+          node --test tests/audio-real-recorded-flight.test.cjs
+      - name: Flight and NANO physics
+        run: |
+          node --test tests/audio-flight-landing-assist.test.cjs tests/audio-flight-vertical-dome.test.cjs tests/audio-nano-motion-invariants.test.cjs tests/audio-roaming-collision-broadphase.test.cjs
