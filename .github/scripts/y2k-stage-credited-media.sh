@@ -16,6 +16,16 @@ for k in ('v_jelly','v_reef','v_steens','v_waves'):
 print('Original video licensing manifest and files present')
 PY
 mkdir -p "$STAGE/audio/media"
-find "$ROOT/audio/media" -maxdepth 1 -type f \( -name '*.mp4' -o -name '*.jpg' -o -name '*.jpeg' -o -name '*.png' -o -name 'credits.json' \) -exec cp -p {} "$STAGE/audio/media/" \;
+# Preserve every original nested path, including 18+ playable songs and credits.
+# A partial top-level-only media copy caused the world/radio to go missing in WKWebView.
+cp -Rp "$ROOT/audio/media/." "$STAGE/audio/media/"
 cp -p "$ROOT/audio/media-credits.html" "$STAGE/audio/media-credits.html"
+python3 - "$ROOT/audio/media" "$STAGE/audio/media" <<'PY'
+from pathlib import Path
+import sys
+src, dst = (Path(p) for p in sys.argv[1:])
+missing = [str(p.relative_to(src)) for p in src.rglob('*') if p.is_file() and not (dst / p.relative_to(src)).is_file()]
+if missing: raise SystemExit('Missing native media after staging: '+', '.join(missing))
+print('Native media staging verified:', sum(p.is_file() for p in src.rglob('*')), 'source files, none missing')
+PY
 echo "Original attributed game media staged into $STAGE/audio/media"
