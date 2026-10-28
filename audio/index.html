@@ -336,8 +336,8 @@ article.inst.flip .media{order:2}
 .card .row .free{color:var(--ok)}
 .card .meta+.motif+.row{margin-top:12px}
 .card[hidden]{display:none}
-.archer-slot{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:28px;align-items:center;margin-top:22px;padding:20px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#14161d,#0d0f14)}
-.archer-slot img{border-radius:12px;width:100%;height:auto}
+.archer-slot{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:28px;align-items:center;margin-top:22px;padding:0;border:0;border-radius:0;background:transparent}
+.archer-slot img{display:block;border:0;border-radius:0;box-shadow:none;background:transparent;object-fit:contain;width:100%;height:auto}
 @media (max-width:800px){.archer-slot{grid-template-columns:1fr}}
 
 /* Caja de juguetes (transformables) */
@@ -583,14 +583,14 @@ footer a{color:var(--soft)}
 <section id="efectos" data-field="2" style="--sec:#ff4d4d"><div class="wrap">
   <div class="sechead reveal"><div><span class="num">02 · 20-UNIT RACK</span><h2>Effects</h2><p class="lede">Twenty machines, each with its own silhouette, LED and archive-photo design. Try an effect with drums, piano or saxophone.</p></div></div>
   <div class="rack reveal"><div class="rail" aria-hidden="true"></div><div class="rack-body">
-    <div class="rack-top"><div class="lcd" id="rackLcd" aria-live="polite">FX20 · 20 EFFECTS IN THE COLLECTION</div><div class="filters" id="fxFilters" role="group" aria-label="Filtrar efectos"></div></div>
+    <div class="rack-top"><div class="lcd" id="rackLcd" aria-live="polite">FX20 · 20 EFFECTS IN THE COLLECTION</div><div class="filters" id="fxFilters" role="group" aria-label="Filter effects"></div></div>
     <div class="grid" id="fxGrid"></div>
     <div class="archer-slot" id="archer" style="--led:#c9d0d9">
-      <img src="img/archer.webp" alt="Interface of ARCHER by Unfire: Gain, Threshold and Atmosphere controls on a liquid-chrome interface" width="1200" height="791" loading="lazy">
+      <img src="../assets/products/archer-nocturne-app-preview-20261028.webp" alt="Authentic preview of the forthcoming ARCHER by Unfire Audio interface with Gain, Threshold and Color controls" width="1120" height="711" loading="lazy">
       <div>
         <div class="kicker"><span class="chip live"><span class="dot"></span>Available on the App Store</span><span class="chip">AUv3 · macOS</span></div>
         <h3 style="font-size:32px">ARCHER by Unfire</h3>
-        <p class="lede" style="margin-top:12px">A three-control clipper: Gain, Threshold and Atmosphere. Shape peaks with character and add a touch of air.</p>
+        <p class="lede" style="margin-top:12px">Explore the upcoming ARCHER interface with Gain, Threshold and Color controls. This is a development preview, not a released App Store update.</p>
         <div class="buy"><button class="btn btn-blue" type="button" data-archer>▶ Try on the web</button><a class="btn btn-gel" href="https://apps.apple.com/us/app/archer-by-unfire/id6812968924" target="_blank" rel="noopener noreferrer" aria-label="Get ARCHER for Mac on the App Store">Get it for Mac ↗</a><a class="btn btn-gel" href="https://apps.apple.com/es/app/archer-for-iphone-ipad/id6822109610" target="_blank" rel="noopener noreferrer" aria-label="Get ARCHER for iPhone or iPad on the App Store">iPhone / iPad ↗</a></div>
       </div>
     </div>
@@ -676,7 +676,7 @@ document.getElementById('shareGame').addEventListener('click',async function(){
 });
 </script>
 <dialog id="sheet" aria-labelledby="sheetTitle"><div style="position:relative">
-  <button class="x" type="button" data-close aria-label="Cerrar">✕</button>
+  <button class="x" type="button" data-close aria-label="Close">✕</button>
   <div class="sheet">
     <div class="pic"><img id="sheetImg" alt=""></div>
     <div class="info">
@@ -684,9 +684,9 @@ document.getElementById('shareGame').addEventListener('click',async function(){
       <h3 class="title" id="sheetTitle"></h3>
       <p class="lede" id="sheetMotif"></p>
       <div class="demo">
-        <div class="bar"><select id="src" aria-label="Sonido de prueba"><option value="drums">Drums</option><option value="piano">Piano</option><option value="sax">Saxophone</option><option value="mix">Drums + piano</option></select>
-          <button class="btn btn-blue btn-sm" type="button" id="play">▶ Probar</button><button class="btn btn-ghost btn-sm" type="button" id="byp" aria-pressed="false">Bypass</button></div>
-        <canvas class="scope" id="scope" width="600" height="140" aria-label="Forma de onda"></canvas>
+        <div class="bar"><select id="src" aria-label="Demo sound"><option value="drums">Drums</option><option value="piano">Piano</option><option value="sax">Saxophone</option><option value="mix">Drums + piano</option></select>
+          <button class="btn btn-blue btn-sm" type="button" id="play">▶ Try</button><button class="btn btn-ghost btn-sm" type="button" id="byp" aria-pressed="false">Bypass</button></div>
+        <canvas class="scope" id="scope" width="600" height="140" aria-label="Waveform"></canvas>
         <div class="knobs" id="knobs"></div>
         <div class="timeleft" aria-hidden="true"><i id="tl"></i></div>
         <p class="over" id="over" hidden>The 45-second demo has ended. Add this item to your bag to check future availability.</p>
@@ -697,12 +697,12 @@ document.getElementById('shareGame').addEventListener('click',async function(){
 </div></dialog>
 
 <dialog id="hyper" aria-label="HYPERWAVE 2000 en la web" style="max-width:min(1200px,calc(100vw - 24px))"><div style="position:relative">
-  <button class="x" type="button" data-close aria-label="Cerrar">✕</button>
+  <button class="x" type="button" data-close aria-label="Close">✕</button>
   <iframe class="frame" id="hyperFrame" title="HYPERWAVE 2000" allow="autoplay"></iframe>
 </div></dialog>
 
 <dialog id="synth" aria-labelledby="synthTitle" style="max-width:min(760px,calc(100vw - 24px))"><div style="position:relative;padding:24px;display:grid;gap:14px">
-  <button class="x" type="button" data-close aria-label="Cerrar">✕</button>
+  <button class="x" type="button" data-close aria-label="Close">✕</button>
   <p class="eyebrow">45-second trial</p><h3 id="synthTitle" style="font-size:28px">Unfire Synthesizer</h3>
   <div class="engines" id="engines"></div>
   <div class="knobs" id="sknobs" style="grid-template-columns:repeat(4,minmax(0,1fr));--led:#3d8bff"></div>
@@ -714,7 +714,7 @@ document.getElementById('shareGame').addEventListener('click',async function(){
 </div></dialog>
 
 <dialog id="bag" class="drawer" aria-labelledby="bagTitle"><div class="in" style="position:relative">
-  <button class="x" type="button" data-close aria-label="Cerrar">✕</button>
+  <button class="x" type="button" data-close aria-label="Close">✕</button>
   <p class="eyebrow">Your bag</p><h3 id="bagTitle" style="font-size:26px">Your selection</h3>
   <ul id="bagList"></ul>
   <p class="lede" id="bagEmpty">Your bag is empty. Explore the catalog to add an item.</p>
@@ -728,7 +728,7 @@ document.getElementById('shareGame').addEventListener('click',async function(){
 </div></dialog>
 
 <dialog id="lic" class="licbox" aria-labelledby="licTitle"><div class="in" style="position:relative">
-  <button class="x" type="button" data-close aria-label="Cerrar">✕</button>
+  <button class="x" type="button" data-close aria-label="Close">✕</button>
   <p class="eyebrow" id="licFor">License</p><h3 id="licTitle" style="font-size:24px">UNFIRE AUDIO software license</h3>
   <div class="legal">
     <p>Version 1.0 · Draft pending legal review. Licensor: Omar Baró (individual operator), under the Unfire brand, Barcelona, Spain · hello@unfire.technology. Unfire does not claim to be an incorporated company.</p>
@@ -1193,9 +1193,9 @@ function knobs(box,names,vals,cb){box.innerHTML='';names.forEach((n,i)=>{const i
 
 /* Ficha de efecto con demo */
 const sheet=$('#sheet');let stopScope=null,playing=false,tlT=null,sheetItem=null;
-function openFx(f,isArcher){sheet.style.setProperty('--led',f[4]);$('#sheetImg').src=isArcher?'img/archer.webp':`img/fx-${f[0]}.webp`;$('#sheetImg').alt='Interface of '+f[1];
-  $('#sheetType').textContent=isArcher?'UNFAIR · Clipper':'UNFIRE · '+f[2];const t=$('#sheetTitle');t.textContent=f[1];if(isArcher)t.style.font='800 34px var(--display)';else face(t,f,38);
-  $('#sheetMotif').textContent=isArcher?'Gain, Threshold and Atmosphere. Get the released Mac or iPhone/iPad edition from its official App Store listing.':'Theme: '+f[3]+'. Archive-photo collage with illuminated trim.';
+function openFx(f,isArcher){sheet.style.setProperty('--led',f[4]);$('#sheetImg').src=isArcher?'../assets/products/archer-nocturne-app-preview-20261028.webp':`img/fx-${f[0]}.webp`;$('#sheetImg').alt='Interface of '+f[1];
+  $('#sheetType').textContent=isArcher?'UNFIRE AUDIO · Clipper':'UNFIRE · '+f[2];const t=$('#sheetTitle');t.textContent=f[1];if(isArcher)t.style.font='800 34px var(--display)';else face(t,f,38);
+  $('#sheetMotif').textContent=isArcher?'Preview of the next ARCHER interface: Gain, Threshold and Color. The current released editions remain available via the official App Store.':'Theme: '+f[3]+'. Archive-photo collage with illuminated trim.';
   sheetItem=isArcher?null:'fx-'+f[0];$('#sheetGet').textContent=isArcher?'App Store ↗':'+ Add to bag';
   $('#sheetPrice').innerHTML=isArcher?'':STARTER.includes(f[0])?'<span style="color:var(--ok)">Always free</span>':`${eur(PRICES.fx)}<small>o los 20 por ${eur(PRICES.fx20)}</small>`;
   stopDemo();DEMO.load(f[8]);knobs($('#knobs'),f[6],DEF,(i,v)=>DEMO.setParam(i,v));DEF.forEach((v,i)=>DEMO.setParam(i,v));DEMO.setBypass(false);$('#byp').setAttribute('aria-pressed','false');$('#byp').textContent='Bypass';
