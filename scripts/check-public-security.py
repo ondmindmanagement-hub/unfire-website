@@ -20,7 +20,10 @@ TEXT_EXTS = {".html", ".js", ".mjs", ".cjs", ".json", ".txt", ".md",
 SENSITIVE_NAMES = {".env", ".env.production", ".env.local", "id_rsa",
                    "id_ed25519", "credentials.json", "service-account.json",
                    "service_account.json", "google-services.json"}
-SENSITIVE_SUFFIXES = {".p12", ".pfx", ".pem", ".sqlite", ".sqlite3", ".db"}
+SENSITIVE_SUFFIXES = {".p12", ".pfx", ".pem", ".p8", ".jks", ".keystore", ".kdbx",
+                      ".sqlite", ".sqlite3", ".db"}
+# Distribution samples contain placeholders, not deployable secrets.
+SAFE_ENV_EXAMPLES = {".env.example", ".env.sample", ".env.template", ".env.dist"}
 CREDENTIAL_SIGNATURES = (
     ("private key", re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----")),
     ("GitHub personal token", re.compile(r"\bgh[pousr]_[A-Za-z0-9]{35,}\b")),
@@ -35,6 +38,16 @@ WINDOW_BLANK = re.compile(r"<a\b[^>]*\btarget\s*=\s*['\"]?_blank\b[^>]*>", re.I)
 REL_SAFE = re.compile(r"\brel\s*=\s*['\"][^'\"]*(?:noopener|noreferrer)", re.I)
 HTTP_REMOTE_SCRIPT = re.compile(r"<script\b[^>]*\bsrc\s*=\s*['\"]http://", re.I)
 
+def sensitive_file_path(name: PurePosixPath) -> bool:
+    """Block secret-bearing file paths without inspecting or printing values."""
+    basename = name.name.lower()
+    return (
+        basename in SENSITIVE_NAMES
+        or (basename.startswith(".env.") and basename not in SAFE_ENV_EXAMPLES)
+        or name.suffix.lower() in SENSITIVE_SUFFIXES
+    )
+
+
 def tracked_files():
     output = subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT)
     return [p.decode("utf-8", "replace") for p in output.split(b"\0") if p]
@@ -48,7 +61,7 @@ def inspect():
         if not path.is_file() or path.is_symlink():
             continue
         name = PurePosixPath(relative)
-        if name.name.lower() in SENSITIVE_NAMES or name.suffix.lower() in SENSITIVE_SUFFIXES:
+        if sensitive_file_path(name):
             errors.append(f"{relative}: sensitive filename tracked in public repository")
         if BACKUP_NAME.search(relative):
             warnings.append(f"{relative}: legacy or backup content is publicly published")
