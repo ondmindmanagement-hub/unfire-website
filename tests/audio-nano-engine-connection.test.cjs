@@ -16,11 +16,11 @@ test('isolated NANO size-aware physics is loaded before the live game engine',()
 });
 
 test('cache identifiers agree for iframe, physics script and engine',()=>{
- const v='20261028flight1', previous='20261024organic1', shared='20261024combinedqa1';
- assert.match(host,/maletin\/index\.html\?v=20261028flight1/);
+ const v='20261028flight2', previous='20261024organic1', shared='20261024combinedqa1';
+ assert.match(host,/maletin\/index\.html\?v=20261028flight2/);
  assert.ok(page.includes('nano-physics.js?v='+shared));
  assert.ok(page.includes('game-engine-v50.js?v='+v));
- assert.ok(page.includes('expanded-map.js?v=20261028flight1'));
+ assert.ok(page.includes('expanded-map.js?v=20261028flight2'));
  assert.ok(page.includes('coins-shop.js?v='+previous));
  assert.ok(!page.includes('game-engine-v50.js?v=20261024storytop1'));
 });

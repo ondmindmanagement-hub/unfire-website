@@ -2626,12 +2626,18 @@
         } else { ROAMS.p.x = px0; ROAMS.p.z = pz0; }
       }
     }
-    const bound = window.__RB || { x: 77.5, z0: -14, z1: 93.5 };
+    // The interior rectangular safety rim is *only* a house boundary. Applying
+    // it outside rubber-bands every flight gear (most visibly x3/x8) to a tiny
+    // x/z rectangle, preventing smooth exploration of remote islands.
+    // Outdoor motion still goes through swept obstacle collisions above.
     const rim = P.radius;
-    ROAMS.p.x = clamp(ROAMS.p.x, -bound.x + rim, bound.x - rim);
-    const inDoorCorridor = !window.ATM_OUT && Math.abs(ROAMS.p.x + 30) < 5 && ROAMS.p.z > 88;
-    ROAMS.p.z = clamp(ROAMS.p.z, bound.z0 + rim, bound.z1 + (inDoorCorridor ? 5 : -rim));
-    if (!window.ATM_OUT && Math.abs(ROAMS.p.x + 30) < 5 && ROAMS.p.z > 93) ATM.setOut(true);
+    if (!window.ATM_OUT) {
+      const bound = window.__RB || { x: 77.5, z0: -14, z1: 93.5 };
+      ROAMS.p.x = clamp(ROAMS.p.x, -bound.x + rim, bound.x - rim);
+      const inDoorCorridor = !window.ATM_OUT && Math.abs(ROAMS.p.x + 30) < 5 && ROAMS.p.z > 88;
+      ROAMS.p.z = clamp(ROAMS.p.z, bound.z0 + rim, bound.z1 + (inDoorCorridor ? 5 : -rim));
+      if (!window.ATM_OUT && Math.abs(ROAMS.p.x + 30) < 5 && ROAMS.p.z > 93) ATM.setOut(true);
+    }
     const hx = ROAMS.p.x, hz = ROAMS.p.z - 1, hd = Math.hypot(hx, hz);
     // The exhibit in the house remains solid for all sizes, but a tiny robot
     // may get closer to it than the full-size avatar.
