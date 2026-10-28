@@ -55,8 +55,10 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         }
       });
       await page.locator('#roamB').tap({timeout: 25000});
+      // The software-GPU runner may starve Playwright's polling even after the tap worked.
+      const entered=await page.evaluate(() => !!window.__UNFIRE_CASE_QA.roam);
       try {
-        await page.waitForFunction(() => window.__UNFIRE_CASE_QA.roam, null, {
+        if (!entered) await page.waitForFunction(() => window.__UNFIRE_CASE_QA.roam, null, {
           timeout: 20000, polling: 100
         });
       } catch (error) {
@@ -72,7 +74,9 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
           };
         });
         console.error('NANO_FIRST_WALK_DIAGNOSTIC', JSON.stringify(diagnostic));
-        throw error;
+        // Only fail for a real unentered world; a successful state after RAF timeout
+        // is still subject to the subsequent movement, mini-scale and UI assertions.
+        if (!diagnostic.roam) throw error;
       }
       const before = await page.evaluate(() => ({
         pos: window.__UNFIRE_CASE_QA.playerPos,
@@ -153,12 +157,53 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
       await page.locator('#storyMenu').waitFor({state: 'hidden', timeout: 12000});
       console.log('NANO_OPTIONAL_STORY_PASS');
 
-      // Settings may remain open after the story dialog closes. Do not toggle it
-      // closed just before trying the Nano return control on a touch device.
+      // Settings may remain open after the story dialog closes. Do not toggle
+      // it closed just before trying the Nano return control on a touch device.
       if (!(await page.locator('#stR').isVisible())) {
-        await page.locator('#cfgB').tap({timeout: 12000});
+        // Chromium's software GPU may starve locator.tap() during its action
+        // handshake after a long WebGL scene. Use an actual touchscreen tap at
+        // the visible Settings button's verified hit target, never DOM.click().
+        const target = await page.locator('#cfgB').evaluate(el => {
+          const rect = el.getBoundingClientRect();
+          const x = rect.left + rect.width / 2, y = rect.top + rect.height / 2;
+          const hit = document.elementFromPoint(x, y);
+          return {
+            x, y, width: rect.width, height: rect.height,
+            hitId: hit?.id || '', hitTag: hit?.tagName || '',
+            unobstructed: hit === el || el.contains(hit),
+            storyHidden: document.getElementById('storyMenu')?.hidden,
+          };
+        });
+        console.log('NANO_SETTINGS_TOUCH_TARGET', JSON.stringify(target));
+        assert(target.width > 0 && target.height > 0 && target.unobstructed,
+          'Settings button must have an unobstructed, visible touch target');
+        await page.touchscreen.tap(target.x, target.y);
+        await page.locator('#stR').waitFor({state: 'visible', timeout: 15000});
       }
-      await page.locator('#stR').tap({timeout: 12000});
+      // The renderer can starve the Playwright locator tap handshake here too.
+      // Exercise a physical touchscreen tap against the actual button instead.
+      const returnTarget = await page.locator('#stR').evaluate(el => {
+        const r = el.getBoundingClientRect();
+        const x = r.left + r.width / 2, y = r.top + r.height / 2;
+        const hit = document.elementFromPoint(x, y);
+        const hud = document.getElementById('storyHud');
+        const gear = document.getElementById('cfgB');
+        const story = document.getElementById('storyMenu');
+        return {x, y, w: r.width, h: r.height, hitId: hit?.id || '',
+          unobstructed: hit === el || el.contains(hit),
+          hudInlineDisplay: hud?.style.display, hudDisplay: hud && getComputedStyle(hud).display,
+          hudCfgOn: hud?.classList.contains('cfgOn'),
+          gearDisplay: gear && getComputedStyle(gear).display,
+          gearVisibility: gear && getComputedStyle(gear).visibility,
+          storyDisplay: story && getComputedStyle(story).display,
+          storyHidden: story?.hidden, bodyClass: document.body.className,
+          roaming: window.__roamAPI?.ROAMS?.on,
+          nano: window.__roamAPI?.ROAMS?.mini};
+      });
+      console.log('NANO_RETURN_TOUCH_TARGET', JSON.stringify(returnTarget));
+      assert(returnTarget.w > 0 && returnTarget.h > 0 && returnTarget.unobstructed,
+        'NANO return button must remain visible and unobstructed');
+      await page.touchscreen.tap(returnTarget.x, returnTarget.y);
       await page.waitForFunction(() => !window.__roamAPI.ROAMS.mini, null,
         {timeout: 15000, polling: 100});
       await page.waitForFunction(() => {

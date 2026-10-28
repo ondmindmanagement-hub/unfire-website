@@ -4590,7 +4590,7 @@ window.ROOMC = function (D) {
         nc = mix(vec3(0.01, 0.02, 0.06), nc, smoothstep(-0.05, 0.2, up)) + vec3(0.02, 0.03, 0.09) * (1.0 - smoothstep(0.0, 0.5, up));
         vec3 col = mix(nc, dc, day);
         // al subir volando el cielo se vuelve un sueño: franjas psicodélicas que respiran con la música, luego el espacio
-        float A = smoothstep(900.0, 2200.0, alt), A2 = smoothstep(2000.0, 3000.0, alt) * 0.85;
+        float A = smoothstep(330.0, 950.0, alt), A2 = smoothstep(700.0, 1550.0, alt) * 0.85;
         float sw = sin(atan(d.x, d.z) * 3.0 + up * 9.0 - t * 0.25 + sin(up * 14.0 + t * 0.3) * 0.8);
         vec3 dream = 0.5 + 0.5 * cos(6.2832 * (vec3(0.0, 0.33, 0.67) + sw * 0.15 + up * 0.6 + t * 0.02));
         dream = mix(dream, vec3(1.0, 0.85, 0.6), smoothstep(0.2, -0.3, up) * 0.6) * (0.75 + lv * 0.5);
@@ -4618,8 +4618,20 @@ window.ROOMC = function (D) {
         gl_FragColor = vec4(col, 1.0); }` });
   // 7 días distintos: cada día de la semana tiene su tiempo (nubes, gris, lluvia, tormenta)
   { const WX = [{ n: 'domingo de nubes altas', cov: 0.6, gray: 0, rot: 0.3, rain: 0 }, { n: 'lunes lluvioso', cov: 1, gray: 0.55, rot: 1.7, rain: 1 }, { n: 'martes despejado', cov: 0.3, gray: 0, rot: 2.6, rain: 0 }, { n: 'miércoles de nieve', cov: 0.95, gray: 0.45, rot: 4.0, rain: 0, snow: 1 }, { n: 'jueves de tormenta', cov: 1, gray: 0.78, rot: 5.1, rain: 2 }, { n: 'viernes de nubes sueltas', cov: 0.5, gray: 0.08, rot: 0.9, rain: 0 }, { n: 'sábado variable', cov: 0.75, gray: 0.2, rot: 3.3, rain: 0 }];
+    // Soft, shared alpha footprint: snow must not look like opaque square dots.
+    // A single 48px canvas texture is reused across weather and scenery snow.
+    const snowCanvas = document.createElement('canvas');
+    snowCanvas.width = snowCanvas.height = 48;
+    const snowCtx = snowCanvas.getContext('2d');
+    const snowGradient = snowCtx.createRadialGradient(24, 24, 1, 24, 24, 23);
+    snowGradient.addColorStop(0, 'rgba(255,255,255,0.95)');
+    snowGradient.addColorStop(0.25, 'rgba(252,254,255,0.72)');
+    snowGradient.addColorStop(0.65, 'rgba(240,248,255,0.26)');
+    snowGradient.addColorStop(1, 'rgba(240,248,255,0)');
+    snowCtx.fillStyle = snowGradient; snowCtx.fillRect(0, 0, 48, 48);
+    window.__UNFIRE_SNOW_TEXTURE = new THREE.CanvasTexture(snowCanvas);
     const W0 = WX[new Date().getDay()]; const SNOW = {}; window.__WEATHER = W0; SKY.cov.value = W0.cov; SKY.gray.value = W0.gray; SKY.rot.value = W0.rot; let rainOn = false;
-    anim.push((dt, t) => { SKY.rot.value = W0.rot + t * 0.002 * (1 + W0.gray); const out = !!window.ATM_OUT; const want = out && W0.rain > 0; if (W0.snow) { if (!SNOW.p) { const N = 2500, g2 = new THREE.BufferGeometry(), pa = new Float32Array(N * 3); for (let i = 0; i < N; i++) { pa[i * 3] = (Math.random() - 0.5) * 160; pa[i * 3 + 1] = Math.random() * 80; pa[i * 3 + 2] = (Math.random() - 0.5) * 160; } g2.setAttribute('position', new THREE.BufferAttribute(pa, 3)); SNOW.p = new THREE.Points(g2, new THREE.PointsMaterial({ color: 0xffffff, size: 0.55, transparent: true, opacity: 0.9, depthWrite: false })); SNOW.p.frustumCulled = false; R.add(SNOW.p); } SNOW.p.visible = out; if (out) { const a2 = SNOW.p.geometry.attributes.position.array; for (let i = 0; i < a2.length; i += 3) { a2[i + 1] -= dt * 6; a2[i] += Math.sin(t + i) * dt * 0.8; if (a2[i + 1] < -10) a2[i + 1] = 70; } SNOW.p.geometry.attributes.position.needsUpdate = true; SNOW.p.position.set(cam.position.x, cam.position.y - 30, cam.position.z); } } if (want !== rainOn && window.__ATMP) { rainOn = want; const b = window.__ATMP.querySelector('#atmSt'); if (b && (b.classList.contains('off') === want)) b.click(); } }); }
+    anim.push((dt, t) => { SKY.rot.value = W0.rot + t * 0.002 * (1 + W0.gray); const out = !!window.ATM_OUT; const want = out && W0.rain > 0; if (W0.snow) { if (!SNOW.p) { const N = window.__LOWDEV ? 480 : 1100, g2 = new THREE.BufferGeometry(), pa = new Float32Array(N * 3); for (let i = 0; i < N; i++) { pa[i * 3] = (Math.random() - 0.5) * 160; pa[i * 3 + 1] = Math.random() * 80; pa[i * 3 + 2] = (Math.random() - 0.5) * 160; } g2.setAttribute('position', new THREE.BufferAttribute(pa, 3)); SNOW.p = new THREE.Points(g2, new THREE.PointsMaterial({ color: 0xe9f5ff, map: window.__UNFIRE_SNOW_TEXTURE, size: 0.32, sizeAttenuation: true, transparent: true, opacity: 0.78, alphaTest: 0.02, depthWrite: false })); SNOW.p.frustumCulled = false; SNOW.p.userData.noCollide = true; R.add(SNOW.p); } SNOW.p.visible = out && !window.__WMAN; if (SNOW.p.visible) { const a2 = SNOW.p.geometry.attributes.position.array; for (let i = 0; i < a2.length; i += 3) { a2[i + 1] -= dt * (4.1 + (i % 9) * 0.34); a2[i] += Math.sin(t * 0.65 + i * 1.7) * dt * 0.46; a2[i + 2] += Math.cos(t * 0.35 + i * 1.1) * dt * 0.23; if (a2[i + 1] < -10) a2[i + 1] = 70; } SNOW.p.geometry.attributes.position.needsUpdate = true; SNOW.p.position.set(cam.position.x, cam.position.y - 30, cam.position.z); } } if (want !== rainOn && window.__ATMP) { rainOn = want; const b = window.__ATMP.querySelector('#atmSt'); if (b && (b.classList.contains('off') === want)) b.click(); } }); }
   // horizonte infinito: tierras de sueño lejanas (colinas derretidas tipo Dalí) que siempre rodean el mapa
   { const HU = { t: { value: 0 }, lv: { value: 0 }, day: SKY.day };
     const hm = new THREE.Mesh(new THREE.CylinderGeometry(5200, 5200, 1600, 128, 1, true), new THREE.ShaderMaterial({ uniforms: HU, transparent: true, depthWrite: false, side: THREE.BackSide, vertexShader: 'varying vec2 vU; void main(){ vU = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',

@@ -14,7 +14,25 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
   const mission=await page.evaluate(()=>window.__UNFIRE_CASE_QA.mission);
   const check=async(width,height)=>{
     await page.setViewportSize({width,height});
-    await page.waitForFunction(([w,h])=>window.__unfireViewport?.width===w&&window.__unfireViewport?.height===h,[width,height],{timeout:15000});
+    // Direct page evaluation is reliable even when the headless software GPU starves RAF polling.
+    // Keep the same exact-width assertion; don't mistake a fulfilled state for a rendering failure.
+    const alreadySized=await page.evaluate(([w,h])=>window.__unfireViewport?.width===w&&window.__unfireViewport?.height===h,[width,height]);
+    try {
+      if(!alreadySized) await page.waitForFunction(([w,h])=>window.__unfireViewport?.width===w&&window.__unfireViewport?.height===h,[width,height],{timeout:15000,polling:200});
+    } catch (error) {
+      const diagnostic=await page.evaluate(()=>({
+        inner:[innerWidth,innerHeight],client:[document.documentElement.clientWidth,document.documentElement.clientHeight],
+        visual:window.visualViewport&&[visualViewport.width,visualViewport.height],
+        saved:window.__unfireViewport,renderer:window.__mal?.S?.renderer?.getSize(new THREE.Vector2())?.toArray(),
+        game:!!window.__mal?.S,roam:window.__roamAPI?.ROAMS?.on,
+        meta:document.querySelector('meta[name=viewport]')?.content
+      })).catch(e=>({evaluationError:String(e)}));
+      console.error('MOBILE_VIEWPORT_DIAGNOSTIC',width,height,JSON.stringify(diagnostic));
+      const correct=diagnostic.saved?.width===width&&diagnostic.saved?.height===height
+        &&diagnostic.renderer?.[0]===width&&diagnostic.renderer?.[1]===height;
+      // Require actual dimensions, not elapsed RAF polling, before the remaining assertions.
+      if(!correct)throw error;
+    }
     await page.waitForTimeout(370);
     const state=await page.evaluate(()=>{
       const names=['unfireTouchPad','unfireFly','unfireTalk','ctlDock','minimap','cfgB'];
