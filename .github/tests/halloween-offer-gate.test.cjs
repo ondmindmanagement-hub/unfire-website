@@ -10,8 +10,8 @@ assert.equal(status.archer_unique_buyer_code.enabled,false);assert.equal(status.
 assert.equal(status.halloween_plugin_prize_wheel.enabled,false);assert.equal(status.halloween_plugin_prize_wheel.rules_published,false);
 assert.equal(status.halloween_plugin_prize_wheel.approved_prize_skus.length,0);
 assert.match(page,/href="unfire-halloween-midi-gratis-2026\.zip" download/);assert.match(store,/href="\.\.\/halloween\/"/);
-assert.match(page,/esta página no ofrece actualmente descuentos del 60 %/i);
-assert.match(page,/No hay pagos, compras ocultas, sorteos ni suscripciones/i);
+assert.match(page,/this page does not currently offer 60% discounts/i);
+assert.match(page,/There are no payments, hidden purchases, raffles or subscriptions/i);
 assert(!/checkout\.stripe\.com|buy\.stripe\.com|payment_intent|SECRET_KEY/i.test(page));
 assert.equal(manifest.total,4);assert.equal(Object.keys(manifest.files).length,4);
 const zip=read('audio/halloween/unfire-halloween-midi-gratis-2026.zip');assert(zip.subarray(0,4).equals(Buffer.from([80,75,3,4])));assert(zip.length>600);
