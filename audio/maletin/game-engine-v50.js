@@ -1296,7 +1296,8 @@
   // Unfire Synthesizer en Mac (portátil), iPad e iPhone: la pantalla de la app dentro de cada aparato
   function device(kind, f, x, z, name, r, kindItem) {
     const g = new THREE.Group(); g.position.set(x, 0.03, z); inside.add(g);
-    const scrMat = new THREE.MeshBasicMaterial({ map: tex(IMG + f), toneMapped: false });
+    const screenImage = (kindItem === 'archer' && !window.UNFIRE_APP) ? '/assets/products/archer-nocturne-app-preview-20261028.webp' : IMG + f;
+    const scrMat = new THREE.MeshBasicMaterial({ map: tex(screenImage), toneMapped: false });
     if (kind === 'laptop') {          // portátil: base con teclado + pantalla abierta
       const w = 1.12, d = 0.74; const baseM = mesh(rbox(w, 0.03, d, 0.03), M.silver); baseM.position.set(0, 0.015, 0); g.add(baseM);
       const kb = mesh(new THREE.PlaneGeometry(w * 0.86, d * 0.42), new THREE.MeshStandardMaterial({ color: 0x15171b, roughness: 0.6 })); kb.rotation.x = -H2; kb.position.set(0, 0.031, -0.06); g.add(kb);
