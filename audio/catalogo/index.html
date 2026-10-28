@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>UNFIRE · Catálogo</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UNFIRE · Catalog</title>
 <style>
 @font-face{font-family:M;src:url(../maletin/fonts/Michroma.ttf)}@font-face{font-family:V;src:url(../maletin/fonts/VT323.ttf)}
 :root{color-scheme:dark}*{box-sizing:border-box}
@@ -23,45 +23,45 @@ dialog::backdrop{background:#000a}
 .card{border-radius:30px 10px 30px 10px;position:relative;box-shadow:inset 0 1px #ffffff2a,0 10px 30px #0008}.card::after{content:'';position:absolute;right:10px;top:10px;width:40px;height:10px;border-radius:999px;background:linear-gradient(90deg,#b6ff3b,#7bff9e);box-shadow:0 0 10px #b6ff3b88;opacity:.6}.btn{border-radius:999px 14px 999px 14px}body::after{content:'';position:fixed;inset:0;pointer-events:none;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 </style></head><body>
 <header><a class="logo" href="../index.html"><img src="../img/logo-unfire-256.webp" alt="">UNFIRE</a>
-<nav id="nav"></nav><a class="btn" href="../visuales/">Capturas reales ↗</a><a class="btn" href="../tienda/">Tienda oficial ↗</a><a class="btn" href="../index.html#hero">Ver el maletín</a></header>
-<main id="main"><h1 style="font:clamp(22px,4vw,34px) M;letter-spacing:.08em">TODO UNFIRE</h1><p class="sub">Todo el catálogo ordenado por familias. Pulsa cualquier aparato para verlo en 3D.</p></main>
-<dialog id="dlg"><iframe id="fr" title="Vista 3D"></iframe><div class="row"><b id="dn" style="font:13px M"></b><span style="flex:1"></span><a class="btn" href="../index.html#hero">Ver en el maletín</a><a class="btn" href="../index.html#precios">Comprar</a><button class="btn" onclick="dlg.close()">Cerrar</button></div></dialog>
+<nav id="nav"></nav><a class="btn" href="../visuales/">Real screenshots ↗</a><a class="btn" href="../tienda/">Official store ↗</a><a class="btn" href="../index.html#hero">View the case</a></header>
+<main id="main"><h1 style="font:clamp(22px,4vw,34px) M;letter-spacing:.08em">ALL OF UNFIRE</h1><p class="sub">Explore the full collection by category. Select an item to see it in 3D.</p></main>
+<dialog id="dlg"><iframe id="fr" title="3D preview"></iframe><div class="row"><b id="dn" style="font:13px M"></b><span style="flex:1"></span><a class="btn" href="../index.html#hero">View in the case</a><a class="btn" href="../index.html#precios">Buy</a><button class="btn" onclick="dlg.close()">Close</button></div></dialog>
 <script src="../js/catalog.js"></script>
 <script src="../js/capat.js" data-base="../"></script>
 <script>
 const FX=[
- ['razora','RAZORA','Clipper','Metal grabado','#ff4d4d','Cinzel',['Drive','Ceiling','Output'],'din','clipper'],
- ['overtones','OVERTONES','Saturador','Campanas y tubos de órgano','#a86bff','IM Fell English SC',['Drive','Tone','Mix'],'color','saturator'],
- ['axial','AXIAL','Delay','Ejes y engranajes','#5cc8ff','Michroma',['Time','Feedback','Mix'],'esp','delay'],
- ['shadow','SHADOW','Reverb','Calaveras y máscaras','#d070ff','Pirata One',['Room','Damping','Wet'],'esp','reverb'],
- ['viscosity','VISCOSITY','Compresor','Vidrio y serpientes','#6fdc7a','Righteous',['Threshold','Ratio','Attack'],'din','compressor'],
- ['novatonal','NOVATONAL','Ecualizador','Diagramas matemáticos','#ffd24a','Cormorant SC',['Gain','Frequency','Q'],'filt','eq'],
- ['morph','MORPH','Filtro','Polillas y crisálidas','#4fd6c4','Playfair Display SC',['Cutoff','Resonance','Mix'],'filt','filter'],
- ['bounding','BOUNDING','Limitador','Castillos y jaulas','#ff6b7a','Black Ops One',['Ceiling','Release','Trim'],'din','limiter'],
- ['airflow','AIRFLOW','Chorus','Alas y nubes','#7b6bff','Comfortaa',['Rate','Depth','Mix'],'mod','chorus'],
- ['flux','FLUX','Flanger','Tormentas y bobinas','#5fd0e6','Audiowide',['Rate','Depth','Mix'],'mod','flanger'],
- ['plume','PLUME','Phaser','Ceniza y nubes','#3d7bff','Poiret One',['Depth','Rate','Mix'],'mod','phaser'],
- ['azureorbit','AZURE ORBIT','Imagen estéreo','Planetas y planetarios','#6cc4ff','Orbitron',['Width','Focus','Rotation'],'esp','imager'],
- ['sculptorpower','SCULPTOR POWER','Transitorios','Esculturas y ruinas','#ff9a3c','Marcellus SC',['Attack','Sustain','Sensitivity'],'din','transient'],
- ['silkx','SILKX','De-esser','Encaje y seda','#c86bff','Bodoni Moda',['Detect','Range','Reduction'],'din','deesser'],
- ['sparks','SPARKS','Excitador','Fuego y forja','#ffd23a','Bungee',['Drive','Air','Mix'],'color','exciter'],
- ['springchroma','SPRING CHROMA','Pitch shifter (beta)','Flores y coral','#ff6b8a','Fraunces',['Pitch','Formant','Mix'],'tex','pitch'],
- ['pixelz','PIXELZ','Granular','Mosaicos y prisma','#4fe0c8','Silkscreen',['Size','Density','Mix'],'tex','granular'],
- ['pulsebits','PULSE BITS','Bitcrusher','Relojería y metrónomo','#6fe06f','VT323',['Bits','Rate','Mix'],'color','crusher'],
- ['aire','AIRE','Puerta de ruido','Murciélagos y polillas','#6aa8ff','New Rocker',['Threshold','Range','Attack'],'din','gate'],
- ['lofi','LOFI','Cinta','Papel envejecido y ruinas','#d1a06e','Special Elite',['Drive','Wow','Color'],'color','tape']];
+ ['razora','RAZORA','Clipper','Engraved metal','#ff4d4d','Cinzel',['Drive','Ceiling','Output'],'din','clipper'],
+ ['overtones','OVERTONES','Saturator','Bells and organ pipes','#a86bff','IM Fell English SC',['Drive','Tone','Mix'],'color','saturator'],
+ ['axial','AXIAL','Delay','Axles and gears','#5cc8ff','Michroma',['Time','Feedback','Mix'],'esp','delay'],
+ ['shadow','SHADOW','Reverb','Skulls and masks','#d070ff','Pirata One',['Room','Damping','Wet'],'esp','reverb'],
+ ['viscosity','VISCOSITY','Compressor','Glass and serpents','#6fdc7a','Righteous',['Threshold','Ratio','Attack'],'din','compressor'],
+ ['novatonal','NOVATONAL','Equalizer','Mathematical diagrams','#ffd24a','Cormorant SC',['Gain','Frequency','Q'],'filt','eq'],
+ ['morph','MORPH','Filter','Moths and chrysalises','#4fd6c4','Playfair Display SC',['Cutoff','Resonance','Mix'],'filt','filter'],
+ ['bounding','BOUNDING','Limiter','Castles and cages','#ff6b7a','Black Ops One',['Ceiling','Release','Trim'],'din','limiter'],
+ ['airflow','AIRFLOW','Chorus','Wings and clouds','#7b6bff','Comfortaa',['Rate','Depth','Mix'],'mod','chorus'],
+ ['flux','FLUX','Flanger','Storms and coils','#5fd0e6','Audiowide',['Rate','Depth','Mix'],'mod','flanger'],
+ ['plume','PLUME','Phaser','Ash and clouds','#3d7bff','Poiret One',['Depth','Rate','Mix'],'mod','phaser'],
+ ['azureorbit','AZURE ORBIT','Stereo imaging','Planets and planetariums','#6cc4ff','Orbitron',['Width','Focus','Rotation'],'esp','imager'],
+ ['sculptorpower','SCULPTOR POWER','Transient shaping','Sculptures and ruins','#ff9a3c','Marcellus SC',['Attack','Sustain','Sensitivity'],'din','transient'],
+ ['silkx','SILKX','De-esser','Lace and silk','#c86bff','Bodoni Moda',['Detect','Range','Reduction'],'din','deesser'],
+ ['sparks','SPARKS','Exciter','Fire and forge','#ffd23a','Bungee',['Drive','Air','Mix'],'color','exciter'],
+ ['springchroma','SPRING CHROMA','Pitch shifter (beta)','Flowers and coral','#ff6b8a','Fraunces',['Pitch','Formant','Mix'],'tex','pitch'],
+ ['pixelz','PIXELZ','Granular','Mosaics and prisms','#4fe0c8','Silkscreen',['Size','Density','Mix'],'tex','granular'],
+ ['pulsebits','PULSE BITS','Bitcrusher','Clockwork and metronomes','#6fe06f','VT323',['Bits','Rate','Mix'],'color','crusher'],
+ ['aire','AIRE','Noise gate','Bats and moths','#6aa8ff','New Rocker',['Threshold','Range','Attack'],'din','gate'],
+ ['lofi','LOFI','Tape','Aged paper and ruins','#d1a06e','Special Elite',['Drive','Wow','Color'],'color','tape']];
 const $=(s)=>document.querySelector(s);
-const ARCH=['Cabeza','Corazón','Concha','Ojo','Pez globo','Escarabajo','Flor','Cohete','Casita de bolsillo','Tele con patas','Calavera','Caracol','Mano','Planeta','Búho','Calabaza','Lámpara de lava','Máscara','Cristal','Nube'];
+const ARCH=['Head','Heart','Shell','Eye','Pufferfish','Beetle','Flower','Rocket','Pocket house','Walking TV','Skull','Snail','Hand','Planet','Owl','Pumpkin','Lava lamp','Mask','Crystal','Cloud'];
 function capSvg(c){return 'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 75"><defs><radialGradient id="g" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="${c}"/><stop offset="1" stop-color="#111"/></radialGradient></defs><rect width="100" height="75" fill="#05070d"/><path d="M22 40a28 28 0 0 0 56 0z" fill="#dfe4ec"/><path d="M22 38a28 28 0 0 1 56 0z" fill="url(#g)"/><rect x="20" y="36" width="60" height="5" rx="2.5" fill="#cfd6e0"/></svg>`)}
 const FAM=[
- {id:'instrumentos',t:'Instrumentos',s:'Sintetizadores para tocar y producir.',items:[{n:'HYPERWAVE 2000',im:'../img/hyperwave-open.webp',tag:'Gratis en lanzamiento',url:'../index.html#instrumentos'},{n:'Unfire Synthesizer · Mac',im:'../img/synth-mac.webp',tag:'Mac',url:'../index.html#instrumentos'},{n:'Unfire Synthesizer · iPad',im:'../img/synth-ipad.webp',tag:'iPad',url:'../index.html#instrumentos'},{n:'Unfire Synthesizer · iPhone',im:'../img/synth-iphone.webp',tag:'iPhone',url:'../index.html#instrumentos'}]},
- {id:'efectos',t:'Efectos FX20',s:'Veinte efectos con su propia cara.',items:FX.map(f=>({n:'UNFIRE '+f[1],im:'../img/fx-'+f[0]+'-s.webp',tag:f[2],c:f[4],url:'../index.html#efectos'}))},
- {id:'archer',t:'ARCHER',s:'Clipper y saturación de mastering.',items:[{n:'ARCHER',im:'../img/archer.webp',tag:'Mac · iPhone · iPad',url:'../index.html#efectos'}]},
- {id:'serie1',t:'Cápsulas · Serie 1',s:'Veinte aparatos, cada uno con su mecanismo.',items:CAPS.slice(0,20).map((c,i)=>({n:ARCH[i]+' · '+c[1],im:capSvg(c[3]),tag:c[5]||'',c:c[3],v:i}))},
- {id:'serie2',t:'Cápsulas · Serie 2',s:'La segunda tanda de aparatos.',items:CAPS.slice(20,40).map((c,i)=>({n:c[1],im:capSvg(c[3]),tag:c[5]||'',c:c[3],v:20+i}))},
- {id:'mas',t:'Cápsulas · Más',s:'El resto de la colección.',items:CAPS.slice(40).map((c,i)=>({n:c[1],im:capSvg(c[3]),tag:c[5]||'',c:c[3],v:40+i}))},
- {id:'transformables',t:'Transformables',s:'Robots plegables que se transforman.',items:MUTS.map(m=>({n:m[1],im:'../img/mut/'+m[0]+'-a.webp',tag:m[4],c:m[3],url:'../index.html#transformables'}))},
- {id:'fabrica',t:'Fábrica',s:'Estudio, sintes, DJ, reproductor, cámara y Dragón en una sola app.',items:['estudio','sintes','dj','player','camara','dragon','patch'].map(k=>({n:{estudio:'Estudio',sintes:'Sintes',dj:'DJ',player:'Reproductor',camara:'Cámara',dragon:'UNFIRE Dragón',patch:'Patch'}[k],im:'../img/logo-unfire-256.webp',tag:'Fábrica',url:'../fabrica/index.html#'+k}))}];
+ {id:'instrumentos',t:'Instruments',s:'Synthesizers for performance and production.',items:[{n:'HYPERWAVE 2000',im:'../img/hyperwave-open.webp',tag:'Planned free launch',url:'../index.html#instrumentos'},{n:'Unfire Synthesizer · Mac',im:'../img/synth-mac.webp',tag:'Mac',url:'../index.html#instrumentos'},{n:'Unfire Synthesizer · iPad',im:'../img/synth-ipad.webp',tag:'iPad',url:'../index.html#instrumentos'},{n:'Unfire Synthesizer · iPhone',im:'../img/synth-iphone.webp',tag:'iPhone',url:'../index.html#instrumentos'}]},
+ {id:'efectos',t:'FX20 effects',s:'Twenty uniquely designed audio effects.',items:FX.map(f=>({n:'UNFIRE '+f[1],im:'../img/fx-'+f[0]+'-s.webp',tag:f[2],c:f[4],url:'../index.html#efectos'}))},
+ {id:'archer',t:'ARCHER',s:'Clipping and saturation for mastering.',items:[{n:'ARCHER',im:'../img/archer.webp',tag:'Mac · iPhone · iPad',url:'../index.html#efectos'}]},
+ {id:'serie1',t:'Capsules · Series 1',s:'Twenty devices, each with its own mechanism.',items:CAPS.slice(0,20).map((c,i)=>({n:ARCH[i]+' · '+c[1],im:capSvg(c[3]),tag:c[5]||'',c:c[3],v:i}))},
+ {id:'serie2',t:'Capsules · Series 2',s:'The second collection of devices.',items:CAPS.slice(20,40).map((c,i)=>({n:c[1],im:capSvg(c[3]),tag:c[5]||'',c:c[3],v:20+i}))},
+ {id:'mas',t:'Capsules · More',s:'Explore the rest of the collection.',items:CAPS.slice(40).map((c,i)=>({n:c[1],im:capSvg(c[3]),tag:c[5]||'',c:c[3],v:40+i}))},
+ {id:'transformables',t:'Transformables',s:'Transforming, foldable robots.',items:MUTS.map(m=>({n:m[1],im:'../img/mut/'+m[0]+'-a.webp',tag:m[4],c:m[3],url:'../index.html#transformables'}))},
+ {id:'fabrica',t:'Studio Factory',s:'Studio, synths, DJ, player, camera and Dragon in one app.',items:['estudio','sintes','dj','player','camara','dragon','patch'].map(k=>({n:{estudio:'Studio',sintes:'Synths',dj:'DJ',player:'Player',camara:'Camera',dragon:'UNFIRE Dragon',patch:'Patch'}[k],im:'../img/logo-unfire-256.webp',tag:'Studio Factory',url:'../fabrica/index.html#'+k}))}];
 const nav=$('#nav'),main=$('#main');
 FAM.forEach(F=>{const a=document.createElement('a');a.href='#'+F.id;a.textContent=F.t;nav.append(a);const sec=document.createElement('section');sec.id=F.id;sec.innerHTML=`<h2>${F.t}</h2><p class="sub">${F.s} · ${F.items.length}</p><div class="grid"></div>`;main.append(sec);
  F.items.forEach(it=>{const c=document.createElement('a');c.className='card';c.href=it.url||'#';if(it.c)c.style.setProperty('--c',it.c);if(it.v!=null)c.dataset.capcard=1;c.innerHTML=`<div class="im">${it.v!=null?`<img data-cap="${it.v}" src="${CAPAT.thumb(it.v)||it.im}" alt="">`:`<img loading="lazy" src="${it.im}" alt="">`}</div><div class="t"><b>${it.n}</b><span class="tag">${it.tag||''}</span></div>`;
