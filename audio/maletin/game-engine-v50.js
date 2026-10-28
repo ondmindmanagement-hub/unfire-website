@@ -2634,9 +2634,9 @@
     if (!window.ATM_OUT) {
       const bound = window.__RB || { x: 77.5, z0: -14, z1: 93.5 };
       ROAMS.p.x = clamp(ROAMS.p.x, -bound.x + rim, bound.x - rim);
-      const inDoorCorridor = Math.abs(ROAMS.p.x + 30) < 5 && ROAMS.p.z > 88;
+      const inDoorCorridor = !window.ATM_OUT && Math.abs(ROAMS.p.x + 30) < 5 && ROAMS.p.z > 88;
       ROAMS.p.z = clamp(ROAMS.p.z, bound.z0 + rim, bound.z1 + (inDoorCorridor ? 5 : -rim));
-      if (Math.abs(ROAMS.p.x + 30) < 5 && ROAMS.p.z > 93) ATM.setOut(true);
+      if (!window.ATM_OUT && Math.abs(ROAMS.p.x + 30) < 5 && ROAMS.p.z > 93) ATM.setOut(true);
     }
     const hx = ROAMS.p.x, hz = ROAMS.p.z - 1, hd = Math.hypot(hx, hz);
     // The exhibit in the house remains solid for all sizes, but a tiny robot
