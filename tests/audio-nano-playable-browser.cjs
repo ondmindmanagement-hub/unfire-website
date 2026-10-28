@@ -55,8 +55,10 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         }
       });
       await page.locator('#roamB').tap({timeout: 25000});
+      // The software-GPU runner may starve Playwright's polling even after the tap worked.
+      const entered=await page.evaluate(() => !!window.__UNFIRE_CASE_QA.roam);
       try {
-        await page.waitForFunction(() => window.__UNFIRE_CASE_QA.roam, null, {
+        if (!entered) await page.waitForFunction(() => window.__UNFIRE_CASE_QA.roam, null, {
           timeout: 20000, polling: 100
         });
       } catch (error) {
@@ -72,7 +74,9 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
           };
         });
         console.error('NANO_FIRST_WALK_DIAGNOSTIC', JSON.stringify(diagnostic));
-        throw error;
+        // Only fail for a real unentered world; a successful state after RAF timeout
+        // is still subject to the subsequent movement, mini-scale and UI assertions.
+        if (!diagnostic.roam) throw error;
       }
       const before = await page.evaluate(() => ({
         pos: window.__UNFIRE_CASE_QA.playerPos,
