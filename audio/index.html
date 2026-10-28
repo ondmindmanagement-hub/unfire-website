@@ -732,20 +732,20 @@ document.getElementById('shareGame').addEventListener('click',async function(){
   <p class="eyebrow" id="licFor">License</p><h3 id="licTitle" style="font-size:24px">UNFIRE AUDIO software license</h3>
   <div class="legal">
     <p>Version 1.0 · Draft pending legal review. Licensor: Omar Baró (individual operator), bajo la brand Unfire, Barcelona, España · hello@unfire.technology. Unfire does not claim to be an incorporated company.</p>
-    <h4>1. What you receive</h4><p>Una licencia personal, no exclusiva e intransferible para instalar y usar el software, sus sonidos e imágenes («el Producto») en los ordenadores y dispositivos que te pertenecen. Si lo has obtenido gratis, la licencia también es gratuita.</p>
-    <h4>2. Permitted use</h4><p>Puedes usar el Producto para crear música, audio y vídeo, también con fines comerciales. Lo que crees con él es tuyo y no debes regalías a Unfire.</p>
-    <h4>3. Prohibited uses</h4><p>No puedes vender, revender, alquilar, prestar, sublicenciar, distribuir ni publicar el Producto o sus instaladores, ni incluirlo en otros packs, bibliotecas o tiendas, ni subirlo a otras webs. Tampoco puedes descompilar, desensamblar, modificar o crear obras derivadas del software, ni extraer sus imágenes, tipografías, sonidos o modelos para usarlos por separado, ni eliminar avisos de autoría, ni hacerlo pasar por tuyo.</p>
-    <h4>4. Ownership</h4><p>El Producto es y sigue siendo de Unfire. Las marcas UNFIRE, UNFIRE AUDIO, HYPERWAVE, ARCHER y los nombres de los productos no se licencian.</p>
-    <h4>5. UNFIRE Club</h4><p>Mientras la suscripción esté activa puedes usar todo el catálogo. Al cumplir 12 meses seguidos, las licencias de lo que tengas instalado pasan a ser permanentes. Puedes cancelar cuando quieras; lo que ya sea permanente se queda.</p>
+    <h4>1. What you receive</h4><p>A personal, non-exclusive, non-transferable license to install and use the software and its included audio and visual assets (“the Product”) on devices you own. Products offered free of charge carry no license fee.</p>
+    <h4>2. Permitted use</h4><p>You may use the Product to create music, audio and video, including commercial work. Your original creations remain yours, and no royalties are owed to Unfire for that use.</p>
+    <h4>3. Prohibited uses</h4><p>You may not sell, resell, rent, lend, sublicense, distribute or publish the Product or its installers, include it in other packs, libraries or stores, or reupload it elsewhere. You may not decompile, disassemble, modify or create derivative software works, extract its assets for separate reuse, remove attribution or misrepresent the Product as your own, except where applicable law permits otherwise.</p>
+    <h4>4. Ownership</h4><p>The Product remains the property of Unfire or its licensors. UNFIRE, UNFIRE AUDIO, HYPERWAVE, ARCHER and other product marks are not licensed for separate use.</p>
+    <h4>5. UNFIRE Club</h4><p>Any future membership and perpetual-license benefits will be governed by separate published terms. There is currently no active Unfire Club subscription checkout on this page.</p>
     <h4>6. Third-party content</h4><p>Algunas imágenes proceden de The Metropolitan Museum of Art Open Access (public domain) y algunas tipografías tienen licencia SIL OFL o Apache 2.0; esas licencias se aplican a esos elementos.</p>
-    <h4>7. Disclaimer</h4><p>El Producto se entrega «tal cual», sin garantía de funcionamiento ininterrumpido ni de compatibilidad con un sistema o programa concreto. En la medida que permita la ley, Unfire no responde de daños indirectos, pérdida de datos o de beneficios.</p>
-    <h4>8. Termination of license</h4><p>Si incumples estas condiciones la licencia termina automáticamente y debes desinstalar el Producto.</p>
-    <h4>9. Governing law</h4><p>Ley española. Si eres consumidor, conservas los derechos que te da la ley de tu país.</p>
+    <h4>7. Disclaimer</h4><p>The Product is supplied “as is”, without any promise of uninterrupted operation or compatibility with every device or host. To the extent allowed by law, Unfire is not liable for indirect losses, data loss or lost profits. Mandatory consumer protections remain unaffected.</p>
+    <h4>8. Termination of license</h4><p>If you breach these terms, your license may terminate and you must cease use and uninstall the Product, subject to applicable law.</p>
+    <h4>9. Governing law</h4><p>Spanish law applies. Consumers retain any mandatory rights provided by their country’s laws.</p>
   </div>
-  <label class="check"><input type="checkbox" id="agree"> He leído y acepto la licencia de uso de UNFIRE AUDIO.</label>
-<label class="check" id="waiveRow" hidden><input type="checkbox" id="waive"> Solicito que la descarga del contenido digital empiece de inmediato y reconozco que, una vez empezada, pierdo mi derecho de desistimiento de 14 días. Vendedor: Omar Baró (individual operator, marca Unfire, Barcelona) · <a href="/refunds.html" target="_blank" rel="noopener">devoluciones</a> · <a href="/terms.html" target="_blank" rel="noopener">condiciones</a>.</label>
-  <button class="btn btn-gel" type="button" id="doGet" disabled>Continuar</button>
-  <p class="over" id="getMsg" hidden>Se abrirá una consulta por correo. No se realizará ningún cargo ni se confirmará un pedido hasta que la versión compatible con tu sistema esté validada y disponible.</p>
+  <label class="check"><input type="checkbox" id="agree"> I have read and accept the UNFIRE AUDIO license terms.</label>
+<label class="check" id="waiveRow" hidden><input type="checkbox" id="waive"> I request immediate digital delivery and acknowledge the applicable withdrawal rules, where a valid paid order and legally required consent are in place. Seller: Omar Baró (individual operator, marca Unfire, Barcelona) · <a href="/refunds.html" target="_blank" rel="noopener">refunds</a> · <a href="/terms.html" target="_blank" rel="noopener">terms</a>.</label>
+  <button class="btn btn-gel" type="button" id="doGet" disabled>Continue</button>
+  <p class="over" id="getMsg" hidden>An email inquiry will open. No payment will be collected or order confirmed until a compatible release is verified and made available.</p>
 </div></dialog>
 
 <script src="js/samples.js"></script>
@@ -790,7 +790,7 @@ const PRICES={fx:9,fx20:49,hyper:59,synth:29,todo:99,clubM:6.99,clubY:59};
    1) Crear un Payment Link LIVE para el producto exacto en Stripe con el importe y
       el modo correctos (pago unico o suscripcion), recibo, impuestos y entrega revisados.
    2) Pegar la URL en PAY con la clave exacta del producto, por ejemplo hyper.
-   3) Solo despues de revisar condiciones, compatibilidad y entrega, incorporar
+   3) Solo despues de revisar terms, compatibilidad y entrega, incorporar
       esa clave a READY_FOR_SALE. Mientras tanto, todo sigue como consulta por correo.
    Para cada FX individual usar una clave diferente: 'fx-razora', 'fx-overtones', etc.
    No usar un mismo enlace generico para productos distintos ni para una bolsa mixta. */
@@ -1272,7 +1272,7 @@ document.querySelectorAll('button[data-add]').forEach(add=>{
 /* ================= Licencia ================= */
 const lic=$('#lic');
 let licenseSelection=null;
-function getLic(what,selected=null){licenseSelection=selected;$('#licFor').textContent='Licencia · '+what;$('#agree').checked=false;$('#doGet').disabled=true;$('#getMsg').hidden=true;const payNow=!!checkoutLinkFor(selected||store.get('unfire.bag',[]));$('#doGet').textContent=payNow?'Ir al pago seguro':'Continuar';$('#waiveRow').hidden=!payNow;$('#waive').checked=false;lic.showModal()}
+function getLic(what,selected=null){licenseSelection=selected;$('#licFor').textContent='Licencia · '+what;$('#agree').checked=false;$('#doGet').disabled=true;$('#getMsg').hidden=true;const payNow=!!checkoutLinkFor(selected||store.get('unfire.bag',[]));$('#doGet').textContent=payNow?'Ir al pago seguro':'Continue';$('#waiveRow').hidden=!payNow;$('#waive').checked=false;lic.showModal()}
 const licOk=()=>{$('#doGet').disabled=!$('#agree').checked||(!$('#waiveRow').hidden&&!$('#waive').checked)};$('#agree').onchange=licOk;$('#waive').onchange=licOk;
 $('#doGet').onclick=()=>{
   const ks=(licenseSelection||store.get('unfire.bag',[])).filter(k=>ITEMS[k]);
@@ -1297,7 +1297,7 @@ if(LAUNCH){const start=new Date(LAUNCH).getTime(),end=start+7*864e5,cd=$('#count
   cd.textContent=now<start?'EMPIEZA EN '+f(start-now):now<end?'GRATIS ' +f(end-now):'SEMANA GRATIS TERMINADA'};tick();setInterval(tick,3e4)}
 if(location.hash.startsWith('#fx-')){const f=FX.find(x=>'#fx-'+x[0]===location.hash);if(f)openFx(f)}
 </script>
-<button id="stopAll" type="button" onclick="Snd.all()" aria-label="Parar todo el sonido">■ PARAR SONIDO</button>
+<button id="stopAll" type="button" onclick="Snd.all()" aria-label="Parar todo el sonido">■ STOP AUDIO</button>
 <style>#stopAll{position:fixed;left:16px;bottom:16px;z-index:60;font:700 12px/1 var(--mono,monospace);letter-spacing:.08em;color:#fff;background:#b0124f;border:1px solid #ff6fa8;border-radius:999px;padding:12px 16px;box-shadow:0 6px 24px #000a;cursor:pointer;opacity:0;transform:translateY(20px);pointer-events:none;transition:.25s}#stopAll.on{opacity:1;transform:none;pointer-events:auto}</style>
 <style>.byu{pointer-events:auto;display:inline-flex;align-items:center;gap:8px;margin-top:10px;font:700 12px/1 var(--mono,monospace);letter-spacing:.16em;color:#fff;text-decoration:none;opacity:.85}.byu img{height:30px;width:auto}.byu img+img{height:22px}</style>
 <style>
