@@ -1648,6 +1648,28 @@
     window.__WRADIO = api; upd(); return api; })();
   // ===== NIMBO, el guía de la historia (pequeño, al lado del maletín; te acompaña al pasear) + MODO HISTORIA =====
   window.UEV = (n) => { try { STORY && STORY.ev(n); } catch (e) {} };
+  // Nimbo must OVERFLY the house desk, never intersect or pass beneath the wood.
+  // These limits match ROOM's desk: 26 x 12.5, centred at (0,-1.2), top DY=-0.005.
+  // Padding covers Nimbo's body, arms, bob and low-FPS horizontal sweeps.
+  const NIMBO_DESK = (() => {
+    const pad = 3.5, x0 = -13 - pad, x1 = 13 + pad;
+    const z0 = -1.2 - 6.25 - pad, z1 = -1.2 + 6.25 + pad;
+    const over = (x, z) => x >= x0 && x <= x1 && z >= z0 && z <= z1;
+    const minimumY = (nano) => -0.005 + (nano ? 2.1 : 5.4);
+    // Full segment vs expanded desk, not just destination: fast catch-ups cannot tunnel.
+    const crosses = (ax, az, bx, bz) => {
+      if (over(ax, az) || over(bx, bz)) return true;
+      let t0 = 0, t1 = 1;
+      for (const [start, step, low, high] of [[ax, bx - ax, x0, x1], [az, bz - az, z0, z1]]) {
+        if (Math.abs(step) < 1e-9) { if (start < low || start > high) return false; continue; }
+        const a = (low - start) / step, b = (high - start) / step;
+        t0 = Math.max(t0, Math.min(a, b)); t1 = Math.min(t1, Math.max(a, b));
+        if (t0 > t1) return false;
+      }
+      return t0 <= t1;
+    };
+    return { over, crosses, minimumY };
+  })();
   const HOST = (() => { let w = null, r0 = null, halo = null, vis = false, talk = 0, k = 0;
     function build() { try { // NIMBO: dron compañero (sin piernas): cuerpo redondo rojo cromado, visor con ojos, antena y dos propulsores
       const D0 = new THREE.Group(); const red = new THREE.MeshPhysicalMaterial({ color: 0xe0242e, metalness: 0.6, roughness: 0.18, clearcoat: 1 }), chr = new THREE.MeshPhysicalMaterial({ color: 0xe8edf3, metalness: 1, roughness: 0.15 }), dark = new THREE.MeshPhysicalMaterial({ color: 0x0b1020, roughness: 0.1, clearcoat: 1 });
@@ -1657,7 +1679,7 @@
       const flM = new THREE.MeshBasicMaterial({ color: 0x7fd6ff, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }); const flames = [];
       [-1, 1].forEach((s) => { const pod = mesh(new THREE.CylinderGeometry(0.11, 0.14, 0.34, 14), chr); pod.position.set(s * 0.5, 0.4, -0.05); D0.add(pod); const fin = mesh(new THREE.BoxGeometry(0.22, 0.03, 0.18), red); fin.position.set(s * 0.6, 0.5, -0.1); fin.rotation.z = s * 0.4; D0.add(fin); const f = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.4, 12, 1, true), flM); f.rotation.x = Math.PI; f.position.set(s * 0.5, 0.05, -0.05); D0.add(f); flames.push(f); }); { const arms = []; const jm = new THREE.MeshPhysicalMaterial({ color: 0xdfe6f2, metalness: 1, roughness: 0.2 }); [-1, 1].forEach((s) => { const sh = new THREE.Group(); sh.position.set(s * 0.5, 0.52, 0.06); D0.add(sh); const up = mesh(new THREE.CylinderGeometry(0.035, 0.045, 0.34, 10), jm); up.position.y = -0.17; sh.add(up); const el = new THREE.Group(); el.position.y = -0.34; sh.add(el); el.add(mesh(new THREE.SphereGeometry(0.055, 12, 8), red)); const fo = mesh(new THREE.CylinderGeometry(0.03, 0.035, 0.3, 10), jm); fo.position.y = -0.15; el.add(fo); const hd = new THREE.Group(); hd.position.y = -0.31; el.add(hd); hd.add(mesh(new THREE.SphereGeometry(0.06, 12, 8), red)); const fg = []; for (let f = 0; f < 3; f++) { const fp = new THREE.Group(); fp.rotation.y = f * TAU / 3; hd.add(fp); const fi = new THREE.Group(); fi.position.set(0.045, -0.02, 0); fp.add(fi); const fm = mesh(new THREE.CylinderGeometry(0.012, 0.02, 0.13, 6), jm); fm.position.y = -0.06; fi.add(fm); fg.push(fi); } sh.scale.setScalar(0.001); arms.push({ s, sh, el, hd, fg }); }); D0.userData.arms = arms; }
       let blink = 3, talkK = 0; r0 = { root: D0, update(T, dt, st) { const tt = performance.now() / 1000; D0.position.y = Math.sin(tt * 2.2) * 0.04; D0.rotation.z = Math.sin(tt * 1.3) * 0.06; flames.forEach((f, i) => { f.scale.set(1, 0.7 + Math.random() * 0.5 + (st && st.act === 'fly' ? 0.4 : 0), 1); }); blink -= dt; const bl = blink < 0.12 && blink > 0; if (blink < -0.05) blink = 2 + Math.random() * 4; talkK = st && st.act === 'talk' ? 0.5 + 0.5 * Math.sin(tt * 18) : 0; eyes.forEach((e) => e.scale.set(1, bl ? 0.15 : 1 + talkK * 0.3, 1)); eyeM.color.setHSL(0.53, 1, 0.6 + talkK * 0.2); } };
-      w = new THREE.Group(); const w2 = new THREE.Group(); w.add(w2); w2.add(D0); w2.scale.setScalar(1 / 1.15); halo = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.035, 10, 40), new THREE.MeshBasicMaterial({ color: 0x5fe0ff, toneMapped: false, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending })); halo.rotation.x = H2; halo.position.y = 1.18; halo.visible = false; w.add(halo); w.position.set(3.8, 0, 4.1); w.scale.setScalar(0.01); S.scene.add(w); } catch (e) { console.warn('host', e); } }
+      w = new THREE.Group(); const w2 = new THREE.Group(); w.add(w2); w2.add(D0); w2.scale.setScalar(1 / 1.15); halo = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.035, 10, 40), new THREE.MeshBasicMaterial({ color: 0x5fe0ff, toneMapped: false, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending })); halo.rotation.x = H2; halo.position.y = 1.18; halo.visible = false; w.add(halo); w.position.set(3.8, 6.2, 1.1); w.scale.setScalar(0.01); S.scene.add(w); } catch (e) { console.warn('host', e); } }
     const hint = (FO) => { try { const L = window.__SECL || []; let best = null, bd = 1e9; L.forEach((s) => { let done = false; try { done = localStorage.getItem('unfire_sec_' + s[0]) === '1'; } catch (e) {} if (done) return; const dd = Math.hypot(s[1] - ROAMS.p.x, s[2] - ROAMS.p.z); if (dd < bd) { bd = dd; best = s; } }); if (best) { const ang = Math.atan2(best[1] - ROAMS.p.x, -(best[2] - ROAMS.p.z)), rel = Math.atan2(Math.sin(ang - (ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy)), Math.cos(ang - (ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy))); const dir = Math.abs(rel) < 0.5 ? 'justo delante' : Math.abs(rel) > 2.6 ? 'detrás de ti' : rel > 0 ? 'a tu derecha' : 'a tu izquierda'; say('🤖 Nimbo: hay un secreto en ' + best[3] + ', ' + dir + ', a ' + Math.round(bd) + ' m.'); FO.grab = 0.8; } else { const o = document.getElementById('stO'); say('🤖 Nimbo: ' + (o && o.textContent.trim() ? 'tu objetivo ahora: ' + o.textContent.trim() : '¡ya has encontrado todos los secretos! Prueba una misión o el modo online.')); } talk = 2.5; } catch (e) {} };
     const API = { show(v) { if (!w) build(); vis = v; }, talk() { talk = 2.5; },
       toggle(fromBtn) { if (!w) build(); const FO = w.userData.fo || (w.userData.fo = { on: false, t: 0 }); const far0 = Math.hypot(ROAMS.p.x - w.position.x, ROAMS.p.z - w.position.z); if (FO.on) { FO.on = false; FO.call = false; say('👋 Nimbo: vale, me quedo aquí. Llámame con 🤖 o tocándome cuando me necesites.'); } else { FO.on = true; FO.t = 0; FO.hT = 6; say(far0 > 30 ? '🤖 Nimbo: ¡voy volando!' : '🤖 Nimbo: ¡contigo! Te aviso de secretos, te saco si te atascas y de noche te ilumino.'); try { localStorage.setItem('unfire_nimbo_met', '1'); } catch (e) {} } talk = 2.5; try { window.__GS && window.__GS.wings(true); } catch (e) {} if (window.__nimB) window.__nimB.textContent = FO.on ? '🤖 NIMBO: VETE' : '🤖 NIMBO: VEN'; },
@@ -1665,7 +1687,55 @@
       util(dt, t, FO) { if (!w.userData.lamp) { const L0 = new THREE.PointLight(0x9fe8ff, 0, 70, 1.6); L0.position.set(0, 1.2, 0); w.add(L0); w.userData.lamp = L0; } const day = window.__SKYDAY ? window.__SKYDAY() : 1; w.userData.lamp.intensity += (((FO.on && window.ATM_OUT) ? (1 - day) * 2.2 : 0) - w.userData.lamp.intensity) * Math.min(1, dt * 2); if (!FO.on) return; FO.hT = (FO.hT || 0) - dt; if (FO.hT <= 0 && !ROAMS.fly && talk <= 0) { FO.hT = 45; hint(FO); } if ((ROAMS.stkN || 0) > 22 && !ROAMS.fly) { const fx = Math.sin(ROAMS.yaw), fz = -Math.cos(ROAMS.yaw); ROAMS.p.x -= fx * 4; ROAMS.p.z -= fz * 4; ROAMS.h = (ROAMS.h || 0) + 3; ROAMS.vy = 8; ROAMS.stkN = 0; FO.grab = 1.2; talk = 2; say('🤖 Nimbo: ¡agárrate! Te saco de ahí.'); } },  get visible() { return vis && !!w; }, get pos() { return w ? w.position : V(3.8, 0, 4.1); },
       tick(dt, t) { if (!w) return; k += ((vis ? 1 : 0) - k) * Math.min(1, dt * 3); w.visible = k > 0.02; if (!w.visible) return; talk = Math.max(0, talk - dt); const big = ROAMS.on ? (ROAMS.mini ? 0.3 : 2.4) : 1.1;
         const FO = w.userData.fo || (w.userData.fo = { on: false, t: 0, call: false });
-        const independentFlight = window.UNFIRE_COMPANION_FLIGHT.step(w.userData.flight || (w.userData.flight = {}), {dt, index:4, flying:!!(ROAMS.on && ROAMS.fly && FO.on), height:ROAMS.h || 0, nano:!!ROAMS.mini, maxLift:16, follow:0.23}); if (ROAMS.on) { FO.t += dt; API.util(dt, t, FO); } if (ROAMS.on && !FO.on) { w.position.y += ((window.ATM_OUT ? -9 : -8.9) + 7 + Math.sin(t * 1.4) * 0.5 - w.position.y) * Math.min(1, dt * 2); } else if (ROAMS.on) { const fx = Math.sin(ROAMS.yaw), fz = -Math.cos(ROAMS.yaw); const near = talk > 0 && !ROAMS.moving; const dd = ROAMS.mini ? (near ? 0.9 : 0.25) : (near ? 9 : 1.5 + Math.sin(t * 0.4) * 2), ds = ROAMS.mini ? (near ? 0.32 : 0.75) : (near ? 3.2 : 6.5 + Math.sin(t * 0.27) * 1.5); const bx = ROAMS.p.x, bz = ROAMS.p.z; const previousNimboX = w.position.x, previousNimboZ = w.position.z; const tx = bx + fx * dd - fz * ds, tz = bz + fz * dd + fx * ds; { const far0 = Math.hypot(tx - w.position.x, tz - w.position.z); if (far0 > 400) { w.position.x = tx - fx * 60; w.position.z = tz - fz * 60; } else if (far0 > 25) { w.position.x += (tx - w.position.x) * Math.min(1, dt * 1.2); w.position.z += (tz - w.position.z) * Math.min(1, dt * 1.2); } } w.position.x += (tx - w.position.x) * Math.min(1, dt * 1.8); w.position.z += (tz - w.position.z) * Math.min(1, dt * 1.55); const baseY = (window.ATM_OUT ? -9 : -8.9) + (ROAMS.mini ? 2.5 : 8.5); w.position.y += ((baseY + independentFlight.height + Math.sin(t * 1.13 + 1.4) * 0.32) - w.position.y) * Math.min(1, dt * 1.7); // Sweep Nimbo's entire frame path against the same solid world
+        const independentFlight = window.UNFIRE_COMPANION_FLIGHT.step(w.userData.flight || (w.userData.flight = {}),
+          { dt, index: 4, flying: !!(ROAMS.on && ROAMS.fly && FO.on),
+            height: ROAMS.h || 0, nano: !!ROAMS.mini, maxLift: 16, follow: 0.23 });
+        if (ROAMS.on) { FO.t += dt; API.util(dt, t, FO); }
+        const inside = !window.ATM_OUT;
+        const deskFloor = NIMBO_DESK.minimumY(!!ROAMS.mini);
+        // Repair legacy saved/transition positions ABOVE the desk immediately;
+        // never animate the drone *through* the surface from a bad old position.
+        if (inside && NIMBO_DESK.over(w.position.x, w.position.z))
+          w.position.y = Math.max(w.position.y, deskFloor);
+        if (ROAMS.on && !FO.on) {
+          const idleY = (window.ATM_OUT ? -9 : -8.9) + 7 + Math.sin(t * 1.4) * 0.5;
+          const overDesk = inside && NIMBO_DESK.over(w.position.x, w.position.z);
+          const targetY = overDesk ? Math.max(idleY, deskFloor + 0.7 + Math.sin(t * 1.4) * 0.25) : idleY;
+          w.position.y += (targetY - w.position.y) * Math.min(1, dt * 2);
+          if (overDesk) w.position.y = Math.max(w.position.y, deskFloor);
+        } else if (ROAMS.on) {
+          const fx = Math.sin(ROAMS.yaw), fz = -Math.cos(ROAMS.yaw);
+          const near = talk > 0 && !ROAMS.moving;
+          const dd = ROAMS.mini ? (near ? 0.9 : 0.25) : (near ? 9 : 1.5 + Math.sin(t * 0.4) * 2);
+          const ds = ROAMS.mini ? (near ? 0.32 : 0.75) : (near ? 3.2 : 6.5 + Math.sin(t * 0.27) * 1.5);
+          const bx = ROAMS.p.x, bz = ROAMS.p.z;
+          const previousNimboX = w.position.x, previousNimboZ = w.position.z;
+          const tx = bx + fx * dd - fz * ds, tz = bz + fz * dd + fx * ds;
+          const far0 = Math.hypot(tx - w.position.x, tz - w.position.z);
+          if (far0 > 400) {
+            w.position.x = tx - fx * 60; w.position.z = tz - fz * 60;
+          } else if (far0 > 25) {
+            w.position.x += (tx - w.position.x) * Math.min(1, dt * 1.2);
+            w.position.z += (tz - w.position.z) * Math.min(1, dt * 1.2);
+          }
+          w.position.x += (tx - w.position.x) * Math.min(1, dt * 1.8);
+          w.position.z += (tz - w.position.z) * Math.min(1, dt * 1.55);
+          const deskCrossing = inside && NIMBO_DESK.crosses(
+            previousNimboX, previousNimboZ, w.position.x, w.position.z);
+          // From the floor, rise first and only then pass horizontally ABOVE the desk.
+          // No one-frame crossing under the surface, including extreme catch-up distance.
+          if (deskCrossing && w.position.y < deskFloor) {
+            w.position.x = previousNimboX; w.position.z = previousNimboZ;
+            w.position.y = Math.min(deskFloor, w.position.y + Math.max(0, dt) * 14);
+          }
+          const baseY = (window.ATM_OUT ? -9 : -8.9) + (ROAMS.mini ? 2.5 : 8.5);
+          const desiredY = baseY + independentFlight.height + Math.sin(t * 1.13 + 1.4) * 0.32;
+          const overDesk = inside && (deskCrossing || NIMBO_DESK.over(w.position.x, w.position.z));
+          const safeY = overDesk ? Math.max(desiredY, deskFloor + 0.5) : desiredY;
+          w.position.y += (safeY - w.position.y) * Math.min(1, dt * 1.7);
+          if (inside && NIMBO_DESK.over(w.position.x, w.position.z))
+            w.position.y = Math.max(w.position.y, deskFloor);
+          // Sweep Nimbo's entire frame path against the same solid world
         // boxes used by the player. A final push-out alone lets him tunnel
         // through desks/tables when catching up or after a long frame.
         const outside = !!window.ATM_OUT;
@@ -1681,7 +1751,13 @@
           { x: w.position.x - previousNimboX, z: w.position.z - previousNimboZ },
           nearby, { radius, height: ROAMS.mini ? 0.45 : 6.4 },
           { footY, prePadding: outside ? 0 : 1.1 });
-        w.position.x = solved.x; w.position.z = solved.z; } else { w.position.lerp(V(3.8, 0, 4.1), Math.min(1, dt * 2)); }
+        w.position.x = solved.x; w.position.z = solved.z;
+          if (inside && NIMBO_DESK.over(w.position.x, w.position.z))
+            w.position.y = Math.max(w.position.y, deskFloor);
+        } else {
+          // Return directly to the safe above-desk home, never interpolate through timber.
+          w.position.set(3.8, 6.2 + Math.sin(t * 1.4) * 0.3, 1.1);
+        }
         { const lx = w.userData.lx == null ? w.position.x : w.userData.lx, lz = w.userData.lz == null ? w.position.z : w.userData.lz; const mv = Math.hypot(w.position.x - lx, w.position.z - lz); w.userData.lx = w.position.x; w.userData.lz = w.position.z; w.userData.wd = (w.userData.wd || 0) + mv; w.userData.mv = mv / Math.max(dt, 1e-3); } w.scale.setScalar(Math.max(0.01, k * big)); { let ty; if (ROAMS.on && talk <= 0) { const cy0 = ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy; ty = Math.atan2(Math.sin(cy0), -Math.cos(cy0)); } else ty = Math.atan2(cam.position.x - w.position.x, cam.position.z - w.position.z); let df = ty - w.rotation.y; df = Math.atan2(Math.sin(df), Math.cos(df)); w.rotation.y += df * Math.min(1, dt * 6); } halo.rotation.z += dt * 2; halo.material.color.setHSL((t * 0.08) % 1, 1, 0.6); halo.position.y = 1.18 + Math.sin(t * 2) * 0.04;
         { const AR = r0.root.userData.arms; if (AR) { const want = ROAMS.on && (FO.on || FO.call || talk > 0 || (FO.grab || 0) > 0) ? 1 : talk > 0 ? 1 : 0; FO.ext = (FO.ext || 0) + (want - (FO.ext || 0)) * Math.min(1, dt * 3); FO.grab = Math.max(0, (FO.grab || 0) - dt); const e = FO.ext; AR.forEach((A) => { A.sh.scale.setScalar(Math.max(0.001, e)); const wav = talk > 0 ? Math.sin(t * 7 + A.s) * 0.6 : 0, gr = (FO.grab || 0) > 0 ? 1 : 0; A.sh.rotation.x = -0.3 - gr * 1.1 + Math.sin(t * 1.3 + A.s) * 0.12 * e; A.sh.rotation.z = A.s * (0.35 + (talk > 0 && A.s > 0 ? 1.6 + wav : 0)); A.el.rotation.x = -0.5 - gr * 0.6 + Math.sin(t * 2.1 + A.s) * 0.15; A.hd.rotation.y += dt * (gr ? 6 : 1.2); A.fg.forEach((f) => { f.rotation.z = (gr ? 0.15 : 0.7 + Math.sin(t * 3 + A.s) * 0.2); }); }); } } r0.update(3.7, dt, { act: talk > 0 ? 'talk' : ROAMS.on && !ROAMS.mini ? 'fly' : w.userData.mv > big * 0.15 ? 'walk' : ['wave', 'look', 'dance'][Math.floor(t / 6) % 3], ph: w.userData.mv > big * 0.15 && !ROAMS.on ? STEPPH(w.userData.wd, big) : t, mood: talk > 0 ? 'happy' : 'star', beatPhase: t * 2 }); } }; window.__NIMBO = API; return API; })();
   // ===== MISIONES SECUNDARIAS: te las ofrecen los robots de fuera =====
