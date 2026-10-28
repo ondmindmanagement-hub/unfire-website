@@ -5,7 +5,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const vm=require('node:vm');
 const src=fs.readFileSync(path.resolve(__dirname,'../audio/maletin/game-engine-v50.js'),'utf8');
-const from=src.indexOf('const propLevel = window.ATM_OUT && window.__PROP');
+const from=src.indexOf('const propLevel = flightProp');
 const to=src.indexOf('if (ROAMS.flyT >',from);
 assert(from>0&&to>from,'real vertical flight calculation must remain locatable');
 const motion=src.slice(from,to);
@@ -18,7 +18,8 @@ function step(cfg={}) {
     __DOME:cfg.dome===false?null:{c:{x:0,y:26.4,z:40},open:cfg.open??0}};
   const vars={ROAMS,K,window,clamp:(v,a,b)=>Math.max(a,Math.min(b,v)),
     miniFlight:cfg.miniScale??1,fw:cfg.fw??0,fl:cfg.fl??0,
-    hov:cfg.fl??22,dt:cfg.dt??1/30,t:0,NANO_SCALE:0.15,Math};
+    hov:cfg.fl??22,dt:cfg.dt??1/30,t:0,NANO_SCALE:0.15,Math,
+    flightProp:out?(cfg.prop??1):1};
   vm.runInNewContext(motion,vars,{timeout:300});
   return {ROAMS,window};
 }

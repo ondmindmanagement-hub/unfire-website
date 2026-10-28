@@ -77,9 +77,10 @@ test('flight off resets only effective speed, not the selected value',()=>{
 });
 
 test('1p and 3p both apply the same propulsor during outdoor flight; trackpad and case untouched',()=>{
-  assert.match(source,/if \(GTA\)[\s\S]*?2\.6 \* \(window\.__PROP \? window\.__PROP\(\) : 1\)/);
-  assert.match(source,/else if \(ROAMS\.mode === '1p'\)[^\n]*?2\.6 \* \(window\.__PROP \? window\.__PROP\(\) : 1\)/);
+  assert.match(source,/if \(GTA\)[\s\S]*?2\.6 \* flightProp/);
+  assert.match(source,/else if \(ROAMS\.mode === '1p'\)[^\n]*?2\.6 \* flightProp/);
   assert.match(source,/const LV = \[1, 3, 8\]/);
+  assert.match(source,/const flightProp = window\.ATM_OUT && ROAMS\.fly && window\.__PROP/);
   assert.doesNotMatch(source,/const LV = \[1, 3, 8, 20\]/);
   assert.match(source,/outsideName\.rotation\.y=Math\.PI;/);
   assert.match(source,/side:THREE\.FrontSide/);
