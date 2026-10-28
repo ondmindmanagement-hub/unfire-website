@@ -1330,7 +1330,7 @@
     const card = new THREE.Mesh(new THREE.PlaneGeometry(0.44, 0.29), new THREE.MeshBasicMaterial({ map: tex(IMG + `fx-${id}-s.webp`), transparent: true, toneMapped: false })); card.rotation.x = -H2; g.add(card); const fr = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.35), new THREE.MeshBasicMaterial({ map: FXGLOW, color: new THREE.Color().setHSL(i / FXI.length * 0.85, 0.9, 0.6), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false, opacity: 0.5 })); fr.rotation.x = -H2; fr.position.y = -0.002; g.add(fr);
     items.push({ kind: 'fx', id, name: FXN[i], pos: V(x, HB, z), r: 0.9, g, m: card, fr }); });
   // ARCHER (plugin de Mac) dentro de un portátil
-  { const c = COMP.archer; device('laptop', 'archer.webp', (c.x0 + c.x1) / 2, (c.z0 + c.z1) / 2, 'ARCHER', 1.2, 'archer'); }
+  { const c = COMP.archer; device('laptop', 'archer-nocturne-app-preview-20261028.webp', (c.x0 + c.x1) / 2, (c.z0 + c.z1) / 2, 'ARCHER', 1.2, 'archer'); }
   // Transformables: robots plegados (se construyen al acercarte)
   MUTANTS.list.forEach((mt, i) => { const c = COMP.mut, col = i % 4, row = Math.floor(i / 4), x = c.x0 + (col + 0.5) * (c.x1 - c.x0) / 4, z = c.z0 + (row + 0.5) * (c.z1 - c.z0) / 5; cell(x, z, (c.x1 - c.x0) / 4 - 0.03, (c.z1 - c.z0) / 5 - 0.03); const _u = 0;
     const tok = new THREE.Group(); tok.position.set(x, 0.02, z); inside.add(tok);
