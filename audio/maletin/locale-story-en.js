@@ -2,6 +2,27 @@
 (function(){
   'use strict';
   window.__UNFIRE_EN_ADDITIONS_20261026 = Object.freeze({
+  "El dispositivo ha interrumpido los gráficos 3D. Tu partida sigue guardada.": "The device interrupted the 3D graphics. Your progress is still saved.",
+  "clásico": "classic",
+  "especial": "special",
+  "dragón": "dragon",
+  "instrumento": "instrument",
+  "caja de ritmos": "drum machine",
+  "efecto": "effect",
+  "El segundo perdido ha vuelto. La música continúa y ahora el tiempo también. Enhorabuena.": "The lost second has returned. The music continues, and so does time. Congratulations.",
+  "👋 La presentación de Nimbo es opcional: puedes explorar primero.": "👋 Nimbo's introduction is optional. You can explore first.",
+  "🔒 maletín completo": "🔒 full case",
+  "¡Eh, {n}! ¿Has probado a volar hasta las nubes? Arriba del todo se ve el espacio.": "Hey, {n}! Have you tried flying above the clouds? You can see space from the top.",
+  "{n}, si pasas por detrás de la columna izquierda, mira bien los cuadros…": "{n}, if you go behind the left column, take a close look at the paintings…",
+  "¿Sabes qué, {n}? En el agua puedes activar la TABLA y hacer trucos con ESPACIO.": "Did you know, {n}? In the water, activate the BOARD and perform tricks with SPACE.",
+  "Hola, {n}. Hoy la radio está de buen humor. Sal fuera y la oirás mejor.": "Hello, {n}. The radio is in a good mood today. You'll hear it better outside.",
+  "{n}, ¿has visto a los titanes del horizonte? Son más altos que las nubes.": "{n}, have you seen the titans on the horizon? They're taller than the clouds.",
+  "Psst, {n}: la cúpula se abre si vuelas hacia arriba desde el centro de la casa.": "Psst, {n}: the dome opens if you fly upward from the center of the house.",
+  "¡{n}! Cuando quieras, abre una vitrina y prueba un plugin. Todos suenan.": "{n}! Open a display case and try a plugin. They all make sound.",
+  "{n}, dicen que en la isla Haiku los peces koi bailan con el bajo.": "{n}, they say the koi fish on Haiku Island dance to the bass.",
+  "Me alegra verte, {n}. La casa estaba demasiado tranquila sin ti.": "Glad to see you, {n}. The house was too quiet without you.",
+  "{n}, ¿te cuento un secreto? El 27 se ríe solo cuando nadie le mira.": "{n}, want to hear a secret? Number 27 laughs when nobody is looking.",
+
   /* Web 3D case text: preserve original art, translate generated canvas labels. */
   "INSTRUMENTOS": "INSTRUMENTS",
   "EFECTOS FX20": "FX20 EFFECTS",
