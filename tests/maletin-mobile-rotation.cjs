@@ -14,8 +14,11 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
   const mission=await page.evaluate(()=>window.__UNFIRE_CASE_QA.mission);
   const check=async(width,height)=>{
     await page.setViewportSize({width,height});
+    // Direct page evaluation is reliable even when the headless software GPU starves RAF polling.
+    // Keep the same exact-width assertion; don't mistake a fulfilled state for a rendering failure.
+    const alreadySized=await page.evaluate(([w,h])=>window.__unfireViewport?.width===w&&window.__unfireViewport?.height===h,[width,height]);
     try {
-      await page.waitForFunction(([w,h])=>window.__unfireViewport?.width===w&&window.__unfireViewport?.height===h,[width,height],{timeout:15000,polling:200});
+      if(!alreadySized) await page.waitForFunction(([w,h])=>window.__unfireViewport?.width===w&&window.__unfireViewport?.height===h,[width,height],{timeout:15000,polling:200});
     } catch (error) {
       const diagnostic=await page.evaluate(()=>({
         inner:[innerWidth,innerHeight],client:[document.documentElement.clientWidth,document.documentElement.clientHeight],
