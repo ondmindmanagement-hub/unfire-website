@@ -39,8 +39,8 @@ test('resting and following Nimbo never descend into desk and climb before enter
 test('both public web layers reference the same refreshed engine version',()=>{
   const host=fs.readFileSync(path.join(__dirname,'../audio/index.html'),'utf8');
   const iframe=fs.readFileSync(path.join(__dirname,'../audio/maletin/index.html'),'utf8');
-  assert.match(host,/maletin\/index\.html\?v=20261028nimbo3/);
-  assert.match(iframe,/game-engine-v50\.js\?v=20261028nimbo3/);
+  assert.match(host,/maletin\/index\.html\?v=20261028audioen4/);
+  assert.match(iframe,/game-engine-v50\.js\?v=20261028audioen4/);
   assert.doesNotMatch(host,/20261028flight2/);
   assert.doesNotMatch(iframe,/20261028flight2/);
 });
