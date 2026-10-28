@@ -75,7 +75,8 @@ test('runtime integrates interior, object-object world, floor and exterior ball 
   assert(html.indexOf('collision-nearby.js') < html.lastIndexOf('game-engine-v50.js?v='));
   assert.match(engine,/COLLISION\(window\.__OBST, p\.x, p\.z, 1\)/);
   assert.match(engine,/COLLISION\(OB, cx, cz, q\.r \+ 2\)/);
-  assert.match(engine,/COLLISION\(OB, hp\.x, hp\.z, 1\)/);
+  assert.match(engine,/COLLISION\(OB, hp\.x, hp\.z, 9\)/);
+  assert.match(engine,/NANO_PHYSICS\.move2D\(\{ x: hp\.x, z: hp\.z \}, away,/);
   assert.match(engine,/COLLISION\(window\.__OBSTO, ROAMS\.p\.x, ROAMS\.p\.z, 1\)/);
   assert.match(engine,/COLLISION\(q\.out \? window\.__OBSTO : window\.__OBST, P\.x, P\.z, q\.r \+ 2\)/);
 });
