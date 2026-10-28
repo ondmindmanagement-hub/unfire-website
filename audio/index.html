@@ -761,26 +761,26 @@ function capSvg(c,o){const t=o?'translate(0 -26) rotate(-24 50 50)':'';return 'd
 
 /* ================= Datos ================= */
 const FX=[
- ['razora','RAZORA','Clipper','Metal grabado','#ff4d4d','Cinzel',['Drive','Ceiling','Output'],'din','clipper'],
- ['overtones','OVERTONES','Saturador','Campanas y tubos de órgano','#a86bff','IM Fell English SC',['Drive','Tone','Mix'],'color','saturator'],
- ['axial','AXIAL','Delay','Ejes y engranajes','#5cc8ff','Michroma',['Time','Feedback','Mix'],'esp','delay'],
- ['shadow','SHADOW','Reverb','Calaveras y máscaras','#d070ff','Pirata One',['Room','Damping','Wet'],'esp','reverb'],
- ['viscosity','VISCOSITY','Compresor','Vidrio y serpientes','#6fdc7a','Righteous',['Threshold','Ratio','Attack'],'din','compressor'],
- ['novatonal','NOVATONAL','Ecualizador','Diagramas matemáticos','#ffd24a','Cormorant SC',['Gain','Frequency','Q'],'filt','eq'],
- ['morph','MORPH','Filtro','Polillas y crisálidas','#4fd6c4','Playfair Display SC',['Cutoff','Resonance','Mix'],'filt','filter'],
- ['bounding','BOUNDING','Limitador','Castillos y jaulas','#ff6b7a','Black Ops One',['Ceiling','Release','Trim'],'din','limiter'],
- ['airflow','AIRFLOW','Chorus','Alas y nubes','#7b6bff','Comfortaa',['Rate','Depth','Mix'],'mod','chorus'],
- ['flux','FLUX','Flanger','Tormentas y bobinas','#5fd0e6','Audiowide',['Rate','Depth','Mix'],'mod','flanger'],
- ['plume','PLUME','Phaser','Ceniza y nubes','#3d7bff','Poiret One',['Depth','Rate','Mix'],'mod','phaser'],
- ['azureorbit','AZURE ORBIT','Imagen estéreo','Planetas y planetarios','#6cc4ff','Orbitron',['Width','Focus','Rotation'],'esp','imager'],
- ['sculptorpower','SCULPTOR POWER','Transitorios','Esculturas y ruinas','#ff9a3c','Marcellus SC',['Attack','Sustain','Sensitivity'],'din','transient'],
- ['silkx','SILKX','De-esser','Encaje y seda','#c86bff','Bodoni Moda',['Detect','Range','Reduction'],'din','deesser'],
- ['sparks','SPARKS','Excitador','Fuego y forja','#ffd23a','Bungee',['Drive','Air','Mix'],'color','exciter'],
- ['springchroma','SPRING CHROMA','Pitch shifter (beta)','Flores y coral','#ff6b8a','Fraunces',['Pitch','Formant','Mix'],'tex','pitch'],
- ['pixelz','PIXELZ','Granular','Mosaicos y prisma','#4fe0c8','Silkscreen',['Size','Density','Mix'],'tex','granular'],
- ['pulsebits','PULSE BITS','Bitcrusher','Relojería y metrónomo','#6fe06f','VT323',['Bits','Rate','Mix'],'color','crusher'],
- ['aire','AIRE','Puerta de ruido','Murciélagos y polillas','#6aa8ff','New Rocker',['Threshold','Range','Attack'],'din','gate'],
- ['lofi','LOFI','Cinta','Papel envejecido y ruinas','#d1a06e','Special Elite',['Drive','Wow','Color'],'color','tape']];
+ ['razora','RAZORA','Clipper','Engraved metal','#ff4d4d','Cinzel',['Drive','Ceiling','Output'],'din','clipper'],
+ ['overtones','OVERTONES','Saturator','Bells and organ pipes','#a86bff','IM Fell English SC',['Drive','Tone','Mix'],'color','saturator'],
+ ['axial','AXIAL','Delay','Axles and gears','#5cc8ff','Michroma',['Time','Feedback','Mix'],'esp','delay'],
+ ['shadow','SHADOW','Reverb','Skulls and masks','#d070ff','Pirata One',['Room','Damping','Wet'],'esp','reverb'],
+ ['viscosity','VISCOSITY','Compressor','Glass and serpents','#6fdc7a','Righteous',['Threshold','Ratio','Attack'],'din','compressor'],
+ ['novatonal','NOVATONAL','Equalizer','Mathematical diagrams','#ffd24a','Cormorant SC',['Gain','Frequency','Q'],'filt','eq'],
+ ['morph','MORPH','Filter','Moths and chrysalises','#4fd6c4','Playfair Display SC',['Cutoff','Resonance','Mix'],'filt','filter'],
+ ['bounding','BOUNDING','Limiter','Castles and cages','#ff6b7a','Black Ops One',['Ceiling','Release','Trim'],'din','limiter'],
+ ['airflow','AIRFLOW','Chorus','Wings and clouds','#7b6bff','Comfortaa',['Rate','Depth','Mix'],'mod','chorus'],
+ ['flux','FLUX','Flanger','Storms and coils','#5fd0e6','Audiowide',['Rate','Depth','Mix'],'mod','flanger'],
+ ['plume','PLUME','Phaser','Ash and clouds','#3d7bff','Poiret One',['Depth','Rate','Mix'],'mod','phaser'],
+ ['azureorbit','AZURE ORBIT','Stereo imaging','Planets and planetariums','#6cc4ff','Orbitron',['Width','Focus','Rotation'],'esp','imager'],
+ ['sculptorpower','SCULPTOR POWER','Transient shaping','Sculptures and ruins','#ff9a3c','Marcellus SC',['Attack','Sustain','Sensitivity'],'din','transient'],
+ ['silkx','SILKX','De-esser','Lace and silk','#c86bff','Bodoni Moda',['Detect','Range','Reduction'],'din','deesser'],
+ ['sparks','SPARKS','Exciter','Fire and forge','#ffd23a','Bungee',['Drive','Air','Mix'],'color','exciter'],
+ ['springchroma','SPRING CHROMA','Pitch shifter (beta)','Flowers and coral','#ff6b8a','Fraunces',['Pitch','Formant','Mix'],'tex','pitch'],
+ ['pixelz','PIXELZ','Granular','Mosaics and prisms','#4fe0c8','Silkscreen',['Size','Density','Mix'],'tex','granular'],
+ ['pulsebits','PULSE BITS','Bitcrusher','Clockwork and metronomes','#6fe06f','VT323',['Bits','Rate','Mix'],'color','crusher'],
+ ['aire','AIRE','Noise gate','Bats and moths','#6aa8ff','New Rocker',['Threshold','Range','Attack'],'din','gate'],
+ ['lofi','LOFI','Tape','Aged paper and ruins','#d1a06e','Special Elite',['Drive','Wow','Color'],'color','tape']];
 const STARTER=['lofi','pulsebits','airflow'];
 /* Precios en euros. Referencias de mercado: efecto suelto 9 € (impulso), pack 49 € (ancla), insignia 59 €,
    todo 99 €, Club 6,99 €/mes (Output One cobra 14,99 $/mes y Arcade 12,99 $/mes). Editables aquí. */
@@ -820,7 +820,7 @@ const DEF=[0.45,0.5,0.6];
 const FACE_STYLE={'Bodoni Moda':'italic 700','Fraunces':'italic 700','Playfair Display SC':'italic 900','Cinzel':'700','Cormorant SC':'700','Comfortaa':'700','Orbitron':'800','Silkscreen':'700'};
 const FACE_SIZE={'VT323':1.35,'Silkscreen':.8,'Michroma':.78,'Orbitron':.84,'Bungee':.84,'Black Ops One':.95,'Poiret One':1.1,'IM Fell English SC':1.05};
 const FAMS={fx:['Efectos','#ff4d4d'],inst:['Instrumentos','#3d8bff'],drums:['Ritmos','#ffb21f']};
-const MFAM=[['box','Radiocasetes','Del equipo de música al robot'],['car','Bólidos','Coches que se ponen de pie'],['jet','Jets','Aviones que aterrizan bailando'],['pod','Pods','Cápsulas con criatura dentro'],['head','Cabezas','Pantallas y monitores con cara']];
+const MFAM=[['box','Boomboxes','From hi-fi to robot'],['car','Speedsters','Cars that rise and walk'],['jet','Jets','Aircraft that land with a dance'],['pod','Pods','Capsules with a creature inside'],['head','Heads','Screens and monitors with faces']];
 const $=s=>document.querySelector(s);
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const face=(el,f,px)=>{el.style.font=`${FACE_STYLE[f[5]]||'400'} ${Math.round(px*(FACE_SIZE[f[5]]||1))}px "${f[5]}",var(--display)`};
@@ -1142,23 +1142,23 @@ FX.forEach(f=>{const b=document.createElement('button');b.type='button';b.classN
   b.addEventListener('pointerleave',()=>Field.setTint(null));fxGrid.append(b)});
 const filt=(box,cats,grid,sel,attr)=>cats.forEach(([k,l],i)=>{const b=document.createElement('button');b.type='button';b.textContent=l;b.setAttribute('aria-pressed',i?'false':'true');
   b.onclick=()=>{box.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');grid.querySelectorAll(sel).forEach(c=>c.hidden=!(k==='all'||c.dataset[attr]===k));if(grid===fxGrid)lcd.textContent=`FX20 · ${l.toUpperCase()} · ${[...grid.querySelectorAll(sel)].filter(c=>!c.hidden).length} UNIDADES`};box.append(b)});
-filt($('#fxFilters'),[['all','Todos'],['din','Dinámica'],['color','Color'],['filt','Filtro y EQ'],['esp','Espacio'],['mod','Modulación'],['tex','Textura']],fxGrid,'.card','cat');
+filt($('#fxFilters'),[['all','All'],['din','Dynamics'],['color','Color'],['filt','Filter and EQ'],['esp','Space'],['mod','Modulation'],['tex','Texture']],fxGrid,'.card','cat');
 
 /* ================= Transformables por familia ================= */
 const shelves=$('#shelves');
 MFAM.forEach(([k,label,sub])=>{const list=MUTS.filter(m=>m[2]===k);const sh=document.createElement('div');sh.className='shelf';
   sh.innerHTML=`<h3>${label} <small>${list.length} · ${sub}</small></h3><div class="row5"></div>`;const row=sh.querySelector('.row5');
   list.forEach(m=>{const a=document.createElement('a');a.className='card';a.href='#transformables';a.style.setProperty('--led',m[3]);
-    a.innerHTML=`<div class="shot"><img class="a" src="img/mut/${m[0]}-a.webp" alt="${m[1]}" loading="lazy"><img class="b" src="img/mut/${m[0]}-b.webp" alt="" loading="lazy"></div><div class="meta"><span class="name">${m[1]}</span></div><p class="motif">${m[6]}</p><div class="row"><span>${m[4]}</span><span class="free">Gratis</span></div>`;
+    a.innerHTML=`<div class="shot"><img class="a" src="img/mut/${m[0]}-a.webp" alt="${m[1]}" loading="lazy"><img class="b" src="img/mut/${m[0]}-b.webp" alt="" loading="lazy"></div><div class="meta"><span class="name">${m[1]}</span></div><p class="motif">${m[6]}</p><div class="row"><span>${m[4]}</span><span class="free">Free</span></div>`;
     a.addEventListener('touchstart',()=>a.classList.toggle('flip'),{passive:true});a.addEventListener('pointerenter',()=>Field.setTint(m[3]));a.addEventListener('pointerleave',()=>Field.setTint(null));row.append(a)});
   shelves.append(sh)});
 
 /* ================= Máquina de cápsulas (física sencilla) ================= */
-['Cabeza','Corazón','Concha','Ojo','Pez globo','Escarabajo','Flor','Cohete','Casita de bolsillo','Tele con patas','Calavera','Caracol','Mano','Planeta','Búho','Calabaza','Lámpara de lava','Máscara','Cristal','Nube'].forEach((n,i)=>{if(CAPS[i])CAPS[i][4]=n+' · '+CAPS[i][4]});
+['Head','Heart','Shell','Eye','Pufferfish','Beetle','Flower','Rocket','Pocket house','Walking TV','Skull','Snail','Hand','Planet','Owl','Pumpkin','Lava lamp','Mask','Crystal','Cloud'].forEach((n,i)=>{if(CAPS[i])CAPS[i][4]=n+' · '+CAPS[i][4]});
 const capGrid=$('#capGrid');
 CAPS.forEach(c=>{const a=document.createElement('a');a.href='#capsulas';a.onclick=(e)=>{e.preventDefault();current=c;showDev(c);$('#prizeName').textContent=c[1];$('#prizeTxt').textContent=c[4];($('#prizeFr')||$('#prizeImg')).scrollIntoView({behavior:'smooth',block:'center'})};a.target='_blank';a.rel='noopener';a.dataset.fam=c[2];a.style.setProperty('--led',c[3]);
   a.dataset.capcard=1;a.innerHTML=`<img data-cap="${CAPS.indexOf(c)}" src="${CAPAT.thumb(CAPS.indexOf(c))||capSvg(c[3])}" alt="Capsule ${c[1]}" loading="lazy"><span>${c[1]}</span>`;capGrid.append(a)});
-filt($('#capFilters'),[['all','Todas · 100'],...Object.entries(FAMS).map(([k,v])=>[k,v[0]+' · '+CAPS.filter(c=>c[2]===k).length])],capGrid,'a','fam');
+filt($('#capFilters'),[['all','All · 100'],...Object.entries(FAMS).map(([k,v])=>[k,v[0]+' · '+CAPS.filter(c=>c[2]===k).length])],capGrid,'a','fam');
 const Gacha=(()=>{
   const cv=$('#globe'),c=cv.getContext('2d'),S=cv.width,R=S/2,r=17;
   const balls=CAPS.map((cp,i)=>({x:R+(Math.random()-.5)*R,y:R+(Math.random()-.2)*R*.6,vx:0,vy:0,col:cp[3],i,gone:false}));
