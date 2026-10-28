@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>UNFIRE Fábrica</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>UNFIRE Studio Factory</title>
 <style>
 @font-face{font-family:M;src:url(../maletin/fonts/Michroma.ttf)}
 @font-face{font-family:V;src:url(../maletin/fonts/VT323.ttf)}
@@ -81,82 +81,82 @@ select{background:#0d1426;color:var(--ink);border:1px solid var(--line);border-r
 }
 </style></head><body>
 <header>
- <a class="logo" href="../index.html"><img src="../img/logo-unfire-256.webp" alt="">UNFIRE FÁBRICA</a>
+ <a class="logo" href="../index.html"><img src="../img/logo-unfire-256.webp" alt="">UNFIRE FACTORY</a>
  <span class="lcd" id="lcdKey">— · — BPM</span>
  <nav class="tabs" id="tabs"></nav>
 </header>
 
 <section id="home" class="on">
- <h1>LA FÁBRICA</h1>
- <p>Todo UNFIRE en una sola app. Cada máquina se conecta con todas las demás: el Estudio, los Sintes, el DJ, el Reproductor y la Cámara comparten tempo, tonalidad y cables.</p>
+ <h1>THE FACTORY</h1>
+ <p>All of UNFIRE in one app. Every machine connects to the others: Studio, Synths, DJ, Player and Camera share tempo, key and patch cables.</p>
  <div class="grid" id="tiles"></div>
- <p class="note">Consejo: usa auriculares para cantar. Micrófono y cámara solo se activan cuando tú pulses.</p>
+ <p class="note">Tip: use headphones when recording vocals. The microphone and camera only activate when you choose to turn them on.</p>
 </section>
 
 <section id="estudio">
  <div class="panel">
-  <h2>ESTUDIO</h2>
-  <p>1 · Carga tu instrumental (o genera una). 2 · La app detecta tonalidad y tempo y configura el autotune. 3 · Pulsa grabar y canta.</p>
+  <h2>STUDIO</h2>
+  <p>1 · Load an instrumental or generate one. 2 · The app detects key and tempo and configures pitch correction. 3 · Press record and sing.</p>
   <div class="row">
-   <label class="btn go">CARGAR BEAT<input type="file" accept="audio/*" id="beatFile" hidden></label>
-   <select id="genre"><option>reggaetón</option><option>trap</option><option>boom bap</option><option>drill</option><option>house</option><option>afro</option></select>
+   <label class="btn go">LOAD BEAT<input type="file" accept="audio/*" id="beatFile" hidden></label>
+   <select id="genre"><option value="reggaetón">Reggaeton</option><option>trap</option><option>boom bap</option><option>drill</option><option>house</option><option>afro</option></select>
    <button class="btn" id="genBeat">GENERAR BEAT</button>
    <button class="btn" id="idea">IDEA ✦</button>
   </div>
   <div class="row" style="margin-top:12px">
    <div class="big" id="bigKey">—</div>
-   <div><div class="lcd" id="bpmLcd">— BPM</div><div class="note" id="keyNote">Sin beat todavía</div></div>
+   <div><div class="lcd" id="bpmLcd">— BPM</div><div class="note" id="keyNote">No beat loaded</div></div>
   </div>
  </div>
  <div class="panel">
   <canvas class="tl" id="tl"></canvas>
   <div class="row" style="margin-top:10px">
    <button class="btn go" id="play">▶ PLAY</button>
-   <button class="btn gel" id="rec">● GRABAR VOZ</button>
-   <button class="btn" id="undo">BORRAR ÚLTIMA TOMA</button>
-   <button class="btn" id="mixdown">GUARDAR MEZCLA</button>
+   <button class="btn gel" id="rec">● RECORD VOCALS</button>
+   <button class="btn" id="undo">DELETE LAST TAKE</button>
+   <button class="btn" id="mixdown">SAVE MIX</button>
   </div>
  </div>
  <div class="panel">
   <h2>AUTOTUNE</h2>
   <div class="row">
-   <button class="btn" id="micBtn">ACTIVAR MICRO</button>
-   <label class="k">AFINACIÓN<input type="range" id="atAmt" min="0" max="1" step=".01" value="1"></label>
-   <label class="k">VELOCIDAD (robot ← → natural)<input type="range" id="atSpd" min="0" max=".4" step=".01" value=".06"></label>
-   <label class="k">ESCUCHARME<input type="checkbox" id="mon"></label>
-   <label class="k">REVERB VOZ<input type="range" id="vRev" min="0" max="1" step=".01" value=".3"></label>
+   <button class="btn" id="micBtn">ENABLE MICROPHONE</button>
+   <label class="k">PITCH CORRECTION<input type="range" id="atAmt" min="0" max="1" step=".01" value="1"></label>
+   <label class="k">SPEED (robotic ← → natural)<input type="range" id="atSpd" min="0" max=".4" step=".01" value=".06"></label>
+   <label class="k">MONITOR MY VOICE<input type="checkbox" id="mon"></label>
+   <label class="k">VOCAL REVERB<input type="range" id="vRev" min="0" max="1" step=".01" value=".3"></label>
    <span class="lcd" id="noteLcd">--</span>
   </div>
-  <p class="note">La escala del autotune sale sola de la tonalidad del beat. Puedes cambiarla:
+  <p class="note">Pitch correction follows the detected musical key. You can change it:
    <select id="keySel"></select></p>
  </div>
  <div class="panel">
   <h2>SAMPLER / PADS</h2>
-  <div class="row"><button class="btn" id="chop">TROCEAR BEAT EN PADS</button><button class="btn" id="kitNew">KIT NUEVO</button><button class="btn" id="padRec">GRABAR EN PAD</button><button class="btn" id="seqClr">LIMPIAR</button></div>
+  <div class="row"><button class="btn" id="chop">SLICE BEAT INTO PADS</button><button class="btn" id="kitNew">NEW KIT</button><button class="btn" id="padRec">RECORD TO PAD</button><button class="btn" id="seqClr">CLEAR</button></div>
   <div class="pads" id="pads" style="margin-top:10px"></div>
   <div class="seq" id="seq"></div>
-  <p class="note">Toca un pad para elegirlo y marca sus pasos en la rejilla.</p>
+  <p class="note">Select a pad, then choose its steps in the sequencer.</p>
  </div>
 </section>
 
 <section id="sintes">
  <div class="syn">
-  <div class="panel"><h3>COLECCIÓN</h3><div class="list" id="synList"></div>
-   <div class="row" style="margin-top:10px"><button class="btn gel" id="synNew">CREAR OTRO ✦</button></div></div>
+  <div class="panel"><h3>COLLECTION</h3><div class="list" id="synList"></div>
+   <div class="row" style="margin-top:10px"><button class="btn gel" id="synNew">CREATE ANOTHER ✦</button></div></div>
   <div class="panel">
    <canvas id="skin"></canvas>
    <div class="row" style="margin-top:8px"><span class="lcd" id="synName">—</span><span class="note" id="synEng"></span>
-    <label class="btn">PON TU FOTO<input type="file" accept="image/*" class="photoIn" hidden></label>
-    <button class="btn" id="synStudio">USAR EN ESTUDIO</button></div>
+    <label class="btn">ADD YOUR PHOTO<input type="file" accept="image/*" class="photoIn" hidden></label>
+    <button class="btn" id="synStudio">USE IN STUDIO</button></div>
    <div class="kbd" id="kbd"></div>
-   <p class="note">Arrastra las ruedas del aparato. La mariposa lo transforma. Teclado del ordenador: A W S E D F T G Y H U J K.</p>
+   <p class="note">Drag the device controls. The butterfly transforms it. Computer keyboard: A W S E D F T G Y H U J K.</p>
   </div>
  </div>
 </section>
 
 <section id="dj">
  <div class="panel">
-  <h2>CONTROLADORES DJ</h2>
+  <h2>CONTROLLERS DJ</h2>
   <div class="row" id="tiers"></div>
   <p class="note" id="tierTxt"></p>
  </div>
@@ -168,9 +168,9 @@ select{background:#0d1426;color:var(--ink);border:1px solid var(--line);border-r
   <canvas id="wmp" style="width:100%;aspect-ratio:16/9;border-radius:18px"></canvas>
   <div class="row" style="margin-top:10px">
    <button class="btn" id="pPrev">⏮</button><button class="btn go" id="pPlay">▶</button><button class="btn" id="pNext">⏭</button>
-   <button class="btn" id="pSkin">SKIN NUEVO</button><button class="btn" id="pViz">VISUAL</button>
-   <label class="btn">AÑADIR CANCIONES<input type="file" accept="audio/*" multiple id="pFiles" hidden></label>
-   <label class="btn">PON TU FOTO<input type="file" accept="image/*" class="photoIn" hidden></label>
+   <button class="btn" id="pSkin">NEW SKIN</button><button class="btn" id="pViz">VISUAL</button>
+   <label class="btn">ADD SONGS<input type="file" accept="audio/*" multiple id="pFiles" hidden></label>
+   <label class="btn">ADD YOUR PHOTO<input type="file" accept="image/*" class="photoIn" hidden></label>
   </div>
   <div class="list" id="pList" style="margin-top:10px;max-height:240px"></div>
  </div>
@@ -178,34 +178,34 @@ select{background:#0d1426;color:var(--ink);border:1px solid var(--line);border-r
 
 <section id="camara">
  <div class="panel">
-  <h2>CÁMARA DE CONTROL</h2>
-  <p>Controla cualquier cosa con las manos o el movimiento. Si hay poca luz, la visión nocturna se enciende sola solo en las zonas oscuras. Con guantes de color (verde o rosa neón) el seguimiento es todavía más preciso.</p>
-  <div class="row"><button class="btn go" id="camAdd">+ AÑADIR CÁMARA</button>
-   <select id="trackMode"><option value="auto">Manos (IA en el navegador) + guantes</option><option value="glove">Solo guantes de color</option><option value="motion">Solo movimiento por zonas</option></select>
-   <label class="k">VISIÓN NOCTURNA<select id="nv"><option value="auto">Automática por zonas</option><option value="on">Siempre</option><option value="off">Apagada</option></select></label></div>
+  <h2>GESTURE CAMERA</h2>
+  <p>Control parameters using your hands or movement. In low light, night vision enhances darker areas. Bright green or neon-pink gloves can help improve tracking.</p>
+  <div class="row"><button class="btn go" id="camAdd">+ ADD CAMERA</button>
+   <select id="trackMode"><option value="auto">Hands (on-device browser AI) + gloves</option><option value="glove">Colored gloves only</option><option value="motion">Zone-based motion only</option></select>
+   <label class="k">NIGHT VISION<select id="nv"><option value="auto">Automatic by zone</option><option value="on">Always</option><option value="off">Off</option></select></label></div>
  </div>
  <div class="cams" id="cams"></div>
 </section>
 
 <section id="dragon">
  <div class="panel">
-  <h2>UNFIRE DRAGÓN · RESONADOR DE TONALIDAD</h2>
-  <p>Convierte cualquier sonido (tu voz, un ruido, una batería, una grabación de la calle) en armonía dentro de la tonalidad de tu beat. El dragón solo escupe fuego en las notas de la escala: nada desafina nunca.</p>
-  <div class="row"><select id="dSrc"></select><button class="btn go" id="dPlay">▶ ESCUPIR FUEGO</button>
-   <label class="k">FUEGO<input type="range" id="dFire" min="0" max="1" step=".01" value=".6"></label><label class="k">ALIENTO<input type="range" id="dBreath" min="0" max="1" step=".01" value=".4"></label><label class="k">MEZCLA<input type="range" id="dMix" min="0" max="1" step=".01" value=".75"></label></div>
+  <h2>UNFIRE DRAGON · KEY RESONATOR</h2>
+  <p>Turn a source signal—vocals, percussion or a field recording—into harmonies aligned with your beat’s key. The dragon aims to keep generated pitches within the selected scale.</p>
+  <div class="row"><select id="dSrc"></select><button class="btn go" id="dPlay">▶ BREATHE FIRE</button>
+   <label class="k">FIRE<input type="range" id="dFire" min="0" max="1" step=".01" value=".6"></label><label class="k">BREATH<input type="range" id="dBreath" min="0" max="1" step=".01" value=".4"></label><label class="k">MIX<input type="range" id="dMix" min="0" max="1" step=".01" value=".75"></label></div>
   <canvas id="dCv" style="width:100%;aspect-ratio:16/8;border-radius:18px;margin-top:10px"></canvas>
-  <p class="note">Tonalidad actual arriba a la izquierda. Cambia la tonalidad en el Estudio y el dragón se reafina solo. También se controla con la cámara desde PATCH.</p>
+  <p class="note">The current key appears in the top-left corner. Change the Studio key and the Dragon follows it. Camera gestures can also control it through PATCH.</p>
  </div>
 </section>
 
 <section id="patch">
  <div class="panel">
-  <h2>PATCH · TODO CON TODO</h2>
-  <p>Conecta cualquier fuente (manos, zonas de la cámara, LFOs, el bombo, otras apps UNFIRE abiertas) con cualquier parámetro de cualquier máquina.</p>
-  <div class="row"><button class="btn go" id="cAdd">+ CABLE</button><button class="btn" data-pre="0">Mano dcha → sinte</button><button class="btn" data-pre="1">Movimiento → filtro master</button><button class="btn" data-pre="2">Mano izq → crossfader</button><button class="btn" data-pre="3">Bombo → sinte</button></div>
+  <h2>PATCH · CONNECT EVERYTHING</h2>
+  <p>Connect supported sources—hand gestures, camera zones, LFOs, kick detection and other compatible Unfire modules—to adjustable parameters across your devices.</p>
+  <div class="row"><button class="btn go" id="cAdd">+ PATCH CABLE</button><button class="btn" data-pre="0">Right hand → synth</button><button class="btn" data-pre="1">Motion → master filter</button><button class="btn" data-pre="2">Left hand → crossfader</button><button class="btn" data-pre="3">Kick → synth</button></div>
  </div>
  <div class="panel" id="cables"></div>
- <div class="panel"><h3>SEÑALES EN VIVO</h3><div class="cv" id="cvLive"></div></div>
+ <div class="panel"><h3>LIVE SIGNALS</h3><div class="cv" id="cvLive"></div></div>
 </section>
 <div class="toast" id="toast"></div>
 
@@ -337,7 +337,7 @@ const REC={on:false};
 function pickMime(){for(const m of['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg'])if(window.MediaRecorder&&MediaRecorder.isTypeSupported(m))return m;return''}
 async function recStart(){if(!(await micOn()))return;if(!S.playing)startPlay(P.cursor||0);const mr=new MediaRecorder(VOX.dst.stream,pickMime()?{mimeType:pickMime()}:{}),ch=[];mr.ondataavailable=e=>ch.push(e.data);REC.on=true;REC.start=AC.currentTime-startT;REC.mr=mr;
  mr.onstop=async()=>{try{const b=await AC.decodeAudioData(await new Blob(ch).arrayBuffer());P.takes.push({buf:b,start:REC.start+.04});toast('Toma guardada · autotune en '+keyLabel())}catch(e){toast('No pude guardar la toma')}};mr.start();$('#rec').textContent='■ PARAR TOMA'}
-function recStop(){if(!REC.on)return;REC.on=false;REC.mr.stop();$('#rec').textContent='● GRABAR VOZ'}
+function recStop(){if(!REC.on)return;REC.on=false;REC.mr.stop();$('#rec').textContent='● RECORD VOCALS'}
 $('#rec').onclick=()=>REC.on?recStop():recStart();
 $('#padRec').onclick=async()=>{if(!(await micOn()))return;toast('Grabando 2 s en el pad '+(selPad+1)+'…');const mr=new MediaRecorder(VOX.dst.stream),ch=[];mr.ondataavailable=e=>ch.push(e.data);mr.onstop=async()=>{const b=await AC.decodeAudioData(await new Blob(ch).arrayBuffer());P.pads[selPad]={...P.pads[selPad],name:'tu voz',buf:b,off:0,dur:undefined,rate:1,gain:1};renderPads()};mr.start();setTimeout(()=>mr.stop(),2000)};
 $('#mixdown').onclick=()=>{ac();if(!window.MediaRecorder)return toast('Este navegador no puede grabar la mezcla');const mr=new MediaRecorder(RECD.stream,pickMime()?{mimeType:pickMime()}:{}),ch=[];mr.ondataavailable=e=>ch.push(e.data);mr.onstop=async()=>{const blob=new Blob(ch,{type:mr.mimeType});try{const b=await AC.decodeAudioData(await blob.arrayBuffer());libAdd('Mezcla '+new Date().toLocaleTimeString().slice(0,5),b)}catch(e){}const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='unfire-mezcla.'+(mr.mimeType.includes('mp4')?'m4a':'webm');a.click();toast('Mezcla guardada en el Reproductor y descargada')};
@@ -511,7 +511,7 @@ function drTune(){if(!DR.in)return;DR.bank.forEach(f=>{try{f.disconnect()}catch(
 function drSet(){if(!DR.in)return;const F=+$('#dFire').value,B=+$('#dBreath').value,X=+$('#dMix').value;DR.bank.forEach(f=>f.Q.value=12+F*140);DR.sum.gain.value=3+F*14;DR.fb.gain.value=B*.82;DR.dry.gain.value=1-X;DR.wet.gain.value=X*.5}
 ['dFire','dBreath','dMix'].forEach(id=>$('#'+id).oninput=drSet);
 function drOpts(){const e=$('#dSrc');if(!e)return;const v=e.value;e.innerHTML='<option value="mic">🎤 Micrófono</option>'+LIB.map((l,i)=>`<option value="${i}">${l.name}</option>`).join('');if(v)e.value=v}
-function drStop(){if(DR.src){try{DR.src.stop()}catch(e){}DR.src=null}if(VOX)try{VOX.out.disconnect(DR.in)}catch(e){}DR.on=false;$('#dPlay').textContent='▶ ESCUPIR FUEGO'}
+function drStop(){if(DR.src){try{DR.src.stop()}catch(e){}DR.src=null}if(VOX)try{VOX.out.disconnect(DR.in)}catch(e){}DR.on=false;$('#dPlay').textContent='▶ BREATHE FIRE'}
 $('#dPlay').onclick=async()=>{drBuild();if(DR.on)return drStop();const v=$('#dSrc').value;if(v==='mic'||v===''){if(!(await micOn()))return;VOX.out.connect(DR.in)}else{const s=AC.createBufferSource();s.buffer=LIB[+v].buf;s.loop=true;s.connect(DR.in);s.start();DR.src=s}DR.on=true;$('#dPlay').textContent='■ PARAR';drSet()};
 DST['dragón · fuego']={get:()=>+$('#dFire').value,set:v=>{$('#dFire').value=v;drSet()}};DST['dragón · aliento']={get:()=>+$('#dBreath').value,set:v=>{$('#dBreath').value=v;drSet()}};
 const FL=[];function drawDragon(t){const c=$('#dCv'),dpr=devicePixelRatio||1,W=c.clientWidth*dpr,H=c.clientHeight*dpr;if(!W)return;if(c.width!=W)c.width=W,c.height=H;const x=c.getContext('2d');const bg=x.createRadialGradient(W*.3,H*.55,0,W*.3,H*.55,W*.8);bg.addColorStop(0,'#1b0d08');bg.addColorStop(1,'#040306');x.fillStyle=bg;x.fillRect(0,0,W,H);
@@ -521,7 +521,7 @@ const FL=[];function drawDragon(t){const c=$('#dCv'),dpr=devicePixelRatio||1,W=c
  x.fillStyle='#ffb36b';x.font=16*dpr+'px V';x.fillText('ESCALA: '+keyLabel().toUpperCase()+' · '+SC[S.mode].map(iv=>NN[(S.root+iv)%12]).join(' '),14*dpr,24*dpr)}
 
 /* ---------- NAV + LOOP ---------- */
-const TABS=[['home','FÁBRICA'],['estudio','ESTUDIO'],['sintes','SINTES'],['dj','DJ'],['player','REPRODUCTOR'],['camara','CÁMARA'],['dragon','DRAGÓN'],['patch','PATCH']];
+const TABS=[['home','FACTORY'],['estudio','ESTUDIO'],['sintes','SINTES'],['dj','DJ'],['player','REPRODUCTOR'],['camara','CÁMARA'],['dragon','DRAGÓN'],['patch','PATCH']];
 const TILE={estudio:['Canta sobre tu beat. Tonalidad, tempo y autotune automáticos. Pads y sampler.','♪'],sintes:['Aparatos 2000s transformables, cada uno distinto. Crea infinitos.','✦'],dj:['Controladores Mini, Pro y Club. Sync, EQ, filtros, eco, roll.','◎'],player:['Reproductor con skins procedurales y visuales.','▶'],camara:['Manos, guantes de color, movimiento y visión nocturna por zonas.','◉'],dragon:['Lo nuevo: cualquier sonido se vuelve armonía en la tonalidad del beat.','🐉'],patch:['Conecta todo con todo, también entre apps UNFIRE abiertas.','⌁']};
 function go(id){$$('section').forEach(s=>s.classList.toggle('on',s.id==id));$$('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.id==id));if(id=='sintes')renderSynList();if(id=='dj'&&!DECKS.length)buildDJ();if(id=='patch')renderPatch();if(id=='player')renderPList();if(id=='dragon')drOpts();scrollTo(0,0);try{history.replaceState(0,'','#'+id)}catch(e){}}
 $('#tabs').innerHTML=TABS.map(([i,n])=>`<button data-id="${i}">${n}</button>`).join('');$('#tabs').onclick=e=>{if(e.target.dataset.id){ac();go(e.target.dataset.id)}};
