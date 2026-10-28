@@ -157,10 +157,28 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
       await page.locator('#storyMenu').waitFor({state: 'hidden', timeout: 12000});
       console.log('NANO_OPTIONAL_STORY_PASS');
 
-      // Settings may remain open after the story dialog closes. Do not toggle it
-      // closed just before trying the Nano return control on a touch device.
+      // Settings may remain open after the story dialog closes. Do not toggle
+      // it closed just before trying the Nano return control on a touch device.
       if (!(await page.locator('#stR').isVisible())) {
-        await page.locator('#cfgB').tap({timeout: 12000});
+        // Chromium's software GPU may starve locator.tap() during its action
+        // handshake after a long WebGL scene. Use an actual touchscreen tap at
+        // the visible Settings button's verified hit target, never DOM.click().
+        const target = await page.locator('#cfgB').evaluate(el => {
+          const rect = el.getBoundingClientRect();
+          const x = rect.left + rect.width / 2, y = rect.top + rect.height / 2;
+          const hit = document.elementFromPoint(x, y);
+          return {
+            x, y, width: rect.width, height: rect.height,
+            hitId: hit?.id || '', hitTag: hit?.tagName || '',
+            unobstructed: hit === el || el.contains(hit),
+            storyHidden: document.getElementById('storyMenu')?.hidden,
+          };
+        });
+        console.log('NANO_SETTINGS_TOUCH_TARGET', JSON.stringify(target));
+        assert(target.width > 0 && target.height > 0 && target.unobstructed,
+          'Settings button must have an unobstructed, visible touch target');
+        await page.touchscreen.tap(target.x, target.y);
+        await page.locator('#stR').waitFor({state: 'visible', timeout: 15000});
       }
       await page.locator('#stR').tap({timeout: 12000});
       await page.waitForFunction(() => !window.__roamAPI.ROAMS.mini, null,
