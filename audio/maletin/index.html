@@ -1,4 +1,4 @@
-<!doctype html><html><head>
+<!doctype html><html lang="en"><head>
 <!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
 <script src="app-mode.js?v=20261027app2"></script>
 <script id="ufAdaptiveBoot">(function(){
@@ -19,10 +19,10 @@
   <div class="uf-load-card">
     <span class="uf-load-emblem" aria-hidden="true"></span>
     <strong class="uf-load-brand" translate="no">UNFIRE</strong>
-    <span class="uf-load-label" id="ufAdaptiveLabel">Preparando la experiencia…</span>
+    <span class="uf-load-label" id="ufAdaptiveLabel">Preparing your experience…</span>
   </div>
 </div>
-<title>UNFIRE Maletín</title>
+<title>UNFIRE Case</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
@@ -421,7 +421,7 @@ body.unfire-roaming #cv{touch-action:none}
 <script>
 // ===== Idiomas del juego: español / inglés (se elige solo según el navegador; botón 🌐 en la pared para cambiar) =====
 (() => {
-  let L = 'es'; try { const q = /[?&#]lang=(es|en)/.exec(location.search + location.hash); L = (q && q[1]) || localStorage.getItem('unfire_lang') || ((navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en'); } catch (e) {}
+  let L = 'en'; try { const q = /[?&#]lang=(es|en)/.exec(location.search + location.hash); L = (q && q[1]) || localStorage.getItem('unfire_lang') || 'en'; } catch (e) {}
   window.__LANG = L;
   window.__setLang = (l) => { try { localStorage.setItem('unfire_lang', l); } catch (e) {} location.reload(); };
   const EN = {
