@@ -644,7 +644,7 @@ footer a{color:var(--soft)}
     </div>
     <div class="launch">
       <div class="cd" id="countdown">PLANNED LAUNCH · COMING LATER</div>
-      <p><b style="color:#fff">Semana de lanzamiento:</b> HYPERWAVE 2000 y los 20 efectos se descargan gratis, y lo que descargues esa semana es tuyo para siempre. Los 500 primeros del Club mantienen su precio de fundador mientras sigan.</p>
+      <p><b style="color:#fff">Launch week:</b> HYPERWAVE 2000 y los 20 efectos se descargan gratis, y lo que descargues esa semana es tuyo para siempre. Los 500 primeros del Club mantienen su precio de fundador mientras sigan.</p>
       <button class="btn btn-gel" type="button" data-add="launch">Notify me</button>
     </div>
   </div>
@@ -652,26 +652,26 @@ footer a{color:var(--soft)}
 
 <!-- 6 · Licencia -->
 <section id="licencia" data-field="6" style="--sec:#59d98e"><div class="wrap">
-  <div class="sechead reveal"><div><span class="num">06 · LICENCIA</span><h2>Para crear. No para revender.</h2><p class="lede">All UNFIRE AUDIO, gratis o de pago, se entrega con la misma licencia de uso. Antes de cada descarga hay que aceptarla.</p></div><button class="btn btn-ghost" type="button" id="readLic">Leer la licencia completa</button></div>
+  <div class="sechead reveal"><div><span class="num">06 · LICENCIA</span><h2>Made for creating. Not for reselling.</h2><p class="lede">All UNFIRE AUDIO, gratis o de pago, se entrega con la misma licencia de uso. Antes de cada descarga hay que aceptarla.</p></div><button class="btn btn-ghost" type="button" id="readLic">Read the full license</button></div>
   <div class="lic reveal">
-    <div class="yes"><h3>Puedes</h3><ul><li>Usarlo en tus canciones, directos, vídeos y encargos, también comerciales</li><li>Instalarlo en tus propios ordenadores y dispositivos</li><li>Publicar y vender la música que hagas con él</li></ul></div>
-    <div class="no"><h3>No puedes</h3><ul><li>Revender, alquilar, sublicenciar ni compartir los instaladores</li><li>Subirlo a otras webs, packs o tiendas</li><li>Descompilar, modificar o extraer sus imágenes, fuentes o sonidos</li><li>Quitar los avisos de UNFIRE ni presentarlo como tuyo</li></ul></div>
+    <div class="yes"><h3>You may</h3><ul><li>Use it in songs, live performances, videos and commissioned projects, including commercial work</li><li>Install it on your own computers and devices</li><li>Release and sell the music you create with it</li></ul></div>
+    <div class="no"><h3>You may not</h3><ul><li>Resell, rent, sublicense or share installers</li><li>Upload software to other websites, bundles or stores</li><li>Decompile or extract its visuals, fonts or sounds except where legally permitted</li><li>Remove Unfire notices or claim the software as your own</li></ul></div>
   </div>
 </div></section>
 </main>
 </div>
 
 <footer><div class="wrap">
-  <div style="display:flex;gap:14px;align-items:center"><img src="img/logo-unfire-256.webp" alt="" width="44" height="44" style="width:44px;height:44px"><div>UNFIRE AUDIO es parte de <a href="https://unfire.technology" target="_blank" rel="noopener">Unfire</a> · Cardedeu, Barcelona<br>Contacto: <span class="sel">hello@unfire.technology</span><br><a href="/terms.html">Términos</a> · <a href="/software-license.html">License</a> · <a href="/refunds.html">Reembolsos</a> · <a href="legal/">Propiedad intelectual de UNFIRE AUDIO</a> · <a href="media-credits.html">Créditos multimedia</a></div></div>
-  <div style="max-width:56ch">Fotografías de los FX20: The Metropolitan Museum of Art, Open Access (dominio público). Sonidos de las demos: VCSL (CC0). Melodías de dominio público. Tipografías SIL OFL y Apache 2.0.</div>
+  <div style="display:flex;gap:14px;align-items:center"><img src="img/logo-unfire-256.webp" alt="" width="44" height="44" style="width:44px;height:44px"><div>UNFIRE AUDIO es parte de <a href="https://unfire.technology" target="_blank" rel="noopener">Unfire</a> · Cardedeu, Barcelona<br>Contact: <span class="sel">hello@unfire.technology</span><br><a href="/terms.html">Terms</a> · <a href="/software-license.html">License</a> · <a href="/refunds.html">Refunds</a> · <a href="legal/">UNFIRE AUDIO intellectual property</a> · <a href="media-credits.html">Media credits</a></div></div>
+  <div style="max-width:56ch">FX20 photography: The Metropolitan Museum of Art, Open Access (public domain). Demo audio: VCSL (CC0). Melodías de public domain. Fonts SIL OFL y Apache 2.0.</div>
   <div><a class="btn btn-ghost btn-sm" href="tienda/" aria-label="Ir a la tienda oficial de aplicaciones Unfire">Official store ↗</a></div>
-  <div><button class="btn btn-ghost btn-sm" type="button" id="shareGame" aria-label="Compartir el juego gratuito">↗ Compartir juego gratis</button></div>
+  <div><button class="btn btn-ghost btn-sm" type="button" id="shareGame" aria-label="Compartir el juego gratuito">↗ Share the free game</button></div>
 </div></footer>
 <script>
 document.getElementById('shareGame').addEventListener('click',async function(){
   const data={title:'Unfire Audio — juego 3D gratis',text:'20 robots transformables, música y un mundo por explorar. Juega gratis:',url:'https://unfire.technology/audio/'};
   if(navigator.share){try{await navigator.share(data);return;}catch(e){if(e.name==='AbortError')return;}}
-  try{await navigator.clipboard.writeText(data.url);this.textContent='✓ Enlace copiado';setTimeout(()=>{this.textContent='↗ Compartir juego gratis';},2500);}
+  try{await navigator.clipboard.writeText(data.url);this.textContent='✓ Enlace copiado';setTimeout(()=>{this.textContent='↗ Share the free game';},2500);}
   catch(e){window.prompt('Copia el enlace del juego',data.url);}
 });
 </script>
@@ -684,12 +684,12 @@ document.getElementById('shareGame').addEventListener('click',async function(){
       <h3 class="title" id="sheetTitle"></h3>
       <p class="lede" id="sheetMotif"></p>
       <div class="demo">
-        <div class="bar"><select id="src" aria-label="Sonido de prueba"><option value="drums">Batería</option><option value="piano">Piano</option><option value="sax">Saxo</option><option value="mix">Batería + piano</option></select>
+        <div class="bar"><select id="src" aria-label="Sonido de prueba"><option value="drums">Drums</option><option value="piano">Piano</option><option value="sax">Saxophone</option><option value="mix">Drums + piano</option></select>
           <button class="btn btn-blue btn-sm" type="button" id="play">▶ Probar</button><button class="btn btn-ghost btn-sm" type="button" id="byp" aria-pressed="false">Bypass</button></div>
         <canvas class="scope" id="scope" width="600" height="140" aria-label="Forma de onda"></canvas>
         <div class="knobs" id="knobs"></div>
         <div class="timeleft" aria-hidden="true"><i id="tl"></i></div>
-        <p class="over" id="over" hidden>Fin de la demo de 45 segundos. Añádelo a tu bolsa para usarlo sin límite.</p>
+        <p class="over" id="over" hidden>The 45-second demo has ended. Add this item to your bag to check future availability.</p>
       </div>
       <div class="buy" style="margin-top:0"><span class="price" id="sheetPrice"></span><button class="btn btn-gel" type="button" id="sheetGet">+ Add to bag</button></div>
     </div>
@@ -703,47 +703,47 @@ document.getElementById('shareGame').addEventListener('click',async function(){
 
 <dialog id="synth" aria-labelledby="synthTitle" style="max-width:min(760px,calc(100vw - 24px))"><div style="position:relative;padding:24px;display:grid;gap:14px">
   <button class="x" type="button" data-close aria-label="Cerrar">✕</button>
-  <p class="eyebrow">Prueba · 45 segundos</p><h3 id="synthTitle" style="font-size:28px">Unfire Synthesizer</h3>
+  <p class="eyebrow">45-second trial</p><h3 id="synthTitle" style="font-size:28px">Unfire Synthesizer</h3>
   <div class="engines" id="engines"></div>
   <div class="knobs" id="sknobs" style="grid-template-columns:repeat(4,minmax(0,1fr));--led:#3d8bff"></div>
   <canvas class="scope" id="sscope" width="700" height="140" aria-label="Osciloscopio"></canvas>
   <div class="kb" id="kb" aria-label="Teclado"></div>
   <div class="timeleft" aria-hidden="true" style="--led:#3d8bff"><i id="stl"></i></div>
-  <p class="over" id="sover" hidden>Fin de la prueba. Añádelo a tu bolsa para tocar sin límite.</p>
-  <p class="eyebrow" style="margin:0">Teclado del ordenador: A W S E D F T G Y H U J K</p>
+  <p class="over" id="sover" hidden>The trial has ended. Add this item to your bag for future availability details.</p>
+  <p class="eyebrow" style="margin:0">Computer keyboard: A W S E D F T G Y H U J K</p>
 </div></dialog>
 
 <dialog id="bag" class="drawer" aria-labelledby="bagTitle"><div class="in" style="position:relative">
   <button class="x" type="button" data-close aria-label="Cerrar">✕</button>
-  <p class="eyebrow">Your bag</p><h3 id="bagTitle" style="font-size:26px">Lo que te llevas</h3>
+  <p class="eyebrow">Your bag</p><h3 id="bagTitle" style="font-size:26px">Your selection</h3>
   <ul id="bagList"></ul>
   <p class="lede" id="bagEmpty">Your bag está vacía. Añade algo desde el catálogo.</p>
   <div class="sum">
-    <div><span>Precio normal</span><span id="bagNormal">0 €</span></div>
-    <div style="color:var(--ok)"><span id="bagOfferLabel">Semana de lanzamiento</span><span id="bagLaunch">0 €</span></div>
-    <button class="btn btn-gel" type="button" id="bagGo">Consultar disponibilidad</button>
-    <p id="bagPayMethods" hidden style="font:500 12px/1.6 Arial,sans-serif;color:#254161;margin:12px 0 0">Pago seguro gestionado por Stripe. Tarjeta, Apple Pay (Face ID o Touch ID), Google Pay y Link, cuando estén disponibles para tu dispositivo y región. UNFIRE no almacena tus datos bancarios. El importe final se confirmará en Stripe.</p>
-    <p id="bagUnreleased" style="font:500 12px/1.6 Arial,sans-serif;color:#254161;margin:12px 0 0">Catálogo en preparación para macOS y Windows. Esta consulta por correo no supone compra, cargo, reserva confirmada ni entrega de instaladores. <a href="compatibilidad/" style="color:#254161;text-decoration:underline;text-underline-offset:3px">Ver compatibilidad y estado de lanzamiento</a>. Si quieres comprar software que ya está publicado, <a href="https://apps.apple.com/us/app/archer-by-unfire/id6812968924" target="_blank" rel="noopener noreferrer" style="color:#254161;text-decoration:underline">ARCHER para Mac</a> y <a href="https://apps.apple.com/es/app/archer-for-iphone-ipad/id6822109610" target="_blank" rel="noopener noreferrer" style="color:#254161;text-decoration:underline">ARCHER para iPhone o iPad</a> se venden por la App Store.</p>
+    <div><span>Standard price</span><span id="bagNormal">0 €</span></div>
+    <div style="color:var(--ok)"><span id="bagOfferLabel">Launch week</span><span id="bagLaunch">0 €</span></div>
+    <button class="btn btn-gel" type="button" id="bagGo">Check availability</button>
+    <p id="bagPayMethods" hidden style="font:500 12px/1.6 Arial,sans-serif;color:#254161;margin:12px 0 0">Direct checkout is not active. If secure payments become available in the future, supported methods and applicable prices will be shown before any order. Unfire does not collect payment details on this page.</p>
+    <p id="bagUnreleased" style="font:500 12px/1.6 Arial,sans-serif;color:#254161;margin:12px 0 0">The macOS and Windows catalog is in preparation. An email inquiry does not constitute a purchase, charge, confirmed reservation or installer delivery. <a href="compatibilidad/" style="color:#254161;text-decoration:underline;text-underline-offset:3px">See compatibility and release status</a>. Si quieres comprar software que ya está publicado, <a href="https://apps.apple.com/us/app/archer-by-unfire/id6812968924" target="_blank" rel="noopener noreferrer" style="color:#254161;text-decoration:underline">ARCHER para Mac</a> y <a href="https://apps.apple.com/es/app/archer-for-iphone-ipad/id6822109610" target="_blank" rel="noopener noreferrer" style="color:#254161;text-decoration:underline">ARCHER para iPhone o iPad</a> se venden por la App Store.</p>
   </div>
 </div></dialog>
 
 <dialog id="lic" class="licbox" aria-labelledby="licTitle"><div class="in" style="position:relative">
   <button class="x" type="button" data-close aria-label="Cerrar">✕</button>
-  <p class="eyebrow" id="licFor">License</p><h3 id="licTitle" style="font-size:24px">Licencia de uso de UNFIRE AUDIO</h3>
+  <p class="eyebrow" id="licFor">License</p><h3 id="licTitle" style="font-size:24px">UNFIRE AUDIO software license</h3>
   <div class="legal">
-    <p>Versión 1.0 · Borrador pendiente de revisión legal. Licenciante: Omar Baró (persona física), bajo la marca comercial Unfire, Barcelona, España · hello@unfire.technology. Unfire no se presenta como sociedad mercantil constituida.</p>
-    <h4>1. Qué recibes</h4><p>Una licencia personal, no exclusiva e intransferible para instalar y usar el software, sus sonidos e imágenes («el Producto») en los ordenadores y dispositivos que te pertenecen. Si lo has obtenido gratis, la licencia también es gratuita.</p>
-    <h4>2. Uso permitido</h4><p>Puedes usar el Producto para crear música, audio y vídeo, también con fines comerciales. Lo que crees con él es tuyo y no debes regalías a Unfire.</p>
-    <h4>3. Usos prohibidos</h4><p>No puedes vender, revender, alquilar, prestar, sublicenciar, distribuir ni publicar el Producto o sus instaladores, ni incluirlo en otros packs, bibliotecas o tiendas, ni subirlo a otras webs. Tampoco puedes descompilar, desensamblar, modificar o crear obras derivadas del software, ni extraer sus imágenes, tipografías, sonidos o modelos para usarlos por separado, ni eliminar avisos de autoría, ni hacerlo pasar por tuyo.</p>
-    <h4>4. Propiedad</h4><p>El Producto es y sigue siendo de Unfire. Las marcas UNFIRE, UNFIRE AUDIO, HYPERWAVE, ARCHER y los nombres de los productos no se licencian.</p>
+    <p>Version 1.0 · Draft pending legal review. Licensor: Omar Baró (individual operator), bajo la brand Unfire, Barcelona, España · hello@unfire.technology. Unfire does not claim to be an incorporated company.</p>
+    <h4>1. What you receive</h4><p>Una licencia personal, no exclusiva e intransferible para instalar y usar el software, sus sonidos e imágenes («el Producto») en los ordenadores y dispositivos que te pertenecen. Si lo has obtenido gratis, la licencia también es gratuita.</p>
+    <h4>2. Permitted use</h4><p>Puedes usar el Producto para crear música, audio y vídeo, también con fines comerciales. Lo que crees con él es tuyo y no debes regalías a Unfire.</p>
+    <h4>3. Prohibited uses</h4><p>No puedes vender, revender, alquilar, prestar, sublicenciar, distribuir ni publicar el Producto o sus instaladores, ni incluirlo en otros packs, bibliotecas o tiendas, ni subirlo a otras webs. Tampoco puedes descompilar, desensamblar, modificar o crear obras derivadas del software, ni extraer sus imágenes, tipografías, sonidos o modelos para usarlos por separado, ni eliminar avisos de autoría, ni hacerlo pasar por tuyo.</p>
+    <h4>4. Ownership</h4><p>El Producto es y sigue siendo de Unfire. Las marcas UNFIRE, UNFIRE AUDIO, HYPERWAVE, ARCHER y los nombres de los productos no se licencian.</p>
     <h4>5. UNFIRE Club</h4><p>Mientras la suscripción esté activa puedes usar todo el catálogo. Al cumplir 12 meses seguidos, las licencias de lo que tengas instalado pasan a ser permanentes. Puedes cancelar cuando quieras; lo que ya sea permanente se queda.</p>
-    <h4>6. Contenido de terceros</h4><p>Algunas imágenes proceden de The Metropolitan Museum of Art Open Access (dominio público) y algunas tipografías tienen licencia SIL OFL o Apache 2.0; esas licencias se aplican a esos elementos.</p>
-    <h4>7. Sin garantía</h4><p>El Producto se entrega «tal cual», sin garantía de funcionamiento ininterrumpido ni de compatibilidad con un sistema o programa concreto. En la medida que permita la ley, Unfire no responde de daños indirectos, pérdida de datos o de beneficios.</p>
-    <h4>8. Fin de la licencia</h4><p>Si incumples estas condiciones la licencia termina automáticamente y debes desinstalar el Producto.</p>
-    <h4>9. Ley aplicable</h4><p>Ley española. Si eres consumidor, conservas los derechos que te da la ley de tu país.</p>
+    <h4>6. Third-party content</h4><p>Algunas imágenes proceden de The Metropolitan Museum of Art Open Access (public domain) y algunas tipografías tienen licencia SIL OFL o Apache 2.0; esas licencias se aplican a esos elementos.</p>
+    <h4>7. Disclaimer</h4><p>El Producto se entrega «tal cual», sin garantía de funcionamiento ininterrumpido ni de compatibilidad con un sistema o programa concreto. En la medida que permita la ley, Unfire no responde de daños indirectos, pérdida de datos o de beneficios.</p>
+    <h4>8. Termination of license</h4><p>Si incumples estas condiciones la licencia termina automáticamente y debes desinstalar el Producto.</p>
+    <h4>9. Governing law</h4><p>Ley española. Si eres consumidor, conservas los derechos que te da la ley de tu país.</p>
   </div>
   <label class="check"><input type="checkbox" id="agree"> He leído y acepto la licencia de uso de UNFIRE AUDIO.</label>
-<label class="check" id="waiveRow" hidden><input type="checkbox" id="waive"> Solicito que la descarga del contenido digital empiece de inmediato y reconozco que, una vez empezada, pierdo mi derecho de desistimiento de 14 días. Vendedor: Omar Baró (persona física, marca Unfire, Barcelona) · <a href="/refunds.html" target="_blank" rel="noopener">devoluciones</a> · <a href="/terms.html" target="_blank" rel="noopener">condiciones</a>.</label>
+<label class="check" id="waiveRow" hidden><input type="checkbox" id="waive"> Solicito que la descarga del contenido digital empiece de inmediato y reconozco que, una vez empezada, pierdo mi derecho de desistimiento de 14 días. Vendedor: Omar Baró (individual operator, marca Unfire, Barcelona) · <a href="/refunds.html" target="_blank" rel="noopener">devoluciones</a> · <a href="/terms.html" target="_blank" rel="noopener">condiciones</a>.</label>
   <button class="btn btn-gel" type="button" id="doGet" disabled>Continuar</button>
   <p class="over" id="getMsg" hidden>Se abrirá una consulta por correo. No se realizará ningún cargo ni se confirmará un pedido hasta que la versión compatible con tu sistema esté validada y disponible.</p>
 </div></dialog>
@@ -1247,10 +1247,10 @@ const Bag=(()=>{let items=store.get('unfire.bag',[]).filter(k=>ITEMS[k]);const b
     const express=checkoutLinkFor(items);
     // An enabled checkout must never display the demo/promo estimate (possibly 0 EUR)
     // as the payment total. The provider's final price must match this reviewed catalog price.
-    $('#bagOfferLabel').textContent=express?'Total del producto':'Semana de lanzamiento';
+    $('#bagOfferLabel').textContent=express?'Total del producto':'Launch week';
     $('#bagLaunch').textContent=eur(express?items.reduce((sum,k)=>sum+ITEMS[k][1],0):items.reduce((sum,k)=>sum+ITEMS[k][2],0));
     $('#bagGo').disabled=!items.length;
-    $('#bagGo').textContent=express?'Pagar rápido de forma segura':'Consultar disponibilidad';
+    $('#bagGo').textContent=express?'Pagar rápido de forma segura':'Check availability';
     $('#bagPayMethods').hidden=!express;$('#bagUnreleased').hidden=!!express}
   function save(){store.set('unfire.bag',items);render()}
   render();btn.onclick=()=>$('#bag').showModal();
