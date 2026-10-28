@@ -8,20 +8,29 @@ const engine=fs.readFileSync(path.resolve(__dirname,'../audio/maletin/game-engin
 test('Snow particles use an alpha-faded shared sprite rather than opaque squares',()=>{
  assert.match(html,/snowGradient\.addColorStop\(1, 'rgba\(240,248,255,0\)'\)/);
  assert.match(html,/window\.__UNFIRE_SNOW_TEXTURE = new THREE\.CanvasTexture/);
- assert.match(html,/map: window\.__UNFIRE_SNOW_TEXTURE/);
+ assert.match(html,/window\.__UNFIRE_SNOW_TEXTURE = new THREE\.CanvasTexture/);
  assert.match(engine,/map: window\.__UNFIRE_SNOW_TEXTURE \|\| null/);
 });
-test('Wednesday snow is de-duplicated when manual weather is selected',()=>{
- assert.match(html,/SNOW\.p\.visible = out && !window\.__WMAN/);
- assert.match(engine,/window\.__UNFIRE_WEATHER_MODE = k/);
+test('Wednesday global snowfall is removed without removing the garden snow',()=>{
+ assert.doesNotMatch(html,/SNOW\.p/);
+ assert.doesNotMatch(html,/snow: 1/);
+ assert.match(html,/miércoles de nubes suaves/);
+ assert.match(html,/Wednesday with gentle clouds/);
+ assert.match(engine,/rincón nevado junto a la casa/);
  assert.match(engine,/const hasGlobalSnow =/);
  assert.match(engine,/flakes\.visible = !hasGlobalSnow/);
 });
+test('player-selectable snow on the weather panel remains available',()=>{
+ assert.match(engine,/\['☀️', '#ffd21a', 'sol'\]/);
+ assert.match(engine,/\['❄️', '#dff6ff', 'nieve'\]/);
+ assert.match(engine,/window\.__UNFIRE_WEATHER_MODE = k/);
+ assert.match(engine,/WEATHER\.set\(k\)/);
+});
 test('Snow reduces particles for lower-power devices while preserving weather settings',()=>{
- assert.match(html,/N = window\.__LOWDEV \? 480 : 1100/);
+ assert.doesNotMatch(html,/N = window\.__LOWDEV \? 480 : 1100/);
  assert.match(engine,/N = window\.__LOWDEV \? 450 : 850/);
  assert.match(engine,/NF = window\.__LOWDEV \? 160 : 280/);
- assert.match(html,/W0\.snow/);
+ assert.doesNotMatch(html,/W0\.snow/);
  assert.match(engine,/WEATHER\.set\(k\)/);
 });
 test('Game play, renderer and existing music references remain intact',()=>{
