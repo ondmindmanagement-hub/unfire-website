@@ -196,7 +196,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        gamePaused:!document.body.classList.contains('immOn'),
        persistent:document.getElementById('heroPin').classList.contains('web-return')};
    });
-   assert(afterExit.portal&&/VOLVER A JUGAR/.test(afterExit.returnLabel)&&afterExit.gamePaused&&afterExit.persistent,
+   assert(afterExit.portal&&/PLAY AGAIN/.test(afterExit.returnLabel)&&afterExit.gamePaused&&afterExit.persistent,
      'Exit to website did not leave game parked with manual return portal '+JSON.stringify(afterExit));
    await page.evaluate(()=>document.getElementById('unfireReturnPlay').click());
    await page.waitForFunction(()=>document.body.classList.contains('immOn'),null,{timeout:10000});
