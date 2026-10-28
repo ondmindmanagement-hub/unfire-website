@@ -6,8 +6,8 @@ test('ship and moon trip assets and load hooks removed, no ghosts in map or dial
   const host=read('audio/index.html'),html=read('audio/maletin/index.html'),eng=read('audio/maletin/game-engine-v50.js');
   const map=read('audio/maletin/expanded-map.js'),dialog=read('audio/maletin/unfire-conversations.js');
   for(const file of [html,eng,map,dialog])assert.doesNotMatch(file,/lunar-world\.js|UnfireLunarWorld|lunarShip|titan-ship|ufMapShip|ROBOT-NAVE|🛸|shipLore/);
-  assert.match(host,/maletin\/index\.html\?v=20261026fluido1/);
-  assert.match(html,/game-engine-v50\.js\?v=20261026fluido1/);
-  assert.match(html,/expanded-map\.js\?v=20261026fluido1/);
+  assert.match(host,/maletin\/index\.html\?v=20261028flight1/);
+  assert.match(html,/game-engine-v50\.js\?v=20261028flight1/);
+  assert.match(html,/expanded-map\.js\?v=20261028flight1/);
   assert.match(eng,/titan-island-roamer/);
 });
