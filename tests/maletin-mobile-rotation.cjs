@@ -28,7 +28,10 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
         meta:document.querySelector('meta[name=viewport]')?.content
       })).catch(e=>({evaluationError:String(e)}));
       console.error('MOBILE_VIEWPORT_DIAGNOSTIC',width,height,JSON.stringify(diagnostic));
-      throw error;
+      const correct=diagnostic.saved?.width===width&&diagnostic.saved?.height===height
+        &&diagnostic.renderer?.[0]===width&&diagnostic.renderer?.[1]===height;
+      // Require actual dimensions, not elapsed RAF polling, before the remaining assertions.
+      if(!correct)throw error;
     }
     await page.waitForTimeout(370);
     const state=await page.evaluate(()=>{
