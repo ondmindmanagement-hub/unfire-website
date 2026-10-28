@@ -186,8 +186,19 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         const r = el.getBoundingClientRect();
         const x = r.left + r.width / 2, y = r.top + r.height / 2;
         const hit = document.elementFromPoint(x, y);
+        const hud = document.getElementById('storyHud');
+        const gear = document.getElementById('cfgB');
+        const story = document.getElementById('storyMenu');
         return {x, y, w: r.width, h: r.height, hitId: hit?.id || '',
-          unobstructed: hit === el || el.contains(hit)};
+          unobstructed: hit === el || el.contains(hit),
+          hudInlineDisplay: hud?.style.display, hudDisplay: hud && getComputedStyle(hud).display,
+          hudCfgOn: hud?.classList.contains('cfgOn'),
+          gearDisplay: gear && getComputedStyle(gear).display,
+          gearVisibility: gear && getComputedStyle(gear).visibility,
+          storyDisplay: story && getComputedStyle(story).display,
+          storyHidden: story?.hidden, bodyClass: document.body.className,
+          roaming: window.__roamAPI?.ROAMS?.on,
+          nano: window.__roamAPI?.ROAMS?.mini};
       });
       console.log('NANO_RETURN_TOUCH_TARGET', JSON.stringify(returnTarget));
       assert(returnTarget.w > 0 && returnTarget.h > 0 && returnTarget.unobstructed,
