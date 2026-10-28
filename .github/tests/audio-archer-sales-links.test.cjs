@@ -44,7 +44,11 @@ test('all Unfire Audio public landing pages remain English-first',()=>{
   const pages=['index.html','audio/index.html','audio/tienda/index.html','audio/catalogo/index.html',
     'audio/compatibilidad/index.html','audio/fabrica/index.html','audio/halloween/index.html',
     'audio/hyperwave/index.html','audio/legal/index.html','audio/maletin/index.html',
-    'archer/index.html','archer/press/index.html','archer/logic-pro/index.html'];
+    'archer/index.html','archer/press/index.html','archer/logic-pro/index.html',
+    'audio/beta/index.html','audio/visuales/index.html','audio/press/index.html',
+    'audio/art/index.html','audio/partners/index.html','audio/privacy.html',
+    'audio/gracias/hyperwave-3f18e906ea04720510d4/index.html',
+    'audio/maletin/test.html','audio/series/index.html'];
   for(const file of pages){
     const page=fs.readFileSync(path.join(__dirname,'../../',file),'utf8');
     assert.match(page,/<html\s+lang="en"/i, file+' must identify as English');

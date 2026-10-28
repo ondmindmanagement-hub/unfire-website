@@ -526,7 +526,7 @@ footer a{color:var(--soft)}
         <button id="unfireReturnPlay" type="button">✦ PLAY AGAIN</button>
       </div>
     </div>
-    <button class="sndbtn" id="sndBtn" type="button" aria-pressed="false">🔈 Sonido</button>
+    <button class="sndbtn" id="sndBtn" type="button" aria-pressed="false">🔈 Sound</button>
   </div>
 </div>
 
@@ -899,7 +899,7 @@ document.querySelectorAll('.reveal').forEach(el=>rv.observe(el));
 /* ---- Sonido del maletín (se activa con el primer clic o con el botón) ---- */
 const CaseSfx=(()=>{let on=false,ctx=null;const btn=$('#sndBtn');
   const unlock=()=>{if(on)return;try{ctx=UA.init();on=true;btn.setAttribute('aria-pressed','true');btn.textContent='🔊 Sonido'}catch(e){}};
-  btn.onclick=()=>{if(on){on=false;btn.setAttribute('aria-pressed','false');btn.textContent='🔈 Sonido'}else unlock()};
+  btn.onclick=()=>{if(on){on=false;btn.setAttribute('aria-pressed','false');btn.textContent='🔈 Sound'}else unlock()};
   addEventListener('pointerdown',unlock,{once:true});addEventListener('keydown',unlock,{once:true});
   const noise=(t,dur,f0,f1,q,g)=>{const b=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;const n=ctx.createBufferSource();n.buffer=b;const f=ctx.createBiquadFilter();f.type='bandpass';f.Q.value=q;f.frequency.setValueAtTime(f0,t);f.frequency.exponentialRampToValueAtTime(f1,t+dur);const G=ctx.createGain();G.gain.setValueAtTime(g,t);G.gain.exponentialRampToValueAtTime(.001,t+dur);n.connect(f);f.connect(G);G.connect(UA.bus.master);n.start(t)};
   const tone=(t,f,dur,g,type='sine')=>{const o=ctx.createOscillator(),G=ctx.createGain();o.type=type;o.frequency.value=f;G.gain.setValueAtTime(g,t);G.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(G);G.connect(UA.bus.master);o.start(t);o.stop(t+dur)};
