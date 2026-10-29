@@ -30,16 +30,16 @@ chk('Capsule carry control stays on left lateral rather than over the robot',
   game.includes('#unfireCarryCase{left:max(9px,env(safe-area-inset-left))!important'));
 
 chk('Old double camera buttons completely removed',!engine.includes('caseModeHud')&&!game.includes('#caseModeHud'));
-chk('Existing PASEAR is the only character action with an open maletin',
-  engine.includes("roamB.textContent = '🚶 PASEAR'")&&
+chk('Existing WALK is the only character action with an open maletin',
+  engine.includes("roamB.textContent = '🚶 WALK'")&&
   engine.includes("pTarget>.99&&lidOpen>=.998")&&
   engine.includes('updateRoamButtonHint();')&&
   !engine.includes('characterEntryButton')&&!game.includes('#unfireCharacterEntry'));
 chk('Clicking maletin from avatar returns to identical case view',
   engine.includes('if(ray.intersectObject(caseG,true).length){')&&
   engine.includes('if(window.ATM_OUT)showCaseView();else exitRoam();')&&
-  engine.includes("roamB.textContent = '🚶 PASEAR'"));
-chk('Same PASEAR button stays in the safe right dock in both case and roam',
+  engine.includes("roamB.textContent = '🚶 WALK'"));
+chk('Same WALK button stays in the safe right dock in both case and roam',
   engine.includes("if(roamB.parentElement!==dock)dock.appendChild(roamB);")&&
   engine.includes("if(roamB.style.position!=='static')roamB.style.position='static';")&&
   game.includes('body:not(.unfire-roaming) #ctlDock{')&&
@@ -56,7 +56,7 @@ chk('First-tap 3D case opens in the existing web document, without a new tab',
   html.includes('immersive();\n    fullscreenFromGesture();')&&
   html.includes('fr.contentWindow.postMessage({unfire:1,entryStart:true,vis:true},location.origin)')&&
   !html.slice(html.indexOf('const Mal=(()=>'),html.indexOf('/* ================= Precios')).includes("window.open("));
-chk('First visit PASEAR blinks exactly two seconds after opening',
+chk('First visit WALK blinks exactly two seconds after opening',
   engine.includes("'unfire_pasear_intro_v1'")&&
   engine.includes('},2000);')&&
   game.includes('animation:unfire-pasear-blink 2s steps(1,end) 1'));
@@ -84,7 +84,7 @@ chk('Workshop attaches to story HUD without timer polling',engine.includes('cons
 chk('Case view stops walk shortcuts while allowing piano notes',engine.includes('if (CASE_VIEW.on) return; const k = e.key.length === 1'));
 chk('Case view G note does not pack capsule',engine.includes('&&ROAMS.on&&!CASE_VIEW.on&&portableUnlocked()'));
 chk('Case mobile pinch zooms inspection camera',engine.includes('CASE_VIEW.dist=clamp(CASE_VIEW.dist*f,window.ATM_OUT?6.8:5.4,window.ATM_OUT?17:14.5)'));
-chk('PASEAR never overlaps center captions and stays accessible without duplicates',
+chk('WALK never overlaps center captions and stays accessible without duplicates',
   game.includes('top:calc(env(safe-area-inset-top) + 135px)!important')&&
   game.includes('top:calc(env(safe-area-inset-top) + 112px)!important')&&
   game.includes('top:calc(env(safe-area-inset-top) + 110px)!important')&&
