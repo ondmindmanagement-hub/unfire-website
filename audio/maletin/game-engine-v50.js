@@ -2233,7 +2233,7 @@
         if (peer === task.current) { peer = null; code = null; myId = null; }
         msg(reason);
       };
-      task.timer = setTimeout(() => failed('La sala no responde. Comprueba la conexión o pide otro código e inténtalo de nuevo.'), 22000);
+      task.timer = setTimeout(() => failed('The room is not responding. Check your connection or request a new code and try again.'), 22000);
       load(() => {
         if (joining !== task) return;
         code = cc; isHost = false;
