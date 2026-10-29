@@ -645,7 +645,7 @@ footer a{color:var(--soft)}
     <div class="gacha">
       <div class="globe"><canvas id="globe" width="440" height="440" aria-label="One hundred colorful capsules inside the machine"></canvas></div>
       <div class="gbody"><span class="gplate">UNFIRE · 100</span>
-        <button class="crank" type="button" id="crank" aria-label="Girar la manivela"><span>SPIN</span></button>
+        <button class="crank" type="button" id="crank" aria-label="Spin the handle"><span>SPIN</span></button>
         <div class="chute"><button class="ball" type="button" id="ball" aria-label="Open the capsule"></button></div>
       </div>
       <div class="gleg"></div>
@@ -668,9 +668,9 @@ footer a{color:var(--soft)}
     <div class="bagbrand"><b>UNFIRE<br>AUDIO</b><span>Personal-use licenses · Clear terms · No hidden purchases</span></div>
     <div class="ladder">
       <article class="tier"><span class="step">Step 1 · Try</span><h3>Always free</h3><ul><li>Interactive demos on this website</li><li>20 robots and 100 capsules</li><li>Three featured effects: LOFI, PULSE BITS and AIRFLOW</li></ul><div class="amt">0 €<small>Ask by email</small></div><button class="btn btn-ghost btn-sm" type="button" data-add="starter">+ Add to bag</button></article>
-      <article class="tier"><span class="step">Step 2 · Create</span><h3>One effect</h3><ul><li>Choose from the other 17 effects</li><li>AU y VST3, Mac</li><li>Version updates</li></ul><div class="amt"><span data-p="fx"></span><small>each · planned pricing, not available to buy</small></div><a class="btn btn-ghost btn-sm" href="#efectos">Choose effect</a></article>
-      <article class="tier hot"><span class="tagx">BEST VALUE</span><span class="step">Step 3 · Complete the collection</span><h3>All UNFIRE</h3><ul><li>HYPERWAVE 2000 + all 20 FX</li><li>Unfire Synthesizer for Mac</li><li>Ahorras <span data-p="saveAll"></span> frente a comprarlo suelto</li></ul><div class="amt"><span data-p="todo"></span><small>one-time payment</small></div><button class="btn btn-gel btn-sm" type="button" data-add="todo">+ Add to bag</button></article>
-      <article class="tier"><span class="step">Step 4 · Stay connected</span><h3>UNFIRE Club</h3><ul><li>Full catalog during membership</li><li>New releases as they become available</li><li>Skins, presets and a new monthly capsule</li><li>Planned 12-month licensing benefit</li></ul><div class="amt"><span data-p="clubM"></span><small>al mes · o <span data-p="clubY"></span> per year</small></div><button class="btn btn-ghost btn-sm" type="button" data-add="club">Register interest</button></article>
+      <article class="tier"><span class="step">Step 2 · Create</span><h3>One effect</h3><ul><li>Choose from the other 17 effects</li><li>AU and VST3 on Mac</li><li>Version updates</li></ul><div class="amt"><span data-p="fx"></span><small>each · planned pricing, not available to buy</small></div><a class="btn btn-ghost btn-sm" href="#efectos">Choose effect</a></article>
+      <article class="tier hot"><span class="tagx">BEST VALUE</span><span class="step">Step 3 · Complete the collection</span><h3>All UNFIRE</h3><ul><li>HYPERWAVE 2000 + all 20 FX</li><li>Unfire Synthesizer for Mac</li><li>Save <span data-p="saveAll"></span> versus buying separately</li></ul><div class="amt"><span data-p="todo"></span><small>one-time payment</small></div><button class="btn btn-gel btn-sm" type="button" data-add="todo">+ Add to bag</button></article>
+      <article class="tier"><span class="step">Step 4 · Stay connected</span><h3>UNFIRE Club</h3><ul><li>Full catalog during membership</li><li>New releases as they become available</li><li>Skins, presets and a new monthly capsule</li><li>Planned 12-month licensing benefit</li></ul><div class="amt"><span data-p="clubM"></span><small>per month · or <span data-p="clubY"></span> per year</small></div><button class="btn btn-ghost btn-sm" type="button" data-add="club">Register interest</button></article>
     </div>
     <div class="launch">
       <div class="cd" id="countdown">PLANNED LAUNCH · COMING LATER</div>
@@ -701,8 +701,8 @@ footer a{color:var(--soft)}
 document.getElementById('shareGame').addEventListener('click',async function(){
   const data={title:'Unfire Audio — free 3D game',text:'20 transforming robots, music and a world to explore. Play for free:',url:'https://unfire.technology/audio/'};
   if(navigator.share){try{await navigator.share(data);return;}catch(e){if(e.name==='AbortError')return;}}
-  try{await navigator.clipboard.writeText(data.url);this.textContent='✓ Enlace copiado';setTimeout(()=>{this.textContent='↗ Share the free game';},2500);}
-  catch(e){window.prompt('Copia el enlace del juego',data.url);}
+  try{await navigator.clipboard.writeText(data.url);this.textContent='✓ Link copied';setTimeout(()=>{this.textContent='↗ Share the free game';},2500);}
+  catch(e){window.prompt('Copy the game link',data.url);}
 });
 </script>
 <dialog id="sheet" aria-labelledby="sheetTitle"><div style="position:relative">
@@ -844,12 +844,12 @@ function checkoutLinkFor(keys){
   return keys.length===1?paymentLinkFor(keys[0]):'';
 }
 const eur=v=>v===0?'0 €':(Number.isInteger(v)?v:v.toFixed(2).replace('.',','))+' €';
-const ITEMS={hyper:['HYPERWAVE 2000',PRICES.hyper,0],fx20:['FX20 · Pack de 20 efectos',PRICES.fx20,0],synth:['Unfire Synthesizer (Mac)',PRICES.synth,PRICES.synth],todo:['All UNFIRE',PRICES.todo,PRICES.synth],starter:['Starter gratis (3 FX)',0,0],club:['UNFIRE Club · mensual',PRICES.clubM,PRICES.clubM],launch:['Aviso de lanzamiento',0,0]};
+const ITEMS={hyper:['HYPERWAVE 2000',PRICES.hyper,0],fx20:['FX20 · Pack of 20 effects',PRICES.fx20,0],synth:['Unfire Synthesizer (Mac)',PRICES.synth,PRICES.synth],todo:['All UNFIRE',PRICES.todo,PRICES.synth],starter:['Free starter (3 FX)',0,0],club:['UNFIRE Club · monthly',PRICES.clubM,PRICES.clubM],launch:['Launch notification',0,0]};
 FX.forEach(f=>ITEMS['fx-'+f[0]]=['UNFIRE '+f[1],STARTER.includes(f[0])?0:PRICES.fx,0]);
 const DEF=[0.45,0.5,0.6];
 const FACE_STYLE={'Bodoni Moda':'italic 700','Fraunces':'italic 700','Playfair Display SC':'italic 900','Cinzel':'700','Cormorant SC':'700','Comfortaa':'700','Orbitron':'800','Silkscreen':'700'};
 const FACE_SIZE={'VT323':1.35,'Silkscreen':.8,'Michroma':.78,'Orbitron':.84,'Bungee':.84,'Black Ops One':.95,'Poiret One':1.1,'IM Fell English SC':1.05};
-const FAMS={fx:['Efectos','#ff4d4d'],inst:['Instrumentos','#3d8bff'],drums:['Ritmos','#ffb21f']};
+const FAMS={fx:['Effects','#ff4d4d'],inst:['Instruments','#3d8bff'],drums:['Rhythms','#ffb21f']};
 const MFAM=[['box','Boomboxes','From hi-fi to robot'],['car','Speedsters','Cars that rise and walk'],['jet','Jets','Aircraft that land with a dance'],['pod','Pods','Capsules with a creature inside'],['head','Heads','Screens and monitors with faces']];
 const $=s=>document.querySelector(s);
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;

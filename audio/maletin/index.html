@@ -316,7 +316,7 @@ body.unfire-roaming #cv{touch-action:none}
     padding:0!important;border:1px solid #ffb4bb99!important;border-radius:12px!important;
     background:rgba(98,22,41,.92)!important;box-shadow:0 3px 11px #0006!important;
     color:#fff!important;font-size:0!important;line-height:1!important;white-space:nowrap!important}
-  body #unfireExitGame::after{content:"↩ SALIR";font:700 10px/1 system-ui,sans-serif;letter-spacing:.02em}
+  body #unfireExitGame::after{content:"↩ EXIT";font:700 10px/1 system-ui,sans-serif;letter-spacing:.02em}
   body #minimap{width:72px!important;height:72px!important;left:max(7px,env(safe-area-inset-left))!important;
     top:calc(env(safe-area-inset-top) + 59px)!important}
   body #ctlDock,body:not(.unfire-roaming) #ctlDock{
@@ -402,7 +402,7 @@ body.unfire-roaming #cv{touch-action:none}
     if(document.getElementById('unfireRecover'))return;
     const box=document.createElement('div');box.id='unfireRecover';
     box.style.cssText='position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:9999;width:min(88vw,320px);padding:18px;border:1px solid #7bdcff;border-radius:18px;background:#08162ef7;color:white;text-align:center;font:600 13px system-ui;box-shadow:0 15px 50px #000a';
-    box.innerHTML='<p>El dispositivo ha interrumpido los gráficos 3D. Tu partida sigue guardada.</p><button type="button" style="padding:12px 18px;border:1px solid #bceeff;border-radius:12px;background:#164b84;color:#fff;font-weight:800">REINICIAR GRÁFICOS</button>';
+    box.innerHTML='<p>The device interrupted the 3D graphics. Your progress is still saved.</p><button type="button" style="padding:12px 18px;border:1px solid #bceeff;border-radius:12px;background:#164b84;color:#fff;font-weight:800">RESTART GRAPHICS</button>';
     box.querySelector('button').onclick=()=>{const url=new URL(location.href);url.searchParams.set('quality','compact');url.searchParams.set('_reload',String(Date.now()));location.replace(url.href);};
     document.body.appendChild(box);
     try{parent.postMessage({unfire:1,sceneFailure:'webglcontextlost'},'*');}catch(e){}
@@ -4943,6 +4943,7 @@ window.STORY_INIT = function (H) {
   html body #ufNear#ufNear{right:auto!important;left:50%!important;transform:translateX(-50%);bottom:calc(12vh + env(safe-area-inset-bottom))!important}
 }
 </style>
-<script src="game-intro.js?v=20261026intro2"></script>
-<script src="language-onboarding.js?v=20261026intro1"></script>
+<!-- Public English-only game. Keep cinematic opening but skip language selection. -->
+<script>window.__UNFIRE_PUBLIC_ENGLISH_ONLY=true;window.__LANG='en';try{localStorage.setItem('unfire_lang','en')}catch(e){}</script>
+<script src="game-intro.js?v=20261029english1"></script>
 </body></html>
