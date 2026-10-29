@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080b10">
+  <meta name="description" content="Unfire Games: play UNFIRE Mutants for free, explore online rooms and learn how to install the web game on a computer.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://unfire.technology/games/">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Unfire Games">
+  <meta property="og:title" content="Unfire Games · Play free">
+  <meta property="og:description" content="Play UNFIRE Mutants free in your browser. Discover online rooms and future desktop releases.">
+  <meta property="og:url" content="https://unfire.technology/games/">
+  <meta property="og:image" content="https://unfire.technology/audio/press/captures/09-night-flight-panorama.jpg">
+  <title translate="no">Unfire Games — Free games</title>
+  <style>
+    :root{color-scheme:dark;--bg:#080b10;--surface:#10151e;--surface2:#141c27;--text:#f3f7ff;--muted:#a6b4c4;--stroke:rgba(198,224,243,.15);--accent:#9deafb;--max:1152px}
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:95px}
+    body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    body::before{content:"";position:absolute;inset:0 0 auto;height:760px;pointer-events:none;background:radial-gradient(ellipse 52% 35% at 78% 24%,rgba(67,138,186,.14),transparent 85%),radial-gradient(ellipse 50% 30% at 24% 8%,rgba(68,112,165,.11),transparent 75%)}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+    .wrap{width:min(var(--max),calc(100% - 48px));margin-inline:auto}
+    .skip{position:absolute;z-index:300;top:-100px;left:16px;background:#fff;color:#111;padding:12px 16px;border-radius:9px}
+    .skip:focus{top:12px}
+    .site-header{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--stroke);background:rgba(8,11,16,.91);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+    .header-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .wordmark{font-size:14px;font-weight:800;letter-spacing:.17em;white-space:nowrap}
+    .wordmark strong{color:var(--accent)}
+    .nav{display:flex;align-items:center;gap:clamp(12px,2vw,24px)}
+    .nav a{font-size:13px;color:var(--muted);white-space:nowrap}
+    .nav a:hover,.nav a:focus-visible{color:#fff}
+    .lang{display:flex;border:1px solid var(--stroke);border-radius:999px;padding:3px;gap:2px;flex:none}
+    .lang button{padding:5px 9px;border:0;border-radius:999px;color:var(--muted);background:transparent;font-size:12px;font-weight:700;cursor:pointer}
+    .lang button[aria-pressed="true"]{background:#eaf7ff;color:#091018}
+    .hero{position:relative;padding:clamp(56px,8vw,106px) 0 74px;display:grid;grid-template-columns:1.06fr 1fr;align-items:center;gap:clamp(28px,6vw,80px)}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;margin:0 0 22px;font-size:12px;letter-spacing:.21em;font-weight:800;color:var(--accent)}
+    .eyebrow::before{content:"";width:8px;height:8px;background:var(--accent);border-radius:50%;box-shadow:0 0 20px rgba(157,234,251,.55)}
+    h1,h2,h3,p{margin-top:0}
+    h1{font-size:clamp(43px,5.8vw,75px);line-height:1.07;font-weight:780;letter-spacing:-.065em;margin-bottom:22px;max-width:650px}
+    .intro{font-size:clamp(16px,1.6vw,19px);line-height:1.7;color:var(--muted);max-width:530px;margin-bottom:29px}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+    .button{display:inline-flex;min-height:49px;align-items:center;justify-content:center;padding:12px 22px;border-radius:12px;border:1px solid var(--stroke);font-size:14px;font-weight:700;transition:transform .18s ease,background .18s ease}
+    .button:hover{transform:translateY(-2px)}
+    .button.primary{background:var(--accent);border-color:var(--accent);color:#071017}
+    .button.secondary{background:rgba(235,245,255,.065)}
+    .fine{font-size:12px;line-height:1.7;color:var(--muted);margin:19px 0 0}
+    .hero-art{position:relative;overflow:hidden;aspect-ratio:5/4;border:1px solid rgba(200,228,244,.2);border-radius:24px;background:radial-gradient(circle at 50% 36%,#21384e,#0e141e 65%);box-shadow:0 32px 75px rgba(0,0,0,.28)}
+    .hero-art img{width:100%;height:100%;display:block;object-fit:cover}
+    .art-label{position:absolute;bottom:18px;left:18px;right:18px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border:1px solid rgba(255,255,255,.22);background:rgba(3,8,12,.8);border-radius:11px;backdrop-filter:blur(10px);font-size:12px;letter-spacing:.08em}
+    .art-label b{font-size:13px}
+    .art-label span{color:#b6eefa}
+    .section{position:relative;padding:72px 0;border-top:1px solid var(--stroke)}
+    .section-heading{max-width:740px;margin-bottom:28px}
+    .section-kicker{font-size:12px;color:var(--accent);font-weight:800;letter-spacing:.17em;margin-bottom:12px}
+    h2{font-size:clamp(28px,3.7vw,44px);line-height:1.16;letter-spacing:-.043em;margin-bottom:15px}
+    h3{font-size:18px;line-height:1.32;letter-spacing:-.015em;margin-bottom:11px}
+    .lead{color:var(--muted);max-width:740px}
+    .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .card{padding:26px;border-radius:18px;background:linear-gradient(135deg,rgba(27,39,55,.77),rgba(15,22,31,.85));border:1px solid var(--stroke)}
+    .card p{color:var(--muted);font-size:14px;margin:0}
+    .card .number{font-size:12px;font-weight:800;letter-spacing:.18em;color:var(--accent);margin:0 0 20px}
+    .split{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
+    .panel{border:1px solid var(--stroke);background:var(--surface);padding:32px;border-radius:20px;min-width:0}
+    .panel.accent{background:linear-gradient(145deg,#142430,#0f151e 78%)}
+    .steps{padding-left:21px;color:var(--muted);margin-bottom:22px}
+    .steps li+li{margin-top:12px}
+    .steps strong{color:var(--text)}
+    .notice{border:1px solid rgba(157,234,251,.23);border-radius:11px;background:rgba(157,234,251,.055);padding:13px 16px;color:#c6e2eb;font-size:13px;line-height:1.65}
+    .muted{color:var(--muted)}
+    .platforms{display:flex;flex-wrap:wrap;gap:10px}
+    .platform{border:1px solid var(--stroke);background:#121a24;border-radius:10px;padding:11px 15px;font-size:14px;color:#c2d1df}
+    .site-footer{border-top:1px solid var(--stroke);padding:28px 0 42px}
+    .footer-inner{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px}
+    .footer-inner p,.footer-inner a{color:var(--muted);font-size:12px}
+    .footer-links{display:flex;flex-wrap:wrap;gap:18px}
+    .sr-only{position:absolute;clip:rect(0,0,0,0);height:1px;width:1px;overflow:hidden;white-space:nowrap}
+    @media(max-width:900px){.nav a:not(.nav-keep){display:none}.hero{grid-template-columns:1fr;padding-top:60px}.hero-art{max-width:720px;width:100%}.split{grid-template-columns:1fr}}
+    @media(max-width:640px){.wrap{width:min(var(--max),calc(100% - 32px))}.header-inner{min-height:64px;gap:10px}.wordmark{font-size:12px;letter-spacing:.1em}.nav{gap:9px}.nav a.nav-keep{display:none}.hero{gap:28px;padding:46px 0 55px}.hero-art{aspect-ratio:5/4}.actions{align-items:stretch}.actions .button{flex:1 1 100%}.section{padding:52px 0}.cards{grid-template-columns:1fr}.card,.panel{padding:23px}.art-label{bottom:10px;left:10px;right:10px;padding:9px 11px;font-size:10px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}.button:hover{transform:none}}
+  </style>
+
+  <style id="unfire-games-premium-20261024">
+    /* Uses existing gameplay assets; no additional WebGL until a deliberate click. */
+    .hero-art{aspect-ratio:16/10}
+    .hero-art img{object-position:center center}
+    .games-gallery-section{padding-top:38px}
+    .games-shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .games-shots .shot{position:relative;min-width:0;aspect-ratio:16/9;margin:0;background:#101923;border:1px solid var(--stroke);border-radius:16px;overflow:hidden}
+    .games-shots .shot-large{grid-column:1/-1;aspect-ratio:21/9}
+    .games-shots img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .25s ease}
+    .games-shots .shot figcaption{position:absolute;left:0;bottom:0;width:100%;padding:30px 16px 13px;font-size:13px;font-weight:650;background:linear-gradient(transparent,rgba(2,5,10,.92));color:white}
+    .games-sound-intro{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+    .games-sound-intro h2{max-width:650px}
+    .games-sound-image{margin:0;min-width:0;border-radius:20px;overflow:hidden;border:1px solid var(--stroke);background:radial-gradient(circle,#202c42,#080b10 75%)}
+    .games-sound-image img{display:block;width:100%;height:auto}
+    .games-sound-image figcaption{color:var(--muted);font-size:12px;padding:12px 18px}
+    .games-embed{margin-top:26px;border:1px solid var(--stroke);padding:14px;border-radius:18px;background:#050810}
+    .games-embed[hidden]{display:none!important}
+    .games-embed iframe{width:100%;height:clamp(380px,75svh,720px);display:block;border:0;border-radius:12px;background:#090e16;margin:10px 0 16px}
+    .games-connection{border-top:1px solid var(--stroke);margin-top:48px;padding-top:32px;max-width:780px}
+    .games-connection h3{font-size:clamp(23px,3vw,31px)}
+    .games-connection>p:not(.section-kicker){color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:12px}
+    .games-connection .games-honesty{font-size:12px!important;color:#8695a5!important}
+    .games-text-link{display:inline-block;margin-top:10px;border-bottom:1px solid #8ba6bc;padding-bottom:4px;font-size:13px;color:#e6f6ff}
+    @media(max-width:850px){.games-sound-intro{grid-template-columns:1fr}.games-sound-image{max-width:650px}.games-shots{gap:10px}}
+    @media(max-width:640px){.games-shots{grid-template-columns:1fr}.games-shots .shot-large{grid-column:1;aspect-ratio:16/9}.games-shots .shot{border-radius:12px}.games-sound-intro{gap:24px}.games-embed{padding:8px}.games-embed iframe{height:74svh;min-height:420px}}
+    @media(prefers-reduced-motion:reduce){.games-shots img{transition:none}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content" data-en="Skip to content">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="wordmark" href="./" aria-label="Unfire Games"><span translate="no" class="notranslate">UNFIRE <strong>GAMES</strong></span></a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#game" data-en="The game">The game</a>
+        <a href="#gallery" data-en="Screenshots">Screenshots</a>
+        <a href="#hyperwave" translate="no" class="notranslate">HYPERWAVE</a>
+        <a href="#online" data-en="Online">Online</a>
+        <a href="#install" data-en="Install">Install</a>
+        <a class="nav-keep notranslate" href="../?site=1" translate="no">Unfire ↗</a>
+      </nav>
+
+    </div>
+  </header>
+  <main id="content">
+    <section class="wrap hero" id="game" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow notranslate" translate="no">UNFIRE GAMES / FREE TO PLAY</p>
+        <h1 id="hero-title" data-en="A universe to play. Free.">A universe to play. Free.</h1>
+        <p class="intro"><span data-en="Enter ">Enter </span><span translate="no" class="notranslate">UNFIRE Mutants</span><span data-en=", our 3D world of robots, exploration, music, capsules and adventures. Play directly in your browser, for free.">, our 3D world of robots, exploration, music, capsules and adventures. Play directly in your browser, for free.</span></p>
+        <div class="actions">
+          <a class="button primary" href="../audio/" data-en="Play free ↗">Play free ↗</a>
+          <a class="button secondary" href="#install" data-en="Play on a computer">Play on a computer</a>
+        </div>
+        <p class="fine" data-en="The browser game requires no download. Online play needs an internet connection and an active room.">The browser game requires no download. Online play needs an internet connection and an active room.</p>
+      </div>
+      <div class="hero-art">
+        <img src="../audio/press/captures/06-sky-flight-sunset.jpg" alt="Authentic game capture of a robot flying beneath a purple twilight sky among colorful trees" width="1280" height="720" decoding="async" fetchpriority="high">
+        <div class="art-label"><b translate="no" class="notranslate">UNFIRE MUTANTS</b><span data-en="TWILIGHT FLIGHT · ACTUAL GAME CAPTURE">TWILIGHT FLIGHT · ACTUAL GAME CAPTURE</span></div>
+      </div>
+    </section>
+
+
+    <section class="section games-gallery-section" id="gallery" aria-labelledby="screens-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker" data-en="INSIDE THE GAME">INSIDE THE GAME</p>
+          <h2 id="screens-title" data-en="A whole world beneath the stars.">A whole world beneath the stars.</h2>
+          <p class="lead" data-en="At night, discover the scale of the main islands, sea and starry sky. Every scene is a real capture of the 3D world.">At night, discover the scale of the main islands, sea and starry sky. Every scene is a real capture of the 3D world.</p>
+        </div>
+        <div class="games-shots">
+          <figure class="shot shot-large"><img src="../audio/press/captures/09-night-flight-panorama.jpg" width="1280" height="720" alt="Authentic night panorama showing the main islands, sea and starry sky" loading="lazy" decoding="async"><figcaption data-en="Islands to discover · night panorama">Islands to discover · night panorama</figcaption></figure>
+          <figure class="shot"><img src="../audio/press/captures/05-sky-flight-day.jpg" width="1280" height="720" alt="Daytime flight above the house and the game islands" loading="lazy" decoding="async"><figcaption data-en="Explore the sky">Explore the sky</figcaption></figure>
+          <figure class="shot"><img src="../audio/press/captures/03-house-exterior.jpg" width="1280" height="720" alt="View outside the house in the game" loading="lazy" decoding="async"><figcaption data-en="Outside the house">Outside the house</figcaption></figure>
+          <figure class="shot"><img src="../audio/press/captures/01-inside-house.jpg" width="1280" height="720" alt="Inside the game house" loading="lazy" decoding="async"><figcaption data-en="Inside the house">Inside the house</figcaption></figure>
+          <figure class="shot"><img src="../audio/press/captures/04-island-exploration.jpg" width="1280" height="720" alt="Actual in-game robot exploring the main island on foot" loading="lazy" decoding="async"><figcaption data-en="Explore on foot">Explore on foot</figcaption></figure>
+        </div>
+        <p class="fine"><span data-en="Authentic frames from the evolving beta. More views in ">Authentic frames from the evolving beta. More views in </span><a href="../audio/press/" data-en="press gallery ↗">press gallery ↗</a></p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="experience-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker" data-en="EXPLORE">EXPLORE</p>
+          <h2 id="experience-title" data-en="Your adventure starts here.">Your adventure starts here.</h2>
+          <p class="lead" data-en="One place to discover and jump directly into our games.">One place to discover and jump directly into our games.</p>
+        </div>
+        <div class="cards">
+          <article class="card"><p class="number">01 / PLAY</p><h3 data-en="Free access">Free access</h3><p data-en="Jump in without a required purchase and explore using a compatible browser.">Jump in without a required purchase and explore using a compatible browser.</p></article>
+          <article class="card"><p class="number">02 / EXPLORE</p><h3 data-en="3D world">3D world</h3><p><span data-en="Robots, missions, music and surprises in the ">Robots, missions, music and surprises in the </span><span translate="no" class="notranslate">UNFIRE Mutants</span><span data-en=" universe."> universe.</span></p></article>
+          <article class="card"><p class="number">03 / CONNECT</p><h3 data-en="Player rooms">Player rooms</h3><p data-en="The game includes temporary peer-to-peer rooms to play with another person. Connectivity depends on the host and network.">The game includes temporary peer-to-peer rooms to play with another person. Connectivity depends on the host and network.</p></article>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section games-sound-section" id="hyperwave" aria-labelledby="hyperwave-title">
+      <div class="wrap">
+        <div class="games-sound-intro">
+          <div>
+            <p class="section-kicker" data-en="SOUND AND TECHNOLOGY">SOUND AND TECHNOLOGY</p>
+            <h2 id="hyperwave-title"><span translate="no" class="notranslate">HYPERWAVE 2000.</span><br><span data-en="Creativity you can play.">Creativity you can play.</span></h2>
+            <p class="lead" data-en="A transforming, interactive Unfire Audio synthesizer. Try it right here without leaving this page.">A transforming, interactive Unfire Audio synthesizer. Try it right here without leaving this page.</p>
+            <div class="actions"><button class="button primary" id="play-hyperwave" type="button" aria-controls="hyperwave-embed" aria-expanded="false" data-en="Open HYPERWAVE here ↗">Open HYPERWAVE here ↗</button><a class="button secondary" href="../audio/hyperwave/" target="_blank" rel="noopener" data-en="Open in its own window ↗">Open in its own window ↗</a></div>
+          </div>
+          <figure class="games-sound-image"><img src="../audio/img/hyperwave-open.webp" width="1200" height="686" loading="lazy" decoding="async" alt="HYPERWAVE 2000 interactive virtual instrument"><figcaption data-en="Real interactive instrument, not a screenshot of the game.">Real interactive instrument, not a screenshot of the game.</figcaption></figure>
+        </div>
+        <div id="hyperwave-embed" class="games-embed" hidden>
+          <p class="fine" data-en="HYPERWAVE uses interactive graphics and loads only when opened; close it to conserve resources.">HYPERWAVE uses interactive graphics and loads only when opened; close it to conserve resources.</p>
+          <iframe id="hyperwave-frame" title="Unfire HYPERWAVE 2000 interactive instrument" loading="lazy" allow="autoplay" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <button class="button secondary" type="button" id="close-hyperwave" data-en="Close instrument">Close instrument</button>
+        </div>
+        <div class="games-connection">
+          <p class="section-kicker" data-en="ONE CREATIVE ECOSYSTEM">ONE CREATIVE ECOSYSTEM</p>
+          <h3 data-en="Explore. Listen. Create.">Explore. Listen. Create.</h3>
+          <p data-en="Unfire Audio brings the 3D world, HYPERWAVE, synthesizers and effects together under one creative family. Shared access, interactive experiences and a consistent visual identity make each product easier to discover.">Unfire Audio brings the 3D world, HYPERWAVE, synthesizers and effects together under one creative family. Shared access, interactive experiences and a consistent visual identity make each product easier to discover.</p>
+          <p class="games-honesty" data-en="Current connection: shared navigation and access. The game and instruments remain separate experiences; universal cross-app or cross-device synchronization is not being claimed.">Current connection: shared navigation and access. The game and instruments remain separate experiences; universal cross-app or cross-device synchronization is not being claimed.</p>
+          <a class="games-text-link" href="../audio/" data-en="Explore all of Unfire Audio ↗">Explore all of Unfire Audio ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="online" aria-labelledby="online-title">
+      <div class="wrap split">
+        <div class="panel accent">
+          <p class="section-kicker">ONLINE / MULTIPLAYER</p>
+          <h2 id="online-title" data-en="Play together.">Play together.</h2>
+          <p class="lead" data-en="Open the game and use its online menu to create or join a room. The current system connects players through temporary peer-to-peer rooms, not a permanent game server.">Open the game and use its online menu to create or join a room. The current system connects players through temporary peer-to-peer rooms, not a permanent game server.</p>
+          <a href="../audio/" class="button primary" data-en="Open game and online menu ↗">Open game and online menu ↗</a>
+        </div>
+        <div class="panel">
+          <h3 data-en="Good to know">Good to know</h3>
+          <p class="muted" data-en="Players need internet and an active room. Certain networks, browsers or host disconnects can prevent or interrupt a session.">Players need internet and an active room. Certain networks, browsers or host disconnects can prevent or interrupt a session.</p>
+          <div class="notice" data-en="Status: multiplayer under validation. Full reconnection and real-device tests are still pending.">Status: multiplayer under validation. Full reconnection and real-device tests are still pending.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="install" aria-labelledby="install-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker">DESKTOP / INSTALL</p>
+          <h2 id="install-title" data-en="Play on your computer.">Play on your computer.</h2>
+          <p class="lead" data-en="You can open the game for free on Windows, macOS or Linux in a compatible browser. If your browser offers website installation as an app, you can add a standalone shortcut.">You can open the game for free on Windows, macOS or Linux in a compatible browser. If your browser offers website installation as an app, you can add a standalone shortcut.</p>
+        </div>
+        <div class="split">
+          <div class="panel">
+            <h3 data-en="Install the web version">Install the web version</h3>
+            <ol class="steps">
+              <li><strong data-en="Open the game">Open the game</strong><span data-en=" in Chrome, Edge or another compatible browser."> in Chrome, Edge or another compatible browser.</span></li>
+              <li><strong data-en="Look for an install option">Look for an install option</strong><span data-en=" in your browser, if offered. In Safari for macOS, check the Add to Dock option."> in your browser, if offered. In Safari for macOS, check the Add to Dock option.</span></li>
+              <li><strong data-en="Launch the new shortcut">Launch the new shortcut</strong><span data-en=" to return to the game whenever you want."> to return to the game whenever you want.</span></li>
+            </ol>
+            <a href="../audio/" class="button secondary" data-en="Open web version ↗">Open web version ↗</a>
+          </div>
+          <div class="panel">
+            <h3 data-en="Native downloads">Native downloads</h3>
+            <p class="muted" data-en="Desktop builds with macOS and Windows installers have not yet been published or verified. No placeholder .dmg or .exe downloads are offered.">Desktop builds with macOS and Windows installers have not yet been published or verified. No placeholder .dmg or .exe downloads are offered.</p>
+            <div class="notice" data-en="Installing the web shortcut does not mean the game works offline. Online play always requires an internet connection.">Installing the web shortcut does not mean the game works offline. Online play always requires an internet connection.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p><span translate="no" class="notranslate">© 2026 Unfire Games</span> · <span data-en="An ">An </span><span class="notranslate" translate="no">Unfire</span><span data-en=" initiative."> initiative.</span></p>
+      <div class="footer-links">
+        <a href="../?site=1" translate="no" class="notranslate">Unfire</a>
+        <a href="../privacy.html" data-en="Privacy">Privacy</a>
+        <a href="../terms.html" data-en="Terms">Terms</a>
+        <a href="../contact/" data-en="Contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+  (function(){
+    "use strict";
+    function setLanguage(){
+      document.documentElement.lang="en";
+      document.querySelectorAll("[data-en]").forEach(function(el){
+        el.textContent=el.getAttribute("data-en");
+      });
+      document.title="Unfire Games — Free games";
+      var meta=document.querySelector('meta[name="description"]');
+      if(meta)meta.content="Unfire Games: play UNFIRE Mutants for free, explore online rooms and learn how to install the web game on a computer.";
+    }
+    setLanguage();
+  }());
+  </script>
+
+  <script id="unfire-games-hyperwave-on-demand">
+  (function(){
+    "use strict";
+    var launch=document.getElementById("play-hyperwave");
+    var close=document.getElementById("close-hyperwave");
+    var region=document.getElementById("hyperwave-embed");
+    var frame=document.getElementById("hyperwave-frame");
+    if(!launch||!close||!region||!frame)return;
+    launch.addEventListener("click",function(){
+      region.hidden=false;
+      if(!frame.getAttribute("src"))frame.setAttribute("src","../audio/hyperwave/");
+      launch.setAttribute("aria-expanded","true");
+      region.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth",block:"start"});
+    });
+    close.addEventListener("click",function(){
+      frame.removeAttribute("src");
+      region.hidden=true;
+      launch.setAttribute("aria-expanded","false");
+      launch.focus();
+    });
+  }());
+  </script>
+</body>
+</html>

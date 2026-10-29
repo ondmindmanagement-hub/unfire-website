@@ -1,0 +1,29 @@
+name: Audio story and online robot conversations QA
+on:
+  push:
+    branches:
+      - feature/audio-story-online-robot-conversations-20261024
+  pull_request:
+    branches:
+      - main
+      - qa/audio-final-reconcile-20261024
+    paths:
+      - 'audio/maletin/unfire-conversations.js'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'tests/unfire-conversations-20261024.test.cjs'
+      - '.github/workflows/audio-robot-conversations.yml'
+permissions:
+  contents: read
+jobs:
+  dialogue-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check audio/maletin/game-engine-v50.js
+      - run: node --check audio/maletin/unfire-conversations.js
+      - run: node --test tests/unfire-conversations-20261024.test.cjs

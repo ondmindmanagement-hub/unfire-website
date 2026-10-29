@@ -53,7 +53,7 @@ const viewports = [
           };
         }, expected);
         assert.equal(summary.cards, 9);
-        assert.equal(summary.images, 8); // KeyBridge intentionally uses a private, text-only research cover
+        assert.equal(summary.images, 9); // Two authentic ARCHER Mobile device images; KeyBridge stays text-only
         assert.equal(summary.emptyAlt, 0);
         assert.equal(await page.locator('#apps .uf-gallery-card--control img').count(), 1, 'Control must use its original app icon');
         assert.equal(await page.locator('#apps .uf-gallery-card--control a[href="/apps/unfire-control/"]').count(), 1, 'Control must offer product details');
@@ -63,7 +63,8 @@ const viewports = [
         assert.equal(summary.categoryHeadersWithin, true, 'Category headings spill out at ' + viewport.width);
         assert.deepEqual(summary.nav, Object.keys(expected).map(x => '#' + x));
         assert.deepEqual(summary.groups, Object.entries(expected).map(([id,headings])=>({ id,headings })));
-        for (const status of ['Product preview', 'Development preview', 'Original app icon · Development preview', 'Lab prototype · not a production sign-in system']) {
+        // Use the current live product statuses while preserving #75's Control image and link assertions.
+        for (const status of ['Product preview · upcoming design, not the current App Store version', 'Development preview', 'Original app icon · Development preview', 'Lab prototype · not a production sign-in system']) {
           assert(summary.tags.includes(status), 'Missing disclaimer ' + status);
         }
         assert(summary.footnote.includes('features and release status may change'));

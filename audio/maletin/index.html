@@ -1,11 +1,35 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261023casecuev1" as="script"></head><body><title>UNFIRE Maletín</title>
+<!doctype html><html lang="en"><head>
+<!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
+<script src="app-mode.js?v=20261027app2"></script>
+<script id="ufAdaptiveBoot">(function(){
+  try {
+    var coarse=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    var memory=Number(navigator.deviceMemory||0), cores=Number(navigator.hardwareConcurrency||0);
+    var unknown=!memory&&!cores&&Math.min(innerWidth,innerHeight)<400;
+    if(coarse&&((memory>0&&memory<=4)||(cores>0&&cores<=4)||unknown))
+      document.documentElement.classList.add('uf-load-pending');
+    // A network failure must never leave a permanent overlay.
+    setTimeout(function(){document.documentElement.classList.remove('uf-load-pending');},9000);
+  } catch(e) {}
+})();</script>
+<link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261024combinedqa1">
+<script defer src="/assets/js/unfire-adaptive-loading.js?v=20261024combinedqa1"></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261028nimbo3english4" as="script"></head><body>
+<div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
+  <div class="uf-load-card">
+    <span class="uf-load-emblem" aria-hidden="true"></span>
+    <strong class="uf-load-brand" translate="no">UNFIRE</strong>
+    <span class="uf-load-label" id="ufAdaptiveLabel">Preparing your experience…</span>
+  </div>
+</div>
+<title>UNFIRE Case</title>
 <style>
 @font-face { font-family: 'Michroma'; src: url(fonts/Michroma.ttf); }
 @font-face { font-family: 'Orbitron'; src: url(fonts/Orbitron.ttf); font-weight: 400 900; }
 @font-face { font-family: 'Share Tech Mono'; src: url(fonts/ShareTechMono.ttf); }
 :root { color-scheme:dark } html,body { margin:0; width:100%; height:100%; min-height:100dvh; padding:0; background:transparent; overflow:hidden; overscroll-behavior:none; color:#eef1f5; font:14px/1.4 system-ui,sans-serif }
 html:fullscreen,html:-webkit-full-screen { background:#050609 }
-#cv { position:fixed; inset:0; width:100%; height:100%; display:block; touch-action:pan-y }
+#cv { position:fixed; inset:0; width:100%; height:100%; display:block; touch-action:none; -webkit-tap-highlight-color:transparent }
 #cv.dive { touch-action:none }
 .hud { position:fixed; left:14px; bottom:14px; display:flex; gap:8px; align-items:center; opacity:0; transition:opacity .4s; pointer-events:none }
 .hud.on { opacity:1; pointer-events:auto }
@@ -292,7 +316,7 @@ body.unfire-roaming #cv{touch-action:none}
     padding:0!important;border:1px solid #ffb4bb99!important;border-radius:12px!important;
     background:rgba(98,22,41,.92)!important;box-shadow:0 3px 11px #0006!important;
     color:#fff!important;font-size:0!important;line-height:1!important;white-space:nowrap!important}
-  body #unfireExitGame::after{content:"↩ SALIR";font:700 10px/1 system-ui,sans-serif;letter-spacing:.02em}
+  body #unfireExitGame::after{content:"↩ EXIT";font:700 10px/1 system-ui,sans-serif;letter-spacing:.02em}
   body #minimap{width:72px!important;height:72px!important;left:max(7px,env(safe-area-inset-left))!important;
     top:calc(env(safe-area-inset-top) + 59px)!important}
   body #ctlDock,body:not(.unfire-roaming) #ctlDock{
@@ -349,10 +373,12 @@ body.unfire-roaming #cv{touch-action:none}
 }
 </style>
 <link rel="stylesheet" href="mobile-hud-guard.css?v=20261023hudlayout1">
-<canvas id="cv" aria-label="Maletín UNFIRE en 3D. Acerca la vista con la rueda para entrar"></canvas>
-<div class="hud" id="hud"><button id="zin" aria-label="Acercar">+</button><button id="zout" aria-label="Alejar">−</button><button id="home" aria-label="Volver al maletín">⟲</button><div class="crumb" id="crumb">MALETÍN</div></div>
+<link rel="stylesheet" href="thumb-reach.css?v=20261023thumb1">
+<link rel="stylesheet" href="expanded-map.css?v=20261028nimbo3">
+<canvas id="cv" aria-label="UNFIRE 3D case. Scroll to move closer and enter"></canvas>
+<div class="hud" id="hud"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button><button id="home" aria-label="Back to the case">⟲</button><div class="crumb" id="crumb">CASE</div></div>
 <div class="tip" id="tip"></div>
-<div class="tb" id="tb"><button data-a="next" title="Siguiente">⟳<small>TRANSFORMAR</small></button><button data-a="back" title="Atrás">↺<small>ATRÁS</small></button><button data-a="move" title="Mover">✥<small>MOVER</small></button><button data-a="close" class="x" title="Cerrar y guardar">✕<small>CERRAR</small></button></div>
+<div class="tb" id="tb"><button data-a="next" title="Next">⟳<small>TRANSFORM</small></button><button data-a="back" title="Back">↺<small>BACK</small></button><button data-a="move" title="Move">✥<small>MOVE</small></button><button data-a="close" class="x" title="Close and save">✕<small>CLOSE</small></button></div>
 <button class="enter" id="buy" type="button"></button>
 
 <script>
@@ -376,7 +402,7 @@ body.unfire-roaming #cv{touch-action:none}
     if(document.getElementById('unfireRecover'))return;
     const box=document.createElement('div');box.id='unfireRecover';
     box.style.cssText='position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:9999;width:min(88vw,320px);padding:18px;border:1px solid #7bdcff;border-radius:18px;background:#08162ef7;color:white;text-align:center;font:600 13px system-ui;box-shadow:0 15px 50px #000a';
-    box.innerHTML='<p>El dispositivo ha interrumpido los gráficos 3D. Tu partida sigue guardada.</p><button type="button" style="padding:12px 18px;border:1px solid #bceeff;border-radius:12px;background:#164b84;color:#fff;font-weight:800">REINICIAR GRÁFICOS</button>';
+    box.innerHTML='<p>The device interrupted the 3D graphics. Your progress is still saved.</p><button type="button" style="padding:12px 18px;border:1px solid #bceeff;border-radius:12px;background:#164b84;color:#fff;font-weight:800">RESTART GRAPHICS</button>';
     box.querySelector('button').onclick=()=>{const url=new URL(location.href);url.searchParams.set('quality','compact');url.searchParams.set('_reload',String(Date.now()));location.replace(url.href);};
     document.body.appendChild(box);
     try{parent.postMessage({unfire:1,sceneFailure:'webglcontextlost'},'*');}catch(e){}
@@ -384,18 +410,26 @@ body.unfire-roaming #cv{touch-action:none}
   addEventListener('webglcontextlost',e=>{e.preventDefault();showRecovery();},true);
 })();
 </script>
+<script src="companion-natural-flight.js?v=20261024organic1"></script>
 <script src="../vendor/three/three.min.js"></script>
 <script src="../vendor/three/RoomEnvironment.js"></script>
 <script src="../vendor/three/RoundedBoxGeometry.js"></script>
+<script>/* Caché de cajas redondeadas: misma forma = copia en vez de recalcular. */(() => { const RB = THREE.RoundedBoxGeometry; if (!RB) return; const C = new Map(); function R(...a) { const k = a.join(","); let g = C.get(k); if (!g) { g = new RB(...a); if (C.size > 600) return g; C.set(k, g); } const c = new THREE.BufferGeometry().copy(g); c.type = g.type; c.parameters = g.parameters; return c; } R.prototype = RB.prototype; THREE.RoundedBoxGeometry = R; })();</script>
 <script src="../vendor/three/OrbitControls.js"></script>
 <script>const SAMPLES = {"piano":{"kind":"melodic","sustain":false,"zones":[{"f":"piano_22.mp3","root":22.0,"len":6.0},{"f":"piano_32.mp3","root":32.19,"len":6.0},{"f":"piano_42.mp3","root":42.05,"len":6.0},{"f":"piano_52.mp3","root":52.06,"len":6.0},{"f":"piano_62.mp3","root":62.04,"len":6.0},{"f":"piano_74.mp3","root":74.03,"len":6.0},{"f":"piano_84.mp3","root":84.08,"len":6.0},{"f":"piano_94.mp3","root":94.02,"len":6.0},{"f":"piano_104.mp3","root":104.0,"len":4.71}]},"upright":{"kind":"melodic","sustain":false,"zones":[{"f":"upright_24.mp3","root":24.0,"len":5.0},{"f":"upright_36.mp3","root":35.95,"len":5.0},{"f":"upright_55.mp3","root":55.04,"len":5.0},{"f":"upright_67.mp3","root":67.09,"len":5.0},{"f":"upright_84.mp3","root":84.0,"len":2.25},{"f":"upright_96.mp3","root":96.03,"len":1.18}]},"fmpiano":{"kind":"melodic","sustain":false,"zones":[{"f":"fmpiano_28.mp3","root":28.2,"len":4.0},{"f":"fmpiano_44.mp3","root":44.0,"len":4.0},{"f":"fmpiano_64.mp3","root":64.0,"len":4.0},{"f":"fmpiano_80.mp3","root":80.0,"len":3.77},{"f":"fmpiano_96.mp3","root":96.0,"len":2.68}]},"clavisynth":{"kind":"melodic","sustain":false,"zones":[{"f":"clavisynth_36.mp3","root":36.1,"len":3.0},{"f":"clavisynth_52.mp3","root":52.1,"len":3.0},{"f":"clavisynth_64.mp3","root":64.0,"len":3.0},{"f":"clavisynth_80.mp3","root":80.0,"len":1.96},{"f":"clavisynth_92.mp3","root":92.0,"len":1.01},{"f":"clavisynth_108.mp3","root":108.0,"len":0.41}]},"vibes":{"kind":"melodic","sustain":false,"zones":[{"f":"vibes_53.mp3","root":53.0,"len":1.43},{"f":"vibes_61.mp3","root":60.0,"len":4.5},{"f":"vibes_67.mp3","root":67.0,"len":4.5},{"f":"vibes_74.mp3","root":74.0,"len":4.5},{"f":"vibes_81.mp3","root":81.0,"len":4.5},{"f":"vibes_88.mp3","root":88.0,"len":4.5}]},"vibesbow":{"kind":"melodic","sustain":true,"zones":[{"f":"vibesbow_57.mp3","root":56.97,"len":7.0},{"f":"vibesbow_64.mp3","root":63.98,"len":7.0},{"f":"vibesbow_67.mp3","root":66.99,"len":7.0},{"f":"vibesbow_74.mp3","root":74.0,"len":7.0},{"f":"vibesbow_81.mp3","root":81.0,"len":7.0},{"f":"vibesbow_88.mp3","root":88.0,"len":7.0}]},"marimba":{"kind":"melodic","sustain":false,"zones":[{"f":"marimba_41.mp3","root":41.01,"len":3.0},{"f":"marimba_55.mp3","root":54.98,"len":3.0},{"f":"marimba_65.mp3","root":65.0,"len":3.0},{"f":"marimba_72.mp3","root":72.05,"len":1.96},{"f":"marimba_83.mp3","root":83.01,"len":1.09},{"f":"marimba_96.mp3","root":96.12,"len":1.29}]},"xylo":{"kind":"melodic","sustain":false,"zones":[{"f":"xylo_67.mp3","root":66.98,"len":1.58},{"f":"xylo_79.mp3","root":79.17,"len":1.37},{"f":"xylo_91.mp3","root":91.06,"len":0.62},{"f":"xylo_96.mp3","root":96.18,"len":0.5},{"f":"xylo_108.mp3","root":108.0,"len":0.39}]},"glock":{"kind":"melodic","sustain":false,"zones":[{"f":"glock_68.mp3","root":79.1,"len":3.5},{"f":"glock_72.mp3","root":84.1,"len":3.5},{"f":"glock_79.mp3","root":91.1,"len":3.12},{"f":"glock_91.mp3","root":103.2,"len":2.9},{"f":"glock_96.mp3","root":108.2,"len":1.15}]},"bells":{"kind":"melodic","sustain":false,"zones":[{"f":"bells_62.mp3","root":62,"len":6.0},{"f":"bells_68.mp3","root":68,"len":6.0},{"f":"bells_72.mp3","root":72,"len":6.0},{"f":"bells_76.mp3","root":76,"len":6.0}]},"kalimba":{"kind":"melodic","sustain":false,"zones":[{"f":"kalimba_43.mp3","root":43.5,"len":2.76},{"f":"kalimba_55.mp3","root":55.4,"len":3.0},{"f":"kalimba_65.mp3","root":65.4,"len":2.14},{"f":"kalimba_75.mp3","root":75.2,"len":0.88},{"f":"kalimba_83.mp3","root":82.5,"len":0.63}]},"mbira":{"kind":"melodic","sustain":false,"zones":[{"f":"mbira_46.mp3","root":47.2,"len":1.57},{"f":"mbira_57.mp3","root":57.2,"len":2.18},{"f":"mbira_66.mp3","root":66.1,"len":3.0},{"f":"mbira_76.mp3","root":76.1,"len":1.79},{"f":"mbira_85.mp3","root":85.5,"len":0.65}]},"harpsi":{"kind":"melodic","sustain":false,"zones":[{"f":"harpsi_26.mp3","root":26.0,"len":3.5},{"f":"harpsi_40.mp3","root":40.01,"len":3.5},{"f":"harpsi_52.mp3","root":52.06,"len":3.5},{"f":"harpsi_62.mp3","root":62.03,"len":3.5},{"f":"harpsi_74.mp3","root":74.05,"len":3.5},{"f":"harpsi_84.mp3","root":84.04,"len":2.3}]},"harp":{"kind":"melodic","sustain":false,"zones":[{"f":"harp_28.mp3","root":27.83,"len":5.0},{"f":"harp_41.mp3","root":40.97,"len":5.0},{"f":"harp_55.mp3","root":54.97,"len":5.0},{"f":"harp_65.mp3","root":65.0,"len":5.0},{"f":"harp_79.mp3","root":78.92,"len":3.32},{"f":"harp_93.mp3","root":92.82,"len":1.0},{"f":"harp_101.mp3","root":100.7,"len":0.41}]},"harmonica":{"kind":"melodic","sustain":true,"zones":[{"f":"harmonica_48.mp3","root":47.98,"len":7.0},{"f":"harmonica_60.mp3","root":60.01,"len":7.0},{"f":"harmonica_72.mp3","root":72.01,"len":7.0},{"f":"harmonica_84.mp3","root":83.98,"len":7.0},{"f":"harmonica_96.mp3","root":96.04,"len":7.0}]},"organ":{"kind":"melodic","sustain":true,"zones":[{"f":"organ_54.mp3","root":60,"len":7.0},{"f":"organ_66.mp3","root":72,"len":7.0},{"f":"organ_78.mp3","root":84,"len":7.0},{"f":"organ_90.mp3","root":96,"len":7.0}]},"ocarina":{"kind":"melodic","sustain":true,"zones":[{"f":"ocarina_69.mp3","root":68.92,"len":7.0},{"f":"ocarina_75.mp3","root":74.98,"len":7.0},{"f":"ocarina_80.mp3","root":80.14,"len":7.0},{"f":"ocarina_84.mp3","root":84.19,"len":7.0}]},"recorder":{"kind":"melodic","sustain":true,"zones":[{"f":"recorder_65.mp3","root":65.07,"len":7.0},{"f":"recorder_74.mp3","root":73.99,"len":7.0},{"f":"recorder_80.mp3","root":80.03,"len":7.0},{"f":"recorder_88.mp3","root":87.99,"len":7.0}]},"balafon":{"kind":"melodic","sustain":false,"zones":[{"f":"balafon_61.mp3","root":61.37,"len":0.79},{"f":"balafon_66.mp3","root":65.59,"len":0.57},{"f":"balafon_71.mp3","root":71.35,"len":0.64},{"f":"balafon_84.mp3","root":84.04,"len":0.59},{"f":"balafon_89.mp3","root":88.87,"len":0.51}]},"chimes":{"kind":"melodic","sustain":false,"zones":[{"f":"chimes_60.mp3","root":60.13,"len":5.0},{"f":"chimes_68.mp3","root":68.02,"len":5.0},{"f":"chimes_78.mp3","root":78.05,"len":3.23},{"f":"chimes_88.mp3","root":88.04,"len":3.39},{"f":"chimes_96.mp3","root":96.0,"len":2.19}]},"psaltery":{"kind":"melodic","sustain":true,"zones":[{"f":"psaltery_70.mp3","root":70,"len":7.0},{"f":"psaltery_74.mp3","root":74,"len":7.0},{"f":"psaltery_80.mp3","root":80,"len":7.0},{"f":"psaltery_86.mp3","root":86,"len":7.0},{"f":"psaltery_90.mp3","root":90,"len":7.0}]},"strumstick":{"kind":"melodic","sustain":false,"zones":[{"f":"strumstick_50.mp3","root":50.06,"len":3.5},{"f":"strumstick_57.mp3","root":57.04,"len":3.5},{"f":"strumstick_64.mp3","root":63.99,"len":3.5},{"f":"strumstick_73.mp3","root":73.03,"len":3.5},{"f":"strumstick_81.mp3","root":81.0,"len":0.77}]},"sax":{"kind":"melodic","sustain":true,"zones":[{"f":"sax_44.mp3","root":44.0,"len":7.0},{"f":"sax_52.mp3","root":52.0,"len":7.0},{"f":"sax_62.mp3","root":62.0,"len":7.0},{"f":"sax_70.mp3","root":70.0,"len":7.0},{"f":"sax_80.mp3","root":80.0,"len":7.0},{"f":"sax_88.mp3","root":88.03,"len":7.0}]},"saxello":{"kind":"melodic","sustain":true,"zones":[{"f":"saxello_58.mp3","root":58.03,"len":7.0},{"f":"saxello_66.mp3","root":65.99,"len":7.0},{"f":"saxello_78.mp3","root":77.99,"len":7.0},{"f":"saxello_88.mp3","root":88.02,"len":7.0}]},"glass":{"kind":"melodic","sustain":true,"zones":[{"f":"glass_75.mp3","root":75.27,"len":7.0},{"f":"glass_78.mp3","root":77.87,"len":7.0},{"f":"glass_83.mp3","root":82.57,"len":7.0},{"f":"glass_86.mp3","root":86.06,"len":7.0}]},"dantranh":{"kind":"melodic","sustain":false,"zones":[{"f":"dantranh_47.mp3","root":47.01,"len":4.0},{"f":"dantranh_56.mp3","root":56.3,"len":4.0},{"f":"dantranh_66.mp3","root":66.0,"len":2.65},{"f":"dantranh_73.mp3","root":73.02,"len":2.77},{"f":"dantranh_83.mp3","root":82.91,"len":1.5}]},"kick":{"kind":"oneshot","f":"kick.mp3","len":1.0,"src":"BDrumNew_hit_v7_rr1_Sum.wav"},"kick2":{"kind":"oneshot","f":"kick2.mp3","len":1.0,"src":"bdrum3_fff_rr1.wav"},"cajon":{"kind":"oneshot","f":"cajon.mp3","len":0.38,"src":"Cajon_hit1_fff_rr1.wav"},"cajonslap":{"kind":"oneshot","f":"cajonslap.mp3","len":0.43,"src":"Cajon_hit2_f_rr1.wav"},"snare":{"kind":"oneshot","f":"snare.mp3","len":1.0,"src":"Snare2_taps_v4_rr1_Mid.wav"},"snare2":{"kind":"oneshot","f":"snare2.mp3","len":1.0,"src":"RopeSnare_stick_Main_vl1_rr1.wav"},"tomh":{"kind":"oneshot","f":"tomh.mp3","len":0.84,"src":"TomH_HitM_v4_rr1_Mid.wav"},"toml":{"kind":"oneshot","f":"toml.mp3","len":1.0,"src":"TomL_rimS_v2_rr1_Mid.wav"},"hat":{"kind":"oneshot","f":"hat.mp3","len":0.37,"src":"HiHat_HitC_v3_rr1_Mid.wav"},"hatopen":{"kind":"oneshot","f":"hatopen.mp3","len":1.6,"src":"HiHat_HitO_rr1_Mid.wav"},"clap":{"kind":"oneshot","f":"clap.mp3","len":0.28,"src":"Clap_rr1.wav"},"crash":{"kind":"oneshot","f":"crash.mp3","len":3.5,"src":"cymbal_crash1_mf1.wav"},"ride":{"kind":"oneshot","f":"ride.mp3","len":4.0,"src":"susCymb1_bow_7.wav"},"cowbell":{"kind":"oneshot","f":"cowbell.mp3","len":0.56,"src":"Cowbell1_Hit_v3_rr1_Mid.wav"},"woodblock":{"kind":"oneshot","f":"woodblock.mp3","len":0.33,"src":"wood_click_f_rr1.wav"},"claves":{"kind":"oneshot","f":"claves.mp3","len":0.85,"src":"Claves1_Hit_v1_rr1_Mid.wav"},"agogo":{"kind":"oneshot","f":"agogo.mp3","len":0.5,"src":"Agogo_High_v2_rr1_Mid.wav"},"agogolow":{"kind":"oneshot","f":"agogolow.mp3","len":1.2,"src":"Agogo_Low_v2_rr1_Mid.wav"},"tamb":{"kind":"oneshot","f":"tamb.mp3","len":0.55,"src":"Tamb1_Hit_v2_rr1_Mid.wav"},"shaker":{"kind":"oneshot","f":"shaker.mp3","len":0.27,"src":"Mid_ShakerDouble_Down_rr1.wav"},"triangle":{"kind":"oneshot","f":"triangle.mp3","len":3.0,"src":"triangle1_hit_mp.wav"},"conga":{"kind":"oneshot","f":"conga.mp3","len":0.63,"src":"Conga_HitN_v2_rr1_Sum.wav"},"congaslap":{"kind":"oneshot","f":"congaslap.mp3","len":0.67,"src":"Conga_HitFM_v2_rr1_Sum.wav"},"bongo":{"kind":"oneshot","f":"bongo.mp3","len":0.59,"src":"BongoH_Hit1_v2_rr1_Mid.wav"},"darbuka":{"kind":"oneshot","f":"darbuka.mp3","len":1.0,"src":"Darbuka_1_hit_vl2_rr1.wav"},"framedrum":{"kind":"oneshot","f":"framedrum.mp3","len":1.0,"src":"HDrumL_Hit_v3_rr1_Sum.wav"},"slitlo":{"kind":"oneshot","f":"slitlo.mp3","len":0.64,"src":"LogDrumLo_MedM_v2_rr1_Sum.wav"},"slithi":{"kind":"oneshot","f":"slithi.mp3","len":0.94,"src":"LogDrumHi_MedM_v2_rr1_Sum.wav"},"guiro":{"kind":"oneshot","f":"guiro.mp3","len":0.99,"src":"Guiro_Hit_rr1_Mid.wav"},"vibraslap":{"kind":"oneshot","f":"vibraslap.mp3","len":1.6,"src":"vibraslap_rr1.wav"},"anvil":{"kind":"oneshot","f":"anvil.mp3","len":0.94,"src":"Anvil_Hit1_v3_rr1_Mid.wav"},"brake":{"kind":"oneshot","f":"brake.mp3","len":0.57,"src":"BrakeDrum1_Hammer_v3_rr1_Mid.wav"},"sleigh":{"kind":"oneshot","f":"sleigh.mp3","len":1.5,"src":"Sleighbells_Hit_rr1_Mid.wav"},"timpani":{"kind":"oneshot","f":"timpani.mp3","len":3.0,"src":"Timpani1_Hit_v2_rr1_Sum.wav"},"gong":{"kind":"oneshot","f":"gong.mp3","len":8.0,"src":"gong_f.wav"},"gongscrape":{"kind":"oneshot","f":"gongscrape.mp3","len":7.0,"src":"gong_scrape_mf.wav"},"flexatone":{"kind":"oneshot","f":"flexatone.mp3","len":4.0,"src":"flexatone_long.wav"},"siren":{"kind":"oneshot","f":"siren.mp3","len":2.09,"src":"Main_SirenWhistle-005.wav"},"train":{"kind":"oneshot","f":"train.mp3","len":2.1,"src":"Main_TrainLow_Fall-001.wav"},"ratchet":{"kind":"oneshot","f":"ratchet.mp3","len":3.0,"src":"Ratchet1_Slow_rr1_Mid.wav"},"ocean":{"kind":"oneshot","f":"ocean.mp3","len":7.0,"src":"OceanDrum_Sus_1_Mid.wav"},"windchimes":{"kind":"oneshot","f":"windchimes.mp3","len":6.0,"src":"windchimes_random.wav"},"belltree":{"kind":"oneshot","f":"belltree.mp3","len":3.38,"src":"bell_tree_metalscrape1.wav"},"cymbow":{"kind":"oneshot","f":"cymbow.mp3","len":7.0,"src":"susCymb1_bow_13.wav"},"brakebow":{"kind":"oneshot","f":"brakebow.mp3","len":5.89,"src":"BrakeDrum1_Bowed_rr2_Mid.wav"},"didge":{"kind":"oneshot","f":"didge.mp3","len":8.0,"src":"Didgeridoo1_Phrase3_Main.wav"},"didge2":{"kind":"oneshot","f":"didge2.mp3","len":8.0,"src":"Didgeridoo1_Phrase6_Main.wav"},"dantranhfx":{"kind":"oneshot","f":"dantranhfx.mp3","len":1.99,"src":"FX_18.wav"},"bb_kick":{"kind":"oneshot","f":"bb_kick.mp3","len":0.9,"src":"Virtuosity Drums (CC0) lofi_kick_snoff_vl4_rr1.flac"},"bb_kick2":{"kind":"oneshot","f":"bb_kick2.mp3","len":0.9,"src":"Virtuosity Drums (CC0) lofi_kick_snoff_vl3_rr2.flac"},"bb_snare":{"kind":"oneshot","f":"bb_snare.mp3","len":0.9,"src":"Virtuosity Drums (CC0) lofi_snare_center_vl34.flac"},"bb_snare2":{"kind":"oneshot","f":"bb_snare2.mp3","len":0.8,"src":"Virtuosity Drums (CC0) lofi_snare_center_vl28.flac"},"bb_rim":{"kind":"oneshot","f":"bb_rim.mp3","len":0.9,"src":"Virtuosity Drums (CC0) lofi_snare_rimshot_vl12.flac"},"bb_xstick":{"kind":"oneshot","f":"bb_xstick.mp3","len":0.5,"src":"Virtuosity Drums (CC0) lofi_snare_crossstick_vl14.flac"},"bb_stick":{"kind":"oneshot","f":"bb_stick.mp3","len":0.5,"src":"Virtuosity Drums (CC0) lofi_snare_stickshot2_vl14.flac"},"bb_hat":{"kind":"oneshot","f":"bb_hat.mp3","len":0.35,"src":"Virtuosity Drums (CC0) lofi_hh_closed_vl3_rr1.flac"},"bb_hat2":{"kind":"oneshot","f":"bb_hat2.mp3","len":0.3,"src":"Virtuosity Drums (CC0) lofi_hh_closed_vl2_rr2.flac"},"bb_hatopen":{"kind":"oneshot","f":"bb_hatopen.mp3","len":1.3,"src":"Virtuosity Drums (CC0) lofi_hh_open_vl3_rr1.flac"},"bb_hathalf":{"kind":"oneshot","f":"bb_hathalf.mp3","len":0.7,"src":"Virtuosity Drums (CC0) lofi_hh_half_vl3_rr1.flac"},"bb_pedal":{"kind":"oneshot","f":"bb_pedal.mp3","len":0.5,"src":"Virtuosity Drums (CC0) lofi_hh_pedal_vl3_rr1.flac"},"bb_ride":{"kind":"oneshot","f":"bb_ride.mp3","len":2.2,"src":"Virtuosity Drums (CC0) lofi_ride_ride_vl3_rr1.flac"},"bb_bell":{"kind":"oneshot","f":"bb_bell.mp3","len":2.0,"src":"Virtuosity Drums (CC0) lofi_ride_bell_vl3_rr1.flac"},"bb_crash":{"kind":"oneshot","f":"bb_crash.mp3","len":3.0,"src":"Virtuosity Drums (CC0) lofi_crash_crash_vl3_rr1.flac"},"bb_tomh":{"kind":"oneshot","f":"bb_tomh.mp3","len":0.9,"src":"Virtuosity Drums (CC0) lofi_htom_center_vl14.flac"},"bb_toml":{"kind":"oneshot","f":"bb_toml.mp3","len":1.2,"src":"Virtuosity Drums (CC0) lofi_ltom_center_vl14.flac"},"st_kick":{"kind":"oneshot","f":"st_kick.mp3","len":0.8,"src":"Virtuosity Drums (CC0) mid_kick_snoff_vl4_rr1.flac"},"st_snare":{"kind":"oneshot","f":"st_snare.mp3","len":0.8,"src":"Virtuosity Drums (CC0) mid_snare_center_vl34.flac"},"st_rim":{"kind":"oneshot","f":"st_rim.mp3","len":0.8,"src":"Virtuosity Drums (CC0) mid_snare_rimshot_vl12.flac"},"st_hat":{"kind":"oneshot","f":"st_hat.mp3","len":0.35,"src":"Virtuosity Drums (CC0) mid_hh_closed_vl3_rr1.flac"}};</script>
+<script src="locale-story-en.js?v=20261028caseen1"></script>
 <script>
 // ===== Idiomas del juego: español / inglés (se elige solo según el navegador; botón 🌐 en la pared para cambiar) =====
 (() => {
-  let L = 'es'; try { const q = /[?&#]lang=(es|en)/.exec(location.search + location.hash); L = (q && q[1]) || localStorage.getItem('unfire_lang') || ((navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en'); } catch (e) {}
+  let L = 'en'; // Unfire Audio public website is English-only (including returning visitors).
   window.__LANG = L;
-  window.__setLang = (l) => { try { localStorage.setItem('unfire_lang', l); } catch (e) {} location.reload(); };
+  window.__setLang = () => { try { localStorage.setItem('unfire_lang', 'en'); } catch (e) {} window.__LANG = 'en'; };
   const EN = {
+    "¡Desde aquí arriba se ve toda la isla!": "You can see the whole island from up here!", "HYPERWAVE 2000 es un sinte entero. Se toca aquí mismo.": "HYPERWAVE 2000 is a full synth. You play it right here.", "¡Y cada cápsula esconde una sorpresa!": "And every capsule hides a surprise!", "¡Hola, humano! Pregúntame por HYPERWAVE, los efectos o la isla.": "Hello, human! Ask me about HYPERWAVE, the effects or the island.", "Bip bup… eso aún no lo sé. Pregúntame por HYPERWAVE, los efectos o la isla.": "Beep boop… I don't know that yet. Ask me about HYPERWAVE, the effects or the island.", "Créditos y licencias": "Credits and licences",
+    "Disponible desde la tercera misión de la historia": "Available from the third story mission", "MALETÍN": "CASE", "Atrás": "Back", "Cerrar y guardar": "Close and save", "Pega un enlace de YouTube o escribe qué buscar": "Paste a YouTube link or type what to search", "Volumen de la radio": "Radio volume", "Pulsa para permitir el micrófono y escuchar jugadores cercanos": "Tap to allow the microphone and hear nearby players", "🔧 TALLER · personaliza tu robot": "🔧 WORKSHOP · customise your robot", "🔧 TALLER": "🔧 WORKSHOP", "TALLER": "WORKSHOP", "ÁRTICO": "ARCTIC", "NEÓN": "NEON", "URBANO": "URBAN", "DESIERTO": "DESERT", "CARBONO": "CARBON", "CARBON": "CARBON", "♥ CORAZÓN": "♥ HEART", "CORAZÓN": "HEART", "★ ESTRELLA": "★ STAR", "ESTRELLA": "STAR", "ϟ RAYO": "ϟ BOLT", "RAYO": "BOLT", "☺ SONRISA": "☺ SMILE", "SONRISA": "SMILE", "≈ OLA": "≈ WAVE", "OLA": "WAVE", "— NINGUNA": "— NONE", "NINGUNA": "NONE", "+ MI IMAGEN": "+ MY IMAGE", "MI IMAGEN": "MY IMAGE", "PEGATINA": "STICKER", "CAMUFLAJE · METALIZADO": "CAMO · METALLIC", "CAMUFLAJE": "CAMO", "METALIZADO": "METALLIC", "Tipo de robot transformable": "Transformable robot type", "La imagen se guarda solo en este dispositivo. No se envía al modo online.": "The image is only saved on this device. It is never sent to online mode.", "★ MISIÓN": "★ MISSION", "Arrastra para explorar · pellizca o usa +/− para ampliar · Esc para cerrar": "Drag to explore · pinch or use +/− to zoom · Esc to close", "Baja sobre una compuerta para abrirla · fuera = todas · o pulsa OPEN ALL": "Move down onto a hatch to open it · outside = all · or press OPEN ALL", "Baja sobre una compuerta para abrirla · fuera = todas · o pulsa ABRIR TODO": "Move down onto a hatch to open it · outside = all · or press OPEN ALL",
+    '🔒 CÁPSULA · MISIÓN 3': '🔒 CAPSULE · MISSION 3', '🎒 CÁPSULA (G)': '🎒 CAPSULE (G)', '🎒 DESPLEGANDO…': '🎒 DEPLOYING…', '🎒 LANZAR CÁPSULA': '🎒 THROW CAPSULE', '🎒 RECUPERAR EN CÁPSULA': '🎒 RECALL TO CAPSULE', '🎒 GUARDAR EN CÁPSULA': '🎒 STORE IN CAPSULE', 'Disponible desde la tercera misión': 'Available from the third mission', 'Guardar o lanzar el maletín con su cápsula': 'Store or throw the case with its capsule', 'Configuración': 'Settings', 'Transformarte en Nano Robot': 'Turn into a Nano Robot',
+    // Línea del diálogo de ARI: texto y voz sintetizada comparten traducción.
+    'Y porque el 9 ya estaba elegido.': 'And because 9 was already taken.',
     // interfaz y avisos
     '🚶 PASEAR': '🚶 WALK', '↩ VOLVER AL MALETÍN': '↩ BACK TO THE CASE', '⏏ SALIR A LA WEB': '⏏ BACK TO THE WEBSITE', '🤖 UNFIRE CONTROL': '🤖 UNFIRE CONTROL',
     '🎥 VISTA: 3ª PERSONA (C)': '🎥 VIEW: 3RD PERSON (C)', '🎥 VISTA: ': '🎥 VIEW: ', '3ª PERSONA': '3RD PERSON', '3ª LEJOS': '3RD FAR', '1ª PERSONA': '1ST PERSON', 'DRON': 'DRONE', '🎒 SACAR MALETÍN (G)': '🎒 PULL OUT CASE (G)', '🔧 TALLER': '🔧 WORKSHOP', '🌐 ONLINE': '🌐 ONLINE', '🌐 MODO ONLINE': '🌐 ONLINE MODE', 'Tu nombre': 'Your name', 'Escribe tu nombre': 'Type your name', 'Color de tu robot': 'Your robot colour', 'Tipo de robot transformable': 'Transformable robot type', '✨ CREAR SALA': '✨ CREATE ROOM', '➜ UNIRME': '➜ JOIN', 'CÓDIGO': 'CODE', 'CERRAR': 'CLOSE', '📨 INVITAR': '📨 INVITE', 'Creando sala…': 'Creating room…', 'Esa sala no existe o el anfitrión se ha ido': 'That room does not exist or the host left', 'El código tiene 5 letras o números': 'The code has 5 letters or numbers', '🏄 TABLA: NO (B)': '🏄 BOARD: OFF (B)', '🏄 ¡Estás en el agua! Pulsa TABLA (o B) para surfear': '🏄 You are in the water! Press BOARD (or B) to surf', '🏄 TABLA: SÍ (B)': '🏄 BOARD: ON (B)', '🏄 Tabla activada · en el agua: ESPACIO = truco (mantén para volar)': '🏄 Board on · in the water: SPACE = trick (hold to fly)', '🪽 Tabla guardada · ESPACIO vuelve a ser volar': '🪽 Board stowed · SPACE flies again', '¿Has visto la isla Haiku? Cerezos en flor, una pagoda y un monte nevado. Dicen que los koi bailan con el bajo.': 'Have you seen Haiku Island? Cherry blossoms, a pagoda and a snowy mountain. They say the koi dance to the bass.', 'Hay olas de verdad en el mar abierto. Coge una tabla en la SURF ZONE y pulsa ESPACIO para hacer trucos.': 'There are real waves out in the open sea. Grab a board at the SURF ZONE and press SPACE for tricks.', 'Mi récord de surf: un FLIP con combo ×3. ¿Te atreves a superarlo?': 'My surf record: a FLIP with a ×3 combo. Dare to beat it?', 'Desde el cielo el mundo no se acaba: islas de sueño, dunas y jardines hasta el horizonte.': 'From the sky the world never ends: dream islands, dunes and gardens all the way to the horizon.', 'Las columnas de la casa son las bobinas del casete. Y ojo, cuando pasas detrás de una… algo cambia.': 'The house columns are the cassette reels. And watch out, when you pass behind one… something changes.', 'La pirámide de Atlantis la han restaurado: piedra de verdad, escalinata y templo arriba.': 'The Atlantis pyramid has been restored: real stone, a grand staircase and a temple on top.', 'Los plugins gigantes del cielo nacen como una célula y se van desplegando poquito a poco.': 'The giant sky plugins are born as a cell and unfold little by little.', 'Dicen que el modo cine (V) es para grabar vídeos como los de los juegos. Yo ya hice uno.': 'They say cinema mode (V) is for recording videos like in games. I already made one.', 'Al atardecer el mar se pone dorado y la isla Haiku huele a cerezo.': 'At sunset the sea turns gold and Haiku Island smells of cherry blossom.', 'El horizonte es infinito, pero hasta el borde del mapa solo llega quien vuela de verdad.': 'The horizon is infinite, but only true flyers reach the edge of the map.', 'Cruza los torii de la isla Haiku hasta la pagoda': 'Walk through the Haiku Island torii to the pagoda', 'Sube a la cima nevada del monte de la isla Haiku': 'Climb the snowy peak on Haiku Island', 'Surfea una ola grande en mar abierto': 'Surf a big wave in the open sea', '🌊 ¡Wipeout! Casi…': '🌊 Wipeout! So close…', '🎬 MODO CINE (V)': '🎬 CINEMA MODE (V)', 'MODO CINE · WASD · Q/E · arrastra · V salir': 'CINEMA MODE · WASD · Q/E · drag · V exit', '✕ SALIR': '✕ EXIT',
@@ -406,6 +440,8 @@ body.unfire-roaming #cv{touch-action:none}
     '🎬 MODO VISTA · toca o pulsa Esc para salir': '🎬 VIEW MODE · tap or press Esc to exit', '🎬 MODO VISTA': '🎬 VIEW MODE',
     '🌍 Estás fuera · la isla entera es tuya': '🌍 You are outside · the whole island is yours', '🌍 SALIR FUERA': '🌍 GO OUTSIDE', '🏠 VOLVER DENTRO': '🏠 GO BACK INSIDE',
     '🔒 En unos días podrás salir a la isla. ¡Prepárate!': '🔒 In a few days you will be able to go out to the island. Get ready!',
+    'Primero lo importante: el maletín viaja en una cápsula de bolsillo. Botón, lanzamiento… ¡y POP! Así lo puedes sacar donde quieras: en casa, fuera o en una sala online.': 'First things first: the case travels in a pocket capsule. Button, throw… and POP! You can bring it out anywhere: at home, outside or in an online room.',
+    '👋 Nimbo: vale, me quedo aquí. Llámame con 🤖 o tocándome cuando me necesites.': '👋 Nimbo: OK, I will stay here. Call me with 🤖 or tap me when you need me.', '🤖 Nimbo: ¡voy volando!': '🤖 Nimbo: flying over!', '🤖 Nimbo: ¡contigo! Te aviso de secretos, te saco si te atascas y de noche te ilumino.': '🤖 Nimbo: with you! I will point out secrets, pull you out if you get stuck and light the way at night.', '🤖 Nimbo: ¡agárrate! Te saco de ahí.': '🤖 Nimbo: hold on! Getting you out of there.', '🤖 NIMBO: VEN': '🤖 NIMBO: COME', '🤖 NIMBO: VETE': '🤖 NIMBO: LEAVE',
     '👋 Nimbo: te dejo explorar a tu aire. Si me buscas, estaré por aquí.': '👋 Nimbo: I will let you explore. If you need me, I will be around.',
     '🎯 Misión de ': '🎯 Mission from ', ' (mira la estrella del mapa)': ' (look for the star on the map)', '🏆 ¡Misión cumplida! «': '🏆 Mission complete! «', '» · ': '» · ', ' te debe una': ' owes you one',
     '¡Eh, tú! ¿Me haces un favor? ': 'Hey, you! Can you do me a favor? ', '. ¡Te espero!': '. I will wait for you!', 'Tengo una para ti: ': 'I have one for you: ', '. ¡Ve!': '. Go!', 'Primero acaba la que llevas, que te veo venir.': 'Finish the one you have first. I can see right through you.',
@@ -419,13 +455,16 @@ body.unfire-roaming #cv{touch-action:none}
     '♪ RADIO EN PAUSA · PULSA ▶': '♪ RADIO PAUSED · PRESS ▶', '📻 Suena: ': '📻 Now playing: ', 'Música parada.': 'Music stopped.', '📂 TU MÚSICA': '📂 YOUR MUSIC', '📻 RADIO': '📻 RADIO',
     '📂 Elige tu canción: sonará por los altavoces de la casa': '📂 Pick your song: it will play through the house speakers', '🖼️ Elige una imagen para la canción que suena': '🖼️ Pick an image for the song that is playing',
     'Cambia la canción (botón ⏭ o el tocadiscos)': 'Change the song (⏭ button or the turntable)', 'sin canciones aún': 'no songs yet',
-    '🌦️ Tiempo: ': '🌦️ Weather: ', 'domingo de nubes altas': 'Sunday with high clouds', 'lunes lluvioso': 'rainy Monday', 'martes despejado': 'clear Tuesday', 'miércoles de nieve': 'snowy Wednesday', 'jueves de tormenta': 'stormy Thursday', 'viernes de nubes sueltas': 'Friday with scattered clouds', 'sábado variable': 'changeable Saturday',
+    '🌦️ Tiempo: ': '🌦️ Weather: ', 'domingo de nubes altas': 'Sunday with high clouds', 'lunes lluvioso': 'rainy Monday', 'martes despejado': 'clear Tuesday', 'miércoles de nubes suaves': 'Wednesday with gentle clouds', 'jueves de tormenta': 'stormy Thursday', 'viernes de nubes sueltas': 'Friday with scattered clouds', 'sábado variable': 'changeable Saturday',
     '★ MEGA TRANSFORMACIÓN · todas las familias': '★ MEGA TRANSFORMATION · all families', '★ SÚPER TRANSFORMACIÓN': '★ SUPER TRANSFORMATION', 'Mega apagado': 'Mega off', '¡MEGA FIESTA!': 'MEGA PARTY!', 'MEGA · FIESTA': 'MEGA · PARTY',
     'ABRIR TODO: abriendo compuertas…': 'OPEN ALL: opening the hatches…', 'ABRIR TODO': 'OPEN ALL', 'Todo abierto · todos al mismo ritmo': 'All open · everyone on the same beat', 'Guardando el maletín…': 'Packing the case…', 'De vuelta al maletín.': 'Back to the case.',
     'TRANSFORMAR': 'TRANSFORM', 'ATRÁS': 'BACK', 'MOVER': 'MOVE', 'CERRAR': 'CLOSE', 'CINE · PELI': 'CINEMA · MOVIE', 'GUARDAR MALETÍN': 'PACK THE CASE', 'Mover: arrastra sobre el maletín': 'Move: drag over the case',
     'Arrastra para girar · cursor al borde para moverte · acércate para abrir': 'Drag to rotate · cursor to the edge to move · get closer to open',
     'Pulsa la mariposa para cambiar de forma · arrastra los mandos': 'Press the butterfly to change shape · drag the knobs', 'Clic para probarlo': 'Click to try it', 'HAZ CLIC': 'CLICK',
     'HYPERWAVE 2000 · listo para tocar (teclas A–L)': 'HYPERWAVE 2000 · ready to play (keys A–L)', 'HYPERWAVE vuelve al maletín': 'HYPERWAVE goes back into the case', 'HYPERWAVE equipado en la mesa · tamaño real': 'HYPERWAVE set up on the desk · real size',
+    '¡Aquí todo está incluido! Explora la isla, toca HYPERWAVE y descubre todos los secretos.': 'Everything is included here! Explore the island, play HYPERWAVE and discover every secret.',
+    'En la isla hay cápsulas escondidas por todas partes. ¡Sigue explorando!': 'There are capsules hidden all over the island. Keep exploring!',
+    'Pregunta a los robots… (HYPERWAVE, efectos, isla)': 'Ask the robots… (HYPERWAVE, effects, island)',
     '🔒 Mandos de demo · desbloquéalos al comprar HYPERWAVE': '🔒 Demo knobs · unlock them by buying HYPERWAVE', '🎹 Melodía nueva': '🎹 New melody', '🎹 Octava ': '🎹 Octave ', 'Toca el HYPERWAVE para desplegarlo': 'Touch HYPERWAVE to unfold it',
     '🎰 ¡Te ha tocado ': '🎰 You got ', '! · tócalo para verlo otra vez': '! · touch it to see it again', '¡Gira la máquina de bolas!': 'Spin the gumball machine!', 'Usa la máquina de bolas roja': 'Use the red gumball machine', 'PLATAFORMA DE PREMIO': 'PRIZE PLATFORM', '100 CÁPSULAS · GIRA': '100 CAPSULES · SPIN',
     '🤖 Modo robot: caminas a su altura por la mesa (WASD / flechas)': '🤖 Robot mode: walk at their height on the desk (WASD / arrows)', '🤖⬇ Los robots vuelven al maletín': '🤖⬇ The robots go back into the case',
@@ -481,11 +520,11 @@ body.unfire-roaming #cv{touch-action:none}
     // historia
     'Ey. Psst. Aquí abajo, al lado del maletín. Soy Nimbo.': "Hey. Psst. Down here, next to the case. I'm Nimbo.", '¿Cómo te llamas? Así te podré llamar por tu nombre y no «oye tú», que queda feo.': 'What is your name? That way I can call you by your name and not "hey you", which is rude.',
     '. ¿Cuánto sabes de música y sintes? Así te explico a tu ritmo.': '. How much do you know about music and synths? That way I can explain at your pace.', 'Encantado, ': 'Nice to meet you, ',
-    'Perfecto. Aquí dentro pasa algo raro y necesito ayuda. ¿Empezamos la historia? Puedes dejarla cuando quieras y volver: yo te guardo la partida.': 'Perfect. Something strange is going on in here and I need help. Shall we start the story? You can leave whenever you want and come back: I will save your game.',
+    'Perfecto. Aquí dentro pasa algo raro, y no es solo la música: el tiempo se ha roto. Necesito a alguien valiente. ¿Empezamos la historia? Puedes pararla cuando quieras y volver: yo te guardo la partida.': 'Perfect. Something strange is going on in here, and it\'s not just the music: time itself is broken. I need someone brave. Shall we start the story? You can stop whenever you like and come back: I\'ll save your game.',
     '! Has vuelto. Te guardé el sitio: capítulo ': "! You're back. I saved your spot: chapter ",
     'Te cuento el lío. La noche del treinta y uno de diciembre de mil novecientos noventa y nueve, a las once, cincuenta y nueve y cincuenta y nueve, este maletín se tragó un segundo. Uno solo. Y desde entonces aquí dentro nunca llega el año dos mil.': 'Here is the mess. On the night of December thirty-first, nineteen ninety-nine, at eleven fifty-nine and fifty-nine seconds, this case swallowed a second. Just one. And ever since, the year two thousand never arrives in here.',
     'Por eso los robots siguen con la moda de entonces. No es estilo: es que no se pueden cambiar de ropa.': "That's why the robots still dress like back then. It's not style: they just can't change clothes.",
-    'Ese segundo se rompió en doce pedacitos, uno por cada familia del zodiaco. Si los recuperamos, el tiempo vuelve a fluir. Y de paso, aprendes a usar todo esto como un maestro.': 'That second broke into twelve little pieces, one for each zodiac family. If we get them back, time flows again. And on the way, you learn to use all of this like a master.',
+    'Ese segundo se rompió en doce pedacitos y salieron volando por toda la isla: playas, nubes, ruinas y hasta el fondo del mar. Si los recuperamos, el tiempo vuelve a correr. Prepárate para volar, surfear y explorar.': 'That second shattered into twelve little pieces and they flew all over the island: beaches, clouds, ruins, even the bottom of the sea. If we get them back, time starts flowing again. Get ready to fly, surf and explore.',
     'Primero, despierta al HYPERWAVE: es el sinte del centro. Tócalo para que se despliegue.': 'First, wake up HYPERWAVE: the synth in the middle. Touch it so it unfolds.', 'Despierta al HYPERWAVE, el sinte del centro.': 'Wake up HYPERWAVE, the synth in the middle.',
     'Ahora toca cuatro notas con el teclado de tu ordenador: las letras A, S, D, F, G, H, J, K son las teclas blancas, y W, E, T, Y, U las negras. Tranquilo: suene lo que suene, siempre suena bien.': 'Now play four notes on your computer keyboard: A, S, D, F, G, H, J, K are the white keys, and W, E, T, Y, U the black ones. Relax: whatever you play, it always sounds good.',
     'Toca cuatro notas con el teclado del ordenador. A S D F… y las negras en W E T Y U.': 'Play four notes on the computer keyboard. A S D F… and the black keys on W E T Y U.',
@@ -494,8 +533,8 @@ body.unfire-roaming #cv{touch-action:none}
     'Todos creen que el segundo se perdió. Yo creo que alguien lo escondió a propósito.': 'Everyone thinks the second got lost. I think someone hid it on purpose.', '¿Y si el segundo perdido está dentro de otro segundo?': 'What if the lost second is inside another second?',
     'Los cuadros de esta casa no son decoración. Son ventanas a sitios donde la música cambió de piel. Pasea y toca tres.': "The paintings in this house aren't decor. They are windows to places where music changed its skin. Walk around and touch three.",
     'Pasea (botón PASEAR) y toca 3 cuadros': 'Walk around (WALK button) and touch 3 paintings', 'Fuego y balanza. Lo que arde y lo que mide. Cuando se dan la mano, aparece el pedacito de Aries. Lo tienes.': 'Fire and scales. What burns and what measures. When they shake hands, the Aries piece appears. You have it.',
-    'Detrás de la puerta azul hay más mundo del que parece. Cuando quieras saber la verdad, ya sabes dónde buscar.': 'Behind the blue door there is more world than it seems. When you want the truth, you know where to look.',
-    'Tres pedacitos de doce. Lo que viene después necesita el maletín completo: islas, la ciudad, el skatepark y la verdad de Escorpio.': 'Three pieces out of twelve. What comes next needs the full case: islands, the city, the skatepark and the truth about Scorpio.',
+    'Detrás de la puerta azul hay una isla entera esperándote: titanes, tormentas y secretos. Cuando quieras la verdad, ya sabes dónde buscar.': 'Behind the blue door there\'s a whole island waiting for you: titans, storms and secrets. When you want the truth, you know where to look.',
+    'Tres pedacitos de doce. Los demás están ahí fuera: en las islas, entre los titanes, en la ciudad y en el skatepark. Y alguien, en algún sitio, no quiere que los encontremos.': 'Three pieces out of twelve. The rest are out there: on the islands, among the titans, in the city and at the skatepark. And someone, somewhere, doesn\'t want us to find them.',
     'El segundo que se quedó dormido': 'The second that fell asleep', 'Aries quiere ser DJ': 'Aries wants to be a DJ', 'Los cuadros que hablan': 'The talking paintings',
     'Recuerda: si te pierdes, abre el mapa. Yo me perdí una vez dentro de un bolsillo.': 'Remember: if you get lost, open the map. I once got lost inside a pocket.', 'Si ves un cerdo volando, no es una metáfora. Se llama Gustavo y paga alquiler.': "If you see a flying pig, it's not a metaphor. His name is Gustavo and he pays rent.",
     'Las ballenas de fuera no cantan. Escuchan. Que es peor.': "The whales outside don't sing. They listen. Which is worse.", 'Yo una vez me soñé a mí mismo soñando. Me desperté dos veces. Fue agotador.': 'I once dreamed of myself dreaming. I woke up twice. It was exhausting.',
@@ -515,6 +554,7 @@ body.unfire-roaming #cv{touch-action:none}
     G3: ['and nobody believes me', "but don't tell Libra", 'and that changes everything', 'so watch your step', "and that's why I wear aluminum socks", 'though it might be my drivers', 'and I think it is beautiful', 'and honestly it scares me a little', 'and I saved it to my hard drive', "but today I don't care, today I dance", 'and I want a photo with it', "and I think it's a sign", 'and Aries says it is normal', 'and I have rebooted three times thinking about it', 'but relax, I have a backup', 'and that explains a lot', "though I'd rather not understand it", "so today we party", 'and nobody has done anything about it', 'and all I wanted was a coffee'],
     G4: ['What do you think', 'Have you noticed it too', 'Will you help me investigate', 'Shall we go see it', 'Do you think it is the music', 'Is it weird or the most normal thing in the world'],
   };
+  if (window.__UNFIRE_EN_ADDITIONS_20261026) Object.assign(EN, window.__UNFIRE_EN_ADDITIONS_20261026);
   const PAIRS = Object.entries(EN).sort((a, b) => b[0].length - a[0].length);
   const MEMO = new Map(); const T = (s) => { if (L !== 'en' || typeof s !== 'string' || !s) return s; if (EN[s]) return EN[s]; const c = MEMO.get(s); if (c !== undefined) return c; let o = s; if (/[a-záéíóúñ¿¡]{3}/i.test(s)) for (const [a, b] of PAIRS) if (a.length > 3 && o.includes(a)) o = o.split(a).join(b); if (MEMO.size > 4000) MEMO.clear(); MEMO.set(s, o); return o; };
   window.T = T;
@@ -522,7 +562,7 @@ body.unfire-roaming #cv{touch-action:none}
     try { const CP = CanvasRenderingContext2D.prototype, fT = CP.fillText, sT = CP.strokeText, mT = CP.measureText; CP.fillText = function (t, ...a) { return fT.call(this, T(String(t)), ...a); }; CP.strokeText = function (t, ...a) { return sT.call(this, T(String(t)), ...a); }; CP.measureText = function (t) { return mT.call(this, T(String(t))); }; } catch (e) {}
     try { const sp = speechSynthesis.speak.bind(speechSynthesis); speechSynthesis.speak = (u) => { try { u.text = T(u.text); if (!u.voice || !/^en/i.test(u.voice.lang)) { const vs = speechSynthesis.getVoices().filter((v) => /^en/i.test(v.lang)); const good = vs.filter((v) => /premium|enhanced|natural|neural|siri|google/i.test(v.name)); const pool = good.length ? good : vs; if (pool.length) { let h = 0; for (const c of (u.voice ? u.voice.name : u.text.slice(0, 4))) h = (h * 31 + c.charCodeAt(0)) | 0; u.voice = pool[Math.abs(h) % pool.length]; } u.lang = 'en-US'; } } catch (e) {} return sp(u); }; } catch (e) {}
     const SKIP = /^(SCRIPT|STYLE|TEXTAREA|INPUT|CODE|PRE)$/; const fixNode = (n) => { if (n.nodeType === 3) { if (n.parentNode && SKIP.test(n.parentNode.nodeName)) return; const v = n.nodeValue; if (v && v.trim()) { const t = T(v); if (t !== v) n.nodeValue = t; } } else if (n.nodeType === 1) { if (/^(SCRIPT|STYLE|CODE|PRE)$/.test(n.nodeName)) return; if (n.placeholder) { const t = T(n.placeholder); if (t !== n.placeholder) n.placeholder = t; } if (n.title) { const t = T(n.title); if (t !== n.title) n.title = t; } n.childNodes.forEach(fixNode); } };
-    const start = () => { fixNode(document.body); new MutationObserver((ms) => ms.forEach((m) => { if (m.type === 'characterData') fixNode(m.target); else m.addedNodes.forEach(fixNode); if (m.type === 'childList' && m.target && m.target.childNodes) m.target.childNodes.forEach((c) => c.nodeType === 3 && fixNode(c)); })).observe(document.body, { childList: true, subtree: true, characterData: true }); };
+    const start = () => { fixNode(document.body); new MutationObserver((ms) => ms.forEach((m) => { if (m.type === 'attributes') { const el = m.target, v = el.getAttribute(m.attributeName); if (v) { const t = T(v); if (t !== v) el.setAttribute(m.attributeName, t); } return; } if (m.type === 'characterData') fixNode(m.target); else m.addedNodes.forEach(fixNode); if (m.type === 'childList' && m.target && m.target.childNodes) m.target.childNodes.forEach((c) => c.nodeType === 3 && fixNode(c)); })).observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['title', 'placeholder'] }); };
     if (document.readyState === 'complete') start(); else addEventListener('DOMContentLoaded', start);
     document.documentElement.lang = 'en';
   }
@@ -932,7 +972,7 @@ const UA = (() => {
       src.buffer = o.reverse ? reversed(z) : z.b;
       src.playbackRate.value = Math.pow(2, (midi - z.root + (o.detune || 0) / 100) / 12) * (o.rate || 1);
       const g = ctx.createGain();
-      const amp = (o.gain ?? 1) * (0.3 + 0.7 * (o.vel ?? 0.8));
+      const amp = (o.gain ?? 1) * (0.3 + 0.7 * (o.vel ?? 0.8)) * ((window.__mega && /^(bells|chimes|glock|glass|vibesbow|xylo|balafon)$/.test(this.key)) ? 0.42 : 1);
       const atk = o.attack ?? 0.003;
       g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(amp, t + atk);
       src.connect(g); g.connect(o.dest || this.dest);
@@ -952,8 +992,13 @@ const UA = (() => {
     if (!z) return;
     const src = ctx.createBufferSource(); src.buffer = o.reverse ? reversed(z) : z.b;
     src.playbackRate.value = o.rate || 1;
-    const g = ctx.createGain(); g.gain.value = o.gain ?? 1;
-    if (o.decay) { g.gain.setValueAtTime(o.gain ?? 1, t); g.gain.setTargetAtTime(0, t + o.decay * 0.3, o.decay / 3); }
+    const g = ctx.createGain();
+    // Per-source true-peak trims: verified CC0 drums stay intact, no re-encoding.
+    const peakTrim = key === 'st_kick' ? 0.79 : key === 'st_snare' ? 0.85 : 1;
+    const metalTrim = window.__mega && /^(anvil|cowbell|gong|triangle|agogo|bb_bell|bb_ride|bb_crash)$/.test(key) ? 0.55 : 1;
+    const hitGain = (o.gain ?? 1) * peakTrim * metalTrim;
+    g.gain.value = hitGain;
+    if (o.decay) { g.gain.setValueAtTime(hitGain, t); g.gain.setTargetAtTime(0, t + o.decay * 0.3, o.decay / 3); }
     src.connect(g); g.connect(dest); src.start(t, o.reverse ? 0 : z.off);
     if (o.decay) src.stop(t + o.decay * 2 + 0.1);
     src.onended = () => g.disconnect();
@@ -1608,8 +1653,8 @@ const ENGINES = (() => {
       else if (mode === 'chip') { const o = ctx.createOscillator(); o.setPeriodicWave(pulseWave()); o.frequency.value = f; oscs.push(o); }
       else if (mode === 'pad') { for (const [type, d] of [['sawtooth', -p.detune], ['sawtooth', p.detune], ['triangle', 0]]) { const o = ctx.createOscillator(); o.type = type; o.frequency.value = f; o.detune.value = d; oscs.push(o); } }
       else { // FM
-        const c = ctx.createOscillator(), mo = ctx.createOscillator(), mg = ctx.createGain(); c.frequency.value = f; mo.frequency.value = f * 3.5;
-        mg.gain.setValueAtTime(f * 6, t); mg.gain.setTargetAtTime(f * 0.4, t, 0.35); mo.connect(mg); mg.connect(c.frequency); mo.start(t); oscs.push(c); c._mod = mo;
+        const c = ctx.createOscillator(), mo = ctx.createOscillator(), mg = ctx.createGain(); c.frequency.value = f; mo.frequency.value = f * 2;
+        mg.gain.setValueAtTime(f * 2.2, t); mg.gain.setTargetAtTime(f * 0.22, t, 0.25); mo.connect(mg); mg.connect(c.frequency); mo.start(t); oscs.push(c); c._mod = mo;
       }
       const mix = ctx.createGain(); mix.gain.value = 1 / Math.sqrt(oscs.length);
       oscs.forEach((o) => { o.connect(mix); o.start(t); });
@@ -1701,6 +1746,9 @@ const G3 = (() => {
     g.setIndex(idx);
     return g;
   }
+  // Caché: cada robot repetía estos cálculos al construirse (entrar en casa, ferias…); ahora se copian ya hechos.
+  const sgCache = new Map(), sgBuild = superGeometry;
+  superGeometry = function (o) { const k = [o.a, o.b, o.c, o.e1, o.e2, o.u0, o.u1, o.v0, o.v1, o.su, o.sv].join(','); let g = sgCache.get(k); if (!g) { g = sgBuild(o); if (sgCache.size > 500) return g; sgCache.set(k, g); } return g.clone(); };
   // z de la superficie frontal y normal en (x, y)
   function surfZ(s, x, y) {
     const A = Math.pow(Math.abs(y / s.b), 2 / s.e1); if (A >= 1) return 0;
@@ -1899,19 +1947,26 @@ const G3 = (() => {
 
   // ---------- Escena ----------
   function createStage(canvas) {
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: false, powerPreference: 'high-performance' });
+    // This renderer is separate from the main world. Reuse its device profile
+    // instead of allocating a second full-resolution/shadowed WebGL scene on mobile.
+    const stageBudget = window.__UNFIRE_AUTOCALIB || { tier: 'desktop', maxDpr: 1.5 };
+    const stageCompact = stageBudget.tier === 'compact';
+    const stageBalanced = stageBudget.tier === 'balanced';
+    const stageDpr = Math.min(window.devicePixelRatio || 1, stageBudget.maxDpr || 1.5);
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: !stageCompact, alpha: true, preserveDrawingBuffer: false, powerPreference: stageCompact ? 'default' : 'high-performance' });
     renderer.setClearColor(0x000000, 0);
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.08;
-    renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    renderer.shadowMap.enabled = !stageCompact; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.setPixelRatio(stageDpr);
     const scene = new THREE.Scene();
     const pmrem = new THREE.PMREMGenerator(renderer);
     scene.environment = pmrem.fromScene(studioScene(), 0.02).texture;
     const camera = new THREE.PerspectiveCamera(27, 1, 0.1, 100);
     camera.position.set(0, 1.35, 7.8);
-    const key = new THREE.DirectionalLight(0xffffff, 1.9); key.position.set(3.5, 7, 5); key.castShadow = true;
-    key.shadow.mapSize.set(2048, 2048); key.shadow.camera.left = -6; key.shadow.camera.right = 6; key.shadow.camera.top = 6; key.shadow.camera.bottom = -6;
+    const key = new THREE.DirectionalLight(0xffffff, 1.9); key.position.set(3.5, 7, 5); key.castShadow = !stageCompact;
+    const stageShadowMapSize = stageCompact ? 512 : stageBalanced ? 1024 : 2048;
+    key.shadow.mapSize.set(stageShadowMapSize, stageShadowMapSize); key.shadow.camera.left = -6; key.shadow.camera.right = 6; key.shadow.camera.top = 6; key.shadow.camera.bottom = -6;
     key.shadow.radius = 6; key.shadow.bias = -0.0004; key.shadow.normalBias = 0.02;
     scene.add(key);
     const rim = new THREE.DirectionalLight(0xbfd8ff, 1.1); rim.position.set(-5, 3, -4); scene.add(rim);
@@ -2376,7 +2431,7 @@ const GEAR3 = (() => {
     const fw = Math.min(B.a * 1.1, 1.0), fh = Math.min(B.b * 0.55, 0.5);
     const SW = 320, SH = 200, sc = Y2K.cnv(SW, SH), sg = sc.getContext('2d'), stex = Y2K.toTex(sc, { color: true });
     const bezel = mesh(rbox(fw + 0.12, fh + 0.12, 0.08, 0.06), M.blackGloss); bezel.position.y = 0.12; face.add(bezel);
-    const scr = new THREE.Mesh(Y2K.plate(fw, fh, 0.04), new THREE.MeshBasicMaterial({ map: stex, toneMapped: false })); scr.position.set(0, 0.12, 0.042); face.add(scr);
+    const scr = new THREE.Mesh(Y2K.plate(fw, fh, 0.04), new THREE.MeshBasicMaterial({ map: stex, toneMapped: false })); scr.onBeforeRender = () => { stex.__seen = performance.now(); }; scr.position.set(0, 0.12, 0.042); face.add(scr);
     const glass = new THREE.Mesh(Y2K.plate(fw, fh, 0.04), M.darkGlass); glass.position.set(0, 0.12, 0.046); face.add(glass);
     const shutter = mesh(rbox(fw + 0.14, fh + 0.14, 0.03, 0.06), MAT.part); shutter.position.set(0, 0.12, 0.07); face.add(shutter);
     tick.push((m) => { const k = ease.smooth(clamp(m * 2.2)); shutter.position.y = 0.12 + (fh + 0.1) * k; shutter.scale.y = Math.max(0.05, 1 - 0.9 * k); shutter.visible = k < 0.98; });
@@ -2519,8 +2574,10 @@ const GEAR3 = (() => {
       // flota
       body.position.y = 1.25 + Math.sin(time * 1.3) * 0.05 + 0.25 * clamp(m - 1);
       body.rotation.y = Math.sin(time * 0.4) * 0.12 * (m < 0.05 ? 1 : 0.4);
-      if (m > 0.1) drawScreen(st);
+      // la pantalla solo se repinta si se está viendo (y como mucho ~22 veces por segundo)
+      if (m > 0.1 && (time - dsT >= 0.045 || time < dsT) && !(stex.__seen && performance.now() - stex.__seen > 300)) { dsT = time; drawScreen(st); }
     }
+    let dsT = -1;
     function drawScreen(st) {
       const g = sg, f = st.spectrum, w = st.scope, lv = st.level || 0, V2 = spec.n % 5;
       g.fillStyle = 'rgba(2,4,12,0.3)'; g.fillRect(0, 0, SW, SH); g.save(); g.translate(SW / 2, SH / 2 + 6);
@@ -2590,7 +2647,7 @@ const GEAR4 = (() => {
       const g = new THREE.Group();
       const geo = round ? new THREE.CircleGeometry(w / 2, 48) : Y2K.plate(w, h, Math.min(w, h) * 0.18);
       put(g, mesh(round ? new THREE.CylinderGeometry(w / 2 + 0.06, w / 2 + 0.06, 0.06, 48).rotateX(H2) : rbox(w + 0.1, h + 0.1, 0.06, 0.05), M.blackGloss), 0, 0, -0.02);
-      put(g, new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ map: stex, toneMapped: false })), 0, 0, 0.015);
+      put(g, (() => { const sm = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ map: stex, toneMapped: false })); sm.onBeforeRender = () => { stex.__seen = performance.now(); }; return sm; })(), 0, 0, 0.015);
       put(g, new THREE.Mesh(geo, M.darkGlass), 0, 0, 0.02);
       if (round) put(g, mesh(new THREE.TorusGeometry(w / 2 + 0.06, 0.022, 10, 48), M.chrome), 0, 0, 0);
       return g;
@@ -2836,6 +2893,7 @@ const GEAR4 = (() => {
 
     // ---------- pantalla estilo reproductores 2000 ----------
     let time = 0, M_ = 0;
+    let dsT = -1;
     function drawScreen(st) {
       const g = sg, f = st.spectrum, w = st.scope, lv = st.level || 0, H360 = hue * 360;
       g.fillStyle = 'rgba(2,4,12,0.28)'; g.fillRect(0, 0, SW, SH); g.save(); g.translate(SW / 2, SH / 2 + 6);
@@ -2860,7 +2918,8 @@ const GEAR4 = (() => {
       ctls.forEach((c) => { if (c.cap) c.cap.material.emissiveIntensity = (c.id === 'use' && st.using) ? 1.8 : 0.5 + 0.3 * Math.sin(time * 3 + c.id.length); });
       emb.scale.setScalar(emb.userData.base * (1 + 0.07 * Math.sin(time * 4) * (m < 0.05 ? 1 : 0.3)));
       body.position.y = 0.4 + Math.sin(time * 1.2) * 0.02 + 0.45 * (1 - (body.userData.rise ?? 1)); body.rotation.y = Math.sin(time * 0.35) * 0.08 * (m < 0.05 ? 1 : 0.4);
-      if (m > 0.1) drawScreen(st);
+      // la pantalla solo se repinta si se está viendo (y como mucho ~22 veces por segundo)
+      if (m > 0.1 && (time - dsT >= 0.045 || time < dsT) && !(stex.__seen && performance.now() - stex.__seen > 300)) { dsT = time; drawScreen(st); }
     }
     const label = `${NAMES[A]} · ${['clásico', 'especial', 'dragón'][[0, 7, 13, 16, 18].includes(A) ? 2 : [1, 4, 5, 9, 10, 12, 14, 17].includes(A) ? 1 : 0]} · ${kind === 'inst' ? 'instrumento' : kind === 'drums' ? 'caja de ritmos' : 'efecto'}`;
     const size = { W: 3.2, H: 3.4, D: 2.6 };
@@ -2906,11 +2965,11 @@ const RADIO = (() => {
     { name: 'Techno de Detroit', city: 'Detroit', bpm: 128, scale: 'minor', progs: [[0, 0, 5, 3], [0, 6, 0, 5]], kit: 'edm', sc: 0.3, swing: 0,
       dr: { k: [P('X...X...X...X...')], s: [P('....X.......X...')], h: [P('xxXxxxXxxxXxxxXx')], o: [P('..x...x...x...x.')], r: [P('..x...x...x...x.')] }, bass: 'sub', chords: 'stab', crh: [2, 5, 10, 13], ext: 1, lead: { kind: 'va', rh: 'arp8' }, va: 3, lva: 7, fx: { verb: 0.3, dly: 0.35 } },
     { name: 'Trap de Atlanta', city: 'Atlanta', bpm: 140, scale: 'minor', progs: [[0, 5, 3, 4], [0, 0, 5, 6], [0, 1, 0, 5]], kit: 'trap', sc: 0, swing: 0,
-      dr: { k: [P('X......x..X.....'), P('X.....X...X..x..'), P('X......X.x......')], s: [P('........X.......')], h: [P('x.x.x.x.x.x.x.x.'), P('x.xxx.x.x.x.xx.x')], o: [P('..............x.')], rolls: true }, bass: '808', chords: 'pad', ext: 0, lead: { kind: 'smp', ins: 'bells', rh: 'trap' }, va: 5, lva: 5, fx: { verb: 0.35, dly: 0.3 } },
+      dr: { k: [P('X......x..X.....'), P('X.....X...X..x..'), P('X......X.x......')], s: [P('........X.......')], h: [P('x.x.x.x.x.x.x.x.'), P('x.xxx.x.x.x.xx.x')], o: [P('..............x.')], rolls: true }, bass: '808', chords: 'pad', ext: 0, lead: { kind: 'smp', ins: 'vibes', rh: 'trap' }, va: 5, lva: 5, fx: { verb: 0.35, dly: 0.3 } },
     { name: 'Drill de Nueva York', city: 'Nueva York', bpm: 142, scale: 'minor', progs: [[0, 5, 6, 4], [0, 1, 5, 4]], kit: 'trap', sc: 0, swing: 0,
       dr: { k: [P('X.........X..x..'), P('X.....x...X.....')], s: [P('........X.....x.'), P('........X......x')], h: [P('x..x..x.x..x..x.'), P('x..x.x..x..x..xx')], o: [], rolls: true, rim: [P('...x..........x.')] }, bass: 'drill', chords: 'pad', ext: 0, lead: { kind: 'smp', ins: 'piano', rh: 'drill' }, va: 3, lva: 4, fx: { verb: 0.38, dly: 0.2 } },
     { name: 'Memphis oscuro', city: 'Memphis', bpm: 136, scale: 'minor', progs: [[0, 1, 0, 5], [0, 0, 1, 0]], kit: 'trap', sc: 0, swing: 0, crackle: 0.5,
-      dr: { k: [P('X.....X...X.....'), P('X..x......X..x..')], s: [P('........X.......')], h: [P('x.x.x.x.x.x.x.x.')], o: [], cb: [P('x..x..x...x.x...'), P('x..x..x..x..x.x.')], rolls: true }, bass: '808', chords: 'pad', ext: 0, lead: { kind: 'smp', ins: 'glock', rh: 'trap' }, va: 5, lva: 4, fx: { verb: 0.4, dly: 0.25 } },
+      dr: { k: [P('X.....X...X.....'), P('X..x......X..x..')], s: [P('........X.......')], h: [P('x.x.x.x.x.x.x.x.')], o: [], cb: [P('x..x..x...x.x...'), P('x..x..x..x..x.x.')], rolls: true }, bass: '808', chords: 'pad', ext: 0, lead: { kind: 'smp', ins: 'piano', rh: 'trap' }, va: 5, lva: 4, fx: { verb: 0.4, dly: 0.25 } },
     { name: 'Boom bap noventero', city: 'El Bronx', bpm: 90, scale: 'dorian', progs: [[0, 3, 4, 3], [0, 3, 0, 4], [0, 5, 1, 4]], kit: 'lofi', sc: 0.1, swing: 0.2, crackle: 0.8,
       dr: { k: [P('X......x..X.....'), P('X.....x...X..x..'), P('X......x.xX.....')], s: [P('....X.......X...'), P('....X.......X..o')], h: [P('x.x.x.x.x.x.x.x.'), P('x.x.xxx.x.x.x.xo')], o: [P('..............x.')] }, bass: 'walk', bins: 'upright', chords: 'jazz', crh: [0, 7], ext: 2, lead: { kind: 'smp', ins: 'vibes', rh: 'sparse' }, va: 3, lva: 5, fx: { verb: 0.22, dly: 0.12 } },
     { name: 'Soul de los 70', city: 'Filadelfia', bpm: 94, scale: 'major', progs: [[1, 4, 0, 5], [0, 3, 1, 4], [3, 2, 1, 4]], kit: 'soul', sc: 0.08, swing: 0.12, crackle: 0.25,
@@ -3084,7 +3143,7 @@ const RADIO = (() => {
     chime(t) { // sonido de apertura que nunca desafina: con la radio generativa sigue su acorde; con canciones de verdad o en silencio es un brillo sin nota
       const now = ctx.currentTime; if (now - (st.lastChime || -9) < 0.9) return; st.lastChime = now;
       const songOn = !!(window.__WRADIO && window.__WRADIO.on);
-      if (st.on && !songOn) { const ch = chordAt(st.bar); ch.concat([ch[0] + 12]).forEach((m, k) => smp('bells', m + 24, t + k * 0.09, { vel: 0.4, dur: 1.1, gain: 0.22 })); return; }
+      if (st.on && !songOn) { const ch = chordAt(st.bar); [ch[0], ch[2]].forEach((m, k) => smp('vibes', m + 12, t + k * 0.11, { vel: 0.32, dur: 0.8, gain: 0.14 })); return; }
       const n = ctx.createBufferSource(), b = ctx.createBuffer(1, ctx.sampleRate * 1.2, ctx.sampleRate), d = b.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1);
       n.buffer = b; const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 3; f.frequency.setValueAtTime(3500, t); f.frequency.exponentialRampToValueAtTime(9000, t + 1.0); const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(songOn ? 0.035 : 0.05, t + 0.08); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.15); n.connect(f); f.connect(g); g.connect(U.bus.master); n.start(t); },
     servo(t, up = true) {
@@ -3477,7 +3536,7 @@ const ROBOT = (() => {
         if (st.playing) { J.upperL.g.rotation.x += Math.sin(b * Math.PI) * 0.3 * rob; J.upperR.g.rotation.x -= Math.sin(b * Math.PI) * 0.3 * rob * (1 - sup); }
         if (st.react > 0 && !st.act) { J.upperL.g.rotation.z -= st.react * 1.6; J.foreL.g.rotation.x -= st.react * 1.2; J.hips.g.position.y += st.react * 0.25; }
       }
-      if (st.act !== curAct) { actW -= dt * 2.5; if (actW <= 0) { actW = 0; curAct = st.act || null; } } else actW = Math.min(1, actW + dt * 2.5);
+      if (st.act !== curAct && (st.act === 'walk' || st.act === 'run') && (curAct === 'walk' || curAct === 'run')) curAct = st.act; if (st.act !== curAct) { actW -= dt * 4; if (actW <= 0) { actW = 0; curAct = st.act || null; } } else actW = Math.min(1, actW + dt * 4);
       if (curAct && rob > 0) { let p = st.ph != null ? st.ph : now, sn = Math.sin, k = rob * ease.smooth(actW), R = (n, ax, v) => { const j = J[n]; if (j) j.g.rotation[ax] += v * k; }, Y = (v) => { J.hips.g.position.y += v * k; }, A = curAct, B = st.beatPhase != null ? st.beatPhase : now * 1.7;
         if (A === 'run') { const w = p * 10; R('thighL', 'x', sn(w) * 0.85); R('thighR', 'x', -sn(w) * 0.85); R('shinL', 'x', Math.max(0, sn(w + 1.6)) * 1.2); R('shinR', 'x', Math.max(0, -sn(w + 1.6)) * 1.2); R('upperL', 'x', -sn(w) * 0.8); R('upperR', 'x', sn(w) * 0.8); R('foreL', 'x', 1.1); R('foreR', 'x', 1.1); R('chest', 'x', 0.22); R('head', 'x', -0.15); Y(Math.abs(sn(w)) * 0.06); }
         else if (A === 'walk') { const w = p * 6; R('thighL', 'x', sn(w) * 0.45); R('thighR', 'x', -sn(w) * 0.45); R('shinL', 'x', Math.max(0, sn(w + 1.6)) * 0.6); R('shinR', 'x', Math.max(0, -sn(w + 1.6)) * 0.6); R('upperL', 'x', -sn(w) * 0.4); R('upperR', 'x', sn(w) * 0.4); R('foreL', 'x', 0.4); R('foreR', 'x', 0.4); Y(Math.abs(sn(w)) * 0.025); }
@@ -4095,7 +4154,7 @@ const VA = (() => {
     { name: 'Acid Line', wave: 'saw', detune: 0.04, cutoff: 0.22, reso: 0.86, env: 0.78, attack: 0.0, release: 0.12, delay: 0.3, reverb: 0.15, decay: 0.22, sustain: 0.25, drive: 0.65, oct: -1, arp: true },
     { name: 'Dream Pad', wave: 'super', detune: 0.62, cutoff: 0.46, reso: 0.1, env: 0.22, attack: 0.62, release: 0.75, delay: 0.32, reverb: 0.72, decay: 1.5, sustain: 0.9, drive: 0.1, oct: 0 },
     { name: 'Pluck Stab', wave: 'square', detune: 0.25, cutoff: 0.32, reso: 0.4, env: 0.88, attack: 0.0, release: 0.24, delay: 0.46, reverb: 0.3, decay: 0.2, sustain: 0.0, drive: 0.3, oct: 0 },
-    { name: 'FM Bells', wave: 'fm', detune: 0.2, cutoff: 0.9, reso: 0.05, env: 0.2, attack: 0.0, release: 0.62, delay: 0.3, reverb: 0.55, decay: 1.2, sustain: 0.0, drive: 0.0, oct: 1 },
+    { name: 'FM Bells', wave: 'fm', detune: 0.2, cutoff: 0.72, reso: 0.05, env: 0.2, attack: 0.01, release: 0.42, delay: 0.16, reverb: 0.28, decay: 0.8, sustain: 0.0, drive: 0.0, oct: 0 },
     { name: 'Sub Bass', wave: 'square', detune: 0.08, cutoff: 0.24, reso: 0.25, env: 0.25, attack: 0.0, release: 0.15, delay: 0.0, reverb: 0.05, decay: 0.4, sustain: 0.8, drive: 0.35, oct: -2 },
     { name: 'Crystal Arp', wave: 'fm', detune: 0.3, cutoff: 0.75, reso: 0.3, env: 0.5, attack: 0.0, release: 0.28, delay: 0.55, reverb: 0.5, decay: 0.3, sustain: 0.1, drive: 0.1, oct: 1, arp: true },
     { name: 'Coro Aah', wave: 'vox', vowel: 'a', detune: 0.5, cutoff: 0.8, reso: 0.05, env: 0.1, attack: 0.35, release: 0.7, delay: 0.25, reverb: 0.75, decay: 1.2, sustain: 0.9, drive: 0.05, oct: 0 },
@@ -4104,7 +4163,7 @@ const VA = (() => {
     { name: 'Wobble Bass', wave: 'saw', detune: 0.1, cutoff: 0.2, reso: 0.7, env: 0.6, attack: 0.0, release: 0.15, delay: 0.1, reverb: 0.1, decay: 0.3, sustain: 0.6, drive: 0.7, oct: -1, glide: 0.04 },
     { name: 'Chip 2000', wave: 'square', detune: 0.0, cutoff: 0.95, reso: 0.0, env: 0.1, attack: 0.0, release: 0.1, delay: 0.4, reverb: 0.2, decay: 0.2, sustain: 0.6, drive: 0.0, oct: 1 },
     { name: 'Reese Oscuro', wave: 'super', detune: 0.35, cutoff: 0.3, reso: 0.35, env: 0.2, attack: 0.05, release: 0.3, delay: 0.15, reverb: 0.25, decay: 0.8, sustain: 0.9, drive: 0.5, oct: -1 },
-    { name: 'Campanas de Cristal', wave: 'fm', detune: 0.4, cutoff: 0.95, reso: 0.0, env: 0.1, attack: 0.0, release: 0.9, delay: 0.45, reverb: 0.7, decay: 1.6, sustain: 0.0, drive: 0.0, oct: 2 },
+    { name: 'Campanas de Cristal', wave: 'fm', detune: 0.25, cutoff: 0.7, reso: 0.0, env: 0.1, attack: 0.01, release: 0.5, delay: 0.17, reverb: 0.3, decay: 0.8, sustain: 0.0, drive: 0.0, oct: 1 },
     { name: 'Brass Stab', wave: 'saw', detune: 0.3, cutoff: 0.35, reso: 0.2, env: 0.75, attack: 0.03, release: 0.2, delay: 0.25, reverb: 0.3, decay: 0.35, sustain: 0.4, drive: 0.35, oct: 0 },
   ];
   const WAVE_NAME = { super: 'SUPSAW', saw: 'SAW', square: 'SQUARE', fm: 'FM' };
@@ -4138,8 +4197,8 @@ const VA = (() => {
     function applyFx() {
       const t = T0(); out.gain.setTargetAtTime(Math.pow(P.volume, 1.6) * 0.9, t, 0.03);
       const step = (60 / bpm) * 0.75; dl.delayTime.setTargetAtTime(step, t, 0.05); dr.delayTime.setTargetAtTime(step, t, 0.05);
-      dSend.gain.setTargetAtTime(P.delay * 0.55, t, 0.03); dfb.gain.setTargetAtTime(0.18 + P.delay * 0.4 + (P.ribbon != null ? P.ribbon * 0.25 : 0), t, 0.03); dOut.gain.value = 0.9;
-      rSend.gain.setTargetAtTime(P.reverb * 0.85, t, 0.03); rOut.gain.value = 0.8; dry.gain.value = 1;
+      dSend.gain.setTargetAtTime(P.delay * 0.38, t, 0.03); dfb.gain.setTargetAtTime(Math.min(0.43, 0.16 + P.delay * 0.23 + (P.ribbon != null ? P.ribbon * 0.08 : 0)), t, 0.03); dOut.gain.value = 0.65;
+      rSend.gain.setTargetAtTime(P.reverb * 0.48, t, 0.03); rOut.gain.value = 0.62; dry.gain.value = 1;
       setDrive(P.drive || 0);
     }
     applyFx();
@@ -4159,8 +4218,8 @@ const VA = (() => {
       else if (P.wave === 'saw') { add('sawtooth', -sp * 0.2, 0.5); add('sawtooth', sp * 0.2, 0.5); }
       else if (P.wave === 'square') { add('square', -sp * 0.15, 0.42); add('square', sp * 0.15, 0.42); add('square', -1200, 0.3); }
       else if (P.wave === 'vox') { const VF = { a: [[800, 1], [1150, 0.5], [2900, 0.25]], o: [[450, 1], [800, 0.6], [2830, 0.15]], e: [[400, 1], [1700, 0.55], [2600, 0.3]] }[P.vowel || 'a']; const src = ctx.createGain(); [-sp * 0.3, 0, sp * 0.3].forEach((d) => { const o = ctx.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = d; bend.connect(o.detune); lfoAmt.connect(o.detune); const g0 = ctx.createGain(); g0.gain.value = 0.33; o.connect(g0); g0.connect(src); oscs.push(o); }); const vib = ctx.createOscillator(), vg2 = ctx.createGain(); vib.frequency.value = 5.2; vg2.gain.value = 9; vib.connect(vg2); oscs.forEach((o) => vg2.connect(o.detune)); mods.push(vib); VF.forEach(([hz, a]) => { const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = hz; bp.Q.value = 9; const ga = ctx.createGain(); ga.gain.value = a * 2.4; src.connect(bp); bp.connect(ga); ga.connect(mix); }); }
-      else { const car = add('sine', 0, 0.7), car2 = add('sine', sp * 0.1 + 1200, 0.12), m = ctx.createOscillator(), mg = ctx.createGain(); m.frequency.value = f * 3.5; m.detune.value = sp * 0.2; bend.connect(m.detune);
-        mg.gain.setValueAtTime(f * 7, t); mg.gain.setTargetAtTime(f * 0.6, t, 0.12 + P.decay * 0.25); m.connect(mg); mg.connect(car.frequency); mg.connect(car2.frequency); mods.push(m); }
+      else { const car = add('sine', 0, 0.7), car2 = add('sine', sp * 0.1 + 1200, 0.06), m = ctx.createOscillator(), mg = ctx.createGain(); m.frequency.value = f * 2; m.detune.value = sp * 0.2; bend.connect(m.detune);
+        mg.gain.setValueAtTime(f * 2.0, t); mg.gain.setTargetAtTime(f * 0.22, t, 0.08 + P.decay * 0.16); m.connect(mg); mg.connect(car.frequency); mg.connect(car2.frequency); mods.push(m); }
       lastF = f;
       const base = cutHz(effCut(), note), peak = Math.min(19500, base * Math.pow(2, P.env * 6)), A = 0.002 + Math.pow(P.attack, 3) * 2.5, R = 0.03 + P.release * P.release * 3;
       f1.Q.value = 0.7 + P.reso * 16; f2.Q.value = 0.6; f2.frequency.value = Math.min(19500, peak * 1.4);
@@ -4456,7 +4515,7 @@ window.ROOMC = function (D) {
       [['LEO', 'Quiero aprender a producir música.'], ['ARI', 'Pues abre el maletín y toca cualquier cosa. Todo suena.'], ['GEMI', 'Y si suena mal, súbele la reverb. Truco de los 2000.']],
       [['GEMI', 'La isla Haiku huele a cerezo.'], ['ARI', 'Y el desierto huele a arena caliente y a bajo de 808.'], ['LEO', 'Yo huelo a aceite de motor. Es mi perfume.']],
       [['ARI', 'Hoy he volado hasta las nubes de verdad.'], ['LEO', '¿Y qué hay arriba?'], ['ARI', 'Más nubes. Y luego el espacio. Y luego… silencio.'], ['GEMI', 'El silencio también es música, dicen.']],
-      [['LEO', '¿Por qué el número del jefe es el 27?'], ['GEMI', 'Porque es Acuario. Los Acuario no eligen números normales.'], ['ARI', 'Y porque el 5 ya estaba cogido.']],
+      [['LEO', '¿Por qué el número del jefe es el 27?'], ['GEMI', 'Porque es Acuario. Los Acuario no eligen números normales.'], ['ARI', 'Y porque el 9 ya estaba elegido.']],
       [['GEMI', 'Mañana quiero montar un concierto en la azotea.'], ['ARI', 'Yo traigo los altavoces.'], ['LEO', 'Yo traigo el ego.'], ['GEMI', 'Eso ya lo traes siempre.']],
       [['ARI', 'He encontrado un tiburón dando vueltas cerca del desierto.'], ['LEO', '¿Te mordió?'], ['ARI', 'No. Solo quería escuchar la radio.']],
       [['LEO', 'Cuando sea mayor quiero ser un sintetizador.'], ['GEMI', 'Ya eres medio sintetizador.'], ['LEO', 'Quiero ser uno entero. Con teclado y todo.']],
@@ -4502,8 +4561,9 @@ window.ROOMC = function (D) {
         // no atravesar a nadie: ni a ti ni entre ellos
         const pushFrom = (x, z, R0) => { const dx = p.x - x, dz = p.z - z, d = Math.hypot(dx, dz); if (d < R0 && d > 0.01) { const nx = p.x + dx / d * (R0 - d), nz = p.z + dz / d * (R0 - d); if (!hit(nx, nz)) { p.x = nx; p.z = nz; } } };
         if (P && P.on && !window.ATM_OUT) pushFrom(P.p.x, P.p.z, 5); FR.forEach((o) => { if (o !== f) pushFrom(o.w.position.x, o.w.position.z, 5.5); });
-        const fly = P && P.fly && P.on && !window.ATM_OUT; p.y += ((fly ? FY + 6 + Math.sin(t + i) * 2 : FY) - p.y) * Math.min(1, dt * 2);
-        const tk = f.talk > 0; f.r0.update(3.7, dt, { act: fly ? 'fly' : moving ? 'walk' : tk ? 'talk' : RADIO_ON() && f.act !== 'rest' ? 'dance' : f.act, ph: moving ? f.wd / (0.87 * f.H) * 1.047 : t + i * 3, mood: tk ? 'happy' : 'star', talk: tk, beatPhase: t * 2 }); });
+        const follower = window.UNFIRE_COMPANION_FLIGHT.step(f.flight || (f.flight = {}), {dt, index:i + 1, flying:!!(P && P.fly && P.on && !window.ATM_OUT), height:P && P.on ? P.h : 0, nano:!!(P && P.mini), maxLift:8, follow:0.32});
+        p.y += ((FY + follower.height) - p.y) * Math.min(1, dt * 2.4);
+        const tk = f.talk > 0; f.r0.update(3.7, dt, { act: follower.flying ? 'fly' : moving ? 'walk' : tk ? 'talk' : RADIO_ON() && f.act !== 'rest' ? 'dance' : f.act, ph: moving ? f.wd / (0.87 * f.H) * 1.047 : t + i * 3, mood: tk ? 'happy' : 'star', talk: tk, beatPhase: t * 2 }); });
       // a veces te hablan a ti cuando estás cerca (frases que no se repiten seguidas)
       { const PL = ['¡Eh, {n}! ¿Has probado a volar hasta las nubes? Arriba del todo se ve el espacio.', '{n}, si pasas por detrás de la columna izquierda, mira bien los cuadros…', '¿Sabes qué, {n}? En el agua puedes activar la TABLA y hacer trucos con ESPACIO.', 'Hola, {n}. Hoy la radio está de buen humor. Sal fuera y la oirás mejor.', '{n}, ¿has visto a los titanes del horizonte? Son más altos que las nubes.', 'Psst, {n}: la cúpula se abre si vuelas hacia arriba desde el centro de la casa.', '¡{n}! Cuando quieras, abre una vitrina y prueba un plugin. Todos suenan.', '{n}, dicen que en la isla Haiku los peces koi bailan con el bajo.', 'Me alegra verte, {n}. La casa estaba demasiado tranquila sin ti.', '{n}, ¿te cuento un secreto? El 27 se ríe solo cuando nadie le mira.']; FR.plT = (FR.plT == null ? 12 : FR.plT) - dt; if (FR.plT <= 0 && P && P.on && !window.ATM_OUT && !conv) { const f = FR.find((x) => x.talk <= 0 && Math.hypot(P.p.x - x.w.position.x, P.p.z - x.w.position.z) < 20); if (f) { let k = 0; try { k = +localStorage.getItem('unfire_pl_k') || 0; localStorage.setItem('unfire_pl_k', String(k + 1)); } catch (e) {} let nm = 'amigo'; try { nm = (window.__STORYNAME && window.__STORYNAME()) || (window.__LANG === 'en' ? 'friend' : 'amigo'); } catch (e) {} f.w.rotation.y = Math.atan2(P.p.x - f.w.position.x, P.p.z - f.w.position.z); say2(f, PL[k % PL.length].replace('{n}', nm)); FR.plT = 25 + Math.random() * 20; } else FR.plT = 6; } }
       // charlas: cuando dos están cerca y quietos, hablan (no se repiten)
@@ -4530,7 +4590,7 @@ window.ROOMC = function (D) {
         nc = mix(vec3(0.01, 0.02, 0.06), nc, smoothstep(-0.05, 0.2, up)) + vec3(0.02, 0.03, 0.09) * (1.0 - smoothstep(0.0, 0.5, up));
         vec3 col = mix(nc, dc, day);
         // al subir volando el cielo se vuelve un sueño: franjas psicodélicas que respiran con la música, luego el espacio
-        float A = smoothstep(900.0, 2200.0, alt), A2 = smoothstep(2000.0, 3000.0, alt) * 0.85;
+        float A = smoothstep(330.0, 950.0, alt), A2 = smoothstep(700.0, 1550.0, alt) * 0.85;
         float sw = sin(atan(d.x, d.z) * 3.0 + up * 9.0 - t * 0.25 + sin(up * 14.0 + t * 0.3) * 0.8);
         vec3 dream = 0.5 + 0.5 * cos(6.2832 * (vec3(0.0, 0.33, 0.67) + sw * 0.15 + up * 0.6 + t * 0.02));
         dream = mix(dream, vec3(1.0, 0.85, 0.6), smoothstep(0.2, -0.3, up) * 0.6) * (0.75 + lv * 0.5);
@@ -4557,9 +4617,21 @@ window.ROOMC = function (D) {
           col += vec3(0.6, 0.95, 1.0) * bD * hz2 * 0.35; float au = sin(atan(d.x, d.z) * 6.0 + t * 0.6 + up * 12.0) * 0.5 + 0.5; col += vec3(0.4, 1.0, 0.8) * pow(au, 6.0) * bS * smoothstep(0.15, 0.6, up) * 0.45 + vec3(1.0, 0.5, 0.95) * pow(1.0 - au, 8.0) * bS * smoothstep(0.3, 0.8, up) * 0.3; }
         gl_FragColor = vec4(col, 1.0); }` });
   // 7 días distintos: cada día de la semana tiene su tiempo (nubes, gris, lluvia, tormenta)
-  { const WX = [{ n: 'domingo de nubes altas', cov: 0.6, gray: 0, rot: 0.3, rain: 0 }, { n: 'lunes lluvioso', cov: 1, gray: 0.55, rot: 1.7, rain: 1 }, { n: 'martes despejado', cov: 0.3, gray: 0, rot: 2.6, rain: 0 }, { n: 'miércoles de nieve', cov: 0.95, gray: 0.45, rot: 4.0, rain: 0, snow: 1 }, { n: 'jueves de tormenta', cov: 1, gray: 0.78, rot: 5.1, rain: 2 }, { n: 'viernes de nubes sueltas', cov: 0.5, gray: 0.08, rot: 0.9, rain: 0 }, { n: 'sábado variable', cov: 0.75, gray: 0.2, rot: 3.3, rain: 0 }];
-    const W0 = WX[new Date().getDay()]; const SNOW = {}; window.__WEATHER = W0; SKY.cov.value = W0.cov; SKY.gray.value = W0.gray; SKY.rot.value = W0.rot; let rainOn = false;
-    anim.push((dt, t) => { SKY.rot.value = W0.rot + t * 0.002 * (1 + W0.gray); const out = !!window.ATM_OUT; const want = out && W0.rain > 0; if (W0.snow) { if (!SNOW.p) { const N = 2500, g2 = new THREE.BufferGeometry(), pa = new Float32Array(N * 3); for (let i = 0; i < N; i++) { pa[i * 3] = (Math.random() - 0.5) * 160; pa[i * 3 + 1] = Math.random() * 80; pa[i * 3 + 2] = (Math.random() - 0.5) * 160; } g2.setAttribute('position', new THREE.BufferAttribute(pa, 3)); SNOW.p = new THREE.Points(g2, new THREE.PointsMaterial({ color: 0xffffff, size: 0.55, transparent: true, opacity: 0.9, depthWrite: false })); SNOW.p.frustumCulled = false; R.add(SNOW.p); } SNOW.p.visible = out; if (out) { const a2 = SNOW.p.geometry.attributes.position.array; for (let i = 0; i < a2.length; i += 3) { a2[i + 1] -= dt * 6; a2[i] += Math.sin(t + i) * dt * 0.8; if (a2[i + 1] < -10) a2[i + 1] = 70; } SNOW.p.geometry.attributes.position.needsUpdate = true; SNOW.p.position.set(cam.position.x, cam.position.y - 30, cam.position.z); } } if (want !== rainOn && window.__ATMP) { rainOn = want; const b = window.__ATMP.querySelector('#atmSt'); if (b && (b.classList.contains('off') === want)) b.click(); } }); }
+  { const WX = [{ n: 'domingo de nubes altas', cov: 0.6, gray: 0, rot: 0.3, rain: 0 }, { n: 'lunes lluvioso', cov: 1, gray: 0.55, rot: 1.7, rain: 1 }, { n: 'martes despejado', cov: 0.3, gray: 0, rot: 2.6, rain: 0 }, { n: 'miércoles de nubes suaves', cov: 0.48, gray: 0.08, rot: 4.0, rain: 0 }, { n: 'jueves de tormenta', cov: 1, gray: 0.78, rot: 5.1, rain: 2 }, { n: 'viernes de nubes sueltas', cov: 0.5, gray: 0.08, rot: 0.9, rain: 0 }, { n: 'sábado variable', cov: 0.75, gray: 0.2, rot: 3.3, rain: 0 }];
+    // Soft, shared alpha footprint: snow must not look like opaque square dots.
+    // A single 48px canvas texture is reused across weather and scenery snow.
+    const snowCanvas = document.createElement('canvas');
+    snowCanvas.width = snowCanvas.height = 48;
+    const snowCtx = snowCanvas.getContext('2d');
+    const snowGradient = snowCtx.createRadialGradient(24, 24, 1, 24, 24, 23);
+    snowGradient.addColorStop(0, 'rgba(255,255,255,0.95)');
+    snowGradient.addColorStop(0.25, 'rgba(252,254,255,0.72)');
+    snowGradient.addColorStop(0.65, 'rgba(240,248,255,0.26)');
+    snowGradient.addColorStop(1, 'rgba(240,248,255,0)');
+    snowCtx.fillStyle = snowGradient; snowCtx.fillRect(0, 0, 48, 48);
+    window.__UNFIRE_SNOW_TEXTURE = new THREE.CanvasTexture(snowCanvas);
+    const W0 = WX[new Date().getDay()]; window.__WEATHER = W0; SKY.cov.value = W0.cov; SKY.gray.value = W0.gray; SKY.rot.value = W0.rot; let rainOn = false;
+    anim.push((dt, t) => { SKY.rot.value = W0.rot + t * 0.002 * (1 + W0.gray); const out = !!window.ATM_OUT; const want = out && W0.rain > 0; if (want !== rainOn && window.__ATMP) { rainOn = want; const b = window.__ATMP.querySelector('#atmSt'); if (b && (b.classList.contains('off') === want)) b.click(); } }); }
   // horizonte infinito: tierras de sueño lejanas (colinas derretidas tipo Dalí) que siempre rodean el mapa
   { const HU = { t: { value: 0 }, lv: { value: 0 }, day: SKY.day };
     const hm = new THREE.Mesh(new THREE.CylinderGeometry(5200, 5200, 1600, 128, 1, true), new THREE.ShaderMaterial({ uniforms: HU, transparent: true, depthWrite: false, side: THREE.BackSide, vertexShader: 'varying vec2 vU; void main(){ vU = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
@@ -4662,7 +4734,7 @@ window.ROOMC = function (D) {
 </script>
 <script>
 /* UNFIRE · MODO HISTORIA «El Segundo Perdido».
-   Un anfitrión (NIMBO) aparece cuando abres el maletín y te alejas un poco; te pone en contexto y te ofrece empezar.
+   Nimbo aparece en el mundo sin interrumpir el juego. Su presentación es opcional desde Historia.
    Partida guardada en este navegador, capítulos con misiones que puedes dejar y retomar, 3 capítulos gratis,
    doce capítulos jugables gratis, tres niveles de ayuda y voces del sistema por personaje. */
 window.STORY_INIT = function (H) {
@@ -4713,7 +4785,7 @@ window.STORY_INIT = function (H) {
   const lv = (a, b, c) => [a, b, c][SAVE.level] || b;
   const CH = [
     { t: 'El segundo que se quedó dormido', steps: [
-      { say: [['NIMBO', 'feliz', () => '¡Hola, ' + N() + '! Bienvenido a la Cápsula del Sueño. Pon cómodo el cerebro, que esto va a dar vueltas.'], ['NIMBO', 'misterio', () => 'Te cuento el lío. La noche del treinta y uno de diciembre de mil novecientos noventa y nueve, a las once, cincuenta y nueve y cincuenta y nueve, este maletín se tragó un segundo. Uno solo. Y desde entonces aquí dentro nunca llega el año dos mil.'], ['NIMBO', 'risa', () => 'Por eso los robots siguen con la moda de entonces. No es estilo: es que no se pueden cambiar de ropa.'], ['NIMBO', 'serio', () => 'Ese segundo se rompió en doce pedacitos, uno por cada familia del zodiaco. Si los recuperamos, el tiempo vuelve a fluir. Y de paso, aprendes a usar todo esto como un maestro.']] },
+      { say: [['NIMBO', 'feliz', () => '¡Hola, ' + N() + '! Bienvenido a la Cápsula del Sueño. Pon cómodo el cerebro, que esto va a dar vueltas.'], ['NIMBO', 'feliz', () => { try { window.__CAPSULE_POP && window.__CAPSULE_POP(); } catch (e) {} return 'Primero lo importante: el maletín viaja en una cápsula de bolsillo. Botón, lanzamiento… ¡y POP! Así lo puedes sacar donde quieras: en casa, fuera o en una sala online.'; }], ['NIMBO', 'misterio', () => 'Te cuento el lío. La noche del treinta y uno de diciembre de mil novecientos noventa y nueve, a las once, cincuenta y nueve y cincuenta y nueve, este maletín se tragó un segundo. Uno solo. Y desde entonces aquí dentro nunca llega el año dos mil.'], ['NIMBO', 'risa', () => 'Por eso los robots siguen con la moda de entonces. No es estilo: es que no se pueden cambiar de ropa.'], ['NIMBO', 'serio', () => 'Ese segundo se rompió en doce pedacitos y salieron volando por toda la isla: playas, nubes, ruinas y hasta el fondo del mar. Si los recuperamos, el tiempo vuelve a correr. Prepárate para volar, surfear y explorar.']] },
       { say: [['NIMBO', 'feliz', () => lv('Primero, despierta al HYPERWAVE: es el sinte del centro. Tócalo para que se despliegue.', 'Despierta al HYPERWAVE, el sinte del centro.', 'HYPERWAVE. Ya sabes.')]], wait: { ev: 'hwopen' }, hint: 'Toca el HYPERWAVE para desplegarlo', at: [0, -0.3], mini: 1 },
       { say: [['NIMBO', 'duda', () => lv('Ahora toca cuatro notas con el teclado de tu ordenador: las letras A, S, D, F, G, H, J, K son las teclas blancas, y W, E, T, Y, U las negras. Tranquilo: suene lo que suene, siempre suena bien.', 'Toca cuatro notas con el teclado del ordenador. A S D F… y las negras en W E T Y U.', 'Cuatro notas. Teclado del ordenador.')]], wait: { ev: 'hwkey', n: 4 }, hint: 'Toca 4 notas (A S D F G H J K)', at: [0, -0.3], mini: 1 },
       { say: [['NIMBO', 'grito', () => '¡Eso! ¿Lo has oído? Ese brillo era el primer pedacito del segundo perdido: el de Piscis. Los de Piscis sueñan tan fuerte que a veces se les olvida despertarse.'], ['NIMBO', 'risa', () => 'Yo una vez me soñé a mí mismo soñando. Me desperté dos veces. Fue agotador.'], ['NIMBO', 'feliz', () => 'Capítulo uno, completado. Lo guardo para que no se nos escape otro segundo.']], end: true },
@@ -4726,7 +4798,7 @@ window.STORY_INIT = function (H) {
     { t: 'Los cuadros que hablan', steps: [
       { say: [['NIMBO', 'susurro', () => 'Los cuadros de esta casa no son decoración. Son ventanas a sitios donde la música cambió de piel. Pasea y toca tres.']], wait: { ev: 'poster', n: 3 }, hint: 'Pasea (botón PASEAR) y toca 3 cuadros', at: [-70, 40] },
       { say: [['GEMI', 'risa', () => 'Nosotros somos los gemelos de Géminis. Yo empiezo las frases…'], ['GEMI', 'feliz', () => '…y yo me como el final. Oye, ' + N() + ', la máquina de bolas guarda un aparato para ti. Gira la manivela.']], wait: { ev: 'gacha' }, hint: 'Usa la máquina de bolas roja', at: [44, 8] },
-      { say: [['ESCORPIO', 'misterio', () => 'Todos creen que el segundo se perdió. Yo creo que alguien lo escondió a propósito.'], ['NIMBO', 'duda', () => 'Escorpio, no asustes a ' + N() + ' en su primer día.'], ['ESCORPIO', 'susurro', () => 'Detrás de la puerta azul hay más mundo del que parece. Cuando quieras saber la verdad, ya sabes dónde buscar.'], ['NIMBO', 'feliz', () => 'Tres pedacitos de doce. Lo que viene después necesita el maletín completo: islas, la ciudad, el skatepark y la verdad de Escorpio.']], end: true },
+      { say: [['ESCORPIO', 'misterio', () => 'Todos creen que el segundo se perdió. Yo creo que alguien lo escondió a propósito.'], ['NIMBO', 'duda', () => 'Escorpio, no asustes a ' + N() + ' en su primer día.'], ['ESCORPIO', 'susurro', () => 'Detrás de la puerta azul hay una isla entera esperándote: titanes, tormentas y secretos. Cuando quieras la verdad, ya sabes dónde buscar.'], ['NIMBO', 'feliz', () => 'Tres pedacitos de doce. Los demás están ahí fuera: en las islas, entre los titanes, en la ciudad y en el skatepark. Y alguien, en algún sitio, no quiere que los encontremos.']], end: true },
     ] },
     { t: "La puerta azul", steps: [
       { say: [["ESCORPIO", 'misterio', "Tras esa puerta está el primer fragmento que cayó fuera del maletín. Atraviésala y sal al mundo."]], wait: { ev: 'outside' }, hint: "Sal de la casa por la puerta azul, o pide ayuda a Nimbo.", at: [-30, 92] },
@@ -4762,7 +4834,7 @@ window.STORY_INIT = function (H) {
     ] },
     { t: "Acuario y el año que por fin llegó", steps: [
       { say: [["NIMBO", 'misterio', "Ya casi está. Sube a la gran pirámide de Atlantis y reúne los fragmentos del segundo perdido."]], wait: { ev: 'reach', x: 600, z: 0, r: 125, h: 90 }, hint: "Vuelve a Atlantis para completar la historia.", at: [600, 0] },
-      { say: [["ESCORPIO", 'feliz', "El segundo perdido ha vuelto. La música continúa y ahora el tiempo también. Enhorabuena."]], end: true }
+      { say: [["ESCORPIO", 'feliz', () => { setTimeout(() => { try { window.__PRIZE && window.__PRIZE(); } catch (e) {} }, 3500); return "El segundo perdido ha vuelto. La música continúa y ahora el tiempo también. Enhorabuena."; }]], end: true }
     ] },
   ];
 
@@ -4775,15 +4847,15 @@ window.STORY_INIT = function (H) {
     #story .ch{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}#story button,#storyMenu button{border:2px solid #fff;border-radius:999px;padding:8px 14px;background:linear-gradient(#5fc8ff,#1d4fd8);color:#fff;font:700 12px Orbitron,Arial;cursor:pointer}#story button.alt,#storyMenu button.alt{background:linear-gradient(#9aa3b2,#5a6070)}
     #story input{border-radius:999px;border:2px solid #9fd0ff;padding:8px 14px;font:600 15px system-ui;background:#0a1030;color:#fff;outline:0}
     #storyHud{position:fixed;left:14px;top:14px;z-index:42;display:none;gap:6px;align-items:center;font:700 12px Orbitron,Arial;color:#fff}#storyHud button{border:2px solid #fff;border-radius:999px;padding:6px 11px;background:linear-gradient(#ff7ad9,#c21a8a);color:#fff;font:inherit;cursor:pointer}#storyHud .obj{background:rgba(5,10,40,.75);border:1.5px solid #5fe0ff;border-radius:12px;padding:6px 10px;max-width:46vw}
-    #storyMenu{position:fixed;inset:12vh 10vw;z-index:62;display:none;background:linear-gradient(160deg,#0d1a4a,#06081e);border:2px solid #9fd0ff;border-radius:24px;padding:20px;color:#fff;font:500 14px system-ui;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.6)}#storyMenu h2{font:900 20px Orbitron,Arial;margin:0 0 10px}#storyMenu .c{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-radius:12px;margin:5px 0;background:rgba(255,255,255,.06)}#storyMenu .c.lk{opacity:.55}
+    #storyMenu{position:fixed;inset:12vh 10vw;z-index:92;display:none;background:linear-gradient(160deg,#0d1a4a,#06081e);border:2px solid #9fd0ff;border-radius:24px;padding:20px;color:#fff;font:500 14px system-ui;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.6)}#storyMenu h2{font:900 20px Orbitron,Arial;margin:0 0 10px}#storyMenu .c{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-radius:12px;margin:5px 0;background:rgba(255,255,255,.06)}#storyMenu .c.lk{opacity:.55}
     </style><div class="bar bt"></div><div class="bar bb"></div><div class="box"><div class="nm"></div><div class="tx"></div><div class="ch"></div></div>`; document.body.appendChild(d);
-  const hud = document.createElement('div'); hud.id = 'storyHud'; hud.innerHTML = '<button id="stM">📖 HISTORIA</button><button id="stR">🤖 MODO ROBOT</button><button id="stP">🗺️ MAPA</button><button id="stS">💾 GUARDAR</button><span class="obj" id="stO"></span>'; document.body.appendChild(hud); { const gear = document.createElement('button'); gear.id = 'cfgB'; gear.textContent = '⚙'; gear.title = 'Configuración'; document.body.appendChild(gear); const st = document.createElement('style'); st.textContent = '#cfgB{position:fixed;top:62px;right:14px;z-index:62;width:44px;height:44px;border-radius:50%;border:2px solid #fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);color:#fff;font:700 22px Arial;cursor:pointer;box-shadow:0 6px 18px #0008;display:none}#storyHud{position:fixed!important;top:112px!important;right:14px!important;left:auto!important;bottom:auto!important;display:none!important;flex-direction:column!important;align-items:stretch!important;gap:8px!important;z-index:62!important;padding:12px!important;border-radius:16px!important;background:rgba(8,14,40,.88)!important;backdrop-filter:blur(8px);border:2px solid #9fd0ff!important;max-width:260px}#storyHud.cfgOn{display:flex!important}#storyHud .obj{white-space:normal!important}body.storyOn #cfgB,body.recOn #cfgB{visibility:hidden}'; document.head.appendChild(st); { const ob = hud.querySelector('#stO'); ob.id = 'stO'; document.body.appendChild(ob); const s2 = document.createElement('style'); s2.textContent = '#stO{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:41;background:rgba(5,10,40,.78);border:1.5px solid #5fe0ff;border-radius:12px;padding:6px 12px;max-width:min(60vw,520px);font:700 12px Orbitron,Arial;color:#fff;text-align:center;pointer-events:none}body.storyOn #stO,body.recOn #stO{visibility:hidden}'; document.head.appendChild(s2); const vis = () => { ob.style.visibility = hud.style.display === 'flex' ? 'visible' : 'hidden'; setTimeout(vis, 400); }; vis(); } gear.addEventListener('pointerdown', (e) => e.stopPropagation()); hud.addEventListener('pointerdown', (e) => e.stopPropagation()); gear.onclick = (e) => { e.stopPropagation(); hud.classList.toggle('cfgOn'); }; hud.addEventListener('click', (e) => { if (e.target.tagName === 'BUTTON') setTimeout(() => hud.classList.remove('cfgOn'), 150); }); const sync = () => { const on = hud.style.display === 'flex'; gear.style.display = on ? 'block' : 'none'; if (!on) hud.classList.remove('cfgOn'); setTimeout(sync, 300); }; sync(); }
+  const hud = document.createElement('div'); hud.id = 'storyHud'; hud.innerHTML = '<button id="stM">📖 HISTORIA</button><button type="button" id="stR" title="Transformarte en Nano Robot" aria-pressed="false">🔬 NANO ROBOT</button><button id="stP">🗺️ MAPA</button><button id="stS">💾 GUARDAR</button><span class="obj" id="stO"></span>'; document.body.appendChild(hud); { const gear = document.createElement('button'); gear.id = 'cfgB'; gear.textContent = '⚙'; gear.title = 'Configuración'; document.body.appendChild(gear); const st = document.createElement('style'); st.textContent = '#cfgB{position:fixed;top:62px;right:14px;z-index:62;width:44px;height:44px;border-radius:50%;border:2px solid #fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);color:#fff;font:700 22px Arial;cursor:pointer;box-shadow:0 6px 18px #0008;display:none}#storyHud{position:fixed!important;top:112px!important;right:14px!important;left:auto!important;bottom:auto!important;display:none!important;flex-direction:column!important;align-items:stretch!important;gap:8px!important;z-index:62!important;padding:12px!important;border-radius:16px!important;background:rgba(8,14,40,.88)!important;backdrop-filter:blur(8px);border:2px solid #9fd0ff!important;max-width:260px}#storyHud.cfgOn{display:flex!important}#storyHud .obj{white-space:normal!important}body.storyOn #cfgB,body.recOn #cfgB{visibility:hidden}'; document.head.appendChild(st); { const ob = hud.querySelector('#stO'); ob.id = 'stO'; document.body.appendChild(ob); const s2 = document.createElement('style'); s2.textContent = '#stO{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:41;background:rgba(5,10,40,.78);border:1.5px solid #5fe0ff;border-radius:12px;padding:6px 12px;max-width:min(60vw,520px);font:700 12px Orbitron,Arial;color:#fff;text-align:center;pointer-events:none}body.storyOn #stO,body.recOn #stO{visibility:hidden}'; document.head.appendChild(s2); const vis = () => { ob.style.visibility = hud.style.display === 'flex' ? 'visible' : 'hidden'; setTimeout(vis, 400); }; vis(); } gear.addEventListener('pointerdown', (e) => e.stopPropagation()); hud.addEventListener('pointerdown', (e) => e.stopPropagation()); gear.onclick = (e) => { e.stopPropagation(); hud.classList.toggle('cfgOn'); }; hud.addEventListener('click', (e) => { if (e.target.tagName === 'BUTTON') setTimeout(() => hud.classList.remove('cfgOn'), 150); }); const sync = () => { const on = hud.style.display === 'flex'; gear.style.display = on ? 'block' : 'none'; if (!on) hud.classList.remove('cfgOn'); setTimeout(sync, 300); }; sync(); }
   const menu = document.createElement('div'); menu.id = 'storyMenu'; document.body.appendChild(menu);
   [d, hud, menu].forEach((el) => el.addEventListener('pointerdown', (e) => e.stopPropagation()));
   const $ = (q) => d.querySelector(q);
   let active = false, queue = [], speaking = false, waitEv = null, waitN = 0, hostShown = false;
   let inStory = false; function show(on) { document.body.classList.toggle('storyOn', on); d.classList.toggle('on', on); d.classList.toggle('cine', on && inStory); active = on; if (!on) inStory = false; H.cinema(on && inStory); }
-  function line(who, emo, text, cb) { const c = CAST[who] || CAST.NIMBO; $('.nm').textContent = who === 'NIMBO' ? 'NIMBO · TU GUÍA' : who; $('.nm').style.background = c.col; $('.ch').innerHTML = '<button class="alt" id="stSkip">SIGUIENTE ▸</button>'; const tx = $('.tx'); tx.textContent = ''; let k = 0, fin = false; const tw = setInterval(() => { k += 2; tx.textContent = text.slice(0, k); if (k >= text.length) clearInterval(tw); }, 28);
+  function line(who, emo, text, cb) { if (window.__LANG === 'en' && typeof window.T === 'function') text = window.T(text); const c = CAST[who] || CAST.NIMBO; $('.nm').textContent = who === 'NIMBO' ? 'NIMBO · TU GUÍA' : who; $('.nm').style.background = c.col; $('.ch').innerHTML = '<button class="alt" id="stSkip">SIGUIENTE ▸</button>'; const tx = $('.tx'); tx.textContent = ''; let k = 0, fin = false; const tw = setInterval(() => { k += 2; tx.textContent = text.slice(0, k); if (k >= text.length) clearInterval(tw); }, 28);
     const go = () => { if (fin) return; fin = true; clearInterval(tw); tx.textContent = text; try { speechSynthesis.cancel(); } catch (e) {} H.duck(0); cb(); }; $('#stSkip').onclick = go; H.focusHost(who); voice(who, text, emo, () => setTimeout(go, 500)); }
   function play(lines, then) { show(true); let i = 0; const nx = () => { if (i >= lines.length) { then && then(); return; } const [w, e, f] = lines[i++]; line(w, e, typeof f === 'function' ? f() : f, nx); }; nx(); }
   function choices(list) { $('.ch').innerHTML = ''; list.forEach(([t, f, alt]) => { const b = document.createElement('button'); b.textContent = t; if (alt) b.className = 'alt'; b.onclick = () => { try { speechSynthesis.cancel(); } catch (e) {} f(); }; $('.ch').appendChild(b); }); }
@@ -4798,15 +4870,15 @@ window.STORY_INIT = function (H) {
     inStory = true; const S0 = C.steps[SAVE.step];
     play(S0.say, () => { if (S0.end) { SAVE.done.includes(SAVE.ch) || SAVE.done.push(SAVE.ch); SAVE.ch++; SAVE.step = 0; save(true); const nxt = CH[SAVE.ch]; if (nxt && !nxt.locked) choices([['▶ SIGUIENTE CAPÍTULO', () => runStep()], ['MÁS TARDE', () => { show(false); setObj('Capítulo ' + (SAVE.ch + 1) + ' esperando · 📖 HISTORIA'); }, 1]]); else choices([['🏆 HISTORIA COMPLETADA', () => { show(false); setObj('🏆 El Segundo Perdido: historia terminada'); }], ['SEGUIR EXPLORANDO', () => { show(false); setObj(''); }, 1]]); return; }
       if (S0.wait) { waitEv = S0.wait.ev; waitN = S0.wait.n || 1; setObj(S0.hint); const opts=[['¡VAMOS!', () => show(false)]]; if (S0.wait.ev==='reach'||S0.wait.ev==='outside')opts.push(['🧭 NIMBO: LLEVARME',()=>{show(false);try{H.navigateTo&&H.navigateTo(S0.wait);}catch(e){H.say('🧭 Sigue la estrella del mapa.');}},true]); choices(opts); if (S0.wait.ev==='hwopen') setTimeout(() => { if(waitEv==='hwopen'&&H.isHyperwaveOpen&&H.isHyperwaveOpen()) ev('hwopen'); }, 0); } else { SAVE.step++; save(); runStep(); } }); }
-  function ev(name) { const currentStep = CH[SAVE.ch] && CH[SAVE.ch].steps && CH[SAVE.ch].steps[SAVE.step]; if (!waitEv || name !== waitEv || !currentStep || !currentStep.wait || currentStep.wait.ev !== name) return; waitN--; if (waitN > 0) { setObj(CH[SAVE.ch].steps[SAVE.step].hint + ' · faltan ' + waitN); return; } waitEv = null; SAVE.step++; save(); setTimeout(runStep, 700); }
-  function intro() { if (hostShown) return; hostShown = true; H.showHost(true); hud.style.display = 'flex';
+  function ev(name) { if (window.__roamAPI?.ROAMS?.freeRobotMode) return; const currentStep = CH[SAVE.ch] && CH[SAVE.ch].steps && CH[SAVE.ch].steps[SAVE.step]; if (!waitEv || name !== waitEv || !currentStep || !currentStep.wait || currentStep.wait.ev !== name) return; waitN--; if (waitN > 0) { setObj(CH[SAVE.ch].steps[SAVE.step].hint + ' · faltan ' + waitN); return; } waitEv = null; SAVE.step++; save(); setTimeout(runStep, 700); }
+  function intro() { if (active) return; hostShown = true; H.showHost(true); hud.style.display = 'flex'; menu.style.display = 'none';
     if (SAVE.met && SAVE.name) { H.say('👋 ¡' + N() + '! Has vuelto · capítulo ' + (SAVE.ch + 1) + ' guardado · 📖 HISTORIA para seguir'); setObj('Cuando quieras: 📖 HISTORIA'); return; }
     play([['NIMBO', 'feliz', 'Ey. Psst. Aquí abajo, al lado del maletín. Soy Nimbo.'], ['NIMBO', 'duda', '¿Cómo te llamas? Así te podré llamar por tu nombre y no «oye tú», que queda feo.']], () => { $('.ch').innerHTML = '<input id="stN" maxlength="18" placeholder="Tu nombre"><button id="stOk">LISTO</button>'; const ok = () => { SAVE.name = ($('#stN').value || '').trim().slice(0, 18) || 'Viajero'; SAVE.met = true; save(); askLevel(); }; $('#stOk').onclick = ok; $('#stN').onkeydown = (e) => { e.stopPropagation(); if (e.key === 'Enter') ok(); }; setTimeout(() => $('#stN').focus(), 50); }); }
   function askLevel() { play([['NIMBO', 'feliz', () => 'Encantado, ' + N() + '. ¿Cuánto sabes de música y sintes? Así te explico a tu ritmo.']], () => choices([['NADA, SOY NUEVO', () => { SAVE.level = 0; offer(); }], ['ALGO SÉ', () => { SAVE.level = 1; offer(); }], ['SOY EXPERTO', () => { SAVE.level = 2; offer(); }]])); }
-  function offer() { save(); play([['NIMBO', 'misterio', () => 'Perfecto. Aquí dentro pasa algo raro y necesito ayuda. ¿Empezamos la historia? Puedes dejarla cuando quieras y volver: yo te guardo la partida.']], () => choices([['▶ EMPEZAR LA HISTORIA', () => runStep()], ['PRIMERO QUIERO CURIOSEAR', () => { show(false); setObj('Cuando quieras: 📖 HISTORIA'); }, 1]])); }
-  function openMenu() { const safeName=String(SAVE.name||'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); menu.style.display = 'block'; menu.innerHTML = '<h2>📖 EL SEGUNDO PERDIDO</h2><p>Partida de <b>' + safeName + '</b> · nivel ' + ['novato', 'medio', 'experto'][SAVE.level] + '</p>' + CH.map((c, i) => '<div class="c' + (i >= FREE ? ' lk' : '') + '"><span>' + (i + 1) + '. ' + c.t + (SAVE.done.includes(i) ? ' ✔' : '') + '</span>' + (i >= FREE ? '<span>🔒 maletín completo</span>' : '<button data-c="' + i + '">' + (i === SAVE.ch ? 'CONTINUAR' : 'JUGAR') + '</button>') + '</div>').join('') + '<div style="margin-top:12px;display:flex;gap:8px"><button id="mSv">💾 GUARDAR</button><button id="mMu">' + (mute ? '🔊 VOCES ON' : '🔇 SIN VOZ') + '</button><button id="mRs" class="alt">BORRAR PARTIDA</button><button id="mX" class="alt">CERRAR</button></div>';
-    menu.querySelectorAll('button[data-c]').forEach((b) => (b.onclick = () => { const c = +b.dataset.c; if (c !== SAVE.ch) { SAVE.ch = c; SAVE.step = 0; } menu.style.display = 'none'; runStep(); })); menu.querySelector('#mSv').onclick = () => save(true); menu.querySelector('#mMu').onclick = () => { mute = !mute; openMenu(); }; menu.querySelector('#mRs').onclick = () => { SAVE = { name: '', level: 1, ch: 0, step: 0, done: [], met: false, ts: 0 }; store(SAVE); menu.style.display = 'none'; hostShown = false; intro(); }; menu.querySelector('#mX').onclick = () => (menu.style.display = 'none'); }
-  hud.querySelector('#stM').onclick = openMenu; hud.querySelector('#stR').onclick = () => { const on = H.robotMode(); hud.querySelector('#stR').textContent = on ? '🧍 TAMAÑO NORMAL' : '🤖 MODO ROBOT'; }; hud.querySelector('#stP').onclick = () => H.toggleMap(); hud.querySelector('#stS').onclick = () => save(true); setObj('');
+  function offer() { save(); play([['NIMBO', 'misterio', () => 'Perfecto. Aquí dentro pasa algo raro, y no es solo la música: el tiempo se ha roto. Necesito a alguien valiente. ¿Empezamos la historia? Puedes pararla cuando quieras y volver: yo te guardo la partida.']], () => choices([['▶ EMPEZAR LA HISTORIA', () => runStep()], ['PRIMERO QUIERO CURIOSEAR', () => { show(false); setObj('Cuando quieras: 📖 HISTORIA'); }, 1]])); }
+  function openMenu() { const safeName=String(SAVE.name||'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); menu.style.display = 'block'; menu.innerHTML = '<h2>📖 EL SEGUNDO PERDIDO</h2><p>Partida de <b>' + safeName + '</b> · nivel ' + ['novato', 'medio', 'experto'][SAVE.level] + '</p><div class="c"><span>📜 Tu aventura, cuando quieras</span><button id="mPlay">▶ EMPEZAR LA HISTORIA</button></div>' + (!SAVE.met ? '<div class="c"><span>👋 La presentación de Nimbo es opcional: puedes explorar primero.</span><button id="mMeet">CONOCER A NIMBO</button></div>' : '') + CH.map((c, i) => '<div class="c' + (i >= FREE ? ' lk' : '') + '"><span>' + (i + 1) + '. ' + c.t + (SAVE.done.includes(i) ? ' ✔' : '') + '</span>' + (i >= FREE ? '<span>🔒 maletín completo</span>' : '<button data-c="' + i + '">' + (i === SAVE.ch ? 'CONTINUAR' : 'JUGAR') + '</button>') + '</div>').join('') + '<div style="margin-top:12px;display:flex;gap:8px"><button id="mSv">💾 GUARDAR</button><button id="mMu">' + (mute ? '🔊 VOCES ON' : '🔇 SIN VOZ') + '</button><button id="mRs" class="alt">BORRAR PARTIDA</button><button id="mX" class="alt">CERRAR</button></div>';
+    menu.querySelectorAll('button[data-c]').forEach((b) => (b.onclick = () => { const c = +b.dataset.c; if (c !== SAVE.ch) { SAVE.ch = c; SAVE.step = 0; } menu.style.display = 'none'; if (window.__roamAPI?.ROAMS) window.__roamAPI.ROAMS.freeRobotMode=false; runStep(); })); menu.querySelector('#mPlay').onclick = () => { menu.style.display = 'none'; if (window.__roamAPI?.ROAMS) window.__roamAPI.ROAMS.freeRobotMode=false; runStep(); }; const meet = menu.querySelector('#mMeet'); if (meet) meet.onclick = () => intro(); menu.querySelector('#mSv').onclick = () => save(true); menu.querySelector('#mMu').onclick = () => { mute = !mute; openMenu(); }; menu.querySelector('#mRs').onclick = () => { SAVE = { name: '', level: 1, ch: 0, step: 0, done: [], met: false, ts: 0 }; store(SAVE); menu.style.display = 'none'; hostShown = false; show(false); setObj(''); H.showHost(false); }; menu.querySelector('#mX').onclick = () => (menu.style.display = 'none'); }
+  hud.querySelector('#stM').onclick = openMenu; hud.querySelector('#stR').onclick = () => { const on = H.robotMode(); const b = hud.querySelector('#stR'); b.textContent = on ? '🧍 TAMAÑO NORMAL' : '🔬 NANO ROBOT'; b.setAttribute('aria-pressed', String(on)); b.title = on ? 'Volver al tamaño normal' : 'Transformarte en Nano Robot'; }; hud.querySelector('#stP').onclick = () => H.toggleMap(); hud.querySelector('#stS').onclick = () => save(true); setObj('');
   // ---------- charla: los robots hablan solos de vez en cuando (sin repetir) ----------
   const CHAT = [['ARI', 'risa', '¿Alguien ha visto mis gafas de sol? Ah, vale, las llevo puestas.'], ['LIBRA', 'serio', 'Si todos bailamos hacia la izquierda, el maletín se inclina tres grados. Lo he calculado.'], ['GEMI', 'feliz', 'Yo creo que deberíamos…'], ['GEMI', 'risa', '…comer pilas. Sí. Eso iba a decir.'], ['ESCORPIO', 'misterio', 'Esa lámpara de lava me mira raro. Lleva mirándome desde mil novecientos noventa y nueve.'], ['NIMBO', 'duda', () => 'Dato inútil para ' + N() + ': aquí dentro el año dos mil todavía no ha llegado. Así que técnicamente sigues teniendo la misma edad.'], ['ARI', 'grito', '¡Quién ha tocado mi cable de auriculares! ¡Estaba perfectamente enredado!'], ['LIBRA', 'triste', 'A veces sueño que me ordenan por colores. Es mi sueño favorito.'], ['ESCORPIO', 'susurro', () => N() + '… ¿tú también oyes el zumbido de la ventana de los aparatos? No es una pregunta. Es una advertencia.'], ['NIMBO', 'feliz', 'Recuerda: si te pierdes, abre el mapa. Yo me perdí una vez dentro de un bolsillo.'], ['GEMI', 'duda', '¿Y si el segundo perdido está dentro de otro segundo?'], ['ARI', 'feliz', 'Mi canción favorita es la que suena. Siempre. Es un truco para ser feliz.'], ['LIBRA', 'feliz', () => 'Me cae bien ' + N() + '. Camina con una simetría excelente.'], ['ESCORPIO', 'misterio', 'Las ballenas de fuera no cantan. Escuchan. Que es peor.'], ['NIMBO', 'risa', 'Si ves un cerdo volando, no es una metáfora. Se llama Gustavo y paga alquiler.']];
   // ---------- generador de frases: miles de combinaciones, nunca repite (memoria guardada) ----------
@@ -4822,8 +4894,14 @@ window.STORY_INIT = function (H) {
   const curObj = () => { const C = CH[SAVE.ch]; const S0 = C && !C.locked && C.steps[SAVE.step]; return waitEv && S0 && S0.at ? { x: S0.at[0], z: S0.at[1], mini: !!S0.mini, t: S0.hint } : null; };
   let missionPollAt=0;
   return { ev, intro, chatter, get obj() { return curObj(); }, get active() { return active; }, tick(st) {
-      if (!hostShown && st.open && st.far) intro();
+      if (!hostShown && st.open && st.far) { hostShown = true; H.showHost(true); }
       hud.style.display = hostShown && st.open ? 'flex' : 'none';
+      const nanoButton = hud.querySelector('#stR');
+      if (nanoButton && typeof H.isNano === 'function') {
+        const nano = !!H.isNano();
+        const label = nano ? '🧍 TAMAÑO NORMAL' : '🔬 NANO ROBOT';
+        if (nanoButton.textContent !== label) { nanoButton.textContent = label; nanoButton.title = nano ? 'Volver al tamaño normal' : 'Transformarte en Nano Robot'; nanoButton.setAttribute('aria-pressed', String(nano)); }
+      }
       const now=Date.now();if(now-missionPollAt<550)return;missionPollAt=now;
       if(!waitEv||typeof H.getExplore!=='function')return;
       const p=H.getExplore(), step=CH[SAVE.ch]?.steps?.[SAVE.step], w=step?.wait;
@@ -4834,6 +4912,38 @@ window.STORY_INIT = function (H) {
 };
 
 </script>
-<script src="game-engine-v50.js?v=20261023casecuev1"></script>
+<script src="workshop-camera.js?v=20261027ws1"></script>
+<script src="music-arbiter.js?v=20261027mus1"></script>
+<script src="door-cinema.js?v=20261023doorcine1"></script>
+<script src="collision-nearby.js?v=20261024combinedqa1"></script>
+<script src="expanded-map.js?v=20261028nimbo3"></script>
+<script src="coins-shop.js?v=20261024organic1"></script>
+<script src="nano-physics.js?v=20261024combinedqa1"></script>
+<script src="robot-customization.js?v=20261024robotselect1"></script>
+<script src="cinema-export.js?v=20261024filmrec1"></script>
+<script src="conversation-lines.js?v=20261027talk1"></script>
+<script src="game-engine-v50.js?v=20261028nimbo3english4"></script>
+<script src="unfire-conversations.js?v=20261028nimbo3"></script>
+<script src="idle-dance.js?v=20261028nimbo3"></script>
+<script src="neural-voices.js?v=20261027es2"></script>
+<script src="garage-scroll-guard.js?v=20261024combinedqa1" defer></script>
 <script src="mobile-hud-guard.js?v=20261023hudlayout1" defer></script>
+<style id="unfireLayoutFix20261026">
+/* Revisión de diseño 26-oct: nada se monta encima de nada en móvil, iPad y Mac */
+@media (pointer:coarse) and (orientation:landscape){
+  html body.unfire-roaming #cfgB#cfgB{top:calc(env(safe-area-inset-top) + 6px)!important}
+  html body.unfire-roaming #ctlDock#ctlDock{top:calc(env(safe-area-inset-top) + 56px)!important;bottom:auto!important;flex-direction:column!important;height:auto!important;max-height:none!important;overflow:visible!important;flex-wrap:nowrap!important;gap:4px!important}
+  html body.unfire-roaming #ctlDock#ctlDock button{min-height:30px!important;max-height:32px;padding:2px 7px!important;font-size:9px!important;line-height:1.1!important}
+}
+@media (pointer:coarse) and (orientation:portrait){
+  html body.unfire-roaming #ctlDock#ctlDock{top:calc(env(safe-area-inset-top) + 112px)!important;bottom:auto!important;flex-direction:column!important;height:auto!important;max-height:none!important;overflow:visible!important;gap:4px!important}
+  html body.unfire-roaming #ctlDock#ctlDock button{min-height:30px!important;max-height:34px}
+}
+@media (pointer:fine){
+  html body #ufNear#ufNear{right:auto!important;left:50%!important;transform:translateX(-50%);bottom:calc(12vh + env(safe-area-inset-bottom))!important}
+}
+</style>
+<!-- Public English-only game. Keep cinematic opening but skip language selection. -->
+<script>window.__UNFIRE_PUBLIC_ENGLISH_ONLY=true;window.__LANG='en';try{localStorage.setItem('unfire_lang','en')}catch(e){}</script>
+<script src="game-intro.js?v=20261029english1"></script>
 </body></html>

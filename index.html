@@ -2,6 +2,21 @@
 
 <html lang="en">
 <head>
+<!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
+<script id="ufAdaptiveBoot">(function(){
+  try {
+    var coarse=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    var memory=Number(navigator.deviceMemory||0), cores=Number(navigator.hardwareConcurrency||0);
+    var unknown=!memory&&!cores&&Math.min(innerWidth,innerHeight)<400;
+    if(coarse&&((memory>0&&memory<=4)||(cores>0&&cores<=4)||unknown))
+      document.documentElement.classList.add('uf-load-pending');
+    // A network failure must never leave a permanent overlay.
+    setTimeout(function(){document.documentElement.classList.remove('uf-load-pending');},9000);
+  } catch(e) {}
+})();</script>
+<link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261023adaptive1">
+<script defer src="/assets/js/unfire-adaptive-loading.js?v=20261023adaptive1"></script>
+
 <meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'">
 
     <!-- Unfire favicon: Safari 26+ and modern browsers -->
@@ -4010,6 +4025,30 @@ main .uf-hero-title {
 @media(max-width:900px){#apps .uf-gallery-card--mobile .uf-gallery-media{height:350px}}
 @media(max-width:620px){#apps .uf-gallery-card--mobile .uf-gallery-media{height:min(390px,110vw);padding:18px 12px 0}#apps .uf-gallery-card--mobile:last-child{grid-column:1/-1}}
 
+/* ARCHER Mobile: compact genuine dual-device presentation. No Mac screenshot reused. */
+#apps .uf-gallery-card--archer-mobile .uf-gallery-media{
+  height:352px!important;padding:15px 12px 10px!important;
+  background:radial-gradient(ellipse at 50% 75%,rgba(44,93,161,.19),transparent 69%),linear-gradient(180deg,#0b1524 0%,#080d16 100%);
+}
+#apps .uf-archer-devices{width:100%;max-width:390px;height:100%;display:flex;justify-content:center;align-items:center;gap:clamp(10px,2vw,18px)}
+#apps .uf-archer-device{display:block;flex:none;position:relative;overflow:hidden;background:#050c17;padding:4px;border:2px solid #526078;box-shadow:0 18px 30px #0009,0 0 18px #286ab327;transition:transform .25s ease}
+#apps .uf-archer-device--iphone{width:min(37%,140px);height:300px;border-radius:23px}
+#apps .uf-archer-device--ipad{width:min(46%,177px);height:304px;border-radius:17px}
+#apps .uf-archer-device img{display:block;width:100%;height:100%;max-width:none;max-height:none;object-fit:contain;object-position:center;transform:none;border-radius:inherit}
+#apps .uf-archer-device--iphone img{border-radius:18px}
+#apps .uf-archer-device--ipad img{border-radius:12px}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  #apps .uf-gallery-card--archer-mobile .uf-gallery-media:hover .uf-archer-device--iphone{transform:translateY(-3px)}
+  #apps .uf-gallery-card--archer-mobile .uf-gallery-media:hover .uf-archer-device--ipad{transform:translateY(-2px)}
+  #apps .uf-gallery-card--archer-mobile .uf-gallery-media:hover img{transform:none}
+}
+@media(max-width:620px){
+  #apps .uf-gallery-card--archer-mobile .uf-gallery-media{height:340px!important;padding:12px 10px!important}
+  #apps .uf-archer-device--iphone{height:292px}
+  #apps .uf-archer-device--ipad{height:285px}
+}
+@media(prefers-reduced-motion:reduce){#apps .uf-archer-device{transition:none}}
+
 /* Product categories: compact, semantic, responsive; original captures untouched. */
 #apps .uf-gallery-taxonomy{display:flex;flex-wrap:wrap;gap:9px;margin-top:28px}
 #apps .uf-gallery-taxonomy a{display:inline-flex;align-items:center;min-height:38px;padding:8px 14px;border:1px solid rgba(167,190,242,.25);border-radius:999px;color:#cbd7ec;background:rgba(255,255,255,.025);font-size:12px;line-height:1.35;letter-spacing:.01em;text-decoration:none}
@@ -4033,9 +4072,29 @@ main .uf-hero-title {
 .unfire-audio-entry{display:inline-flex;align-items:center;justify-content:center;gap:.5em;padding:10px 15px;margin:0 0 22px;border:1px solid currentColor;border-radius:999px;text-decoration:none;font-size:clamp(12px,1vw,14px);font-weight:600;letter-spacing:.015em;transition:opacity .2s,transform .2s}
 .unfire-audio-entry:hover{opacity:.8;transform:translateY(-2px)}
 </style>
+<style id="unfire-games-home-preview">
+#games.unfire-games-home{padding:clamp(70px,8vw,106px) 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+#games .unfire-games-home-layout{display:grid;grid-template-columns:.84fr 1.16fr;gap:clamp(28px,5vw,72px);align-items:center}
+#games .unfire-games-home-copy h2{font-size:clamp(32px,3.9vw,56px);line-height:1.08;letter-spacing:-.035em;font-weight:630;max-width:560px;margin-bottom:16px}
+#games .unfire-games-home-copy p{font-size:15px;line-height:1.75;color:#a6a6b1;max-width:470px;margin:0 0 24px}
+#games .unfire-games-home-copy .eyebrow{font-size:11px;letter-spacing:.16em;margin-bottom:16px}
+#games .unfire-games-home-copy .unfire-games-home-cta{display:inline-flex;align-items:center;min-height:44px;padding:11px 20px;border-radius:999px;border:1px solid #e9eaee;background:#e9eaee;color:#111;font-size:13px;font-weight:620;text-decoration:none}
+#games .unfire-games-home-visual{display:block;position:relative;overflow:hidden;min-width:0;border-radius:18px;border:1px solid #272c33;background:#0c101a;aspect-ratio:16/10}
+#games .unfire-games-home-visual img{width:100%;height:100%;display:block;object-fit:cover}
+#games .unfire-games-home-visual span{position:absolute;bottom:0;left:0;right:0;padding:26px 16px 14px;font-size:12px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.85))}
+@media(max-width:760px){#games .unfire-games-home-layout{grid-template-columns:1fr}#games .unfire-games-home-visual{aspect-ratio:16/9}}
+</style>
 </head>
 <body>
-<div id="unfire-clean-header-v2"><div class="unfire-clean-mainbar"><div class="unfire-clean-inner"><a class="unfire-clean-brand notranslate" data-unfire-move="header-brand" href="#top" translate="no"><img translate="no" alt="Unfire" class="unfire-header-logo" src="assets/logo/unfire-logo-white.png"/><span class="unfire-header-name notranslate" translate="no"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no">Unfire</span></span></a><button id="unfire-mobile-menu-toggle" class="unfire-mobile-menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="unfire-mobile-site-nav" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 8h16M4 16h16"/></svg></button><nav id="unfire-mobile-site-nav" aria-label="Main navigation" class="unfire-clean-nav" data-unfire-move="header-navigation"><a href="#company">Company</a><a href="#work">Work</a><a href="/apps/">Apps</a><a href="/audio/" class="notranslate" translate="no">Audio</a><a href="#system">System</a><a href="#scale">Scale</a><a href="#funding">Funding</a><a href="/contact/">Contact</a>
+<div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
+  <div class="uf-load-card">
+    <span class="uf-load-emblem" aria-hidden="true"></span>
+    <strong class="uf-load-brand" translate="no">UNFIRE</strong>
+    <span class="uf-load-label" id="ufAdaptiveLabel">Preparing the experience…</span>
+  </div>
+</div>
+
+<div id="unfire-clean-header-v2"><div class="unfire-clean-mainbar"><div class="unfire-clean-inner"><a class="unfire-clean-brand notranslate" data-unfire-move="header-brand" href="#top" translate="no"><img translate="no" alt="Unfire" class="unfire-header-logo" src="assets/logo/unfire-logo-white.png"/><span class="unfire-header-name notranslate" translate="no"><span class="notranslate unfire-protected-name" data-unfire-protected="true" translate="no">Unfire</span></span></a><button id="unfire-mobile-menu-toggle" class="unfire-mobile-menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="unfire-mobile-site-nav" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 8h16M4 16h16"/></svg></button><nav id="unfire-mobile-site-nav" aria-label="Main navigation" class="unfire-clean-nav" data-unfire-move="header-navigation"><a href="#company">Company</a><a href="#work">Work</a><a href="/apps/">Apps</a><a href="/games/" class="notranslate" translate="no">Games</a><a href="/audio/" class="notranslate" translate="no">Audio</a><a href="#system">System</a><a href="#scale">Scale</a><a href="#funding">Funding</a><a href="/contact/">Contact</a>
 </nav></div></div></div>
 <script id="unfire-mobile-nav-controller">
 (function(){
@@ -4074,7 +4133,7 @@ main .uf-hero-title {
 <div id="unfire-brand-stack"><a class="brand notranslate" data-unfire-move="brand" href="#top" translate="no"><span class="notranslate unfire-brand-lock" translate="no">Unfire</span></a></div>
 <nav class="nav-links" data-unfire-move="navigation">
 <a href="#company">Company</a>
-<a href="#work">Work</a><a href="/apps/">Apps</a><a href="/audio/" class="notranslate" translate="no">Audio</a>
+<a href="#work">Work</a><a href="/apps/">Apps</a><a href="/games/" class="notranslate" translate="no">Games</a><a href="/audio/" class="notranslate" translate="no">Audio</a>
 <a href="#system">System</a>
 <a href="#scale">Scale</a>
 <a class="unfire-lava-secondary" href="#funding">Funding</a>
@@ -4225,12 +4284,17 @@ main .uf-hero-title {
 <div class="uf-gallery-category-head"><div><h3 id="apps-audio-title">Audio &amp; Music</h3><p>Sound processing, recording and instruments for creative work.</p></div><span class="uf-gallery-category-count">4 products</span></div>
 <div class="uf-gallery-grid">
 <article class="uf-gallery-card uf-gallery-card--wide">
-<a class="uf-gallery-media" href="assets/products/archer-mac.webp" target="_blank" rel="noopener" aria-label="View the ARCHER Clipper cover at full size"><img src="assets/products/archer-mac.webp" width="1400" height="875" alt="ARCHER Clipper presentation showing the real audio plugin interface" loading="lazy" decoding="async"></a>
+<a class="uf-gallery-media" href="assets/products/archer-nocturne-app-preview-20261028.webp" target="_blank" rel="noopener" aria-label="View the ARCHER Nocturne preview"><img src="assets/products/archer-nocturne-app-preview-20261028.webp" width="1120" height="743" alt="ARCHER Nocturne interface preview with Gain, Threshold and Color controls" loading="lazy" decoding="async"></a>
 <div class="uf-gallery-copy"><p class="uf-gallery-type">Audio / Mac</p><h4>ARCHER</h4><p>Precision clipping with tactile sound controls and a distinctive interface.</p></div>
 </article>
-<article class="uf-gallery-card uf-gallery-card--mobile">
-<a class="uf-gallery-media" href="assets/products/archer-mobile.webp" target="_blank" rel="noopener noreferrer" aria-label="View the real ARCHER mobile interface at full size"><img src="assets/products/archer-mobile.webp" width="740" height="1541" alt="ARCHER mobile clipping controls on an iPhone, captured from the app" loading="lazy" decoding="async"></a>
-<div class="uf-gallery-copy"><p class="uf-gallery-type">Audio / iPhone &amp; iPad</p><h4>ARCHER Mobile</h4><p>Touch-first clipping controls in the ARCHER family.</p><span class="uf-gallery-availability">Product preview</span></div>
+<article class="uf-gallery-card uf-gallery-card--mobile uf-gallery-card--archer-mobile">
+<a class="uf-gallery-media" href="/apps/archer-mobile/" aria-label="Explore the ARCHER Mobile iPhone and iPad interface previews">
+  <span class="uf-archer-devices">
+    <span class="uf-archer-device uf-archer-device--iphone"><img src="assets/products/archer-mobile-iphone-ui-20261029.webp" width="640" height="1317" alt="ARCHER Mobile iPhone preview with three vertically stacked blue-lit audio controls" loading="lazy" decoding="async"></span>
+    <span class="uf-archer-device uf-archer-device--ipad"><img src="assets/products/archer-mobile-ipad-ui-20261029.webp" width="720" height="1283" alt="ARCHER Mobile iPad portrait preview with vertically stacked Gain, Threshold and Color controls" loading="lazy" decoding="async"></span>
+  </span>
+</a>
+<div class="uf-gallery-copy"><p class="uf-gallery-type">Audio / iPhone &amp; iPad</p><h4>ARCHER Mobile</h4><p>A dedicated touch interface, designed for iPhone and iPad. Two devices, one distinct mobile experience.</p><span class="uf-gallery-availability">Product preview · upcoming design, not the current App Store version</span></div>
 </article>
 <article class="uf-gallery-card uf-gallery-card--mobile">
 <a class="uf-gallery-media" href="assets/products/pocket-capture-ipad.webp" target="_blank" rel="noopener" aria-label="View the Pocket Capture iPad cover at full size"><img src="assets/products/pocket-capture-ipad.webp" alt="Pocket Capture app cover featuring its real audio recording interface for iPad" loading="lazy" decoding="async"></a>
@@ -4268,9 +4332,24 @@ main .uf-hero-title {
 </div>
 </section>
 
+<section id="games" class="unfire-games-home" aria-labelledby="unfire-games-home-title">
+<div class="wrap unfire-games-home-layout">
+  <div class="unfire-games-home-copy">
+    <div class="eyebrow"><span translate="no" class="notranslate">Unfire Games</span></div>
+    <h2 id="unfire-games-home-title">A world to explore.</h2>
+    <p>Enter the free 3D robot world, explore real gameplay scenes, and discover the interactive sound of <span translate="no" class="notranslate">HYPERWAVE 2000</span>. Part of the <span translate="no" class="notranslate">Unfire Audio</span> family.</p>
+    <a class="unfire-games-home-cta" href="/games/">Explore Games <span aria-hidden="true">↗</span></a>
+  </div>
+  <a href="/games/" class="unfire-games-home-visual" aria-label="View Unfire Games and authentic gameplay screenshots">
+    <img src="/audio/press/captures/09-night-flight-panorama.jpg" width="1280" height="720" loading="lazy" decoding="async" alt="Authentic Unfire game scene: a flying robot above illuminated islands at night">
+    <span>Actual in-game capture · Unfire Audio</span>
+  </a>
+</div>
+</section>
+
 <section id="audio">
 <div class="wrap">
-<a class="unfire-audio-entry" href="/audio/" aria-label="Abrir Unfire Audio">Explore <span class="notranslate" translate="no">Unfire Audio</span> <span aria-hidden="true">↗</span></a>
+<a class="unfire-audio-entry" href="/audio/" aria-label="Open Unfire Audio">Explore <span class="notranslate" translate="no">Unfire Audio</span> <span aria-hidden="true">↗</span></a>
 <div class="eyebrow"><span class="notranslate" translate="no">Unfire</span> Audio</div>
 <h2>Creative technology beyond a single plugin.</h2>
 <p class="lead"><span><span class="notranslate" translate="no">Unfire</span> Audio</span> develops and tests audio technology, procedural systems and AI-assisted ideas for practical creative tools.</p>

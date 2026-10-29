@@ -1,0 +1,33 @@
+name: Audio secondary stage candidate
+
+on:
+  push:
+    branches:
+      - perf/audio-secondary-stage-budget-20261024
+    paths:
+      - 'audio/maletin/index.html'
+      - 'tests/audio-secondary-stage-candidate.test.cjs'
+      - '.github/workflows/audio-secondary-stage-candidate.yml'
+  pull_request:
+    paths:
+      - 'audio/maletin/index.html'
+      - 'tests/audio-secondary-stage-candidate.test.cjs'
+      - '.github/workflows/audio-secondary-stage-candidate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  secondary-stage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify JS syntax and five device profiles
+        run: |
+          node --check tests/audio-secondary-stage-candidate.test.cjs
+          node tests/audio-secondary-stage-candidate.test.cjs

@@ -537,8 +537,8 @@ const ENGINES = (() => {
       else if (mode === 'chip') { const o = ctx.createOscillator(); o.setPeriodicWave(pulseWave()); o.frequency.value = f; oscs.push(o); }
       else if (mode === 'pad') { for (const [type, d] of [['sawtooth', -p.detune], ['sawtooth', p.detune], ['triangle', 0]]) { const o = ctx.createOscillator(); o.type = type; o.frequency.value = f; o.detune.value = d; oscs.push(o); } }
       else { // FM
-        const c = ctx.createOscillator(), mo = ctx.createOscillator(), mg = ctx.createGain(); c.frequency.value = f; mo.frequency.value = f * 3.5;
-        mg.gain.setValueAtTime(f * 6, t); mg.gain.setTargetAtTime(f * 0.4, t, 0.35); mo.connect(mg); mg.connect(c.frequency); mo.start(t); oscs.push(c); c._mod = mo;
+        const c = ctx.createOscillator(), mo = ctx.createOscillator(), mg = ctx.createGain(); c.frequency.value = f; mo.frequency.value = f * 2;
+        mg.gain.setValueAtTime(f * 2.2, t); mg.gain.setTargetAtTime(f * 0.22, t, 0.25); mo.connect(mg); mg.connect(c.frequency); mo.start(t); oscs.push(c); c._mod = mo;
       }
       const mix = ctx.createGain(); mix.gain.value = 1 / Math.sqrt(oscs.length);
       oscs.forEach((o) => { o.connect(mix); o.start(t); });

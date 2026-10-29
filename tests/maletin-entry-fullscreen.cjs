@@ -118,9 +118,9 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
      assert(state.exit.x>=-1&&state.exit.y>=-1&&state.exit.x+state.exit.w<=width+1,
        'Game exit clipped by small viewport');
      // Compact touch UI deliberately abbreviates the visual label, but retains
-     // the full accessible button text and shows a real, unclipped SALIR caption.
+     // the full accessible button text and shows a real, unclipped EXIT caption.
      assert(/(SALIR A LA WEB|BACK TO THE WEBSITE)/.test(state.label.text)&&
-       /SALIR/.test(state.label.compactCaption)&&state.exit.w>=70&&state.exit.w<=92&&
+       /EXIT/.test(state.label.compactCaption)&&state.exit.w>=70&&state.exit.w<=92&&
        state.exit.h>=34&&state.label.scrollWidth<=state.label.clientWidth+2,
        'Compact exit caption missing, clipped or not accessible '+JSON.stringify({width,height,label:state.label}));
      const overlaps=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
@@ -196,7 +196,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        gamePaused:!document.body.classList.contains('immOn'),
        persistent:document.getElementById('heroPin').classList.contains('web-return')};
    });
-   assert(afterExit.portal&&/VOLVER A JUGAR/.test(afterExit.returnLabel)&&afterExit.gamePaused&&afterExit.persistent,
+   assert(afterExit.portal&&/PLAY AGAIN/.test(afterExit.returnLabel)&&afterExit.gamePaused&&afterExit.persistent,
      'Exit to website did not leave game parked with manual return portal '+JSON.stringify(afterExit));
    await page.evaluate(()=>document.getElementById('unfireReturnPlay').click());
    await page.waitForFunction(()=>document.body.classList.contains('immOn'),null,{timeout:10000});

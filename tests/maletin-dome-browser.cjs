@@ -1,0 +1,158 @@
+'use strict';
+// Bounded real-Chromium smoke test: enter/exit the roof opening, no screenshots.
+// Run with playwright installed and Chrome/Chromium available.
+const assert = require('node:assert/strict');
+const path = require('node:path');
+const { spawn } = require('node:child_process');
+const { chromium } = require(process.env.UNFIRE_PLAYWRIGHT_PATH || 'playwright');
+
+const root = path.resolve(__dirname, '..');
+const port = Number(process.env.UNFIRE_DOME_QA_PORT || 8786);
+const cases = [
+  { name: 'desktop', width: 960, height: 640, mobile: false },
+  { name: 'mobile-portrait', width: 390, height: 844, mobile: true },
+  { name: 'mobile-landscape', width: 844, height: 390, mobile: true }
+];
+let server, browser;
+
+async function exercise(spec) {
+  const context = await browser.newContext({
+    viewport: { width: spec.width, height: spec.height },
+    deviceScaleFactor: 1, hasTouch: spec.mobile, isMobile: spec.mobile
+  });
+  const errors = [];
+  try {
+    const page = await context.newPage();
+    page.on('pageerror', e => errors.push(String(e.message).slice(0, 350)));
+    const start = Date.now();
+    try {
+      await page.goto('http://127.0.0.1:' + port + '/audio/maletin/?quality=compact', {
+        waitUntil: 'domcontentloaded', timeout: 30000
+      });
+    } catch (error) {
+      console.error('DOME_NAVIGATION_DIAGNOSTIC', JSON.stringify({
+        viewport: spec.name, elapsedMs: Date.now() - start,
+        location: page.url(), pageErrors: errors, failure: String(error.message)
+      }));
+      throw error;
+    }
+    await page.waitForFunction(() => !!(window.__roamAPI && window.__DOME && window.__mal && window.__mal.S),
+      null, { timeout: 65000, polling: 300 });
+    const beginning = await page.evaluate(() => {
+      window.__roamAPI.enterRoam();
+      const R = window.__roamAPI.ROAMS;
+      R.p.set(0, 4.5, 40);
+      R.h = 16; R.flyH = 17; R.fly = true; R.vy = 0; R.k = {};
+      window.__DOME.open = 0;
+      return { playing: R.on, outside: !!window.ATM_OUT };
+    });
+    assert(beginning.playing && !beginning.outside, 'Begin inside the house');
+    // The real unthrottled petal animation is covered by the Node state-machine
+    // test and the Mac Chromium smoke. Linux software WebGL can take tens of
+    // seconds per frame; do not confuse that render throttle with a state bug.
+    await page.waitForTimeout(350);
+    const prewarm = await page.evaluate(() => ({
+      open: window.__DOME.open, altitude: window.__roamAPI.ROAMS.h,
+      preparing: !!window.__obstWarmPending, prepared: !!window.__obstWarmReady
+    }));
+    await page.evaluate(() => {
+      const R = window.__roamAPI.ROAMS;
+      R.p.set(0, 4.5, 40);
+      R.h = 43; R.flyH = 43; R.vy = 0; R.fly = true;
+      window.__DOME.open = 0.95;
+    });
+    try {
+      await page.waitForFunction(() => window.ATM_OUT === true,
+        null, { timeout: 45000, polling: 100 });
+    } catch (e) {
+      console.error('DOME_EXIT_DIAGNOSTIC', JSON.stringify(await page.evaluate(() => {
+        const R = window.__roamAPI.ROAMS;
+        return { hidden: document.hidden, out: !!window.ATM_OUT, h: R.h,
+          fly: R.fly, open: window.__DOME.open, quality: window.__UNFIRE_ACTIVE_DEVICE,
+          stage: !!window.__mal.S };
+      })));
+      throw e;
+    }
+    const outdoor = await page.evaluate(() => {
+      const R = window.__roamAPI.ROAMS;
+      return { outside: !!window.ATM_OUT, x: R.p.x, z: R.p.z, h: R.h,
+        flying: !!R.fly, dome: window.__DOME.open };
+    });
+    assert(outdoor.outside && outdoor.flying, 'Exterior transition keeps flight');
+    assert(Math.hypot(outdoor.x, outdoor.z - 40) < 34 && Number.isFinite(outdoor.h),
+      'Avatar remains at the dome, not teleported elsewhere');
+
+    await page.evaluate(() => {
+      const R = window.__roamAPI.ROAMS;
+      R.p.set(0, 4.5, 40);
+      R.h = 33; R.flyH = 33; R.vy = 0; R.fly = true;
+      window.__DOME.open = 0.95;
+    });
+    try {
+      await page.waitForFunction(() => window.ATM_OUT === false,
+        null, { timeout: 45000, polling: 100 });
+    } catch (e) {
+      console.error('DOME_REENTRY_DIAGNOSTIC', JSON.stringify(await page.evaluate(() => {
+        const R = window.__roamAPI.ROAMS;
+        return { hidden: document.hidden, out: !!window.ATM_OUT, h: R.h,
+          fly: R.fly, open: window.__DOME.open, quality: window.__UNFIRE_ACTIVE_DEVICE };
+      })));
+      throw e;
+    }
+    await page.waitForTimeout(500);
+    const indoor = await page.evaluate(() => {
+      const R = window.__roamAPI.ROAMS;
+      return { outside: !!window.ATM_OUT, x: R.p.x, z: R.p.z,
+        h: R.h, playing: !!R.on };
+    });
+    assert(!indoor.outside && indoor.playing && Number.isFinite(indoor.h),
+      'Re-entry keeps the session and a valid altitude without mode bounce');
+    assert.equal(errors.length, 0, 'No unhandled browser errors: ' + errors.join('; '));
+    console.log('DOME_BROWSER_PASS', JSON.stringify({
+      viewport: spec.name, elapsedMs: Date.now() - start, prewarm, outdoor, indoor
+    }));
+  } finally {
+    await context.close();
+  }
+}
+
+(async () => {
+  try {
+    server = spawn('python3', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], {
+      cwd: root, stdio: 'ignore'
+    });
+    await new Promise(resolve => setTimeout(resolve, 800));
+    const requested = process.env.UNFIRE_DOME_QA_CASE;
+    const selected = requested ? cases.filter(spec => spec.name === requested) : cases;
+    assert(selected.length > 0, 'Unknown UNFIRE_DOME_QA_CASE: ' + requested);
+    // A fresh Chromium process for every viewport prevents software-WebGL GPU
+    // resources from carrying over between desktop, portrait and landscape.
+    // Every case still exercises the same real exit/re-entry assertions.
+    for (const spec of selected) {
+      console.log('DOME_BROWSER_START', JSON.stringify({ viewport: spec.name }));
+      browser = await chromium.launch({
+        headless: true, executablePath: process.env.UNFIRE_CHROME || undefined,
+        args: ['--enable-unsafe-swiftshader', '--disable-dev-shm-usage', '--no-sandbox',
+          '--autoplay-policy=no-user-gesture-required']
+      });
+      try {
+        await exercise(spec);
+      } finally {
+        await browser.close();
+        browser = null;
+      }
+    }
+  } catch (error) {
+    console.error('DOME_BROWSER_FAIL', error.stack || error);
+    process.exitCode = 1;
+  } finally {
+    try { if (browser) await browser.close(); } catch (_) {}
+    if (server) {
+      server.kill('SIGTERM');
+      await Promise.race([
+        new Promise(resolve => server.once('exit', resolve)),
+        new Promise(resolve => setTimeout(resolve, 500))
+      ]);
+    }
+  }
+})();

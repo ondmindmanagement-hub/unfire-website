@@ -1,0 +1,29 @@
+name: Audio indoor-outdoor collision broadphase
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/collision-nearby.js'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'audio/maletin/index.html'
+      - 'audio/index.html'
+      - 'tests/audio-roaming-collision-broadphase.test.cjs'
+      - 'tests/audio-roaming-prewarm.test.cjs'
+      - 'tests/audio-case-hotfix-cache.test.cjs'
+      - '.github/workflows/audio-roaming-collision-broadphase.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  roaming-grid:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check audio/maletin/collision-nearby.js
+      - run: node --check audio/maletin/game-engine-v50.js
+      - run: node --test tests/audio-roaming-collision-broadphase.test.cjs tests/audio-roaming-prewarm.test.cjs tests/audio-case-hotfix-cache.test.cjs
+      - run: node tests/maletin-v50.test.cjs
+      - run: node --test tests/maletin-door-transition.test.cjs

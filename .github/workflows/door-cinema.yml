@@ -1,0 +1,32 @@
+name: Audio cinematic doorway QA
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/door-cinema.js'
+      - 'audio/maletin/index.html'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'tests/door-cinema.test.cjs'
+      - '.github/workflows/door-cinema.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: door-cinema-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  door-cinema-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax and doorway animation contracts
+        run: |
+          node --check audio/maletin/door-cinema.js
+          node --check audio/maletin/game-engine-v50.js
+          node --check tests/door-cinema.test.cjs
+          node tests/door-cinema.test.cjs
+      - name: Existing door and safety regressions
+        run: |
+          if [ -f tests/maletin-door-transition.test.cjs ]; then node tests/maletin-door-transition.test.cjs; fi
+          if [ -f tests/maletin-v50.test.cjs ]; then node tests/maletin-v50.test.cjs; fi
+          if [ -f tests/maletin-cache-version.test.cjs ]; then node tests/maletin-cache-version.test.cjs; fi

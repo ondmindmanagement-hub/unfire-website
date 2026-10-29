@@ -1,0 +1,23 @@
+name: Audio PeerJS message safety
+on:
+  pull_request:
+    paths:
+      - audio/maletin/game-engine-v50.js
+      - tests/audio-online-packet-guard.test.cjs
+      - .github/workflows/audio-online-packet-guard.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  packets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: No invalid peers, coordinates or relay
+        run: |
+          node --check audio/maletin/game-engine-v50.js
+          node --test tests/audio-online-packet-guard.test.cjs tests/audio-online-selector-scroll.test.cjs tests/audio-trackpad-wheel-isolation.test.cjs

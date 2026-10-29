@@ -1,6 +1,21 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
+<script id="ufAdaptiveBoot">(function(){
+  try {
+    var coarse=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    var memory=Number(navigator.deviceMemory||0), cores=Number(navigator.hardwareConcurrency||0);
+    var unknown=!memory&&!cores&&Math.min(innerWidth,innerHeight)<400;
+    if(coarse&&((memory>0&&memory<=4)||(cores>0&&cores<=4)||unknown))
+      document.documentElement.classList.add('uf-load-pending');
+    // A network failure must never leave a permanent overlay.
+    setTimeout(function(){document.documentElement.classList.remove('uf-load-pending');},9000);
+  } catch(e) {}
+})();</script>
+<link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261023adaptive1">
+<script defer src="/assets/js/unfire-adaptive-loading.js?v=20261023adaptive1"></script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'">
@@ -8,13 +23,14 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://unfire.technology/apps/">
 <title translate="no">Apps & Product Families — Unfire</title>
-<meta name="description" content="Explore Unfire's software families: audio tools, intelligent workflows, interaction technology and everyday utilities. Explore released software and products currently under App Store review.">
+<meta name="description" content="Explore Unfire's software families: audio tools, intelligent workflows, interaction technology and everyday utilities. Explore apps by use and device, with individual release statuses and verified product links.">
 <style>
 :root{color-scheme:dark;--bg:#090b12;--panel:#141925;--line:#2c3447;--text:#f7f9fc;--muted:#a7afc0;--accent:#91bdfa}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:6px}.wrap{width:min(1130px,calc(100% - 48px));margin:auto}header{border-bottom:1px solid var(--line)}header .wrap{display:flex;align-items:center;justify-content:space-between;padding:22px 0;gap:20px}.brand{font-size:22px;font-weight:700;letter-spacing:0.008em;text-decoration:none}.back{font-size:13px;color:var(--muted);text-decoration:none}.back:hover,.family-link:hover{color:#fff}main{padding-bottom:100px}.hero{padding:115px 0 77px}.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:650;color:var(--accent)}h1{font-size:clamp(54px,8vw,100px);line-height:1.02;letter-spacing:0.008em;font-weight:620;margin:19px 0 21px;max-width:900px}h2{font-size:clamp(29px,4vw,47px);line-height:1.12;letter-spacing:0.008em;margin:0 0 12px;font-weight:610}p{margin:0;color:var(--muted)}.lead{font-size:clamp(17px,2.4vw,22px);max-width:675px}.subnav{display:flex;gap:10px;flex-wrap:wrap;margin:32px 0 0}.subnav a{font-size:12px;text-decoration:none;padding:8px 13px;border:1px solid var(--line);border-radius:999px;color:#d5dce8}.subnav a:hover{background:#1e2738}.family{padding:56px 0 59px;border-top:1px solid var(--line);scroll-margin-top:30px}.family-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:28px}.family-head p{max-width:580px}.tag{font-size:11px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:15px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{min-height:244px;display:flex;flex-direction:column;justify-content:space-between;gap:26px;padding:30px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(140deg,#1a2130,#111722 70%);transition:transform .2s,border-color .2s}.card:hover{transform:translateY(-2px);border-color:#67768e}.card .name{font-size:24px;font-weight:620;letter-spacing:0.008em;line-height:1.18}.card .platform{font-size:12px;font-weight:600;color:#9cadd0;margin-top:9px;letter-spacing:.045em}.card .copy{margin-top:16px;font-size:14px;line-height:1.7;max-width:400px}.card .foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.status{font-size:11px;color:#a3b6d7}.family-link{font-size:12px;font-weight:650;color:#c8dfff;text-decoration:none}.future{margin-top:26px;padding:22px 26px;background:#111621;border:1px solid #263047;border-radius:18px;font-size:13px;color:var(--muted)}.future strong{font-weight:650;color:#dfe7f4}.footline{border-top:1px solid var(--line);padding:36px 0 65px;font-size:12px;color:var(--muted)}.footline .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px}.footline a{text-decoration:none;color:#d8dfe9}.footline a:hover{text-decoration:underline}@media(max-width:660px){.wrap{width:calc(100% - 34px)}header .wrap{padding:18px 0}.hero{padding:75px 0 57px}.cards{grid-template-columns:1fr}.family{padding:45px 0}.family-head{display:block}.family-head p{margin-top:10px}.card{padding:25px;min-height:230px}h1{font-size:clamp(48px,12vw,72px)}}
+.catalog-tools{border:1px solid var(--line);border-radius:26px;padding:31px 34px;margin:0 0 40px;background:linear-gradient(140deg,#171d2a,#0d121b)}.catalog-tools-header{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:24px}.catalog-tools-header h2{margin-bottom:0;font-size:clamp(25px,3.1vw,36px)}.catalog-tools-header p{max-width:430px;font-size:13px}.catalog-filter-row{display:flex;align-items:flex-start;gap:22px;padding:12px 0}.filter-label{color:#9da8ba;font-size:12px;letter-spacing:.02em;min-width:75px;padding-top:8px;font-weight:650}.filter-buttons{display:flex;flex-wrap:wrap;gap:8px}.filter-button{color:#d0d8e8;background:#101725;border:1px solid #35425a;border-radius:999px;font:600 12px/1.3 -apple-system,BlinkMacSystemFont,Arial,sans-serif;min-height:36px;padding:8px 13px;cursor:pointer}.filter-button:hover{background:#273244;border-color:#64758d}.filter-button:focus-visible{outline:2px solid #9dc5ff;outline-offset:3px}.filter-button.is-active{color:#081326;background:#bad7ff;border-color:#bad7ff}.catalog-count{font-size:12px;font-weight:650;color:#dce8fc;margin-top:17px}.catalog-note{font-size:11px;margin-top:8px;max-width:760px}.card[hidden],.family[hidden]{display:none!important}@media(max-width:700px){.catalog-tools{padding:24px 20px}.catalog-tools-header{display:block}.catalog-tools-header p{margin-top:10px}.catalog-filter-row{display:block;padding:9px 0}.filter-label{display:block;padding:0;margin-bottom:9px}.filter-button{min-height:40px}.catalog-tools{margin-bottom:24px}}
 </style>
 
 <meta property="og:title" content="Apps &amp; Product Families — Unfire">
-<meta property="og:description" content="Explore Unfire&#x27;s software families: audio tools, intelligent workflows, interaction technology and everyday utilities. Explore released software and products currently under App Store review.">
+<meta property="og:description" content="Explore Unfire&#x27;s software families: audio tools, intelligent workflows, interaction technology and everyday utilities. Explore apps by use and device, with individual release statuses and verified product links.">
 <meta property="og:url" content="https://unfire.technology/apps/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
@@ -22,20 +38,99 @@
 <link rel="stylesheet" href="/assets/css/unfire-compact-system-20261019.css?v=2">
 </head>
 <body>
+<div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
+  <div class="uf-load-card">
+    <span class="uf-load-emblem" aria-hidden="true"></span>
+    <strong class="uf-load-brand" translate="no">UNFIRE</strong>
+    <span class="uf-load-label" id="ufAdaptiveLabel">Preparing the experience…</span>
+  </div>
+</div>
+
 <header><div class="wrap"><a class="brand" href="/"><span class="notranslate" translate="no">Unfire</span></a><a class="back" href="/contact/">Contact <span class="notranslate" translate="no">Unfire</span> →</a></div></header>
 <main class="wrap">
-<section class="hero"><div class="eyebrow"><span class="notranslate" translate="no">Unfire</span> / Products</div><h1>One ecosystem.<br>Distinct possibilities.</h1><p class="lead">Explore software built around distinct needs, connected by a shared approach to design, capability and reliability. Each family can grow without losing its identity.</p><p style="margin-top:26px"><a href="/early-access/" style="font-size:14px;font-weight:650;color:#c8dfff">Request free early-access evaluation or a research pilot →</a></p><nav class="subnav" aria-label="Product families"><a href="#audio">Audio</a><a href="#intelligence">Intelligence</a><a href="#control">Control</a><a href="#utilities">Utilities</a></nav></section>
+<section class="hero"><div class="eyebrow"><span class="notranslate" translate="no">Unfire</span> / Products</div><h1>One ecosystem.<br>Distinct possibilities.</h1><p class="lead">Explore software built around distinct needs, connected by a shared approach to design, capability and reliability. Each family can grow without losing its identity.</p><p style="margin-top:26px"><a href="/early-access/" style="font-size:14px;font-weight:650;color:#c8dfff">Request free early-access evaluation or a research pilot →</a></p><nav class="subnav" aria-label="Product families"><a href="#audio">Audio</a><a href="#intelligence">Development &amp; AI</a><a href="#control">Interaction</a><a href="#utilities">Utilities</a></nav></section>
+<section class="catalog-tools" aria-labelledby="catalog-tools-title">
+  <div class="catalog-tools-header"><div><div class="tag">Explore by purpose</div><h2 id="catalog-tools-title">Find your app.</h2></div><p>One catalogue. Choose the work you do and the device you use. Release status is shown per product.</p></div>
+  <div class="catalog-filter-row"><span class="filter-label" id="topic-filter-label">Category</span><div class="filter-buttons" role="group" aria-labelledby="topic-filter-label">
+    <button type="button" class="filter-button is-active" data-filter-kind="topic" data-filter-value="all" aria-pressed="true">All categories</button>
+    <button type="button" class="filter-button" data-filter-kind="topic" data-filter-value="audio" aria-pressed="false">Audio &amp; music</button>
+    <button type="button" class="filter-button" data-filter-kind="topic" data-filter-value="capture" aria-pressed="false">Capture</button>
+    <button type="button" class="filter-button" data-filter-kind="topic" data-filter-value="developer" aria-pressed="false">Development &amp; AI</button>
+    <button type="button" class="filter-button" data-filter-kind="topic" data-filter-value="productivity" aria-pressed="false">Productivity</button>
+    <button type="button" class="filter-button" data-filter-kind="topic" data-filter-value="utility" aria-pressed="false">Utilities</button>
+  </div></div>
+  <div class="catalog-filter-row"><span class="filter-label" id="device-filter-label">Device</span><div class="filter-buttons" role="group" aria-labelledby="device-filter-label">
+    <button type="button" class="filter-button is-active" data-filter-kind="device" data-filter-value="all" aria-pressed="true">All devices</button>
+    <button type="button" class="filter-button" data-filter-kind="device" data-filter-value="mac" aria-pressed="false">Mac</button>
+    <button type="button" class="filter-button" data-filter-kind="device" data-filter-value="iphone" aria-pressed="false">iPhone</button>
+    <button type="button" class="filter-button" data-filter-kind="device" data-filter-value="ipad" aria-pressed="false">iPad</button>
+  </div></div>
+  <p class="catalog-count" id="catalog-count" role="status" aria-live="polite">7 products · Filter by category or device.</p>
+  <p class="catalog-note">Product families are Unfire's own organization, not custom sections within Apple's developer page. Apple categories and release statuses are managed per app.</p>
+</section>
 <section class="family" id="audio"><div class="family-head"><div><div class="tag">Family 01</div><h2><span class="notranslate" translate="no">Unfire</span> Audio</h2><p>Creative software for music production, audio processing and recording.</p></div></div><div class="cards">
-<article class="card"><div><div class="name">ARCHER Clipper</div><div class="platform">macOS · Audio</div><p class="copy">Precision clipping with hands-on controls for gain, threshold and sound character. Standalone and Audio Unit workflows.</p></div><div class="foot"><span class="status">Available on the Mac App Store</span><a class="family-link" href="https://apps.apple.com/app/id6812968924" target="_blank" rel="noopener noreferrer" aria-label="View ARCHER Clipper in the App Store">View on App Store ↗</a></div></article>
-<article class="card"><div><div class="name">ARCHER Mobile</div><div class="platform">iOS &amp; iPadOS · Audio</div><p class="copy">The Archer audio-clipping experience adapted for touch, with standalone and Audio Unit v3 workflows.</p></div><div class="foot"><span class="status">Available on the App Store</span><a class="family-link" href="/apps/archer-mobile/" target="_blank" rel="noopener noreferrer" aria-label="Explore Archer for iPhone and iPad">Explore ARCHER →</a></div></article>
-<article class="card"><div><div class="name">Pocket Capture</div><div class="platform">iOS &amp; iPadOS · Recording</div><p class="copy">Capture audio locally, work with real waveforms, trim a selection and export WAV from a recorder-inspired interface.</p></div><div class="foot"><span class="status">App Store review in progress</span><a translate="no" class="family-link" href="/apps/pocket-capture/" aria-label="Explore Unfire Pocket Capture">Explore Pocket Capture →</a></div></article>
+<article class="card" data-topics="audio" data-devices="mac"><div><div class="name">ARCHER Clipper</div><div class="platform">macOS · Audio</div><p class="copy">Precision clipping with hands-on controls for gain, threshold and sound character. Standalone and Audio Unit workflows.</p></div><div class="foot"><span class="status">Available on the Mac App Store</span><a class="family-link" href="https://apps.apple.com/app/id6812968924" target="_blank" rel="noopener noreferrer" aria-label="View ARCHER Clipper in the App Store">View on App Store ↗</a></div></article>
+<article class="card" data-topics="audio" data-devices="iphone ipad"><div><div class="name">ARCHER Mobile</div><div class="platform">iOS &amp; iPadOS · Audio</div><p class="copy">The Archer audio-clipping experience adapted for touch, with standalone and Audio Unit v3 workflows.</p></div><div class="foot"><span class="status">Available on the App Store</span><a class="family-link" href="/apps/archer-mobile/" target="_blank" rel="noopener noreferrer" aria-label="Explore Archer for iPhone and iPad">Explore ARCHER →</a></div></article>
+<article class="card" data-topics="audio capture" data-devices="iphone ipad"><div><div class="name">Pocket Capture</div><div class="platform">iOS &amp; iPadOS · Recording</div><p class="copy">Capture audio locally, work with real waveforms, trim a selection and export WAV from a recorder-inspired interface.</p></div><div class="foot"><span class="status">Available on the App Store</span><a class="family-link" href="https://apps.apple.com/app/id6823107299" target="_blank" rel="noopener noreferrer" aria-label="Download Unfire Pocket Capture from the App Store">View on App Store ↗</a><a translate="no" class="family-link" href="/apps/pocket-capture/" aria-label="Learn more about Unfire Pocket Capture">Details →</a></div></article>
 </div><div class="future"><strong>Designed to expand:</strong> audio processing, recording and other creative tools. App Store availability is confirmed individually for each product.</div></section>
-<section class="family" id="intelligence"><div class="family-head"><div><div class="tag">Family 02</div><h2><span class="notranslate" translate="no">Unfire</span> Intelligence</h2><p>AI workflows, human approval, local controls and accountable automation.</p></div></div><div class="cards"><article class="card"><div><div class="name">Bolt</div><div class="platform">macOS · Intelligent workflows</div><p class="copy">Review proposed changes, inspect permissions and keep people in control of AI-assisted work.</p></div><div class="foot"><span class="status">Available on the Mac App Store</span><a class="family-link" href="https://apps.apple.com/app/id6814615903" target="_blank" rel="noopener noreferrer" aria-label="View BOLT in the App Store">View on App Store ↗</a></div></article><article class="card"><div><div class="name">BOLT Mobile</div><div class="platform">iOS &amp; iPadOS · Local review</div><p class="copy">Review proposed text-file changes on a separate copy, with explicit approval before keeping the result.</p></div><div class="foot"><span class="status">App Store review in progress</span><a class="family-link" href="/apps/bolt-mobile/" aria-label="Explore BOLT for iPhone and iPad">Explore BOLT Mobile →</a></div></article></div><div class="future">The mobile release is in review. Features and platform requirements differ from the BOLT desktop edition.</div></section>
-<section class="family" id="control"><div class="family-head"><div><div class="tag">Family 03</div><h2><span class="notranslate" translate="no">Unfire</span> Control</h2><p>New ways to interact with technology through gestures, voice and connected devices.</p></div></div><div class="cards"><article class="card"><div><div class="name"><span class="notranslate" translate="no">Unfire</span> Control</div><div class="platform">macOS · Hand gestures &amp; voice</div><p class="copy">Move, click and scroll with hand gestures. Use supported voice commands with transparent Mac permissions.</p></div><div class="foot"><span class="status">Mac App Store review in progress</span><a translate="no" class="family-link" href="/apps/unfire-control/" aria-label="Explore Unfire Control">Explore <span class="notranslate" translate="no">Unfire</span> Control →</a></div></article></div><div class="future">This release is under Apple review. Download links will appear only after availability is confirmed.</div></section>
-<section class="family" id="utilities"><div class="family-head"><div><div class="tag">Family 04</div><h2><span class="notranslate" translate="no">Unfire</span> Utilities</h2><p>Everyday tools built around clear, useful information. Starting with energy.</p></div></div><div class="cards"><article class="card"><div><div class="name">Power Energy Prices</div><div class="platform">iPhone &amp; iPad · Energy</div><p class="copy">Check electricity pricing information and explore costs through a focused, readable interface.</p></div><div class="foot"><span class="status">Available on the App Store</span><a class="family-link" href="/apps/power/" target="_blank" rel="noopener noreferrer" aria-label="Explore Power Energy Prices">Explore Power →</a></div></article></div><div class="future"><strong>Potential future lines:</strong> Energy, Water and Mobility. These are categories for expansion, not announcements of released apps.</div></section>
+<section class="family" id="intelligence"><div class="family-head"><div><div class="tag">Family 02</div><h2><span class="notranslate" translate="no">Unfire</span> Development &amp; AI</h2><p>AI workflows, human approval, local controls and accountable automation.</p></div></div><div class="cards"><article class="card" data-topics="developer productivity" data-devices="mac"><div><div class="name">Bolt</div><div class="platform">macOS · Intelligent workflows</div><p class="copy">Review proposed changes, inspect permissions and keep people in control of AI-assisted work.</p></div><div class="foot"><span class="status">Available on the Mac App Store</span><a class="family-link" href="https://apps.apple.com/app/id6814615903" target="_blank" rel="noopener noreferrer" aria-label="View BOLT in the App Store">View on App Store ↗</a></div></article><article class="card" data-topics="developer productivity" data-devices="iphone ipad"><div><div class="name">BOLT Mobile</div><div class="platform">iOS &amp; iPadOS · Local review</div><p class="copy">Review proposed text-file changes on a separate copy, with explicit approval before keeping the result.</p></div><div class="foot"><span class="status">Store availability not yet reconfirmed</span><a class="family-link" href="/apps/bolt-mobile/" aria-label="Explore BOLT for iPhone and iPad">Explore BOLT Mobile →</a></div></article></div><div class="future">BOLT Mobile has its own review and release status, which must be verified independently of the desktop edition.</div></section>
+<section class="family" id="control"><div class="family-head"><div><div class="tag">Family 03</div><h2><span class="notranslate" translate="no">Unfire</span> Interaction</h2><p>New ways to interact with technology through gestures, voice and connected devices.</p></div></div><div class="cards"><article class="card" data-topics="productivity" data-devices="mac"><div><div class="name"><span class="notranslate" translate="no">Unfire</span> Control</div><div class="platform">macOS · Hand gestures &amp; voice</div><p class="copy">Move, click and scroll with hand gestures. Use supported voice commands with transparent Mac permissions.</p></div><div class="foot"><span class="status">Development preview · not available for download</span><a translate="no" class="family-link" href="/apps/unfire-control/" aria-label="Explore Unfire Control">Explore <span class="notranslate" translate="no">Unfire</span> Control →</a></div></article></div><div class="future">Development preview. A store link will appear only once an actual release is verified.</div></section>
+<section class="family" id="utilities"><div class="family-head"><div><div class="tag">Family 04</div><h2><span class="notranslate" translate="no">Unfire</span> Utilities</h2><p>Everyday tools built around clear, useful information. Starting with energy.</p></div></div><div class="cards"><article class="card" data-topics="utility" data-devices="iphone ipad"><div><div class="name">Power Energy Prices</div><div class="platform">iPhone &amp; iPad · Energy</div><p class="copy">Check electricity pricing information and explore costs through a focused, readable interface.</p></div><div class="foot"><span class="status">Available on the App Store</span><a class="family-link" href="/apps/power/" target="_blank" rel="noopener noreferrer" aria-label="Explore Power Energy Prices">Explore Power →</a></div></article></div><div class="future"><strong>Potential future lines:</strong> Energy, Water and Mobility. These are categories for expansion, not announcements of released apps.</div></section>
 </main>
 <footer class="footline"><div class="wrap"><span>© 2026 <span class="notranslate" translate="no">Unfire</span> · Independent technology initiative</span><span><a href="mailto:hello@unfire.technology"><span class="notranslate" translate="no">hello@unfire.technology</span></a> · <a href="/contact/">Contact</a></span></div><div class="unfire-commerce-legal-links" style="font-size:12.5px;line-height:1.9;margin:16px auto 0;text-align:center;color:#86868b;max-width:900px"><a href="/terms.html" style="color:inherit;text-decoration:none">Sales Terms</a> <span aria-hidden="true">&middot;</span> <a href="/software-license.html" style="color:inherit;text-decoration:none">Software License</a> <span aria-hidden="true">&middot;</span> <a href="/refunds.html" style="color:inherit;text-decoration:none">Refunds</a></div></footer>
 
+<script id="unfire-app-catalog-filters">
+(function () {
+  "use strict";
+  var root = document.querySelector(".catalog-tools");
+  if (!root) return;
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".family .card[data-devices][data-topics]"));
+  var families = Array.prototype.slice.call(document.querySelectorAll(".family"));
+  var buttons = Array.prototype.slice.call(root.querySelectorAll("button[data-filter-kind]"));
+  var status = document.getElementById("catalog-count");
+  var selected = { topic: "all", device: "all" };
+  function hasToken(value, selectedToken) {
+    return selectedToken === "all" || (" " + value + " ").indexOf(" " + selectedToken + " ") !== -1;
+  }
+  function render() {
+    var visible = 0;
+    cards.forEach(function(card) {
+      var matching = hasToken(card.dataset.topics, selected.topic) && hasToken(card.dataset.devices, selected.device);
+      card.hidden = !matching;
+      if (matching) visible += 1;
+    });
+    families.forEach(function(family) {
+      family.hidden = !Array.prototype.some.call(family.querySelectorAll(".card"), function(card) { return !card.hidden; });
+    });
+    status.textContent = visible === 0 ? "No matching apps. Try another category or device." :
+      "Showing " + visible + " of " + cards.length + " products";
+  }
+  buttons.forEach(function(button) {
+    button.addEventListener("click", function() {
+      selected[button.dataset.filterKind] = button.dataset.filterValue;
+      buttons.forEach(function(b) {
+        var active = b.dataset.filterValue === selected[b.dataset.filterKind];
+        b.classList.toggle("is-active", active);
+        b.setAttribute("aria-pressed", String(active));
+      });
+      render();
+    });
+  });
+  document.querySelectorAll(".subnav a[href^='#']").forEach(function(link) {
+    link.addEventListener("click", function() {
+      selected.topic = "all";
+      selected.device = "all";
+      buttons.forEach(function(b) {
+        var active = b.dataset.filterValue === "all";
+        b.classList.toggle("is-active", active);
+        b.setAttribute("aria-pressed", String(active));
+      });
+      render();
+    });
+  });
+  render();
+})();
+</script>
 <!-- Sr. Dante: Unfire public web assistant (speech opt-in) -->
 <script src="/assets/js/ask-unfire.js?v=20261020-3" defer></script>
 </body>

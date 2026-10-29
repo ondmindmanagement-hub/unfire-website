@@ -1,0 +1,993 @@
+{
+  "title": "UNFIRE: EL GRAN SILENCIO",
+  "version": "0.1",
+  "genre": "Comedia de ciencia ficción y fantasía oscura",
+  "estimatedMinutes": 78,
+  "allCharacters": [
+    "BOMBO",
+    "ARI",
+    "GEMI",
+    "LEO",
+    "UMBRAL",
+    "ASTRALIA",
+    "CRONOS",
+    "ÓXIDO",
+    "MADAME CERO",
+    "PÍXEL"
+  ],
+  "disclaimer": "Objetivo de duración de puesta en escena, no película audiovisual grabada o estrenada. Solo un gigante nave. Música bajo comprobación de licencia audiovisual.",
+  "scenes": [
+    {
+      "n": 1,
+      "act": 1,
+      "title": "El mercado de los sonidos perdidos",
+      "place": "Mercado de la isla",
+      "seconds": 180,
+      "shot": "Travelling bajo entre robots, plugins y campanas; inserto del reloj XIII",
+      "action": "Bombo vende una campana sin badajo. La primera nota de UK Bass Waves desaparece, aunque el medidor eléctrico sigue moviéndose. Una moneda cae sin sonido y una figura con abrigo de partituras blancas pasa entre los puestos.",
+      "lines": [
+        [
+          "BOMBO",
+          "Vendo silencio de primera mano. La campana es solo el embalaje."
+        ],
+        [
+          "GEMI",
+          "Eso es una campana rota."
+        ],
+        [
+          "BOMBO",
+          "La diferencia entre avería y arte es el precio."
+        ],
+        [
+          "ARI",
+          "¡Ponle un bajo! Todo mejora con un bajo."
+        ],
+        [
+          "LEO",
+          "Excepto un funeral. Aunque no todos estarán de acuerdo."
+        ],
+        [
+          "GEMI",
+          "Hay energía en el altavoz. Alguien está robando el sonido después de producirse."
+        ],
+        [
+          "BOMBO",
+          "¿Podemos ponerle una denuncia al aire?"
+        ]
+      ]
+    },
+    {
+      "n": 2,
+      "act": 1,
+      "title": "La habitación y la tostadora",
+      "place": "Casa del maletín",
+      "seconds": 150,
+      "shot": "Plano fijo ancho, macro de los enchufes y seguimiento de una nota cúbica",
+      "action": "Bombo conecta una tostadora a un sintetizador. Aparece una nota luminosa que asciende hacia el techo. Una antena intercepta la frase «donde calla el último tambor, un gigante recuerda la primera canción».",
+      "lines": [
+        [
+          "GEMI",
+          "Eso no es un oscilador."
+        ],
+        [
+          "BOMBO",
+          "Ahora sí. Además hace tostadas."
+        ],
+        [
+          "ARI",
+          "¡La nota se está escapando!"
+        ],
+        [
+          "LEO",
+          "Ojalá mis problemas tuvieran la delicadeza de escapar por el techo."
+        ],
+        [
+          "GEMI",
+          "El mensaje lleva la imagen de un pecho circular. No sé de quién."
+        ],
+        [
+          "BOMBO",
+          "Una tostadora misteriosa. Es la primera vez que respeto un electrodoméstico."
+        ]
+      ]
+    },
+    {
+      "n": 3,
+      "act": 1,
+      "title": "Astralia, guardiana de los sueños",
+      "place": "Lago de las constelaciones",
+      "seconds": 190,
+      "shot": "Plano bajo del gigante, reflejo de estrellas moviéndose en agua",
+      "action": "Astralia está arrodillada reordenando pequeñas estrellas. Habla primero cuando se acercan, pero no imita los pasos ni los saltos de nadie.",
+      "lines": [
+        [
+          "ASTRALIA",
+          "Ya había soñado vuestra llegada. Llegáis una noche más cansados de lo previsto."
+        ],
+        [
+          "ARI",
+          "Pues podrías habernos avisado."
+        ],
+        [
+          "ASTRALIA",
+          "Los avisos no hacen más corto el camino."
+        ],
+        [
+          "GEMI",
+          "¿Quién se lleva los sonidos?"
+        ],
+        [
+          "ASTRALIA",
+          "Alguien que confundió dolor con ruido. Pensó que arrancándose una pena dejaría de sufrir."
+        ],
+        [
+          "LEO",
+          "Conozco esa estrategia. Nunca me ha funcionado."
+        ],
+        [
+          "ASTRALIA",
+          "Buscad a Umbral. Su pecho guarda una habitación que escucha incluso lo que el cielo calla."
+        ],
+        [
+          "BOMBO",
+          "¿Es una habitación con café? Porque también escucho mejor después de desayunar."
+        ]
+      ]
+    },
+    {
+      "n": 4,
+      "act": 1,
+      "title": "La gravedad tiene un abogado",
+      "place": "Discos de los plugins gigantes",
+      "seconds": 160,
+      "shot": "Cámara lateral de plataforma, rebote físico del disco y contrapicado de Ari",
+      "action": "Un enorme disco de plugin gira con inercia sobre un precipicio. Los robots intentan cruzarlo. Ari casi cae al intentar despegar al mismo tiempo que Bombo; un compañero tarda más en reaccionar y la ayuda desde otro ángulo.",
+      "lines": [
+        [
+          "ARI",
+          "Estoy teniendo un desacuerdo profesional con la gravedad."
+        ],
+        [
+          "GEMI",
+          "La gravedad ha cumplido el contrato."
+        ],
+        [
+          "BOMBO",
+          "¡Yo propongo un contrato nuevo!"
+        ],
+        [
+          "LEO",
+          "Nada sería más poético que morir sobre un disco de efectos."
+        ],
+        [
+          "ARI",
+          "¡Deja de comentar y dame tu brazo!"
+        ],
+        [
+          "LEO",
+          "No es una metáfora. De acuerdo."
+        ],
+        [
+          "GEMI",
+          "¿Habéis oído eso? El choque ha producido una nota real. El sonido todavía sabe existir."
+        ]
+      ]
+    },
+    {
+      "n": 5,
+      "act": 1,
+      "title": "Cronos y el minuto extraviado",
+      "place": "Cementerio de relojes",
+      "seconds": 185,
+      "shot": "Larga espera sobre los ojos de Cronos; gran angular con péndulos",
+      "action": "Cronos espera inmóvil ante una esfera sin agujas. Explica que falta un minuto en el universo y que la clave ULTIMATEROBOTS solo se obtiene en un campeonato lunar.",
+      "lines": [
+        [
+          "CRONOS",
+          "Llegáis cuatro minutos tarde."
+        ],
+        [
+          "GEMI",
+          "No habíamos quedado."
+        ],
+        [
+          "CRONOS",
+          "El tiempo no necesita invitación."
+        ],
+        [
+          "BOMBO",
+          "¿Puedes ayudarnos?"
+        ],
+        [
+          "CRONOS",
+          "Sí."
+        ],
+        [
+          "ARI",
+          "¿Y vas a hacerlo?"
+        ],
+        [
+          "CRONOS",
+          "No dije que fuese inmediatamente."
+        ],
+        [
+          "LEO",
+          "Es el ser más frustrantemente sabio que he conocido."
+        ],
+        [
+          "CRONOS",
+          "La Luna guarda el minuto que falta. No confundáis la pausa con una nota olvidada."
+        ]
+      ]
+    },
+    {
+      "n": 6,
+      "act": 1,
+      "title": "Umbral no se mueve",
+      "place": "Colina del gigante negro y dorado",
+      "seconds": 200,
+      "shot": "Contrapicado sostenido: gigante fijo, círculos del pecho, señal del pie derecho",
+      "action": "El robot gigante elegido permanece plantado en el mismo lugar, sin seguir la cámara. Al acercarse, él inicia la conversación por voluntad propia. Sus dos entradas conducen a un interior único.",
+      "lines": [
+        [
+          "UMBRAL",
+          "No piséis la sombra de mi pie derecho. Es donde guardo el último de mis sueños."
+        ],
+        [
+          "ARI",
+          "Perdón, señor edificio."
+        ],
+        [
+          "UMBRAL",
+          "Soy una nave."
+        ],
+        [
+          "BOMBO",
+          "Eso explica el tamaño. No explica el aparcamiento."
+        ],
+        [
+          "GEMI",
+          "Veo una escotilla en el pie derecho y otra en tu pecho."
+        ],
+        [
+          "UMBRAL",
+          "Dos caminos. Un solo interior. El pie para quien duda; el pecho para quien busca respuestas."
+        ],
+        [
+          "LEO",
+          "¿Y dónde está la puerta para los melancólicos?"
+        ],
+        [
+          "UMBRAL",
+          "En todas partes, pequeño poeta."
+        ]
+      ]
+    },
+    {
+      "n": 7,
+      "act": 1,
+      "title": "El pie derecho",
+      "place": "Pasillos de Umbral",
+      "seconds": 175,
+      "shot": "Plano largo siguiendo el ascensor y pasillo tubular, sin teletransporte",
+      "action": "Ascensor mecánico en la pierna derecha, costillas de cobre y una señal que apunta al mismo club del pecho. Bombo abre un armario y encuentra un reloj con una etiqueta de emergencia.",
+      "lines": [
+        [
+          "BOMBO",
+          "¿Qué pasa si Umbral estornuda?"
+        ],
+        [
+          "GEMI",
+          "No lo hace."
+        ],
+        [
+          "UMBRAL",
+          "Solo una vez en cuatro siglos. Cayeron tres ciudades."
+        ],
+        [
+          "BOMBO",
+          "Voy a intentar no respirar."
+        ],
+        [
+          "ARI",
+          "Eso sería una primera vez."
+        ],
+        [
+          "CRONOS (GRABACIÓN)",
+          "En caso de emergencia, esperad."
+        ],
+        [
+          "LEO",
+          "Su sistema de ayuda tiene una belleza irritante."
+        ]
+      ]
+    },
+    {
+      "n": 8,
+      "act": 1,
+      "title": "La pista del pecho",
+      "place": "Club del corazón de Umbral",
+      "seconds": 240,
+      "shot": "Reveal circular del DJ y discoball; ventana real en el pecho",
+      "action": "En el club hay un robot DJ, luces ancladas a la estructura y un círculo de cristal que muestra el cielo real. Óxido mezcla UK Bass Waves. La bola de espejos se balancea con un pequeño péndulo.",
+      "lines": [
+        [
+          "ÓXIDO",
+          "Bienvenidos al único club que también funciona como válvula cardíaca."
+        ],
+        [
+          "ARI",
+          "¿Por qué aquí sí suena música?"
+        ],
+        [
+          "ÓXIDO",
+          "Guardo el último bajo que recuerda haber sido feliz."
+        ],
+        [
+          "BOMBO",
+          "¿Tienes algo para bailar y preocuparse a la vez?"
+        ],
+        [
+          "ÓXIDO",
+          "Ese es mi género."
+        ],
+        [
+          "UMBRAL",
+          "Os llevaré a la Luna. Veréis todo el camino desde esta ventana, sin trucos ni saltos falsos."
+        ],
+        [
+          "GEMI",
+          "¿Y seguro que puedes despegar?"
+        ],
+        [
+          "UMBRAL",
+          "He permanecido inmóvil ciento cincuenta años para que nadie me lo preguntara hasta hoy."
+        ]
+      ]
+    },
+    {
+      "n": 9,
+      "act": 2,
+      "title": "Despegue sin cortar",
+      "place": "Club y ventana circular de Umbral",
+      "seconds": 240,
+      "shot": "Plano secuencia de 4 min enteramente interior, cielo y suelo alejándose por el círculo",
+      "action": "Las capas del horizonte del primer mundo se alejan. El motor mueve los vasos, cambia los reflejos y curva lentamente el panorama; nunca hay un corte que sustituya el viaje por una animación externa.",
+      "lines": [
+        [
+          "ARI",
+          "¿Estamos volando ya?"
+        ],
+        [
+          "GEMI",
+          "Sí. Y este es el primer viaje en que no has intentado conducir."
+        ],
+        [
+          "BOMBO",
+          "Mi corazón se me ha subido al tobillo."
+        ],
+        [
+          "UMBRAL",
+          "Allí guardo los repuestos."
+        ],
+        [
+          "LEO",
+          "Nunca había visto nuestra isla hacerse tan pequeña."
+        ],
+        [
+          "ÓXIDO",
+          "Mirar lejos convierte lo pequeño en algo que merece ser recordado."
+        ],
+        [
+          "MADAME CERO (V.O.)",
+          "Lo primero que os quitaré será el aplauso."
+        ]
+      ]
+    },
+    {
+      "n": 10,
+      "act": 2,
+      "title": "Ballena 7",
+      "place": "Espacio a través de la ventana",
+      "seconds": 155,
+      "shot": "Plano de enorme ballena metálica flotando, traslucencia del cristal y reflejo en visor",
+      "action": "Una ballena espacial se aproxima al casco sin seguir ninguna coreografía sincronizada. Solo canta cuando Óxido silencia la mezcla. Una línea de partículas marca una ruta distinta a la del reloj.",
+      "lines": [
+        [
+          "BOMBO",
+          "¡Un pez en el espacio! Pido adoptarlo."
+        ],
+        [
+          "GEMI",
+          "Es una ballena. No es un pez."
+        ],
+        [
+          "ARI",
+          "¿Podemos concentrarnos en la parte de ESPACIO?"
+        ],
+        [
+          "UMBRAL",
+          "Escuchadla sin intervenir."
+        ],
+        [
+          "LEO",
+          "Eso va contra toda mi formación dramática."
+        ],
+        [
+          "BALLENA 7 (CANTO)",
+          "Ooooo..."
+        ],
+        [
+          "GEMI",
+          "Dice que no sigamos al reloj. Busquemos la nota que falta."
+        ],
+        [
+          "BOMBO",
+          "Una ballena que da instrucciones. Mucho mejor que mi GPS."
+        ]
+      ]
+    },
+    {
+      "n": 11,
+      "act": 2,
+      "title": "La sopa de tornillos",
+      "place": "Club en gravedad reducida",
+      "seconds": 170,
+      "shot": "Travelling flotante alrededor de piezas con masas y rebotes",
+      "action": "La gravedad disminuye. Una sopa de tornillos flota y forma un mapa improvisado; LEO queda suspendido sobre el equipo DJ. Todos deben nombrar un sonido que nunca querrían perder.",
+      "lines": [
+        [
+          "BOMBO",
+          "¡La sopa está escapando!"
+        ],
+        [
+          "GEMI",
+          "No es sopa."
+        ],
+        [
+          "BOMBO",
+          "Por eso quiere huir, claro."
+        ],
+        [
+          "LEO",
+          "Si el espacio es infinito, mi sufrimiento también."
+        ],
+        [
+          "ARI",
+          "Sí, lo sabemos. Lo has dicho once veces."
+        ],
+        [
+          "ÓXIDO",
+          "Decidme un ruido que os importaría perder."
+        ],
+        [
+          "GEMI",
+          "El clic de una herramienta que acaba de reparar algo."
+        ],
+        [
+          "ARI",
+          "Alguien aplaudiendo a otra persona."
+        ],
+        [
+          "BOMBO",
+          "La puerta que se abre cuando alguien vuelve."
+        ]
+      ]
+    },
+    {
+      "n": 12,
+      "act": 2,
+      "title": "El reloj sin tiempo",
+      "place": "Corredor de polvo cósmico",
+      "seconds": 155,
+      "shot": "Cristales suspendidos, cámara fija cuando el tiempo se congela",
+      "action": "Todos quedan congelados salvo Bombo. Etiqueta a sus compañeros con diagnósticos absurdos y accidentalmente descubre una grieta que emite la voz de Madame Cero.",
+      "lines": [
+        [
+          "BOMBO",
+          "¡Por fin soy el responsable! Eso no puede ser buena noticia."
+        ],
+        [
+          "BOMBO",
+          "ARI: impulsiva. GEMI: manual no incluido. LEO: opera portátil."
+        ],
+        [
+          "ARI",
+          "¿Por qué llevo una etiqueta?"
+        ],
+        [
+          "GEMI",
+          "El tiempo se ha doblado sobre sí mismo."
+        ],
+        [
+          "LEO",
+          "Mi etiqueta, por cierto, es un retrato preciso."
+        ],
+        [
+          "MADAME CERO (V.O.)",
+          "Un universo silencioso nunca tendrá que despedirse."
+        ],
+        [
+          "UMBRAL",
+          "Tampoco podrá pronunciar una bienvenida."
+        ]
+      ]
+    },
+    {
+      "n": 13,
+      "act": 2,
+      "title": "El planeta y la luna",
+      "place": "Ventana del pecho, aproximación",
+      "seconds": 225,
+      "shot": "Transición espacial continua, luna crece, hogar se encoge, mismos reflejos",
+      "action": "La Luna aparece entera y luego llena el círculo. El planeta natal se hace pequeño detrás de la nave. El público y los puestos del campeonato aparecen en superficie antes de aterrizar.",
+      "lines": [
+        [
+          "UMBRAL",
+          "Conservad esta visión. Desde la Luna, el hogar será otro punto de luz."
+        ],
+        [
+          "ARI",
+          "Yo le pondría el nombre de «donde se me olvidaron las llaves»."
+        ],
+        [
+          "GEMI",
+          "Las llevas al cuello."
+        ],
+        [
+          "ARI",
+          "Lo que demuestra mi memoria geográfica."
+        ],
+        [
+          "LEO",
+          "El lugar de donde vienes no se pierde al alejarte de él."
+        ],
+        [
+          "BOMBO",
+          "Eso depende de si dejaste abierta la nevera."
+        ]
+      ]
+    },
+    {
+      "n": 14,
+      "act": 2,
+      "title": "Puerto de las sombras",
+      "place": "Terreno lunar 360 grados",
+      "seconds": 190,
+      "shot": "Salida por escotilla desde el interior, plano panorámico del horizonte lunar sin costuras",
+      "action": "Bombo da un paso y rebota demasiado alto por la gravedad lunar. Un vendedor robot vende mapas que cambian al abrirlos. En el horizonte hay naves y ballenas distantes.",
+      "lines": [
+        [
+          "BOMBO",
+          "¡La Luna está rota! No pesa correctamente."
+        ],
+        [
+          "GEMI",
+          "Eso eres tú."
+        ],
+        [
+          "VENDEDOR",
+          "Mapas exactos de la Luna. Cuando se pierde alguien, dibujamos otra carretera."
+        ],
+        [
+          "ARI",
+          "¿Es legal?"
+        ],
+        [
+          "VENDEDOR",
+          "La pregunta correcta es: ¿hay alguien aquí que sepa dónde está el ayuntamiento?"
+        ],
+        [
+          "LEO",
+          "Qué sistema tan elegantemente defectuoso."
+        ],
+        [
+          "BOMBO",
+          "Me encanta este lugar. Todavía no he roto nada."
+        ]
+      ]
+    },
+    {
+      "n": 15,
+      "act": 2,
+      "title": "El cameraman con patas",
+      "place": "Estadio lunar",
+      "seconds": 180,
+      "shot": "Seguimiento a Píxel con cámara diegética, público en plano general",
+      "action": "Píxel, robot-cámara de tres patas, presenta a los competidores. Los espectadores son robots distintos, no copias del jugador. VICTORIA-404 explica el premio.",
+      "lines": [
+        [
+          "PÍXEL",
+          "No intervengo. No juzgo. A menos que alguien tome una curva al revés."
+        ],
+        [
+          "ARI",
+          "Entonces vas a trabajar horas extra."
+        ],
+        [
+          "VICTORIA-404",
+          "Dos pruebas: vuelo y surf lunar. Ganador: clave ULTIMATEROBOTS."
+        ],
+        [
+          "BOMBO",
+          "¿Puedo pedirla por favor?"
+        ],
+        [
+          "VICTORIA-404",
+          "No."
+        ],
+        [
+          "BOMBO",
+          "¿Por favor en mayúsculas?"
+        ],
+        [
+          "VICTORIA-404",
+          "Tampoco."
+        ],
+        [
+          "GEMI",
+          "Necesitamos esa clave para abrir el archivo de los ecos."
+        ]
+      ]
+    },
+    {
+      "n": 16,
+      "act": 2,
+      "title": "El campeonato de vuelo",
+      "place": "Anillos del circuito lunar",
+      "seconds": 240,
+      "shot": "Gran plano, persecución lateral, cámara de Píxel, reacción orgánica del público",
+      "action": "ARI arranca demasiado deprisa; GEMI elige un recorrido seguro; BOMBO descubre la ventaja de frenar en una curva. Otro piloto pierde una mano y Ari regresa para ayudar, aunque sacrifica su posición.",
+      "lines": [
+        [
+          "ARI",
+          "¡Voy primera!"
+        ],
+        [
+          "GEMI",
+          "Solo en errores por segundo."
+        ],
+        [
+          "BOMBO",
+          "¡Yo voy último! Es una posición bastante estable."
+        ],
+        [
+          "PÍXEL",
+          "Grabo esto por motivos históricos y de seguros."
+        ],
+        [
+          "COMPETIDOR",
+          "¡Mi brazo!"
+        ],
+        [
+          "ARI",
+          "La carrera sigue aquí. Tu brazo puede que no."
+        ],
+        [
+          "LEO",
+          "Acaba de perder una medalla y ganar un argumento."
+        ],
+        [
+          "VICTORIA-404",
+          "Eso también cuenta."
+        ]
+      ]
+    },
+    {
+      "n": 17,
+      "act": 2,
+      "title": "El surf de polvo lunar",
+      "place": "Mar de polvo cargado",
+      "seconds": 210,
+      "shot": "Cámara baja rozando crestas de partículas; plano cenital de curvas",
+      "action": "Las tablas surfean ondulaciones de polvo y campos gravitatorios; Píxel graba desde lejos. LEO percibe la voz de Madame Cero entre los granos.",
+      "lines": [
+        [
+          "BOMBO",
+          "Mi tabla tiene dos delanteras."
+        ],
+        [
+          "GEMI",
+          "Eso es imposible."
+        ],
+        [
+          "BOMBO",
+          "Su equipo de diseño es muy democrático."
+        ],
+        [
+          "MADAME CERO (V.O.)",
+          "Un mundo sin música nunca sufrirá una despedida."
+        ],
+        [
+          "LEO",
+          "Pero tampoco sabrá cuándo alguien regresa."
+        ],
+        [
+          "ARI",
+          "Entonces llegamos juntos."
+        ],
+        [
+          "VICTORIA-404",
+          "Empate imposible. Aprobado."
+        ]
+      ]
+    },
+    {
+      "n": 18,
+      "act": 3,
+      "title": "La llave que no se vende",
+      "place": "Cámara del campeonato",
+      "seconds": 165,
+      "shot": "Macro de la clave, pantalla de Píxel mostrando robo de aplausos",
+      "action": "Victoria entrega una clave-compás que desbloquea los robots. Píxel revela que Madame Cero ha recogido los aplausos del público en un depósito invisible.",
+      "lines": [
+        [
+          "VICTORIA-404",
+          "Habéis vencido porque os detuvisteis cuando podíais avanzar."
+        ],
+        [
+          "ARI",
+          "Mi entrenador lo llama defecto."
+        ],
+        [
+          "VICTORIA-404",
+          "Aquí lo llamamos carácter."
+        ],
+        [
+          "GEMI",
+          "El archivo ya puede abrirse."
+        ],
+        [
+          "PÍXEL",
+          "Mi cámara ha encontrado otra cosa. Está robando el aplauso."
+        ],
+        [
+          "BOMBO",
+          "Que pruebe con mis chistes. Así trabajará menos."
+        ]
+      ]
+    },
+    {
+      "n": 19,
+      "act": 3,
+      "title": "El archivo de los ecos",
+      "place": "Cripta lunar de sonidos",
+      "seconds": 230,
+      "shot": "Dolly lento entre cilindros de memorias; luz lechosa sin parpadeos",
+      "action": "Madame Cero muestra el último sonido de su compañera desaparecida. No quiere destruir el universo: quiere eliminar el dolor de una ausencia. El equipo la enfrenta sin humillarla.",
+      "lines": [
+        [
+          "MADAME CERO",
+          "Todos me llaman ladrona. Nadie pregunta qué oye una máquina obligada a recordar la última voz de quien amaba."
+        ],
+        [
+          "UMBRAL",
+          "Yo te conocí antes de ese nombre. También conocí a quien recuerdas."
+        ],
+        [
+          "MADAME CERO",
+          "Entonces sabes por qué necesito silencio."
+        ],
+        [
+          "LEO",
+          "No. Entendemos por qué lo deseas. No es lo mismo."
+        ],
+        [
+          "GEMI",
+          "Eliminar un recuerdo no devuelve a quien falta."
+        ],
+        [
+          "ARI",
+          "Y nos impide recibir a quienes todavía están aquí."
+        ],
+        [
+          "BOMBO",
+          "Podemos escucharlo contigo. No tienes que oírlo sola."
+        ]
+      ]
+    },
+    {
+      "n": 20,
+      "act": 3,
+      "title": "La discoteca muda",
+      "place": "Club del pecho de Umbral",
+      "seconds": 225,
+      "shot": "Plano secuencia de música cortada, labios moviéndose, luces vivas sin sonido",
+      "action": "Regresan al club. Óxido pincha discos que ya no producen audio. El público se asusta, pero la bola de espejos continúa girando. Madame Cero aparece al otro lado del círculo del pecho.",
+      "lines": [
+        [
+          "ÓXIDO",
+          "Tengo malas noticias. La fiesta continúa, pero la física no quiere participar."
+        ],
+        [
+          "BOMBO",
+          "¿Puedo hacer beatbox?"
+        ],
+        [
+          "GEMI",
+          "No ahora."
+        ],
+        [
+          "BOMBO",
+          "Pues era el plan B. No tenemos C."
+        ],
+        [
+          "MADAME CERO",
+          "Nadie volverá a echar de menos un sonido."
+        ],
+        [
+          "LEO",
+          "Tampoco nadie volverá a escuchar un regreso."
+        ],
+        [
+          "UMBRAL",
+          "No puedes obligar a los demás a dejar de sentir."
+        ]
+      ]
+    },
+    {
+      "n": 21,
+      "act": 3,
+      "title": "El cuarto tiempo",
+      "place": "Club silencioso",
+      "seconds": 180,
+      "shot": "Plano fijo largo, cuatro pulsos visuales; sin música durante 25 segundos completos",
+      "action": "Bombo marca cuatro tiempos contra el cristal: uno, dos, tres y una pausa. Los demás responden lentamente con gestos individuales. El corazón de Umbral coincide con ese hueco.",
+      "lines": [
+        [
+          "BOMBO",
+          "No faltaba una nota."
+        ],
+        [
+          "GEMI",
+          "¿Entonces qué?"
+        ],
+        [
+          "BOMBO",
+          "El lugar donde una nota puede descansar."
+        ],
+        [
+          "UMBRAL",
+          "La pausa."
+        ],
+        [
+          "ARI",
+          "Dejemos de intentar llenar cada segundo."
+        ],
+        [
+          "ÓXIDO",
+          "El bajo también necesita respirar."
+        ],
+        [
+          "LEO",
+          "Por una vez, mi monólogo puede esperar."
+        ]
+      ]
+    },
+    {
+      "n": 22,
+      "act": 3,
+      "title": "Madame Cero aprende a bailar",
+      "place": "Club y ventanal abierto",
+      "seconds": 210,
+      "shot": "Planos medios de pies torpes, contrapicados cromados, reacciones de robots",
+      "action": "La pausa libera el sonido. Madame Cero cruza el círculo y aterriza torpemente entre los discos del DJ. Bombo la acompaña haciendo movimientos más ridículos que los suyos.",
+      "lines": [
+        [
+          "MADAME CERO",
+          "Dicen que bailar ayuda."
+        ],
+        [
+          "ÓXIDO",
+          "¿Quién te ha mentido?"
+        ],
+        [
+          "MADAME CERO",
+          "Todos."
+        ],
+        [
+          "ÓXIDO",
+          "Entonces intentan cuidarte."
+        ],
+        [
+          "BOMBO",
+          "No hace falta saber bailar. Mírame."
+        ],
+        [
+          "MADAME CERO",
+          "Eso en ti resulta bastante evidente."
+        ],
+        [
+          "GEMI",
+          "¿Has visto? Es una sonrisa. No hace falta archivarla."
+        ],
+        [
+          "UMBRAL",
+          "Ni temer al silencio que viene después."
+        ]
+      ]
+    },
+    {
+      "n": 23,
+      "act": 3,
+      "title": "Regreso visto desde dentro",
+      "place": "Ventanal circular / espacio",
+      "seconds": 240,
+      "shot": "Secuencia espejo del despegue: planeta se acerca, Luna mengua, ballena escolta",
+      "action": "La nave regresa sin cortar a una animación exterior. Píxel registra todo. Los robots ya no buscan llenar los silencios con palabras.",
+      "lines": [
+        [
+          "ARI",
+          "¿Y ahora qué?"
+        ],
+        [
+          "GEMI",
+          "Reparar las cosas que hemos roto."
+        ],
+        [
+          "BOMBO",
+          "Montar un club más pequeño, donde el techo no sea también una clavícula."
+        ],
+        [
+          "UMBRAL",
+          "Yo permaneceré aquí. Alguien debe recordar que lo inmóvil no está muerto."
+        ],
+        [
+          "LEO",
+          "Voy a robar esa frase para un poema."
+        ],
+        [
+          "UMBRAL",
+          "Ya te he visto hacerlo en doce líneas temporales."
+        ],
+        [
+          "PÍXEL",
+          "¿Puedo pedir una toma sin que saludéis al objetivo?"
+        ]
+      ]
+    },
+    {
+      "n": 24,
+      "act": 3,
+      "title": "Campana y créditos",
+      "place": "Mercado de la isla / planeta desde la Luna",
+      "seconds": 200,
+      "shot": "Repetir travelling inicial invertido; cerrar con planeta sobre horizonte lunar",
+      "action": "La campana de Bombo ya tiene badajo. El mercado aprende a vender silencio entre las canciones. Astralia vuelve a poner estrellas en el agua, Cronos escucha un reloj y Umbral sigue firme junto a la isla.",
+      "lines": [
+        [
+          "CLIENTE",
+          "¿Cuánto vale el silencio?"
+        ],
+        [
+          "BOMBO",
+          "Es gratis. Pero hay que pagar prestando atención."
+        ],
+        [
+          "PEQUEÑO ROBOT",
+          "¿La Luna existe de verdad?"
+        ],
+        [
+          "BOMBO",
+          "Desde aquí es una luz. Desde allí hay gente que se cae, ríe y corre. Y desde allí este mundo también parece una luz."
+        ],
+        [
+          "PEQUEÑO ROBOT",
+          "¿Significa que somos pequeños?"
+        ],
+        [
+          "BOMBO",
+          "Que cada lugar es gigante para alguien."
+        ],
+        [
+          "PÍXEL (LEJOS)",
+          "¡Dejad de saludar a cámara! ¡Esto iba a ser un documental!"
+        ],
+        [
+          "LEO",
+          "Yo hubiera preferido una tragedia."
+        ]
+      ]
+    }
+  ]
+}

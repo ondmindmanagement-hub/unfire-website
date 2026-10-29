@@ -1,12 +1,27 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
+<script id="ufAdaptiveBoot">(function(){
+  try {
+    var coarse=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    var memory=Number(navigator.deviceMemory||0), cores=Number(navigator.hardwareConcurrency||0);
+    var unknown=!memory&&!cores&&Math.min(innerWidth,innerHeight)<400;
+    if(coarse&&((memory>0&&memory<=4)||(cores>0&&cores<=4)||unknown))
+      document.documentElement.classList.add('uf-load-pending');
+    // A network failure must never leave a permanent overlay.
+    setTimeout(function(){document.documentElement.classList.remove('uf-load-pending');},9000);
+  } catch(e) {}
+})();</script>
+<link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261023adaptive1">
+<script defer src="/assets/js/unfire-adaptive-loading.js?v=20261023adaptive1"></script>
+
 <meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'">
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title translate="no">About Unfire</title>
-<meta name="description" content="Unfire is an independent founder-led technology initiative creating software, AI systems and digital tools across multiple industries.">
+<meta name="description" content="Unfire is an independent technology initiative creating AI workflow software, music tools, interactive games, gesture and voice experiences, and energy utilities.">
 <link rel="canonical" href="https://unfire.technology/about/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="About Unfire">
@@ -43,21 +58,30 @@ h1{font-size:clamp(48px,8vw,84px)!important;line-height:.98!important;letter-spa
 a{text-underline-offset:3px}
 </style>
 
-<meta property="og:description" content="Unfire is an independent founder-led technology initiative creating software, AI systems and digital tools across multiple industries.">
+<meta property="og:description" content="Explore the Unfire portfolio across AI workflows, audio tools, interactive experiences, human-computer interaction and energy utilities.">
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/assets/css/unfire-display-typography-20261019.css?v=2">
 <link rel="stylesheet" href="/assets/css/unfire-compact-system-20261019.css?v=2">
 </head>
 <body>
+<div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
+  <div class="uf-load-card">
+    <span class="uf-load-emblem" aria-hidden="true"></span>
+    <strong class="uf-load-brand" translate="no">UNFIRE</strong>
+    <span class="uf-load-label" id="ufAdaptiveLabel">Preparing the experience…</span>
+  </div>
+</div>
+
 <nav><a class="brand" href="/"><img src="/unfire-dragon-transparent.png" alt=""><span><span class="notranslate" translate="no">Unfire</span></span></a><a class="secondary" href="/">Home</a></nav>
 <main>
 <div class="eyebrow">Company</div>
 <h1>About<br><span class="notranslate" translate="no">Unfire</span></h1>
-<p class="lead"><span class="notranslate" translate="no">Unfire</span> is an independent founder-led technology initiative founded by Omar Baró. It creates software, AI systems and digital tools for real-world use across multiple industries.</p>
+<p class="lead"><span class="notranslate" translate="no">Unfire</span> is an independent technology initiative founded by Omar Baró. Its portfolio spans AI-assisted workflows, music software, interactive games, gesture and voice interaction, and energy tools. Each product has its own release status and validation process.</p>
 <div class="rule"></div>
 <div class="row"><div class="label">Founder</div><div class="value"><a href="/omar-baro/">Omar Baró</a></div></div>
 <div class="row"><div class="label">Website</div><div class="value"><a href="/"><span class="notranslate" translate="no">unfire.technology</span></a></div></div>
-<div class="row"><div class="label">Focus</div><div class="value">Software products, AI systems, automation, infrastructure, energy technology and creative software.</div></div>
+<div class="row"><div class="label">Portfolio</div><div class="value"><a href="/apps/">Apps &amp; product families</a> · <a href="/games/">Games &amp; experiences</a> · <a href="/enterprise/">Business technology</a></div></div>
+<div class="row"><div class="label">Product families</div><div class="value"><span class="notranslate" translate="no">Unfire</span> Audio (ARCHER, audio tools and interactive experiences) · BOLT (reviewed AI workflows) · <span class="notranslate" translate="no">Unfire</span> Control (gestures and voice) · Power Energy Prices (energy information). Offerings range from publicly listed apps to development previews; see each product page for its current status.</div></div>
 <div class="row"><div class="label">Contact</div><div class="value"><a href="mailto:hello@unfire.technology"><span class="notranslate" translate="no">hello@unfire.technology</span></a></div></div>
 </main>
 <footer>© 2026 <span class="notranslate" translate="no">Unfire</span></footer>

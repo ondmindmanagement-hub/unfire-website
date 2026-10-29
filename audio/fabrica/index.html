@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>UNFIRE Fábrica</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>UNFIRE Studio Factory</title>
 <style>
 @font-face{font-family:M;src:url(../maletin/fonts/Michroma.ttf)}
 @font-face{font-family:V;src:url(../maletin/fonts/VT323.ttf)}
@@ -81,82 +81,82 @@ select{background:#0d1426;color:var(--ink);border:1px solid var(--line);border-r
 }
 </style></head><body>
 <header>
- <a class="logo" href="../index.html"><img src="../img/logo-unfire-256.webp" alt="">UNFIRE FÁBRICA</a>
+ <a class="logo" href="../index.html"><img src="../img/logo-unfire-256.webp" alt="">UNFIRE FACTORY</a>
  <span class="lcd" id="lcdKey">— · — BPM</span>
  <nav class="tabs" id="tabs"></nav>
 </header>
 
 <section id="home" class="on">
- <h1>LA FÁBRICA</h1>
- <p>Todo UNFIRE en una sola app. Cada máquina se conecta con todas las demás: el Estudio, los Sintes, el DJ, el Reproductor y la Cámara comparten tempo, tonalidad y cables.</p>
+ <h1>THE FACTORY</h1>
+ <p>All of UNFIRE in one app. Every machine connects to the others: Studio, Synths, DJ, Player and Camera share tempo, key and patch cables.</p>
  <div class="grid" id="tiles"></div>
- <p class="note">Consejo: usa auriculares para cantar. Micrófono y cámara solo se activan cuando tú pulses.</p>
+ <p class="note">Tip: use headphones when recording vocals. The microphone and camera only activate when you choose to turn them on.</p>
 </section>
 
 <section id="estudio">
  <div class="panel">
-  <h2>ESTUDIO</h2>
-  <p>1 · Carga tu instrumental (o genera una). 2 · La app detecta tonalidad y tempo y configura el autotune. 3 · Pulsa grabar y canta.</p>
+  <h2>STUDIO</h2>
+  <p>1 · Load an instrumental or generate one. 2 · The app detects key and tempo and configures pitch correction. 3 · Press record and sing.</p>
   <div class="row">
-   <label class="btn go">CARGAR BEAT<input type="file" accept="audio/*" id="beatFile" hidden></label>
-   <select id="genre"><option>reggaetón</option><option>trap</option><option>boom bap</option><option>drill</option><option>house</option><option>afro</option></select>
-   <button class="btn" id="genBeat">GENERAR BEAT</button>
+   <label class="btn go">LOAD BEAT<input type="file" accept="audio/*" id="beatFile" hidden></label>
+   <select id="genre"><option value="reggaetón">Reggaeton</option><option>trap</option><option>boom bap</option><option>drill</option><option>house</option><option>afro</option></select>
+   <button class="btn" id="genBeat">GENERATE BEAT</button>
    <button class="btn" id="idea">IDEA ✦</button>
   </div>
   <div class="row" style="margin-top:12px">
    <div class="big" id="bigKey">—</div>
-   <div><div class="lcd" id="bpmLcd">— BPM</div><div class="note" id="keyNote">Sin beat todavía</div></div>
+   <div><div class="lcd" id="bpmLcd">— BPM</div><div class="note" id="keyNote">No beat loaded</div></div>
   </div>
  </div>
  <div class="panel">
   <canvas class="tl" id="tl"></canvas>
   <div class="row" style="margin-top:10px">
    <button class="btn go" id="play">▶ PLAY</button>
-   <button class="btn gel" id="rec">● GRABAR VOZ</button>
-   <button class="btn" id="undo">BORRAR ÚLTIMA TOMA</button>
-   <button class="btn" id="mixdown">GUARDAR MEZCLA</button>
+   <button class="btn gel" id="rec">● RECORD VOCALS</button>
+   <button class="btn" id="undo">DELETE LAST TAKE</button>
+   <button class="btn" id="mixdown">SAVE MIX</button>
   </div>
  </div>
  <div class="panel">
   <h2>AUTOTUNE</h2>
   <div class="row">
-   <button class="btn" id="micBtn">ACTIVAR MICRO</button>
-   <label class="k">AFINACIÓN<input type="range" id="atAmt" min="0" max="1" step=".01" value="1"></label>
-   <label class="k">VELOCIDAD (robot ← → natural)<input type="range" id="atSpd" min="0" max=".4" step=".01" value=".06"></label>
-   <label class="k">ESCUCHARME<input type="checkbox" id="mon"></label>
-   <label class="k">REVERB VOZ<input type="range" id="vRev" min="0" max="1" step=".01" value=".3"></label>
+   <button class="btn" id="micBtn">ENABLE MICROPHONE</button>
+   <label class="k">PITCH CORRECTION<input type="range" id="atAmt" min="0" max="1" step=".01" value="1"></label>
+   <label class="k">SPEED (robotic ← → natural)<input type="range" id="atSpd" min="0" max=".4" step=".01" value=".06"></label>
+   <label class="k">MONITOR MY VOICE<input type="checkbox" id="mon"></label>
+   <label class="k">VOCAL REVERB<input type="range" id="vRev" min="0" max="1" step=".01" value=".3"></label>
    <span class="lcd" id="noteLcd">--</span>
   </div>
-  <p class="note">La escala del autotune sale sola de la tonalidad del beat. Puedes cambiarla:
+  <p class="note">Pitch correction follows the detected musical key. You can change it:
    <select id="keySel"></select></p>
  </div>
  <div class="panel">
   <h2>SAMPLER / PADS</h2>
-  <div class="row"><button class="btn" id="chop">TROCEAR BEAT EN PADS</button><button class="btn" id="kitNew">KIT NUEVO</button><button class="btn" id="padRec">GRABAR EN PAD</button><button class="btn" id="seqClr">LIMPIAR</button></div>
+  <div class="row"><button class="btn" id="chop">SLICE BEAT INTO PADS</button><button class="btn" id="kitNew">NEW KIT</button><button class="btn" id="padRec">RECORD TO PAD</button><button class="btn" id="seqClr">CLEAR</button></div>
   <div class="pads" id="pads" style="margin-top:10px"></div>
   <div class="seq" id="seq"></div>
-  <p class="note">Toca un pad para elegirlo y marca sus pasos en la rejilla.</p>
+  <p class="note">Select a pad, then choose its steps in the sequencer.</p>
  </div>
 </section>
 
 <section id="sintes">
  <div class="syn">
-  <div class="panel"><h3>COLECCIÓN</h3><div class="list" id="synList"></div>
-   <div class="row" style="margin-top:10px"><button class="btn gel" id="synNew">CREAR OTRO ✦</button></div></div>
+  <div class="panel"><h3>COLLECTION</h3><div class="list" id="synList"></div>
+   <div class="row" style="margin-top:10px"><button class="btn gel" id="synNew">CREATE ANOTHER ✦</button></div></div>
   <div class="panel">
    <canvas id="skin"></canvas>
    <div class="row" style="margin-top:8px"><span class="lcd" id="synName">—</span><span class="note" id="synEng"></span>
-    <label class="btn">PON TU FOTO<input type="file" accept="image/*" class="photoIn" hidden></label>
-    <button class="btn" id="synStudio">USAR EN ESTUDIO</button></div>
+    <label class="btn">ADD YOUR PHOTO<input type="file" accept="image/*" class="photoIn" hidden></label>
+    <button class="btn" id="synStudio">USE IN STUDIO</button></div>
    <div class="kbd" id="kbd"></div>
-   <p class="note">Arrastra las ruedas del aparato. La mariposa lo transforma. Teclado del ordenador: A W S E D F T G Y H U J K.</p>
+   <p class="note">Drag the device controls. The butterfly transforms it. Computer keyboard: A W S E D F T G Y H U J K.</p>
   </div>
  </div>
 </section>
 
 <section id="dj">
  <div class="panel">
-  <h2>CONTROLADORES DJ</h2>
+  <h2>CONTROLLERS DJ</h2>
   <div class="row" id="tiers"></div>
   <p class="note" id="tierTxt"></p>
  </div>
@@ -168,9 +168,9 @@ select{background:#0d1426;color:var(--ink);border:1px solid var(--line);border-r
   <canvas id="wmp" style="width:100%;aspect-ratio:16/9;border-radius:18px"></canvas>
   <div class="row" style="margin-top:10px">
    <button class="btn" id="pPrev">⏮</button><button class="btn go" id="pPlay">▶</button><button class="btn" id="pNext">⏭</button>
-   <button class="btn" id="pSkin">SKIN NUEVO</button><button class="btn" id="pViz">VISUAL</button>
-   <label class="btn">AÑADIR CANCIONES<input type="file" accept="audio/*" multiple id="pFiles" hidden></label>
-   <label class="btn">PON TU FOTO<input type="file" accept="image/*" class="photoIn" hidden></label>
+   <button class="btn" id="pSkin">NEW SKIN</button><button class="btn" id="pViz">VISUAL</button>
+   <label class="btn">ADD SONGS<input type="file" accept="audio/*" multiple id="pFiles" hidden></label>
+   <label class="btn">ADD YOUR PHOTO<input type="file" accept="image/*" class="photoIn" hidden></label>
   </div>
   <div class="list" id="pList" style="margin-top:10px;max-height:240px"></div>
  </div>
@@ -178,34 +178,34 @@ select{background:#0d1426;color:var(--ink);border:1px solid var(--line);border-r
 
 <section id="camara">
  <div class="panel">
-  <h2>CÁMARA DE CONTROL</h2>
-  <p>Controla cualquier cosa con las manos o el movimiento. Si hay poca luz, la visión nocturna se enciende sola solo en las zonas oscuras. Con guantes de color (verde o rosa neón) el seguimiento es todavía más preciso.</p>
-  <div class="row"><button class="btn go" id="camAdd">+ AÑADIR CÁMARA</button>
-   <select id="trackMode"><option value="auto">Manos (IA en el navegador) + guantes</option><option value="glove">Solo guantes de color</option><option value="motion">Solo movimiento por zonas</option></select>
-   <label class="k">VISIÓN NOCTURNA<select id="nv"><option value="auto">Automática por zonas</option><option value="on">Siempre</option><option value="off">Apagada</option></select></label></div>
+  <h2>GESTURE CAMERA</h2>
+  <p>Control parameters using your hands or movement. In low light, night vision enhances darker areas. Bright green or neon-pink gloves can help improve tracking.</p>
+  <div class="row"><button class="btn go" id="camAdd">+ ADD CAMERA</button>
+   <select id="trackMode"><option value="auto">Hands (on-device browser AI) + gloves</option><option value="glove">Colored gloves only</option><option value="motion">Zone-based motion only</option></select>
+   <label class="k">NIGHT VISION<select id="nv"><option value="auto">Automatic by zone</option><option value="on">Always</option><option value="off">Off</option></select></label></div>
  </div>
  <div class="cams" id="cams"></div>
 </section>
 
 <section id="dragon">
  <div class="panel">
-  <h2>UNFIRE DRAGÓN · RESONADOR DE TONALIDAD</h2>
-  <p>Convierte cualquier sonido (tu voz, un ruido, una batería, una grabación de la calle) en armonía dentro de la tonalidad de tu beat. El dragón solo escupe fuego en las notas de la escala: nada desafina nunca.</p>
-  <div class="row"><select id="dSrc"></select><button class="btn go" id="dPlay">▶ ESCUPIR FUEGO</button>
-   <label class="k">FUEGO<input type="range" id="dFire" min="0" max="1" step=".01" value=".6"></label><label class="k">ALIENTO<input type="range" id="dBreath" min="0" max="1" step=".01" value=".4"></label><label class="k">MEZCLA<input type="range" id="dMix" min="0" max="1" step=".01" value=".75"></label></div>
+  <h2>UNFIRE DRAGON · KEY RESONATOR</h2>
+  <p>Turn a source signal—vocals, percussion or a field recording—into harmonies aligned with your beat’s key. The dragon aims to keep generated pitches within the selected scale.</p>
+  <div class="row"><select id="dSrc"></select><button class="btn go" id="dPlay">▶ BREATHE FIRE</button>
+   <label class="k">FIRE<input type="range" id="dFire" min="0" max="1" step=".01" value=".6"></label><label class="k">BREATH<input type="range" id="dBreath" min="0" max="1" step=".01" value=".4"></label><label class="k">MIX<input type="range" id="dMix" min="0" max="1" step=".01" value=".75"></label></div>
   <canvas id="dCv" style="width:100%;aspect-ratio:16/8;border-radius:18px;margin-top:10px"></canvas>
-  <p class="note">Tonalidad actual arriba a la izquierda. Cambia la tonalidad en el Estudio y el dragón se reafina solo. También se controla con la cámara desde PATCH.</p>
+  <p class="note">The current key appears in the top-left corner. Change the Studio key and the Dragon follows it. Camera gestures can also control it through PATCH.</p>
  </div>
 </section>
 
 <section id="patch">
  <div class="panel">
-  <h2>PATCH · TODO CON TODO</h2>
-  <p>Conecta cualquier fuente (manos, zonas de la cámara, LFOs, el bombo, otras apps UNFIRE abiertas) con cualquier parámetro de cualquier máquina.</p>
-  <div class="row"><button class="btn go" id="cAdd">+ CABLE</button><button class="btn" data-pre="0">Mano dcha → sinte</button><button class="btn" data-pre="1">Movimiento → filtro master</button><button class="btn" data-pre="2">Mano izq → crossfader</button><button class="btn" data-pre="3">Bombo → sinte</button></div>
+  <h2>PATCH · CONNECT EVERYTHING</h2>
+  <p>Connect supported sources—hand gestures, camera zones, LFOs, kick detection and other compatible Unfire modules—to adjustable parameters across your devices.</p>
+  <div class="row"><button class="btn go" id="cAdd">+ PATCH CABLE</button><button class="btn" data-pre="0">Right hand → synth</button><button class="btn" data-pre="1">Motion → master filter</button><button class="btn" data-pre="2">Left hand → crossfader</button><button class="btn" data-pre="3">Kick → synth</button></div>
  </div>
  <div class="panel" id="cables"></div>
- <div class="panel"><h3>SEÑALES EN VIVO</h3><div class="cv" id="cvLive"></div></div>
+ <div class="panel"><h3>LIVE SIGNALS</h3><div class="cv" id="cvLive"></div></div>
 </section>
 <div class="toast" id="toast"></div>
 
@@ -288,7 +288,7 @@ function sched(){const spb=60/S.bpm/4;while(nextT<AC.currentTime+.12){const t=ne
 setInterval(()=>{if(S.playing)sched()},25);
 function drawTL(){const c=$('#tl');if(!c.offsetParent)return;const dpr=devicePixelRatio||1,W=c.clientWidth*dpr,H=c.clientHeight*dpr;if(c.width!=W)c.width=W,c.height=H;const x=c.getContext('2d');x.clearRect(0,0,W,H);const L=songLen();
  const bars=Math.round(L/(240/S.bpm));x.strokeStyle='#1a2440';for(let b=0;b<=bars;b++){const px=b/bars*W;x.beginPath();x.moveTo(px,0);x.lineTo(px,H);x.stroke()}
- if(P.beatPk){const pk=P.beatPk;x.fillStyle='#38e1ff88';for(let i=0;i<pk.length;i++){const h=pk[i]*H*.35;x.fillRect(i/pk.length*W,H*.3-h,W/pk.length+1,h*2)}}else{x.fillStyle='#8f9bb8';x.font=14*dpr+'px M';x.fillText('SIN BEAT · se usa el patrón de pads',12*dpr,H*.32)}
+ if(P.beatPk){const pk=P.beatPk;x.fillStyle='#38e1ff88';for(let i=0;i<pk.length;i++){const h=pk[i]*H*.35;x.fillRect(i/pk.length*W,H*.3-h,W/pk.length+1,h*2)}}else{x.fillStyle='#8f9bb8';x.font=14*dpr+'px M';x.fillText('NO BEAT · using the pad pattern',12*dpr,H*.32)}
  x.fillStyle='#ff4fd8';for(const tk of P.takes){const a=tk.start/L*W,b=(tk.start+tk.buf.duration)/L*W;x.globalAlpha=.75;x.fillRect(a,H*.62,b-a,H*.3);x.globalAlpha=1;x.fillStyle='#fff';x.font=11*dpr+'px M';x.fillText('VOZ',a+4,H*.8);x.fillStyle='#ff4fd8'}
  if(REC.on){const a=REC.start/L*W,b=(AC.currentTime-startT)/L*W;x.fillStyle='#f33a';x.fillRect(a,H*.62,b-a,H*.3)}
  const ph=S.playing?((AC.currentTime-startT)%L)/L*W:(P.cursor||0)/L*W;x.fillStyle='#b6ff3b';x.fillRect(ph-1,0,2*dpr,H)}
@@ -305,7 +305,7 @@ async function renderBeat(genre,seed){ac();const r=rng(seed),bpm=BPMG[genre]+Mat
   if(bass&&(s==0||s==10&&genre!='house')){const deg=prog[Math.floor(i/16)%4],m=36+root+sc[deg%7];one(bass,t,.7,2**((m-36)/12))}}
  const out=await oc.startRendering();P.genre=genre;return{buf:out,name:`UNFIRE ${genre} #${seed%1000}`,g}}
 $('#genBeat').onclick=async()=>{toast('Fabricando beat…');const{buf,name,g}=await renderBeat($('#genre').value,Date.now()%100000);loadBeat(buf,name)};
-$('#idea').onclick=async()=>{ac();const r=rng(Date.now());const genre=$('#genre').value;P.grid=pat(genre,r);if(!P.beat)S.bpm=BPMG[genre];P.prog=pick(r,S.mode=='menor'?[[0,5,2,6],[0,3,4,0],[0,6,5,4],[0,5,3,4]]:[[0,4,5,3],[0,5,3,4],[3,4,0,0]]);P.chords=true;if(!STUDIO_SYN)STUDIO_SYN=SYNTHS[0];await newKit(Date.now()%9999);updKey();toast('Idea: patrón '+genre+' + acordes en '+keyLabel()+' con '+STUDIO_SYN.name)};
+$('#idea').onclick=async()=>{ac();const r=rng(Date.now());const genre=$('#genre').value;P.grid=pat(genre,r);if(!P.beat)S.bpm=BPMG[genre];P.prog=pick(r,S.mode=='menor'?[[0,5,2,6],[0,3,4,0],[0,6,5,4],[0,5,3,4]]:[[0,4,5,3],[0,5,3,4],[3,4,0,0]]);P.chords=true;if(!STUDIO_SYN)STUDIO_SYN=SYNTHS[0];await newKit(Date.now()%9999);updKey();toast('Idea: '+genre+' + chords in '+keyLabel()+' con '+STUDIO_SYN.name)};
 $('#play').onclick=()=>S.playing?stopPlay():startPlay(P.cursor||0);
 $('#chop').onclick=()=>{if(!P.beat)return toast('Primero carga o genera un beat');const L=P.beat.duration,bar=240/S.bpm;P.pads=P.pads.map((p,i)=>({...p,name:'trozo '+(i+1),buf:P.beat,off:(i*bar/2)%L,dur:bar/2,rate:1,gain:.9}));renderPads();toast('Beat troceado en 8 pads')};
 $('#kitNew').onclick=()=>{ac();newKit(Date.now()%99999)};
@@ -328,7 +328,7 @@ function makeAutotune(){const sr=AC.sampleRate,node=AC.createScriptProcessor(102
   for(let k=0;k<n;k++){const wp=w+k+L*4;ph+=(1-r)/W;ph-=Math.floor(ph);const p2=(ph+.5)%1,g1=Math.sin(Math.PI*ph)**2,g2=Math.sin(Math.PI*p2)**2;o[k]=rd(wp-ph*W-2)*g1+rd(wp-p2*W-2)*g2}
   w=(w+n)&(L-1)};return node}
 async function micOn(){ac();if(VOX)return true;try{const st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:true,autoGainControl:false}});const src=AC.createMediaStreamSource(st),hp=AC.createBiquadFilter();hp.type='highpass';hp.frequency.value=90;const at=makeAutotune(),cp=AC.createDynamicsCompressor();cp.threshold.value=-24;cp.ratio.value=5;const out=AC.createGain();out.gain.value=1.6;const mon=AC.createGain();mon.gain.value=0;const rv=AC.createGain();rv.gain.value=0;
- src.connect(hp).connect(at).connect(cp).connect(out);out.connect(mon).connect(MASTER);mon.connect(rv).connect(REV);const dst=AC.createMediaStreamDestination();out.connect(dst);VOX={st,src,out,mon,rv,dst};$('#micBtn').textContent='MICRO ACTIVO';$('#micBtn').classList.add('on');return true}catch(e){toast('No hay permiso de micrófono en este navegador');return false}}
+ src.connect(hp).connect(at).connect(cp).connect(out);out.connect(mon).connect(MASTER);mon.connect(rv).connect(REV);const dst=AC.createMediaStreamDestination();out.connect(dst);VOX={st,src,out,mon,rv,dst};$('#micBtn').textContent='MICRO ACTIVO';$('#micBtn').classList.add('on');return true}catch(e){toast('Microphone permission is unavailable in this browser');return false}}
 $('#micBtn').onclick=micOn;
 $('#atAmt').oninput=e=>AT.amt=+e.target.value;$('#atSpd').oninput=e=>AT.speed=+e.target.value;
 $('#mon').onchange=e=>{if(VOX){VOX.mon.gain.value=e.target.checked?1:0;VOX.rv.gain.value=e.target.checked?VOXREV:0}};
@@ -337,15 +337,15 @@ const REC={on:false};
 function pickMime(){for(const m of['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg'])if(window.MediaRecorder&&MediaRecorder.isTypeSupported(m))return m;return''}
 async function recStart(){if(!(await micOn()))return;if(!S.playing)startPlay(P.cursor||0);const mr=new MediaRecorder(VOX.dst.stream,pickMime()?{mimeType:pickMime()}:{}),ch=[];mr.ondataavailable=e=>ch.push(e.data);REC.on=true;REC.start=AC.currentTime-startT;REC.mr=mr;
  mr.onstop=async()=>{try{const b=await AC.decodeAudioData(await new Blob(ch).arrayBuffer());P.takes.push({buf:b,start:REC.start+.04});toast('Toma guardada · autotune en '+keyLabel())}catch(e){toast('No pude guardar la toma')}};mr.start();$('#rec').textContent='■ PARAR TOMA'}
-function recStop(){if(!REC.on)return;REC.on=false;REC.mr.stop();$('#rec').textContent='● GRABAR VOZ'}
+function recStop(){if(!REC.on)return;REC.on=false;REC.mr.stop();$('#rec').textContent='● RECORD VOCALS'}
 $('#rec').onclick=()=>REC.on?recStop():recStart();
 $('#padRec').onclick=async()=>{if(!(await micOn()))return;toast('Grabando 2 s en el pad '+(selPad+1)+'…');const mr=new MediaRecorder(VOX.dst.stream),ch=[];mr.ondataavailable=e=>ch.push(e.data);mr.onstop=async()=>{const b=await AC.decodeAudioData(await new Blob(ch).arrayBuffer());P.pads[selPad]={...P.pads[selPad],name:'tu voz',buf:b,off:0,dur:undefined,rate:1,gain:1};renderPads()};mr.start();setTimeout(()=>mr.stop(),2000)};
-$('#mixdown').onclick=()=>{ac();if(!window.MediaRecorder)return toast('Este navegador no puede grabar la mezcla');const mr=new MediaRecorder(RECD.stream,pickMime()?{mimeType:pickMime()}:{}),ch=[];mr.ondataavailable=e=>ch.push(e.data);mr.onstop=async()=>{const blob=new Blob(ch,{type:mr.mimeType});try{const b=await AC.decodeAudioData(await blob.arrayBuffer());libAdd('Mezcla '+new Date().toLocaleTimeString().slice(0,5),b)}catch(e){}const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='unfire-mezcla.'+(mr.mimeType.includes('mp4')?'m4a':'webm');a.click();toast('Mezcla guardada en el Reproductor y descargada')};
- startPlay(0);mr.start();toast('Grabando la mezcla completa…');setTimeout(()=>{mr.stop();stopPlay(true)},songLen()*1000+300)};
+$('#mixdown').onclick=()=>{ac();if(!window.MediaRecorder)return toast('Este navegador no puede grabar la mezcla');const mr=new MediaRecorder(RECD.stream,pickMime()?{mimeType:pickMime()}:{}),ch=[];mr.ondataavailable=e=>ch.push(e.data);mr.onstop=async()=>{const blob=new Blob(ch,{type:mr.mimeType});try{const b=await AC.decodeAudioData(await blob.arrayBuffer());libAdd('Mezcla '+new Date().toLocaleTimeString().slice(0,5),b)}catch(e){}const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='unfire-mezcla.'+(mr.mimeType.includes('mp4')?'m4a':'webm');a.click();toast('Mix saved to the Player and downloaded')};
+ startPlay(0);mr.start();toast('Recording the full mix…');setTimeout(()=>{mr.stop();stopPlay(true)},songLen()*1000+300)};
 
 /* ---------- SYNTHS ---------- */
-const ENG={acid:['CORTE','RESO','DECAY','ONDA'],super:['BRILLO','ANCHO','ATAQUE','SUELTA'],fm:['METAL','RATIO','SUELTA','BRILLO'],pluck:['APAGADO','BRILLO','SUELTA','OCTAVA'],rom:['BRILLO','SUAVE','SUELTA','OCTAVA'],vox:['VOCAL','VIBRATO','ATAQUE','AIRE'],wave:['MORPH','CORTE','SUELTA','TRÉMOLO'],gran:['POSICIÓN','GRANO','SUELTA','NUBE']};
-const ENGN={acid:'Bajo ácido',super:'Supersierra',fm:'FM campanas',pluck:'Cuerda física',rom:'Instrumento real',vox:'Voz robótica',wave:'Tabla de ondas',gran:'Nube granular'};
+const ENG={acid:['CUTOFF','RESO','DECAY','WAVE'],super:['BRIGHTNESS','WIDTH','ATTACK','RELEASE'],fm:['METAL','RATIO','RELEASE','BRIGHTNESS'],pluck:['DAMPING','BRIGHTNESS','RELEASE','OCTAVE'],rom:['BRIGHTNESS','SOFTNESS','RELEASE','OCTAVE'],vox:['VOCAL','VIBRATO','ATTACK','AIR'],wave:['MORPH','CUTOFF','RELEASE','TREMOLO'],gran:['POSITION','GRAIN','RELEASE','CLOUD']};
+const ENGN={acid:'Acid bass',super:'Supersaw',fm:'FM bells',pluck:'Physical string',rom:'Acoustic instrument',vox:'Robot voice',wave:'Wavetable',gran:'Granular cloud'};
 const SYL=['ZO','KA','LUX','MI','RA','VEX','NOO','BLI','OR','TA','XEN','PU','GLO','FI','SKA','MUU','TRI','DOX','YU','BEL','QUA','ZAP'],SUF=['-2000','·X','98','MAX','JR','TURBO','2K','XP','ULTRA','MINI','Ω'];
 const GR=['gong','didge','ocean','windchimes','cymbow','brakebow','vibesbow_64','glass_78','dantranhfx','gongscrape','didge2'];
 class Synth{constructor(seed){const r=rng(seed*31+5);this.seed=seed;this.eng=Object.keys(ENG)[seed%8];this.name=pick(r,SYL)+pick(r,SYL)+' '+pick(r,SUF);this.p=[.3+r()*.5,.2+r()*.6,.2+r()*.5,r()];this.inst=pick(r,Object.keys(ROM));this.gsrc=pick(r,GR);this.wv=[0,1].map(()=>{const re=new Float32Array(32),im=new Float32Array(32);for(let i=1;i<32;i++)im[i]=(r()<.6?1:0)*(r()*2-1)/i**(.4+r());return[re,im]});this.voices=new Map();this.skin=skinP(seed);this.t=0;this.tt=0;}
@@ -404,7 +404,7 @@ let SYNTHS=[],CUR=0,skinHits=[],mouse={x:0,y:0};
 function addSynth(seed){const s=new Synth(seed);SYNTHS.push(s);regSynthDst(s);return s}
 function renderSynList(){const b=$('#synList');b.innerHTML='';SYNTHS.forEach((s,i)=>{const e=document.createElement('button');e.textContent=s.name;if(i==CUR)e.className='on';e.onclick=()=>{CUR=i;renderSynList()};b.append(e)});const s=SYNTHS[CUR];$('#synName').textContent=s.name;$('#synEng').textContent=ENGN[s.eng]+(s.eng=='rom'?' · '+s.inst:s.eng=='gran'?' · '+s.gsrc:'')}
 $('#synNew').onclick=()=>{addSynth(Date.now()%1e6);CUR=SYNTHS.length-1;renderSynList();renderPatch();toast('Nuevo aparato: '+SYNTHS[CUR].name)};
-$('#synStudio').onclick=()=>{STUDIO_SYN=SYNTHS[CUR];P.chords=true;toast(STUDIO_SYN.name+' tocará los acordes del Estudio en '+keyLabel())};
+$('#synStudio').onclick=()=>{STUDIO_SYN=SYNTHS[CUR];P.chords=true;toast(STUDIO_SYN.name+' will play Studio chords in '+keyLabel())};
 const skin=$('#skin');let drag=null;
 skin.onpointerdown=e=>{ac();const r=skin.getBoundingClientRect(),dpr=skin.width/r.width,px=(e.clientX-r.left)*dpr,py=(e.clientY-r.top)*dpr;for(const h of skinHits)if(Math.hypot(px-h.x,py-h.y)<h.r){if(h.i=='bf'){const s=SYNTHS[CUR];s.tt=s.tt>.5?0:1;playSfx(s.tt);return}drag={i:h.i,y:e.clientY,v:SYNTHS[CUR].p[h.i]};skin.setPointerCapture(e.pointerId);return}};
 skin.onpointermove=e=>{const r=skin.getBoundingClientRect();mouse={x:(e.clientX-r.left)*skin.width/r.width,y:(e.clientY-r.top)*skin.width/r.width};if(drag){SYNTHS[CUR].p[drag.i]=clamp(drag.v+(drag.y-e.clientY)/160,0,1)}};
@@ -416,10 +416,10 @@ function playSfx(up){ac();const o=AC.createOscillator(),g=AC.createGain();o.type
  const at=e=>{const el=document.elementFromPoint(e.clientX,e.clientY);return el&&el.dataset.m?+el.dataset.m:null};
  k.onpointerdown=e=>{k.setPointerCapture(e.pointerId);const m=at(e);if(m)on(e.pointerId,m)};k.onpointermove=e=>{if(!down.has(e.pointerId))return;const m=at(e);if(m)on(e.pointerId,m)};k.onpointerup=k.onpointercancel=e=>off(e.pointerId);
  const map='awsedftgyhujk';addEventListener('keydown',e=>{if(e.repeat||!$('#sintes').classList.contains('on')||e.target.tagName=='INPUT')return;const i=map.indexOf(e.key.toLowerCase());if(i>=0)on('k'+i,base+i)});addEventListener('keyup',e=>{const i=map.indexOf(e.key.toLowerCase());if(i>=0)off('k'+i)})})();
-$$('.photoIn').forEach(inp=>inp.onchange=async e=>{const f=e.target.files[0];if(f){PHOTO=await createImageBitmap(f);toast('Foto puesta en las pantallas')}});
+$$('.photoIn').forEach(inp=>inp.onchange=async e=>{const f=e.target.files[0];if(f){PHOTO=await createImageBitmap(f);toast('Photo added to the screens')}});
 
 /* ---------- DJ ---------- */
-const TIERS=[{n:'DJ-1 MINI',d:2,fx:0,pads:0,t:'2 platos, mezclador con EQ y filtro. Para empezar.'},{n:'DJ-2 PRO',d:2,fx:1,pads:4,t:'2 platos + efectos (eco, roll) + 4 hot cues por plato.'},{n:'DJ-4 CLUB',d:4,fx:1,pads:4,t:'4 platos, efectos, hot cues y sincronía total. La nave nodriza.'}];
+const TIERS=[{n:'DJ-1 MINI',d:2,fx:0,pads:0,t:'Two decks, a mixer, EQ and filter. Perfect to get started.'},{n:'DJ-2 PRO',d:2,fx:1,pads:4,t:'Two decks, echo and roll effects, plus four hot cues per deck.'},{n:'DJ-4 CLUB',d:4,fx:1,pads:4,t:'Four decks, effects, hot cues and full sync. The flagship setup.'}];
 let TIER=1,DECKS=[],XF=.5;
 class Deck{constructor(i){this.i=i;ac();this.buf=null;this.bpm=120;this.pitch=0;this.pos=0;this.on=false;this.cues=[0,0,0,0];const b=(t,f)=>{const q=AC.createBiquadFilter();q.type=t;q.frequency.value=f;return q};this.lo=b('lowshelf',220);this.mid=b('peaking',1000);this.hi=b('highshelf',4500);this.flt=b('lowpass',22000);this.vol=AC.createGain();this.xf=AC.createGain();this.dl=AC.createDelay(2);this.dg=AC.createGain();this.dg.gain.value=0;const fb=AC.createGain();fb.gain.value=.45;
   this.lo.connect(this.mid).connect(this.hi).connect(this.flt).connect(this.vol).connect(this.xf).connect(MASTER);this.flt.connect(this.dg).connect(this.dl).connect(fb).connect(this.dl);this.dl.connect(this.xf);this.ang=0}
@@ -434,7 +434,7 @@ class Deck{constructor(i){this.i=i;ac();this.buf=null;this.bpm=120;this.pitch=0;
  render(){const e=$('#dk'+this.i);if(!e)return;$('.dn',e).textContent=this.name?`${this.name.slice(0,22)} · ${Math.round(this.bpm*this.rate())} BPM`:'VACÍO'}}
 function djOptions(){$$('.dsel').forEach(s=>{const v=s.value;s.innerHTML='<option value="">Cargar…</option><option value="gen">✦ Beat nuevo generado</option>'+LIB.map((l,i)=>`<option value="${i}">${l.name}</option>`).join('')+'<option value="file">Archivo…</option>';s.value=v&&v!='gen'&&v!='file'?v:''})}
 function buildDJ(){ac();DECKS.forEach(d=>d.stop());const T=TIERS[TIER];DECKS=Array.from({length:T.d},(_,i)=>new Deck(i));$('#tierTxt').textContent=T.t;$$('#tiers .btn').forEach((b,i)=>b.classList.toggle('on',i==TIER));
- const deckH=i=>`<div class="deck" id="dk${i}" style="--dc:hsl(${[190,320,90,40][i]} 90% 55%)"><span class="lcd dn">VACÍO</span><select class="dsel" data-d="${i}"></select><div class="jog" data-d="${i}"></div><div class="row"><button class="btn go" data-a="play" data-d="${i}">▶/❚❚</button><button class="btn" data-a="cue" data-d="${i}">CUE</button><button class="btn" data-a="sync" data-d="${i}">SYNC</button></div><label class="k">PITCH<input type="range" min="-8" max="8" step=".01" value="0" data-a="pitch" data-d="${i}"></label>${T.pads?`<div class="row">${[0,1,2,3].map(c=>`<button class="btn gel" data-a="hc" data-c="${c}" data-d="${i}">${c+1}</button>`).join('')}</div><p class="note">Mantén ⇧ al pulsar para guardar el hot cue</p>`:''}${T.fx?`<div class="row"><button class="btn" data-a="echo" data-d="${i}">ECO</button><button class="btn" data-a="roll" data-d="${i}">ROLL</button></div>`:''}</div>`;
+ const deckH=i=>`<div class="deck" id="dk${i}" style="--dc:hsl(${[190,320,90,40][i]} 90% 55%)"><span class="lcd dn">VACÍO</span><select class="dsel" data-d="${i}"></select><div class="jog" data-d="${i}"></div><div class="row"><button class="btn go" data-a="play" data-d="${i}">▶/❚❚</button><button class="btn" data-a="cue" data-d="${i}">CUE</button><button class="btn" data-a="sync" data-d="${i}">SYNC</button></div><label class="k">PITCH<input type="range" min="-8" max="8" step=".01" value="0" data-a="pitch" data-d="${i}"></label>${T.pads?`<div class="row">${[0,1,2,3].map(c=>`<button class="btn gel" data-a="hc" data-c="${c}" data-d="${i}">${c+1}</button>`).join('')}</div><p class="note">Hold ⇧ while clicking to save a hot cue</p>`:''}${T.fx?`<div class="row"><button class="btn" data-a="echo" data-d="${i}">ECO</button><button class="btn" data-a="roll" data-d="${i}">ROLL</button></div>`:''}</div>`;
  const ch=i=>`<div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span class="note">${i+1}</span>${['hi','mid','lo'].map(b=>`<input type="range" min="-24" max="8" value="0" data-a="eq" data-b="${b}" data-d="${i}" style="width:70px">`).join('')}<input type="range" min="0" max="1" step=".01" value=".5" data-a="filt" data-d="${i}" style="width:70px" title="Filtro"><input class="vf" type="range" min="0" max="1" step=".01" value=".85" data-a="vol" data-d="${i}"></div>`;
  const mixer=`<div class="mixer"><h3>MIXER</h3><div class="row" style="justify-content:center">${DECKS.map((_,i)=>ch(i)).join('')}</div><label class="k" style="align-items:center">CROSSFADER<input type="range" id="xf" min="0" max="1" step=".01" value=".5" style="width:200px"></label></div>`;
  const box=$('#djBox');box.style.gridTemplateColumns=innerWidth<760?'1fr':T.d==2?'1fr auto 1fr':'1fr 1fr auto 1fr 1fr';box.innerHTML=T.d==2?deckH(0)+mixer+deckH(1):deckH(0)+deckH(2)+mixer+deckH(1)+deckH(3);djOptions();applyXF(.5);
@@ -450,8 +450,8 @@ $('#tiers').innerHTML=TIERS.map((t,i)=>`<button class="btn" data-t="${i}">${t.n}
 
 /* ---------- PLAYER (WMP) ---------- */
 let PI=0,PSRC=null,PSEED=7,PVIZ=0,PT0=0;
-function renderPList(){const b=$('#pList');if(!b)return;b.innerHTML=LIB.length?'':'<p class="note">Aquí aparecen tus beats, mezclas y canciones.</p>';LIB.forEach((l,i)=>{const e=document.createElement('button');e.textContent=(i+1)+'. '+l.name;if(i==PI)e.className='on';e.onclick=()=>{PI=i;pPlay(true)};b.append(e)})}
-function pPlay(force){ac();if(PSRC&&!force){PSRC.stop();PSRC=null;$('#pPlay').textContent='▶';return}if(PSRC){try{PSRC.stop()}catch(e){}}const l=LIB[PI];if(!l)return toast('Añade canciones o graba una mezcla');PSRC=shot(l.buf,AC.currentTime,{gain:.9});PT0=AC.currentTime;PSRC.onended=()=>{};$('#pPlay').textContent='❚❚';renderPList()}
+function renderPList(){const b=$('#pList');if(!b)return;b.innerHTML=LIB.length?'':'<p class="note">Your beats, mixes and songs will appear here.</p>';LIB.forEach((l,i)=>{const e=document.createElement('button');e.textContent=(i+1)+'. '+l.name;if(i==PI)e.className='on';e.onclick=()=>{PI=i;pPlay(true)};b.append(e)})}
+function pPlay(force){ac();if(PSRC&&!force){PSRC.stop();PSRC=null;$('#pPlay').textContent='▶';return}if(PSRC){try{PSRC.stop()}catch(e){}}const l=LIB[PI];if(!l)return toast('Add songs or record a mix');PSRC=shot(l.buf,AC.currentTime,{gain:.9});PT0=AC.currentTime;PSRC.onended=()=>{};$('#pPlay').textContent='❚❚';renderPList()}
 $('#pPlay').onclick=()=>pPlay();$('#pNext').onclick=()=>{PI=(PI+1)%Math.max(1,LIB.length);pPlay(true)};$('#pPrev').onclick=()=>{PI=(PI-1+LIB.length)%Math.max(1,LIB.length);pPlay(true)};
 $('#pSkin').onclick=()=>{PSEED=Date.now()%1e6;playSfx(1)};$('#pViz').onclick=()=>PVIZ=(PVIZ+1)%3;
 $('#pFiles').onchange=async e=>{ac();for(const f of e.target.files){try{libAdd(f.name.replace(/\.[^.]+$/,''),await AC.decodeAudioData(await f.arrayBuffer()))}catch(err){}}};
@@ -466,8 +466,8 @@ function drawWMP(c,time){const dpr=devicePixelRatio||1,W=c.clientWidth*dpr,H=c.c
 
 /* ---------- CAMERA ---------- */
 const CAMS=[];let HL=null,HL_TRY=false;
-async function loadHands(){if(HL||HL_TRY)return HL;HL_TRY=true;try{const v=await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs');const fs=await v.FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');HL=await v.HandLandmarker.createFromOptions(fs,{baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',delegate:'GPU'},runningMode:'VIDEO',numHands:2});toast('Detector de manos listo')}catch(e){toast('Detector de manos IA no disponible aquí: uso guantes de color y movimiento')}return HL}
-$('#camAdd').onclick=async()=>{try{const devs=(await navigator.mediaDevices.enumerateDevices()).filter(d=>d.kind=='videoinput');const used=CAMS.map(c=>c.devId);const dv=devs.find(d=>!used.includes(d.deviceId));const st=await navigator.mediaDevices.getUserMedia({video:dv&&dv.deviceId?{deviceId:{exact:dv.deviceId},width:640,height:480}:{width:640,height:480}});addCam(st,dv?.deviceId);if($('#trackMode').value=='auto')loadHands()}catch(e){toast('Sin permiso de cámara en este navegador')}};
+async function loadHands(){if(HL||HL_TRY)return HL;HL_TRY=true;try{const v=await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs');const fs=await v.FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');HL=await v.HandLandmarker.createFromOptions(fs,{baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',delegate:'GPU'},runningMode:'VIDEO',numHands:2});toast('Detector de manos listo')}catch(e){toast('AI hand tracking is unavailable here: using colored gloves and motion')}return HL}
+$('#camAdd').onclick=async()=>{try{const devs=(await navigator.mediaDevices.enumerateDevices()).filter(d=>d.kind=='videoinput');const used=CAMS.map(c=>c.devId);const dv=devs.find(d=>!used.includes(d.deviceId));const st=await navigator.mediaDevices.getUserMedia({video:dv&&dv.deviceId?{deviceId:{exact:dv.deviceId},width:640,height:480}:{width:640,height:480}});addCam(st,dv?.deviceId);if($('#trackMode').value=='auto')loadHands()}catch(e){toast('Camera permission is unavailable in this browser')}};
 function addCam(st,devId){const i=CAMS.length+1,el=document.createElement('div');el.className='panel cam';el.innerHTML=`<h3>CÁMARA ${i}</h3><canvas width="320" height="240"></canvas><div class="cv"></div>`;$('#cams').append(el);const v=document.createElement('video');v.srcObject=st;v.muted=true;v.playsInline=true;v.play();const pc=document.createElement('canvas');pc.width=160;pc.height=120;const c={i,v,st,devId,el,cv:$('canvas',el),pc,px:pc.getContext('2d',{willReadFrequently:true}),prev:null,zones:new Float32Array(9),gl:{},lastT:0};CAMS.push(c);renderPatch()}
 function hueOf(r,g,b){const mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;if(!d)return[0,0,mx];let h=mx==r?((g-b)/d)%6:mx==g?(b-r)/d+2:(r-g)/d+4;return[(h*60+360)%360,d/mx,mx]}
 function camTick(c,now){if(c.v.readyState<2)return;const W=160,H=120,x=c.px;x.save();x.scale(-1,1);x.drawImage(c.v,-W,0,W,H);x.restore();const img=x.getImageData(0,0,W,H),d=img.data,mode=$('#nv').value,tm=$('#trackMode').value;
@@ -487,18 +487,18 @@ function camTick(c,now){if(c.v.readyState<2)return;const W=160,H=120,x=c.px;x.sa
  $('.cv',c.el).innerHTML=Object.keys(SRC).filter(k=>k.startsWith('cam'+c.i+'.')).slice(0,15).map(k=>`<span>${k.slice(5)} ${SRC[k].toFixed(2)}</span>`).join('')}
 
 /* ---------- PATCH ---------- */
-const SRC={'lfo.lento':0,'lfo.rápido':0,'bombo':0,'link.cv':0},DST={},CABLES=[],CVPULSE={kick:0};
+const SRC={'lfo.slow':0,'lfo.fast':0,'kick':0,'link.cv':0},DST={},CABLES=[],CVPULSE={kick:0};
 function regSynthDst(s){ENG[s.eng].forEach((lab,i)=>DST[`${s.name} · ${lab}`]={get:()=>s.p[i],set:v=>s.p[i]=v})}
-DST['voz · afinación']={get:()=>AT.amt,set:v=>AT.amt=v};DST['voz · velocidad']={get:()=>AT.speed/.4,set:v=>AT.speed=v*.4};
+DST['voice · pitch correction']={get:()=>AT.amt,set:v=>AT.amt=v};DST['voice · speed']={get:()=>AT.speed/.4,set:v=>AT.speed=v*.4};
 DST['master · filtro']={get:()=>.5,set:v=>{if(!MFILT)return;if(v<.47){MFILT.type='lowpass';MFILT.frequency.value=100*2**(v/.47*7.6)}else if(v>.53){MFILT.type='highpass';MFILT.frequency.value=20*2**((v-.53)/.47*8)}else{MFILT.type='lowpass';MFILT.frequency.value=22000}}};
 DST['dj · crossfader']={get:()=>XF,set:v=>applyXF(v)};for(let i=0;i<4;i++)DST[`dj · filtro ${i+1}`]={get:()=>.5,set:v=>DECKS[i]&&setFilt(DECKS[i],v)};
 DST['estudio · tempo']={get:()=>(S.bpm-60)/120,set:v=>{if(!P.beat){S.bpm=60+v*120;updKey()}}};
 function renderPatch(){const box=$('#cables');if(!box)return;const so=[...new Set([...Object.keys(SRC),...CAMS.flatMap(c=>[...Array(9)].map((_,z)=>`cam${c.i}.zona${z+1}`).concat([`cam${c.i}.mano_dcha.x`,`cam${c.i}.mano_dcha.y`,`cam${c.i}.mano_dcha.pinza`,`cam${c.i}.mano_izq.x`,`cam${c.i}.mano_izq.y`,`cam${c.i}.guante_verde.x`,`cam${c.i}.guante_verde.y`,`cam${c.i}.guante_rosa.x`,`cam${c.i}.guante_rosa.y`,`cam${c.i}.luz`]))])],dk=Object.keys(DST);
- box.innerHTML=CABLES.length?'':'<p class="note">Sin cables. Añade uno o usa un preset.</p>';CABLES.forEach((c,i)=>{const e=document.createElement('div');e.className='cable';e.innerHTML=`<select data-k="s">${so.map(o=>`<option ${o==c.s?'selected':''}>${o}</option>`).join('')}</select> → <select data-k="d">${dk.map(o=>`<option ${o==c.d?'selected':''}>${o}</option>`).join('')}</select><label class="k">CANTIDAD<input type="range" min="0" max="1" step=".01" value="${c.amt}" data-k="amt"></label><button class="btn" data-k="x">✕</button>`;e.oninput=ev=>{const k=ev.target.dataset.k;if(k)c[k]=k=='amt'?+ev.target.value:ev.target.value;if(k=='d')c.base=DST[c.d]?.get()};e.onclick=ev=>{if(ev.target.dataset.k=='x'){CABLES.splice(i,1);renderPatch()}};box.append(e)})}
+ box.innerHTML=CABLES.length?'':'<p class="note">No patch cables yet. Add one or use a preset.</p>';CABLES.forEach((c,i)=>{const e=document.createElement('div');e.className='cable';e.innerHTML=`<select data-k="s">${so.map(o=>`<option ${o==c.s?'selected':''}>${o}</option>`).join('')}</select> → <select data-k="d">${dk.map(o=>`<option ${o==c.d?'selected':''}>${o}</option>`).join('')}</select><label class="k">CANTIDAD<input type="range" min="0" max="1" step=".01" value="${c.amt}" data-k="amt"></label><button class="btn" data-k="x">✕</button>`;e.oninput=ev=>{const k=ev.target.dataset.k;if(k)c[k]=k=='amt'?+ev.target.value:ev.target.value;if(k=='d')c.base=DST[c.d]?.get()};e.onclick=ev=>{if(ev.target.dataset.k=='x'){CABLES.splice(i,1);renderPatch()}};box.append(e)})}
 function cable(s,d,amt=1){CABLES.push({s,d,amt,base:DST[d]?.get()??.5});renderPatch()}
-$('#cAdd').onclick=()=>cable('lfo.lento',Object.keys(DST)[0],.6);
-$$('[data-pre]').forEach(b=>b.onclick=()=>{const s=SYNTHS[CUR],d0=`${s.name} · ${ENG[s.eng][0]}`,p=+b.dataset.pre;if(p==0)cable('cam1.mano_dcha.y',d0);if(p==1)cable('cam1.zona5','master · filtro',.8);if(p==2)cable('cam1.mano_izq.x','dj · crossfader');if(p==3)cable('bombo',d0,.5);toast('Cable conectado'+(p!=3&&!CAMS.length?' · añade una cámara en CÁMARA':''))});
-function patchTick(time){SRC['lfo.lento']=.5+.5*Math.sin(time*.4);SRC['lfo.rápido']=.5+.5*Math.sin(time*S.bpm/60*Math.PI);CVPULSE.kick*=.86;SRC['bombo']=CVPULSE.kick;
+$('#cAdd').onclick=()=>cable('lfo.slow',Object.keys(DST)[0],.6);
+$$('[data-pre]').forEach(b=>b.onclick=()=>{const s=SYNTHS[CUR],d0=`${s.name} · ${ENG[s.eng][0]}`,p=+b.dataset.pre;if(p==0)cable('cam1.mano_dcha.y',d0);if(p==1)cable('cam1.zona5','master · filtro',.8);if(p==2)cable('cam1.mano_izq.x','dj · crossfader');if(p==3)cable('kick',d0,.5);toast('Cable connected'+(p!=3&&!CAMS.length?' · add a camera in CAMERA':''))});
+function patchTick(time){SRC['lfo.slow']=.5+.5*Math.sin(time*.4);SRC['lfo.fast']=.5+.5*Math.sin(time*S.bpm/60*Math.PI);CVPULSE.kick*=.86;SRC['kick']=CVPULSE.kick;
  for(const c of CABLES){const v=SRC[c.s],d=DST[c.d];if(v==null||!d)continue;d.set(clamp(lerp(c.base??.5,v,c.amt),0,1))}
  if(CAMS.length&&time-(patchTick.l||0)>.05){patchTick.l=time;const cv={};for(const k in SRC)if(k.startsWith('cam'))cv[k]=SRC[k];LINK.post({t:'cv',cv})}}
 const LINK=(()=>{let bc=null;try{bc=new BroadcastChannel('unfire-link');bc.onmessage=e=>{const m=e.data;if(m.t=='cv')for(const k in m.cv)SRC['link.'+k]=m.cv[k];if(m.t=='clock')SRC['link.cv']=(m.step%4==0)?1:SRC['link.cv']*.8}}catch(e){}return{post:m=>{try{bc&&bc.postMessage(m)}catch(e){}}}})();
@@ -510,19 +510,19 @@ function drBuild(){ac();if(DR.in)return;DR.in=AC.createGain();DR.dry=AC.createGa
 function drTune(){if(!DR.in)return;DR.bank.forEach(f=>{try{f.disconnect()}catch(e){}});DR.bank=[];for(let o=0;o<3;o++)SC[S.mode].forEach(iv=>{const m=45+S.root+iv+o*12,f=AC.createBiquadFilter();f.type='bandpass';f.frequency.value=mtof(m);DR.in.connect(f).connect(DR.sum);f.m=m;DR.bank.push(f)});DR.dl.delayTime.value=60/S.bpm*.75;drSet()}
 function drSet(){if(!DR.in)return;const F=+$('#dFire').value,B=+$('#dBreath').value,X=+$('#dMix').value;DR.bank.forEach(f=>f.Q.value=12+F*140);DR.sum.gain.value=3+F*14;DR.fb.gain.value=B*.82;DR.dry.gain.value=1-X;DR.wet.gain.value=X*.5}
 ['dFire','dBreath','dMix'].forEach(id=>$('#'+id).oninput=drSet);
-function drOpts(){const e=$('#dSrc');if(!e)return;const v=e.value;e.innerHTML='<option value="mic">🎤 Micrófono</option>'+LIB.map((l,i)=>`<option value="${i}">${l.name}</option>`).join('');if(v)e.value=v}
-function drStop(){if(DR.src){try{DR.src.stop()}catch(e){}DR.src=null}if(VOX)try{VOX.out.disconnect(DR.in)}catch(e){}DR.on=false;$('#dPlay').textContent='▶ ESCUPIR FUEGO'}
-$('#dPlay').onclick=async()=>{drBuild();if(DR.on)return drStop();const v=$('#dSrc').value;if(v==='mic'||v===''){if(!(await micOn()))return;VOX.out.connect(DR.in)}else{const s=AC.createBufferSource();s.buffer=LIB[+v].buf;s.loop=true;s.connect(DR.in);s.start();DR.src=s}DR.on=true;$('#dPlay').textContent='■ PARAR';drSet()};
-DST['dragón · fuego']={get:()=>+$('#dFire').value,set:v=>{$('#dFire').value=v;drSet()}};DST['dragón · aliento']={get:()=>+$('#dBreath').value,set:v=>{$('#dBreath').value=v;drSet()}};
+function drOpts(){const e=$('#dSrc');if(!e)return;const v=e.value;e.innerHTML='<option value="mic">🎤 Microphone</option>'+LIB.map((l,i)=>`<option value="${i}">${l.name}</option>`).join('');if(v)e.value=v}
+function drStop(){if(DR.src){try{DR.src.stop()}catch(e){}DR.src=null}if(VOX)try{VOX.out.disconnect(DR.in)}catch(e){}DR.on=false;$('#dPlay').textContent='▶ BREATHE FIRE'}
+$('#dPlay').onclick=async()=>{drBuild();if(DR.on)return drStop();const v=$('#dSrc').value;if(v==='mic'||v===''){if(!(await micOn()))return;VOX.out.connect(DR.in)}else{const s=AC.createBufferSource();s.buffer=LIB[+v].buf;s.loop=true;s.connect(DR.in);s.start();DR.src=s}DR.on=true;$('#dPlay').textContent='■ STOP';drSet()};
+DST['dragon · fire']={get:()=>+$('#dFire').value,set:v=>{$('#dFire').value=v;drSet()}};DST['dragon · breath']={get:()=>+$('#dBreath').value,set:v=>{$('#dBreath').value=v;drSet()}};
 const FL=[];function drawDragon(t){const c=$('#dCv'),dpr=devicePixelRatio||1,W=c.clientWidth*dpr,H=c.clientHeight*dpr;if(!W)return;if(c.width!=W)c.width=W,c.height=H;const x=c.getContext('2d');const bg=x.createRadialGradient(W*.3,H*.55,0,W*.3,H*.55,W*.8);bg.addColorStop(0,'#1b0d08');bg.addColorStop(1,'#040306');x.fillStyle=bg;x.fillRect(0,0,W,H);
  const mx=W*.24,my=H*.5,sz=H*.62;x.save();x.shadowColor='#ff6a1a';x.shadowBlur=30*dpr;if(DIMG.complete)x.drawImage(DIMG,mx-sz*.45,my-sz*.5,sz*.87,sz);x.restore();
  if(DR.ana&&DR.on){const d=new Uint8Array(DR.ana.frequencyBinCount);DR.ana.getByteFrequencyData(d);const bw=AC.sampleRate/DR.ana.fftSize;DR.bank.forEach((f,i)=>{const e=d[Math.round(f.frequency.value/bw)]/255;if(e>.12&&Math.random()<e)FL.push({x:mx+sz*.25,y:my-sz*.18,vx:(3+e*9)*dpr,vy:((i/DR.bank.length)-.5)*5*dpr,l:1,h:(i*360/7)%360,r:(4+e*16)*dpr,n:NN[f.m%12]})})}
  x.globalCompositeOperation='lighter';for(let i=FL.length-1;i>=0;i--){const p=FL[i];p.x+=p.vx;p.y+=p.vy;p.vy-=.04*dpr;p.l-=.012;p.r*=1.01;if(p.l<=0||p.x>W){FL.splice(i,1);continue}const g=x.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r);g.addColorStop(0,`hsla(${p.h},100%,75%,${p.l})`);g.addColorStop(1,`hsla(${(p.h+30)%360},100%,50%,0)`);x.fillStyle=g;x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill()}x.globalCompositeOperation='source-over';if(FL.length>500)FL.splice(0,FL.length-500);
- x.fillStyle='#ffb36b';x.font=16*dpr+'px V';x.fillText('ESCALA: '+keyLabel().toUpperCase()+' · '+SC[S.mode].map(iv=>NN[(S.root+iv)%12]).join(' '),14*dpr,24*dpr)}
+ x.fillStyle='#ffb36b';x.font=16*dpr+'px V';x.fillText('SCALE: '+keyLabel().toUpperCase()+' · '+SC[S.mode].map(iv=>NN[(S.root+iv)%12]).join(' '),14*dpr,24*dpr)}
 
 /* ---------- NAV + LOOP ---------- */
-const TABS=[['home','FÁBRICA'],['estudio','ESTUDIO'],['sintes','SINTES'],['dj','DJ'],['player','REPRODUCTOR'],['camara','CÁMARA'],['dragon','DRAGÓN'],['patch','PATCH']];
-const TILE={estudio:['Canta sobre tu beat. Tonalidad, tempo y autotune automáticos. Pads y sampler.','♪'],sintes:['Aparatos 2000s transformables, cada uno distinto. Crea infinitos.','✦'],dj:['Controladores Mini, Pro y Club. Sync, EQ, filtros, eco, roll.','◎'],player:['Reproductor con skins procedurales y visuales.','▶'],camara:['Manos, guantes de color, movimiento y visión nocturna por zonas.','◉'],dragon:['Lo nuevo: cualquier sonido se vuelve armonía en la tonalidad del beat.','🐉'],patch:['Conecta todo con todo, también entre apps UNFIRE abiertas.','⌁']};
+const TABS=[['home','FACTORY'],['estudio','STUDIO'],['sintes','SYNTHS'],['dj','DJ'],['player','PLAYER'],['camara','CAMERA'],['dragon','DRAGON'],['patch','PATCH']];
+const TILE={estudio:['Record vocals over your beat with automatic key, tempo and pitch correction, plus pads and sampling.','♪'],sintes:['Unique transforming Y2K-style instruments. Create as many as you like.','✦'],dj:['Mini, Pro and Club DJ controllers with sync, EQ, filters, echo and roll.','◎'],player:['Media player with procedural skins and visuals.','▶'],camara:['Hand tracking, colored gloves, motion and adaptive night vision.','◉'],dragon:['Turn an incoming sound into harmony aligned with your beat’s key.','🐉'],patch:['Patch compatible modules together, including across supported open Unfire apps.','⌁']};
 function go(id){$$('section').forEach(s=>s.classList.toggle('on',s.id==id));$$('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.id==id));if(id=='sintes')renderSynList();if(id=='dj'&&!DECKS.length)buildDJ();if(id=='patch')renderPatch();if(id=='player')renderPList();if(id=='dragon')drOpts();scrollTo(0,0);try{history.replaceState(0,'','#'+id)}catch(e){}}
 $('#tabs').innerHTML=TABS.map(([i,n])=>`<button data-id="${i}">${n}</button>`).join('');$('#tabs').onclick=e=>{if(e.target.dataset.id){ac();go(e.target.dataset.id)}};
 $('#tiles').innerHTML=TABS.slice(1).map(([i,n])=>`<button class="tile" data-go="${i}"><b>${n}</b>${TILE[i][0]}<i>${TILE[i][1]}</i></button>`).join('');$('#tiles').onclick=e=>{const t=e.target.closest('[data-go]');if(t){ac();go(t.dataset.go)}};

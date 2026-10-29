@@ -28,7 +28,9 @@
         875
       ],
       "web_asset": "archer-mac.webp",
-      "bytes": 84392
+      "bytes": 84392,
+      "retired_from_public_web": "2026-10-28",
+      "retirement_reason": "Superseded by newer Unfire-owned ARCHER Nocturne design. File removed from published website."
     },
     {
       "app_visual": "power-iphone",
@@ -86,7 +88,9 @@
       "web_asset": "archer-mobile.webp",
       "bytes": 107104,
       "sha256": "f095cde5faacafed4d81e7259742c87f03d6f9a603db94612be71621fbd45e19",
-      "crop": "Remove top 120px of simulator debug audio-input warning; chrome UI remains unmodified."
+      "crop": "Remove top 120px of simulator debug audio-input warning; chrome UI remains unmodified.",
+      "retired_from_public_web": "2026-10-28",
+      "retirement_reason": "Superseded by newer Unfire-owned ARCHER Nocturne design. File removed from published website."
     },
     {
       "app_visual": "unfire-synth-ipad",

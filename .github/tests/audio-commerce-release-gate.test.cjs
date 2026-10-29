@@ -71,7 +71,7 @@ test('public consumer rights pages must remain available',()=>{
   assert.match(license,/consumidor/i);
   assert.match(legal,/Unfire/);
   assert.match(privacy,/privacy|privacidad/i);
-  assert.match(compatibility,/todavía no se aceptan pagos/i);
+  assert.match(compatibility,/Direct website payments and downloads for these upcoming products are not available yet/i);
 });
 
 test('checkout stays a non-binding enquiry while no SKU is approved',()=>{

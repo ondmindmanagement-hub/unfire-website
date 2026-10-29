@@ -66,8 +66,9 @@ const assert=require('node:assert/strict');
   const closed=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,mission:window.__UNFIRE_CASE_QA.mission}));
   console.log('CASE_STATE_DIAGNOSTIC',JSON.stringify({initial,closed}));
   assert(closed.closed&&closed.carrying&&closed.mission===initial.mission,'Closing case loses game or quest');
-  const host=await page.evaluate(()=>({url:location.pathname,frameSrc:document.getElementById('malFrame').getAttribute('src'),immersive:document.body.classList.contains('immOn')}));
-  assert(host.immersive&&host.frameSrc.includes('v=20261023casecuev1'),'Game returned to website after closing case');
+  const host=await page.evaluate(()=>({url:location.pathname,baseUri:document.baseURI,frameSrc:document.getElementById('malFrame').getAttribute('src'),expectedFrameSrc:document.getElementById('malFrame').dataset.src,immersive:document.body.classList.contains('immOn')}));
+  const actual=new URL(host.frameSrc,host.baseUri),expected=new URL(host.expectedFrameSrc,host.baseUri);
+  assert(host.immersive&&actual.pathname===expected.pathname&&actual.searchParams.get('v')===expected.searchParams.get('v')&&!!actual.searchParams.get('quality'),'Game returned to website after closing case with synchronized cache URL');
   const control=await f.evaluate(()=>{const b=document.getElementById('unfireCarryCase');if(!b)return {exists:false};const q=b.getBoundingClientRect();return {exists:true,display:getComputedStyle(b).display,visibility:getComputedStyle(b).visibility,rect:[q.x,q.y,q.width,q.height],hidden:b.hidden,roam:window.__UNFIRE_CASE_QA.roam,carry:window.__UNFIRE_CASE_QA.carrying};});
   console.log('CARRY_BUTTON_DIAGNOSTIC',JSON.stringify(control));
   assert.equal(await f.evaluate(()=>window.__UNFIRE_CASE_QA.caseVisible),false,'Case must not obstruct player camera when packed');
@@ -137,9 +138,39 @@ const assert=require('node:assert/strict');
   console.log('WORKSHOP_UI_DIAGNOSTIC',JSON.stringify(workshopDiag));
   await f.waitForFunction(()=>!!document.getElementById('unfireWorkshopHud'),null,{timeout:25000,polling:150});
   await f.evaluate(()=>{const b=document.getElementById('unfireWorkshopHud');if(!b)throw Error('Workshop action missing');b.click()});
-  await f.waitForFunction(()=>document.querySelectorAll("#onT .robotCard img").length>=2,{timeout:20000}).catch(()=>{});
-  const studio=await f.evaluate(()=>{const panel=document.querySelector('#onl .b').getBoundingClientRect();return {cards:document.querySelectorAll('#onT .robotCard').length,locked:document.querySelectorAll('#onT .robotCard:disabled').length,portraits:document.querySelectorAll('#onT .robotCard img').length,width:panel.width,viewport:innerWidth}});
-  assert(studio.cards===20&&studio.locked===0&&studio.portraits>=2&&studio.width<studio.viewport*0.5,'Workshop obstructs player or 3D portraits missing: '+JSON.stringify(studio));
+  // The redesigned workshop shows ONE true 3D robot portrait, not the retired 20-card grid.
+  // Keep the browser check strict: the robot, both navigation controls and a
+  // compact non-obstructing dock are required, not just successful DOM creation.
+  await f.waitForFunction(()=>document.querySelectorAll('#onT .robotCard img').length===1,
+    null,{timeout:30000,polling:250});
+  const studio=await f.evaluate(()=>{
+    const panel=document.querySelector('#onl .b').getBoundingClientRect();
+    const selector=document.querySelector('#onT');
+    return {
+      cards:selector.querySelectorAll('.robotCard').length,
+      portraits:selector.querySelectorAll('.robotCard img').length,
+      previous:selector.querySelectorAll('[data-step="-1"]').length,
+      next:selector.querySelectorAll('[data-step="1"]').length,
+      width:panel.width,viewport:innerWidth
+    };
+  });
+  assert(studio.cards===1&&studio.portraits===1&&studio.previous===1&&studio.next===1&&
+    studio.width<studio.viewport*0.5,
+    'Single-robot workshop must show its 3D portrait, navigation and unobstructed game: '+JSON.stringify(studio));
+  const robotNavigation=await f.evaluate(()=>{
+    const selector=document.querySelector('#onT');
+    const selected=()=>selector.querySelector('.robotCard')?.dataset.t;
+    const before=selected();
+    selector.querySelector('[data-step="1"]').click();
+    const after=selected();
+    selector.querySelector('[data-step="-1"]').click();
+    return {before,after,restored:selected()};
+  });
+  assert(robotNavigation.before&&robotNavigation.after&&
+    robotNavigation.before!==robotNavigation.after&&
+    robotNavigation.restored===robotNavigation.before,
+    'Robot arrow navigation must change and restore the selected unlocked robot: '+JSON.stringify(robotNavigation));
+  console.log('WORKSHOP_SINGLE_ROBOT_PASS',JSON.stringify({studio,robotNavigation}));
   // PeerJS failure/retry/cancel regression runs as a single page task.
   // A CPU-only CI WebGL renderer can delay Playwright polling for seconds;
   // synchronous microtask flushing is deterministic and does not change game.

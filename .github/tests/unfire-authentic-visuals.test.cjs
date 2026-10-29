@@ -5,8 +5,8 @@ const page=fs.readFileSync(path.join(dir,'index.html'),'utf8');
 const catalog=fs.readFileSync(path.join(root,'audio/catalogo/index.html'),'utf8');
 assert.equal(j.schema,1);assert.equal(j.products.length,20);assert.equal(j.customer_testimonials,false);assert.equal(j.license_ready_for_commercial_release,false);
 assert.match(j.photo_usage,/No human photographs/);
-assert.match(page,/<html lang="es">/);assert.match(page,/<meta name="viewport"/);assert.match(page,/DESARROLLO · NO A LA VENTA/);
-assert.match(page,/sin fotografías inventadas/);assert.match(catalog,/href="\.\.\/visuales\/"/);
+assert.match(page,/<html lang="en">/);assert.match(page,/<meta name="viewport"/);assert.match(page,/DEVELOPMENT · NOT FOR SALE/);
+assert.match(page,/personal photographs are excluded/);assert.match(catalog,/href="\.\.\/visuales\/"/);
 const files=new Set(),names=new Set();let total=0;
 for(const [i,p] of j.products.entries()){
  assert.equal(p.index,i+1);assert(!p.available_for_purchase);assert.match(p.release_status,/no aprobada/);
