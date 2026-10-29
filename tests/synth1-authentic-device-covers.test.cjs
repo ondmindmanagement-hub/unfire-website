@@ -27,3 +27,15 @@ test('3D engine references existing synth texture filenames without logic edits'
  const engine=read('audio/maletin/game-engine-v50.js');
  assert.match(engine,/device\('pad', 'synth-ipad.webp'/);assert.match(engine,/device\('phone', 'synth-iphone.webp'/);
 });
+
+test('Synth I public media credits are accessible from both product previews',()=>{
+ const home=read('index.html'),audio=read('audio/index.html'),media=read('audio/media-credits.html');
+ assert.match(home,/href="\/audio\/media-credits\.html#synth-i-footage"/);
+ assert.match(audio,/href="media-credits\.html#synth-i-footage"/);
+ assert.match(media,/id="synth-i-footage"/);
+ assert.equal((media.match(/class="synth-footage-source"/g)||[]).length,16);
+ for(const author of ['François Nguyen','Julian Boed'])assert.ok(media.includes(author));
+ for(const original of ['Glowing_neon_and_argon_in_a_microwave_oven.webm','Night_view_of_Chicago.webm'])
+  assert.ok(media.includes(original));
+ assert.match(media,/creativecommons\.org\/licenses\/by\/2\.0/);
+});
