@@ -136,7 +136,7 @@ chk('Only local avatar entitlements updated',engine.includes("localStorage.setIt
 chk('Story saves protected from corrupted data',storySource.includes('Validate older/corrupted saves'));
 chk('Twelve playable story chapters', (storySource.match(/\{\s*t:\s*['\"][^'\"]+['\"],\s*steps:/g)||[]).length===12 && storySource.includes('const FREE = 12'));
 chk('Map chapter goals can be completed with Nimbo assistance',storySource.includes("w.ev==='reach'")&&engine.includes('navigateTo: (quest)'));
-chk('Completed story has no purchase gate',storySource.includes('HISTORIA COMPLETADA')&&!storySource.includes('VER EL MALETÍN COMPLETO'));
+chk('Completed story has no purchase gate',storySource.includes('STORY COMPLETE')&&storySource.includes('const FREE = 12')&&!storySource.includes('VER EL MALETÍN COMPLETO'));
 chk('Mission events guarded against stale steps',storySource.includes('currentStep.wait.ev !== name'));
 chk('Persistent active side quest',engine.includes("'unfire_side_active'"));
 chk('Showcase exhibition keeps player camera and avoids overlapping full-size plugins',
