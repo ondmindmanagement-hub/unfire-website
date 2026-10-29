@@ -39,3 +39,9 @@ test('Synth I public media credits are accessible from both product previews',()
   assert.ok(media.includes(original));
  assert.match(media,/creativecommons\.org\/licenses\/by\/2\.0/);
 });
+
+test('Public Audio footer keeps English-only company label',()=>{
+ const audio=read('audio/index.html');
+ assert.match(audio,/UNFIRE AUDIO is part of/);
+ assert.doesNotMatch(audio,/UNFIRE AUDIO es parte de/);
+});
