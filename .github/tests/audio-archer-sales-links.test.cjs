@@ -5,7 +5,7 @@ const {test}=require('node:test');
 const html=fs.readFileSync(path.join(__dirname,'../../audio/index.html'),'utf8');
 test('buy only through official App Store product URLs',()=>{
   assert.match(html,/href="https:\/\/apps\.apple\.com\/us\/app\/archer-by-unfire\/id6812968924"[^>]*>Get it for Mac/);
-  assert.match(html,/href="https:\/\/apps\.apple\.com\/es\/app\/archer-for-iphone-ipad\/id6822109610"[^>]*>iPhone \/ iPad/);
+  assert.match(html,/href="https:\/\/apps\.apple\.com\/es\/app\/archer-for-iphone-ipad\/id6822109610"[^>]*>Current iPhone &amp; iPad app/);
 });
 test('the web game stays free and unverified web checkout stays off',()=>{
   assert.match(html,/const READY_FOR_SALE=new Set\(\[\]\)/);
