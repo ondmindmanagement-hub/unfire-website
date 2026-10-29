@@ -10,7 +10,7 @@ assert.equal(press.includes(forbiddenPunctuation), false, "Press page must use c
 assert.equal(brief.includes(forbiddenPunctuation), false, "Media brief must use compact punctuation");
 assert.match(press, /<title>Unfire Audio\. Press and creators\.<\/title>/);
 assert.match(press, /<html lang="en">/);
-assert.match(press, /lang="es"/);
+assert.doesNotMatch(press, /lang="es"/, "Press page must not expose Spanish locale controls");
 assert.match(press, /href="\.\.\/"/);
 assert.match(press, /mailto:hello@unfire\.technology/);
 assert.match(press, /https:\/\/unfire\.technology\/audio\//);
