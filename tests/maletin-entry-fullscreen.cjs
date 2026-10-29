@@ -119,7 +119,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        'Game exit clipped by small viewport');
      // Compact touch UI deliberately abbreviates the visual label, but retains
      // the full accessible button text and shows a real, unclipped EXIT caption.
-     assert(/(SALIR A LA WEB|BACK TO THE WEBSITE)/.test(state.label.text)&&
+     assert(/(EXIT TO WEBSITE|BACK TO THE WEBSITE)/.test(state.label.text)&&
        /EXIT/.test(state.label.compactCaption)&&state.exit.w>=70&&state.exit.w<=92&&
        state.exit.h>=34&&state.label.scrollWidth<=state.label.clientWidth+2,
        'Compact exit caption missing, clipped or not accessible '+JSON.stringify({width,height,label:state.label}));

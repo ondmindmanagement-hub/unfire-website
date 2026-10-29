@@ -89,7 +89,7 @@ chk('PASEAR never overlaps center captions and stays accessible without duplicat
   game.includes('top:calc(env(safe-area-inset-top) + 112px)!important')&&
   game.includes('top:calc(env(safe-area-inset-top) + 110px)!important')&&
   game.includes('#ctlDock #roamB{min-height:34px!important')&&
-  engine.includes("roamB.textContent=CASE_VIEW.on?'↩ VOLVER AL PERSONAJE'")&&
+  engine.includes("roamB.textContent=CASE_VIEW.on?'↩ RETURN TO ROBOT'")&&
   !engine.includes('characterEntryButton'));
 chk('No blue artificial case illustration in any initial viewport or compatibility fallback',
   !html.includes('unfire-case-preview.svg') && !html.includes('background:url("img/hyperwave-open.webp")'));
@@ -105,7 +105,7 @@ chk('Outdoor case camera keeps the avatar in place and widens the horizon',
   engine.includes('if(window.ATM_OUT)showCaseView();else exitRoam();')&&
   engine.includes("CASE_VIEW.elevation=window.ATM_OUT?0.52:0.78")&&
   engine.includes('const panoramic=window.ATM_OUT')&&
-  engine.includes("roamB.textContent=CASE_VIEW.on?'↩ VOLVER AL PERSONAJE'"));
+  engine.includes("roamB.textContent=CASE_VIEW.on?'↩ RETURN TO ROBOT'"));
 chk('Portrait and landscape HUD use safe areas and leave story legible',
   game.includes('id="unfireMobileNoOverlap20261023"')&&
   game.includes('#tip{left:50%!important;top:calc(env(safe-area-inset-top) + 10px)!important;')&&
@@ -113,10 +113,10 @@ chk('Portrait and landscape HUD use safe areas and leave story legible',
   game.includes('@media (pointer:coarse) and (orientation:landscape)'));
 chk('Single exit label is not visually truncated',
   game.includes('#unfireExitGame{box-sizing:border-box!important;')&&
-  engine.includes("xb.textContent = '⏏ SALIR A LA WEB'"));
+  engine.includes("xb.textContent = '⏏ EXIT TO WEBSITE'"));
 chk('Mission logic retained',engine.includes("localStorage.setItem('unfire_side'")&&engine.includes('const SIDE ='));
 chk('Multiplayer logic retained',engine.includes('const ONLINE ='));
-chk('Online joins timeout safely and allow retries',engine.includes('function clearJoining()')&&engine.includes('La sala no responde.')&&engine.includes('ONLINE.joining'));
+chk('Online joins timeout safely and allow retries',engine.includes('function clearJoining()')&&engine.includes('The room is not responding.')&&engine.includes('ONLINE.joining'));
 chk('Room audio implementation retained',engine.includes('const AMB ='));
 chk('Parent scroll no longer overrides manual open/close',engine.includes('!lidControlledByPlayer) pTarget = d.p;'));
 chk('Host keeps iframe active when case is local',html.includes('vis:caseLocal||rb.bottom>90'));
