@@ -13,7 +13,7 @@ function section(start, end) {
   return engine.slice(a,b);
 }
 
-test('PASEAR focuses the playing canvas and resets stale input without losing current spawn', () => {
+test('WALK focuses the playing canvas and resets stale input without losing current spawn', () => {
   const src = section('function enterRoam() {', 'function exitRoam() {');
   const r = { on:false, k:{w:1}, tgt:{x:1}, p:{set(x,y,z){this.x=x;this.y=y;this.z=z}} };
   let focused=false, message='';
