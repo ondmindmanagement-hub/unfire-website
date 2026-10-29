@@ -138,7 +138,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
       await page.locator('#unfireCoinHud').tap({timeout: 15000});
       await page.locator('#unfireCoinShop.open').waitFor({state: 'visible', timeout: 10000});
       const shopText = await page.locator('#unfireCoinShop').innerText();
-      assert(/No cuesta dinero|free|does not cost money/i.test(shopText), 'Currency is free and earned in the game');
+      assert(/No real-money purchases/i.test(shopText), 'Offline currency is earned in the game and cannot require real-money purchases');
       await page.locator('#unfireCoinShop [data-close]').tap({timeout: 10000});
       console.log('NANO_COIN_SHOP_PASS');
 
