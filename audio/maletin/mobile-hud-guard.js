@@ -11,7 +11,7 @@
     if(mix.classList.contains('unfire-expanded'))mix.classList.remove('unfire-expanded');
     if(document.body.classList.contains('unfire-mix-open'))document.body.classList.remove('unfire-mix-open');
     const b=document.getElementById(id);
-    if(b){b.setAttribute('aria-expanded','false');b.textContent='♫ MÚSICA · AJUSTES';}
+    if(b){b.setAttribute('aria-expanded','false');b.textContent='♫ MUSIC · SETTINGS';}
   };
   const sync=()=>{
     if(!mix)return;
@@ -26,8 +26,8 @@
     if(!d||document.getElementById(id))return false;
     mix=d;
     const b=document.createElement('button');
-    b.id=id;b.type='button';b.textContent='♫ MÚSICA · AJUSTES';
-    b.setAttribute('aria-label','Abrir o cerrar ajustes de música');
+    b.id=id;b.type='button';b.textContent='♫ MUSIC · SETTINGS';
+    b.setAttribute('aria-label','Open or close music settings');
     b.setAttribute('aria-expanded','false');
     d.insertBefore(b,d.querySelector('.row'));
     b.addEventListener('click',e=>{
@@ -36,7 +36,7 @@
       const expanded=d.classList.toggle('unfire-expanded');
       document.body.classList.toggle('unfire-mix-open',expanded);
       b.setAttribute('aria-expanded',String(expanded));
-      b.textContent=expanded?'✕ CERRAR MÚSICA':'♫ MÚSICA · AJUSTES';
+      b.textContent=expanded?'✕ CLOSE MUSIC':'♫ MUSIC · SETTINGS';
     });
     const mo=new MutationObserver(sync);
     mo.observe(d,{attributes:true,attributeFilter:['class']});

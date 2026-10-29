@@ -12,14 +12,12 @@ var mode=path.endsWith('/audio/maletin')?'engine':path.endsWith('/audio')?'audio
 var connection=typeof navigator==='object'&&navigator?(navigator.connection||navigator.mozConnection||navigator.webkitConnection):null;
 var slowNetwork=!!(connection&&(connection.saveData||/^(slow-2g|2g)$/.test(String(connection.effectiveType||''))));
 var low=root.classList.contains('uf-load-pending')||(mode!=='site'&&slowNetwork);
-var en=mode==='site'&&root.lang.toLowerCase().startsWith('en');
+var en=true; // All public Unfire pages use English
 var phase='',lastDisplay=0,lastRecovery=-15000,watchStart=0,suspect=0;
 var isHidden=doc.hidden,beatAt=performance.now(),ended=false,gameStarted=false;
 var hideTimer=0,gameTimer=0,showDelay=0,probeTimer=0,beatTimer=0;
 function clear(id){if(id)clearTimeout(id);}
-function copy(kind){return en?
-(kind==='recovery'?'Restoring smoothness…':kind==='game'?'Preparing the 3D world…':'Preparing the experience…'):
-(kind==='recovery'?'Recuperando fluidez…':kind==='game'?'Preparando el mundo 3D…':'Preparando la experiencia…');}
+function copy(kind){return kind==='recovery'?'Restoring smoothness…':kind==='game'?'Preparing the 3D world…':'Preparing the experience…';}
 function show(kind){if(doc.hidden)return;clear(hideTimer);hideTimer=0;phase=kind;lastDisplay=performance.now();
 if(text)text.textContent=copy(kind);
 panel.dataset.phase=kind;panel.dataset.active='true';panel.setAttribute('aria-hidden','false');}
