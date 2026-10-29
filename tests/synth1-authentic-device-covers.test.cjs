@@ -19,6 +19,7 @@ test('WebP outputs are real, distinct and metadata hashes match',()=>{
   const p=prov.find(x=>x.app_visual==='unfire-synth-'+device);
   assert.ok(p);assert.equal(p.bytes,a.length);assert.equal(p.sha256,crypto.createHash('sha256').update(a).digest('hex'));
   assert.match(p.release_status,/Development\/QA/);
+  if(device==='ipad') { assert.deepEqual(p.web_size,[920,1270]); assert.match(p.crop,/residual Spanish iPadOS status strip/); }
  }
  assert.notDeepEqual(fs.readFileSync(path.join(root,'audio/img/synth-iphone.webp')),fs.readFileSync(path.join(root,'audio/img/synth-ipad.webp')));
 });

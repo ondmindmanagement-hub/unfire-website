@@ -101,12 +101,12 @@
       ],
       "web_size": [
         920,
-        1298
+        1270
       ],
       "web_asset": "unfire-synth-ipad.webp",
-      "bytes": 86910,
-      "sha256": "2338812d31a84b01beab6e39be8ba17278972e250bbcc3f173497aa5366fbbf2",
-      "crop": "Removed top 34 px status bar to avoid account/time metadata; app controls unchanged",
+      "bytes": 414116,
+      "sha256": "ba2146a1cc208ef583c99676ffe662bf9dd39d5982468b46bba493288669da5c",
+      "crop": "Removed 34 source px in initial screenshot processing, then trimmed 28 additional web px to remove residual Spanish iPadOS status strip; authentic application UI unchanged",
       "release_status": "Development/QA screenshot, not certified as App Store production capture; review underlying UI resource rights"
     },
     {
