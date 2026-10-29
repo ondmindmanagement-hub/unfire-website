@@ -53,7 +53,7 @@ const viewports = [
           };
         }, expected);
         assert.equal(summary.cards, 9);
-        assert.equal(summary.images, 8); // KeyBridge intentionally uses a private, text-only research cover
+        assert.equal(summary.images, 9); // Two authentic ARCHER Mobile device images; KeyBridge stays text-only
         assert.equal(summary.emptyAlt, 0);
         assert.equal(summary.bodyOverflow, false, 'Horizontal overflow at ' + viewport.width);
         assert.equal(summary.cardsWithin, true, 'Cards spill out at ' + viewport.width + ': ' + JSON.stringify({outside:summary.outside,layout:summary.layout}));
