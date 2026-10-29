@@ -9,7 +9,7 @@
   const KEY = 'unfire_lang', SEEN = 'unfire_intro_seen';
   const get = (s, k) => { try { return s.getItem(k); } catch (_) { return null; } };
   const set = (s, k, v) => { try { s.setItem(k, v); } catch (_) {} };
-  const hasLang = () => ['es', 'en'].includes(get(localStorage, KEY)) || ['es', 'en'].includes(q.get('lang'));
+  const hasLang = () => window.__UNFIRE_PUBLIC_ENGLISH_ONLY === true || ['es', 'en'].includes(get(localStorage, KEY)) || ['es', 'en'].includes(q.get('lang'));
   const automated = navigator.webdriver && q.get('introQA') !== '1';
   const seen = get(sessionStorage, SEEN) === '1' || q.get('langChosen') === '1';
   window.UNFIRE_INTRO = { active: false };
