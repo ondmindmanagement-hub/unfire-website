@@ -404,6 +404,66 @@ article.inst.flip .media{order:2}
 .capgrid span{display:block;font:600 9px/1.2 var(--mono);color:var(--soft);text-align:center;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .capgrid a[hidden]{display:none}
 
+/* Capsule machine · balanced premium composition. Actual canvas + prize interaction retained. */
+#capsulas .capsule-head{margin-bottom:clamp(22px,3vw,34px);align-items:start}
+#capsulas .capsule-head .lede{max-width:62ch}
+#capsulas .capsule-collection-link{display:inline-flex;align-items:center;gap:14px;margin-top:22px;min-height:44px;padding-inline:20px;text-decoration:none}
+#capsulas .capsule-collection-link span{font-size:18px;line-height:1}
+#capsulas .gacha-wrap{max-width:1180px;grid-template-columns:minmax(290px,.97fr) minmax(310px,1.03fr);gap:clamp(26px,4vw,64px);align-items:center;margin-inline:auto;padding:clamp(22px,3vw,42px);border:1px solid rgba(157,190,239,.17);border-radius:30px;background:radial-gradient(ellipse at 28% 38%,rgba(168,255,31,.072),transparent 54%),radial-gradient(ellipse at 84% 78%,rgba(61,139,255,.10),transparent 56%),linear-gradient(160deg,#111722e8,#090d16e8);box-shadow:inset 0 1px 0 #ffffff16,0 28px 65px #0006}
+#capsulas .gacha{width:min(398px,100%);filter:drop-shadow(0 14px 22px rgba(0,0,0,.29))}
+#capsulas .globe{box-shadow:inset 0 0 0 3px #ffffff31,inset 0 -20px 40px rgba(0,0,0,.4),0 0 54px rgba(168,255,31,.085)}
+#capsulas .gbody{height:182px;padding:52px 24px 18px}
+#capsulas .crank{width:96px;height:96px}
+#capsulas .capsule-console{min-width:0}
+#capsulas .capsule-console-kicker,#capsulas .capsule-filter-label{font:650 10px/1.5 var(--mono,monospace);letter-spacing:.18em;color:#a8ff1f;text-transform:uppercase}
+#capsulas .capsule-console-kicker{margin:0 0 16px}
+#capsulas .capsule-console-kicker span{color:#93a0b4;margin-inline:6px}
+#capsulas .prize{min-height:224px;grid-template-columns:minmax(116px,138px) minmax(0,1fr);gap:clamp(14px,2vw,25px);padding:clamp(18px,2.5vw,26px);background:linear-gradient(155deg,#1b2230 0%,#0d131e 100%);border:1px solid #586b8838;border-radius:23px;box-shadow:inset 0 1px 0 #ffffff1a,0 15px 36px #0005}
+#capsulas .prize-visual{width:100%;aspect-ratio:1;display:grid;place-items:center;position:relative;overflow:hidden;border-radius:22px;background:radial-gradient(circle at 50% 42%,#1d3249 0,#0a101d 71%);border:1px solid #98bbff25;box-shadow:inset 0 0 25px #080d1a}
+#capsulas .prize-visual::before{content:"";position:absolute;width:60%;aspect-ratio:1;border-radius:50%;background:linear-gradient(180deg,#9bdb39 0 48%,#f1f4f7 48% 100%);box-shadow:inset -9px -12px 20px #0004,0 14px 30px #0008;transform:rotate(-18deg);opacity:.72}
+#capsulas .prize-visual img{position:relative;width:100%;height:100%;object-fit:contain;z-index:1;filter:drop-shadow(0 8px 14px #0008)}
+#capsulas .prize-visual img[src=""]{opacity:0}
+#capsulas .prize-copy{min-width:0}
+#capsulas .prize-copy .eyebrow{color:#a8ff1f;letter-spacing:.15em;margin:0 0 9px}
+#capsulas .prize-copy h3{font-size:clamp(20px,2.1vw,27px);line-height:1.15;margin:0}
+#capsulas .prize-copy .lede{font-size:14px;line-height:1.65;color:#aebbd0;margin-top:10px!important}
+#capsulas #prize:has(#prizeFr){grid-template-columns:minmax(0,1fr);justify-items:center}
+#capsulas #prize .prize-visual:has(#prizeFr){grid-column:1/-1;aspect-ratio:auto;display:block;overflow:visible;border:0;border-radius:18px;background:transparent;box-shadow:none}
+#capsulas #prize .prize-visual:has(#prizeFr)::before{display:none}
+#capsulas #prize .prize-visual:has(#prizeFr) img{display:none!important}
+#capsulas #prize .prize-visual #prizeFr{position:relative;display:block;grid-column:1/-1;max-width:340px!important;width:100%!important;margin:0 auto!important}
+#capsulas #prize:has(#prizeFr) .prize-copy{grid-column:1/-1;text-align:center}
+#capsulas .capsule-steps{margin-top:18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+#capsulas .capsule-steps span{display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid #b6c9e01f;border-radius:12px;background:#ffffff07;padding:11px 7px;font:600 12px/1.3 var(--mono,monospace);color:#d5dfef;white-space:nowrap}
+#capsulas .capsule-steps b{color:#a8ff1f;font-size:10px}
+#capsulas .capsule-filter-label{margin:24px 0 11px;color:#9faec2}
+#capsulas #capFilters{gap:8px}
+#capsulas #capFilters button{min-height:34px;padding-inline:13px}
+#capsulas #capGrid{scroll-margin-top:88px;margin-top:26px}
+#capsulas #capGrid a{border-color:#adc4ef24;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+#capsulas #capGrid a:focus-visible,#capsulas .crank:focus-visible,#capsulas .ball:focus-visible{outline:2px solid #a8ff1f;outline-offset:4px}
+#capsulas #capGrid a:hover{box-shadow:0 8px 25px #0006}
+@media(max-width:900px){
+ #capsulas .gacha-wrap{grid-template-columns:minmax(0,1fr);gap:22px;padding:clamp(18px,4vw,32px)}
+ #capsulas .gacha{width:min(380px,100%)}
+ #capsulas .capsule-console{width:100%;max-width:580px;justify-self:center}
+}
+@media(max-width:500px){
+ #capsulas .gacha-wrap{padding:17px 14px;border-radius:23px;gap:16px}
+ #capsulas .gacha{width:min(330px,100%)}
+ #capsulas .gbody{height:155px;padding:43px 18px 15px}
+ #capsulas .gbody .gplate{font-size:12px}
+ #capsulas .crank{width:78px;height:78px}
+ #capsulas .chute{width:91px;height:72px}
+ #capsulas .prize{grid-template-columns:100px minmax(0,1fr);min-height:175px;padding:13px;gap:12px}
+ #capsulas .prize-copy h3{font-size:19px}
+ #capsulas .prize-copy .lede{font-size:12px}
+ #capsulas .capsule-steps{gap:6px}
+ #capsulas .capsule-steps span{font-size:10px;gap:5px;padding:10px 5px}
+ #capsulas #capFilters button{padding-inline:10px}
+}
+@media(prefers-reduced-motion:reduce){#capsulas #capGrid a{transition:none}}
+
 /* La bolsa (precios) */
 .bagsec{position:relative}
 .bigbag{position:relative;margin-top:60px;border-radius:10px 10px 30px 30px;background:linear-gradient(180deg,#f2ede4,#ddd5c6);color:#1a1712;padding:clamp(22px,3.4vw,44px);box-shadow:0 50px 90px rgba(0,0,0,.6)}
@@ -639,8 +699,8 @@ footer a{color:var(--soft)}
 
 <!-- 4 · Cápsulas: máquina -->
 <section id="capsulas" data-field="4" style="--sec:#a8ff1f"><div class="wrap">
-  <div class="sechead reveal"><div><span class="num">04 · CAPSULE MACHINE</span><h2>Capsules</h2><p class="lede">One hundred unique capsules, each with its own shell, opening mechanism and miniature machine inside. Turn the handle, open your capsule and connect it to UNFIRE Radio.</p></div>
-    <a class="btn btn-blue" href="#capsulas">▶ Explore all 100 ↓</a></div>
+  <div class="sechead reveal capsule-head"><div><span class="num">04 · CAPSULE MACHINE</span><h2>Capsules</h2><p class="lede">One hundred unique capsules, each with its own shell, opening mechanism and miniature machine inside. Turn the handle, open your capsule and connect it to UNFIRE Radio.</p>
+    <a class="btn btn-blue capsule-collection-link" href="#capGrid" aria-label="Browse all 100 capsules below the machine">Explore all 100 <span aria-hidden="true">↓</span></a></div></div>
   <div class="gacha-wrap reveal">
     <div class="gacha">
       <div class="globe"><canvas id="globe" width="440" height="440" aria-label="One hundred colorful capsules inside the machine"></canvas></div>
@@ -650,12 +710,17 @@ footer a{color:var(--soft)}
       </div>
       <div class="gleg"></div>
     </div>
-    <div>
+    <div class="capsule-console">
+      <p class="capsule-console-kicker">DISCOVERY CONSOLE <span aria-hidden="true">·</span> 100 UNIQUE CAPSULES</p>
       <div class="prize" id="prize" aria-live="polite">
-        <img id="prizeImg" src="" alt="" width="150" height="150">
-        <div><p class="eyebrow" id="prizeFam">Turn the handle</p><h3 id="prizeName">Which one will you get?</h3><p class="lede" id="prizeTxt" style="margin-top:8px">There are 100 capsules. Tap the capsule to open it.</p></div>
+        <span class="prize-visual"><img id="prizeImg" src="" alt="" width="150" height="150"></span>
+        <div class="prize-copy"><p class="eyebrow" id="prizeFam">Turn the handle</p><h3 id="prizeName">Which one will you get?</h3><p class="lede" id="prizeTxt">There are 100 capsules. Tap the capsule to open it.</p></div>
       </div>
-      <div class="filters" id="capFilters" role="group" aria-label="Capsule families" style="margin-top:22px"></div>
+      <div class="capsule-steps" aria-label="How the capsule machine works">
+        <span><b>01</b> Spin</span><span><b>02</b> Open</span><span><b>03</b> Explore</span>
+      </div>
+      <p class="capsule-filter-label">EXPLORE BY FAMILY</p>
+      <div class="filters" id="capFilters" role="group" aria-label="Capsule families"></div>
     </div>
   </div>
   <div class="capgrid" id="capGrid"></div>
