@@ -86,7 +86,7 @@ const nanoConfig = simulate();
 const modeButton = nanoConfig.hud.querySelector('#stR');
 assert.equal(modeButton.attrs['aria-pressed'], 'false', 'initial nano state is inactive');
 modeButton.onclick();
-assert.equal(modeButton.textContent, '🧍 TAMAÑO NORMAL', 'configuration toggles nano on');
+assert.equal(modeButton.textContent, '🧍 NORMAL SIZE', 'configuration toggles nano on');
 assert.equal(modeButton.attrs['aria-pressed'], 'true', 'screen reader gets active nano state');
 modeButton.onclick();
 assert.equal(modeButton.textContent, '🔬 NANO ROBOT', 'configuration toggles nano off');
@@ -94,7 +94,7 @@ assert.equal(modeButton.attrs['aria-pressed'], 'false', 'screen reader gets inac
 assert.equal(nanoConfig.guide.active, false, 'transform does not launch Nimbo onboarding');
 assert.equal(nanoConfig.guide.save.name, '', 'transform never forces player name');
 const fresh = simulate();
-assert.match(fresh.menu.innerHTML, /CONOCER A NIMBO/, 'new players can choose introduction later');
+assert.match(fresh.menu.innerHTML, /MEET NIMBO/, 'new players can choose introduction later');
 assert.equal(fresh.data.has('unfire_save_v1'), false, 'entry must not write a save');
 const firstStory = simulate();
 firstStory.menu.querySelector('#mPlay').onclick();
