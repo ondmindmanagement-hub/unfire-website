@@ -38,6 +38,8 @@ test('multiplayer, camera permissions and the local secret computer display Engl
  'Code not recognized.', 'All playable robots unlocked',
  'You were invited to room ', 'You left the room',
  'The host closed the room','Come play UNFIRE AUDIO with me',
+ 'ready · select 📨 INVITE to bring friends', 'Player report',
+ 'NO ENTRY', 'RECORDING',
  'Microphone on. You can hear nearby players',
  'CAMERA: MOVE YOUR HANDS','Camera permission is unavailable',
  'No other players in the room yet.'
