@@ -126,20 +126,21 @@
     },
     {
       "app_visual": "unfire-synth-iphone",
-      "source_original": "Unfire/Coordination/ReleaseCandidates/Synth1_RealCaptures_20261027/iPhone/iPhone_REAL_QA49_initial_20261027.png",
+      "source_original": "Desktop/Unfire/Coordination/ReleaseCandidates/Synth1_RealCaptures_20261029/iPhone/iPhone_Duo_Simulator_Build90_20261029_REAL.png",
       "original_size": [
-        750,
-        1334
+        1398,
+        2034
       ],
       "web_size": [
         560,
-        965
+        1010
       ],
       "web_asset": "unfire-synth-iphone.webp",
-      "bytes": 47964,
-      "sha256": "47509831652d35479b30c0741527b248671c1cd64d00b460cf65f01c67daff7d",
-      "crop": "Removed top 42 px status bar to avoid carrier/time metadata; app controls unchanged",
-      "release_status": "Development/QA screenshot, not certified as App Store production capture; review underlying UI resource rights"
+      "bytes": 59426,
+      "sha256": "024a942074ec1073daba462381fc73e7d02257068dfaf57b9993a50daa444233",
+      "crop": "Removed only right-side iPhone Duo simulator status/controls outside the live Synth instrument panel (x 1128 to 1398); authentic current instrument UI and title PORTABLE SYNTH preserved without repainting.",
+      "release_status": "Development/QA screenshot from installed iPhone Duo simulator app version 1.0 build 90, not approved production App Store capture; underlying media/skin rights still require verification",
+      "capture_build": "technology.unfire.synth 1.0 (90) · iPhone Duo iOS 27.1 · 2026-10-29"
     }
   ]
 }
