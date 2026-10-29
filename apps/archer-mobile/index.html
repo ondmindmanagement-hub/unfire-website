@@ -20,14 +20,14 @@
 .mobile-preview-stage{min-width:0;border:1px solid #26354c;border-radius:30px;min-height:500px;padding:35px 24px 24px;background:radial-gradient(ellipse at 50% 65%,#233b5a50,transparent 67%),linear-gradient(155deg,#101927,#080c13 75%);display:flex;gap:clamp(12px,3vw,30px);align-items:center;justify-content:center;overflow:hidden}
 .mobile-previews figure{margin:0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:17px}
 .mobile-previews .device-frame{display:block;overflow:hidden;padding:5px;background:#030812;border:2px solid #5c6981;box-shadow:0 19px 36px #000a,0 0 24px #225d9a22}
-.mobile-previews .device--iphone{width:clamp(120px,15vw,165px);height:337px;border-radius:24px}
-.mobile-previews .device--ipad{width:clamp(152px,20vw,210px);height:355px;border-radius:18px}
+.mobile-previews .device--iphone{width:clamp(120px,15vw,160px);aspect-ratio:640/1317;height:auto;border-radius:24px}
+.mobile-previews .device--ipad{width:clamp(185px,21vw,260px);aspect-ratio:3/4;height:auto;border-radius:18px}
 .mobile-previews img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
 .mobile-previews .device--iphone img{border-radius:18px}
 .mobile-previews .device--ipad img{border-radius:12px}
 .mobile-previews figcaption{font-size:12px;letter-spacing:.04em;color:#a9b7ce;text-align:center}
-@media(max-width:860px){.mobile-previews{grid-template-columns:1fr;gap:25px}.mobile-preview-stage{min-height:420px}.mobile-previews .device--iphone{width:148px;height:320px}.mobile-previews .device--ipad{width:183px;height:332px}}
-@media(max-width:430px){.mobile-preview-stage{padding:24px 12px;gap:12px;min-height:355px}.mobile-previews .device--iphone{width:min(35vw,135px);height:277px}.mobile-previews .device--ipad{width:min(44vw,165px);height:290px}.mobile-previews figcaption{font-size:11px}}
+@media(max-width:860px){.mobile-previews{grid-template-columns:1fr;gap:25px}.mobile-preview-stage{min-height:420px}.mobile-previews .device--iphone{width:140px;height:auto}.mobile-previews .device--ipad{width:232px;height:auto}}
+@media(max-width:430px){.mobile-preview-stage{padding:24px 12px;gap:12px;min-height:355px}.mobile-previews .device--iphone{width:min(28vw,120px);height:auto}.mobile-previews .device--ipad{width:min(48vw,205px);height:auto}.mobile-previews figcaption{font-size:11px}}
 .details{padding:50px 0 90px;border-top:1px solid var(--line)}.note{border-left:2px solid #718bc0;padding:12px 20px;color:var(--muted);margin-top:30px;font-size:14px}footer{border-top:1px solid var(--line);padding:35px 0 60px;color:var(--muted);font-size:13px}footer a{color:var(--fg)}@media(max-width:740px){.grid{grid-template-columns:1fr}.hero{padding:80px 0 75px}}</style>
 
 <meta name="twitter:card" content="summary">
@@ -43,12 +43,12 @@
   <div class="mobile-preview-copy">
     <div class="eyebrow">ARCHER / Mobile interface</div>
     <h2 id="mobile-preview-title">Precision, shaped for touch.</h2>
-    <p>A dedicated vertical interface for iPhone and iPad. Gain, Threshold and Color stay within easy reach, with the same luminous blue character and a layout designed for smaller screens.</p>
+    <p>The development previews show ARCHER controls in separate iPhone and tablet-proportioned iPad frames. These are interface crops, not final device-specific App Store screenshots.</p>
     <p class="disclosure">Authentic cropped captures from the unreleased 1.0.3 development build on iOS simulators. These are interface previews, not screenshots of the currently published App Store version. Final appearance may change.</p>
   </div>
   <div class="mobile-preview-stage" aria-label="ARCHER Mobile interface previews for iPhone and iPad">
     <figure><span class="device-frame device--iphone"><img src="/assets/products/archer-mobile-iphone-ui-20261029.webp" alt="ARCHER Mobile iPhone portrait interface featuring vertically stacked blue-lit Gain, Threshold and Color controls" width="640" height="1317" loading="lazy" decoding="async"></span><figcaption>iPhone · Development preview</figcaption></figure>
-    <figure><span class="device-frame device--ipad"><img src="/assets/products/archer-mobile-ipad-ui-20261029.webp" alt="ARCHER Mobile iPad portrait interface featuring its three touch controls" width="720" height="1283" loading="lazy" decoding="async"></span><figcaption>iPad · Development preview</figcaption></figure>
+    <figure><span class="device-frame device--ipad"><img src="/assets/products/archer-mobile-ipad-ui-20261029.webp" alt="ARCHER Mobile development control-panel crop contained within a portrait iPad-proportioned display frame" width="720" height="1283" loading="lazy" decoding="async"></span><figcaption>iPad · Interface crop, development preview</figcaption></figure>
   </div>
 </section>
 <section class="features"><h2>Made for the work.</h2><div class="grid"><article class="feature"><h3>Gain & threshold</h3><p>Move quickly from clean control to more assertive clipping with dedicated parameter adjustments.</p></article><article class="feature"><h3>Atmosphere</h3><p>Shape the character of your sound with an expressive additional control.</p></article><article class="feature"><h3>Mobile workflow</h3><p>Use the standalone interface or the supported Audio Unit v3 workflow on compatible devices and hosts.</p></article></div></section>

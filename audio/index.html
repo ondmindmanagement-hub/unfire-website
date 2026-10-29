@@ -350,11 +350,11 @@ article.inst.flip .media{order:2}
 .archer-mobile-showcase .am-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
 .archer-mobile-showcase .am-device-stage{min-width:0;display:flex;gap:clamp(10px,2vw,22px);align-items:center;justify-content:center;min-height:333px}
 .archer-mobile-showcase .am-device{display:block;flex:0 0 auto;padding:4px;background:#030b16;border:2px solid #65778d;box-shadow:0 18px 30px #000a,0 0 22px #337bb52b;overflow:hidden}
-.archer-mobile-showcase .am-device--iphone{width:clamp(104px,12vw,150px);height:310px;border-radius:23px}
-.archer-mobile-showcase .am-device--ipad{width:clamp(122px,15vw,183px);height:325px;border-radius:18px}
+.archer-mobile-showcase .am-device--iphone{width:clamp(100px,10vw,140px);aspect-ratio:640/1317;height:auto;border-radius:23px}
+.archer-mobile-showcase .am-device--ipad{width:clamp(175px,17vw,235px);aspect-ratio:3/4;height:auto;border-radius:18px}
 .archer-mobile-showcase .am-device img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;border-radius:inherit}
-@media(max-width:820px){.archer-mobile-showcase{grid-template-columns:1fr}.archer-mobile-showcase .am-device-stage{min-height:314px}.archer-mobile-showcase .am-device--iphone{height:284px}.archer-mobile-showcase .am-device--ipad{height:304px}}
-@media(max-width:450px){.archer-mobile-showcase{padding:20px 15px}.archer-mobile-showcase .am-device-stage{min-height:269px;gap:12px}.archer-mobile-showcase .am-device--iphone{width:min(35%,120px);height:251px}.archer-mobile-showcase .am-device--ipad{width:min(43%,146px);height:266px}}
+@media(max-width:820px){.archer-mobile-showcase{grid-template-columns:1fr}.archer-mobile-showcase .am-device-stage{min-height:314px}.archer-mobile-showcase .am-device--iphone{height:auto}.archer-mobile-showcase .am-device--ipad{height:auto}}
+@media(max-width:450px){.archer-mobile-showcase{padding:20px 15px}.archer-mobile-showcase .am-device-stage{min-height:269px;gap:12px}.archer-mobile-showcase .am-device--iphone{width:min(30%,110px);height:auto}.archer-mobile-showcase .am-device--ipad{width:min(50%,185px);height:auto}}
 
 
 /* Caja de juguetes (transformables) */
@@ -675,13 +675,13 @@ footer a{color:var(--soft)}
       <div class="am-copy">
         <span class="am-label">Unfire Audio / iPhone &amp; iPad</span>
         <h3 id="archer-mobile-preview-title">ARCHER Mobile.</h3>
-        <p>Made for touch. The mobile edition has its own portrait layout, with Gain, Threshold and Color within easy reach — not a resized desktop screenshot.</p>
+        <p>Made for touch. This development preview keeps Gain, Threshold and Color together and shows separate phone and tablet-proportioned frames, without stretching the captured interface.</p>
         <div class="am-actions"><a class="btn btn-blue" href="/apps/archer-mobile/">Explore the mobile interface ↗</a><a class="btn btn-gel" href="https://apps.apple.com/es/app/archer-for-iphone-ipad/id6822109610" target="_blank" rel="noopener noreferrer">Current iPhone &amp; iPad app ↗</a></div>
         <p class="am-note">Authentic, cropped iOS simulator captures from an unreleased 1.0.3 build. Not screenshots of the current App Store version.</p>
       </div>
       <div class="am-device-stage" aria-label="Two separate ARCHER Mobile development previews for iPhone and iPad">
         <span class="am-device am-device--iphone"><img src="/assets/products/archer-mobile-iphone-ui-20261029.webp" width="640" height="1317" alt="ARCHER Mobile iPhone development interface with vertical blue audio controls" loading="lazy" decoding="async"></span>
-        <span class="am-device am-device--ipad"><img src="/assets/products/archer-mobile-ipad-ui-20261029.webp" width="720" height="1283" alt="ARCHER Mobile iPad development interface with a dedicated portrait layout" loading="lazy" decoding="async"></span>
+        <span class="am-device am-device--ipad"><img src="/assets/products/archer-mobile-ipad-ui-20261029.webp" width="720" height="1283" alt="ARCHER Mobile development control-panel crop presented within an iPad-proportioned portrait frame" loading="lazy" decoding="async"></span>
       </div>
     </section>
   </div><div class="rail r" aria-hidden="true"></div></div>
