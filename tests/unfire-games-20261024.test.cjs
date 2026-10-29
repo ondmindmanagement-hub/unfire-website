@@ -8,9 +8,10 @@ const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const games=read('games/index.html');
 const home=read('index.html');
 const sitemap=read('sitemap.xml');
-test('landing retains bilingual, semantic, accessible navigation',()=>{
-  for(const term of ['lang="es"','id="content"','href="#content"','data-es=','data-en=','aria-labelledby="hero-title"','id="gallery"','id="hyperwave"','id="online"','id="install"'])assert.ok(games.includes(term),term);
-  assert.match(games,/function setLanguage\(lang\)/);
+test('landing retains English-only, semantic, accessible navigation',()=>{
+  for(const term of ['lang="en"','id="content"','href="#content"','data-en=','aria-labelledby="hero-title"','id="gallery"','id="hyperwave"','id="online"','id="install"'])assert.ok(games.includes(term),term);
+  assert.match(games,/function setLanguage\(\)/);
+  assert.doesNotMatch(games,/data-es=|data-set-lang=/);
   assert.match(games,/prefers-reduced-motion/);
   assert.match(games,/@media\(max-width:640px\)/);
   assert.match(games,/\.games-shots\{grid-template-columns:1fr\}/);
@@ -37,8 +38,8 @@ test('Hyperwave is available but initialized only after click, with unload on cl
   assert.doesNotMatch(games,/<canvas\b/);
 });
 test('shared-family wording does not claim universal synchronization',()=>{
-  assert.ok(games.includes('navegación y acceso comunes'));
-  assert.ok(games.includes('experiencias independientes'));
+  assert.ok(games.includes('shared navigation and access'));
+  assert.ok(games.includes('remain separate experiences'));
   assert.ok(games.includes('cross-app or cross-device'));
   assert.ok(games.includes('href="../audio/"'));
   assert.ok(games.includes('href="../audio/press/"'));

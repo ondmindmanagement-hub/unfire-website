@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es"><head>
+<html lang="en"><head>
 <!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
 <script id="ufAdaptiveBoot">(function(){
   try {
@@ -17,10 +17,10 @@
 
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080b12"><meta name="color-scheme" content="dark"><meta name="robots" content="index,follow">
-<meta name="description" content="Unfire Control: propuestas de pruebas con docentes, pantallas de aula y presentaciones asistidas por gestos y voz. Pilotaje condicionado a revisión técnica y permisos.">
+<meta name="description" content="Unfire Control: proposed classroom pilots with teachers, presentation screens, hand gestures and voice. Pilots depend on technical validation, institutional permissions and written agreement.">
 <link rel="canonical" href="https://unfire.technology/education/"><link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<title translate="no">Unfire Control para aulas y universidades | Unfire</title>
-<meta property="og:type" content="website"><meta property="og:title" content="Unfire Control | Pruebas en aulas y universidades"><meta property="og:description" content="Tecnología de gestos y voz para explorar nuevas formas de enseñar y presentar. Propuestas de pilotos técnicos con docentes."><meta property="og:url" content="https://unfire.technology/education/">
+<title translate="no">Unfire Control for Schools and Universities | Unfire</title>
+<meta property="og:type" content="website"><meta property="og:title" content="Unfire Control | Classroom and University Pilot Studies"><meta property="og:description" content="Explore hand and voice control for teaching and presentations through supervised technical pilots with educators."><meta property="og:url" content="https://unfire.technology/education/">
 <style>
 :root{color-scheme:dark;--bg:#080b12;--card:#111722;--fg:#f5f7fb;--muted:#b0bbc9;--accent:#bfd9fe;--line:#303b4a;--weak:#8495a8}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.7 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}a:focus-visible{outline:2px solid #bed9fb;outline-offset:4px}
@@ -45,33 +45,76 @@ footer{padding:29px 0 39px;border-top:1px solid var(--line);font-size:11px;color
   <div class="uf-load-card">
     <span class="uf-load-emblem" aria-hidden="true"></span>
     <strong class="uf-load-brand" translate="no">UNFIRE</strong>
-    <span class="uf-load-label" id="ufAdaptiveLabel">Preparando la experiencia…</span>
+    <span class="uf-load-label" id="ufAdaptiveLabel">Preparing the experience…</span>
   </div>
 </div>
-<header><div class="wrap"><a href="/" class="brand" aria-label="Unfire inicio"><span translate="no" class="notranslate">UNFIRE</span></a><nav class="nav" aria-label="Navegación"><a href="#usos">Aulas</a><a href="#piloto">Pilotos</a><a href="#requisitos">Requisitos</a><a href="#contacto">Contacto</a></nav></div></header>
-<main><div class="wrap"><div class="hero">
-<div><p class="kicker">Unfire Control · Educación e instituciones</p>
-<h1>Presenta ideas.<br>Sin volver al teclado.</h1>
-<p class="lead">Exploramos el uso de gestos de las manos y órdenes de voz para interactuar con un ordenador durante clases, conferencias y demostraciones. Una forma de estudiar si el docente puede moverse con más libertad mientras explica.</p>
-<p class="lead">Buscamos centros que quieran evaluar la utilidad real de esta interacción en un entorno controlado, empezando por docentes y personal adulto.</p>
-<div class="actions"><a class="btn primary" href="mailto:hello@unfire.technology?subject=Unfire%20Control%20%E2%80%94%20inter%C3%A9s%20en%20piloto%20educativo">Proponer una prueba por correo ↗</a><a class="btn secondary" href="/apps/unfire-control/">Conocer Unfire Control ↗</a></div>
-<p class="note">Aplicación macOS en desarrollo y revisión para su distribución. No hay descarga pública autorizada para este programa hasta superar los controles de distribución y acordar el piloto. La eficacia en aulas reales está pendiente de evaluación.</p></div>
-<div class="display" role="img" aria-label="Esquema conceptual ilustrativo: ordenador del profesor conectado a pantalla de presentación; no es una captura de la aplicación">
-<div class="screen"><span class="one">En el aula</span><span class="two">Control<br>por gestos y voz</span><span class="three"><span>●</span> Propuesta para evaluar</span></div><div class="hardware"><span>Mac del docente</span><span aria-hidden="true">→</span><span>Pantalla / proyector</span></div></div></div></div>
-<section id="usos"><div class="wrap"><p class="kicker">Escenarios reales que queremos medir</p><h2>Tecnología al servicio de explicar mejor.</h2><p class="intro">No damos por supuesto que la tecnología mejore la enseñanza por sí sola. Cada escenario deberá contrastarse con teclado, ratón o mando de presentación.</p>
-<div class="cards"><article class="card"><small>01 / Docencia</small><h3>Presentaciones y pizarras proyectadas</h3><p>Explorar navegación por diapositivas, selección, desplazamiento o zoom mediante gestos y voz cuando la app concreta admita esos comandos.</p></article>
-<article class="card"><small>02 / Formación superior</small><h3>Conferencias y demostraciones</h3><p>Ensayar interacciones en clases magistrales, presentaciones de proyectos y laboratorios donde el ponente necesita libertad de movimiento.</p></article>
-<article class="card"><small>03 / Investigación</small><h3>Interfaces y accesibilidad</h3><p>Estudiar errores, esfuerzo, precisión, falsos clics y necesidades diversas con investigadores; no sustituye a tecnología asistiva validada.</p></article>
+<header><div class="wrap">
+  <a href="/" class="brand" aria-label="Unfire home"><span translate="no" class="notranslate">UNFIRE</span></a>
+  <nav class="nav" aria-label="Navigation"><a href="#usos">Classrooms</a><a href="#piloto">Pilots</a><a href="#requisitos">Requirements</a><a href="#contacto">Contact</a></nav>
+</div></header>
+<main>
+<div class="wrap"><div class="hero">
+  <div>
+    <p class="kicker">Unfire Control · Education and institutions</p>
+    <h1>Present ideas.<br>Without returning to the keyboard.</h1>
+    <p class="lead">We are exploring how hand gestures and voice commands could help people interact with a computer during classes, conferences and demonstrations. The goal is to evaluate whether educators can move more freely while presenting.</p>
+    <p class="lead">We are looking for educational institutions interested in evaluating the practical usefulness of this interaction in a controlled environment, initially with adult teachers and staff.</p>
+    <div class="actions">
+      <a class="btn primary" href="mailto:hello@unfire.technology?subject=Unfire%20Control%20-%20Education%20pilot%20proposal">Propose a pilot by email ↗</a>
+      <a class="btn secondary" href="/apps/unfire-control/">Explore Unfire Control ↗</a>
+    </div>
+    <p class="note">The macOS application remains in development and distribution review. No public download is authorized for this program until distribution checks have passed and a pilot is agreed. Effectiveness in real classrooms has not yet been validated.</p>
+  </div>
+  <div class="display" role="img" aria-label="Conceptual illustration: teacher's computer connected to a presentation screen; not an actual app screenshot">
+    <div class="screen"><span class="one">In the classroom</span><span class="two">Gesture and<br>voice control</span><span class="three"><span>●</span> Proposed evaluation</span></div>
+    <div class="hardware"><span>Teacher's Mac</span><span aria-hidden="true">→</span><span>Screen / projector</span></div>
+  </div>
+</div></div>
+<section id="usos"><div class="wrap">
+  <p class="kicker">Real use cases to evaluate</p>
+  <h2>Technology that supports clearer teaching.</h2>
+  <p class="intro">We do not assume technology improves learning on its own. Each use case must be compared with a keyboard, mouse or conventional presentation remote.</p>
+  <div class="cards">
+    <article class="card"><small>01 / Teaching</small><h3>Presentations and projected whiteboards</h3><p>Explore slide navigation, selection, scrolling and zoom through gestures and voice, where the specific application supports these commands.</p></article>
+    <article class="card"><small>02 / Higher education</small><h3>Lectures and demonstrations</h3><p>Test interaction during lectures, project presentations and laboratory demonstrations where presenters need freedom of movement.</p></article>
+    <article class="card"><small>03 / Research</small><h3>Interfaces and accessibility</h3><p>Study errors, effort, precision, unintended clicks and diverse user needs with researchers. This is not a replacement for validated assistive technology.</p></article>
+  </div>
+</div></section>
+<section id="piloto"><div class="wrap">
+  <p class="kicker">No mandatory in-person meetings</p>
+  <h2>Start with a small pilot.</h2>
+  <p class="intro">Participation is assessed by email with a responsible institutional contact. We do not request children's data or installation before authorization.</p>
+  <div class="steps">
+    <div class="step"><b>01</b><h3>Compatibility</h3><p>Confirm an Apple Silicon Mac with macOS 14 or later, camera, microphone, institutional permissions and a connection to a projector or screen.</p></div>
+    <div class="step"><b>02</b><h3>Safe distribution</h3><p>Verify the version and installation channel, including notarization or official availability as applicable.</p></div>
+    <div class="step"><b>03</b><h3>Guided evaluation</h3><p>Adult educators, short reversible tasks, keyboard or mouse as alternatives and supervision by the institution's IT team.</p></div>
+    <div class="step"><b>04</b><h3>Results</h3><p>Measure task completion time, selection errors, false activations, stability and participant feedback.</p></div>
+  </div>
+  <div class="band"><h3>What remains to be demonstrated</h3><p>Accuracy and latency under varying classroom lighting; hardware compatibility; voice recognition robustness; the impact of background noise; privacy and data retention; and acceptance by institutional IT administrators. Eye tracking is still experimental and is excluded from the base pilot.</p></div>
+</div></section>
+<section id="requisitos"><div class="wrap">
+  <p class="kicker">Transparency and student protection</p><h2>What an institution needs.</h2>
+  <div class="columns">
+    <div><h3>Initial requirements</h3><ul class="points">
+      <li>Mac with Apple Silicon (M1 or newer) and macOS 14+. The current arm64 build is not designed for Intel Macs.</li>
+      <li>Available camera and microphone; accessibility and system permissions approved by institutional IT.</li>
+      <li>A connected external monitor, presentation screen or projector. The whiteboard does not run Unfire Control by itself.</li>
+      <li>An adult teacher or staff member participating with consent; start with fictional, non-sensitive material.</li>
+      <li>A reviewed distribution method, without asking anyone to disable Gatekeeper or institutional security policies.</li>
+    </ul></div>
+    <div><h3>Other Unfire experiences</h3>
+      <p>In addition to Control, we can explore educational proposals involving <a href="/audio/">interactive 3D and creative environments</a>, <a href="/archer/">audio production and processing</a>, <a href="/pilot/">AI workflow oversight</a> and <a href="/ai4climate-power/">energy data visualization</a>. Every product has its own maturity level and requirements; they are not automatically delivered as a bundled installation.</p>
+      <h3>Licensing and collaboration</h3><p>A pilot does not grant redistribution rights, access to source code or unlimited institutional use. Any paid pilot, integration, license or support would require written terms and a review of applicable rights and obligations.</p>
+    </div>
+  </div>
+</div></section>
+<section id="contacto"><div class="wrap"><div class="contact">
+  <p class="kicker">For universities · schools · research centers · laboratories</p>
+  <h2>What would this look like in your classroom?</h2>
+  <p class="lead">Tell us your institution type, a real presentation task, the Mac model and macOS version, the display you use, and an institutional IT or education-innovation contact. Do not send passwords or student documents. We reply by email.</p>
+  <a class="btn primary" href="mailto:hello@unfire.technology?subject=Unfire%20Control%20-%20Educational%20institution%20proposal">hello@unfire.technology ↗</a>
+  <p class="note">Unfire is an independent technology initiative based in Spain and has not yet been incorporated as a company. Accessibility capabilities, educational quality and institutional suitability require specific validation.</p>
 </div></div></section>
-<section id="piloto"><div class="wrap"><p class="kicker">Sin reuniones presenciales obligatorias</p><h2>Primero una prueba pequeña.</h2><p class="intro">La participación se cualifica por email, con una persona responsable del centro, sin compartir inicialmente datos de menores ni pedir instalación sin autorización.</p>
-<div class="steps"><div class="step"><b>01</b><h3>Compatibilidad</h3><p>Confirmar un Mac con Apple Silicon y macOS 14 o posterior, cámara, micrófono, permisos institucionales y conexión al proyector o pantalla.</p></div><div class="step"><b>02</b><h3>Distribución segura</h3><p>Validar la versión y el canal de instalación, incluida la notarización o disponibilidad oficial que corresponda.</p></div><div class="step"><b>03</b><h3>Prueba guiada</h3><p>Personal docente adulto, tareas breves y reversibles, teclado/ratón como alternativa y supervisión del equipo TIC.</p></div><div class="step"><b>04</b><h3>Resultados</h3><p>Registrar tiempo de tarea, errores de selección, falsas activaciones, estabilidad y valoración del usuario.</p></div></div>
-<div class="band"><h3>Lo que aún debemos demostrar</h3><p>Precisión y latencia bajo las distintas luces del aula; funcionamiento en cada hardware; robustez del reconocimiento de voz; impacto del ruido; privacidad y retención de datos; aceptación por administradores TIC. El seguimiento de la mirada sigue siendo experimental y queda fuera del piloto base.</p></div></div></section>
-<section id="requisitos"><div class="wrap"><p class="kicker">Transparencia y protección del alumnado</p><h2>Qué necesita un centro.</h2><div class="columns">
-<div><h3>Requisitos iniciales</h3><ul class="points"><li>Mac con Apple Silicon (procesadores M1 o posteriores) y macOS 14+. La compilación actual es arm64 y no está preparada para ordenadores Mac con Intel.</li><li>Cámara y micrófono disponibles; permisos de accesibilidad y de sistema aprobados por TIC.</li><li>Conexión del Mac a pantalla, monitor externo o proyector. La pizarra no ejecuta Unfire Control por sí sola.</li><li>Profesor/a o personal adulto participante con consentimiento; primero materiales ficticios y no sensibles.</li><li>Distribución revisada, sin pedir desactivar Gatekeeper ni las políticas de seguridad del centro.</li></ul></div>
-<div><h3>Otras experiencias de Unfire</h3><p>Además de Control, podemos estudiar propuestas educativas concretas en <a href="/audio/">3D interactivo y entornos creativos</a>, <a href="/archer/">producción y procesamiento de audio</a>, <a href="/pilot/">supervisión de flujos con IA</a> y <a href="/ai4climate-power/">visualización de datos energéticos</a>. Cada producto tiene su madurez y sus requisitos; no se entregan automáticamente como un paquete instalable.</p>
-<h3>Licencias y colaboración</h3><p>Una prueba no concede derechos de redistribución, acceso al código ni uso institucional ilimitado. Si existe encaje, cualquier piloto remunerado, integración, licencia o soporte se definirán mediante condiciones escritas y revisión de derechos y obligaciones.</p></div>
-</div></div></section>
-<section id="contacto"><div class="wrap"><div class="contact"><p class="kicker">Para universidades · institutos · centros · laboratorios</p><h2>¿Cómo sería en tu aula?</h2><p class="lead">Indícanos el tipo de centro, una tarea de presentación real, el modelo de Mac, la versión de macOS, la pantalla que utilizáis y una persona responsable de TIC o innovación docente. Sin contraseñas ni documentos de alumnos. Respondemos por correo.</p>
-<a class="btn primary" href="mailto:hello@unfire.technology?subject=Unfire%20Control%20%E2%80%94%20propuesta%20de%20centro%20educativo">hello@unfire.technology ↗</a>
-<p class="note">Unfire es una iniciativa tecnológica independiente en España, todavía no constituida como sociedad. Las funciones de accesibilidad, calidad pedagógica y uso institucional necesitan validación específica.</p></div></div></section></main>
-<footer><div class="wrap"><span><strong translate="no" class="notranslate">Unfire</strong> · 2026 · Evaluación educativa</span><span><a href="/enterprise/">Tecnología y licencias</a> · <a href="/early-access/">Acceso temprano</a> · <a href="/privacy.html">Privacidad</a></span></div></footer></body></html>
+</main>
+<footer><div class="wrap"><span><strong translate="no" class="notranslate">Unfire</strong> · 2026 · Education evaluation</span><span><a href="/enterprise/">Technology and licensing</a> · <a href="/early-access/">Early access</a> · <a href="/privacy.html">Privacy</a></span></div></footer>
+</body></html>
