@@ -108,6 +108,23 @@ async function earlyLoadingTap(spec) {
     console.log('CASE_LOADING_TAP_PASS', spec.label);
   } finally { await bounded(() => context.close()); }
 }
+// Independent Chromium per viewport/scenario: software WebGL resources are fully released
+// before the next case. Preserve every touch, orientation and lid assertion.
+async function withIsolatedBrowser(label, action) {
+  const isolated = await chromium.launch({headless: true,
+    executablePath: process.env.UNFIRE_CHROME || undefined,
+    args: ['--enable-unsafe-swiftshader','--disable-dev-shm-usage','--no-sandbox']});
+  browser = isolated;
+  try {
+    await action();
+  } finally {
+    const child = typeof isolated.process === 'function' ? isolated.process() : null;
+    const closed = await bounded(() => isolated.close(), 4000);
+    if(!closed && child && !child.killed) try { child.kill('SIGTERM'); } catch (_) {}
+    if(browser === isolated) browser = null;
+    console.log('CASE_BROWSER_ISOLATED', label);
+  }
+}
 async function standaloneTouch() {
   const context = await browser.newContext({viewport:{width:390,height:844},
     isMobile:true,hasTouch:true,deviceScaleFactor:1});
@@ -137,13 +154,13 @@ async function standaloneTouch() {
     server = spawn('python3', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'],
       {cwd: path.resolve(__dirname, '..'), stdio: 'ignore'});
     await new Promise(r => setTimeout(r, 900));
-    browser = await chromium.launch({headless: true,
-      executablePath: process.env.UNFIRE_CHROME || undefined,
-      args: ['--enable-unsafe-swiftshader','--disable-dev-shm-usage','--no-sandbox']});
-    for(const spec of specs) await exercise(spec);
-    await earlyLoadingTap({label:'phone-loading',width:390,height:844});
-    await earlyLoadingTap({label:'ipad-loading',width:820,height:1180});
-    await standaloneTouch();
+    for(const spec of specs)
+      await withIsolatedBrowser(spec.label, () => exercise(spec));
+    await withIsolatedBrowser('phone-loading',
+      () => earlyLoadingTap({label:'phone-loading',width:390,height:844}));
+    await withIsolatedBrowser('ipad-loading',
+      () => earlyLoadingTap({label:'ipad-loading',width:820,height:1180}));
+    await withIsolatedBrowser('standalone', () => standaloneTouch());
   } catch(e) {console.error('CASE_TAP_FAIL', e.stack || e);process.exitCode=1;}
   finally {
     if(browser) {
