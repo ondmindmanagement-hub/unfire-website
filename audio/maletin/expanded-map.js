@@ -3,15 +3,15 @@
   'use strict';
   if (window.UnfireExpandedMap) return;
   const PLACES = [
-    {x:0,z:40,t:'CASA',size:94,col:'#e8ecff'},
+    {x:0,z:40,t:'HOUSE',size:94,col:'#e8ecff'},
     {x:600,z:0,t:'ATLANTIS',size:340,col:'#e3dad0'},
-    {x:80,z:-500,t:'DESIERTO',size:190,col:'#ead4a3'},
+    {x:80,z:-500,t:'DESERT',size:190,col:'#ead4a3'},
     {x:-760,z:-760,t:'HAIKU',size:250,col:'#ffa9d0'},
-    {x:-420,z:120,t:'ISLA VERDE',size:70,col:'#9fe86f'},
-    {x:300,z:420,t:'ISLA BLANCA',size:60,col:'#e1f5ff'},
-    {x:-360,z:-380,t:'ISLA VIOLETA',size:80,col:'#bf96ff'},
+    {x:-420,z:120,t:'GREEN ISLAND',size:70,col:'#9fe86f'},
+    {x:300,z:420,t:'WHITE ISLAND',size:60,col:'#e1f5ff'},
+    {x:-360,z:-380,t:'VIOLET ISLAND',size:80,col:'#bf96ff'},
     {x:150,z:650,t:'SURF',size:80,col:'#72d9ff'},
-    {x:2200,z:-1800,t:'TORRES',size:145,col:'#a0bbff'}
+    {x:2200,z:-1800,t:'TOWERS',size:145,col:'#a0bbff'}
   ];
   const clamp = (v,min,max) => Math.max(min,Math.min(max,v));
   function create(getState, onOpen) {
@@ -28,17 +28,17 @@
       root.hidden = true;
       root.setAttribute('role','dialog');
       root.setAttribute('aria-modal','true');
-      root.setAttribute('aria-label','Mapa ampliado del juego');
-      root.innerHTML = '<section id="ufMapPanel" aria-label="Mapa del mundo">'
-        + '<header id="ufMapHeader"><div><small>UNFIRE AUDIO · EXPLORAR</small><h2>🗺 MAPA DEL MUNDO</h2></div>'
-        + '<button type="button" id="ufMapClose" aria-label="Cerrar mapa">✕ <span>CERRAR</span></button></header>'
-        + '<div id="ufMapSurface"><canvas id="ufMapCanvas" aria-label="Mapa con tu posición y la misión activa"></canvas>'
-        + '<div id="ufMapBadge">LA CASA</div></div>'
-        + '<footer id="ufMapFooter"><div id="ufMapLegend"><span>◆ JUGADOR</span><span>★ MISIÓN</span><span>● LUGARES</span></div>'
-        + '<div id="ufMapTools"><button type="button" id="ufMapMinus" aria-label="Alejar mapa">−</button>'
-        + '<button type="button" id="ufMapCenter">⌖ CENTRAR</button>'
-        + '<button type="button" id="ufMapPlus" aria-label="Acercar mapa">+</button></div></footer>'
-        + '<p id="ufMapHelp">Arrastra para explorar · pellizca o usa +/− para ampliar · Esc para cerrar</p></section>';
+      root.setAttribute('aria-label','Expanded game map');
+      root.innerHTML = '<section id="ufMapPanel" aria-label="World map">'
+        + '<header id="ufMapHeader"><div><small>UNFIRE AUDIO · EXPLORE</small><h2>🗺 WORLD MAP</h2></div>'
+        + '<button type="button" id="ufMapClose" aria-label="Close map">✕ <span>CLOSE</span></button></header>'
+        + '<div id="ufMapSurface"><canvas id="ufMapCanvas" aria-label="Map showing your position and active mission"></canvas>'
+        + '<div id="ufMapBadge">THE HOUSE</div></div>'
+        + '<footer id="ufMapFooter"><div id="ufMapLegend"><span>◆ PLAYER</span><span>★ MISSION</span><span>● PLACES</span></div>'
+        + '<div id="ufMapTools"><button type="button" id="ufMapMinus" aria-label="Zoom out">−</button>'
+        + '<button type="button" id="ufMapCenter">⌖ CENTER</button>'
+        + '<button type="button" id="ufMapPlus" aria-label="Zoom in">+</button></div></footer>'
+        + '<p id="ufMapHelp">Drag to explore · pinch or use +/− to zoom · Esc to close</p></section>';
       document.body.appendChild(root);
       canvas = root.querySelector('#ufMapCanvas');
       context = canvas.getContext('2d', {alpha:false});
@@ -193,7 +193,7 @@
         if(zone==='island'){
           area(0,0,290,'rgba(49,169,97,.36)');
           PLACES.forEach(p => {
-            if(p.t==='CASA')return;
+            if(p.t==='HOUSE')return;
             area(p.x,p.z,p.size,p.col+'66');
             textLabel(p.t,p.x,p.z+p.size*.25,'#ffffff');
           });
@@ -203,7 +203,7 @@
         if(zone==='house'){
           rectArea(-13,-7.45,13,5.05,'rgba(222,191,149,.48)');
           [[44,8,'ESTUDIO'],[38,44,'GALERÍA'],[-38,40,'SALA'],[-30,93,'PUERTA']].forEach(q => textLabel(q[2],q[0],q[1],'#d3ebff'));
-        }else textLabel('CASA',0,45,'#0a1831');
+        }else textLabel('HOUSE',0,45,'#0a1831');
       }
       const obj = s.objective;
       if(obj && Number.isFinite(obj.x) && Number.isFinite(obj.z) && (zone!=='table' || obj.mini)){
@@ -214,7 +214,7 @@
           g.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,r=i%2?5:12;
             const x=Math.cos(a)*r,y=Math.sin(a)*r;i?g.lineTo(x,y):g.moveTo(x,y);}
           g.closePath();g.fill();g.stroke();g.restore();
-          textLabel('MISIÓN',obj.x,obj.z+16/scale,'#ffe484');
+          textLabel('MISSION',obj.x,obj.z+16/scale,'#ffe484');
         }
       }
       const player=P(Number(s.x)||0,Number(s.z)||0);
@@ -224,7 +224,7 @@
         g.fillStyle='#c0ff56';g.strokeStyle='#081825';g.lineWidth=3;g.fill();g.stroke();g.restore();
       }
       g.restore();
-      zoneLabel.textContent=zone==='table'?'LA MESA':zone==='island'?'LA ISLA':'LA CASA';
+      zoneLabel.textContent=zone==='table'?'THE TABLE':zone==='island'?'THE ISLAND':'THE HOUSE';
       dirty=false;lastDraw=Date.now();
     }
     function tick(){

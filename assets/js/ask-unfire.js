@@ -35,7 +35,7 @@
         '<header id="panel-header">' + face +
           '<div class="identity"><strong>Ask <span class="notranslate" translate="no">Unfire</span> <span class="online" aria-hidden="true"></span></strong><small id="subtitle"><span class="notranslate" translate="no">Unfire</span> site support</small></div>' +
           '<div class="actions">' +
-            '<button type="button" id="lang" class="ghost" aria-label="Change language">ES</button>' +
+            '<button type="button" id="lang" class="ghost" aria-label="Language fixed to English" hidden aria-hidden="true" style="display:none">EN</button>' +
             '<button type="button" id="voice" class="ghost" aria-label="Enable spoken answers" aria-pressed="false">' + soundOffIcon + '</button>' +
             '<button type="button" id="close" class="ghost" aria-label="Close assistant">×</button>' +
           '</div>' +
@@ -85,7 +85,7 @@
     var mic = $("mic"), status = $("status"), voice = $("voice"), langButton = $("lang");
     var Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     var recognition = null, listening = false, opened = false, voiceEnabled = false, pendingSpeechText = "", lastAssistantText = "";
-    var lang = /^es\b/i.test(navigator.language || "") ? "es" : "en";
+    var lang = "en"; // Public site is English-only, regardless of browser locale
     var copy = {
       es: {
         sub:"Información y ayuda", teaser:"¿En qué podemos ayudarte?", placeholder:"Escribe tu pregunta…",
@@ -222,7 +222,7 @@
       input.placeholder = c.placeholder; input.setAttribute("aria-label",c.placeholder);
       launcher.setAttribute("aria-label", lang === "es" ? "Abrir asistente de Unfire" : "Open Unfire assistant");
       launcher.title = lang === "es" ? "Preguntar a Unfire" : "Ask Unfire";
-      langButton.textContent = lang === "es" ? "EN" : "ES";
+      langButton.hidden=true;langButton.style.display="none";langButton.setAttribute("aria-hidden","true");
       voice.setAttribute("aria-label",voiceEnabled ? c.mute : c.unmute);
       voice.setAttribute("aria-pressed",String(voiceEnabled));
       voice.innerHTML = voiceEnabled ? soundOnIcon : soundOffIcon;
@@ -267,10 +267,7 @@
       var topic = b.dataset.topic;
       send(topic === "control" ? "Unfire Control" : topic === "apps" ? (lang === "es" ? "Aplicaciones" : "Applications") : (lang === "es" ? "Contacto" : "Contact"));
     });
-    langButton.addEventListener("click",function() {
-      stopListen(); silence(); lang = lang === "es" ? "en" : "es"; refresh();
-      addMessage(lang === "es" ? "Idioma cambiado a español." : "Language changed to English.","agent");
-    });
+    // English-only public assistant: keep historical translations unavailable to visitors.
     voice.addEventListener("click",function() {
       voiceEnabled = !voiceEnabled;
       if (!voiceEnabled) silence();

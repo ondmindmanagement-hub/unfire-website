@@ -29,14 +29,14 @@
   }
   const MORPH_ORDER = [4,1,7,10,13,16,2,5,8,11,14,17,3,6,9,12,15,18,0,19];
   const EXTRAS = [
-    { id:'aura-cyan', title:'Aura azul neón', price:12, group:'Efectos', kind:'aura', value:'cyan' },
-    { id:'aura-pink', title:'Aura rosa neón', price:12, group:'Efectos', kind:'aura', value:'pink' },
-    { id:'color-gold', title:'Acabado dorado', price:10, group:'Personalización', kind:'color', value:'#ffd21a' },
-    { id:'color-violet', title:'Acabado violeta', price:10, group:'Personalización', kind:'color', value:'#9b6bff' },
-    { id:'footprints', title:'Huellas de luz', price:14, group:'Efectos', kind:'footprint' },
-    { id:'deco', title:'Lámpara de la casa', price:18, group:'Decoración', kind:'deco' },
-    { id:'magnet', title:'Imán de monedas', price:16, group:'Exploración', kind:'magnet' },
-    { id:'bonus', title:'Moneda doble', price:24, group:'Exploración', kind:'bonus' }
+    { id:'aura-cyan', title:'Neon blue aura', price:12, group:'Effects', kind:'aura', value:'cyan' },
+    { id:'aura-pink', title:'Neon pink aura', price:12, group:'Effects', kind:'aura', value:'pink' },
+    { id:'color-gold', title:'Gold finish', price:10, group:'Customization', kind:'color', value:'#ffd21a' },
+    { id:'color-violet', title:'Violet finish', price:10, group:'Customization', kind:'color', value:'#9b6bff' },
+    { id:'footprints', title:'Light footprints', price:14, group:'Effects', kind:'footprint' },
+    { id:'deco', title:'House lamp', price:18, group:'Decoration', kind:'deco' },
+    { id:'magnet', title:'Coin magnet', price:16, group:'Exploration', kind:'magnet' },
+    { id:'bonus', title:'Double coins', price:24, group:'Exploration', kind:'bonus' }
   ];
   const coords = [
     [-30,24],[-44,37],[-57,63],[-19,72],[25,76],[56,62],[64,30],[37,13],
@@ -50,7 +50,7 @@
     const active = () => !!ROAMS.on && !(window.ONLINE_ON && window.ONLINE_ON());
     const entries = MORPH_ORDER.filter(n => n < MUTANTS.list.length).map((n,i) => ({
       id:'robot-'+n, title:MUTANTS.list[n].name || 'Robot '+n, kind:'robot', value:n,
-      price:i<2?0:20+Math.floor((i-2)/3)*8, group:'Transformaciones'
+      price:i<2?0:20+Math.floor((i-2)/3)*8, group:'Transformations'
     })).concat(EXTRAS);
     const root = document.createElement('div'); root.id = 'unfireCoinSystem'; root.innerHTML =
       '<style>\n' +
@@ -72,23 +72,23 @@
       '@media(max-width:420px){#unfireCoinHud{left:calc(env(safe-area-inset-left) + 84px);max-width:60px;gap:2px;padding:4px 6px}#unfireCoinHud span:last-child{display:none}}\n' +
       '@media(max-height:480px){#unfireCoinHud{top:calc(env(safe-area-inset-top) + 60px);font-size:10px;min-height:30px}#unfireCoinShop .panel{max-height:88dvh;padding:11px}}\n' +
       '@media(prefers-reduced-motion:reduce){#unfireCoinSystem *{animation:none!important;transition:none!important}}\n' +
-      '</style><button id="unfireCoinHud" type="button" aria-label="Abrir tienda de monedas"><span aria-hidden="true">🟡</span><span data-wallet>0</span><span aria-hidden="true">＋</span></button>' +
-      '<section id="unfireCoinShop" role="dialog" aria-modal="true" aria-label="Tienda de monedas" aria-hidden="true"><div class="panel"><div class="heading"><h2>🟡 Unfire Coins</h2><button data-close type="button" aria-label="Cerrar tienda">✕</button></div><div class="hint">Recoge monedas explorando y desbloquea cosas para tu partida individual. No cuesta dinero. No afecta al online.</div><p data-available aria-live="polite"></p><div data-products></div><p data-message aria-live="polite"></p></div></section>';
+      '</style><button id="unfireCoinHud" type="button" aria-label="Open coin shop"><span aria-hidden="true">🟡</span><span data-wallet>0</span><span aria-hidden="true">＋</span></button>' +
+      '<section id="unfireCoinShop" role="dialog" aria-modal="true" aria-label="Coin shop" aria-hidden="true"><div class="panel"><div class="heading"><h2>🟡 Unfire Coins</h2><button data-close type="button" aria-label="Close shop">✕</button></div><div class="hint">Collect coins while exploring and unlock items for your solo game. No real-money purchases. Does not affect online play.</div><p data-available aria-live="polite"></p><div data-products></div><p data-message aria-live="polite"></p></div></section>';
     document.body.appendChild(root);
     const hud = root.querySelector('#unfireCoinHud'), shop = root.querySelector('#unfireCoinShop'), list = root.querySelector('[data-products]'),
       available = root.querySelector('[data-available]'), msg = root.querySelector('[data-message]'), wallet = root.querySelector('[data-wallet]');
     const current = () => entries.find(e => e.kind==='robot' && e.id===state.morph);
     let previousFocus = null;
     let lastBalance=-1,lastActive=null;
-    function updateHud() { const a=active();if(lastBalance!==state.balance){wallet.textContent=state.balance>999?((state.balance/1000).toFixed(state.balance>=10000?0:1)+'k'):state.balance.toLocaleString('es-ES');hud.title='Monedas: '+state.balance.toLocaleString('es-ES')+'. Abrir tienda';lastBalance=state.balance;}if(a!==lastActive){hud.style.display=a?'flex':'none';lastActive=a;} }
+    function updateHud() { const a=active();if(lastBalance!==state.balance){wallet.textContent=state.balance>999?((state.balance/1000).toFixed(state.balance>=10000?0:1)+'k'):state.balance.toLocaleString('en-GB');hud.title='Coins: '+state.balance.toLocaleString('en-GB')+'. Open shop';lastBalance=state.balance;}if(a!==lastActive){hud.style.display=a?'flex':'none';lastActive=a;} }
     function owned(item) { return item.price===0 || state.owned.includes(item.id); }
     function isEquipped(e) { return e.kind==='robot' ? state.morph===e.id
       : e.kind==='aura' ? state.aura===e.value : e.kind==='color' ? state.color===e.value
       : !!state[e.kind]; }
     function render() {
-      available.textContent='Monedas disponibles: '+state.balance;
+      available.textContent='Available coins: '+state.balance;
       list.innerHTML='';
-      ['Transformaciones','Personalización','Efectos','Decoración','Exploración'].forEach(group => {
+      ['Transformations','Customization','Effects','Decoration','Exploration'].forEach(group => {
         const items=entries.filter(e=>e.group===group);
         if(!items.length)return;
         const heading=document.createElement('h3');heading.textContent=group;list.appendChild(heading);
@@ -96,7 +96,7 @@
         items.forEach(e => {
           const b=document.createElement('button');b.type='button';b.dataset.item=e.id;
           b.disabled=!owned(e)&&state.balance<e.price;
-          b.innerHTML=clean(e.title)+'<small>'+ (isEquipped(e)?'✓ Equipado':owned(e)?'Usar':e.price+' 🟡')+'</small>';
+          b.innerHTML=clean(e.title)+'<small>'+ (isEquipped(e)?'✓ Equipped':owned(e)?'Use':e.price+' 🟡')+'</small>';
           grid.appendChild(b);
         });
         list.appendChild(grid);
@@ -109,7 +109,7 @@
       else state[e.kind]=true;
       if((e.kind==='robot'||e.kind==='color') && ROAMS.av){if(ROAMS.av.w)S.scene.remove(ROAMS.av.w);ROAMS.av=null;}
       persist(); render();
-      msg.textContent='✓ '+e.title+' activado';
+      msg.textContent='✓ '+e.title+' activated';
     }
     function buy(id){
       if(!active() || !shop.classList.contains('open'))return false;

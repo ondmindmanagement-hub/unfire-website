@@ -95,7 +95,7 @@ chk('No blue artificial case illustration in any initial viewport or compatibili
   !html.includes('unfire-case-preview.svg') && !html.includes('background:url("img/hyperwave-open.webp")'));
 chk('First landing loads actual live WebGL maletin, not synth ad or fake image',
   html.includes('requestAnimationFrame(()=>{if(!document.hidden&&nearHero())start()})')&&
-  html.includes('PREPARANDO MALETÍN 3D')&&
+  html.includes('PREPARING 3D CASE')&&
   !html.includes('::after{content:"";position:absolute;inset:16% 2% 0')&&
   html.includes('scene-ready .hero-copy{opacity:0!important'));
 chk('Outdoor capsule rests above terrain instead of on the ground',
