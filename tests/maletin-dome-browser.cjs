@@ -25,9 +25,17 @@ async function exercise(spec) {
     const page = await context.newPage();
     page.on('pageerror', e => errors.push(String(e.message).slice(0, 350)));
     const start = Date.now();
-    await page.goto('http://127.0.0.1:' + port + '/audio/maletin/?quality=compact', {
-      waitUntil: 'domcontentloaded', timeout: 30000
-    });
+    try {
+      await page.goto('http://127.0.0.1:' + port + '/audio/maletin/?quality=compact', {
+        waitUntil: 'domcontentloaded', timeout: 30000
+      });
+    } catch (error) {
+      console.error('DOME_NAVIGATION_DIAGNOSTIC', JSON.stringify({
+        viewport: spec.name, elapsedMs: Date.now() - start,
+        location: page.url(), pageErrors: errors, failure: String(error.message)
+      }));
+      throw error;
+    }
     await page.waitForFunction(() => !!(window.__roamAPI && window.__DOME && window.__mal && window.__mal.S),
       null, { timeout: 65000, polling: 300 });
     const beginning = await page.evaluate(() => {
@@ -114,12 +122,26 @@ async function exercise(spec) {
       cwd: root, stdio: 'ignore'
     });
     await new Promise(resolve => setTimeout(resolve, 800));
-    browser = await chromium.launch({
-      headless: true, executablePath: process.env.UNFIRE_CHROME || undefined,
-      args: ['--enable-unsafe-swiftshader', '--disable-dev-shm-usage', '--no-sandbox',
-        '--autoplay-policy=no-user-gesture-required']
-    });
-    for (const spec of cases) await exercise(spec);
+    const requested = process.env.UNFIRE_DOME_QA_CASE;
+    const selected = requested ? cases.filter(spec => spec.name === requested) : cases;
+    assert(selected.length > 0, 'Unknown UNFIRE_DOME_QA_CASE: ' + requested);
+    // A fresh Chromium process for every viewport prevents software-WebGL GPU
+    // resources from carrying over between desktop, portrait and landscape.
+    // Every case still exercises the same real exit/re-entry assertions.
+    for (const spec of selected) {
+      console.log('DOME_BROWSER_START', JSON.stringify({ viewport: spec.name }));
+      browser = await chromium.launch({
+        headless: true, executablePath: process.env.UNFIRE_CHROME || undefined,
+        args: ['--enable-unsafe-swiftshader', '--disable-dev-shm-usage', '--no-sandbox',
+          '--autoplay-policy=no-user-gesture-required']
+      });
+      try {
+        await exercise(spec);
+      } finally {
+        await browser.close();
+        browser = null;
+      }
+    }
   } catch (error) {
     console.error('DOME_BROWSER_FAIL', error.stack || error);
     process.exitCode = 1;
