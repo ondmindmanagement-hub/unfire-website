@@ -3996,7 +3996,7 @@ main .uf-hero-title {
 #apps .uf-gallery-copy{padding:23px 25px 28px;min-width:0}
 #apps .uf-gallery-type{font-size:10px;line-height:1.6;text-transform:uppercase;letter-spacing:.12em;color:#8f9fc4;margin:0 0 8px}
 #apps .uf-gallery-copy h3{font-size:clamp(23px,2vw,30px)!important;line-height:1.18!important;letter-spacing:-.025em!important;color:#f1f3f8;margin:0 0 10px!important;font-weight:650!important;overflow-wrap:break-word}
-#apps .uf-gallery-copy p:last-child{font-size:14px;line-height:1.7;letter-spacing:normal;color:#a9adba;margin:0}
+#apps .uf-gallery-copy>p:not(.uf-gallery-type){font-size:14px;line-height:1.7;letter-spacing:normal;color:#a9adba;margin:0}
 #apps .uf-gallery-footnote{font-size:12px;line-height:1.6;color:#7d8291;margin:22px 0 0}
 @media(max-width:900px){#apps.uf-app-showcase{padding:84px 0}#apps .uf-gallery-card--mobile{grid-column:span 3}#apps .uf-gallery-card--mobile:last-child{grid-column:2 / span 4}#apps .uf-gallery-card--mobile .uf-gallery-media{height:390px}}
 @media(max-width:620px){#apps.uf-app-showcase{padding:72px 0 80px}#apps .uf-gallery-grid{grid-template-columns:minmax(0,1fr);gap:16px}#apps .uf-gallery-card,#apps .uf-gallery-card--wide,#apps .uf-gallery-card--mobile,#apps .uf-gallery-card--mobile:last-child{grid-column:1 / -1}#apps .uf-gallery-card{border-radius:20px}#apps .uf-gallery-card--mobile .uf-gallery-media{height:410px;padding:20px}#apps .uf-gallery-intro{margin-bottom:34px}#apps .uf-gallery-copy{padding:21px 22px 26px}#apps h2{font-size:clamp(36px,10vw,54px)!important}}
@@ -4008,6 +4008,15 @@ main .uf-hero-title {
 #apps .uf-gallery-availability{display:block;margin-top:16px;color:#9da7ba;font-size:11px;line-height:1.5;letter-spacing:.025em}
 #apps .uf-gallery-card--icon .uf-gallery-media{background:radial-gradient(circle at 50% 50%,#1e2636 0%,#0b1019 64%,#090c13 100%)}
 #apps .uf-gallery-card--icon .uf-gallery-media img{width:min(57%,200px);height:auto;max-height:200px;border-radius:22%;box-shadow:0 12px 30px rgba(0,0,0,.38)}
+
+/* Unfire Control: an authentic app icon, presented with CSS rather than a fabricated screenshot. */
+#apps .uf-gallery-card--control{background:linear-gradient(180deg,#171e2b,#0b0e16);border-color:rgba(159,183,223,.24)}
+#apps .uf-gallery-card--control .uf-gallery-media{height:350px;padding:26px;position:relative;background:radial-gradient(circle at 50% 48%,rgba(127,152,196,.17),transparent 60%),linear-gradient(160deg,#192132,#090d15)}
+#apps .uf-gallery-card--control .uf-gallery-media img{display:block;flex:none;width:min(60%,210px);max-height:210px;height:auto;object-fit:contain;border-radius:22%;box-shadow:0 18px 44px rgba(0,0,0,.34)}
+#apps .uf-gallery-details{display:inline-flex;gap:8px;align-items:center;align-self:flex-start;margin-top:16px;font-size:12px;color:#d4e2fb;text-decoration:underline;text-decoration-color:#596980;text-underline-offset:4px}
+#apps .uf-gallery-details:hover,#apps .uf-gallery-details:focus-visible{color:white;text-decoration-color:white}
+@media(max-width:620px){#apps .uf-gallery-card--control .uf-gallery-media{height:min(350px,105vw);padding:20px}}
+
 #apps .uf-gallery-media--private{background:radial-gradient(circle at 50% 43%,#1b2941,#0a101c 68%);padding:32px!important}
 #apps .uf-keybridge-wordmark{display:flex;flex-direction:column;gap:9px;align-items:center;text-align:center;font-size:clamp(20px,2.5vw,30px);font-weight:750;letter-spacing:.09em;line-height:1.25;color:#f4f8ff;overflow-wrap:anywhere}
 #apps .uf-keybridge-wordmark b{font:inherit;color:#a7c9ff}
@@ -4300,9 +4309,9 @@ main .uf-hero-title {
 <div class="uf-gallery-category" id="apps-control" aria-labelledby="apps-control-title">
 <div class="uf-gallery-category-head"><div><h3 id="apps-control-title">Control &amp; Security</h3><p>New interaction methods and clearly labelled device-security research.</p></div><span class="uf-gallery-category-count">2 products</span></div>
 <div class="uf-gallery-grid">
-<article class="uf-gallery-card uf-gallery-card--mobile uf-gallery-card--icon">
-<a class="uf-gallery-media" href="assets/products/unfire-control-icon.webp" target="_blank" rel="noopener noreferrer" aria-label="View the authentic Unfire Control app icon"><img src="assets/products/unfire-control-icon.webp" width="480" height="480" alt="Original Unfire Control application icon, not an interface screenshot" loading="lazy" decoding="async"></a>
-<div class="uf-gallery-copy"><p class="uf-gallery-type">Gestures &amp; voice / Mac</p><h4><span translate="no" class="notranslate">Unfire</span> Control</h4><p>Hands-free desktop navigation through camera gestures and assisted voice commands.</p><span class="uf-gallery-availability">App preview · original app icon</span></div>
+<article class="uf-gallery-card uf-gallery-card--mobile uf-gallery-card--icon uf-gallery-card--control">
+<a class="uf-gallery-media" href="assets/products/unfire-control-icon.webp" target="_blank" rel="noopener noreferrer" aria-label="See the original Unfire Control app icon at full resolution"><img src="assets/products/unfire-control-icon.webp" width="480" height="480" alt="Authentic Unfire Control app icon from the existing macOS application, not a screenshot of its interface" loading="lazy" decoding="async"></a>
+<div class="uf-gallery-copy"><p class="uf-gallery-type">Gestures &amp; voice / macOS</p><h4><span translate="no" class="notranslate">Unfire</span> Control</h4><p>Gesture and voice interaction with deliberate, permission-based computer controls.</p><span class="uf-gallery-availability">Original app icon · Development preview</span><a class="uf-gallery-details" href="/apps/unfire-control/" aria-label="Explore Unfire Control product details">Product details <span aria-hidden="true">↗</span></a></div>
 </article>
 <article class="uf-gallery-card uf-gallery-card--mobile">
 <div class="uf-gallery-media uf-gallery-media--private" role="img" aria-label="Unfire KeyBridge security research preview, without device identifiers"><span class="uf-keybridge-wordmark" translate="no">UNFIRE <b>KEYBRIDGE</b><small>PRIVATE BY DESIGN</small></span></div>
