@@ -27,8 +27,9 @@ test('canonical encode/decode preserves only transition metadata',()=>{
   const text=encodeJournal(runner.events());
   assert.deepEqual(decodeJournal(text),runner.events());
   assert.ok(text.endsWith('\n'));
-  assert.equal(text.includes('17'),false);
-  assert.equal(text.includes('26'),false); // output 26 never appears as payload
+  assert.equal(text.includes('"input"'),false);
+  assert.equal(text.includes('"output"'),false);
+  assert.equal(text.includes('"worker"'),false);
   assert.equal(text.includes('worker_a'),false);
 });
 test('read-only restart audit never revives approval, claims or execution',()=>{
