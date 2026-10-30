@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0a0d12">
+<meta name="description" content="Unfire OS Layer. Local, offline multi-agent coordination research demo.">
+<title>Unfire OS Layer · Mission Control</title>
+<style>
+:root{color-scheme:dark;--bg:#0a0d12;--panel:#121720;--panel2:#171e29;--line:#2b3542;--text:#f4f7fc;--dim:#9aa8b8;--blue:#b0c6ff;--mint:#86d8bc;--amber:#f4cb85;--red:#f3adad;--r:16px}
+*{box-sizing:border-box}
+body{background:radial-gradient(ellipse at 63% -30%,#23365390,transparent 55%),var(--bg);color:var(--text);font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;min-height:100vh}
+button,input,textarea{font:inherit}a{color:inherit}button{cursor:pointer;border:1px solid #4c5d75;border-radius:10px;color:#f6f8ff;background:#253245;padding:10px 14px;font-weight:620}button:hover{background:#34445d}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #a9beff;outline-offset:3px}button:disabled{opacity:.45;cursor:not-allowed}button.primary{background:#b0c6ff;border-color:#b0c6ff;color:#12213a}button.primary:hover{background:#d2ddff}button.danger{border-color:#70444f;background:#3b232c;color:#f8bcc2}button.danger:hover{background:#512b37}
+.shell{display:grid;grid-template-columns:214px minmax(0,1fr);min-height:100vh}
+aside{border-right:1px solid var(--line);background:#0d1219;padding:28px 15px;display:flex;flex-direction:column;gap:30px}
+.logo{display:flex;align-items:center;gap:11px;padding:0 10px}.glyph{display:grid;place-items:center;width:36px;height:36px;background:linear-gradient(145deg,#e6efff,#8ea5d8);border-radius:11px;color:#101a2c;font-weight:850;font-size:19px}.logo b{font-size:17px;letter-spacing:.15em}.logo small{display:block;font-size:9px;letter-spacing:.18em;color:var(--dim);margin-top:-3px}
+nav{display:grid;gap:5px}nav a{text-decoration:none;color:var(--dim);padding:11px 13px;border-radius:10px}nav a[aria-current="page"]{color:var(--text);background:#1d2a39}nav a:hover{background:#1b2632;color:var(--text)}
+.side-note{margin-top:auto;font-size:11px;color:var(--dim);padding:14px 10px;border-top:1px solid var(--line)}.dot{display:inline-block;height:7px;width:7px;border-radius:50%;background:var(--mint);margin-right:6px}
+main{padding:30px clamp(18px,3vw,48px) 40px;min-width:0;max-width:1700px;width:100%;margin:auto}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:11px;font-weight:700;color:var(--blue)}.status{font-size:11px;border:1px solid #39526a;border-radius:30px;padding:7px 11px;color:#b6d8f0;background:#182433;white-space:nowrap}
+.hero{margin:35px 0 24px;display:flex;justify-content:space-between;align-items:center;gap:20px}.hero h1{font-size:clamp(32px,3.9vw,53px);letter-spacing:-.055em;line-height:1.08;font-weight:650;margin:8px 0 12px}.hero p{color:var(--dim);max-width:650px;margin:0;font-size:14px}.orbits{flex-shrink:0;width:105px;height:105px;border-radius:100%;border:1px solid #91aaff88;box-shadow:0 0 65px #7492f52b,inset 0 0 40px #718df322;position:relative;display:grid;place-items:center}.orbits:before,.orbits:after{content:"";border-radius:100%;border:1px solid #a8bbf389;position:absolute;inset:15px}.orbits:after{inset:29px;border-color:#c6c9f3}.orbits span{width:20px;height:20px;background:radial-gradient(circle at 30% 20%,#fff,#8ea8ed);border-radius:100%;box-shadow:0 0 30px #a0b5ef}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:18px}.metric{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:#141b25}.metric span{color:var(--dim);display:block;font-size:12px}.metric strong{font-size:28px;display:block;line-height:1.2;margin:7px 0 5px;letter-spacing:-.04em}.metric small{color:var(--dim);font-size:11px}
+.controls{border:1px solid var(--line);background:#121923;border-radius:var(--r);padding:21px;margin-bottom:19px;display:grid;grid-template-columns:minmax(0,1fr) 175px;gap:12px 24px}
+.controls h2{font-weight:650;font-size:17px;margin:0}.controls p{margin:3px 0 12px;color:var(--dim);font-size:12px}.field label{display:block;font-size:12px;color:#cbd5e4;margin-bottom:7px}
+input[type=text],input[type=number]{border:1px solid #415066;border-radius:10px;background:#0c121a;color:var(--text);padding:11px 12px;min-height:42px;width:100%}
+.options{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;grid-column:1/-1}.options label{display:flex;align-items:center;gap:7px;font-size:12px;color:#bfccdb}.options input{accent-color:#afc4fc;width:16px;height:16px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;grid-column:1/-1}.hint{grid-column:1/-1;color:var(--dim);font-size:11px;margin:0}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:25px 0 12px}.section-head h2{font-size:18px;margin:0;letter-spacing:-.02em}.section-head p{margin:2px 0 0;color:var(--dim);font-size:12px}.smalltag{font-size:11px;color:var(--dim);padding:5px 10px;border-radius:30px;border:1px solid var(--line)}
+.lanes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.lane{border:1px solid #303c49;background:#121821;border-radius:16px;padding:13px;min-height:320px}.lane-top{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #293543;padding:5px 3px 14px;margin-bottom:12px}.lane h3{margin:0;font-size:14px;letter-spacing:-.01em}.lane-count{border-radius:6px;padding:2px 8px;color:#c4d0df;background:#263242;font-size:11px}.lane-desc{color:var(--dim);font-size:11px;margin:0 2px 13px;min-height:34px}
+.agent{border:1px solid #354150;border-radius:12px;background:#1a2230;padding:12px;margin-bottom:9px;min-height:107px}.agent .head{display:flex;justify-content:space-between;gap:8px;align-items:center}.agent b{font-size:12px;font-weight:650}.agent .kind{font-size:10px;color:#a0b8e6}.agent .role{font-size:11px;color:var(--dim);margin:7px 0 8px}.agent .state{font-size:10px;display:inline-flex;align-items:center;gap:6px;color:#afbbca}.agent .state:before{content:"";width:6px;height:6px;border-radius:100%;background:#798798}.agent[data-state=planned] .state:before{background:var(--blue)}.agent[data-state=blocked] .state:before{background:var(--amber)}.agent[data-state=simulated] .state{color:var(--mint)}.agent[data-state=simulated] .state:before{background:var(--mint)}.agent[data-state=stopped] .state:before{background:var(--red)}
+.bottom{display:grid;grid-template-columns:1.4fr 1fr;gap:15px;margin-top:17px}.panel{border-radius:var(--r);border:1px solid var(--line);background:#121923;padding:20px;min-height:155px}.panel h3{font-size:14px;font-weight:640;margin:0 0 10px}.panel p,.panel li{font-size:12px;line-height:1.6;color:var(--dim)}.panel ul{margin:6px 0 0;padding-left:19px}
+#events{max-height:240px;overflow:auto}.event{display:flex;gap:13px;padding:7px 0;border-bottom:1px solid #2a3340;font-size:11px;line-height:1.6}.event:last-child{border:0}.event span{flex-shrink:0;color:#8ca3c2;font-variant-numeric:tabular-nums}.event b{font-weight:500;color:#d2dcea}
+footer{font-size:11px;color:var(--dim);border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.footline{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:1200px){.lanes{grid-template-columns:repeat(2,minmax(0,1fr))}.lane{min-height:250px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:780px){.shell{grid-template-columns:1fr}aside{padding:13px 18px;flex-direction:row;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);border-right:0}aside nav{display:flex}aside nav a{padding:7px 10px;font-size:12px}.side-note{display:none}main{padding:23px 14px 34px}.hero{margin:25px 0}.orbits{display:none}.bottom{grid-template-columns:1fr}}
+@media(max-width:540px){.logo small{display:none}.logo b{font-size:14px}.glyph{height:31px;width:31px}.top .status{font-size:10px}.hero h1{font-size:33px}.metrics{gap:8px}.metric{padding:12px}.metric strong{font-size:23px}.controls{grid-template-columns:1fr;padding:17px}.lanes{grid-template-columns:1fr}.lane{min-height:0}.lane-desc{min-height:0}.actions button{flex:1}.section-head{align-items:flex-start}nav a:nth-child(2){display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+<script type="module" src="/app.mjs"></script>
+</head>
+<body><div class="shell">
+<aside><div class="logo"><span class="glyph" aria-hidden="true">U</span><div><b>UNFIRE</b><small>OS LAYER</small></div></div>
+<nav aria-label="Sections"><a href="#overview" aria-current="page">Overview</a><a href="#lanes">Agent lanes</a><a href="#audit">Audit</a></nav>
+<div class="side-note"><span class="dot"></span>Offline research prototype<br>No real agents connected<br>No files or services accessed</div></aside>
+<main id="overview">
+<div class="top"><div class="eyebrow">Unfire · AI Operations Research</div><div class="status">Research prototype · Offline</div></div>
+<section class="hero"><div><div class="eyebrow">One coordinator. Many specialists.</div><h1>Intelligence, organized.</h1><p>Parallel work without duplicated effort. Every task has an owner, a dependency, an approval policy and a verifiable outcome. This demonstration schedules synthetic agents only.</p></div><div class="orbits" aria-hidden="true"><span></span></div></section>
+<section class="metrics" aria-label="Mission metrics">
+<div class="metric"><span>Real agents connected</span><strong>0</strong><small>No model provider configured</small></div>
+<div class="metric"><span>Specialist roles</span><strong id="metric-roles">7</strong><small>One coordinator model is enough</small></div>
+<div class="metric"><span>Parallel slots</span><strong id="metric-slots">3</strong><small>Simulation capacity</small></div>
+<div class="metric"><span>Planned waves</span><strong id="metric-waves">0</strong><small>Dependency-safe batches</small></div>
+</section>
+<section class="controls" id="workspace" aria-labelledby="mission-title">
+<div class="field"><h2 id="mission-title">Mission workspace</h2><p>Design a safe multi-agent research plan before allowing any actions.</p>
+<label for="goal">Mission objective</label><input id="goal" type="text" maxlength="240" value="Compare secure multi-agent workflow designs for Unfire OS" autocomplete="off"></div>
+<div class="field"><label for="concurrency">Parallel agent capacity</label><input id="concurrency" type="number" min="1" max="8" step="1" value="3"><p>1 to 8 virtual slots</p></div>
+<div class="options"><label><input id="approve-synthesis" type="checkbox">Approve synthetic report writing</label><label><input id="approve-release" type="checkbox">Approve synthetic release stage</label></div>
+<div class="actions"><button id="plan" type="button" class="primary">Plan mission</button><button id="advance" type="button" disabled>Simulate next wave</button><button id="stop" type="button" class="danger">STOP</button><button id="reset" type="button">Reset</button></div>
+<p class="hint" id="feedback" role="status" aria-live="polite">No code, shell commands, model requests, files or network operations will be executed.</p>
+</section>
+<section id="lanes" aria-labelledby="lanes-title"><div class="section-head"><div><h2 id="lanes-title">Agent lanes</h2><p>Specialists work in their own columns. Dependencies coordinate handoffs automatically.</p></div><div class="smalltag" id="summary">7 roles · 0 running</div></div>
+<div class="lanes">
+<div class="lane" data-lane="discover"><div class="lane-top"><h3>01 · Discover</h3><span class="lane-count" id="count-discover">0</span></div><p class="lane-desc">Find evidence, alternatives and independent challenges.</p><div id="cards-discover"></div></div>
+<div class="lane" data-lane="build"><div class="lane-top"><h3>02 · Build</h3><span class="lane-count" id="count-build">0</span></div><p class="lane-desc">Combine verified information into one controlled artifact.</p><div id="cards-build"></div></div>
+<div class="lane" data-lane="verify"><div class="lane-top"><h3>03 · Verify</h3><span class="lane-count" id="count-verify">0</span></div><p class="lane-desc">Check evidence, quality, conflicts and missing work.</p><div id="cards-verify"></div></div>
+<div class="lane" data-lane="deliver"><div class="lane-top"><h3>04 · Deliver</h3><span class="lane-count" id="count-deliver">0</span></div><p class="lane-desc">Require deliberate release approval and record outcomes.</p><div id="cards-deliver"></div></div>
+</div></section>
+<section class="bottom"><div class="panel" id="audit"><h3>Mission event log</h3><div id="events" aria-live="polite"><p>No mission events yet.</p></div></div>
+<div class="panel"><h3>Guardrails</h3><ul><li>One owner for each writable artifact.</li><li>Dependencies are checked before scheduling.</li><li>Writing and release need separate approval.</li><li>STOP blocks subsequent simulated waves.</li><li>Real tools require future independent security review.</li></ul></div></section>
+<footer><div class="footline"><span>UNFIRE · OS Layer v0.1 · Research preview</span><span>Zero real agents · Zero cloud calls · Zero commercial claims</span></div></footer>
+</main></div></body></html>
