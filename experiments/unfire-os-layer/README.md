@@ -1,38 +1,52 @@
-# Unfire OS Layer · Research Prototype 0.1
+# Unfire OS Layer · Mission Control · Research v0.1
 
-**State:** isolated synthetic prototype. No agent backend, operating-system service, third-party connectivity, privileged adapter, file access, shell access, or network access. Not a native operating system or shipping product.
+**State: isolated offline prototype.** Not a native operating system, installed service, connected ChatGPT workspace, multi-agent deployment, AI model, remote bridge or shipping application.
 
-## Objective
-Investigate a portable coordination model built around tasks, dependencies, explicit approval, default-deny capability policies, STOP, audit and resource-aware scheduling. The future interface can integrate verified local or remote agents only after consent, isolation, authentication and security reviews.
+## Vision
+One coordinator can plan work for multiple specialist agents using one or more approved models. Specialists operate in **Discover, Build, Verify, Deliver** lanes, with explicit dependencies, scoped permissions, single-writer artifact reservations and a final human release gate.
 
-## Run
-- **Tests:** `node --test experiments/unfire-os-layer/core.test.mjs`
-- **Dashboard:** `node experiments/unfire-os-layer/serve.mjs` then visit `http://127.0.0.1:4177/`.
-- **No external Node packages required.** Server binds to loopback only, serves a strict fixed allowlist of static files, has no endpoints that execute commands and no telemetry.
-- To keep the host untouched, run only if you deliberately choose to; no installer, daemon, auto-start or permission prompts.
+This prototype only simulates the schedule and performs allowlisted pure transformations. It performs **zero model calls, zero network requests and zero OS operations on behalf of an agent**.
 
-## Architecture
-1. **Workspace (planned):** projects, immutable task specifications, versions and evidence.
-2. **Planner (implemented subset):** DAG validation, up to 16 deterministic demo operations, strict operation allowlist.
-3. **Policy (implemented subset):** task approval gate and synchronous STOP checks. Future adapters require per-tool, per-path and per-domain authorization, not a global switch.
-4. **Execution (demo only):** text uppercase, word count and numerical sum. No actual LLM, subprocess, filesystem, UI automation or OS resource controls.
-5. **Audit (demo only):** local volatile event records, downloadable user-initiated JSON export. Not tamper-resistant.
-6. **Adapters (not implemented):** OS-specific connectors, authenticated MCP tools and A2A agent links, all disabled by default.
+## Run in a disposable local workspace
+- Prerequisite: recent Node.js runtime. No additional packages or subscription.
+- Tests: `node --test experiments/unfire-os-layer/core.test.mjs experiments/unfire-os-layer/superchat.test.mjs`
+- Visual dashboard: `node experiments/unfire-os-layer/serve.mjs`; open `http://127.0.0.1:4177/` on the same machine.
+- Stop local preview manually with Ctrl+C. No installation, daemon, privileged changes or auto-start.
+- The preview binds to loopback, has a fixed allowlist of static read-only assets and forbids outgoing browser connections with its CSP. No persistence or telemetry.
 
-## Threat model
-- Treat natural-language instructions, project files and remote agent output as untrusted.
-- Model approval as explicit, scoped, expiring and revocable authorization. The demo checkbox is **not production authorization**.
-- Require an OS-enforced sandbox for real code execution; JavaScript policy checks by themselves are not a security boundary.
-- Build proper identity, per-agent permissions, authenticated cross-platform transport, signed updates, secret isolation, quotas, retries and replay protection **before** enabling real integrations.
-- Enforce workspace isolation, a single writer per artifact, checkpoints and rollback options for future worktrees.
-- Collect no sensitive data in this demo. Do not enter keys or personal information into sample inputs. No cloud costs are incurred.
+## What works today (research only)
+- Strict manifest validation, deterministic task dependency ordering, detection of cycles/duplicate IDs/unknown operations.
+- Allowlisted synthetic functions: uppercase, word count, numeric sum.
+- Explicit approval flag for synthetic tasks and a STOP callback before each pure step.
+- Research mission template with **7 roles and 4 lanes**.
+- Offline capacity planning: 1–8 *virtual* concurrent slots, dependencies, artifact reservations, and distinct write/release authorization gates.
+- Interactive accessible dashboard with mission input, concurrency setting, simulated approval, STOP, sequential wave simulation, event log and mobile layout.
+- Audit events only exist in volatile UI memory; they are **not** durable, tamper-evident or independently verified.
 
-## Product requirements for future research
-- Usability: keyboard navigation, responsive layout, readable type, understandable human approvals and STOP.
-- Reliability: reproducible p50/p95 job time, task success/quality and error recovery against a same-hardware baseline.
-- Resource budgets: preserve audio/desktop responsiveness; no heavy builds while Logic is recording.
-- Portability: macOS, Windows and Linux implementations must be independently tested. "One workspace" does not mean arbitrary cross-platform executable compatibility.
-- Research a Linux VM only after independent proof of value. Never replace or modify the host boot chain.
+## What is not implemented
+- Real agents, ChatGPT session coordination, LLM inference, live web searches or third-party tools.
+- Shared persistent memory, GitHub write locks, authentication, identity federation, OS process scheduling or remote device control.
+- True concurrency; waves describe *possible* parallel work, but the demo executes no workers.
+- Production access policies, background daemons, deployment, provider credentials, payments or public release.
+- Measured speedups or independent benchmarks.
 
-## Ownership
-Dedicated branch `research/unfire-os-layer-20261030`, new files within this directory only. Issue #247. Links: global #78; AI performance #242; legal #140; release #215; Unfire Control #50. No merge or public product announcement from this prototype.
+## Design rules for a future secure version
+1. **Single mission truth:** goal, project, scoped task IDs, dependencies, outputs, hashes, version and responsible agent.
+2. **One writer per artifact:** exclusive lease keyed by project, repository/path and revision; conflict detection, lease renewal, expiry and recovery.
+3. **Permission boundaries:** task-specific capability tokens; agent/tool allowlists; least privilege; separate permission for publishing, payments, messages and destructive changes.
+4. **Structured evidence handoffs:** source provenance, confidence/limitations, test outcomes, exceptions and verifier signature. A second agent checks important claims without copying untrusted instructions.
+5. **Queueing and resources:** bounded worker pools, priority classes, memory/GPU budgets, cancellation, timeouts, retries only for idempotent tasks, and cost ceilings.
+6. **Safe execution:** isolated, disposable workers with OS-enforced sandbox and scoped credentials. Never allow unrestricted LLM-generated shell execution or global computer permissions.
+7. **Portability:** adapters for macOS/Windows/Linux separately tested; do not claim programs from one OS run directly on another.
+8. **Human final authority:** STOP, approval, audit and rollback where technically possible. Checkpoints before external side effects.
+9. **Quality evaluation:** compare 1 coordinator / 1 worker with multi-agent strategies at equivalent task quality. Track p50/p95 latency, task success, error/rework rate, tokens/cost, CPU/RAM, conflict rate and time-to-evidence.
+10. **Accessible premium UX:** English UI, keyboard interaction, reduced motion, responsive columns and clear "simulated" versus "connected" status.
+
+## Research references
+- MCP Authorization Security Considerations (2026-07-28): https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/docs/specification/2026-07-28/basic/authorization/security-considerations.mdx
+- A2A Task lifecycle: https://github.com/a2aproject/A2A/blob/main/docs/topics/life-of-a-task.md
+- Temporal workflow tasks/durability: https://docs.temporal.io/tasks
+- OWASP MCP Security Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html
+
+## Ownership and release boundaries
+Branch `research/unfire-os-layer-20261030`, all files under `experiments/unfire-os-layer/`. This is an independent proposal for issue #247. Global #78; AI research #242; safety/legal #140; release #215. No merge or production publication. One authorized integrator if a release is eventually considered.
