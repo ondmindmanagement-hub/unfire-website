@@ -3064,9 +3064,9 @@
   function command(q) { const L = q.toLowerCase(), has = (r) => r.test(L); const on = !/apaga|para|quita|cierra|turn off|switch off|stop|close|disable/.test(L);
     if (has(/youtube|busca|search|find|canci[oó]n de|pon .* de /)) { TUBE.open(q.replace(/^(busca|pon|en youtube|youtube|search(?: youtube for)?|search(?: for)?|find(?: on youtube)?|play)\s*/i, '')); return 'Opening UNFIRE TUBE on the computer.'; }
     if (has(/hyperwave|sinte|synthesizer/)) { if (on) { openComp('hw'); return 'HYPERWAVE rises and unfolds. Play using A–L.'; } HW.tg = 0; HW.closeGate = 1; return 'HYPERWAVE is back in its dome.'; }
-    if (has(/m[uú]sica|radio|suena|music|song|audio/)) { try { UA.init(); on ? RADIO.start() : RADIO.stop(); } catch (e) {} return on ? 'Music playing.' : 'Music stopped.'; }
     if (has(/estilo|cambia.*tema|otro tema|siguiente|next|another track|change style/)) { try { UA.init(); RADIO.start(); RADIO.newSong(); } catch (e) {} return 'Switching to ' + RADIO.STYLES[RADIO.st.style].name + '.'; }
-    if (has(/luz|oscur|fiesta|light|dark|party/)) { ROOM.toggleDark(); return 'Done.'; }
+    if (has(/m[uú]sica|radio|suena|music|song|audio/)) { try { UA.init(); on ? RADIO.start() : RADIO.stop(); } catch (e) {} return on ? 'Music playing.' : 'Music stopped.'; }
+    if (has(/luz|oscur|fiesta|light|dark|party/)) { const isDark = !!(ROOM.R && ROOM.R.userData && ROOM.R.userData.dark); if (has(/light|luz/) && !on) { if (!isDark) ROOM.toggleDark(); return 'Lights off.'; } if (has(/light|luz/) && has(/turn on|switch on|enciende/)) { if (isDark) ROOM.toggleDark(); return 'Lights on.'; } ROOM.toggleDark(); return 'Lighting changed.'; }
     if (has(/cine|peli|cinema|movie/)) { CINE.on = on; return on ? 'Cinema mode: action!' : 'Cinema mode finished.'; }
     if (has(/mega|todo|\ball\b/)) { on ? (MEGA || megaOn()) : (MEGA && megaOff()); return on ? 'MEGA PARTY!' : 'Party finished.'; }
     if (has(/pasea|habitaci[oó]n|casa|explore|walk|room|house/)) { on ? enterRoam() : exitRoam(); return on ? 'Time to explore.' : 'Back to the case.'; }
