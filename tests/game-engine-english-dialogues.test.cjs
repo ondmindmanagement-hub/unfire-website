@@ -119,3 +119,24 @@ test('ambient world conversations, missions and robot banter are English',()=>{
     '¡Y en el Club cae una cápsula nueva cada mes!'
   ]) assert.ok(!src.includes(old),old);
 });
+
+test('online, voice, rewards, cinema and in-world displays stay English',()=>{
+  for(const visible of [
+    'TIME · CHOOSE ONE','KEEP TIME: YES','CONGRATULATIONS!',
+    'YOU WON AN MP3!', 'TARGET › ', 'Hide radio controls',
+    'Could not connect to the online server.',
+    'MICROPHONE BLOCKED · RETRY','Creating room…',
+    'The code must have 5 letters or numbers','Joining room ',
+    'That room no longer exists or the host has left',
+    'New transformation unlocked:', 'DJ battle on stage',
+    'Cinema mode: automatic shots', 'Cinema mode off'
+  ]) assert.ok(src.includes(visible),visible);
+  for(const old of [
+    'EL TIEMPO · TOCA UNO','MANTENER TIEMPO: SÍ',
+    '¡¡ENHORABUENA!!','¡HAS GANADO UN MP3!',
+    'No se pudo conectar con el servidor online.',
+    'MICRÓFONO DENEGADO','Creando sala…',
+    'No se pudo abrir esa sala.','¡Nueva transformación desbloqueada',
+    '¡Batalla de DJs en el escenario', 'Modo cine apagado'
+  ]) assert.ok(!src.includes(old),old);
+});
