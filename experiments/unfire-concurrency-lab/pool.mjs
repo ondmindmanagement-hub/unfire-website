@@ -77,6 +77,8 @@ export async function runThreaded(input,{lanes=2,taskTimeoutMs=5000,signal,onPro
         slot.active=index;
         try { emit(task.id,"RUNNING"); }
         catch(e){ fail(e); return; }
+        // An AbortSignal can fire synchronously from the progress callback.
+        if(settled) return;
         slot.timer=setTimeout(()=>fail(new Error("Synthetic task timed out")),taskTimeoutMs);
         worker.postMessage({type:"run",task});
       };
