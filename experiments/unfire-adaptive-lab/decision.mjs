@@ -62,8 +62,16 @@ export function decide(input, profile, {minAbsoluteMs=MIN_ABSOLUTE_SAVING_MS,
   const target=expectedDigest(tasks);
   const baseline=evaluateSamples("sequential",profile.samples.sequential,target,tasks.length);
   if(!baseline) return fallback("unverified_sequential_baseline");
-  const valid=[baseline,...MODES.slice(1).map(mode=>
-    evaluateSamples(mode,profile.samples[mode],target,tasks.length)).filter(Boolean)];
+  // If a submitted mode has corrupt or failed evidence, reject the entire profile.
+  // Omitted modes are allowed: a calibration may have intentionally measured fewer lanes.
+  const candidates=[];
+  for (const mode of MODES.slice(1)) {
+    if (!Object.hasOwn(profile.samples,mode)) continue;
+    const sample=evaluateSamples(mode,profile.samples[mode],target,tasks.length);
+    if (!sample) return fallback("invalid_parallel_evidence");
+    candidates.push(sample);
+  }
+  const valid=[baseline,...candidates];
   let best=baseline;
   for(const candidate of valid.slice(1)) {
     const benefit=baseline.medianMs-candidate.medianMs;
