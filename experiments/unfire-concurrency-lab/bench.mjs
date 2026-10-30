@@ -9,6 +9,7 @@ const median=values=>{
   return sorted[Math.floor(sorted.length/2)];
 };
 const results=[];
+let referenceOutputs = null;
 for(const lanes of [0,1,2,4,8]){
   const times=[],outputs=[];
   for(let i=0;i<repeats;i++){
@@ -21,9 +22,10 @@ for(const lanes of [0,1,2,4,8]){
   }
   if(outputs.some(x=>JSON.stringify(x)!==JSON.stringify(outputs[0])))
     throw new Error("Inconsistent synthetic output across runs");
+  if(referenceOutputs===null) referenceOutputs=JSON.stringify(outputs[0]);
+  else if(JSON.stringify(outputs[0])!==referenceOutputs) throw new Error("Inconsistent output between lane configurations");
   results.push({lanes:lanes===0?"sequential":lanes,measurementsMs:times.map(x=>Number(x.toFixed(2))),medianMs:Number(median(times).toFixed(2)),verified:tasks.length});
 }
-const expected=JSON.stringify(outputs);
 console.log(JSON.stringify({
   label:"Unfire OS research · synthetic Node worker_threads",
   workload:{jobs:tasks.length,roundsPerJob:90000,repeats},
