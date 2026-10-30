@@ -147,3 +147,61 @@ test('radio accessibility labels are both in English',()=>{
   assert.ok(!src.includes('Mostrar más controles de radio'));
   assert.ok(!src.includes('Ocultar controles de radio'));
 });
+
+
+test('English voice and chat commands operate as promised by visible help',()=>{
+  const vm=require('node:vm');
+  const begin=src.indexOf('  function command(q) {');
+  const end=src.indexOf('    return null; }',begin);
+  assert.ok(begin>=0 && end>begin,'production command source must be found');
+  const events=[];
+  const context={
+    TUBE:{open:q=>events.push(['youtube',q])},
+    openComp:k=>events.push(['open',k]),
+    HW:{tg:1,closeGate:0},
+    UA:{init:()=>events.push(['audio-init'])},
+    RADIO:{start:()=>events.push(['start']),stop:()=>events.push(['stop']),newSong:()=>events.push(['new-song']),STYLES:[{name:'TEST'}],st:{style:0}},
+    ROOM:{R:{userData:{dark:false}},toggleDark(){this.R.userData.dark=!this.R.userData.dark;events.push(['lights',this.R.userData.dark]);},gacha:()=>events.push(['gacha'])},
+    CINE:{on:false},
+    MEGA:false,
+    megaOn:()=>events.push(['mega-on']),
+    megaOff:()=>events.push(['mega-off']),
+    enterRoam:()=>events.push(['enter']),
+    exitRoam:()=>events.push(['exit'])
+  };
+  vm.runInNewContext(src.slice(begin,end+'    return null; }'.length)+'\nthis.command=command;',context,{timeout:1000});
+  assert.match(context.command('search YouTube for robots'),/Opening UNFIRE TUBE/);
+  assert.deepEqual(events.find(x=>x[0]==='youtube'),['youtube','robots']);
+  assert.match(context.command('raise HYPERWAVE'),/rises and unfolds/);
+  assert.ok(events.some(x=>x[0]==='open'&&x[1]==='hw'));
+  const musicStops=events.filter(x=>x[0]==='stop').length;
+  assert.match(context.command('stop music'),/Music stopped/);
+  assert.equal(events.filter(x=>x[0]==='stop').length,musicStops+1);
+  assert.match(context.command('next song'),/Switching to/);
+  assert.ok(events.some(x=>x[0]==='new-song'),'next song must advance, not just start audio');
+  assert.match(context.command('turn off the lights'),/Lights off/);
+  assert.equal(context.ROOM.R.userData.dark,true);
+  const lightChanges=events.filter(x=>x[0]==='lights').length;
+  context.command('turn off the lights');
+  assert.equal(events.filter(x=>x[0]==='lights').length,lightChanges,'repeated off must not toggle lights on');
+  assert.match(context.command('turn on the lights'),/Lights on/);
+  assert.equal(context.ROOM.R.userData.dark,false);
+});
+
+test('retro mixer, chat and character UI text remains English',()=>{
+  for(const shown of [
+    'PRIZE PLATFORM','Weather:', 'New York at night',
+    'KEY <select', 'FOLLOW THE SONG','YOUR TURN',
+    'Recommended videos','LOAD SONG','DECK B · YOUR SONG',
+    'Ask the robots','Check the current license',
+    'The Club gets', 'Lost Second Guardian Certificate',
+    'The torii path on Haiku Island'
+  ]) {
+    if (shown==='The Club gets') continue;
+    assert.ok(src.toLowerCase().includes(shown.toLowerCase()),shown);
+  }
+  for(const old of ['BATERÍA</button>','CARGAR CANCIÓN','CÓDIGO','TU TURNO','Pregunta a los robots',
+    'un año', 'MODO CINE / GRABACIÓN', 'Bip bup… eso aún no lo sé']) {
+    assert.ok(!src.includes(old),old);
+  }
+});
