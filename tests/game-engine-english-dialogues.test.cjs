@@ -61,3 +61,8 @@ test('story rewards, studio and video-game hints are visibly English',()=>{
  for(const old of ['AÑADIR A LA BOLSA','DESCARGAR DIPLOMA','HAS RECUPERADO EL SEGUNDO PERDIDO'])
   assert.ok(!src.includes(old),old);
 });
+
+test('touch-first case butterfly prompt is English on iPhone and iPad',()=>{
+  assert.ok(src.includes("'TAP THE BUTTERFLY'"),'touch-first instruction must be present');
+  assert.ok(!src.includes("'PULSA LA MARIPOSA'"),'Spanish touch-first instruction must not ship');
+});
