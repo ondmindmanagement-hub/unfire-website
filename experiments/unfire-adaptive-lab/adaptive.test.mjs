@@ -5,7 +5,7 @@ import { taskSignature, expectedDigest, decide } from "./decision.mjs";
 import { calibrate, runAdaptive } from "./adaptive.mjs";
 
 const tasks=()=>sampleTasks(6,4000);
-function profileFor(input,medians={sequential:100,"1":75,"2":65,"4":64,"8":63}){
+function profileFor(input,medians={sequential:100,"1":75,"2":65,"4":64,"8":64}){
   const resultDigest=expectedDigest(input),verified=input.length;
   return {
     version:1,signature:taskSignature(input),
@@ -52,7 +52,7 @@ test("corrupt evidence never enables concurrency",()=>{
   assert.equal(decide(tasks(),corrupted).mode,"sequential");
   const bad=profileFor(tasks());
   bad.samples["2"][0].verified=0;
-  assert.equal(decide(tasks(),bad).mode,"1");
+  assert.equal(decide(tasks(),bad).mode,"sequential");
 });
 test("nonnumeric, negative, and missing trials fail closed",()=>{
   for(const invalid of [-1,0,Infinity,NaN,"3"]){
