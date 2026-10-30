@@ -1,0 +1,43 @@
+{
+  "study": "Unfire synthetic CPU placeholder workflow, NOT actual LLM inference",
+  "date_utc": "2026-10-30",
+  "mac_platform": "Apple M3 Pro macOS, 18 GiB RAM",
+  "trials_per_variant": 24,
+  "case_repeated": {
+    "total_operations": 12,
+    "unique_operations": 6,
+    "baseline": {
+      "p50_ms": 17.039,
+      "p95_ms": 18.271,
+      "compute_calls": 12
+    },
+    "deduplicated": {
+      "p50_ms": 8.488,
+      "p95_ms": 8.932,
+      "compute_calls": 6
+    },
+    "exact_outputs_equal": true
+  },
+  "case_unique": {
+    "total_operations": 12,
+    "unique_operations": 12,
+    "baseline": {
+      "p50_ms": 16.357,
+      "p95_ms": 16.901,
+      "compute_calls": 12
+    },
+    "deduplicated": {
+      "p50_ms": 16.423,
+      "p95_ms": 16.741,
+      "compute_calls": 12
+    },
+    "exact_outputs_equal": true
+  },
+  "backend": "Python hashlib.pbkdf2_hmac placeholder (5500 rounds), no AI model or network",
+  "experiment_cost_usd": 0,
+  "limitations": [
+    "Synthetic CPU timings do not predict AI response latency or cost.",
+    "No LLM tokens, full app speed, reliability under business workloads or benefits were measured.",
+    "No customer pilot or deployment has occurred."
+  ]
+}
