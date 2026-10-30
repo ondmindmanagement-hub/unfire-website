@@ -3741,7 +3741,7 @@
     // Touch-first HUD: no long translucent instruction banners over the avatar,
     // the suitcase, or the mobile action controls. Desktop keeps full hints.
     const mobileTip = window.__UNFIRE_AUTOCALIB && window.__UNFIRE_AUTOCALIB.touch
-      ? (!ROAMS.on && lidOpen < 0.05 ? 'PULSA LA MARIPOSA' : '')
+      ? (!ROAMS.on && lidOpen < 0.05 ? 'TAP THE BUTTERFLY' : '')
       : tip;
     $('tip').textContent = mobileTip; $('tip').classList.toggle('on', !!mobileTip);
     if (!(frameN++ % 6)) { const pts = []; for (const x of [-CW / 2 - 0.1, CW / 2 + 0.1]) for (const z of [-CD / 2 - 0.1, CD / 2 + 0.25]) { pts.push(V(x, 0, z), V(x, HB + 0.1, z)); pts.push(lid.localToWorld(V(x, HL, z))); } let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
