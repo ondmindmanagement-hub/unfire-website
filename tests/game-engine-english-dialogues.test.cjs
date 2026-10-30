@@ -140,3 +140,10 @@ test('online, voice, rewards, cinema and in-world displays stay English',()=>{
     '¡Batalla de DJs en el escenario', 'Modo cine apagado'
   ]) assert.ok(!src.includes(old),old);
 });
+
+test('radio accessibility labels are both in English',()=>{
+  assert.ok(src.includes('Show more radio controls'));
+  assert.ok(src.includes('Hide radio controls'));
+  assert.ok(!src.includes('Mostrar más controles de radio'));
+  assert.ok(!src.includes('Ocultar controles de radio'));
+});
