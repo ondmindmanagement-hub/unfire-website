@@ -97,3 +97,25 @@ test('visible case tips, chat, radio and transformation labels stay English',()=
     'Arrastra para girar · cursor'
   ]) assert.ok(!src.includes(old),old);
 });
+
+test('ambient world conversations, missions and robot banter are English',()=>{
+  for(const line of [
+    'That was MY screw!',
+    'Take back what you said about Auto-Tune!',
+    'Have you seen Haiku Island?',
+    'There are real waves out at sea.',
+    'The Atlantis pyramid has been restored',
+    'Hey, you! Could you do me a favor?',
+    'HYPERWAVE 2000 is a full synthesizer.',
+    'The Club is full of surprises, with more to come in future updates!',
+    'Everything is made in Cardedeu.',
+    "'traveler'"
+  ]) assert.ok(src.includes(line),line);
+  for(const old of [
+    '¡Ese era MI tornillo!',
+    '¿Has visto la isla Haiku?',
+    '¡Eh, tú! ¿Me haces un favor?',
+    'HYPERWAVE 2000 es un sinte entero.',
+    '¡Y en el Club cae una cápsula nueva cada mes!'
+  ]) assert.ok(!src.includes(old),old);
+});
