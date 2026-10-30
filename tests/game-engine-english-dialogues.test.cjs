@@ -66,3 +66,34 @@ test('touch-first case butterfly prompt is English on iPhone and iPad',()=>{
   assert.ok(src.includes("'TAP THE BUTTERFLY'"),'touch-first instruction must be present');
   assert.ok(!src.includes("'PULSA LA MARIPOSA'"),'Spanish touch-first instruction must not ship');
 });
+
+test('visible case tips, chat, radio and transformation labels stay English',()=>{
+  const required=[
+    'RADIO UNFIRE · standby',
+    'Talk to the nearest robot… (Enter)',
+    '★ MEGA TRANSFORMATION · all families',
+    '★ SUPER TRANSFORMATION',
+    'HYPERWAVE on the table · full size',
+    'HYPERWAVE returns to the case',
+    'Tap the butterfly button · or scroll down a little',
+    'Scroll over the case to zoom in',
+    'Scroll over a compartment to open it',
+    'Tap the butterfly to transform',
+    'Click to try it',
+    'Drag to rotate · move the cursor to the edge'
+  ];
+  for(const line of required) assert.ok(src.includes(line),line);
+  for(const old of [
+    'RADIO UNFIRE · en espera',
+    'Habla con el robot que tengas más cerca',
+    '★ MEGA TRANSFORMACIÓN',
+    '★ SÚPER TRANSFORMACIÓN',
+    'HYPERWAVE vuelve al maletín',
+    'Pulsa el botón de la mariposa',
+    'Rueda sobre el maletín = acercarte',
+    'Baja sobre una compuerta para abrirla',
+    'Pulsa la mariposa para cambiar de forma',
+    'Clic para probarlo',
+    'Arrastra para girar · cursor'
+  ]) assert.ok(!src.includes(old),old);
+});
