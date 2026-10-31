@@ -6,10 +6,14 @@
  *   node assetlinks-preview.mjs --package technology.unfire.y2krobots --sha256 XX:...:XX
  */
 import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 
 export function buildAssetLinks({ packageName, fingerprint }) {
   if (typeof packageName !== 'string' || !/^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*){1,}$/.test(packageName)) {
     throw new Error('Invalid Android package name; confirm the exact Play Console application ID.');
+  }
+  if (packageName === 'com.example' || packageName.startsWith('com.example.') || packageName.startsWith('example.')) {
+    throw new Error('Reserved example package name is forbidden.');
   }
   if (typeof fingerprint !== 'string' || !/^([0-9A-Fa-f]{2}:){31}[0-9A-Fa-f]{2}$/.test(fingerprint)) {
     throw new Error('Missing or invalid SHA-256 certificate fingerprint; require exactly 32 hexadecimal bytes separated by colons.');
@@ -26,7 +30,7 @@ export function buildAssetLinks({ packageName, fingerprint }) {
   }];
 }
 
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   const p = process.argv.indexOf('--package');
   const s = process.argv.indexOf('--sha256');
   try {
