@@ -259,8 +259,7 @@ public final class SyntheticIssuerInbox {
             sqlite3_bind_text(stmt,1,nonce,-1,transient)
             sqlite3_bind_text(stmt,2,challengeFingerprint,-1,transient)
             guard sqlite3_step(stmt)==SQLITE_DONE else{
-                if sqlite3_errcode(db)==SQLITE_CONSTRAINT ||
-                   sqlite3_extended_errcode(db)==SQLITE_CONSTRAINT_PRIMARYKEY {
+                if sqlite3_errcode(db)==SQLITE_CONSTRAINT {
                     throw IssuerEnvelopeError.replay
                 }
                 throw IssuerEnvelopeError.sqliteFailure
