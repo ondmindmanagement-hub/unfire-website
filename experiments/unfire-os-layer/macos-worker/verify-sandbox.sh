@@ -90,3 +90,8 @@ assert values[2]=={"ok":True,"value":3}, values[2]
 print("MACOS_PURE_WORKER_PASS")
 PY
 echo "MACOS_RESEARCH_WORKER_QA_PASS"
+# Trusted CI only: never expose worker selection through task JSON.
+export UNFIRE_SIGNED_TEST_APP
+UNFIRE_SIGNED_TEST_APP="$(cd "$app" && pwd -P)"
+node --test "$here/../secure-broker.test.mjs"
+echo "MACOS_SECURE_BROKER_QA_PASS"
