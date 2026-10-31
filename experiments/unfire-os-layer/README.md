@@ -1,11 +1,11 @@
-# Unfire OS Layer · Mission Control and Local Memory · Research v0.5
+# Unfire OS Layer · Mission Control and Local Memory · Research v0.7
 
 **State: isolated offline prototype.** Not a native operating system, installed service, connected ChatGPT workspace, multi-agent deployment, AI model, remote bridge or shipping application.
 
 ## Vision
 One coordinator can plan work for multiple specialist agents using one or more approved models. Specialists operate in **Discover, Build, Verify, Deliver** lanes, with explicit dependencies, scoped permissions, single-writer artifact reservations and a final human release gate.
 
-The planner simulates waves and pure transformations. The new **separate** Mission Memory console sends authenticated *loopback* HTTP requests for a limited journal API. It performs **zero model calls, zero external network requests and zero OS operations on behalf of an agent**.
+The planner simulates waves. The separate Mission Memory console sends authenticated *loopback* HTTP requests for a limited journal API. A further **trusted, local-only broker** executes one genuinely sandboxed native Swift worker for three pure, synthetic operations, currently only in ephemeral macOS CI. There are **zero model calls, zero remote agents, zero production file mutations and zero public network connections**.
 
 ## Run in a disposable local workspace
 - Prerequisite: recent Node.js runtime. No additional packages or subscription.
@@ -28,7 +28,7 @@ The planner simulates waves and pure transformations. The new **separate** Missi
 ## What is not implemented
 - Real agents, ChatGPT session coordination, LLM inference, live web searches or third-party tools.
 - Authenticated shared memory across multiple real agents or devices, OS-user identity, GitHub write locks, identity federation, OS process scheduling or remote device control.
-- True concurrency; waves describe *possible* parallel work, but the demo executes no workers.
+- Real multiagent concurrency; waves describe *possible* parallel work. Only the separate trusted broker can start a single, tightly allowlisted synthetic macOS worker in test environments.
 - Production access policies, background daemons, deployment, provider credentials, payments or public release.
 - Measured speedups or independent benchmarks.
 
@@ -43,7 +43,7 @@ The planner simulates waves and pure transformations. The new **separate** Missi
 ## Verification performed
 - 31 October 2026: Node tests on the authorized Mac in a temporary directory: **66 passed, 0 failed** as of the initial service commit, including 14 HTTP security and persistence cases, 18 memory cases and 34 existing planner/runtime cases; no additional package installation. Later changes are subject to the dedicated CI workflow.
 - Chrome headless with a temporary profile: the **original offline simulation dashboard** passed DOM, responsive overflow and interaction assertions at 1440×900, 390×844 and 320×740. Seven agents remain **simulated**, not connected. The new connected memory console has a dedicated optional browser QA script; a complete passing browser QA result for this new console is not yet recorded.
-- QA does not certify security, accessibility compliance, physical devices, cross-OS interoperability or performance improvements. No production changes, merges or installations.
+- QA does not certify production security, accessibility compliance, physical devices, cross-OS interoperability or performance improvements. No production changes, merges or installations.
 
 ## Research agent credentials (v0.3, not actual AI agents)
 
@@ -73,6 +73,16 @@ The planner simulates waves and pure transformations. The new **separate** Missi
 - The log records **claims about digests**, not independently verified content or completed work. No code executes, no files are promoted, no model is called, and no cross-chat integration exists. Same-user filesystem access and stale lock recovery remain outside an OS-enforced security boundary.
 - Future work: migrate only after security review to one authoritative service, implement independent evidence validation, OS-enforced worker sandbox, durable recovery/revocation, and reproducible one-agent-vs-parallel benchmarks. No production deployment or user data.
 - Tests: `node --test experiments/unfire-os-layer/control-plane.test.mjs experiments/unfire-os-layer/coordinator.test.mjs`. The isolated CI workflow runs all research suites.
+
+## Signed native macOS worker and trusted broker (v0.6–v0.7)
+
+- `macos-worker/Worker.swift` compiles into a minimally entitled, signed background test bundle. The App Sandbox bit is verified by `codesign`. A differential denial test proves the *signed test worker* cannot read a synthetic home-directory file or connect to a synthetic localhost listener, while an unsigned baseline can. Three pure transforms still work.
+- `secure-broker.mjs` is a **trusted Node parent**, not itself in App Sandbox. It verifies the exact signed test bundle and minimal entitlements, pins the executable hash, spawns only the fixed `transform` mode **without a shell**, limits input/output/time and refuses arbitrary commands. It does not accept a worker path from tasks.
+- `pure-verifier.mjs` independently recomputes bounded printable-ASCII uppercase/word-count/SHA-256 results and fails closed for malformed, fabricated or unsupported output.
+- For **explicitly provisioned** test credentials, the broker obtains an exclusive artifact lease through the in-process coordinator, checks the synthetic worker output, computes its digest and attests it within the same STOP/fencing journal. It does not connect ChatGPT sessions, third-party model APIs, the browser Mission Console, real repositories or customer files.
+- The `macos-worker/verify-sandbox.sh` check runs only on an ephemeral GitHub-hosted macOS 15 runner. It also launches the 13-case `secure-broker.test.mjs` suite. The separate Ubuntu Node suite includes the 10-case `pure-verifier.test.mjs`.
+- **Verified at commit `714865ab0add2253f3600018368200e640f0ba3b`:** 148/148 Node tests passed, 13/13 macOS broker integration tests passed, Chrome console QA passed and signed macOS sandbox file/network denial tests passed. Evidence: https://github.com/ondmindmanagement-hub/unfire-website/actions/runs/41212937705 . Subsequent documentation-only commits do not change test code but should also receive green CI.
+- The validation is limited to synthetic operations on the hosted macOS runner. **Not production security:** the trusted parent remains unsandboxed; signature/hash check may have file-replacement races; there is no hard memory/CPU quota, arbitrary-code isolation, multi-agent credential issuer, independent quality assessment of AI outputs, authenticated provider, cross-platform proof or released signed application. Do not deploy the broker on an untrusted host or present it as a finished operating system.
 
 ## Design rules for a future secure version
 1. **Single mission truth:** goal, project, scoped task IDs, dependencies, outputs, hashes, version and responsible agent.
