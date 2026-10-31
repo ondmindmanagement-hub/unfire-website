@@ -36,14 +36,17 @@ export function evaluateAnswer(fixture,output) {
     const valid=text===fixture.expected;
     return Object.freeze({id:fixture.id,passed:valid,score:valid?1:0,criterion:"strict_exact_match"});
   }
+  // Reject duplicate JSON object keys before JSON.parse silently overwrites them.
+  // This benchmark's public schema has exactly two primitive fields.
+  const canonicalShape=/^\{\s*"ok"\s*:\s*true\s*,\s*"count"\s*:\s*3\s*\}$/.test(text) ||
+    /^\{\s*"count"\s*:\s*3\s*,\s*"ok"\s*:\s*true\s*\}$/.test(text);
+  if(!canonicalShape)return Object.freeze({id:fixture.id,passed:false,score:0,criterion:"strict_json_schema"});
   try{
     const parsed=JSON.parse(text);
-    const keys=parsed && !Array.isArray(parsed) && typeof parsed==="object"
-      ?Object.keys(parsed).sort():[];
-    const valid=keys.length===2 && keys[0]==="count"&&keys[1]==="ok"&&
-      own(parsed,"ok")&&own(parsed,"count")&&parsed.ok===true&&parsed.count===3;
+    const valid=Object.keys(parsed).length===2 && own(parsed,"ok")&&own(parsed,"count")&&
+      parsed.ok===true&&parsed.count===3;
     return Object.freeze({id:fixture.id,passed:valid,score:valid?1:0,criterion:"strict_json_schema"});
-  }catch {
+  }catch{
     return Object.freeze({id:fixture.id,passed:false,score:0,criterion:"strict_json_schema"});
   }
 }
