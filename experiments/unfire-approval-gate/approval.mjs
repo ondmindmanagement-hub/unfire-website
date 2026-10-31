@@ -134,6 +134,7 @@ export class SyntheticApprovalGate {
     if(!verify(null,Buffer.from(unsignedPayload(record,decision)),this.#key,bytes))
       throw new Error("Signature rejected");
     record.state=decision==="APPROVE"?STATES.APPROVED:STATES.DENIED;
+    record.decidedAt=now;
     this.#event(id,record.state);
     return this.#summary(record);
   }
@@ -144,7 +145,9 @@ export class SyntheticApprovalGate {
   preview(id,{now}={}) {
     if(this.#stopped)throw new Error("STOP active");
     const record=this.#get(id);
-    if(!nowValid(now)||now<record.createdAt)throw new TypeError("Invalid clock value");
+    if(!nowValid(now)||now<record.createdAt||
+       (record.decidedAt!==undefined && now<record.decidedAt))
+      throw new TypeError("Invalid clock value");
     if(record.state!==STATES.APPROVED)throw new Error("No live approval");
     if(now>=record.expiresAt) {
       record.state=STATES.EXPIRED;this.#event(id,record.state);
