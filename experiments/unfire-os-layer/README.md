@@ -1,4 +1,4 @@
-# Unfire OS Layer · Mission Control and Local Memory · Research v0.7
+# Unfire OS Layer · Mission Control and Local Memory · Research v0.8
 
 **State: isolated offline prototype.** Not a native operating system, installed service, connected ChatGPT workspace, multi-agent deployment, AI model, remote bridge or shipping application.
 
@@ -83,6 +83,15 @@ The planner simulates waves. The separate Mission Memory console sends authentic
 - The `macos-worker/verify-sandbox.sh` check runs only on an ephemeral GitHub-hosted macOS 15 runner. It also launches the 13-case `secure-broker.test.mjs` suite. The separate Ubuntu Node suite includes the 10-case `pure-verifier.test.mjs`.
 - **Verified at commit `714865ab0add2253f3600018368200e640f0ba3b`:** 148/148 Node tests passed, 13/13 macOS broker integration tests passed, Chrome console QA passed and signed macOS sandbox file/network denial tests passed. Evidence: https://github.com/ondmindmanagement-hub/unfire-website/actions/runs/41212937705 . Subsequent documentation-only commits do not change test code but should also receive green CI.
 - The validation is limited to synthetic operations on the hosted macOS runner. **Not production security:** the trusted parent remains unsandboxed; signature/hash check may have file-replacement races; there is no hard memory/CPU quota, arbitrary-code isolation, multi-agent credential issuer, independent quality assessment of AI outputs, authenticated provider, cross-platform proof or released signed application. Do not deploy the broker on an untrusted host or present it as a finished operating system.
+
+## Broker hardening (v0.8 · synthetic research only)
+
+- **One active worker per trusted broker instance:** an immediate second invocation fails closed. This is not a global system-wide concurrency controller and does not coordinate separate broker processes.
+- The signed macOS worker applies kernel `RLIMIT_CPU=2s`, `RLIMIT_NOFILE=32`, and `RLIMIT_FSIZE=65536 bytes`. Effective limits and sandbox file/network denials were rechecked in hosted macOS CI. **RAM, GPU, total I/O, OS process trees and other machines are NOT quota-controlled by this prototype.**
+- Every broker execution re-verifies the signed app and exact single App Sandbox entitlement, hashes the selected executable before and after running, and rejects detected changes. The parent still runs outside the sandbox; its checks do not fully defeat same-user filesystem replacement / time-of-check-to-time-of-use races.
+- **Accepted operator STOP notifies same-process broker subscribers**; the broker can abort or SIGKILL its active synthetic child. Even if cancellation races with completion, the same-journal commit rejects a result accepted after STOP. A STOP written in a separate process is not immediately broadcast. Timeouts/cancellation cannot roll back outside side effects, though these test operations have none.
+- **Verified implementation before documentation changes:** 151/151 Node tests, 17/17 hosted macOS signed-broker tests, effective worker resource limits, sandbox differential denials, and Chrome QA all passed: https://github.com/ondmindmanagement-hub/unfire-website/actions/runs/41215043658 .
+- No live AI provider, arbitrary shell access, real project data, user Mac installation, release, app publication, or observed acceleration. The code stays in an unmerged research PR.
 
 ## Design rules for a future secure version
 1. **Single mission truth:** goal, project, scoped task IDs, dependencies, outputs, hashes, version and responsible agent.
