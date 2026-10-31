@@ -28,7 +28,7 @@ function tick(value) {
 function consent(value) {
   if (value !== true) deny('CONSENT_REQUIRED');
 }
-const nodeKey = (tenant, nodeId) => \`\${tenant}:\${nodeId}\`;
+const nodeKey = (tenant, nodeId) => `${tenant}:${nodeId}`;
 
 export function createBridgeSimulator() {
   const nodes = new Map();
@@ -137,7 +137,7 @@ export function createBridgeSimulator() {
       const current = [...nodes.values()].filter(n => n.tenant === tenant)
         .map(({nodeId, platform, connected, revoked}) => ({nodeId, platform, connected, revoked}));
       return structuredClone({ tenant, stopped: stopped.has(tenant), nodes: current,
-        simulatedMessages: [...usedMessages].filter(k => k.startsWith(\`\${tenant}:\`)).length });
+        simulatedMessages: [...usedMessages].filter(k => k.startsWith(`${tenant}:`)).length });
     },
   });
 }
