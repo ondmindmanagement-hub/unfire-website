@@ -8,7 +8,7 @@ import { AgentCredentialRegistry } from "./agent-identity.mjs";
 import { UnifiedControlPlane } from "./control-plane.mjs";
 
 export class ResearchCoordinator {
-  #registry;#plane;
+  #registry;#plane;#stopListeners=new Set();
   constructor(registry,plane){
     if(!(registry instanceof AgentCredentialRegistry)||
       !(plane instanceof UnifiedControlPlane))throw new TypeError("Invalid coordinator dependencies");
@@ -28,7 +28,20 @@ export class ResearchCoordinator {
     return identity.actor;
   }
   async createMission(now){return this.#plane.createMission(now)}
-  async stopMission(now){return this.#plane.stopMission(now)}
+  async stopMission(now){
+    const accepted=await this.#plane.stopMission(now);
+    // Only same-process subscribers receive immediate cancellation.
+    // The journal remains authoritative for accepted STOP and attestation.
+    for(const listener of this.#stopListeners) {
+      try {listener();} catch { /* Never undo committed STOP. */ }
+    }
+    return accepted;
+  }
+  onStop(callback){
+    if(typeof callback!=="function")throw new TypeError("STOP callback required");
+    this.#stopListeners.add(callback);
+    return ()=>this.#stopListeners.delete(callback);
+  }
   async read(header){
     this.#allow(header,"state:read");
     return this.#plane.inspect();
