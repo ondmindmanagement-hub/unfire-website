@@ -25,6 +25,16 @@ The probes are deliberate denial tests, not general capabilities available to a 
 - GitHub-hosted macOS CI runs 13 negative and integration checks from `../secure-broker.test.mjs`: signature checks, unsigned path rejection, modified binary detection, permission failures, aborted/invalid tasks, STOP and correctly scoped digest attestation. All actions use disposable synthetic data.
 - The Node broker itself runs as a trusted process **outside App Sandbox**. It is not safe to expose as a remote service. Signature pinning does not eliminate all file-replacement races, nor does the test enforce CPU/RAM quotas, model identity, evidence provenance for arbitrary work, or real-world file publishing.
 
+## Hardening v0.8 · Research limits and STOP propagation
+
+- The signed Swift worker now applies **kernel-enforced `RLIMIT_CPU = 2 seconds`, `RLIMIT_NOFILE = 32` and `RLIMIT_FSIZE = 65,536 bytes`**, failing closed if any limit cannot be set. Test-only `probe-limits` confirms the effective soft limits on a hosted macOS 15 runner. The broker cannot invoke this probe because its operation allowlist remains uppercase, word count and SHA-256.
+- The broker now **allows at most one worker process per broker instance**; concurrent calls fail closed instead of opening another process. It re-checks code signature, exact minimal App Sandbox entitlement and executable digest before execution, and checks the digest again after completion. This reduces, but **does not eliminate**, filesystem replacement races during launch.
+- An accepted operator STOP now notifies subscribers **inside that same trusted Node process**. The broker subscribes before acquiring a lease and relays STOP or a caller's AbortSignal to the child-process cancellation controller. STOP/lease attestation is still guarded by the atomic journal. This is **not cross-process cancellation**, and a STOP written by another independent coordinator instance cannot instantly notify a worker here.
+- Existing child execution also has a **bounded wall timeout of 100–5,000 ms**, output limits and SIGKILL on timeout/cancellation. Worker CPU soft limit is distinct from elapsed wall time and is not a universal resource budget.
+- No hard `RAM` or GPU limit is enforced by this version. A reviewed native resource manager, external watchdog, trusted identity, independent output evidence and real on-device security tests are necessary before production claims.
+
+Hosted CI verification for the v0.8 implementation: **151/151 Node tests**, **17/17 signed macOS broker tests**, Chrome QA and the separate file/network denial + effective rlimit checks all passed on run [#41215043658](https://github.com/ondmindmanagement-hub/unfire-website/actions/runs/41215043658). This does not establish a safe general-purpose agent runtime.
+
 ## Security limits
 
 A signed command-line test executable is not yet an approved Xcode app/helper distribution design. Before real integration, provide a separately reviewed signed Xcode target or XPC service, verified identity, input/output validation and scope, inherited descriptor audit, reliable cancellation, credential separation, resource budgets and release/security verification. Terminal/CI permissions and sandbox behavior may differ across macOS versions. Re-run real OS denial tests for each supported target system.
