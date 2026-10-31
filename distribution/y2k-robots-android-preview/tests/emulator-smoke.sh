@@ -45,6 +45,19 @@ for attempt in 1 2 3; do
   echo "ANDROID_COLD_START_ATTEMPT_${attempt}_NO_CRASH"
 done
 
+# Inspect only Android activity/window management after launch, not browser content.
+# Chrome is required in this virtual image; native launcher should hand off
+# to the browser. This is NOT proof that the WebGL game has finished loading.
+activity_state="$(adb shell dumpsys activity activities | grep -E 'topResumedActivity=|mResumedActivity:' | head -n 5 || true)"
+window_state="$(adb shell dumpsys window windows | grep -E 'mCurrentFocus=|mFocusedApp=' | head -n 5 || true)"
+printf 'EMULATOR_ACTIVITY_FOREGROUND=%s\\n' "$activity_state"
+printf 'EMULATOR_WINDOW_FOCUS=%s\\n' "$window_state"
+if ! printf '%s\\n%s\\n' "$activity_state" "$window_state" | grep -q 'com.android.chrome'; then
+  echo 'BLOCKED: Chrome is installed but was not verified in foreground after Y2K app launch.'
+  exit 7
+fi
+echo 'ANDROID_BROWSER_FOREGROUND_VERIFIED. Content/game is not yet certified.'
+
 # No screenshots or log files exported: avoid publishing any browser/session data.
 rm -f /tmp/y2k-launch-observed.txt /tmp/y2k-runtime-observed.txt
 echo 'ANDROID_EMULATOR_3_COLD_STARTS_WITH_BROWSER_PASS. Chrome present; 3 Android launcher activations with no observed native AndroidRuntime crash. Actual web game rendering, fullscreen, P2P, missions, physical Android NOT CERTIFIED.'
