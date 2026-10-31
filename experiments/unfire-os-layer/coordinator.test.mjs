@@ -114,3 +114,31 @@ test("cannot mint more than 8 workers",async t=>{
  const agents=Array.from({length:9},(_,i)=>worker("agent"+i,["state:read"],[]));
  await assert.rejects(fixture(t,agents),/Invalid agent list/);
 });
+
+test("operator STOP notifies local subscribers only after durable commit",async t=>{
+ const {coordinator}=await fixture(t);
+ await coordinator.createMission(1000);
+ let signals=0;
+ const unsubscribe=coordinator.onStop(()=>{signals++;});
+ await coordinator.stopMission(1100);
+ assert.equal(signals,1);
+ unsubscribe();
+ await assert.rejects(coordinator.stopMission(1200),/STOPPED/);
+ assert.equal(signals,1);
+});
+test("listener exception never reverses accepted STOP",async t=>{
+ const {coordinator}=await fixture(t);
+ await coordinator.createMission(1000);
+ coordinator.onStop(()=>{throw new Error("subscriber malfunction");});
+ await coordinator.stopMission(1100);
+ await assert.rejects(coordinator.acquire("Bearer "+"0".repeat(64),{
+  artifact:"report",now:1200,ttlMs:1000
+ }),/denied/);
+});
+test("failed STOP does not emit a cancellation notice",async t=>{
+ const {coordinator}=await fixture(t);
+ let called=0;
+ coordinator.onStop(()=>{called++;});
+ await assert.rejects(coordinator.stopMission(1000),/Mission must be created/);
+ assert.equal(called,0);
+});
