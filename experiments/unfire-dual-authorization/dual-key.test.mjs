@@ -196,11 +196,14 @@ test("wrong verifier curve and invalid signature representation rejected",()=>{
       /Invalid DER/);
   }finally{f.db.close();}
 });
-test("no second party's private key is accepted as a protocol field",()=>{
+test("unexpected fields cannot smuggle a test signer's private key or tool action",()=>{
   const f=fixture();
   try{
     const p=f.proof();
     p.privateKey="should never be used";
-    assert.equal(verify(p).externalActionAllowed,false);
+    assert.throws(()=>verify(p),/Unexpected dual-approval fields/);
+    const q=f.proof();
+    q.toolAction="email.send";
+    assert.throws(()=>verify(q),/Unexpected dual-approval fields/);
   }finally{f.db.close();}
 });
