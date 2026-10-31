@@ -75,13 +75,11 @@ test("operator STOP and attestation serialize without post-STOP commit",async t=
  assert.ok([stop,attest].some(x=>x.status==="fulfilled"));
  if(stop.status==="fulfilled"){
    assert.equal(view.stopped,true);
-   const raw=await readFile(join(directoryOf(plane),"control-events.jsonl"),"utf8").catch(()=>null);
-   // Prove via the final event count that a subsequent write is rejected.
+   // A subsequent attestation must be rejected after accepted STOP.
    await assert.rejects(req(),/STOPPED/);
  }
  assert.ok(view.count>=2&&view.count<=3);
 });
-function directoryOf(){return "/nonexistent-test-ignored";}
 test("STOP after attestation prevents later release and fresh claims",async t=>{
  const {plane}=await fixture(t);await plane.createMission(1000);
  const lease=await plane.acquire({actor:"builder",artifact:"report",now:1100,ttlMs:1000});
