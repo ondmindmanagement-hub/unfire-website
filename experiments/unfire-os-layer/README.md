@@ -1,4 +1,4 @@
-# Unfire OS Layer · Mission Control and Local Memory · Research v0.8
+# Unfire OS Layer · Mission Control and Local Memory · Research v0.9
 
 **State: isolated offline prototype.** Not a native operating system, installed service, connected ChatGPT workspace, multi-agent deployment, AI model, remote bridge or shipping application.
 
@@ -92,6 +92,15 @@ The planner simulates waves. The separate Mission Memory console sends authentic
 - **Accepted operator STOP notifies same-process broker subscribers**; the broker can abort or SIGKILL its active synthetic child. Even if cancellation races with completion, the same-journal commit rejects a result accepted after STOP. A STOP written in a separate process is not immediately broadcast. Timeouts/cancellation cannot roll back outside side effects, though these test operations have none.
 - **Verified implementation before documentation changes:** 151/151 Node tests, 17/17 hosted macOS signed-broker tests, effective worker resource limits, sandbox differential denials, and Chrome QA all passed: https://github.com/ondmindmanagement-hub/unfire-website/actions/runs/41215043658 .
 - No live AI provider, arbitrary shell access, real project data, user Mac installation, release, app publication, or observed acceleration. The code stays in an unmerged research PR.
+
+## v0.9 · Journal-observed STOP and bounded RSS supervision
+
+- The trusted broker now polls the authoritative single-journal state while its signed synthetic macOS worker is running, in addition to receiving same-process STOP callbacks. A STOP committed by an **independent local Node process sharing the same private journal** is observable and triggers cancellation. A final attestation still requires the authoritative STOP/fencing journal to accept the record.
+- The broker samples the **one known child PID** with macOS `/bin/ps` RSS in KiB every ~80 ms. The default threshold is 192 MiB, and test-only calls can select 1–512 MiB. The worker is killed and the output rejected on an observed overage or inspection error while running.
+- This is **a soft, sampled memory watchdog**, NOT a kernel-enforced RAM quota: peaks between samples may escape, and this does not control the trusted broker's own RAM, descendant processes, shared memory, GPU or other hosts. Existing native Swift CPU, file descriptor and file size limits remain distinct.
+- The fixed, synthetic `slow_uppercase` operation sleeps one second to exercise cancellation. It remains bounded, independent of user-selected duration and has no filesystem, network or external model access; independent verifier recomputes the output.
+- Tests cover external-process STOP during a running signed worker, invalid memory-budget values, small sampled-RSS threshold cancellation and successful bounded delayed output. All happen in ephemeral CI; no local Mac installation.
+- Still not production-ready: identity and signature hardening, hard memory budgets, multi-host authenticated STOP, atomic executable launch, independent evidence of AI work and a real model connection remain open. Do not promise real-time cancellation latency or universal memory safety.
 
 ## Design rules for a future secure version
 1. **Single mission truth:** goal, project, scoped task IDs, dependencies, outputs, hashes, version and responsible agent.
