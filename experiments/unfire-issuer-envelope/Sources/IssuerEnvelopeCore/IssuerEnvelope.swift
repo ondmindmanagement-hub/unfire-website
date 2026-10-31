@@ -190,7 +190,7 @@ public final class SyntheticIssuerInbox {
         }
     }
 
-    private func transaction<T>(_ body:()->throws->T) throws -> T {
+    private func transaction<T>(_ body: () throws -> T) throws -> T {
         try execute("BEGIN IMMEDIATE;")
         do {
             let result=try body()
