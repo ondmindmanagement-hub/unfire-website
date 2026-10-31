@@ -117,13 +117,20 @@ public final class SyntheticIssuerInbox {
         do {
             try execute("PRAGMA busy_timeout=2500;")
             try execute("PRAGMA synchronous=FULL;")
-            try execute("CREATE TABLE IF NOT EXISTS issuer_meta ("+
-                        "id INTEGER PRIMARY KEY CHECK(id=1),"+
-                        "issuer_fingerprint TEXT NOT NULL,"+
-                        "stopped INTEGER NOT NULL CHECK(stopped IN(0,1)),"+
-                        "last_ms INTEGER NOT NULL);")
-            try execute("CREATE TABLE IF NOT EXISTS issuer_seen ("+
-                        "nonce TEXT PRIMARY KEY,challenge_digest TEXT NOT NULL);")
+            try execute("""
+              CREATE TABLE IF NOT EXISTS issuer_meta (
+                id INTEGER PRIMARY KEY CHECK(id=1),
+                issuer_fingerprint TEXT NOT NULL,
+                stopped INTEGER NOT NULL CHECK(stopped IN(0,1)),
+                last_ms INTEGER NOT NULL
+              );
+              """)
+            try execute("""
+              CREATE TABLE IF NOT EXISTS issuer_seen (
+                nonce TEXT PRIMARY KEY,
+                challenge_digest TEXT NOT NULL
+              );
+              """)
             try insertInitialMeta()
             try ensurePinnedIssuer()
         } catch {
@@ -153,9 +160,11 @@ public final class SyntheticIssuerInbox {
     }
 
     private func insertInitialMeta() throws {
-        let s=try prepare(
-            "INSERT OR IGNORE INTO issuer_meta(id,issuer_fingerprint,stopped,last_ms)"+
-            " VALUES(1,?,0,-1)")
+        let s=try prepare("""
+          INSERT OR IGNORE INTO issuer_meta(
+            id,issuer_fingerprint,stopped,last_ms
+          ) VALUES(1,?,0,-1)
+          """)
         defer{sqlite3_finalize(s)}
         let transient=unsafeBitCast(-1,to:sqlite3_destructor_type.self)
         sqlite3_bind_text(s,1,pinnedFingerprint,-1,transient)
@@ -181,7 +190,7 @@ public final class SyntheticIssuerInbox {
         }
     }
 
-    private func transaction<T>(_ body:()->throws->T)throws->T {
+    private func transaction<T>(_ body:()->throws->T) throws -> T {
         try execute("BEGIN IMMEDIATE;")
         do {
             let result=try body()
