@@ -1,4 +1,4 @@
-# Unfire OS Layer · Mission Control and Local Memory · Research v0.4
+# Unfire OS Layer · Mission Control and Local Memory · Research v0.5
 
 **State: isolated offline prototype.** Not a native operating system, installed service, connected ChatGPT workspace, multi-agent deployment, AI model, remote bridge or shipping application.
 
@@ -63,6 +63,16 @@ The planner simulates waves and pure transformations. The new **separate** Missi
 - A claimed digest is **not** proof of successful execution, source truthfulness, software safety or human review. No real agent, model or repository file has been allowed to write an artifact.
 - **Not yet coupled to the operator STOP journal or to HTTP agent APIs.** Do not use as a production concurrency lock: crash recovery is manual, and OS-user processes may bypass the code by writing directly to files.
 - OS isolation design and explicit macOS/Windows/Linux acceptance gates: `experiments/unfire-os-layer/SANDBOX-ADAPTER-DESIGN.md`.
+
+## Unified local coordinator (v0.5, in-process research only)
+
+- `control-plane.mjs` is a **new, independent single journal** for mission creation, operator STOP, short-lived artifact leases, increasing fencing generations, and claimed SHA-256 result digests. These operations are ordered by the same exclusive local writer lock, removing the research-only two-journal race within this module.
+- `coordinator.mjs` connects the existing **default-off**, explicitly provisioned research credential registry to this local control plane. A scoped role must have both artifact-claim and task-complete permissions to attest a result, and an exact release scope to release its lease. The agent identity is assigned from its token, not supplied by the client.
+- **No live HTTP API or agent adapters are connected to this unified module.** The existing `mission-service.mjs` still uses the previous independent journal and is **not** the unified control plane. Do not infer that the browser's STOP now covers this separate research journal.
+- A race between operator STOP and result acceptance is serialized. If STOP is committed first, subsequent acquisitions, attestations and releases fail. If an attestation commits first, a later STOP cannot undo that prior record. When the lock is occupied, the request fails closed; the caller must inspect state and retry deliberately.
+- The log records **claims about digests**, not independently verified content or completed work. No code executes, no files are promoted, no model is called, and no cross-chat integration exists. Same-user filesystem access and stale lock recovery remain outside an OS-enforced security boundary.
+- Future work: migrate only after security review to one authoritative service, implement independent evidence validation, OS-enforced worker sandbox, durable recovery/revocation, and reproducible one-agent-vs-parallel benchmarks. No production deployment or user data.
+- Tests: `node --test experiments/unfire-os-layer/control-plane.test.mjs experiments/unfire-os-layer/coordinator.test.mjs`. The isolated CI workflow runs all research suites.
 
 ## Design rules for a future secure version
 1. **Single mission truth:** goal, project, scoped task IDs, dependencies, outputs, hashes, version and responsible agent.
