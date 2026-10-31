@@ -35,6 +35,14 @@ The probes are deliberate denial tests, not general capabilities available to a 
 
 Hosted CI verification for the v0.8 implementation: **151/151 Node tests**, **17/17 signed macOS broker tests**, Chrome QA and the separate file/network denial + effective rlimit checks all passed on run [#41215043658](https://github.com/ondmindmanagement-hub/unfire-website/actions/runs/41215043658). This does not establish a safe general-purpose agent runtime.
 
+## v0.9 · Persistent STOP observation and sampled RSS watchdog
+
+- The in-process `ResearchCoordinator` now exposes a **trusted local journal observation**. The broker periodically checks the same authoritative STOP journal while a worker runs. This can detect a STOP recorded by another coordinator **process using the same local journal**, even without an in-memory event. The journal still governs final attestation and prevents later accepted results. This is **not** inter-device or cloud-wide STOP propagation; polling imposes a detection delay, and a filesystem failure causes cancellation.
+- The trusted Node parent samples the **specific spawned Swift child PID** via macOS `/bin/ps` using its resident set size (RSS, KiB). Default threshold **192 MiB**, adjustable for test cases from 1 to 512 MiB. If observed RSS exceeds the threshold or sampling fails during execution, the broker kills the child and refuses a result.
+- RSS supervision is **sampled, not a hard kernel memory limit**. Brief spikes between samples may go undetected, and process accounting can include shared memory. The existing kernel CPU, descriptor and file-size limits remain independently verified. The parent broker and any descendant processes are **not** memory-quota-controlled by this safeguard.
+- The fixed **`slow_uppercase`** transform delays exactly one second and exists only to test live STOP/cancellation and watchdog behavior. It has no user-selectable delay, no network or file permissions, and is recomputed by the same independent deterministic verifier.
+- Negative CI tests use a separate journal handle to commit STOP during a running worker, plus a deliberately tiny RSS threshold to confirm fail-closed cancellation. These are research-only tests on a temporary hosted macOS runner, not production service guarantees.
+
 ## Security limits
 
 A signed command-line test executable is not yet an approved Xcode app/helper distribution design. Before real integration, provide a separately reviewed signed Xcode target or XPC service, verified identity, input/output validation and scope, inherited descriptor audit, reliable cancellation, credential separation, resource budgets and release/security verification. Terminal/CI permissions and sandbox behavior may differ across macOS versions. Re-run real OS denial tests for each supported target system.
