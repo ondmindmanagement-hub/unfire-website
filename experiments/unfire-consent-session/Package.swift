@@ -6,7 +6,8 @@ let package = Package(
     platforms: [.macOS(.v14)],
     products: [
         .library(name: "UnfireConsentSessionCore", targets: ["ConsentSessionCore"]),
-        .executable(name: "UnfireConsentSession", targets: ["UnfireConsentSession"])
+        .executable(name: "UnfireConsentSession", targets: ["UnfireConsentSession"]),
+        .executable(name: "ConsentSessionProbe", targets: ["ConsentSessionProbe"])
     ],
     dependencies: [
         .package(path: "../unfire-issuer-envelope"),
@@ -20,6 +21,7 @@ let package = Package(
             .product(name: "UnfireEnclaveGate", package: "unfire-enclave-gate")
         ]),
         .executableTarget(name: "UnfireConsentSession", dependencies: ["ConsentSessionCore"]),
+        .executableTarget(name: "ConsentSessionProbe", dependencies: ["ConsentSessionCore"]),
         .testTarget(name: "ConsentSessionCoreTests", dependencies: ["ConsentSessionCore"])
     ]
 )
