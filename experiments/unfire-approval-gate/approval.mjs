@@ -91,7 +91,9 @@ export class SyntheticApprovalGate {
   }
   snapshot(id){return this.#summary(this.#get(id));}
   get stopped(){return this.#stopped;}
-  propose(proposal,{now}={}) {
+  propose(proposal,options={}) {
+    if(!exact(options,["now"]))throw new TypeError("Unexpected proposal options");
+    const {now}=options;
     if(this.#stopped)throw new Error("STOP active");
     if(!nowValid(now))throw new TypeError("Invalid clock value");
     if(this.#records.size>=MAX_PROPOSALS)throw new RangeError("Proposal budget exceeded");
@@ -119,7 +121,10 @@ export class SyntheticApprovalGate {
       expiresAt:record.expiresAt
     });
   }
-  decide(id,{decision,signature,now}={}) {
+  decide(id,options={}) {
+    if(!exact(options,["decision","signature","now"]))
+      throw new TypeError("Unexpected decision options");
+    const {decision,signature,now}=options;
     if(this.#stopped)throw new Error("STOP active");
     const record=this.#get(id);
     if(record.state!==STATES.PENDING)throw new Error("Decision is no longer pending");
@@ -142,7 +147,9 @@ export class SyntheticApprovalGate {
    * Consume one approval and generate only an immutable event.
    * NO tool adapter, model output or external side effect runs here.
    */
-  preview(id,{now}={}) {
+  preview(id,options={}) {
+    if(!exact(options,["now"]))throw new TypeError("Unexpected preview options");
+    const {now}=options;
     if(this.#stopped)throw new Error("STOP active");
     const record=this.#get(id);
     if(!nowValid(now)||now<record.createdAt||
