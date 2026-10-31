@@ -44,6 +44,7 @@ export class AgentCredentialRegistry {
       throw new TypeError("Invalid credential specification");
     }
     validateName(spec.actor, "agent ID");
+    if (spec.actor === "operator" || spec.actor === "admin") throw new Error("Reserved actor identity");
     if (!Array.isArray(spec.actions) || spec.actions.length < 1 ||
         spec.actions.length > ACTIONS.length ||
         spec.actions.some(a => !ACTIONS.includes(a)) ||
