@@ -15,6 +15,10 @@ adb shell input keyevent 82 || true
 # Do not grant dangerous permissions, log into any account or interact with real users.
 adb install -r "$APK"
 adb shell pm path "$PACKAGE" | grep -F 'package:'
+# A TWA launcher is not a usable web game without a compatible browser.
+adb shell pm path com.android.chrome | grep -F 'package:' >/dev/null || {
+  echo 'BLOCKED: compatible Chrome browser is not installed in test emulator'; exit 6;
+}
 adb shell pm dump "$PACKAGE" | grep -E 'targetSdk=36|targetSdkVersion=36' >/dev/null || {
   echo 'BLOCKED: exact package/API36 install not confirmed'; exit 3;
 }
@@ -35,4 +39,4 @@ fi
 
 # No screenshots or log files exported: avoid publishing any browser/session data.
 rm -f /tmp/y2k-launch-observed.txt /tmp/y2k-runtime-observed.txt
-echo 'ANDROID_EMULATOR_INSTALL_LAUNCH_PASS. Scope: emulator APK install + Android native launcher only. Game content/Chrome integration, fullscreen, P2P, gameplay, and physical Android NOT CERTIFIED.'
+echo 'ANDROID_EMULATOR_NATIVE_WITH_BROWSER_PASS. Scope: Chrome present + emulator APK installed + native launcher accepted. Actual web game rendering, fullscreen, P2P, missions, physical Android NOT CERTIFIED.'
