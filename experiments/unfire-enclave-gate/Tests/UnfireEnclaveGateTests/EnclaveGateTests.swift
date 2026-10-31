@@ -1,6 +1,7 @@
 import XCTest
 import Foundation
 import CryptoKit
+import LocalAuthentication
 @testable import UnfireEnclaveGate
 
 final class EnclaveGateTests: XCTestCase {
@@ -160,4 +161,35 @@ final class EnclaveGateTests: XCTestCase {
         XCTAssertEqual(other.phase,.stopped)
         XCTAssertThrowsError(try other.beginAfterUserClick(nowMs:101))
     }
+    func testImplicitEnrollmentCannotTouchSecureEnclaveOrKeychain() async {
+        await MainActor.run {
+            let service=ProtectedP256SigningService()
+            let context=LAContext()
+            XCTAssertThrowsError(try service.enrollAfterExplicitUserAction(
+                context:context,explicitlyConfirmed:false
+            )) { error in
+                guard case ProtectedSignerError.explicitUserActionRequired=error else {
+                    return XCTFail("Enrollment gate did not fail closed")
+                }
+            }
+            context.invalidate()
+        }
+    }
+    func testImplicitSigningCannotTouchProtectedKey() async throws {
+        let challenge=try CanonicalPreviewChallenge(bytes:source())
+        await MainActor.run {
+            let service=ProtectedP256SigningService()
+            let context=LAContext()
+            XCTAssertThrowsError(try service.signAfterExplicitUserAction(
+                challenge:challenge,context:context,
+                explicitlyConfirmed:false,nowMs:100
+            )) { error in
+                guard case ProtectedSignerError.explicitUserActionRequired=error else {
+                    return XCTFail("Signing gate did not fail closed")
+                }
+            }
+            context.invalidate()
+        }
+    }
+
 }
