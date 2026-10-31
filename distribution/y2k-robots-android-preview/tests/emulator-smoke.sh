@@ -33,8 +33,13 @@ grep -q 'Status: ok' /tmp/y2k-launch-observed.txt || {
 
 sleep 6
 adb logcat -d -v time -t 3000 > /tmp/y2k-runtime-observed.txt
-if grep -E 'Process: technology\.unfire\.y2krobots|FATAL EXCEPTION.*technology\.unfire\.y2krobots' /tmp/y2k-runtime-observed.txt; then
-  echo 'BLOCKED: observed a native application crash associated with this package'; exit 5;
+if grep -Eq 'Process: technology\\.unfire\\.y2krobots|FATAL EXCEPTION.*technology\\.unfire\\.y2krobots' /tmp/y2k-runtime-observed.txt; then
+  echo 'BLOCKED: observed native Android crash for Y2K ROBOTS. AndroidRuntime diagnostic excerpt follows.'
+  # Log was cleared immediately before launch. Print only bounded AndroidRuntime
+  # error-tag stack rather than uploading full emulator logs or screenshots.
+  adb logcat -d -v tag -s AndroidRuntime:E '*:S' | head -c 8000 || true
+  rm -f /tmp/y2k-launch-observed.txt /tmp/y2k-runtime-observed.txt
+  exit 5
 fi
 
 # No screenshots or log files exported: avoid publishing any browser/session data.
