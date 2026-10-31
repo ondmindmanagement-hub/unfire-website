@@ -38,6 +38,24 @@ Official sources:
 - `android-twa-manifest.candidate.json` is an UNSIGNED, UNBUILT Bubblewrap configuration proposal, not a valid Play release or reserved package identity. Run the official generator only after the game site, icons and owner legal review are ready.
 - Candidate tests: `node --test distribution/y2k-robots-store-preflight/store-candidate.test.mjs`.
 
+## Android Digital Asset Links preview gate
+
+`assetlinks-preview.mjs` is a read-only generator for the actual `/.well-known/assetlinks.json` content **only after** Play App Signing supplies a real SHA-256 **app signing certificate** fingerprint (not simply an upload certificate). The output is printed to stdout for human review, not written/deployed. Missing, malformed or zero placeholder fingerprints exit nonzero without JSON. Example with a verified REAL value only:
+
+```bash
+node distribution/y2k-robots-store-preflight/assetlinks-preview.mjs \
+  --package technology.unfire.y2krobots \
+  --sha256 "REAL:32:BYTE:SHA256:PLAY:CERT:FINGERPRINT"
+```
+
+The above string is **a placeholder**, not a valid command argument. Never put a fabricated fingerprint into the website. The package ID is also a candidate until confirmed in Play Console. After signing, independently verify certificate provenance and match the exact production package name, then validate the association on a physical Android device. See the official Chrome TWA documentation.
+
+Tests:
+
+```bash
+node --test distribution/y2k-robots-store-preflight/store-candidate.test.mjs distribution/y2k-robots-store-preflight/assetlinks-preview.test.mjs
+```
+
 ## Static preflight
 
 Run from repository root:
