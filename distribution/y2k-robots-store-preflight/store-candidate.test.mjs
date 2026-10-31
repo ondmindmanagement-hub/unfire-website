@@ -69,3 +69,19 @@ test('staged approved PNG files have exact bytes and expected dimensions', () =>
     assert.equal(createHash('sha256').update(bytes).digest('hex'), sha256);
   }
 });
+
+test('Android TWA config is explicitly a proposal and cannot claim signed status', () => {
+  const twa = JSON.parse(data('android-twa-manifest.candidate.json'));
+  assert.match(twa._status, /NOT BUILT, SIGNED/);
+  assert.equal(twa.packageId, 'technology.unfire.y2krobots');
+  assert.equal(twa.host, 'unfire.technology');
+  assert.equal(twa.startUrl, '/audio/');
+  assert.equal(twa.name, 'Y2K ROBOTS');
+  assert.equal(twa.enableNotifications, false);
+  assert.equal(twa.fallbackType, 'customtabs');
+  assert.equal(twa.webManifestUrl, 'https://unfire.technology/audio/game.webmanifest');
+  assert.equal(twa.minSdkVersion, 26);
+  assert.equal(twa.signingKey.path, './android.keystore');
+  assert.equal(twa.signingKey.alias, 'android');
+  assert.ok(!('certificateFingerprint' in twa));
+});
