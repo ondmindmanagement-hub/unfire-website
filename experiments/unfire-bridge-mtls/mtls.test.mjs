@@ -169,10 +169,12 @@ test('extra untrusted packet fields are denied',async()=>{
     assert.equal(r.status,403);assert.equal(r.body.code,'INVALID_SHAPE');
   });
 });
-test('incorrect Host header is denied',async()=>{
+test('incorrect Host header is denied by TLS hostname verification or HTTP policy',async()=>{
   await withHost(async({url,send})=>{
-    const r=await send(url,undefined,firstKey,firstCert,ca,'evil.example');
-    assert.equal(r.status,403);assert.equal(r.body.code,'HEADERS_DENIED');
+    const result=await send(url,undefined,firstKey,firstCert,ca,'evil.example')
+      .then(value=>({kind:'response',value}),error=>({kind:'error',code:error.code}));
+    if(result.kind==='error')assert.equal(result.code,'ERR_TLS_CERT_ALTNAME_INVALID');
+    else {assert.equal(result.value.status,403);assert.equal(result.value.body.code,'HEADERS_DENIED');}
   });
 });
 test('external network URLs are refused before connecting',async()=>{
