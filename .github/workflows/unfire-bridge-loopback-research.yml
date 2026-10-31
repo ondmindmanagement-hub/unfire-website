@@ -1,0 +1,48 @@
+# Research-only: real localhost socket, synthetic-only, ephemeral keys.
+# No real cross-device connectivity, OS permissions, secrets or deployment.
+name: Unfire Bridge loopback research
+
+on:
+  push:
+    branches:
+      - research/unfire-bridge-loopback-20261031
+    paths:
+      - 'experiments/unfire-bridge-loopback/**'
+      - '.github/workflows/unfire-bridge-loopback-research.yml'
+  pull_request:
+    paths:
+      - 'experiments/unfire-bridge-loopback/**'
+      - '.github/workflows/unfire-bridge-loopback-research.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: unfire-bridge-loopback-research-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  loopback-tests:
+    name: Node 22 signed local relay · ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 8
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        os: [ubuntu-24.04, windows-2022, macos-15]
+    steps:
+      - name: Checkout research source (read-only)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Runtime identification
+        run: |
+          node --version
+          node -p "process.platform"
+      - name: Signed localhost loopback tests (synthetic data only)
+        run: node --test experiments/unfire-bridge-loopback/loopback.test.mjs
