@@ -6,7 +6,9 @@ import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { ResearchSecureBroker } from "./secure-broker.mjs";
 import { ResearchCoordinator } from "./coordinator.mjs";
-import { UnifiedControlPlane } from "./control-plane.mjs";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
+const execFileAsync = promisify(execFile);
 
 const workerApp=process.env.UNFIRE_SIGNED_TEST_APP;
 if(process.platform!=="darwin" || !workerApp) {
@@ -183,15 +185,19 @@ test("STOP committed through an independent coordinator cancels a running worker
  const broker=await ResearchSecureBroker.open({workerApp});
  const {coordinator,credential,directory}=await withCoordinator(t);
  await coordinator.createMission();
- // The second handle stands in for a different process: no in-memory STOP
- // callback from it is registered on the broker's coordinator.
- const external=await UnifiedControlPlane.open(directory,"demo");
+ // A separate Node OS process commits STOP to the same private journal.
+ // The broker receives NO in-memory callback from that process.
  const work=broker.executeAndAttest({coordinator,credential,
    artifact:"report",taskId:"slowtest",operation:"slow_uppercase",
    input:"do not deliver",timeoutMs:3000});
  const rejected=assert.rejects(work,/stopped|STOPPED|aborted/);
  await new Promise(resolve=>setTimeout(resolve,350));
- await external.stopMission();
+ const moduleUrl=new URL("./control-plane.mjs",import.meta.url).href;
+ const script=`import {UnifiedControlPlane} from ${JSON.stringify(moduleUrl)};
+ const plane=await UnifiedControlPlane.open(${JSON.stringify(directory)},"demo");
+ await plane.stopMission();`;
+ await execFileAsync(process.execPath,["--input-type=module","-e",script],
+   {timeout:3000,maxBuffer:2048});
  await rejected;
  const state=await coordinator.read(credential);
  assert.equal(state.stopped,true);
