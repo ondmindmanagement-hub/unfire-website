@@ -24,3 +24,7 @@ jobs:
         run: python3 scripts/check-brand-metadata.py
       - name: Protect iframe message trust boundary
         run: node tests/audio-message-boundary.test.cjs
+      - name: Challenge iframe trust boundary with synthetic adversarial cases
+        run: node --test tests/unfire-adversarial-boundaries.test.cjs
+      - name: Challenge credential gate with synthetic fixtures
+        run: python3 -m unittest discover -s tests -p 'test_unfire_adversarial_secrets.py'
