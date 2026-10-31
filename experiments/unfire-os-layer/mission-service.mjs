@@ -52,6 +52,7 @@ export async function createMissionServer({directory,mission="demo",port=4178,to
   if(!Number.isInteger(port) || port<0 || port>65535) throw new TypeError("Invalid port");
   if(!/^[a-f0-9]{64}$/u.test(token)) throw new TypeError("Invalid session token");
   const store=await LocalMissionMemory.open(directory);
+  const expiry=Date.now()+2*60*60*1000;
   const grants=OPERATIONS.map(type=>({
     actor:"operator",mission,
     capability:({
@@ -59,7 +60,7 @@ export async function createMissionServer({directory,mission="demo",port=4178,to
       ARTIFACT_RELEASED:"artifact:release",TASK_COMPLETED:"task:complete",
       MISSION_STOPPED:"mission:stop"
     })[type],
-    expires:new Date(Date.now()+2*60*60*1000).toISOString()
+    expires:new Date(expiry).toISOString()
   }));
   const missionSession=new AuthorizedMission(store,new MemoryPolicy(grants));
   const server=createServer(async(req,res)=>{
@@ -88,6 +89,7 @@ export async function createMissionServer({directory,mission="demo",port=4178,to
       return;
     }
     if(!req.url?.startsWith("/api/")) {reject(res,404,"Not found");return;}
+    if(Date.now()>=expiry) {reject(res,401,"Research session expired. Restart locally.");return;}
     if(!allowedToken(req.headers.authorization,token)) {reject(res,401,"Session token required");return;}
     if(req.url==="/api/state" && req.method==="GET") {
       try {
