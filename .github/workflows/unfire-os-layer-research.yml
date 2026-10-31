@@ -1,0 +1,45 @@
+name: Unfire OS Layer · Research QA
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/unfire-os-layer/**'
+      - '.github/workflows/unfire-os-layer-research.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: unfire-os-layer-research-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  node-research:
+    name: Isolated Node validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out proposed branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in experiments/unfire-os-layer/*.mjs; do
+            node --check "$file"
+          done
+      - name: Verify local research contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test \
+            experiments/unfire-os-layer/core.test.mjs \
+            experiments/unfire-os-layer/superchat.test.mjs \
+            experiments/unfire-os-layer/memory.test.mjs \
+            experiments/unfire-os-layer/mission-service.test.mjs
