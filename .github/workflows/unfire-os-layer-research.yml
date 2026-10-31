@@ -42,7 +42,9 @@ jobs:
             experiments/unfire-os-layer/core.test.mjs \
             experiments/unfire-os-layer/superchat.test.mjs \
             experiments/unfire-os-layer/memory.test.mjs \
-            experiments/unfire-os-layer/mission-service.test.mjs
+            experiments/unfire-os-layer/mission-service.test.mjs \
+            experiments/unfire-os-layer/agent-identity.test.mjs \
+            experiments/unfire-os-layer/agent-gateway.test.mjs
 
   browser-console:
     name: Isolated Chrome console check
