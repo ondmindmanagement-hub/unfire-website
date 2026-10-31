@@ -195,3 +195,13 @@ test("no model output or signature appears in audit record",()=>{
   assert.equal(events.includes("modelOutput"),false);
   assert.equal(events.includes("42"),false);
 });
+
+
+test("unexpected options cannot smuggle a signed extra tool action",()=>{
+  const {gate,keys}=setup();proposal(gate);
+  const signature=signed(gate,keys);
+  assert.throws(()=>gate.decide("task_a",{decision:"APPROVE",signature,now:101,action:"email.send"}),/Unexpected decision/);
+  assert.throws(()=>gate.preview("task_a",{now:101,target:"real-app"}),/Unexpected preview/);
+  assert.throws(()=>gate.propose(good("task_b"),{now:101,qualityGate:"PASS"}),/Unexpected proposal/);
+  assert.equal(gate.snapshot("task_a").state,S.PENDING);
+});
