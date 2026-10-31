@@ -54,11 +54,15 @@ function verifyCanonicalChallenge(text) {
     throw new Error("Unexpected canonical challenge");
   return fields;
 }
-export function verifyDualSyntheticProof({
-  signedEnvelope,expectedChallenge,
-  issuerPublicKeyDer,reviewerPublicKeyPem,
-  testReviewerSignature,now
-}={}) {
+export function verifyDualSyntheticProof(input={}) {
+  const expected=["signedEnvelope","expectedChallenge","issuerPublicKeyDer",
+    "reviewerPublicKeyPem","testReviewerSignature","now"];
+  if(input===null||typeof input!=="object"||Array.isArray(input)||
+     Object.getPrototypeOf(input)!==Object.prototype||
+     Object.keys(input).sort().join(",")!==expected.sort().join(","))
+    throw new Error("Unexpected dual-approval fields");
+  const {signedEnvelope,expectedChallenge,issuerPublicKeyDer,
+    reviewerPublicKeyPem,testReviewerSignature,now}=input;
   if(!Number.isSafeInteger(now)||now<0)
     throw new Error("Invalid test clock");
   if(!Buffer.isBuffer(signedEnvelope)||signedEnvelope.length>4096||
