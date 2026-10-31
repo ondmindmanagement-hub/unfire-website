@@ -68,6 +68,12 @@ async function withHost(fn) {
   finally {await obj.lab.close();}
 }
 
+test('temporary server certificate verifies against its local CA',()=>{
+  openssl('verify','-CAfile','labCA.pem','-purpose','sslserver','server.pem');
+});
+test('temporary client certificate verifies against its local CA',()=>{
+  openssl('verify','-CAfile','labCA.pem','-purpose','sslclient','sender.pem');
+});
 test('enrollment is offline and requires opt-in',()=>{
   const lab=createMtlsLab({serverKeyPem:serverKey,serverCertPem:serverCert,caCertPem:ca});
   denial(()=>lab.enroll({tenant:'x',nodeId:'a',platform:'macos',clientCertificatePem:firstCert,approved:false}),'CONSENT_REQUIRED');
