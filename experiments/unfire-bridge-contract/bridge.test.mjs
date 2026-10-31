@@ -52,3 +52,15 @@ test('stopping one tenant does not block unrelated tenant', () => {const {bridge
 test('different source and target required', () => {const {bridge,transfer}=demo();assertCode(()=>bridge.relay({...transfer,toNodeId:'mac'}),'DISTINCT_NODES_REQUIRED');});
 test('snapshot reports only metadata, not synthetic payloads', () => {const {bridge,transfer}=demo();bridge.relay(transfer);const s=bridge.snapshot({tenant:'lab'});assert.equal(s.simulatedMessages,1);assert.equal(JSON.stringify(s).includes('research'),false);});
 test('duplicate grant IDs rejected', () => {const {bridge}=demo();assertCode(()=>bridge.issueGrant({tenant:'lab',nodeId:'mac',grantId:'send',capability:'synthetic.send',approved:true,now:100,expiresAt:200}),'GRANT_ALREADY_EXISTS');});
+test('synthetic Windows to macOS relay requires separate bilateral grants', () => {
+  const {bridge,transfer}=demo();
+  bridge.issueGrant({tenant:'lab',nodeId:'win',grantId:'win-send',capability:'synthetic.send',approved:true,now:100,expiresAt:200});
+  bridge.issueGrant({tenant:'lab',nodeId:'mac',grantId:'mac-receive',capability:'synthetic.receive',approved:true,now:100,expiresAt:200});
+  assert.equal(bridge.relay({...transfer,messageId:'m2',fromNodeId:'win',toNodeId:'mac',sendGrantId:'win-send',receiveGrantId:'mac-receive'}).targetPlatform,'macos');
+});
+test('synthetic Linux to Windows relay requires separate bilateral grants', () => {
+  const {bridge,transfer}=demo();
+  bridge.issueGrant({tenant:'lab',nodeId:'lin',grantId:'lin-send',capability:'synthetic.send',approved:true,now:100,expiresAt:200});
+  bridge.issueGrant({tenant:'lab',nodeId:'win',grantId:'win-receive',capability:'synthetic.receive',approved:true,now:100,expiresAt:200});
+  assert.equal(bridge.relay({...transfer,messageId:'m3',fromNodeId:'lin',toNodeId:'win',sendGrantId:'lin-send',receiveGrantId:'win-receive'}).targetPlatform,'windows');
+});
