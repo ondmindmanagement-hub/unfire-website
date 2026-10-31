@@ -38,14 +38,22 @@ public final class SyntheticConsentSession {
     private let inbox: SyntheticIssuerInbox
     private let envelopeData: Data
     private let issuerPublicDER: Data
+    private let reviewerPublicDER: Data
     private var lastSeenMs: Int64
 
     public init(
         envelopeData: Data,
         pinnedIssuerPublicDER: Data,
+        pinnedReviewerPublicDER: Data,
         journalPath: String,
         nowMs: Int64
     ) throws {
+        guard pinnedReviewerPublicDER != pinnedIssuerPublicDER,
+              (try? P256.Signing.PublicKey(
+                derRepresentation: pinnedReviewerPublicDER
+              )) != nil else {
+            throw ConsentSessionError.invalidSignedRequest
+        }
         let verified = try VerifiedIssuerEnvelope(
             bytes: envelopeData,
             pinnedPublicKeyDER: pinnedIssuerPublicDER
@@ -78,6 +86,7 @@ public final class SyntheticConsentSession {
         self.inbox = receiver
         self.envelopeData = envelopeData
         self.issuerPublicDER = pinnedIssuerPublicDER
+        self.reviewerPublicDER = pinnedReviewerPublicDER
         self.lastSeenMs = nowMs
     }
 
@@ -129,7 +138,8 @@ public final class SyntheticConsentSession {
             throw ConsentSessionError.staleAttempt
         }
         try validateTime(nowMs)
-        guard let key = try? P256.Signing.PublicKey(
+        guard publicKeyDER == reviewerPublicDER,
+        let key = try? P256.Signing.PublicKey(
             derRepresentation: publicKeyDER
         ),
         let signature = try? P256.Signing.ECDSASignature(
