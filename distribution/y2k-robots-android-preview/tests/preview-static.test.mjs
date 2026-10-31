@@ -36,3 +36,11 @@ test('game icon is the approved exact PNG, not a replacement',()=>{
   assert.equal(icon.readUInt32BE(20),512);
   assert.equal(createHash('sha256').update(icon).digest('hex'),'636d98b7510137224644558f397b5ad184e3f14bf09f96d0b70ad7524036141e');
 });
+
+test('Android Browser Helper launcher site-settings component is declared, private and scoped',()=>{
+  assert.match(manifest,/android:manageSpaceActivity="com\\.google\\.androidbrowserhelper\\.trusted\\.ManageDataLauncherActivity"/);
+  assert.match(manifest,/<activity[\\s\\S]*?android:name="com\\.google\\.androidbrowserhelper\\.trusted\\.ManageDataLauncherActivity"[\\s\\S]*?android:exported="false"/);
+  assert.match(manifest,/android:name="android\\.support\\.customtabs\\.trusted\\.MANAGE_SPACE_URL"/);
+  const links=manifest.match(/android:value="https:\\/\\/unfire\\.technology\\/audio\\/"/g)||[];
+  assert.ok(links.length>=2,'Launcher and site-settings URL must match the same Unfire game origin');
+});
