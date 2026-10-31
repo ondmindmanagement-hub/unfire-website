@@ -225,12 +225,15 @@ public final class SyntheticIssuerInbox {
     public func inspectAndConsume(
         envelopeData:Data,pinnedIssuerPublicKeyDER:Data,nowMs:Int64
     )throws->InertIssuerReceipt {
+        // Reject caller key substitution before attempting signature verification.
+        let presentedFingerprint=SHA256.hash(data:pinnedIssuerPublicKeyDER)
+            .map{String(format:"%02x",$0)}.joined()
+        guard presentedFingerprint==pinnedFingerprint else {
+            throw IssuerEnvelopeError.keyPinMismatch
+        }
         let envelope=try VerifiedIssuerEnvelope(
             bytes:envelopeData,pinnedPublicKeyDER:pinnedIssuerPublicKeyDER
         )
-        guard envelope.issuerFingerprint==pinnedFingerprint else{
-            throw IssuerEnvelopeError.keyPinMismatch
-        }
         guard nowMs>=0,nowMs<envelope.expiresAtMs else {
             throw IssuerEnvelopeError.expired
         }
