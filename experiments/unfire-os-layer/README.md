@@ -45,6 +45,16 @@ The planner simulates waves and pure transformations. The new **separate** Missi
 - Chrome headless with a temporary profile: the **original offline simulation dashboard** passed DOM, responsive overflow and interaction assertions at 1440×900, 390×844 and 320×740. Seven agents remain **simulated**, not connected. The new connected memory console has a dedicated optional browser QA script; a complete passing browser QA result for this new console is not yet recorded.
 - QA does not certify security, accessibility compliance, physical devices, cross-OS interoperability or performance improvements. No production changes, merges or installations.
 
+## Research agent credentials (v0.3, not actual AI agents)
+
+- `agent-identity.mjs` provides an in-memory registry for short-lived, random 256-bit bearer credentials. Only a trusted local caller can provision a research actor; there is no HTTP issuance route. SHA-256 token digests, not original secrets, are retained in the registry. A credential expires after at most 30 minutes and can be revoked by the trusted caller.
+- Research roles are **disabled by default** (`agentSpecs: []`). At most eight roles may be explicitly provisioned. Each has an action allowlist (`state:read`, `artifact:claim`, `artifact:release`, `task:complete`) and optional explicit artifact names. Roles with artifact write permissions require at least one specific artifact.
+- `mission-service.mjs` offers `GET /api/agent/state` with the scoped mission summary, and `POST /api/agent/events` for narrowly granted claim/release/manual task checkpoints. It fixes the actor name from the credential, never from submitted JSON. Only the human operator session may create or STOP a mission.
+- Operator STOP still invalidates further task events from research agents. No OS command, web search, repository file write, local process, AI model or chat session is executed by the gateway.
+- **Crucial:** A token is not a verified AI identity and is not bound to an OS sandbox, model provider or particular client binary. A holder can act under its limited pseudonymous role, including fabricating a manual task-completion claim; this is not independently validated work. Do not distribute agent tokens to third-party clients or use production information in this experiment.
+- The prototype remains a single-machine manual research API. **Do not deploy or expose outside loopback.** Real identity, delegated consent, sandbox, per-agent memory filtering, independent evidence and durable distributed leases remain future work.
+- Threat model and host-specific acceptance gates: `experiments/unfire-os-layer/SECURITY-GATES.md`.
+
 ## Design rules for a future secure version
 1. **Single mission truth:** goal, project, scoped task IDs, dependencies, outputs, hashes, version and responsible agent.
 2. **One writer per artifact:** exclusive lease keyed by project, repository/path and revision; conflict detection, lease renewal, expiry and recovery.
