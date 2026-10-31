@@ -367,7 +367,7 @@ final class CancellableSigningTests: XCTestCase {
             return SyntheticSignature(publicKeyDER:Data([1]),
                                       signatureDER:Data([2]))
         }
-        let task=Task {
+        let task=Task.detached {
             try await worker.sign(challengeBytes:Data("inert".utf8))
         }
         XCTAssertEqual(started.wait(timeout:.now()+4),.success)
