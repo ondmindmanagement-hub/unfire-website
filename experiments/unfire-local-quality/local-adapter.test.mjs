@@ -114,3 +114,10 @@ test("quality failures counted, not disguised as success",async()=>{
 test("invalid session cannot impersonate local model",async()=>{
   await assert.rejects(evaluateAll({model:ALLOWED_MODEL}),/Invalid local evaluation session/);
 });
+
+
+test("duplicate JSON keys cannot disguise incorrect model output",()=>{
+  assert.equal(evaluateAnswer(FIXTURES[2],'{"ok":false,"ok":true,"count":3}').passed,false);
+  assert.equal(evaluateAnswer(FIXTURES[2],'{"count":4,"count":3,"ok":true}').passed,false);
+  assert.equal(evaluateAnswer(FIXTURES[2],'{"ok":true,"count":3}').passed,true);
+});
