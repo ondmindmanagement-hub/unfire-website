@@ -11,6 +11,7 @@ import { readFile } from "node:fs/promises";
 import { dirname, isAbsolute, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { LocalMissionMemory, MemoryPolicy, AuthorizedMission } from "./memory.mjs";
+import { AgentCredentialRegistry } from "./agent-identity.mjs";
 
 const codeDir = dirname(fileURLToPath(import.meta.url));
 const SAFE_HOST = "127.0.0.1";
@@ -46,11 +47,14 @@ async function bodyJson(req) {
   catch {throw new Error("Invalid JSON");}
 }
 function reject(res,status,message) {json(res,status,{error:message});}
-export async function createMissionServer({directory,mission="demo",port=4178,token=randomBytes(32).toString("hex")}={}) {
+export async function createMissionServer({directory,mission="demo",port=4178,token=randomBytes(32).toString("hex"),agentSpecs=[]}={}) {
   if(typeof directory!=="string" || !isAbsolute(directory)) throw new TypeError("Absolute, dedicated workspace required");
   if(typeof mission!=="string" || !IDENT.test(mission)) throw new TypeError("Invalid mission identifier");
   if(!Number.isInteger(port) || port<0 || port>65535) throw new TypeError("Invalid port");
   if(!/^[a-f0-9]{64}$/u.test(token)) throw new TypeError("Invalid session token");
+  if (!Array.isArray(agentSpecs) || agentSpecs.length>8) throw new TypeError("Invalid agent bootstrap list");
+  const registry = new AgentCredentialRegistry(mission);
+  const agentCredentials = agentSpecs.map(spec=>registry.issue(spec));
   const store=await LocalMissionMemory.open(directory);
   const expiry=Date.now()+2*60*60*1000;
   const grants=OPERATIONS.map(type=>({
@@ -89,6 +93,40 @@ export async function createMissionServer({directory,mission="demo",port=4178,to
       return;
     }
     if(!req.url?.startsWith("/api/")) {reject(res,404,"Not found");return;}
+    if (req.url==="/api/agent/state" && req.method==="GET") {
+      const identity=registry.authorize(req.headers.authorization,"state:read");
+      if(!identity) {reject(res,401,"Agent credential invalid or insufficient");return;}
+      try {
+        const view=await store.read();
+        json(res,200,{mission,actor:identity.actor,summary:view.summary,
+          count:view.count,realAgentExecutions:0});
+      } catch{reject(res,409,"Local mission journal invalid");}
+      return;
+    }
+    if (req.url==="/api/agent/events" && req.method==="POST") {
+      if(req.headers.origin && req.headers.origin!==origin) {reject(res,403,"Origin rejected");return;}
+      if(req.headers["content-type"]?.split(";")[0]?.toLowerCase()!=="application/json") {
+        reject(res,415,"JSON content required");return;
+      }
+      try {
+        const submitted=await bodyJson(req);
+        if(!exact(submitted,["type","artifact","task"])) throw new Error("Invalid event fields");
+        const action=({
+          ARTIFACT_CLAIMED:"artifact:claim",
+          ARTIFACT_RELEASED:"artifact:release",
+          TASK_COMPLETED:"task:complete"
+        })[submitted.type];
+        if (!action) throw new Error("Unsupported agent operation");
+        const identity=registry.authorize(req.headers.authorization,action,submitted.artifact);
+        if(!identity) {reject(res,403,"Agent permission denied");return;}
+        const event={type:submitted.type,mission,actor:identity.actor};
+        if(submitted.artifact!==undefined) event.artifact=submitted.artifact;
+        if(submitted.task!==undefined) event.task=submitted.task;
+        const output=await store.append(event);
+        json(res,201,{seq:output.seq,hash:output.hash,actor:identity.actor});
+      } catch(e) {reject(res,409,"Research event rejected: "+e.message);}
+      return;
+    }
     if(Date.now()>=expiry) {reject(res,401,"Research session expired. Restart locally.");return;}
     if(!allowedToken(req.headers.authorization,token)) {reject(res,401,"Session token required");return;}
     if(req.url==="/api/state" && req.method==="GET") {
@@ -129,6 +167,9 @@ export async function createMissionServer({directory,mission="demo",port=4178,to
   const address=SAFE_HOST+":"+server.address().port;
   return {
     server, token, port:server.address().port,
+    agentCredentials: Object.freeze(agentCredentials),
+    revokeResearchAgent: actor=>registry.revokeActor(actor),
+    researchRoster: ()=>registry.roster(),
     url:"http://"+address+"/mission-console.html#"+token,
     close:()=>new Promise((resolve,reject)=>server.close(err=>err?reject(err):resolve()))
   };
