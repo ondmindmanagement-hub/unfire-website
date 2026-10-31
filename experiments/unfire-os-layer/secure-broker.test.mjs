@@ -122,3 +122,37 @@ test("no worker secrets or uncontrolled arguments appear in result",async()=>{
  const result=await broker.execute({operation:"sha256",input:"abc"});
  assert.deepEqual(Object.keys(result).sort(),["operation","resultDigest","value","verification"]);
 });
+
+test("single broker never launches two synthetic workers simultaneously",async()=>{
+ const broker=await ResearchSecureBroker.open({workerApp});
+ const first=broker.execute({operation:"sha256",input:"abc"});
+ await assert.rejects(broker.execute({operation:"uppercase",input:"b"}),/capacity exceeded/);
+ assert.equal((await first).value,h("abc"));
+ // Capacity releases on completion.
+ assert.equal((await broker.execute({operation:"uppercase",input:"next"})).value,"NEXT");
+});
+test("abort during pending startup is fail-closed and frees worker capacity",async()=>{
+ const broker=await ResearchSecureBroker.open({workerApp});
+ const controller=new AbortController();
+ const work=broker.execute({operation:"uppercase",input:"safely"},{signal:controller.signal});
+ controller.abort();
+ await assert.rejects(work,/aborted|stopped/);
+ const after=await broker.execute({operation:"uppercase",input:"okay"});
+ assert.equal(after.value,"OKAY");
+});
+test("invalid cancellation arguments are rejected before any lease",async t=>{
+ const broker=await ResearchSecureBroker.open({workerApp});
+ const {coordinator,credential}=await withCoordinator(t);
+ await coordinator.createMission();
+ await assert.rejects(broker.executeAndAttest({
+   coordinator,credential,artifact:"report",taskId:"review",
+   operation:"uppercase",input:"test",signal:{aborted:true}
+ }),/cancellation signal/);
+ assert.deepEqual((await coordinator.read(credential)).leases,{});
+});
+test("research worker probe modes stay unreachable through broker",async()=>{
+ const broker=await ResearchSecureBroker.open({workerApp});
+ for(const operation of ["probe-limits","probe-network","probe-file"]){
+   await assert.rejects(broker.execute({operation,input:"hello"}),/synthetic/);
+ }
+});
