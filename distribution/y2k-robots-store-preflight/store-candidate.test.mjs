@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -51,4 +52,20 @@ test('required owner release gates exist as documented', () => {
   assert.match(guide, /actual.*Windows|Windows hardware/i);
   assert.match(guide, /Android AAB/i);
   assert.match(guide, /approved.*icon/i);
+});
+
+test('staged approved PNG files have exact bytes and expected dimensions', () => {
+  const fixtures = [
+    { size: 192, sha256: '69a2f35b90f3c84c5355a809b64b92970acd0d957d3bd9363f5fe75c8326d842' },
+    { size: 512, sha256: '636d98b7510137224644558f397b5ad184e3f14bf09f96d0b70ad7524036141e' }
+  ];
+  for (const {size, sha256} of fixtures) {
+    const filename = path.join(dir, 'assets', `y2k-robots-icon-${size}.png`);
+    const bytes = readFileSync(filename);
+    assert.equal(bytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+    assert.equal(bytes.subarray(12, 16).toString('ascii'), 'IHDR');
+    assert.equal(bytes.readUInt32BE(16), size);
+    assert.equal(bytes.readUInt32BE(20), size);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), sha256);
+  }
 });
