@@ -43,3 +43,29 @@ jobs:
             experiments/unfire-os-layer/superchat.test.mjs \
             experiments/unfire-os-layer/memory.test.mjs \
             experiments/unfire-os-layer/mission-service.test.mjs
+
+  browser-console:
+    name: Isolated Chrome console check
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - name: Check out proposed branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Browser QA with temporary test-only dependency
+        shell: bash
+        run: |
+          set -euo pipefail
+          temp="$RUNNER_TEMP/unfire-os-browser-qa"
+          mkdir -p "$temp"
+          npm install --prefix "$temp" --no-save --no-package-lock --ignore-scripts --no-audit --no-fund puppeteer-core@24.28.0
+          export UNFIRE_PUPPETEER_MODULE
+          UNFIRE_PUPPETEER_MODULE=$(node -e "console.log(require.resolve('puppeteer-core',{paths:[process.env.RUNNER_TEMP+'/unfire-os-browser-qa']}))")
+          export UNFIRE_CHROME_EXECUTABLE
+          UNFIRE_CHROME_EXECUTABLE=$(command -v google-chrome || command -v google-chrome-stable)
+          node experiments/unfire-os-layer/mission-console.browser-qa.mjs
