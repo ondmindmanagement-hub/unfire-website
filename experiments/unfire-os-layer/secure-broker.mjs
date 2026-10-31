@@ -89,7 +89,7 @@ function spawnBounded(executable,payload,timeoutMs,signal) {
   });
 }
 export class ResearchSecureBroker {
-  #app;#executable;#digest;
+  #app;#executable;#digest;#active=0;
   constructor(app,executable,digest) {
     this.#app=app;this.#executable=executable;this.#digest=digest;
   }
@@ -111,13 +111,27 @@ export class ResearchSecureBroker {
       throw new TypeError("Worker timeout must be bounded between 100 and 5000 ms");
     if(signal!==undefined && !(signal instanceof AbortSignal))
       throw new TypeError("Invalid cancellation signal");
-    if(await readPinnedBinary(this.#executable)!==this.#digest)
-      throw new Error("Signed worker binary changed after verification");
-    // This research checksum is a guard against replacement, not a complete
-    // atomic open-and-execute implementation.
-    const request=JSON.stringify(validated);
-    const stdout=await spawnBounded(this.#executable,request,timeoutMs,signal);
-    return independentlyVerify(validated,stdout);
+    // Reserve capacity before ANY asynchronous checks, so a second caller
+    // cannot race this single-worker research broker into parallel execution.
+    if(this.#active!==0)throw new Error("Research worker capacity exceeded");
+    this.#active=1;
+    try {
+      if(signal?.aborted)throw new Error("Task aborted before launch");
+      if(await readPinnedBinary(this.#executable)!==this.#digest)
+        throw new Error("Signed worker binary changed after verification");
+      await verifyMacSignature(this.#app,this.#executable);
+      if(signal?.aborted)throw new Error("Task aborted before launch");
+      // This research checksum is a guard against replacement, NOT a complete
+      // atomic open-and-execute implementation.
+      const request=JSON.stringify(validated);
+      const stdout=await spawnBounded(this.#executable,request,timeoutMs,signal);
+      if(await readPinnedBinary(this.#executable)!==this.#digest)
+        throw new Error("Signed worker binary changed during execution");
+      if(signal?.aborted)throw new Error("Task stopped before verification");
+      return independentlyVerify(validated,stdout);
+    } finally {
+      this.#active=0;
+    }
   }
   async executeAndAttest({coordinator,credential,artifact,taskId,operation,input,
                           timeoutMs=2000,signal}={}) {
@@ -128,12 +142,18 @@ export class ResearchSecureBroker {
        typeof taskId!=="string" || !NAME.test(taskId))
       throw new TypeError("Invalid artifact or task identifier");
     const work=validatePureTask({operation,input});
-    if(signal?.aborted)throw new Error("Task aborted before lease acquisition");
-    // Lease + immutable input are selected only by trusted local caller.
-    const lease=await coordinator.acquire(credential,{artifact,ttlMs:30_000});
-    let attested=false,released=false;
+    const stopping=new AbortController();
+    const abortWhenStopped=()=>stopping.abort();
+    const unsubscribe=coordinator.onStop(abortWhenStopped);
+    signal?.addEventListener("abort",abortWhenStopped,{once:true});
+    let lease,attested=false,released=false;
     try {
-      const verified=await this.execute(work,{timeoutMs,signal});
+      if(signal?.aborted)throw new Error("Task aborted before lease acquisition");
+      // Lease + immutable input are selected only by trusted local caller.
+      lease=await coordinator.acquire(credential,{artifact,ttlMs:30_000});
+      if(stopping.signal.aborted)throw new Error("Task stopped before launch");
+      const verified=await this.execute(work,{timeoutMs,signal:stopping.signal});
+      if(stopping.signal.aborted)throw new Error("Task stopped before attestation");
       // This final commit is serialized with STOP, and validates generation,
       // current lease owner and the scoped role credential again.
       const receipt=await coordinator.attest(credential,{
@@ -156,7 +176,7 @@ export class ResearchSecureBroker {
         sequence:receipt.seq,verifiedBy:verified.verification
       });
     }catch(error){
-      if(!attested) {
+      if(lease && !attested) {
         // On failed verification, never attest. Cleanup is best-effort;
         // an expired lease can be reclaimed with a higher generation.
         try {await coordinator.release(credential,{
@@ -164,6 +184,9 @@ export class ResearchSecureBroker {
         });}catch{}
       }
       throw error;
+    }finally{
+      signal?.removeEventListener("abort",abortWhenStopped);
+      unsubscribe();
     }
   }
 }
