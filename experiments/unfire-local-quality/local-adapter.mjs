@@ -77,6 +77,8 @@ export async function evaluateAll(session) {
   return Object.freeze({
     model:session.model,attempted:session.used,
     passed:runs.filter(r=>r.passed).length,total:runs.length,
+    qualityGate:runs.every(r=>r.passed)?"PASS":"BLOCKED",
+    externalActionAllowed:false,
     results:Object.freeze(runs),
     externalCalls:0,providerCostUsd:0,
     disclaimer:"A bounded on-device model test only. No real-world action, identity attestation or performance promise."
