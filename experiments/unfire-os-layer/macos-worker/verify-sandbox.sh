@@ -89,6 +89,15 @@ assert values[1]=={"ok":True,"value":hashlib.sha256(b"abc").hexdigest()}, values
 assert values[2]=={"ok":True,"value":3}, values[2]
 print("MACOS_PURE_WORKER_PASS")
 PY
+limits="$("$worker" probe-limits)"
+python3 - "$limits" <<'PY'
+import json,sys
+resource_limits=json.loads(sys.argv[1])
+assert resource_limits == {
+    "cpuSeconds":2, "fileHandles":32, "fileBytes":65536
+}, resource_limits
+print("MACOS_WORKER_KERNEL_LIMITS_PASS")
+PY
 echo "MACOS_RESEARCH_WORKER_QA_PASS"
 # Trusted CI only: never expose worker selection through task JSON.
 export UNFIRE_SIGNED_TEST_APP
