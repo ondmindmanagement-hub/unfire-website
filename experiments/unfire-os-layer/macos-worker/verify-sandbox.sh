@@ -13,12 +13,15 @@ cleanup() {
 trap cleanup EXIT
 
 xcrun swiftc "$here/Worker.swift" -o "$tmp/worker-unsigned"
-cp "$tmp/worker-unsigned" "$tmp/worker"
+app="$tmp/UnfireResearchWorker.app"
+mkdir -p "$app/Contents/MacOS"
+cp "$here/Worker.Info.plist" "$app/Contents/Info.plist"
+cp "$tmp/worker-unsigned" "$app/Contents/MacOS/UnfireResearchWorker"
+worker="$app/Contents/MacOS/UnfireResearchWorker"
 codesign --force --sign - --options runtime \
-  --identifier technology.unfire.os.research.worker \
-  --entitlements "$here/Worker.entitlements" "$tmp/worker"
-codesign --verify --strict "$tmp/worker"
-codesign --display --entitlements :- "$tmp/worker" > "$tmp/effective.plist" 2>/dev/null
+  --entitlements "$here/Worker.entitlements" "$app"
+codesign --verify --strict --deep "$app"
+codesign --display --entitlements :- "$worker" > "$tmp/effective.plist" 2>/dev/null
 python3 - "$tmp/effective.plist" <<'PY'
 import plistlib,sys
 with open(sys.argv[1],"rb") as handle:
@@ -57,8 +60,10 @@ port="$(cat "$tmp/listener-port")"
 
 unsandboxed_read="$("$tmp/worker-unsigned" probe-file "$private")"
 unsandboxed_net="$("$tmp/worker-unsigned" probe-network "$port")"
-sandboxed_read="$("$tmp/worker" probe-file "$private")"
-sandboxed_net="$("$tmp/worker" probe-network "$port")"
+echo "MACOS_PROBE_FILE_START"
+sandboxed_read="$("$worker" probe-file "$private")"
+echo "MACOS_PROBE_NETWORK_START"
+sandboxed_net="$("$worker" probe-network "$port")"
 python3 - "$unsandboxed_read" "$unsandboxed_net" "$sandboxed_read" "$sandboxed_net" <<'PY'
 import json,sys
 baseline_file,baseline_net,sandbox_file,sandbox_net=map(json.loads,sys.argv[1:])
@@ -73,9 +78,9 @@ print("MACOS_SANDBOX_DENIAL_PASS",json.dumps({
   "sandbox_network_denied": sandbox_net["errorNumber"]}))
 PY
 
-transformed="$(printf '%s' '{"operation":"uppercase","input":"unfire os"}' | "$tmp/worker" transform)"
-hash_result="$(printf '%s' '{"operation":"sha256","input":"abc"}' | "$tmp/worker" transform)"
-count_result="$(printf '%s' '{"operation":"word_count","input":"one two three"}' | "$tmp/worker" transform)"
+transformed="$(printf '%s' '{"operation":"uppercase","input":"unfire os"}' | "$worker" transform)"
+hash_result="$(printf '%s' '{"operation":"sha256","input":"abc"}' | "$worker" transform)"
+count_result="$(printf '%s' '{"operation":"word_count","input":"one two three"}' | "$worker" transform)"
 python3 - "$transformed" "$hash_result" "$count_result" <<'PY'
 import hashlib,json,sys
 values=list(map(json.loads,sys.argv[1:]))
