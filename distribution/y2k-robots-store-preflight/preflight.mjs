@@ -23,7 +23,7 @@ if (exists(manifestPath)) {
     add('manifest_english_description', typeof m.description === 'string' && m.description.length >= 30 && !/\b(juego|gratuito|aventura|misiones|secretos|robots transformables)\b/i.test(m.description), 'Public copy must be in English; manual language review remains required');
     add('manifest_standalone', m.display === 'standalone', `display=${JSON.stringify(m.display)}`);
     const icons = Array.isArray(m.icons) ? m.icons : [];
-    const hasIcon = (size) => icons.some(i => new RegExp(`(^|\\s)${size}x${size}($|\\s)`).test(i.sizes ?? '') && /image\\/png/.test(i.type ?? '') && exists(path.join('audio', i.src ?? '')));
+    const hasIcon = (size) => icons.some(i => new RegExp(`(^|\\s)${size}x${size}($|\\s)`).test(i.sizes ?? '') && i.type === 'image/png' && exists(path.join('audio', i.src ?? '')));
     add('game_png_192', hasIcon(192), 'Approved, genuine 192px PNG icon must exist and be declared');
     add('game_png_512', hasIcon(512), 'Approved, genuine 512px PNG icon must exist and be declared');
   }
