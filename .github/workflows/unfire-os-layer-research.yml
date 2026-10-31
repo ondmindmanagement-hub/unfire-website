@@ -74,3 +74,18 @@ jobs:
           export UNFIRE_CHROME_EXECUTABLE
           UNFIRE_CHROME_EXECUTABLE=$(command -v google-chrome || command -v google-chrome-stable)
           node experiments/unfire-os-layer/mission-console.browser-qa.mjs
+
+  native-macos-sandbox:
+    name: macOS App Sandbox deny-by-default research
+    runs-on: macos-15
+    timeout-minutes: 8
+    steps:
+      - name: Check out proposed branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Compile, sign, and probe only synthetic targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash experiments/unfire-os-layer/macos-worker/verify-sandbox.sh
