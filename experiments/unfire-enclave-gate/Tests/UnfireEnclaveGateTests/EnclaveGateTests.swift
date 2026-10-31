@@ -161,10 +161,10 @@ final class EnclaveGateTests: XCTestCase {
         XCTAssertEqual(other.phase,.stopped)
         XCTAssertThrowsError(try other.beginAfterUserClick(nowMs:101))
     }
-    func testImplicitEnrollmentCannotTouchSecureEnclaveOrKeychain() async {
-        await MainActor.run {
+    func testImplicitEnrollmentCannotTouchSecureEnclaveOrKeychain() async throws {
+        try await MainActor.run {
             let service=ProtectedP256SigningService()
-            let context=LAContext()
+            let context=try LAContext()
             XCTAssertThrowsError(try service.enrollAfterExplicitUserAction(
                 context:context,explicitlyConfirmed:false
             )) { error in
@@ -177,9 +177,9 @@ final class EnclaveGateTests: XCTestCase {
     }
     func testImplicitSigningCannotTouchProtectedKey() async throws {
         let challenge=try CanonicalPreviewChallenge(bytes:source())
-        await MainActor.run {
+        try await MainActor.run {
             let service=ProtectedP256SigningService()
-            let context=LAContext()
+            let context=try LAContext()
             XCTAssertThrowsError(try service.signAfterExplicitUserAction(
                 challenge:challenge,context:context,
                 explicitlyConfirmed:false,nowMs:100
