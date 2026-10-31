@@ -101,11 +101,15 @@ test("all three fixtures work via mocked offline transport",async()=>{
   assert.equal(report.passed,3);assert.equal(report.total,3);
   assert.equal(report.externalCalls,0);assert.equal(report.providerCostUsd,0);
   assert.equal(report.attempted,3);
+  assert.equal(report.qualityGate,"PASS");
+  assert.equal(report.externalActionAllowed,false);
 });
 test("quality failures counted, not disguised as success",async()=>{
   const session=allowed(async()=>sampleResponse("wrong"));
   const r=await evaluateAll(session);
   assert.equal(r.passed,0);assert.equal(r.attempted,3);
+  assert.equal(r.qualityGate,"BLOCKED");
+  assert.equal(r.externalActionAllowed,false);
 });
 test("invalid session cannot impersonate local model",async()=>{
   await assert.rejects(evaluateAll({model:ALLOWED_MODEL}),/Invalid local evaluation session/);
