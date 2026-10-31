@@ -108,6 +108,22 @@ func applyProcessLimits() {
 
 applyProcessLimits()
 
+// Test-only introspection to confirm limits were imposed by the kernel.
+// The production broker has no path to this mode.
+func probeLimits() {
+    var cpu = rlimit(rlim_cur: 0, rlim_max: 0)
+    var handles = rlimit(rlim_cur: 0, rlim_max: 0)
+    var fileBytes = rlimit(rlim_cur: 0, rlim_max: 0)
+    guard Darwin.getrlimit(RLIMIT_CPU, &cpu) == 0 &&
+          Darwin.getrlimit(RLIMIT_NOFILE, &handles) == 0 &&
+          Darwin.getrlimit(RLIMIT_FSIZE, &fileBytes) == 0 else {
+        reject("resource_limit_probe_failed")
+    }
+    output(["cpuSeconds": Int(cpu.rlim_cur),
+            "fileHandles": Int(handles.rlim_cur),
+            "fileBytes": Int(fileBytes.rlim_cur)])
+}
+
 let arguments = CommandLine.arguments
 guard arguments.count >= 2 else { reject("missing_mode") }
 switch arguments[1] {
@@ -117,6 +133,8 @@ case "probe-file" where arguments.count == 3:
     probeFile(arguments[2])
 case "probe-network" where arguments.count == 3:
     probeNetwork(arguments[2])
+case "probe-limits" where arguments.count == 2:
+    probeLimits()
 default:
     reject("invalid_mode")
 }
