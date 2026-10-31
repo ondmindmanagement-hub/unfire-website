@@ -54,6 +54,10 @@ printf 'EMULATOR_ACTIVITY_FOREGROUND=%s\\n' "$activity_state"
 printf 'EMULATOR_WINDOW_FOCUS=%s\\n' "$window_state"
 if ! printf '%s\\n%s\\n' "$activity_state" "$window_state" | grep -q 'com.android.chrome'; then
   echo 'BLOCKED: Chrome is installed but was not verified in foreground after Y2K app launch.'
+  echo 'BROWSER_RESOLVER:'
+  adb shell cmd package resolve-activity --brief -a android.intent.action.VIEW -d https://unfire.technology/audio/ | head -n 8 || true
+  echo 'TWA_PROVIDER_DIAGNOSTICS (bounded Android-only tags):'
+  adb logcat -d -v tag -s TWALauncherActivity:D TWAProviderPicker:D TwaLauncher:D ActivityTaskManager:W AndroidRuntime:E '*:S' | head -c 12000 || true
   exit 7
 fi
 echo 'ANDROID_BROWSER_FOREGROUND_VERIFIED. Content/game is not yet certified.'
