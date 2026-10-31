@@ -31,6 +31,13 @@ Official sources:
 - https://support.google.com/googleplay/android-developer/answer/14151465
 - https://support.google.com/googleplay/android-developer/answer/13628312
 
+## Checked-in candidate assets and Android source configuration
+
+- Official green robot image derivatives (192 and 512 PNG) are staged under `assets/` in this **draft** branch; image content hashes and dimensions are verified by `store-candidate.test.mjs`. They have not been copied into live `audio/img/` or deployed.
+- `windows-pwa-manifest.candidate.json` and `service-worker.candidate.js` are inert Windows PWA integration candidates, not an installable Windows Store package.
+- `android-twa-manifest.candidate.json` is an UNSIGNED, UNBUILT Bubblewrap configuration proposal, not a valid Play release or reserved package identity. Run the official generator only after the game site, icons and owner legal review are ready.
+- Candidate tests: `node --test distribution/y2k-robots-store-preflight/store-candidate.test.mjs`.
+
 ## Static preflight
 
 Run from repository root:
