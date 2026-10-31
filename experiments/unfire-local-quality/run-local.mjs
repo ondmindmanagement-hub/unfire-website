@@ -16,6 +16,7 @@ try {
     study:"Unfire OS local on-device model quality · public tiny fixtures",
     environment:"existing model via isolated loopback service",
     model:report.model,total:report.total,passed:report.passed,
+    qualityGate:report.qualityGate,externalActionAllowed:report.externalActionAllowed,
     attempts:report.attempted,externalCalls:report.externalCalls,
     providerCostUsd:report.providerCostUsd,
     results:report.results.map(({id,passed,criterion,elapsedMs,reportedOutputTokens})=>
