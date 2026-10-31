@@ -15,7 +15,8 @@ let package = Package(
             .product(name: "UnfireConsentSessionCore", package: "unfire-consent-session")
         ]),
         .testTarget(name: "UnfireCancellableSignTests", dependencies: [
-            "UnfireCancellableSign"
+            "UnfireCancellableSign",
+            .product(name: "UnfireConsentSessionCore", package: "unfire-consent-session")
         ])
     ]
 )
