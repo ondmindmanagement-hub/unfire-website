@@ -62,8 +62,8 @@ export class DurableSyntheticApproval {
     database.exec(
       "CREATE TABLE IF NOT EXISTS synthetic_approval_meta ("+
       "id INTEGER PRIMARY KEY CHECK(id=1),last_seen_ms INTEGER NOT NULL,"+
-      "stopped INTEGER NOT NULL CHECK(stopped IN (0,1)));"+
-      "INSERT OR IGNORE INTO synthetic_approval_meta(id,last_seen_ms,stopped) VALUES(1,-1,0);"+
+      "stopped INTEGER NOT NULL CHECK(stopped IN (0,1)),"+
+      "pinned_key_fingerprint TEXT NOT NULL);"+
       "CREATE TABLE IF NOT EXISTS synthetic_approval_requests ("+
       "id TEXT PRIMARY KEY,fixture_id TEXT NOT NULL,digest TEXT NOT NULL,"+
       "nonce TEXT NOT NULL UNIQUE,issued_at INTEGER NOT NULL,"+
@@ -71,6 +71,18 @@ export class DurableSyntheticApproval {
       "CREATE TABLE IF NOT EXISTS synthetic_approval_audit ("+
       "seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL,state TEXT NOT NULL);"
     );
+    // Bind the trusted verifier identity to the durable journal itself.
+    // Reopening the same database with a different public key must fail.
+    const fingerprint=digest(this.#key.export({format:"der",type:"spki"}));
+    database.prepare(
+      "INSERT OR IGNORE INTO synthetic_approval_meta"+
+      "(id,last_seen_ms,stopped,pinned_key_fingerprint) VALUES(1,-1,0,?)"
+    ).run(fingerprint);
+    const pinned=database.prepare(
+      "SELECT pinned_key_fingerprint FROM synthetic_approval_meta WHERE id=1"
+    ).get();
+    if(pinned.pinned_key_fingerprint!==fingerprint)
+      throw new Error("Pinned verification key mismatch for existing approval database");
   }
   #meta(){return this.#db.prepare(
     "SELECT last_seen_ms,stopped FROM synthetic_approval_meta WHERE id=1").get();}
