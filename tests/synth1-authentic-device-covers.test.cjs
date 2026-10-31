@@ -46,3 +46,13 @@ test('Public Audio footer keeps English-only company label',()=>{
  assert.match(audio,/UNFIRE AUDIO is part of/);
  assert.doesNotMatch(audio,/UNFIRE AUDIO es parte de/);
 });
+
+
+test('ARCHER public page shows truthful distinct Mac and iPhone/iPad editions',()=>{
+ const home=read('index.html');
+ assert.doesNotMatch(home,/available exclusively for macOS|macOS only/i);
+ assert.match(home,/available as separate apps for Mac and for iPhone\/iPad/);
+ assert.match(home,/Features and pricing vary by platform and version/);
+ assert.match(home,/https:\/\/apps\.apple\.com\/app\/id6812968924/);
+ assert.match(home,/https:\/\/apps\.apple\.com\/us\/app\/archer-for-iphone-ipad\/id6822109610/);
+});
