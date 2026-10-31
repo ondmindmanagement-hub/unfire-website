@@ -52,10 +52,10 @@ async function verifyMacSignature(app,executable) {
     throw new Error("Worker signature or minimal App Sandbox entitlement verification failed");
   }
 }
-function spawnBounded(executable,payload,timeoutMs,signal) {
+function spawnBounded(executable,payload,timeoutMs,signal,maxResidentMiB) {
   return new Promise((resolve,reject)=>{
     if(signal?.aborted) {reject(new Error("Task aborted before launch"));return;}
-    let done=false,reason=null,out="",errorBytes=0;
+    let done=false,reason=null,out="",errorBytes=0,memoryPolling=false;
     const child=spawn(executable,["transform"],{
       shell:false,detached:false,stdio:["pipe","pipe","pipe"],
       cwd:"/",env:cleanEnv
@@ -67,6 +67,29 @@ function spawnBounded(executable,payload,timeoutMs,signal) {
     const onAbort=()=>fail("Task stopped before worker completion");
     signal?.addEventListener("abort",onAbort,{once:true});
     const timer=setTimeout(()=>fail("Worker exceeded its time limit"),timeoutMs);
+    // macOS ps reports resident memory in KiB. This is SAMPLE-BASED
+    // enforcement, not an OS memory-limit guarantee. A spike between samples
+    // may escape detection. If inspection fails while the child is active,
+    // fail closed. The monitored PID is the broker's own fixed Swift child.
+    const memoryTimer=setInterval(async()=>{
+      if(done || reason || memoryPolling || !Number.isSafeInteger(child.pid))return;
+      memoryPolling=true;
+      try{
+        const {stdout}=await execFileAsync("/bin/ps",
+          ["-o","rss=","-p",String(child.pid)],
+          {timeout:650,maxBuffer:512,env:cleanEnv});
+        if(done || child.exitCode!==null || child.signalCode!==null)return;
+        const sample=stdout.trim();
+        if(!/^\\d+$/u.test(sample)) {
+          fail("Worker memory sample unavailable");return;
+        }
+        if(Number(sample)>maxResidentMiB*1024)
+          fail("Worker sampled RSS budget exceeded");
+      }catch{
+        if(!done && child.exitCode===null && child.signalCode===null)
+          fail("Worker memory inspection failed");
+      }finally{memoryPolling=false}
+    },80);
     child.on("error",()=>{if(reason===null)reason=new Error("Unable to start signed worker");});
     child.stdout.setEncoding("utf8");
     child.stdout.on("data",part=>{
@@ -78,7 +101,7 @@ function spawnBounded(executable,payload,timeoutMs,signal) {
       if(errorBytes>1024)fail("Worker error output limit exceeded");
     });
     child.once("close",(code,signalName)=>{
-      if(done)return;done=true;clearTimeout(timer);
+      if(done)return;done=true;clearTimeout(timer);clearInterval(memoryTimer);
       signal?.removeEventListener("abort",onAbort);
       if(reason)reject(reason);
       else if(code!==0 || signalName)reject(new Error("Sandboxed worker exited unsuccessfully"));
@@ -105,12 +128,14 @@ export class ResearchSecureBroker {
     await verifyMacSignature(workerApp,executable);
     return new ResearchSecureBroker(workerApp,executable,digest);
   }
-  async execute(task,{timeoutMs=2000,signal}={}) {
+  async execute(task,{timeoutMs=2000,signal,maxResidentMiB=192}={}) {
     const validated=validatePureTask(task);
     if(!Number.isSafeInteger(timeoutMs) || timeoutMs<100 || timeoutMs>5000)
       throw new TypeError("Worker timeout must be bounded between 100 and 5000 ms");
     if(signal!==undefined && !(signal instanceof AbortSignal))
       throw new TypeError("Invalid cancellation signal");
+    if(!Number.isSafeInteger(maxResidentMiB) || maxResidentMiB<1 || maxResidentMiB>512)
+      throw new TypeError("Invalid sample-based RSS budget");
     // Reserve capacity before ANY asynchronous checks, so a second caller
     // cannot race this single-worker research broker into parallel execution.
     if(this.#active!==0)throw new Error("Research worker capacity exceeded");
@@ -124,7 +149,7 @@ export class ResearchSecureBroker {
       // This research checksum is a guard against replacement, NOT a complete
       // atomic open-and-execute implementation.
       const request=JSON.stringify(validated);
-      const stdout=await spawnBounded(this.#executable,request,timeoutMs,signal);
+      const stdout=await spawnBounded(this.#executable,request,timeoutMs,signal,maxResidentMiB);
       if(await readPinnedBinary(this.#executable)!==this.#digest)
         throw new Error("Signed worker binary changed during execution");
       if(signal?.aborted)throw new Error("Task stopped before verification");
@@ -134,7 +159,7 @@ export class ResearchSecureBroker {
     }
   }
   async executeAndAttest({coordinator,credential,artifact,taskId,operation,input,
-                          timeoutMs=2000,signal}={}) {
+                          timeoutMs=2000,signal,maxResidentMiB=192}={}) {
     if(!(coordinator instanceof ResearchCoordinator))throw new TypeError("Trusted coordinator required");
     if(typeof credential!=="string" || !/^Bearer [a-f0-9]{64}$/u.test(credential))
       throw new TypeError("Research role credential required");
@@ -148,13 +173,26 @@ export class ResearchSecureBroker {
     const abortWhenStopped=()=>stopping.abort();
     const unsubscribe=coordinator.onStop(abortWhenStopped);
     signal?.addEventListener("abort",abortWhenStopped,{once:true});
+    let observing=false;
+    const committedStopWatch=setInterval(async()=>{
+      if(observing || stopping.signal.aborted)return;
+      observing=true;
+      try{
+        if(await coordinator.observeCommittedStop())stopping.abort();
+      }catch{
+        // Corrupt/unavailable control journal also cancels the worker.
+        stopping.abort();
+      }finally{observing=false}
+    },70);
     let lease,attested=false,released=false;
     try {
       if(signal?.aborted)throw new Error("Task aborted before lease acquisition");
       // Lease + immutable input are selected only by trusted local caller.
       lease=await coordinator.acquire(credential,{artifact,ttlMs:30_000});
+      if(await coordinator.observeCommittedStop())stopping.abort();
       if(stopping.signal.aborted)throw new Error("Task stopped before launch");
-      const verified=await this.execute(work,{timeoutMs,signal:stopping.signal});
+      const verified=await this.execute(work,{timeoutMs,signal:stopping.signal,maxResidentMiB});
+      if(await coordinator.observeCommittedStop())stopping.abort();
       if(stopping.signal.aborted)throw new Error("Task stopped before attestation");
       // This final commit is serialized with STOP, and validates generation,
       // current lease owner and the scoped role credential again.
@@ -187,6 +225,7 @@ export class ResearchSecureBroker {
       }
       throw error;
     }finally{
+      clearInterval(committedStopWatch);
       signal?.removeEventListener("abort",abortWhenStopped);
       unsubscribe();
     }
