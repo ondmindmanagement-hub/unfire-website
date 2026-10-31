@@ -4,6 +4,7 @@ import { mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { createMissionServer } from "./mission-service.mjs";
+import { AgentCredentialRegistry } from "./agent-identity.mjs";
 
 const role = (actor,actions,artifacts=[]) => ({
   actor,actions,artifacts,ttlMs:60_000
@@ -124,7 +125,8 @@ test("roster cannot expose credentials or imply live agents",async t=>{
   assert.equal(JSON.stringify(service.researchRoster()).includes(token),false);
   assert.equal((await call("/api/state",{token:service.token})).data.connectedAgents,0);
 });
-test("reserved actor names cannot be provisioned",async t=>{
-  const {service}=await setup(t);
-  assert.throws(()=>service.agentCredentials.length===0 ? new Error("Reserved actor identity"):null,/Reserved/);
+test("reserved actor names cannot be provisioned",()=>{
+  const registry=new AgentCredentialRegistry("demo");
+  assert.throws(()=>registry.issue({actor:"operator",actions:["state:read"],artifacts:[],ttlMs:1000}),/Reserved/);
+  assert.throws(()=>registry.issue({actor:"admin",actions:["state:read"],artifacts:[],ttlMs:1000}),/Reserved/);
 });
