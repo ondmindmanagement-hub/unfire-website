@@ -8,7 +8,20 @@
         android:icon="@drawable/game_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:manageSpaceActivity="com.google.androidbrowserhelper.trusted.ManageDataLauncherActivity"
         android:theme="@android:style/Theme.Translucent.NoTitleBar">
+
+        <!-- Required by Android Browser Helper 2.7.4:
+             LauncherActivity.launchTwa() calls addSiteSettingsShortcut(), which
+             enables this component through PackageManager. Without declaring it,
+             Android throws IllegalArgumentException and the user sees Home. -->
+        <activity
+            android:name="com.google.androidbrowserhelper.trusted.ManageDataLauncherActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.customtabs.trusted.MANAGE_SPACE_URL"
+                android:value="https://unfire.technology/audio/" />
+        </activity>
 
         <!-- Trusted Web Activity opens the public Unfire website.
              Fullscreen trust requires verified Digital Asset Links from a
