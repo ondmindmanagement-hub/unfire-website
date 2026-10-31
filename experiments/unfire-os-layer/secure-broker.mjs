@@ -142,6 +142,8 @@ export class ResearchSecureBroker {
        typeof taskId!=="string" || !NAME.test(taskId))
       throw new TypeError("Invalid artifact or task identifier");
     const work=validatePureTask({operation,input});
+    if(signal!==undefined && !(signal instanceof AbortSignal))
+      throw new TypeError("Invalid cancellation signal");
     const stopping=new AbortController();
     const abortWhenStopped=()=>stopping.abort();
     const unsubscribe=coordinator.onStop(abortWhenStopped);
