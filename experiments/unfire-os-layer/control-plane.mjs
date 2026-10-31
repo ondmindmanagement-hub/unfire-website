@@ -39,7 +39,7 @@ function validate(event){
     }else if(event.type==="RESULT_ATTESTED"){
       name(event.task,"task");
       if(typeof event.resultDigest!=="string"||!HEX.test(event.resultDigest)||
-        Object.keys(event).length!==7)throw new Error("Invalid result attestation");
+        Object.keys(event).length!==8)throw new Error("Invalid result attestation");
     }else if(Object.keys(event).length!==6)throw new Error("Invalid release fields");
   }
   if(Buffer.byteLength(JSON.stringify(event),"utf8")>1100)throw new Error("Control event too large");
