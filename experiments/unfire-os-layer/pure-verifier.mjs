@@ -5,7 +5,7 @@
  */
 import { createHash } from "node:crypto";
 
-const OPS = Object.freeze(["uppercase","word_count","sha256"]);
+const OPS = Object.freeze(["uppercase","slow_uppercase","word_count","sha256"]);
 const ASCII = /^[\x20-\x7e]{0,512}$/u;
 const hash = bytes => createHash("sha256").update(bytes).digest("hex");
 
@@ -34,7 +34,7 @@ export function independentlyVerify(task, outputText) {
       !Object.hasOwn(result, "value")) {
     throw new Error("Worker response has an untrusted or unexpected shape");
   }
-  const expected = input.operation === "uppercase" ? input.input.toUpperCase()
+  const expected = (input.operation === "uppercase" || input.operation === "slow_uppercase") ? input.input.toUpperCase()
     : input.operation === "word_count"
       ? (input.input.trim() ? input.input.trim().split(/ +/u).length : 0)
       : hash(Buffer.from(input.input,"utf8"));
