@@ -1,0 +1,31 @@
+{
+  "name": "Y2K ROBOTS",
+  "short_name": "Y2K ROBOTS",
+  "description": "Explore a developing 3D world with robots, flight and secrets.",
+  "lang": "en",
+  "id": "/audio/",
+  "start_url": "/audio/",
+  "scope": "/audio/",
+  "display": "standalone",
+  "display_override": [
+    "fullscreen",
+    "standalone"
+  ],
+  "background_color": "#08090c",
+  "theme_color": "#08090c",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/audio/img/y2k-robots-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/audio/img/y2k-robots-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
