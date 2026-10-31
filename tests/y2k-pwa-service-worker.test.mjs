@@ -35,7 +35,8 @@ test('network-only worker intercepts only same-origin /audio/ document navigatio
 });
 
 test('no caching, forced worker takeover or background tasks', () => {
-  assert.doesNotMatch(worker, /\bcaches\s*\.|\bskipWaiting\s*\(|\bclients\.claim\s*\(|\bSyncManager\b/);
+  const executable = worker.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  assert.doesNotMatch(executable, /\bcaches\s*\.|\bskipWaiting\s*\(|\bclients\.claim\s*\(|\bSyncManager\b/);
   assert.doesNotMatch(worker, /addEventListener\(\s*['"]push['"]/);
   assert.doesNotMatch(helper, /\bwindow\.location\s*=|\bwindow\.open\s*\(/);
   assert.match(helper, /window\.addEventListener\('load'/);
