@@ -17,7 +17,7 @@ final class SyntheticConsentSessionTests: XCTestCase {
         let challenge:Data
         let sqlitePath:String
 
-        func session(now:Int64=100,
+        @MainActor func session(now:Int64=100,
                      reviewerDER:Data?=nil,
                      issuerDER:Data?=nil) throws -> SyntheticConsentSession {
             try SyntheticConsentSession(
