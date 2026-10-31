@@ -28,14 +28,14 @@ node --test experiments/unfire-durable-approval/durable-preview.test.mjs
 
 The tests cover valid/invalid signatures, DENY versus APPROVE, mismatched proposal, SQL/JSON injection shapes, explicit revocation, expiry, signed decision reuse, persistent STOP, monotonic clock checks, same-file double-consume through **two separate database connections**, reopening an actual temporary SQLite file, pinned-key replacement rejection, exact request shapes, strict proposal budgets, and metadata-only audit.
 
-**Measured local verification on the authorized Mac:** 25/25 tests passed, 0 failed, on the research branch at source SHA `9c01e64e1d2f0c83b8766d4a68d4a038ca2c131a` (Node v26.8.2). A separate integrated test run should also be completed before acceptance. These are Node tests, not GitHub Actions CI or a security certification.
+**Measured local verification on the authorized Mac:** 26/26 tests passed, 0 failed, on source SHA `a0fb5b2798e39f7ac332ee4d6b93d096c5b889c9` (Node v26.8.2), including an actual separately launched Node process attempting to replay a preview consumed before reopen. An earlier integrated 203/203 suite passed before adding this last test; a final post-commit integrated rerun remains required. These are Node tests, not GitHub Actions CI or a security certification.
 
 ## Limits and remaining blockers
 
 - A software signature authenticates a private key, **not the presence, identity, informed consent or direct action of a human**. This module has no trusted confirmation window, biometrics, Keychain/Secure Enclave integration or legal consent process. Test private keys are ephemeral only; never put a real private key in GitHub.
 - A signed preview is *not* authorization to execute something externally. There is deliberately no real tool adapter here. A malicious or incorrectly designed host with filesystem access could bypass or mutate the database. **SQLite does not cryptographically authenticate or encrypt the database file**.
 - The persisted clock prevents regression *relative to stored inputs*, but is not an independently trusted wall clock. Loss/corruption/rollback of the database, file locking by hostile processes, OS permission boundaries, backups, power failure, secure storage, data retention, audit immutability and transaction recovery across actual power interruptions are not validated.
-- Two database connections are tested, but this does not constitute a complete hostile concurrent-process or fault-injection assessment.
+- Two database connections and one independently launched Node process are tested, but this does not constitute a full hostile concurrent-process or fault-injection assessment.
 - A second caller who has internal access to an already approved proposal can attempt to consume its inert preview. Before ever connecting real capabilities, binding the **consumer identity and precise allowed target operation** is mandatory.
 - The standalone module is not yet wired into the original synthetic scheduler; integration tests confirm no regressions but do not prove a deployed end-to-end approval system.
 - Previous local Qwen evaluation remains **2/3** trivial prompts correct and therefore quality-gated as BLOCKED; this journal does not make model answers trustworthy.
