@@ -88,6 +88,26 @@ func probeNetwork(_ portText: String) {
     output(["allowed": result == 0, "errorNumber": result == 0 ? 0 : Int(errno)])
 }
 
+// Explicit OS process budgets, enforced by the macOS kernel.
+// Memory is NOT hard-capped by this prototype; a separate validated
+// macOS memory/coalition control is required before production.
+func applyProcessLimits() {
+    var cpu = rlimit(rlim_cur: rlim_t(2), rlim_max: rlim_t(2))
+    guard Darwin.setrlimit(RLIMIT_CPU, &cpu) == 0 else {
+        reject("cpu_limit_unavailable")
+    }
+    var openFiles = rlimit(rlim_cur: rlim_t(32), rlim_max: rlim_t(32))
+    guard Darwin.setrlimit(RLIMIT_NOFILE, &openFiles) == 0 else {
+        reject("open_file_limit_unavailable")
+    }
+    var maxFileBytes = rlimit(rlim_cur: rlim_t(65536), rlim_max: rlim_t(65536))
+    guard Darwin.setrlimit(RLIMIT_FSIZE, &maxFileBytes) == 0 else {
+        reject("file_size_limit_unavailable")
+    }
+}
+
+applyProcessLimits()
+
 let arguments = CommandLine.arguments
 guard arguments.count >= 2 else { reject("missing_mode") }
 switch arguments[1] {
