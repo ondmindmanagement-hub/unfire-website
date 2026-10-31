@@ -34,6 +34,14 @@ func runTransform() {
             reject("invalid_text")
         }
         output(["ok": true, "value": text.uppercased()])
+    case "slow_uppercase":
+        // Fixed one-second sleep exclusively for synthetic watchdog/cancel QA.
+        // No user-supplied delay, network, filesystem or arbitrary execution.
+        guard let text = value["input"] as? String, text.utf8.count <= 4096 else {
+            reject("invalid_text")
+        }
+        usleep(1_000_000)
+        output(["ok": true, "value": text.uppercased()])
     case "word_count":
         guard let text = value["input"] as? String, text.utf8.count <= 4096 else {
             reject("invalid_text")
