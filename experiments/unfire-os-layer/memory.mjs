@@ -107,12 +107,14 @@ async function ensureRoot(directory) {
   try { await fs.mkdir(directory,{mode:0o700}); } catch (e) { if(e.code!=="EEXIST") throw e; }
   const st=await fs.lstat(directory);
   if (!st.isDirectory() || st.isSymbolicLink()) throw new Error("Workspace cannot be a symlink");
+  if ((st.mode & 0o077) !== 0) throw new Error("Workspace must be owner-private (0700)");
 }
 async function ensureJournal(directory) {
   const file=join(directory,JOURNAL);
   try {
     const stat=await fs.lstat(file);
     if(!stat.isFile()||stat.isSymbolicLink()) throw new Error("Journal must be a regular file");
+    if ((stat.mode & 0o077) !== 0) throw new Error("Journal must be owner-private (0600)");
   } catch(e) {
     if(e.code!=="ENOENT") throw e;
     let h;
