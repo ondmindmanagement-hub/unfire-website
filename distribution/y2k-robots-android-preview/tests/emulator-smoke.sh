@@ -23,25 +23,28 @@ adb shell pm dump "$PACKAGE" | grep -E 'targetSdk=36|targetSdkVersion=36' >/dev/
   echo 'BLOCKED: exact package/API36 install not confirmed'; exit 3;
 }
 
-# Begin with a clean buffered log; verify the launcher intent is accepted.
-adb logcat -c
-adb shell am start -W -n "$PACKAGE/$ACTIVITY" > /tmp/y2k-launch-observed.txt
-cat /tmp/y2k-launch-observed.txt
-grep -q 'Status: ok' /tmp/y2k-launch-observed.txt || {
-  echo 'BLOCKED: Android did not accept native launcher activity'; exit 4;
-}
-
-sleep 6
-adb logcat -d -v time -t 3000 > /tmp/y2k-runtime-observed.txt
-if grep -Eq 'Process: technology\\.unfire\\.y2krobots|FATAL EXCEPTION.*technology\\.unfire\\.y2krobots' /tmp/y2k-runtime-observed.txt; then
-  echo 'BLOCKED: observed native Android crash for Y2K ROBOTS. AndroidRuntime diagnostic excerpt follows.'
-  # Log was cleared immediately before launch. Print only bounded AndroidRuntime
-  # error-tag stack rather than uploading full emulator logs or screenshots.
-  adb logcat -d -v tag -s AndroidRuntime:E '*:S' | head -c 8000 || true
-  rm -f /tmp/y2k-launch-observed.txt /tmp/y2k-runtime-observed.txt
-  exit 5
-fi
+# Multiple independent cold app starts on one disposable emulator. A single
+# success cannot rule out the intermittent native crash seen on this image.
+for attempt in 1 2 3; do
+  echo "ANDROID_COLD_START_ATTEMPT=${attempt}/3"
+  adb shell am force-stop "$PACKAGE" || true
+  adb logcat -c
+  adb shell am start -W -n "$PACKAGE/$ACTIVITY" > /tmp/y2k-launch-observed.txt
+  cat /tmp/y2k-launch-observed.txt
+  grep -q 'Status: ok' /tmp/y2k-launch-observed.txt || {
+    echo "BLOCKED: Android launcher intent failed on cold start ${attempt}"; exit 4;
+  }
+  sleep 6
+  adb logcat -d -v time -t 3000 > /tmp/y2k-runtime-observed.txt
+  if grep -Eq 'Process: technology\\.unfire\\.y2krobots|FATAL EXCEPTION.*technology\\.unfire\\.y2krobots' /tmp/y2k-runtime-observed.txt; then
+    echo "BLOCKED: AndroidRuntime native crash on cold start ${attempt}. AndroidRuntime error-tag excerpt:"
+    adb logcat -d -v tag -s AndroidRuntime:E '*:S' | head -c 9500 || true
+    rm -f /tmp/y2k-launch-observed.txt /tmp/y2k-runtime-observed.txt
+    exit 5
+  fi
+  echo "ANDROID_COLD_START_ATTEMPT_${attempt}_NO_CRASH"
+done
 
 # No screenshots or log files exported: avoid publishing any browser/session data.
 rm -f /tmp/y2k-launch-observed.txt /tmp/y2k-runtime-observed.txt
-echo 'ANDROID_EMULATOR_NATIVE_WITH_BROWSER_PASS. Scope: Chrome present + emulator APK installed + native launcher accepted. Actual web game rendering, fullscreen, P2P, missions, physical Android NOT CERTIFIED.'
+echo 'ANDROID_EMULATOR_3_COLD_STARTS_WITH_BROWSER_PASS. Chrome present; 3 Android launcher activations with no observed native AndroidRuntime crash. Actual web game rendering, fullscreen, P2P, missions, physical Android NOT CERTIFIED.'
