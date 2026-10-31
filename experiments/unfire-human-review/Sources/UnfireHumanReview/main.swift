@@ -5,6 +5,7 @@ import LocalAuthentication
 final class ReviewViewModel: ObservableObject {
     @Published private(set) var policy: ReviewPolicy
     @Published private(set) var statusMessage: String = "No device authentication has been requested."
+    private var pendingContext: LAContext?
 
     init() {
         policy = ReviewPolicy(request: .synthetic(at: Date()))
@@ -30,6 +31,7 @@ final class ReviewViewModel: ObservableObject {
             objectWillChange.send()
             return
         }
+        pendingContext = context
         statusMessage = "Waiting for macOS device authentication."
         objectWillChange.send()
         context.evaluatePolicy(
@@ -38,6 +40,7 @@ final class ReviewViewModel: ObservableObject {
         ) { [weak self] granted, _ in
             Task { @MainActor [weak self] in
                 guard let self else { return }
+                self.pendingContext = nil
                 self.policy.completeAuthentication(
                     ticket: ticket, granted: granted, now: Date()
                 )
@@ -50,12 +53,16 @@ final class ReviewViewModel: ObservableObject {
     }
 
     func deny() {
+        pendingContext?.invalidate()
+        pendingContext = nil
         policy.deny()
         statusMessage = "Review denied. No action occurred."
         objectWillChange.send()
     }
 
     func stop() {
+        pendingContext?.invalidate()
+        pendingContext = nil
         policy.stop()
         statusMessage = "STOP active for this demonstration. Nothing was executed."
         objectWillChange.send()
