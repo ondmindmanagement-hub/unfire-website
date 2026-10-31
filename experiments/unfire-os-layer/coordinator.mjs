@@ -42,6 +42,11 @@ export class ResearchCoordinator {
     this.#stopListeners.add(callback);
     return ()=>this.#stopListeners.delete(callback);
   }
+  async observeCommittedStop(){
+    // Trusted local-only read. This journal is authoritative even when STOP
+    // was committed by an independent process without an in-memory callback.
+    return (await this.#plane.inspect()).stopped;
+  }
   async read(header){
     this.#allow(header,"state:read");
     return this.#plane.inspect();
