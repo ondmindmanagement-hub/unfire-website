@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { generateKeyPairSync, sign } from "node:crypto";
 import { mkdtemp, rm } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { DurableSyntheticApproval as Gate, STATE, DOMAIN } from "./durable-preview.mjs";
@@ -238,4 +239,37 @@ test("untrusted proposal cannot supply its own pinned key fingerprint",()=>{
   assert.throws(()=>gate.propose({
     ...proposal(),pinned_key_fingerprint:"forged"
   },{now:1}),/Invalid synthetic proposal/);
+});
+
+
+test("independent Node process cannot replay preview consumed before restart",async()=>{
+  const dir=await mkdtemp(join(tmpdir(),"unfire-approval-process-"));
+  const file=join(dir,"process.sqlite"),pair=keys();
+  let db;
+  try {
+    db=new DatabaseSync(file);
+    const gate=new Gate({database:db,trustedPublicKeyPem:pair.publicKey});
+    create(gate);
+    approve(gate,pair);
+    gate.preview("task_a",{now:103});
+    db.close();db=null;
+    const moduleURL=new URL("./durable-preview.mjs",import.meta.url).href;
+    const child=[
+      'import {DatabaseSync} from "node:sqlite";',
+      'import {DurableSyntheticApproval} from '+JSON.stringify(moduleURL)+';',
+      'const db=new DatabaseSync(process.argv[1]);',
+      'const key=Buffer.from(process.argv[2],"base64").toString("utf8");',
+      'const gate=new DurableSyntheticApproval({database:db,trustedPublicKeyPem:key});',
+      'try { gate.preview("task_a",{now:104});process.stdout.write("REPLAY_ALLOWED");process.exitCode=4; }',
+      'catch(e) { if(!/No unused approval/.test(e.message))throw e; process.stdout.write("REPLAY_REJECTED"); }',
+      'finally { db.close(); }'
+    ].join("\n");
+    const result=execFileSync(process.execPath,[
+      "--input-type=module","-e",child,file,
+      Buffer.from(pair.publicKey).toString("base64")
+    ],{encoding:"utf8",timeout:5000,maxBuffer:10240});
+    assert.equal(result,"REPLAY_REJECTED");
+  } finally {
+    db?.close();await rm(dir,{recursive:true,force:true});
+  }
 });
