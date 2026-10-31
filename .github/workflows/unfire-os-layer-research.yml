@@ -47,7 +47,8 @@ jobs:
             experiments/unfire-os-layer/agent-gateway.test.mjs \
             experiments/unfire-os-layer/fenced-results.test.mjs \
             experiments/unfire-os-layer/control-plane.test.mjs \
-            experiments/unfire-os-layer/coordinator.test.mjs
+            experiments/unfire-os-layer/coordinator.test.mjs \
+            experiments/unfire-os-layer/pure-verifier.test.mjs
 
   browser-console:
     name: Isolated Chrome console check
@@ -84,6 +85,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - name: Set up Node 22 for bounded broker tests
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Compile, sign, and probe only synthetic targets
         shell: bash
         run: |
