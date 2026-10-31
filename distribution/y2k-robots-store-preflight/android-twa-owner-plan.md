@@ -8,6 +8,8 @@ If the *actual* mobile game works well, preserve the existing free browser exper
 
 The protected origin is `https://unfire.technology`, web manifest is `https://unfire.technology/audio/game.webmanifest`, launch is `/audio/`. Keep technical web manifest `id=/audio/` stable for installed users. Proposed Android application ID for owner/legal review: `technology.unfire.y2krobots` (a **candidate**; not reserved in Play Console). Do not commit to production ID without publisher account access and collision check.
 
+A separate `android-twa-manifest.candidate.json` is staged in the same PR; it has no keystore, signed fingerprint or reserved Play identity and MUST be checked against Bubblewrap's current generated schema before use. The owner-approved official icon PNGs are staged under `assets/` without modifying the game.
+
 ## Canonical workflow after PWA owner integration and full QA
 
 1. Verify genuine approved 192x192 and 512x512 icons, English metadata, security, an intentionally registered service worker, HTTPS and the exact deployed launch page. The current `audio/game.webmanifest` does not yet match this candidate and `https://unfire.technology/audio/sw.js` returned 404 on 31 October 2026.
