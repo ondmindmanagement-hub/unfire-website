@@ -214,3 +214,28 @@ test("untrusted model cannot choose SQL database, host clock, or verification ke
     assert.throws(()=>gate.propose({...proposal(),[property]:"evil"},{now:1}),/Invalid synthetic/);
   }
 });
+
+
+test("different public key cannot be substituted when reopening a persistent journal",async()=>{
+  const dir=await mkdtemp(join(tmpdir(),"unfire-approval-keypin-"));
+  const path=join(dir,"keypin.sqlite"),original=keys(),replacement=keys();
+  let db;
+  try {
+    db=new DatabaseSync(path);
+    const first=new Gate({database:db,trustedPublicKeyPem:original.publicKey});
+    create(first);
+    db.close();
+    db=new DatabaseSync(path);
+    assert.throws(()=>new Gate({
+      database:db,trustedPublicKeyPem:replacement.publicKey
+    }),/Pinned verification key mismatch/);
+    const reopened=new Gate({database:db,trustedPublicKeyPem:original.publicKey});
+    assert.equal(reopened.snapshot("task_a").state,STATE.PENDING);
+  }finally{db?.close();await rm(dir,{recursive:true,force:true});}
+});
+test("untrusted proposal cannot supply its own pinned key fingerprint",()=>{
+  const {gate}=context();
+  assert.throws(()=>gate.propose({
+    ...proposal(),pinned_key_fingerprint:"forged"
+  },{now:1}),/Invalid synthetic proposal/);
+});
