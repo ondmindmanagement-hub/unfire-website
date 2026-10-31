@@ -1,0 +1,65 @@
+name: Y2K ROBOTS Android emulator installation smoke
+
+on:
+  pull_request:
+    paths:
+      - 'distribution/y2k-robots-android-preview/**'
+      - '.github/workflows/y2k-android-emulator-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: y2k-android-virtual-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  virtual-android-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 23
+    defaults:
+      run:
+        working-directory: distribution/y2k-robots-android-preview
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify preinstalled official Android SDK API 36
+        run: |
+          set -eu
+          : "${ANDROID_HOME:?Missing hosted Android SDK}"
+          test -d "$ANDROID_HOME/platforms/android-36"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: Compile isolated native wrapper without Play signing
+        run: |
+          node --test tests/preview-static.test.mjs
+          gradle --no-daemon --max-workers=2 :app:assembleDebug
+      - name: Enable Linux KVM for virtual test only
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Install and launch debug-only APK on disposable emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_5
+          cores: 2
+          ram-size: 1536M
+          heap-size: 256M
+          working-directory: distribution/y2k-robots-android-preview
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: bash tests/emulator-smoke.sh
