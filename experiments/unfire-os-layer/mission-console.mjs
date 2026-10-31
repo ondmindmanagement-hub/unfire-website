@@ -1,6 +1,8 @@
 const $ = name => document.getElementById(name);
 const params = new URL(location.href);
-const token = params.hash.slice(1);
+const fromLink = params.hash.slice(1);
+if (/^[a-f0-9]{64}$/u.test(fromLink)) sessionStorage.setItem("unfire-os-local-session",fromLink);
+const token = fromLink || sessionStorage.getItem("unfire-os-local-session") || "";
 history.replaceState(null,"",params.pathname);
 let mission = null, stopped = false, connected = false, hasMission = false, claims = {};
 function feedback(message,error=false) {
