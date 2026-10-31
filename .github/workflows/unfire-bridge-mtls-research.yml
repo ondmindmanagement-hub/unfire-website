@@ -45,5 +45,12 @@ jobs:
           node --version
           openssl version
           node -p "process.platform"
+      - name: Use Homebrew OpenSSL 3 for macOS fixture generation
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          BIN="$(brew --prefix openssl@3)/bin/openssl"
+          "$BIN" version
+          echo "OPENSSL_BIN=$BIN" >> "$GITHUB_ENV"
       - name: Ephemeral key and localhost TLS security tests
         run: node --test experiments/unfire-bridge-mtls/mtls.test.mjs
