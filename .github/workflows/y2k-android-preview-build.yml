@@ -1,0 +1,58 @@
+name: Y2K ROBOTS Android TWA unsigned preview
+
+on:
+  pull_request:
+    paths:
+      - 'distribution/y2k-robots-android-preview/**'
+      - '.github/workflows/y2k-android-preview-build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: y2k-twa-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview-android-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: distribution/y2k-robots-android-preview
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Confirm Android SDK API 36 is preinstalled on public CI runner
+        run: |
+          set -eu
+          : "${ANDROID_HOME:?GitHub runner Android SDK unavailable}"
+          test -d "$ANDROID_HOME/platforms/android-36"
+          test -d "$ANDROID_HOME/build-tools/35.0.0"
+          echo "Using existing Android SDK only. No SDK license acceptance or install."
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: Check non-production identity, permissions and genuine icon bytes
+        run: node --test tests/preview-static.test.mjs
+      - name: Compile only debug APK and unsigned release AAB; do NOT sign for distribution
+        run: gradle --no-daemon --max-workers=2 :app:assembleDebug :app:bundleRelease
+      - name: Verify ephemeral generated packages (do NOT upload artifacts)
+        run: |
+          set -eu
+          test -s app/build/outputs/apk/debug/app-debug.apk
+          test -s app/build/outputs/bundle/release/app-release.aab
+          shasum() { sha256sum "$1"; }
+          echo "ANDROID_PREVIEW_COMPILE_PASS. These are NOT authorized public builds."
+          ls -lh app/build/outputs/apk/debug/app-debug.apk app/build/outputs/bundle/release/app-release.aab
+          shasum app/build/outputs/apk/debug/app-debug.apk
+          shasum app/build/outputs/bundle/release/app-release.aab
