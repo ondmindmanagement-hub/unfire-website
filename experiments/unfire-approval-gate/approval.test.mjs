@@ -167,3 +167,31 @@ test("no real operation can be invoked through preview return",()=>{
   assert.equal(Object.hasOwn(r,"output"),false);
   assert.equal(r.externalActionAllowed,false);
 });
+
+
+test("signature cannot be replayed into a new session sharing the same key",()=>{
+  const keys=pair();
+  const first=new Gate({trustedPublicKeyPem:keys.publicKey});
+  const second=new Gate({trustedPublicKeyPem:keys.publicKey});
+  proposal(first);proposal(second);
+  const signature=signed(first,keys);
+  assert.throws(()=>second.decide("task_a",{
+    decision:"APPROVE",signature,now:101
+  }),/Signature rejected/);
+});
+test("approval-to-preview time cannot regress",()=>{
+  const {gate,keys}=setup();proposal(gate);
+  gate.decide("task_a",{decision:"APPROVE",signature:signed(gate,keys),now:500});
+  assert.throws(()=>gate.preview("task_a",{now:499}),/Invalid clock/);
+  assert.equal(gate.preview("task_a",{now:501}).simulated,true);
+});
+test("no model output or signature appears in audit record",()=>{
+  const {gate,keys}=setup();proposal(gate);
+  const signature=signed(gate,keys);
+  gate.decide("task_a",{decision:"APPROVE",signature,now:101});
+  gate.preview("task_a",{now:101});
+  const events=JSON.stringify(gate.events());
+  assert.equal(events.includes(signature),false);
+  assert.equal(events.includes("modelOutput"),false);
+  assert.equal(events.includes("42"),false);
+});
