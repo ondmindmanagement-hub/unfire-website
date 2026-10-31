@@ -45,7 +45,9 @@ jobs:
             experiments/unfire-os-layer/mission-service.test.mjs \
             experiments/unfire-os-layer/agent-identity.test.mjs \
             experiments/unfire-os-layer/agent-gateway.test.mjs \
-            experiments/unfire-os-layer/fenced-results.test.mjs
+            experiments/unfire-os-layer/fenced-results.test.mjs \
+            experiments/unfire-os-layer/control-plane.test.mjs \
+            experiments/unfire-os-layer/coordinator.test.mjs
 
   browser-console:
     name: Isolated Chrome console check
