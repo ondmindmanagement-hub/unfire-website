@@ -6,6 +6,7 @@ import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { ResearchSecureBroker } from "./secure-broker.mjs";
 import { ResearchCoordinator } from "./coordinator.mjs";
+import { UnifiedControlPlane } from "./control-plane.mjs";
 
 const workerApp=process.env.UNFIRE_SIGNED_TEST_APP;
 if(process.platform!=="darwin" || !workerApp) {
@@ -26,7 +27,7 @@ async function withCoordinator(t) {
    artifacts:["report"],ttlMs:60_000}]
  });
  const credential="Bearer "+credentials[0].token;
- return {coordinator,credential};
+ return {coordinator,credential,directory:join(d,"state")};
 }
 test("signed sandboxed worker passes independent verification",async()=>{
  const broker=await ResearchSecureBroker.open({workerApp});
@@ -155,4 +156,44 @@ test("research worker probe modes stay unreachable through broker",async()=>{
  for(const operation of ["probe-limits","probe-network","probe-file"]){
    await assert.rejects(broker.execute({operation,input:"hello"}),/synthetic/);
  }
+});
+
+test("fixed delayed synthetic worker completes under the default RSS budget",async()=>{
+ const broker=await ResearchSecureBroker.open({workerApp});
+ const result=await broker.execute({operation:"slow_uppercase",input:"unfire"},
+   {timeoutMs:3000});
+ assert.equal(result.value,"UNFIRE");
+ assert.equal(result.verification,"deterministic-recomputed");
+});
+test("RSS watchdog kills slow worker when a tiny sampled budget is exceeded",async()=>{
+ const broker=await ResearchSecureBroker.open({workerApp});
+ await assert.rejects(broker.execute({operation:"slow_uppercase",input:"unfire"},
+   {timeoutMs:3000,maxResidentMiB:1}),/RSS budget exceeded/);
+ // A failed worker does not permanently occupy the broker.
+ assert.equal((await broker.execute({operation:"uppercase",input:"again"})).value,"AGAIN");
+});
+test("reject invalid sample-based RSS thresholds",async()=>{
+ const broker=await ResearchSecureBroker.open({workerApp});
+ for(const maxResidentMiB of [0,-1,513,1.5,"64"]){
+  await assert.rejects(broker.execute({operation:"uppercase",input:"test"},
+    {maxResidentMiB}),/RSS budget/);
+ }
+});
+test("STOP committed through an independent coordinator cancels a running worker",async t=>{
+ const broker=await ResearchSecureBroker.open({workerApp});
+ const {coordinator,credential,directory}=await withCoordinator(t);
+ await coordinator.createMission();
+ // The second handle stands in for a different process: no in-memory STOP
+ // callback from it is registered on the broker's coordinator.
+ const external=await UnifiedControlPlane.open(directory,"demo");
+ const work=broker.executeAndAttest({coordinator,credential,
+   artifact:"report",taskId:"slowtest",operation:"slow_uppercase",
+   input:"do not deliver",timeoutMs:3000});
+ const rejected=assert.rejects(work,/stopped|STOPPED|aborted/);
+ await new Promise(resolve=>setTimeout(resolve,350));
+ await external.stopMission();
+ await rejected;
+ const state=await coordinator.read(credential);
+ assert.equal(state.stopped,true);
+ assert.equal(state.leases.report.result,null);
 });
