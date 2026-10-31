@@ -9,7 +9,7 @@ This prototype only simulates the schedule and performs allowlisted pure transfo
 
 ## Run in a disposable local workspace
 - Prerequisite: recent Node.js runtime. No additional packages or subscription.
-- Tests: `node --test experiments/unfire-os-layer/core.test.mjs experiments/unfire-os-layer/superchat.test.mjs`
+- Tests: `node --test experiments/unfire-os-layer/core.test.mjs experiments/unfire-os-layer/superchat.test.mjs experiments/unfire-os-layer/memory.test.mjs`
 - Visual dashboard: `node experiments/unfire-os-layer/serve.mjs`; open `http://127.0.0.1:4177/` on the same machine.
 - Stop local preview manually with Ctrl+C. No installation, daemon, privileged changes or auto-start.
 - The preview binds to loopback, has a fixed allowlist of static read-only assets and forbids outgoing browser connections with its CSP. No persistence or telemetry.
@@ -21,14 +21,27 @@ This prototype only simulates the schedule and performs allowlisted pure transfo
 - Research mission template with **7 roles and 4 lanes**.
 - Offline capacity planning: 1–8 *virtual* concurrent slots, dependencies, artifact reservations, and distinct write/release authorization gates.
 - Interactive accessible dashboard with mission input, concurrency setting, simulated approval, STOP, sequential wave simulation, event log and mobile layout.
-- Audit events only exist in volatile UI memory; they are **not** durable, tamper-evident or independently verified.
+- Dashboard audit events still exist only in volatile browser memory. Separately, `memory.mjs` provides an owner-private **local** append-only journal with SHA-256 hash chaining, event/state replay, single-writer locking and a demo capability-grant policy. It is not connected to the dashboard or to any real agent and is not tamper-proof against an attacker who can rewrite the entire journal.
 
 ## What is not implemented
 - Real agents, ChatGPT session coordination, LLM inference, live web searches or third-party tools.
-- Shared persistent memory, GitHub write locks, authentication, identity federation, OS process scheduling or remote device control.
+- Authenticated shared memory across multiple agents or devices, GitHub write locks, identity federation, OS process scheduling or remote device control.
 - True concurrency; waves describe *possible* parallel work, but the demo executes no workers.
 - Production access policies, background daemons, deployment, provider credentials, payments or public release.
 - Measured speedups or independent benchmarks.
+
+## New local memory research module
+- `LocalMissionMemory.open(absoluteWorkspaceDirectory)` creates or opens an explicit owner-private workspace (0700) and an append-only event journal (0600), with no telemetry or network access.
+- Events: mission creation, artifact claim/release, task completion and persistent mission STOP; strict identifiers and bounded payloads.
+- The journal uses a SHA-256 hash chain to detect accidental corruption and simple tampering, and rejects broken state transitions. A same-user attacker can rewrite and rehash it: **not a signature or production audit guarantee**.
+- A directory-based exclusive lock rejects simultaneous append attempts rather than retrying. If a process crashes with a stale lock, writes intentionally fail closed until an operator reviews and clears it. No automatic lock theft.
+- `MemoryPolicy` checks explicit actor, mission, action, optional artifact and expiry grants. But actors are still **self-declared strings**, reads are local/trusted, and code importing the store can bypass the policy. It must not be exposed as an authenticated agent or remote service.
+- Persistent memory and the visual dashboard are intentionally separate while auth and storage design are reviewed. No private customer, founder or API-key content should be stored in this research version.
+
+## Verification performed
+- 31 October 2026: Node tests on the authorized Mac in a temporary directory: **52 passed, 0 failed**. Includes 18 memory and 34 existing planner/runtime cases; no additional package installation.
+- Chrome headless with a temporary profile: dashboard passed basic DOM, responsive overflow and interaction assertions at 1440×900, 390×844 and 320×740. Seven agents remain **simulated**, not connected.
+- QA does not certify security, accessibility compliance, physical devices, cross-OS interoperability or performance improvements. No production changes, merges or installations.
 
 ## Design rules for a future secure version
 1. **Single mission truth:** goal, project, scoped task IDs, dependencies, outputs, hashes, version and responsible agent.
