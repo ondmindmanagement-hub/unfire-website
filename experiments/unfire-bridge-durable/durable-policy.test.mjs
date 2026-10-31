@@ -11,10 +11,13 @@ const F1='A'.repeat(64), F2='B'.repeat(64), F3='C'.repeat(64);
 const fail=(fn,code)=>assert.throws(fn,e=>e.code===code);
 function setup(t) {
   const dir=mkdtempSync(join(tmpdir(),'unfire-bridge-durable-'));
-  t.after(()=>rmSync(dir,{recursive:true,force:true}));
   const dbPath=join(dir,'metadata.sqlite');
   const store=openDurablePolicy({dbPath});
-  t.after(()=>store.close());
+  // Windows requires releasing SQLite handles before removing a temporary DB.
+  t.after(()=>{
+    store.close();
+    rmSync(dir,{recursive:true,force:true,maxRetries:20,retryDelay:50});
+  });
   for(const [nodeId,platform,fingerprint] of [['mac','macos',F1],['win','windows',F2],['linux','linux',F3]]) {
     store.enroll({tenant:'school',nodeId,platform,fingerprint,approved:true});
     store.connect({tenant:'school',nodeId,approved:true});
