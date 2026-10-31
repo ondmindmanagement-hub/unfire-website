@@ -1,0 +1,46 @@
+# Synthetic Unfire Bridge durable security-state tests only. No network or deployment.
+name: Unfire Bridge durable policy research
+
+on:
+  push:
+    branches: [research/unfire-bridge-durable-20261031]
+    paths:
+      - 'experiments/unfire-bridge-durable/**'
+      - '.github/workflows/unfire-bridge-durable-research.yml'
+  pull_request:
+    paths:
+      - 'experiments/unfire-bridge-durable/**'
+      - '.github/workflows/unfire-bridge-durable-research.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: unfire-bridge-durable-research-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  durable-synthetic:
+    name: SQLite synthetic durable STOP · ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        os: [ubuntu-24.04, windows-2022, macos-15]
+    steps:
+      - name: Read-only research checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Identify runtime
+        run: |
+          node --version
+          node -p "process.platform"
+      - name: Test synthetic SQLite security state and restart
+        run: node --test experiments/unfire-bridge-durable/durable-policy.test.mjs
