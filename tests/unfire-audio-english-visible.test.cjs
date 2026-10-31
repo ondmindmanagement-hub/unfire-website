@@ -10,7 +10,7 @@ const game=read('audio/maletin/index.html');
 const intro=read('audio/maletin/game-intro.js');
 const catalog=read('audio/catalogo/index.html');
 const shop=read('audio/tienda/index.html');
-const forbidden=/\b(?:efectos|instrumentos|ritmos|ahorras|comprarlo|suelto|copia el enlace|enlace copiado|girar la manivela|reiniciar gráficos|el dispositivo ha interrumpido|selecciona idioma|continuar|español|castellano)\b/i;
+const forbidden=/\b(?:efectos|instrumentos|ritmos|ahorras|comprarlo|suelto|copia el enlace|enlace copiado|girar la manivela|reiniciar gráficos|el dispositivo ha interrumpido|selecciona idioma|continuar|español|castellano|programas|pitch y mod)\b/i;
 function visibleText(document){
   return document
     .replace(/<!--[\s\S]*?-->/g,'')

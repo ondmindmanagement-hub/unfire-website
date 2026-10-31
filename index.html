@@ -4049,6 +4049,19 @@ main .uf-hero-title {
 }
 @media(prefers-reduced-motion:reduce){#apps .uf-archer-device{transition:none}}
 
+/* Synth I: authentic iPhone/iPad capture pair, native ratios and discreet frames. */
+#apps .uf-gallery-card--synth1 .uf-gallery-media{height:352px!important;padding:15px 12px 10px!important;background:radial-gradient(ellipse at 50% 75%,rgba(47,91,151,.17),transparent 70%),linear-gradient(180deg,#0b1524,#080d16)}
+#apps .uf-synth-devices{width:100%;max-width:410px;height:100%;display:flex;justify-content:center;align-items:center;gap:clamp(10px,2vw,17px)}
+#apps .uf-synth-device{display:block;flex:none;overflow:hidden;background:#050c17;padding:4px;border:2px solid #526078;box-shadow:0 18px 30px #0009,0 0 18px #286ab327;transition:transform .25s ease}
+#apps .uf-synth-device--iphone{width:min(34%,133px);height:298px;border-radius:22px}
+#apps .uf-synth-device--ipad{width:min(48%,188px);height:300px;border-radius:17px}
+#apps .uf-synth-device img{width:100%;height:100%;max-height:none;object-fit:contain;object-position:center;transform:none!important}
+#apps .uf-synth-device--iphone img{border-radius:16px}
+#apps .uf-synth-device--ipad img{border-radius:11px}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){#apps .uf-gallery-card--synth1 .uf-gallery-media:hover .uf-synth-device{transform:translateY(-3px)}}
+@media(max-width:620px){#apps .uf-gallery-card--synth1 .uf-gallery-media{height:340px!important;padding:12px 10px!important}#apps .uf-synth-device--iphone{height:286px}#apps .uf-synth-device--ipad{height:280px}}
+@media(prefers-reduced-motion:reduce){#apps .uf-synth-device{transition:none}}
+
 /* Product categories: compact, semantic, responsive; original captures untouched. */
 #apps .uf-gallery-taxonomy{display:flex;flex-wrap:wrap;gap:9px;margin-top:28px}
 #apps .uf-gallery-taxonomy a{display:inline-flex;align-items:center;min-height:38px;padding:8px 14px;border:1px solid rgba(167,190,242,.25);border-radius:999px;color:#cbd7ec;background:rgba(255,255,255,.025);font-size:12px;line-height:1.35;letter-spacing:.01em;text-decoration:none}
@@ -4244,10 +4257,10 @@ main .uf-hero-title {
 <div>
 <div class="product-type"><span class="notranslate" translate="no">Unfire</span> Audio · Available now</div>
 <h3 class="notranslate" translate="no">Archer</h3>
-<p><span class="notranslate" translate="no">Archer by Unfire</span> is a focused clipping tool for producers and mix engineers, available exclusively for macOS.</p>
+<p><span class="notranslate" translate="no">Archer by Unfire</span> is a focused clipping tool for producers and mix engineers, available as separate apps for Mac and for iPhone/iPad.</p>
 <p>It is built around Gain, Threshold and Atmosphere, designed to give direct control over clipping behaviour, peaks, transients and sonic character.</p>
-<p><strong>Available now on the Mac App Store · macOS only · See current regional price on the Mac App Store.</strong></p>
-<p><a class="button primary" href="https://apps.apple.com/app/id6812968924" target="_blank" rel="noopener">Get ARCHER on the Mac App Store</a></p>
+<p><strong>Available in separate Mac and iPhone/iPad editions. Features and pricing vary by platform and version.</strong></p>
+<p><a class="button primary" href="https://apps.apple.com/app/id6812968924" target="_blank" rel="noopener">Get ARCHER on the Mac App Store</a> <a class="button" href="https://apps.apple.com/us/app/archer-for-iphone-ipad/id6822109610" target="_blank" rel="noopener">Get ARCHER for iPhone/iPad</a></p>
 <p id="archerIntroSale" style="display:none" aria-live="off"><strong>Limited-time ARCHER offer: $1.99 (US) / €1.99 (Spain), October 13–26.</strong> Check the live price in your App Store before buying.</p>
 <p>Beyond the individual product, <span class="notranslate" translate="no">Archer</span> provides a practical environment for validating audio technology, interface decisions and production components.</p>
 <p><span><span class="notranslate" translate="no">Unfire</span> Audio</span> also explores how AI-assisted systems, procedural processing and software can support new creative tools and workflows.</p>
@@ -4300,9 +4313,14 @@ main .uf-hero-title {
 <a class="uf-gallery-media" href="assets/products/pocket-capture-ipad.webp" target="_blank" rel="noopener" aria-label="View the Pocket Capture iPad cover at full size"><img src="assets/products/pocket-capture-ipad.webp" alt="Pocket Capture app cover featuring its real audio recording interface for iPad" loading="lazy" decoding="async"></a>
 <div class="uf-gallery-copy"><p class="uf-gallery-type">Recording / iPad</p><h4>Pocket Capture</h4><p>A focused way to record, review and work with audio.</p></div>
 </article>
-<article class="uf-gallery-card uf-gallery-card--mobile">
-<a class="uf-gallery-media" href="assets/products/unfire-synth-ipad.webp" target="_blank" rel="noopener noreferrer" aria-label="View the real Unfire Synthesizer tablet interface at full size"><img src="assets/products/unfire-synth-ipad.webp" width="900" height="1306" alt="Unfire Synthesizer instrument interface captured on iPad" loading="lazy" decoding="async"></a>
-<div class="uf-gallery-copy"><p class="uf-gallery-type">Music creation / iPad</p><h4><span translate="no" class="notranslate">Unfire</span> Synthesizer</h4><p>Synthesis, sequencing and sound shaping in a compact instrument workspace.</p><span class="uf-gallery-availability">Development preview</span></div>
+<article class="uf-gallery-card uf-gallery-card--mobile uf-gallery-card--synth1">
+<a class="uf-gallery-media" href="/audio/#instrumentos" aria-label="Explore authentic Unfire Synthesizer 1 development captures for iPhone and iPad">
+  <span class="uf-synth-devices">
+    <span class="uf-synth-device uf-synth-device--iphone"><img src="assets/products/unfire-synth-iphone.webp" width="560" height="1010" alt="Real iPhone development capture of Synth I four engines, six-track timeline and performance keyboard" loading="lazy" decoding="async"></span>
+    <span class="uf-synth-device uf-synth-device--ipad"><img src="assets/products/unfire-synth-ipad.webp" width="920" height="1270" alt="Real iPad development capture of Synth I instrument controls, multitrack timeline and keyboard" loading="lazy" decoding="async"></span>
+  </span>
+</a>
+<div class="uf-gallery-copy"><p class="uf-gallery-type">Music creation / iPhone &amp; iPad</p><h4><span translate="no" class="notranslate">Unfire</span> Synthesizer I</h4><p>Two genuine touch layouts for synthesis, multitrack recording and performance.</p><span class="uf-gallery-availability">Development previews · not the approved App Store release</span><p><a href="/audio/media-credits.html#synth-i-footage" aria-label="View Synth I footage source and licence credits">Media credits</a></p></div>
 </article>
 </div>
 </div>

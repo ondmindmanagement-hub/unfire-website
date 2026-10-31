@@ -94,18 +94,20 @@
     },
     {
       "app_visual": "unfire-synth-ipad",
-      "source_original": "UnfireOrbit/Mobile/ipad_final2.png",
+      "source_original": "Unfire/Coordination/ReleaseCandidates/Synth1_RealCaptures_20261027/iPad/iPad_REAL_QA66_initial_20261027.png",
       "original_size": [
         1668,
-        2420
+        2388
       ],
       "web_size": [
-        900,
-        1306
+        920,
+        1270
       ],
       "web_asset": "unfire-synth-ipad.webp",
-      "bytes": 37458,
-      "sha256": "30ec3133bf9dd408da7bc858e2e65288cebf52767137e5d622f2fc46ba9c86e3"
+      "bytes": 414116,
+      "sha256": "ba2146a1cc208ef583c99676ffe662bf9dd39d5982468b46bba493288669da5c",
+      "crop": "Removed 34 source px in initial screenshot processing, then trimmed 28 additional web px to remove residual Spanish iPadOS status strip; authentic application UI unchanged",
+      "release_status": "Development/QA screenshot, not certified as App Store production capture; review underlying UI resource rights"
     },
     {
       "app_visual": "unfire-control-icon",
@@ -121,6 +123,24 @@
       "web_asset": "unfire-control-icon.webp",
       "bytes": 19614,
       "sha256": "039cf9b1f92d08bf9d0c5680a01b5729d5913fef333ef26bf378baf4c3cc0ec5"
+    },
+    {
+      "app_visual": "unfire-synth-iphone",
+      "source_original": "Desktop/Unfire/Coordination/ReleaseCandidates/Synth1_RealCaptures_20261029/iPhone/iPhone_Duo_Simulator_Build90_20261029_REAL.png",
+      "original_size": [
+        1398,
+        2034
+      ],
+      "web_size": [
+        560,
+        1010
+      ],
+      "web_asset": "unfire-synth-iphone.webp",
+      "bytes": 59426,
+      "sha256": "024a942074ec1073daba462381fc73e7d02257068dfaf57b9993a50daa444233",
+      "crop": "Removed only right-side iPhone Duo simulator status/controls outside the live Synth instrument panel (x 1128 to 1398); authentic current instrument UI and title PORTABLE SYNTH preserved without repainting.",
+      "release_status": "Development/QA screenshot from installed iPhone Duo simulator app version 1.0 build 90, not approved production App Store capture; underlying media/skin rights still require verification",
+      "capture_build": "technology.unfire.synth 1.0 (90) · iPhone Duo iOS 27.1 · 2026-10-29"
     }
   ]
 }
