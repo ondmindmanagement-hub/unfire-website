@@ -18,7 +18,7 @@ codesign --force --sign - --options runtime \
   --identifier technology.unfire.os.research.worker \
   --entitlements "$here/Worker.entitlements" "$tmp/worker"
 codesign --verify --strict "$tmp/worker"
-codesign --display --entitlements "$tmp/effective.plist" "$tmp/worker" 2>/dev/null
+codesign --display --entitlements :- "$tmp/worker" > "$tmp/effective.plist" 2>/dev/null
 python3 - "$tmp/effective.plist" <<'PY'
 import plistlib,sys
 with open(sys.argv[1],"rb") as handle:
