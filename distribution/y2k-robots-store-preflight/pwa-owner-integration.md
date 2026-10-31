@@ -9,11 +9,11 @@ Approved exact source on the owner Mac:
 
 Source SHA-256: `f3eda6a0f1fae38f02c7e4c75f93a9e11af414b2148726fbc4b7bd35d6f5113f`.
 
-Derived via **lossless PNG resize only** using macOS sips on 31 October 2026. Existing local outputs (not pushed to the public repository or deployed):
+Derived from the exact approved source by macOS `sips` resizing and PNG export on 31 October 2026. The resulting files are staged in this **unmerged PR** under `distribution/y2k-robots-store-preflight/assets/`; the same copies exist in the owner's local coordination folder. They have **NOT** been deployed to the public game:
 - `~/Desktop/Unfire/Coordination/StoreDistribution_20261031/Y2K_ROBOTS/y2k-robots-icon-192.png`. 192×192 PNG. SHA-256 `69a2f35b90f3c84c5355a809b64b92970acd0d957d3bd9363f5fe75c8326d842`.
 - `~/Desktop/Unfire/Coordination/StoreDistribution_20261031/Y2K_ROBOTS/y2k-robots-icon-512.png`. 512×512 PNG. SHA-256 `636d98b7510137224644558f397b5ad184e3f14bf09f96d0b70ad7524036141e`.
 
-Do not accidentally substitute older corporate dragon logos or other robot imagery. Verify the owner's exact approved identity and current licensing before committing official assets.
+Do not accidentally substitute older corporate dragon logos or other robot imagery. Verify the owner's exact approved identity and current licensing before copying these staged assets into the live game.
 
 ## Isolated integration steps for the current game/web integrator
 
