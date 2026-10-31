@@ -30,16 +30,16 @@ chk('Capsule carry control stays on left lateral rather than over the robot',
   game.includes('#unfireCarryCase{left:max(9px,env(safe-area-inset-left))!important'));
 
 chk('Old double camera buttons completely removed',!engine.includes('caseModeHud')&&!game.includes('#caseModeHud'));
-chk('Existing PASEAR is the only character action with an open maletin',
-  engine.includes("roamB.textContent = '🚶 PASEAR'")&&
+chk('Existing WALK is the only character action with an open maletin',
+  engine.includes("roamB.textContent = '🚶 WALK'")&&
   engine.includes("pTarget>.99&&lidOpen>=.998")&&
   engine.includes('updateRoamButtonHint();')&&
   !engine.includes('characterEntryButton')&&!game.includes('#unfireCharacterEntry'));
 chk('Clicking maletin from avatar returns to identical case view',
   engine.includes('if(ray.intersectObject(caseG,true).length){')&&
   engine.includes('if(window.ATM_OUT)showCaseView();else exitRoam();')&&
-  engine.includes("roamB.textContent = '🚶 PASEAR'"));
-chk('Same PASEAR button stays in the safe right dock in both case and roam',
+  engine.includes("roamB.textContent = '🚶 WALK'"));
+chk('Same WALK button stays in the safe right dock in both case and roam',
   engine.includes("if(roamB.parentElement!==dock)dock.appendChild(roamB);")&&
   engine.includes("if(roamB.style.position!=='static')roamB.style.position='static';")&&
   game.includes('body:not(.unfire-roaming) #ctlDock{')&&
@@ -56,7 +56,7 @@ chk('First-tap 3D case opens in the existing web document, without a new tab',
   html.includes('immersive();\n    fullscreenFromGesture();')&&
   html.includes('fr.contentWindow.postMessage({unfire:1,entryStart:true,vis:true},location.origin)')&&
   !html.slice(html.indexOf('const Mal=(()=>'),html.indexOf('/* ================= Precios')).includes("window.open("));
-chk('First visit PASEAR blinks exactly two seconds after opening',
+chk('First visit WALK blinks exactly two seconds after opening',
   engine.includes("'unfire_pasear_intro_v1'")&&
   engine.includes('},2000);')&&
   game.includes('animation:unfire-pasear-blink 2s steps(1,end) 1'));
@@ -84,12 +84,12 @@ chk('Workshop attaches to story HUD without timer polling',engine.includes('cons
 chk('Case view stops walk shortcuts while allowing piano notes',engine.includes('if (CASE_VIEW.on) return; const k = e.key.length === 1'));
 chk('Case view G note does not pack capsule',engine.includes('&&ROAMS.on&&!CASE_VIEW.on&&portableUnlocked()'));
 chk('Case mobile pinch zooms inspection camera',engine.includes('CASE_VIEW.dist=clamp(CASE_VIEW.dist*f,window.ATM_OUT?6.8:5.4,window.ATM_OUT?17:14.5)'));
-chk('PASEAR never overlaps center captions and stays accessible without duplicates',
+chk('WALK never overlaps center captions and stays accessible without duplicates',
   game.includes('top:calc(env(safe-area-inset-top) + 135px)!important')&&
   game.includes('top:calc(env(safe-area-inset-top) + 112px)!important')&&
   game.includes('top:calc(env(safe-area-inset-top) + 110px)!important')&&
   game.includes('#ctlDock #roamB{min-height:34px!important')&&
-  engine.includes("roamB.textContent=CASE_VIEW.on?'↩ VOLVER AL PERSONAJE'")&&
+  engine.includes("roamB.textContent=CASE_VIEW.on?'↩ RETURN TO ROBOT'")&&
   !engine.includes('characterEntryButton'));
 chk('No blue artificial case illustration in any initial viewport or compatibility fallback',
   !html.includes('unfire-case-preview.svg') && !html.includes('background:url("img/hyperwave-open.webp")'));
@@ -105,7 +105,7 @@ chk('Outdoor case camera keeps the avatar in place and widens the horizon',
   engine.includes('if(window.ATM_OUT)showCaseView();else exitRoam();')&&
   engine.includes("CASE_VIEW.elevation=window.ATM_OUT?0.52:0.78")&&
   engine.includes('const panoramic=window.ATM_OUT')&&
-  engine.includes("roamB.textContent=CASE_VIEW.on?'↩ VOLVER AL PERSONAJE'"));
+  engine.includes("roamB.textContent=CASE_VIEW.on?'↩ RETURN TO ROBOT'"));
 chk('Portrait and landscape HUD use safe areas and leave story legible',
   game.includes('id="unfireMobileNoOverlap20261023"')&&
   game.includes('#tip{left:50%!important;top:calc(env(safe-area-inset-top) + 10px)!important;')&&
@@ -113,10 +113,10 @@ chk('Portrait and landscape HUD use safe areas and leave story legible',
   game.includes('@media (pointer:coarse) and (orientation:landscape)'));
 chk('Single exit label is not visually truncated',
   game.includes('#unfireExitGame{box-sizing:border-box!important;')&&
-  engine.includes("xb.textContent = '⏏ SALIR A LA WEB'"));
+  engine.includes("xb.textContent = '⏏ EXIT TO WEBSITE'"));
 chk('Mission logic retained',engine.includes("localStorage.setItem('unfire_side'")&&engine.includes('const SIDE ='));
 chk('Multiplayer logic retained',engine.includes('const ONLINE ='));
-chk('Online joins timeout safely and allow retries',engine.includes('function clearJoining()')&&engine.includes('La sala no responde.')&&engine.includes('ONLINE.joining'));
+chk('Online joins timeout safely and allow retries',engine.includes('function clearJoining()')&&engine.includes('The room is not responding.')&&engine.includes('ONLINE.joining'));
 chk('Room audio implementation retained',engine.includes('const AMB ='));
 chk('Parent scroll no longer overrides manual open/close',engine.includes('!lidControlledByPlayer) pTarget = d.p;'));
 chk('Host keeps iframe active when case is local',html.includes('vis:caseLocal||rb.bottom>90'));
@@ -136,7 +136,7 @@ chk('Only local avatar entitlements updated',engine.includes("localStorage.setIt
 chk('Story saves protected from corrupted data',storySource.includes('Validate older/corrupted saves'));
 chk('Twelve playable story chapters', (storySource.match(/\{\s*t:\s*['\"][^'\"]+['\"],\s*steps:/g)||[]).length===12 && storySource.includes('const FREE = 12'));
 chk('Map chapter goals can be completed with Nimbo assistance',storySource.includes("w.ev==='reach'")&&engine.includes('navigateTo: (quest)'));
-chk('Completed story has no purchase gate',storySource.includes('HISTORIA COMPLETADA')&&!storySource.includes('VER EL MALETÍN COMPLETO'));
+chk('Completed story has no purchase gate',storySource.includes('STORY COMPLETE')&&storySource.includes('const FREE = 12')&&!storySource.includes('VER EL MALETÍN COMPLETO'));
 chk('Mission events guarded against stale steps',storySource.includes('currentStep.wait.ev !== name'));
 chk('Persistent active side quest',engine.includes("'unfire_side_active'"));
 chk('Showcase exhibition keeps player camera and avoids overlapping full-size plugins',

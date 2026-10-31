@@ -74,10 +74,10 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        const d=document.getElementById('malFrame').contentWindow.document;
        const story=d.getElementById('story');assertExists(story);
        // Reset the previous orientation's artificial story overlay before
-       // measuring the case-view-only PASEAR button: storyOn hides it by design.
+       // measuring the case-view-only WALK button: storyOn hides it by design.
        d.body.classList.remove('storyOn');story.classList.remove('on');
        const rect=(el)=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}};
-       // The SAME original PASEAR now lives inside the right-hand action dock.
+       // The SAME original WALK now lives inside the right-hand action dock.
        // It may be hidden by the story overlay; measure before re-enabling it.
        const walk=d.getElementById('roamB'), dock=d.getElementById('ctlDock'),oldDisplay=walk.style.display;
        walk.style.display='block';
@@ -106,10 +106,10 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
      assert(state.insideDock&&walk.x>=width*.54&&walk.y>=65&&walk.w>=65&&
        walk.x>=-1&&walk.x+walk.w<=width+2&&walk.y+walk.h<=height+2&&
        walk.x>=state.dockRect.x-2,
-       'PASEAR not inside the safe right action dock '+JSON.stringify({width,height,walk,dock:state.dockRect}));
+       'WALK not inside the safe right action dock '+JSON.stringify({width,height,walk,dock:state.dockRect}));
      assert(!intersects(walk,state.exit)&&!intersects(walk,state.cfg)&&
        !intersects(walk,state.map)&&!intersects(walk,state.zoomHud)&&!intersects(walk,state.tip),
-       'PASEAR overlaps exit, gear, minimap, zoom HUD or captions '+JSON.stringify({width,height,walk,exit:state.exit,cfg:state.cfg,map:state.map,hud:state.zoomHud,tip:state.tip}));
+       'WALK overlaps exit, gear, minimap, zoom HUD or captions '+JSON.stringify({width,height,walk,exit:state.exit,cfg:state.cfg,map:state.map,hud:state.zoomHud,tip:state.tip}));
      const b=state.box;
      assert(b.x>=-1&&b.y>=-1&&b.x+b.w<=width+2&&b.y+b.h<=height+2,
        'Nimbo story dialogue clipped '+JSON.stringify({width,height,b}));
@@ -119,7 +119,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        'Game exit clipped by small viewport');
      // Compact touch UI deliberately abbreviates the visual label, but retains
      // the full accessible button text and shows a real, unclipped EXIT caption.
-     assert(/(SALIR A LA WEB|BACK TO THE WEBSITE)/.test(state.label.text)&&
+     assert(/(EXIT TO WEBSITE|BACK TO THE WEBSITE)/.test(state.label.text)&&
        /EXIT/.test(state.label.compactCaption)&&state.exit.w>=70&&state.exit.w<=92&&
        state.exit.h>=34&&state.label.scrollWidth<=state.label.clientWidth+2,
        'Compact exit caption missing, clipped or not accessible '+JSON.stringify({width,height,label:state.label}));
@@ -160,10 +160,10 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
      game.document.body.classList.remove('storyOn');
      game.document.getElementById('story').classList.remove('on');
      const button=game.document.getElementById('roamB');
-     if(button.style.display==='none') throw Error('PASEAR missing after lid opened');
+     if(button.style.display==='none') throw Error('WALK missing after lid opened');
      button.click();
      const exploring=game.__UNFIRE_CASE_QA.roam;
-     const hiddenOnWalking=!button.textContent.includes('PASEAR');
+     const hiddenOnWalking=!button.textContent.includes('WALK');
      game.document.getElementById('roamB').click();
      return {exploring,hiddenOnWalking,returned:!game.__UNFIRE_CASE_QA.roam,
        lid:game.__UNFIRE_CASE_QA.lid,caseVisible:game.__UNFIRE_CASE_QA.caseVisible};

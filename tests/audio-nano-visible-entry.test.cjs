@@ -63,7 +63,7 @@ test('all existing camera modes visibly return to third-person when the player c
     const v = scenario(mode);
     assert.equal(v.handler(), true, 'NANO should activate from ' + mode);
     assert.equal(v.R.mode, '3p', 'actual avatar must be in-frame, not hidden by ' + mode);
-    assert.match(v.cameraButton.textContent, /3ª PERSONA/);
+    assert.match(v.cameraButton.textContent, /3RD PERSON/);
     assert.equal(v.calls.start, 1);
   }
 });

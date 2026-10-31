@@ -116,7 +116,7 @@ const assert=require('node:assert/strict');
     return {rejected,unlocked,confirmation,questStillActive:window.__UNFIRE_CASE_QA.mission===beforeQuest,storyUnchanged:localStorage.getItem('unfire_save_v1')===beforeSave};
     function assertExists(v,msg){if(!v)throw Error(msg);}
   });
-  assert(secret.rejected&&secret.unlocked&&secret.questStillActive&&secret.storyUnchanged&&secret.confirmation.includes('desbloqueados'),'Secret app unlock/persistence or mission isolation failed: '+JSON.stringify(secret));
+  assert(secret.rejected&&secret.unlocked&&secret.questStillActive&&secret.storyUnchanged&&secret.confirmation.includes('All playable robots unlocked'),'Secret app unlock/persistence or mission isolation failed: '+JSON.stringify(secret));
   const rapid=await f.evaluate(()=>{const a=[],initial=window.__UNFIRE_CASE_QA.closed;for(let i=0;i<4;i++){window.__mal.toggleCase();a.push(window.__UNFIRE_CASE_QA.closed)}return {initial,states:a};});
   assert(rapid.states.every((v,i)=>v===(i%2===0?!rapid.initial:rapid.initial)),'Rapid click target-state toggle not alternating: '+JSON.stringify(rapid));
   const missions=await f.evaluate(()=>{
@@ -204,7 +204,7 @@ const assert=require('node:assert/strict');
         cancelled:!document.getElementById('onl').classList.contains('on')};
     } finally {window.Peer=original;}
   });
-  assert(/(Esa sala no existe|That room does not exist)/.test(peerQA.first)&&/(Esa sala no existe|That room does not exist)/.test(peerQA.second)
+  assert(/That room no longer exists or the host has left/.test(peerQA.first)&&/That room no longer exists or the host has left/.test(peerQA.second)
     &&peerQA.afterErrors>=2&&peerQA.destroyed>=3&&peerQA.cancelled,
     'PeerJS error/retry/close did not recover cleanly '+JSON.stringify(peerQA));
   console.log('PASS PeerJS error/retry/stalled cancellation without third-party network or polling delays');
