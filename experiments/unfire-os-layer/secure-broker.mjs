@@ -80,7 +80,7 @@ function spawnBounded(executable,payload,timeoutMs,signal,maxResidentMiB) {
           {timeout:650,maxBuffer:512,env:cleanEnv});
         if(done || child.exitCode!==null || child.signalCode!==null)return;
         const sample=stdout.trim();
-        if(!/^\\d+$/u.test(sample)) {
+        if(!/^\d+$/u.test(sample)) {
           fail("Worker memory sample unavailable");return;
         }
         if(Number(sample)>maxResidentMiB*1024)
