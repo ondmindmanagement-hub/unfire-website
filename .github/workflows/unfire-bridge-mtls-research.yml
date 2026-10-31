@@ -1,0 +1,49 @@
+# Test-only TLS 1.3 mutual-authentication research on ephemeral loopback.
+# Does not deploy, publish, connect devices or use real user/academic data.
+name: Unfire Bridge mutual TLS research
+
+on:
+  push:
+    branches:
+      - research/unfire-bridge-mtls-20261031
+    paths:
+      - 'experiments/unfire-bridge-mtls/**'
+      - '.github/workflows/unfire-bridge-mtls-research.yml'
+  pull_request:
+    paths:
+      - 'experiments/unfire-bridge-mtls/**'
+      - '.github/workflows/unfire-bridge-mtls-research.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: unfire-bridge-mtls-research-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  mtls-research:
+    name: Node 22 · TLS lab · ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        os: [ubuntu-24.04, windows-2022, macos-15]
+    steps:
+      - name: Checkout research source only
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Stable Node runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Record test runtime
+        run: |
+          node --version
+          openssl version
+          node -p "process.platform"
+      - name: Ephemeral key and localhost TLS security tests
+        run: node --test experiments/unfire-bridge-mtls/mtls.test.mjs
