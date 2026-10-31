@@ -49,3 +49,10 @@ test("empty printable input is supported",()=>{
 test("whitespace-only word input returns zero",()=>{
  assert.equal(independentlyVerify({operation:"word_count",input:"    "},json(0)).value,0);
 });
+
+test("fixed synthetic delayed uppercase is checked without trusting the worker",()=>{
+ const task={operation:"slow_uppercase",input:"unfire"};
+ const valid=independentlyVerify(task,json("UNFIRE"));
+ assert.equal(valid.value,"UNFIRE");
+ assert.throws(()=>independentlyVerify(task,json("unfire")),/Independent result verification/);
+});
