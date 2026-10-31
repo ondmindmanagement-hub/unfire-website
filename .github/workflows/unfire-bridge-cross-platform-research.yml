@@ -1,0 +1,48 @@
+# Research-only: validate the synthetic Unfire Bridge contract on hosted OS images.
+# No real bridging, deployments, privileged adapters, credentials or network access by bridge code.
+name: Unfire Bridge cross-platform research
+
+on:
+  push:
+    branches:
+      - research/unfire-bridge-contract-20261031
+    paths:
+      - 'experiments/unfire-bridge-contract/**'
+      - '.github/workflows/unfire-bridge-cross-platform-research.yml'
+  pull_request:
+    paths:
+      - 'experiments/unfire-bridge-contract/**'
+      - '.github/workflows/unfire-bridge-cross-platform-research.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: unfire-bridge-research-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  synthetic-contract:
+    name: Node 22 synthetic contract · ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 8
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        os: [ubuntu-24.04, windows-2022, macos-15]
+    steps:
+      - name: Checkout research source only
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Use stable Node runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Record runtime platform
+        run: |
+          node --version
+          node -p "process.platform"
+      - name: Test offline synthetic contract
+        run: node --test experiments/unfire-bridge-contract/bridge.test.mjs
