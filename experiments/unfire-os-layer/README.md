@@ -1,4 +1,4 @@
-# Unfire OS Layer · Mission Control and Local Memory · Research v0.2
+# Unfire OS Layer · Mission Control and Local Memory · Research v0.4
 
 **State: isolated offline prototype.** Not a native operating system, installed service, connected ChatGPT workspace, multi-agent deployment, AI model, remote bridge or shipping application.
 
@@ -54,6 +54,15 @@ The planner simulates waves and pure transformations. The new **separate** Missi
 - **Crucial:** A token is not a verified AI identity and is not bound to an OS sandbox, model provider or particular client binary. A holder can act under its limited pseudonymous role, including fabricating a manual task-completion claim; this is not independently validated work. Do not distribute agent tokens to third-party clients or use production information in this experiment.
 - The prototype remains a single-machine manual research API. **Do not deploy or expose outside loopback.** Real identity, delegated consent, sandbox, per-agent memory filtering, independent evidence and durable distributed leases remain future work.
 - Threat model and host-specific acceptance gates: `experiments/unfire-os-layer/SECURITY-GATES.md`.
+
+## Fenced research results (v0.4, journal-only)
+
+- `fenced-results.mjs` stores short-lived **exclusive artifact leases** in a separate owner-private, hash-linked append-only journal, with atomic fail-closed file locking.
+- Each new lease increments an artifact's **fencing generation**, so an old holder cannot submit or release a newer holder's artifact. Leases expire after at most five minutes and require an unguessable 256-bit lease token.
+- `submit()` records only a task identifier plus the claimed SHA-256 digest of a synthetic output, never the raw output or token. Duplicate, expired, stale-generation and wrong-owner submissions are denied. Journal replay reconstructs the lease state across restarts.
+- A claimed digest is **not** proof of successful execution, source truthfulness, software safety or human review. No real agent, model or repository file has been allowed to write an artifact.
+- **Not yet coupled to the operator STOP journal or to HTTP agent APIs.** Do not use as a production concurrency lock: crash recovery is manual, and OS-user processes may bypass the code by writing directly to files.
+- OS isolation design and explicit macOS/Windows/Linux acceptance gates: `experiments/unfire-os-layer/SANDBOX-ADAPTER-DESIGN.md`.
 
 ## Design rules for a future secure version
 1. **Single mission truth:** goal, project, scoped task IDs, dependencies, outputs, hashes, version and responsible agent.
