@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { spawn, spawnSync } from 'node:child_process';
 import { createMtlsLab, sendMtlsSynthetic } from './mtls.mjs';
 
@@ -110,7 +111,7 @@ test('a valid CA client certificate for the wrong node does not impersonate send
   });
 });
 test('a client without a certificate cannot establish an authorized TLS request',async()=>{
-  await withHost(async({url,send})=>{await assert.rejects(send(url,undefined,undefined,undefined));});
+  await withHost(async({url,send})=>{await assert.rejects(send(url,undefined,null,null));});
 });
 test('a client from a rogue CA cannot establish a trusted mTLS connection',async()=>{
   await withHost(async({url,send})=>{await assert.rejects(send(url,undefined,thirdKey,thirdCert));});
@@ -185,7 +186,7 @@ test('stopping the service closes its listening port',async()=>{
 test('separate child Node process performs real mTLS exchange',async()=>{
   const {lab,packet}=setup();const url=await lab.start();
   try {
-    const path=new URL('./client-fixture.mjs',import.meta.url).pathname;
+    const path=fileURLToPath(new URL('./client-fixture.mjs',import.meta.url));
     const child=spawn(process.execPath,[path],{stdio:['pipe','pipe','pipe'],windowsHide:true});
     let output='',errorText='';
     child.stdout.on('data',b=>{output+=b.toString();});
