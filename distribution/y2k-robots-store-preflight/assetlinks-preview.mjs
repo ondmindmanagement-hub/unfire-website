@@ -7,6 +7,7 @@
  */
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { realpathSync } from 'node:fs';
 
 export function buildAssetLinks({ packageName, fingerprint }) {
   if (typeof packageName !== 'string' || !/^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*){1,}$/.test(packageName)) {
@@ -30,7 +31,7 @@ export function buildAssetLinks({ packageName, fingerprint }) {
   }];
 }
 
-if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
+if (process.argv[1] && realpathSync(fileURLToPath(import.meta.url)) === realpathSync(path.resolve(process.argv[1]))) {
   const p = process.argv.indexOf('--package');
   const s = process.argv.indexOf('--sha256');
   try {
