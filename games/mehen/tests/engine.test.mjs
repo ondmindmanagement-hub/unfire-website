@@ -37,7 +37,7 @@ test("cannot move during the other player's phase, choose a nonexistent lion, or
  assert.equal(move(s,5),s);
  assert.equal(move(newGame(),0).phase,"roll");
  const blocked={...s,board:[[0,1,-1],[-1,-1,-1]],roll:1};
- assert.deepEqual(legalMoves(blocked),[1,2]);
+ assert.deepEqual(legalMoves(blocked),[1]);
 });
 test("capture sends rival lion back to the tail",()=>{
  const s={...newGame(),board:[[5,-1,-1],[7,-1,-1]],phase:"move",roll:2};
