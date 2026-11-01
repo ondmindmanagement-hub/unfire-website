@@ -267,11 +267,16 @@ function joinRoom(){
   netStatus("Connecting to room…");
 }
 function copyInvite(){
+  // A file:// or localhost URL is not usable by a friend on another device.
+  const publicPage=(location.protocol==="https:" || location.protocol==="http:") &&
+    !["localhost","127.0.0.1","::1"].includes(location.hostname);
   const url=new URL(location.href);
   url.searchParams.set("room",room);
-  const code=url.toString();
+  const invitation=publicPage?url.toString():room;
+  const success=publicPage?"Invitation link copied.":"Room code copied. Both players must open the game.";
   if(navigator.clipboard?.writeText){
-    navigator.clipboard.writeText(code).then(()=>netStatus("Invitation link copied.")).catch(()=>netStatus(`Your room code: ${room}`));
+    navigator.clipboard.writeText(invitation).then(()=>netStatus(success))
+      .catch(()=>netStatus(`Share this room code: ${room}`));
   }else netStatus(`Share this room code: ${room}`);
 }
 function disconnect(){
