@@ -29,3 +29,6 @@ No museum images, proprietary game artwork, font files, audio, trackers or third
 
 ## Release gate
 This folder is independent from Unfire Audio and the site host. Prototype branch must not be merged/published without static checks, engine tests, local 2-browser online smoke test, reconnection and device QA. See GitHub issue #276.
+
+## Web preview and offline install
+An isolated public preview is published at https://ondmindmanagement-hub.github.io/unfire-mehen/ and mirrored at https://github.com/ondmindmanagement-hub/unfire-mehen. The source directory includes the PWA manifest, icons and service worker. Offline solo/local play works after installation; online private rooms rely on external PeerJS signaling. The web preview has passed 12 engine tests, headless Chrome online/reconnect and offline cache checks, but separate physical devices, real-world networks and native app-store submissions remain unverified.
