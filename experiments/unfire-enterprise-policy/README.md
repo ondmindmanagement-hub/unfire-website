@@ -63,3 +63,13 @@ A customer-controlled private deployment may reduce data disclosure but cannot g
 6. Licensing, GDPR and contract review before use of real company data.
 
 **Coordination:** #279 owns only new files under experiments/unfire-enterprise-policy/. Keep the PR draft and unmerged. No app, website, releases, external integrations, deployment, outreach or spending.
+
+
+## Continuum Operations Center read-only research adapter
+
+`continuum-snapshot.mjs` accepts an **already-read** canonical Continuum Operations Center index and returns only low-information counts and freshness. It does not open files itself, call services, retrieve user content or establish enterprise tenancy. The real Mac index currently uses source schema `unfire-operations-center-0.1` and thirteen named categories. Unknown schema, malformed fields or category drift are denied. A stale source is explicitly marked stale, never silently reclassified as live.
+
+- Additional tests: `node --test continuum-snapshot.test.mjs`.
+- Combined isolated research tests: `node --test policy.test.mjs continuum-snapshot.test.mjs`.
+- On 3 November 2026, exact-source combined tests **53/53 PASS** in a temporary authorized Mac checkout; a **read-only aggregate compatibility check** against the installed Continuum index returned `FRESH_LOCAL_AGGREGATE`, thirteen categories and no tenant authority. Only aggregate counts were printed; source task content was not exported to GitHub.
+- **Important:** this remains a *global local operations index*, not verified customer-specific data. All output has `tenantBoundaryVerified:false` and `externalActionAllowed:false`. Do not use for live access control, route customer tasks, or publish the private index.
