@@ -46,3 +46,28 @@
 The local 17,210-row manifest is private to the authorized Mac and references public Git blob SHA per file. Its `candidate_origin_from_repo_only` field is deliberately **not evidence of rights**. Every media item remains `commercial_distribution_verified=NO` until individually or in a reproducibly identified, proven group cleared. A group-level grant may legally apply to many derivative outputs, but the mapping and conditions must be demonstrable.
 
 **Coordination:** #140 owns legal/IP audit; #13 owns game runtime; #78 global; #289 is separate draft legal documentation. Do not modify or deploy current game, existing license/privacy pages, payment gates, or other owners' branches in this task.
+
+## Verified font license metadata and notices · 4 November 2026
+
+This is a **narrow, reproducible source-license verification** for five bundled `.ttf` files, not clearance for the complete game or even for every font used elsewhere on the broader Audio website.
+
+The exact bytes of each `audio/maletin/fonts/*.ttf` were retrieved from GitHub `main`, their OpenType `name` table copyright and license metadata inspected (name IDs 0 and 13/14), and Git blob SHA-1 computed. Each declares **SIL Open Font License 1.1**. The corresponding original Google Fonts `ofl/<family>/OFL.txt` full license notices were copied **verbatim** to `audio/maletin/fonts/LICENSES/` on legal PR #289. The new game license links directly to each notice. The font binaries were not altered.
+
+| Exact game file | Git blob SHA-1 | Original copyright notice / license source |
+| --- | --- | --- |
+| `Audiowide.ttf` | `8b50bedc0f99bcfcb5686a3dbeb5b51d1c0190d5` | Brian J. Bonislawsky (Astigmatic), OFL 1.1 · `google/fonts/ofl/audiowide/OFL.txt` |
+| `Michroma.ttf` | `59e8c534349962143f45b48152f80524fe9045bc` | Michroma Project Authors, OFL 1.1 · `google/fonts/ofl/michroma/OFL.txt` |
+| `Orbitron.ttf` | `1fc54ce7116a6ec549f37358466bcc92f9a72c33` | Orbitron Project Authors, reserved name, OFL 1.1 · `google/fonts/ofl/orbitron/OFL.txt` |
+| `ShareTechMono.ttf` | `1611474a4cc94c3cb51664597cae92a6f3c68857` | Carrois Type Design / Ralph du Carrois, reserved name 'Share', OFL 1.1 · `google/fonts/ofl/sharetechmono/OFL.txt` |
+| `VT323.ttf` | `afa69098f15bf64849d397f133d9467486904053` | VT323 Project Authors, OFL 1.1 · `google/fonts/ofl/vt323/OFL.txt` |
+
+The license permits bundling with commercial software if copyright and license requirements are met. Source: https://openfontlicense.org/how-to-use-ofl-fonts and https://openfontlicense.org/ofl-faq/ . All five notice files have original copyright lines plus the complete OFL 1.1 body. **The installed app bundle must still be checked to contain the required notices and accessible attribution**, not merely the website source.
+
+### Automated non-clearance / release preflight
+
+- New `.github/y2k-game-rights-release.json`: **10 P0 release checks blocked, `release_authorized=false`**. This is an intentionally conservative default, not a claim that each asset infringes.
+- New `scripts/y2k-game-rights-preflight.cjs`: `--audit` validates declaration schema; `--release` fails closed unless all gates have evidence and a named review, but evidence strings alone never substitute for human/legal verification.
+- New `.github/workflows/y2k-game-rights-gate.yml`: pull-request declaration and font notice QA, plus optional explicit manual release preflight. **This does not automatically prevent submission in App Store Connect, Google Play, Microsoft Store or Pages**; deployment teams must wire it into their real submission pipeline.
+- Locally validated against staged PR files and exact five font binaries: **10 tests passed, zero failures**; `--audit` PASS, `--release` intentionally EXIT 1 / BLOCKED.
+- The whole-product `fonts_images_video_and_dependency_notices` gate remains **BLOCKED** until all resources, exact installed build and third-party permissions are audited.
+
