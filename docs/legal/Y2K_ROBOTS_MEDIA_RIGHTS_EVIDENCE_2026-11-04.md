@@ -71,3 +71,34 @@ The license permits bundling with commercial software if copyright and license r
 - Locally validated against staged PR files and exact five font binaries: **10 tests passed, zero failures**; `--audit` PASS, `--release` intentionally EXIT 1 / BLOCKED.
 - The whole-product `fonts_images_video_and_dependency_notices` gate remains **BLOCKED** until all resources, exact installed build and third-party permissions are audited.
 
+
+## Exact original-file name reconciliation and decoded audio spot check · 4 November 2026
+
+This section is **additional evidence**, not a change in release status.
+
+An independent private source report prepared on the authorized development Mac, `Unfire_Y2K_PrimarySourceReconciliation_20261104.json`, crosswalks the game catalog against pinned original Git trees:
+- **206 of 206** game MP3 filenames indexed against the local source catalog; hashes recorded.
+- **69** entries with declared original WAV/FLAC source filenames matched to exact filename/path and upstream Git blob SHA in pinned revisions: **48 VCSL WAV**, **21 Virtuosity Drums FLAC**.
+- **137** melodic entries have no original WAV/FLAC filename in the examined game catalog.
+- Exact source filename matching is *not* acoustic matching, transcode evidence, or a release rights grant.
+- Pinned VCSL `sgossner/VCSL` revision: `c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e`. Virtuosity `sfzinstruments/virtuosity_drums` revision: `9f04cf9a734527edfbb0a4eee1f674e45bbf71bc`.
+- Official collections and published licensing: https://versilian-studios.com/vcsl/ and https://versilian-studios.com/virtuosity-drums/ (both describe CC0 resources). Do not extend those licenses to MP3 content unless its actual origin has been established.
+
+### First decoded content comparison (3 of the 69 origin-named files)
+
+Source bytes were retrieved from the specific pinned Git blob SHA. Game MP3 bytes were retrieved independently from current GitHub game source. Each was decoded using FFmpeg to 8 kHz mono PCM and compared with SciPy full cross-correlation. The figures below are **absolute normalized audio correlations** at the best lag, not ownership assertions, legal proof, or comprehensive audio fingerprints. Different trimming, gain or processing can reduce similarity.
+
+| Local game MP3 | Claimed collection | Original filename | Best normalized correlation | Interpretation |
+| --- | --- | --- | ---: | --- |
+| `agogo.mp3` | VCSL | `Agogo_High_v2_rr1_Mid.wav` | 0.8668 | Meaningful signal similarity; not definitive transformation proof |
+| `anvil.mp3` | VCSL | `Anvil_Hit1_v3_rr1_Mid.wav` | 0.6907 | Moderate similarity; investigate edits/gain/trim and competing source |
+| `bb_kick.mp3` | Virtuosity Drums | `lofi_kick_snoff_vl4_rr1.flac` | 0.9985 | Extremely strong waveform match at shifted lag; still not a distribution bundle check |
+
+**Limits:** Small **3-file spot check**; not all 69, not all 206, not the 16,692 voice recordings. Conversion logs, licenses for any additional layers/samples and exact signed app build remain unverified. The local results are in a private coordination JSON file; no source audio or personal records were uploaded to public GitHub. The 10 product release gates remain BLOCKED.
+
+### Priority next steps
+1. Reconcile 137 melodic assets with original source filenames or reproducible conversion scripts; compare their decoded audio with source recordings and rule out other licenses.
+2. Expand source-to-decoded-audio comparison to the remaining 66 files having declared source names, with appropriate confidence criteria and review of edited/truncated samples.
+3. Crosswalk all voice clips to Piper/Kokoro model and version with generator logs; investigate any possible macOS system voice or Edge TTS outputs.
+4. Check actual app bundles, included notices, the in-game Terms/License/Privacy links and storefront-specific user-generated content safeguards.
+5. Maintain `release_authorized=false` and block unverified launches until evidence is reviewed.
