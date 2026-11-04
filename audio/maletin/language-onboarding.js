@@ -75,11 +75,51 @@
   group.append(label,sel);hud.appendChild(group);
   return true;
  }
+ function quickSettings(){
+  if(document.getElementById('ufLangQuick'))return;
+  style();
+  const css=document.createElement('style');css.id='ufLangQuickStyle';
+  css.textContent=`
+    #ufLangQuick{position:fixed;right:max(68px,calc(env(safe-area-inset-right) + 68px));top:calc(env(safe-area-inset-top) + 62px);z-index:68;font:700 12px Arial,sans-serif;color:#f4f9ff;pointer-events:auto}
+    #ufLangQuick *{box-sizing:border-box}
+    #ufLangQuickButton{min-height:38px;padding:7px 13px;border-radius:999px;border:1.5px solid #b4ddff;background:linear-gradient(180deg,#235a98,#102749);color:#fff;box-shadow:0 3px 10px #0008;cursor:pointer;font:700 12px Arial,sans-serif;white-space:nowrap}
+    #ufLangQuickButton:focus-visible,#ufLangQuickPanel button:focus-visible{outline:3px solid #f8f8ff;outline-offset:3px}
+    #ufLangQuickPanel{position:absolute;right:0;top:calc(100% + 8px);width:min(250px,calc(100vw - 24px));padding:14px;background:linear-gradient(165deg,#122c50,#07152f);border:1.5px solid #87bfff;border-radius:14px;box-shadow:0 12px 28px #000a;display:grid;gap:9px}
+    #ufLangQuickPanel[hidden]{display:none}
+    #ufLangQuickPanel strong{font:800 14px Arial,sans-serif;color:#f1f9ff}
+    #ufLangQuickPanel button{min-height:42px;padding:9px;border:1px solid #81afe4;border-radius:9px;background:#15335d;color:#fff;cursor:pointer;text-align:left;font:700 13px Arial,sans-serif}
+    #ufLangQuickPanel button[aria-pressed=true]{border-color:#f5faff;background:#265e9d;box-shadow:inset 3px 0 #8bedff}
+    #ufLangQuickPanel small{font:500 11px/1.4 Arial,sans-serif;color:#bed2ed}
+    @media(max-height:470px){#ufLangQuick{top:calc(env(safe-area-inset-top) + 8px)}}
+    @media(max-width:400px){#ufLangQuick{right:max(62px,calc(env(safe-area-inset-right) + 62px))}#ufLangQuickButton{padding:6px 9px;font-size:11px}}
+    @media(prefers-reduced-motion:reduce){#ufLangQuick *{transition:none!important}}
+  `;
+  document.head.appendChild(css);
+  const wrap=document.createElement('div');wrap.id='ufLangQuick';
+  wrap.innerHTML='<button id="ufLangQuickButton" type="button" aria-expanded="false" aria-controls="ufLangQuickPanel">🌐 LANGUAGE</button><div id="ufLangQuickPanel" role="group" aria-label="Game language / Idioma del juego" hidden><strong>Language · Idioma</strong><button type="button" data-game-lang="en">English</button><button type="button" data-game-lang="es">Español</button><small>The language will apply when the game reloads.</small></div>';
+  const button=wrap.querySelector('#ufLangQuickButton'), panel=wrap.querySelector('#ufLangQuickPanel');
+  const selected=supported.includes(window.__LANG)?window.__LANG:(stored()||'en');
+  button.textContent=selected==='es'?'🌐 IDIOMA':'🌐 LANGUAGE';
+  panel.querySelector('small').textContent=selected==='es'?'El juego se recargará para aplicar el idioma.':'The game reloads to apply the language.';
+  for(const item of panel.querySelectorAll('[data-game-lang]')){
+    item.setAttribute('aria-pressed',String(item.dataset.gameLang===selected));
+    item.addEventListener('click',()=>{if(item.dataset.gameLang===selected){panel.hidden=true;button.setAttribute('aria-expanded','false');return;}commit(item.dataset.gameLang);});
+  }
+  const close=()=>{panel.hidden=true;button.setAttribute('aria-expanded','false');};
+  button.addEventListener('click',()=>{panel.hidden=!panel.hidden;button.setAttribute('aria-expanded',String(!panel.hidden));});
+  wrap.addEventListener('pointerdown',e=>e.stopPropagation());
+  wrap.addEventListener('click',e=>e.stopPropagation());
+  wrap.addEventListener('wheel',e=>e.stopPropagation(),{passive:true});
+  wrap.addEventListener('keydown',e=>{if(e.key==='Escape'){close();e.stopPropagation();button.focus();}});
+  document.addEventListener('pointerdown',e=>{if(!wrap.contains(e.target))close();});
+  document.body.appendChild(wrap);
+ }
  function init(){
   // Correct the original wall-toggle too: an old ?lang=es query must not
   // override a newly chosen value saved by that existing game control.
   window.__setLang=(lang)=>commit(lang);
   first();
+  quickSettings();
   if(!settings()){
    let retries=150;
    const again=()=>{if(settings()||--retries===0)return;setTimeout(again,1200)};
