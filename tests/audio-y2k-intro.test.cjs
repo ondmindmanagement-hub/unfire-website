@@ -13,6 +13,7 @@ test('Y2K Robots opening stays cinematic with a selectable English or Spanish la
   for (const s of ['unfire-dragon-transparent.png', 'logo-unfire-256.webp', 'emblem-butterfly.webp', 'Y2K<br>ROBOTS']) assert.ok(intro.includes(s), s);
   assert.ok(intro.indexOf('data-lang="en"') < intro.indexOf('data-lang="es"'), 'English listed first');
   assert.match(intro, /navigator\.webdriver/, 'automated QA browsers skip the opening');
-  assert.match(lang, /UNFIRE_INTRO&&window\.UNFIRE_INTRO\.active/, 'first-run dialog defers to the opening');
-  assert.ok(lang.indexOf('data-lang=\\"en\\"') < lang.indexOf('data-lang=\\"es\\"') || lang.indexOf('data-lang="en"') < lang.indexOf('data-lang="es"'));
+  assert.match(lang, /group\.id='ufLangSettings'/, 'language lives in the settings panel');
+  assert.match(lang, /sel\.id='ufLangSelect'/);
+  assert.doesNotMatch(lang, /ufLangFirst|ufLangQuick/, 'no redundant language overlay or floating control');
 });

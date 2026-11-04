@@ -1502,10 +1502,10 @@
     })[nm] || nm); } } } }; })();
   const ctlB = document.createElement('button'); ctlB.textContent = '🤖 UNFIRE CONTROL'; ctlB.style.cssText = roamB.style.cssText.replace('right:14px', 'right:150px'); document.body.appendChild(ctlB); ctlB.onclick = (e) => { e.stopPropagation(); const c = document.getElementById('chat'); c.classList.toggle('on'); if (c.classList.contains('on')) { const i = document.getElementById('chatq'); i.placeholder = 'Dime algo: «sube HYPERWAVE», «apaga la luz», «busca en YouTube…»'; i.focus(); } }; ctlB.addEventListener('pointerdown', (e) => e.stopPropagation());
   // UNFIRE TUBE: ordenador con un buscador al estilo de los 2000 (vídeos de YouTube embebidos)
-  const TUBE = (() => { const d = document.createElement('div'); d.id = 'tube'; d.innerHTML = '<style>#tube{position:fixed;inset:6vh 6vw;z-index:60;display:none;flex-direction:column;background:#ece9d8;border:3px solid #0a246a;border-radius:8px;box-shadow:0 20px 60px #000c;font:13px Tahoma,Verdana,Arial;color:#111}#tube.on{display:flex}#tube .bar{background:linear-gradient(180deg,#0a246a,#3a6ea5);color:#fff;font-weight:700;padding:6px 10px;display:flex;justify-content:space-between}#tube .bar button{background:#c33;color:#fff;border:1px solid #fff;font-weight:700;cursor:pointer}#tube .top{display:flex;gap:8px;align-items:center;padding:10px;background:#fff;border-bottom:1px solid #ccc}#tube .logo{font:900 22px Arial;color:#000}#tube .logo b{background:#c00;color:#fff;border-radius:6px;padding:0 6px;margin-left:2px}#tube input{flex:1;padding:6px;border:1px solid #999;font:13px Tahoma}#tube .go{padding:6px 12px;background:linear-gradient(#fff,#ddd);border:1px solid #999;cursor:pointer}#tube .body{flex:1;display:flex;gap:10px;padding:10px;min-height:0}#tube iframe{flex:1;border:1px solid #999;background:#000}#tube .side{width:220px;overflow:auto;background:#fff;border:1px solid #ccc;padding:8px}#tube .side a{display:block;color:#03c;margin:4px 0;cursor:pointer;text-decoration:underline}</style><div class=bar><span>UNFIRE TUBE 2000 — Explorador</span><button id=tubeX>X</button></div><div class=top><span class=logo>Unfire<b>Tube</b></span><input id=tubeQ placeholder="Pega un enlace de YouTube o escribe qué buscar"><button class=go id=tubeGo>Buscar</button></div><div class=body><iframe id=tubeF allow="autoplay; encrypted-media" allowfullscreen></iframe><div class=side><b>Videos recomendados</b> <a id=tubeK style="float:right;cursor:pointer">⚙</a><div id=tubeL></div><p style="font-size:11px;color:#666">Pega un enlace para verlo aquí. Las búsquedas se abren en YouTube.</p></div></div>';
+  const TUBE = (() => { const d = document.createElement('div'); d.id = 'tube'; d.innerHTML = '<style>#tube{position:fixed;inset:6vh 6vw;z-index:60;display:none;flex-direction:column;background:#ece9d8;border:3px solid #0a246a;border-radius:8px;box-shadow:0 20px 60px #000c;font:13px Tahoma,Verdana,Arial;color:#111}#tube.on{display:flex}#tube .bar{position:relative;isolation:isolate;z-index:25;min-height:44px;flex:0 0 auto;box-sizing:border-box;background:linear-gradient(180deg,#10366b,#2e639a);color:#fff;font-weight:700;padding:5px 9px 5px 13px;display:flex;align-items:center;justify-content:space-between;gap:12px}#tube .bar span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#tube #tubeX{display:inline-flex!important;align-items:center;justify-content:center;position:relative!important;z-index:26;flex:0 0 42px;width:42px;height:36px;min-height:36px;border-radius:9px;border:1.5px solid #fff9;background:linear-gradient(180deg,#ff6868,#b91f38);color:#fff;font:900 20px Arial,sans-serif;box-shadow:0 2px 9px #0005;cursor:pointer;pointer-events:auto!important;touch-action:manipulation}#tube #tubeX:focus-visible{outline:3px solid #fff;outline-offset:2px}#tube .top{display:flex;gap:8px;align-items:center;padding:10px;background:#fff;border-bottom:1px solid #ccc}#tube .logo{font:900 22px Arial;color:#000}#tube .logo b{background:#c00;color:#fff;border-radius:6px;padding:0 6px;margin-left:2px}#tube input{flex:1;padding:6px;border:1px solid #999;font:13px Tahoma}#tube .go{padding:6px 12px;background:linear-gradient(#fff,#ddd);border:1px solid #999;cursor:pointer}#tube .body{flex:1;display:flex;gap:10px;padding:10px;min-height:0}#tube iframe{flex:1;border:1px solid #999;background:#000}#tube .side{width:220px;overflow:auto;background:#fff;border:1px solid #ccc;padding:8px}#tube .side a{display:block;color:#03c;margin:4px 0;cursor:pointer;text-decoration:underline}</style><div class=bar><span>UNFIRE TUBE 2000 — Explorador</span><button type="button" id=tubeX aria-label="Close computer" title="Close computer">×</button></div><div class=top><span class=logo>Unfire<b>Tube</b></span><input id=tubeQ placeholder="Pega un enlace de YouTube o escribe qué buscar"><button class=go id=tubeGo>Buscar</button></div><div class=body><iframe id=tubeF allow="autoplay; encrypted-media" allowfullscreen></iframe><div class=side><b>Videos recomendados</b> <a id=tubeK style="float:right;cursor:pointer">⚙</a><div id=tubeL></div><p style="font-size:11px;color:#666">Pega un enlace para verlo aquí. Las búsquedas se abren en YouTube.</p></div></div>';
     // Retro desktop of the actual house computer. Keep the Tube app unchanged.
     d.insertAdjacentHTML('beforeend', `<style>
-      #tube #pcDesktop,#tube #pcSecret{position:absolute;inset:33px 0 0;z-index:5;background:linear-gradient(145deg,#126f77,#073c58);color:#fff;box-sizing:border-box;padding:clamp(16px,4vw,32px);overflow:auto}
+      #tube #pcDesktop,#tube #pcSecret{position:absolute;inset:44px 0 0;z-index:5;background:linear-gradient(145deg,#126f77,#073c58);color:#fff;box-sizing:border-box;padding:clamp(16px,4vw,32px);overflow:auto}
       #tube #pcDesktop{display:flex;flex-direction:column;gap:16px}
       #tube #pcDesktop .pcApps{display:flex;gap:18px;flex-wrap:wrap}
       #tube .pcApp{width:112px;min-height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#ffffff12;border:1px solid #ffffff55;border-radius:10px;color:#fff;cursor:pointer;font:700 12px Tahoma,Arial;text-align:center;touch-action:manipulation}
@@ -1566,7 +1566,12 @@
     d.querySelector('#pcSecretGo').onclick=redeemRobots;
     d.querySelector('#pcSecretCode').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();redeemRobots();}});
     const play = (q) => { const m = /(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/.exec(q || ''); if (m) { try { RADIO.stop(); } catch (e) {} document.getElementById('tubeF').src = 'https://www.youtube-nocookie.com/embed/' + m[1] + '?autoplay=1'; return true; } if (q && q.trim()) { let key = ''; try { key = localStorage.getItem('ytkey') || ''; } catch (e) {} if (key) { fetch('https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=12&q=' + encodeURIComponent(q.trim()) + '&key=' + encodeURIComponent(key)).then((r) => r.json()).then((j) => { const L = (j.items || []).map((x) => ({ u: 'https://youtu.be/' + x.id.videoId, t: x.snippet.title })); document.getElementById('tubeL').innerHTML = L.map((x) => '<a data-u="' + x.u + '">' + x.t.replace(/</g, '&lt;') + '</a>').join('') || uiText('<i>No results</i>','<i>Sin resultados</i>'); if (L[0]) play(L[0].u); }).catch(() => { document.getElementById('tubeL').innerHTML = uiText('<i>Search unavailable (API key or network).</i>','<i>No se pudo buscar (clave o red).</i>'); }); } else { document.getElementById('tubeL').innerHTML = uiText('<i>To search here, add a free YouTube API key in ⚙. Otherwise, paste a link.</i><br><a data-yt="' + encodeURIComponent(q.trim()) + '">Open search on YouTube ↗</a>','<i>Para buscar aquí dentro, añade una clave gratuita de YouTube en ⚙. Mientras, pega un enlace.</i><br><a data-yt="' + encodeURIComponent(q.trim()) + '">Abrir búsqueda en YouTube ↗</a>'); } } return false; };
-    document.getElementById('tubeX').onclick = () => { d.classList.remove('on'); document.getElementById('tubeF').src = 'about:blank'; }; document.getElementById('tubeGo').onclick = () => play(document.getElementById('tubeQ').value); document.getElementById('tubeQ').addEventListener('keydown', (e) => { if (e.key === 'Enter') play(e.target.value); });
+    const closeComputer=()=>{d.classList.remove('on');d.querySelector('#tubeF').src='about:blank';showDesktop();};
+    d.querySelector('#tubeX').onclick=e=>{e.stopPropagation();closeComputer();};
+    d.addEventListener('keydown',e=>{if(e.key==='Escape'&&d.classList.contains('on')){e.preventDefault();e.stopPropagation();closeComputer();}});
+    d.querySelector('#tubeX').setAttribute('aria-label',uiText('Close computer','Cerrar ordenador'));
+    d.querySelector('#tubeX').title=uiText('Close computer','Cerrar ordenador');
+    document.getElementById('tubeGo').onclick = () => play(document.getElementById('tubeQ').value); document.getElementById('tubeQ').addEventListener('keydown', (e) => { if (e.key === 'Enter') play(e.target.value); });
     const LIST = window.UNFIRE_TUBE || []; document.getElementById('tubeL').innerHTML = LIST.length ? LIST.map((x) => '<a data-u="' + x.u + '">' + x.t + '</a>').join('') : uiText('<i>(UNFIRE tracks coming soon)</i>','<i>(pronto: los temas de UNFIRE)</i>'); document.getElementById('tubeL').onclick = (e) => { const a = e.target.closest('a'); if (!a) return; if (a.dataset.yt) { window.open('https://www.youtube.com/results?search_query=' + a.dataset.yt, '_blank', 'noopener'); return; } play(a.dataset.u); }; document.getElementById('tubeK').onclick = () => { const k = prompt(uiText('YouTube API key (free from Google Cloud). Stored only in this browser:','Clave de la API de YouTube (gratis en Google Cloud). Se guarda solo en este navegador:')); if (k != null) { try { localStorage.setItem('ytkey', k.trim()); } catch (e) {} } };
     return { open(q) { d.classList.add('on'); hap(0.4); if (q) { desktop.style.display='none';mystery.style.display='none';document.getElementById('tubeQ').value = q; play(q); } else showDesktop(); } }; })();
 
@@ -1612,7 +1617,65 @@
   const recHud = document.createElement('div'); recHud.id = 'recHud'; recHud.innerHTML = '<b style="color:#ff2a4a">● REC</b> <span>MODO CINE · CÁMARA LIBRE · ATRAVIESA TODO · WASD · Q/E · V salir</span> <button id="recX">✕ SALIR</button>'; recHud.style.cssText = 'position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:60;display:none;align-items:center;gap:10px;font:600 11px "Share Tech Mono",monospace;color:#fff;background:rgba(0,0,0,.42);padding:6px 10px;border-radius:12px;backdrop-filter:blur(6px);transition:opacity 1.2s;max-width:calc(100vw - 32px);flex-wrap:wrap;justify-content:center';
   document.body.appendChild(recHud); { const st = document.createElement('style'); st.textContent = 'body.recOn>*:not(#cv):not(#recHud):not(audio):not(iframe){visibility:hidden!important}#recX{all:unset;cursor:pointer;color:#fff;background:#ff2a4a;padding:3px 8px;border-radius:8px}'; document.head.appendChild(st); }
   // controles abajo a la derecha en una sola columna ordenada: nunca se pisan, se encogen en pantallas pequeñas o ventanas minimizadas
-  { const dock = document.createElement('div'); dock.id = 'ctlDock'; dock.style.cssText = 'position:fixed;right:max(12px,env(safe-area-inset-right));bottom:calc(9vh + 14px);z-index:40;display:flex;flex-direction:column-reverse;align-items:flex-end;gap:8px;pointer-events:none;max-height:calc(100vh - 140px)'; document.body.appendChild(dock); const surfB = document.createElement('button'); surfB.id = 'surfB'; surfB.textContent = '🏄 TABLA: NO (B)'; surfB.style.cssText = camB.style.cssText; surfB.style.background = 'linear-gradient(180deg,#5fe0ff,#0a8fb8)'; surfB.addEventListener('pointerdown', (e) => e.stopPropagation()); window.__surfToggle = () => { ROAMS.board = !ROAMS.board; surfB.textContent = ROAMS.board ? '🏄 TABLA: SÍ (B)' : '🏄 TABLA: NO (B)'; say(ROAMS.board ? '🏄 Tabla activada · en el agua: ESPACIO = truco (mantén para volar)' : '🪽 Tabla guardada · ESPACIO vuelve a ser volar'); hap(0.3); }; surfB.onclick = (e) => { e.stopPropagation(); window.__surfToggle(); }; window.__surfB = surfB; const onlB = document.createElement('button'); onlB.id = 'onlB'; onlB.textContent = '🌐 ONLINE'; onlB.style.cssText = camB.style.cssText; onlB.style.background = 'linear-gradient(180deg,#b06bff,#6a2bd8)'; onlB.addEventListener('pointerdown', (e) => e.stopPropagation()); onlB.onclick = (e) => { e.stopPropagation(); try { ONLINE.open(); } catch (er) {} }; window.__onlB = onlB; const nimB = document.createElement('button'); nimB.id = 'nimB'; nimB.textContent = '🤖 NIMBO: VEN'; nimB.style.cssText = camB.style.cssText; nimB.style.background = 'linear-gradient(180deg,#ff5a6a,#c8102e)'; nimB.addEventListener('pointerdown', (e) => e.stopPropagation()); nimB.onclick = (e) => { e.stopPropagation(); try { if (window.__NIMBO) window.__NIMBO.toggle(true); } catch (er) {} }; window.__nimB = nimB; [roamB, camB, recB, surfB, onlB, nimB].forEach((b) => { b.style.position = 'static'; b.style.right = b.style.bottom = b.style.top = b.style.left = 'auto'; b.style.pointerEvents = 'auto'; b.style.whiteSpace = 'nowrap'; dock.appendChild(b); }); const st = document.createElement('style'); st.textContent = '@keyframes surfPop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}#ctlDock button{font-size:clamp(9px,1.6vw,12px)!important;padding:clamp(6px,1.2vw,9px) clamp(9px,1.8vw,14px)!important}@media (hover:hover) and (max-height:520px){#ctlDock{bottom:12px!important;flex-direction:row-reverse!important}}@media (hover:hover) and (max-width:520px){#ctlDock{bottom:calc(9vh + 60px)!important}}body.storyOn #ctlDock{visibility:hidden}@media(pointer:coarse) and (max-height:420px) and (orientation:landscape){#ctlDock button{min-height:30px!important;padding:3px 6px!important;font-size:9px!important}}'; document.head.appendChild(st); }
+  { const dock = document.createElement('div'); dock.id = 'ctlDock'; dock.style.cssText = 'position:fixed;right:max(12px,env(safe-area-inset-right));bottom:calc(9vh + 14px);z-index:40;display:flex;flex-direction:column-reverse;align-items:flex-end;gap:8px;pointer-events:none;max-height:calc(100vh - 140px)'; document.body.appendChild(dock); const surfB = document.createElement('button'); surfB.id = 'surfB'; surfB.textContent = '🏄 TABLA: NO (B)'; surfB.style.cssText = camB.style.cssText; surfB.style.background = 'linear-gradient(180deg,#5fe0ff,#0a8fb8)'; surfB.addEventListener('pointerdown', (e) => e.stopPropagation()); window.__surfToggle = () => { ROAMS.board = !ROAMS.board; surfB.textContent = ROAMS.board ? '🏄 TABLA: SÍ (B)' : '🏄 TABLA: NO (B)'; say(ROAMS.board ? '🏄 Tabla activada · en el agua: ESPACIO = truco (mantén para volar)' : '🪽 Tabla guardada · ESPACIO vuelve a ser volar'); hap(0.3); }; surfB.onclick = (e) => { e.stopPropagation(); window.__surfToggle(); }; window.__surfB = surfB; const onlB = document.createElement('button'); onlB.id = 'onlB'; onlB.textContent = '🌐 ONLINE'; onlB.style.cssText = camB.style.cssText; onlB.style.background = 'linear-gradient(180deg,#b06bff,#6a2bd8)'; onlB.addEventListener('pointerdown', (e) => e.stopPropagation()); onlB.onclick = (e) => { e.stopPropagation(); try { ONLINE.open(); } catch (er) {} }; window.__onlB = onlB; const nimB = document.createElement('button'); nimB.id = 'nimB'; nimB.textContent = '🤖 NIMBO: VEN'; nimB.style.cssText = camB.style.cssText; nimB.style.background = 'linear-gradient(180deg,#ff5a6a,#c8102e)'; nimB.addEventListener('pointerdown', (e) => e.stopPropagation()); nimB.onclick = (e) => { e.stopPropagation(); try { if (window.__NIMBO) window.__NIMBO.toggle(true); } catch (er) {} }; window.__nimB = nimB; const actionItems=document.createElement('div');actionItems.id='ufActionItems';
+    actionItems.setAttribute('role','group');actionItems.setAttribute('aria-label',uiText('Game actions','Acciones del juego'));
+    actionItems.hidden=true;dock.appendChild(actionItems);
+    [roamB,camB,recB,surfB,onlB,nimB].forEach((b)=>{
+      b.style.position='static';b.style.right=b.style.bottom=b.style.top=b.style.left='auto';
+      b.style.pointerEvents='auto';b.style.whiteSpace='nowrap';actionItems.appendChild(b);
+    });
+    const actionToggle=document.createElement('button');actionToggle.id='ufActionsToggle';
+    actionToggle.type='button';actionToggle.setAttribute('aria-controls','ufActionItems');
+    const setActionOpen=(v)=>{
+      actionItems.hidden=!v;actionToggle.setAttribute('aria-expanded',String(v));
+      actionToggle.textContent=v?uiText('✕ CLOSE','✕ CERRAR'):uiText('☷ ACTIONS','☷ ACCIONES');
+      actionToggle.setAttribute('aria-label',v?uiText('Close game actions','Cerrar acciones del juego'):uiText('Open game actions','Abrir acciones del juego'));
+    };
+    dock.appendChild(actionToggle);setActionOpen(false);
+    actionToggle.onclick=e=>{e.stopPropagation();setActionOpen(actionItems.hidden);};
+    actionItems.addEventListener('click',e=>{if(e.target.closest('button'))setActionOpen(false);},true);
+    dock.addEventListener('pointerdown',e=>e.stopPropagation());
+    dock.addEventListener('keydown',e=>{if(e.key==='Escape'&&!actionItems.hidden){setActionOpen(false);actionToggle.focus({preventScroll:true});e.preventDefault();e.stopPropagation();}});
+    document.addEventListener('pointerdown',e=>{if(!actionItems.hidden&&!dock.contains(e.target))setActionOpen(false);}); const st = document.createElement('style'); st.textContent = '@keyframes surfPop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}#ctlDock button{font-size:clamp(9px,1.6vw,12px)!important;padding:clamp(6px,1.2vw,9px) clamp(9px,1.8vw,14px)!important}@media (hover:hover) and (max-height:520px){#ctlDock{bottom:12px!important;flex-direction:row-reverse!important}}@media (hover:hover) and (max-width:520px){#ctlDock{bottom:calc(9vh + 60px)!important}}body.storyOn #ctlDock{visibility:hidden}@media(pointer:coarse) and (max-height:420px) and (orientation:landscape){#ctlDock button{min-height:30px!important;padding:3px 6px!important;font-size:9px!important}}'; document.head.appendChild(st);
+    // Late, deliberately specific rules override legacy landscape/phone rail positions.
+    const foldedStyle=document.createElement('style');foldedStyle.id='ufFoldedActionsStyle';
+    foldedStyle.textContent=`
+      html body #ctlDock#ctlDock,html body.unfire-roaming #ctlDock#ctlDock,html body:not(.unfire-roaming) #ctlDock#ctlDock{
+        position:fixed!important;right:max(12px,env(safe-area-inset-right))!important;left:auto!important;
+        top:auto!important;bottom:max(12px,calc(env(safe-area-inset-bottom) + 12px))!important;
+        display:flex!important;flex-direction:column!important;align-items:flex-end!important;
+        gap:7px!important;width:auto!important;height:auto!important;max-width:210px!important;
+        max-height:calc(100dvh - 120px)!important;overflow:visible!important;
+        padding:0!important;pointer-events:none!important;z-index:41!important;
+      }
+      html body #ctlDock#ctlDock #ufActionItems[hidden]{display:none!important}
+      html body #ctlDock#ctlDock #ufActionItems:not([hidden]){
+        box-sizing:border-box;display:flex!important;flex-direction:column!important;align-items:stretch!important;
+        gap:6px!important;width:min(192px,calc(100vw - 24px))!important;
+        max-height:min(67dvh,470px)!important;overflow-y:auto!important;
+        padding:9px!important;border:1px solid #a4cfff88;border-radius:16px;
+        background:linear-gradient(160deg,rgba(22,43,82,.96),rgba(5,13,31,.97));
+        box-shadow:0 14px 44px #0009,inset 0 1px #ffffff36;pointer-events:auto!important;
+      }
+      html body #ctlDock#ctlDock #ufActionsToggle{display:flex!important;align-items:center;justify-content:center;
+        position:static!important;top:auto!important;bottom:auto!important;right:auto!important;
+        width:auto!important;max-width:none!important;min-width:118px!important;min-height:44px!important;
+        padding:10px 15px!important;border-radius:999px!important;border:1.5px solid #bde4ff!important;
+        color:#fff!important;background:linear-gradient(160deg,#3172c1,#15365c)!important;
+        box-shadow:0 5px 15px #0008!important;font:800 12px system-ui,Arial!important;
+        white-space:nowrap!important;cursor:pointer;pointer-events:auto!important;
+      }
+      html body #ctlDock#ctlDock #ufActionItems button{
+        box-sizing:border-box!important;width:100%!important;max-width:100%!important;
+        min-width:0!important;min-height:39px!important;text-align:center!important;
+        padding:8px!important;font:700 11px system-ui,Arial!important;
+      }
+      html body #ctlDock#ctlDock #ufActionsToggle:focus-visible,
+      html body #ctlDock#ctlDock #ufActionItems button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+      @media(max-height:500px){html body #ctlDock#ctlDock #ufActionItems:not([hidden]){max-height:55dvh!important}}
+    `;
+    document.head.appendChild(foldedStyle);
+  }
   let recIdle = 0; const recWake = () => { recIdle = 0; recHud.style.opacity = '1'; };
   REC.set = (v) => { if (!!v === REC.on) return; if (v && !ROAMS.on) return; REC.on = !!v; document.body.classList.toggle('recOn', REC.on); recHud.style.display = REC.on ? 'flex' : 'none'; REC.k = {}; if (REC.on) { REC.p.copy(cam.position); const d = new THREE.Vector3(); cam.getWorldDirection(d); REC.yaw = Math.atan2(d.x, -d.z); REC.pitch = Math.asin(clamp(d.y, -1, 1)); REC.v.set(0, 0, 0); for (const k in ROAMS.k) ROAMS.k[k] = 0; recWake(); } else { ROAMS.cp = null; } };
   const CINEMA_EXPORT = window.UnfireCinemaExport && window.UnfireCinemaExport.create({
@@ -1653,7 +1716,8 @@
     // never reparent it into the viewport or spawn a second CTA.
     const dock=document.getElementById('ctlDock');
     if(dock){
-      if(roamB.parentElement!==dock)dock.appendChild(roamB);
+      const target=dock.querySelector('#ufActionItems')||dock;
+      if(roamB.parentElement!==target)target.appendChild(roamB);
       if(roamB.style.position!=='static')roamB.style.position='static';
     }
     if(roamB.style.display!==(show?'block':'none'))roamB.style.display=show?'block':'none'; if(ROAMS.on){const label=CASE_VIEW.on?'↩ VOLVER AL PERSONAJE':'↩ VOLVER AL MALETÍN';if(roamB.textContent!==label)roamB.textContent=label;}
@@ -1898,7 +1962,49 @@
       take(i, mine) { const n = this.list[i]; if (!n || !n.on) return; n.on = false; n.sp.visible = false; if (mine) { this.sc++; hap(0.3); try { if (window.__SPRAY) window.__SPRAY(n.sp.position.x, n.sp.position.y, n.sp.position.z, 30, 6, 8); } catch (e) {} } if (this.list.every((q) => !q.on)) { this.round++; say('🏁 ¡Ronda de notas terminada! Empieza otra'); setTimeout(() => this.build(this.seed + 1), 2500); } } };
 
     const ui = document.createElement('div'); ui.id = 'onl'; ui.innerHTML = '<style>#onl{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:rgba(0,10,30,.55);font:600 13px Arial;color:#0a1a3a}#onl.on{display:flex}#onl .b{background:linear-gradient(180deg,#eef6ff,#bcd9ff);border:3px solid #fff;border-radius:22px;padding:18px;width:min(380px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;box-shadow:0 20px 50px #000a}#onl h3{margin:0 0 10px;font:900 18px Orbitron,Arial;color:#1d4fd8}#onl input{width:100%;box-sizing:border-box;padding:9px 12px;border-radius:12px;border:2px solid #9fd0ff;font:700 14px Arial;margin:4px 0 10px}#onl .sw{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px}#onl .sw button{width:34px;height:34px;border-radius:50%;border:3px solid #fff;cursor:pointer;box-shadow:0 2px 6px #0004}#onl .sw button.on{outline:3px solid #1d4fd8}#onl .ty button{width:auto;height:auto;border-radius:12px;padding:7px 10px;background:#fff;color:#0a1a3a;font:700 11px Arial}#onl .ty button.on{background:#1d4fd8;color:#fff}#onl.workshop .b{width:min(790px,calc(100vw - 22px));background:linear-gradient(170deg,#152744,#08142d);color:#ecf4ff;padding:clamp(12px,3vw,22px)}#onl.workshop h3{color:#86ceff}#onl.workshop .ty{display:grid;grid-template-columns:repeat(auto-fill,minmax(107px,1fr));gap:10px;align-items:stretch}#onl.workshop .ty .robotCard{min-width:0;min-height:140px;width:100%;height:auto;display:flex;align-items:center;flex-direction:column;gap:4px;padding:7px 5px;border-radius:14px;border:1px solid #5b90c077;background:linear-gradient(145deg,#172e4e,#0b172c);color:#fff;cursor:pointer;touch-action:manipulation;box-shadow:0 5px 15px #0005}#onl.workshop .ty .robotCard.on{border-color:#55e2ff;background:linear-gradient(145deg,#225a84,#103759);outline:2px solid #52d4ff}#onl.workshop .ty .robotCard:disabled{opacity:1;cursor:default;border-style:dashed;background:linear-gradient(145deg,#151b30,#08101f)}#onl.workshop .robotPortrait{width:92px;height:92px;max-width:100%;object-fit:contain;border-radius:11px;background:radial-gradient(ellipse at 50% 38%,#245782,#080f24 78%);display:grid;place-items:center;overflow:hidden;color:#91b2d4}#onl.workshop .robotPortrait img{height:100%;width:100%;object-fit:contain}#onl.workshop .robotUnknown{font:900 56px Arial;text-shadow:0 3px 1px #000,0 0 16px #5198c7}#onl.workshop .robotName{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:800 10px Arial}#onl.workshop .robotPerk{display:block;font:600 9px Arial;color:#91d5fb}#onl.workshop #onT{max-height:min(47vh,460px);overflow:auto;padding:4px}#onl.workshop .sw:not(.ty) button{border-color:#cfebff}#onl.workshop #onMsg{color:#a8eaff}#onl .act{display:flex;gap:8px;margin-top:6px}#onl .act button,#onl .act input{flex:1}#onl .go{border:0;border-radius:999px;padding:10px 14px;font:800 13px Michroma,Arial;color:#fff;background:linear-gradient(180deg,#5fb0ff,#1d4fd8);cursor:pointer}#onl .x{background:#999}#onl p{min-height:16px;margin:8px 0 0;color:#c0302a}#onlHud{position:fixed;top:112px;left:50%;transform:translateX(-50%);z-index:61;display:none;gap:8px;align-items:center;padding:7px 10px;border-radius:999px;background:rgba(8,14,40,.85);border:2px solid #9fd0ff;color:#fff;font:700 12px Orbitron,Arial;white-space:nowrap}#onlHud button{border:0;border-radius:999px;padding:6px 10px;font:800 11px Arial;cursor:pointer;color:#fff;background:#1d4fd8}#onlHud .q{background:#c0302a}#onlMic[aria-pressed="true"]{background:#18824f!important}#onlHud{max-width:calc(100vw - 20px);flex-wrap:wrap;justify-content:center}#onlT{max-width:min(380px,80vw);overflow:hidden;text-overflow:ellipsis}@media(max-width:700px){#onlHud{top:74px;font-size:10px}#onlHud button{font-size:11px}}body.recOn #onlHud,body.storyOn #onlHud{visibility:hidden}</style><div class="b"><h3>🌐 MODO ONLINE</h3><div class="onlIdentity">Tu nombre<input id="onN" maxlength="14" placeholder="Escribe tu nombre">Tu número<input id="onNum" type="number" min="0" max="99" placeholder="27"></div><div>Color de tu robot</div><div class="sw" id="onC"></div><div>Tipo de robot transformable</div><div class="sw ty" id="onT"></div><div class="act"><button class="go" id="onNew">✨ CREAR SALA</button></div><div class="act"><input id="onCode" maxlength="5" placeholder="CÓDIGO"><button class="go" id="onJoin">➜ UNIRME</button></div><div class="act"><button class="go x" id="onX">CERRAR</button></div><p id="onMsg"></p></div>';
-    document.body.appendChild(ui); ui.addEventListener('pointerdown', (e) => e.stopPropagation()); ui.addEventListener('keydown', (e) => e.stopPropagation(), true);
+    // Join-first lobby. A public slot is only reported as available after a real PeerJS connection.
+    const rowCreate=ui.querySelector('#onNew').closest('.act');
+    const rowJoin=ui.querySelector('#onJoin').closest('.act');
+    rowCreate.classList.add('onl-connect');rowJoin.classList.add('onl-connect');
+    rowCreate.before(rowJoin);
+    const rowPublic=document.createElement('div');rowPublic.className='act onl-connect';
+    rowPublic.innerHTML='<button type="button" class="go" id="onFind">🔎 FIND PLAYERS</button>';
+    rowJoin.before(rowPublic);
+    rowCreate.querySelector('#onNew').textContent=uiText('🔒 CREATE PRIVATE ROOM','🔒 CREAR SALA PRIVADA');
+    const hostPublic=document.createElement('button');hostPublic.className='go';hostPublic.type='button';hostPublic.id='onHostPublic';
+    hostPublic.textContent=uiText('🌐 HOST PUBLIC ROOM','🌐 CREAR SALA PÚBLICA');
+    rowCreate.insertBefore(hostPublic,rowCreate.firstChild);
+    ui.querySelector('#onJoin').textContent=uiText('➜ JOIN','➜ UNIRME');
+    ui.querySelector('#onCode').placeholder=uiText('5-CHARACTER ROOM CODE','CÓDIGO DE SALA (5)');
+    ui.querySelector('#onX').textContent=uiText('CLOSE','CERRAR');
+    ui.querySelector('h3').textContent=uiText('🌐 ONLINE · JOIN A ROOM','🌐 ONLINE · UNIRSE A UNA SALA');
+    if(window.__LANG!=='es'){
+      const identity=ui.querySelector('.onlIdentity');
+      const texts=[...identity.childNodes].filter(x=>x.nodeType===3);
+      if(texts[0])texts[0].textContent='Your name';
+      if(texts[1])texts[1].textContent='Your number';
+      ui.querySelector('#onN').placeholder='Your name';
+      const colorHeading=ui.querySelector('#onC').previousElementSibling;
+      if(colorHeading)colorHeading.textContent='Robot color';
+      const robotHeading=ui.querySelector('#onT').previousElementSibling;
+      if(robotHeading)robotHeading.textContent='Transformable robot';
+    }
+    const lobbyInfo=document.createElement('p');lobbyInfo.id='onLobbyInfo';
+    lobbyInfo.textContent=uiText('Find an active public room, join with a code, or host one. Creating a room never puts you into an empty multiplayer game.',
+      'Busca una sala pública activa, únete con un código o crea una. No empezarás solo una partida multijugador.');
+    rowPublic.before(lobbyInfo);
+    const pubStyles=document.createElement('style');pubStyles.textContent=`
+      #onl .onl-connect{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+      #onl .onl-connect .go{min-height:44px;min-width:0;flex:1 1 130px}
+      #onl .onl-connect input{min-height:44px;flex:1 1 130px;width:0;min-width:0;margin:0}
+      #onl #onFind{background:linear-gradient(160deg,#23a4dd,#2151bb)}
+      #onl #onHostPublic{background:linear-gradient(160deg,#407eb3,#244874)}
+      #onl #onLobbyInfo{font:500 12px/1.5 Arial;color:#23436e;min-height:0;margin:9px 0}
+      #onl.workshop .onl-connect,#onl.workshop #onLobbyInfo{display:none!important}
+      #onl .onl-connect button:focus-visible{outline:3px solid #153ec7;outline-offset:2px}
+      @media(max-width:380px){#onl .onl-connect .go{font-size:10px}}
+    `;ui.appendChild(pubStyles);
+    document.body.appendChild(ui); ui.addEventListener('pointerdown', (e) => e.stopPropagation()); ui.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target?.id==='onCode'){e.preventDefault();ONLINE.join(e.target.value);}e.stopPropagation();},true);
     if (ROBOT_STYLE) ROBOT_STYLE.inject(document);
     // Workshop does not obscure the player's 3D robot. Desktop uses a side dock;
     // phones use a compact bottom sheet that leaves the avatar visible above it.
@@ -2038,7 +2144,7 @@
     const load = (cb) => { if (window.Peer) return cb(); const s = document.createElement('script'); s.src = 'vendor/peerjs.min.js'; s.onload = cb; s.onerror = () => msg('No se pudo conectar con el servidor online. Revisa tu conexión.'); document.head.appendChild(s); };
     const rnd = () => Array.from({ length: 5 }, () => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random() * 32)]).join('');
     const link = () => { let base = ''; try { base = parent.location.origin + parent.location.pathname; } catch (e) { base = location.origin + location.pathname; } return base + '?room=' + code; };
-    const started = () => { ui.classList.remove('on'); hud.style.display = 'flex'; /* friends in the same room talk straight away */ setTimeout(() => { try { if (!VOICE.on) VOICE.start(); } catch (e) {} }, 400); NOTES.sc = 0; NOTES.build([...code].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) % 100000); upd(); say('🌐 Sala ' + code + ' lista · pulsa 📨 INVITAR para traer a tus amigos'); hap(0.5); };
+    const started = () => { ui.classList.remove('on'); hud.style.display = 'flex'; /* Voice remains opt-in; no microphone permission prompt merely for joining. */ NOTES.sc = 0; NOTES.build([...code].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) % 100000); upd(); say('🌐 Sala ' + code + ' lista · pulsa 📨 INVITAR para traer a tus amigos'); hap(0.5); };
     const upd = () => { const rk = [[cfg.name || 'Tú', NOTES.sc]].concat(Object.values(R).map((r) => [r.d ? r.d.n : '?', r.d ? r.d.sc || 0 : 0])).sort((a, b) => b[1] - a[1]).slice(0, 3).map((x, i) => ['🥇', '🥈', '🥉'][i] + x[0] + ' ' + x[1]).join(' '); $o('onlT').textContent = '🌐 ' + code + ' · ' + (Object.keys(R).length + 1) + '👥 · ♪ ' + rk; };
     // PeerJS WebRTC voice is opt-in: the room never requests a mic on join.
     // Audio is spatialised locally only; no microphone media is stored in the game.
@@ -2278,11 +2384,101 @@
         }else{say('🌐 El anfitrión cerró la sala');leave();}
       });
     }
-    function create() { if (joining) { msg('Primero termina o cancela el intento de conexión'); return; } save(); applyMe(); msg('Creando sala…'); load(() => { code = rnd(); isHost = true; peer = new Peer('unfire-sala-' + code); VOICE.bindPeer(peer); peer.on('open', (id) => { myId = id; started(); }); peer.on('connection', (c) => { c.on('open', () => setup(c)); }); peer.on('error', (e) => { if (e.type === 'unavailable-id') { try { peer.destroy(); } catch (er) {} create(); } else msg('Error online: ' + e.type); }); }); }
+    // Public rooms have predictable P2P identifiers, not a fake online list.
+    // Search attempts a real peer connection and never silently creates a solo session.
+    const PUBLIC_CODES=Array.from({length:8},(_,i)=>'P'+String(i+1).padStart(4,'0'));
+    let hostWaiting=false;
+    function create(publicRoom=false) {
+      if(joining){msg(uiText('Finish or cancel the current connection first.','Termina o cancela la conexión antes.'));return;}
+      if(code||peer){msg(uiText('You are already hosting or joining a room.','Ya estás en una sala o creando una.'));return;}
+      save();applyMe();hostWaiting=true;
+      msg(uiText('Preparing room…','Preparando sala…'));
+      let attemptIndex=0;
+      const attempt=()=>{
+        if(!hostWaiting)return;
+        if(publicRoom&&attemptIndex>=PUBLIC_CODES.length){hostWaiting=false;code=null;peer=null;
+          msg(uiText('All public slots are busy. Join an active room instead.','Todas las salas públicas están ocupadas. Prueba a unirte.'));return;}
+        code=publicRoom?PUBLIC_CODES[attemptIndex]:rnd();isHost=true;
+        let p;
+        try{p=new Peer('unfire-sala-'+code);}catch(_){hostWaiting=false;code=null;msg(uiText('Could not connect to the room service.','No se pudo conectar al servicio de salas.'));return;}
+        peer=p;VOICE.bindPeer(p);
+        p.on('open',id=>{
+          if(peer!==p||!hostWaiting)return;
+          myId=id;
+          msg(uiText('Room '+code+' is ready. Waiting for another player. Share the room code or invite link. You will enter together.',
+            'Sala '+code+' lista. Esperando a otro jugador. Comparte el código o el enlace. Entraréis juntos.'));
+        });
+        p.on('connection',c=>{
+          c.on('open',()=>{
+            if(peer!==p){try{c.close();}catch(_){}return;}
+            setup(c);
+            if(hostWaiting){hostWaiting=false;started();}
+          });
+        });
+        p.on('error',e=>{
+          if(peer!==p)return;
+          if(e?.type==='unavailable-id'){
+            try{p.destroy();}catch(_){}
+            peer=null;code=null;attemptIndex++;
+            if(publicRoom&&attemptIndex>=PUBLIC_CODES.length){hostWaiting=false;
+              msg(uiText('Public slots are occupied. Choose Join Public.','Las salas públicas están ocupadas. Elige Unirte.'));}
+            else attempt();
+          }else{hostWaiting=false;try{p.destroy();}catch(_){}peer=null;code=null;
+            msg(uiText('Room connection unavailable. Please retry.','No se pudo conectar a la sala. Reintenta.'));}
+        });
+      };
+      load(attempt);
+    }
     // A remote connection may stall behind strict NATs or restricted Wi-Fi.
     // Keep the screen responsive, offer a retry and never leave a dangling Peer.
     let joining = null;
     function clearJoining() { if (joining) { clearTimeout(joining.timer); joining = null; } }
+    function joinPublic() {
+      if(joining){msg(uiText('Already looking for a room.','Ya se está buscando una sala.'));return;}
+      if(code||peer){msg(uiText('Leave your current room first.','Sal de tu sala actual primero.'));return;}
+      save();applyMe();
+      msg(uiText('Searching for real public rooms…','Buscando salas públicas reales…'));
+      const task={timer:null,current:null,connections:[]};joining=task;
+      const fail=(reason)=>{
+        if(joining!==task)return;
+        clearJoining();
+        for(const c of task.connections){try{c.close();}catch(_){}}
+        try{task.current?.destroy();}catch(_){}
+        if(peer===task.current){peer=null;code=null;myId=null;}
+        msg(reason);
+      };
+      task.timer=setTimeout(()=>fail(uiText('No active public room found. You can host a public room and wait for others to join.',
+        'No hay salas públicas activas. Puedes crear una y esperar a otros jugadores.')),12000);
+      load(()=>{
+        if(joining!==task)return;
+        let p;
+        try{p=new Peer();}catch(_){fail(uiText('Room service unavailable.','Servicio de salas no disponible.'));return;}
+        peer=task.current=p;isHost=false;VOICE.bindPeer(p);
+        p.on('open',id=>{
+          if(joining!==task)return;
+          myId=id;
+          for(const cc of PUBLIC_CODES){
+            let c;
+            try{c=p.connect('unfire-sala-'+cc,{reliable:false});}catch(_){continue;}
+            if(!c)continue;
+            task.connections.push(c);
+            c.on('open',()=>{
+              if(joining!==task){try{c.close();}catch(_){}return;}
+              clearJoining();
+              task.connections.filter(other=>other!==c).forEach(other=>{try{other.close();}catch(_){}});
+              code=cc;
+              setup(c);started();
+            });
+            c.on('error',()=>{}); // Another public slot is simply empty.
+          }
+        });
+        p.on('error',e=>{
+          if(joining!==task)return;
+          if(e?.type==='peer-unavailable')return; // Empty slot; keep checking the others.
+          fail(uiText('Unable to search rooms right now.','No se pueden buscar salas ahora.'));
+        });
+      });
+    }
     function join(c0) {
       save(); applyMe();
       const cc = (c0 || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
@@ -2323,7 +2519,7 @@
         p.on('error', (e) => failed(e.type === 'peer-unavailable' ? 'Esa sala no existe o el anfitrión se ha ido' : 'Error de conexión online: ' + e.type));
       });
     }
-    function leave() { clearJoining(); VOICE.stop(); NOTES.clear(); try { conns.forEach((c) => { try { c.send({ id: myId, bye: 1 }); } catch (e) {} c.close(); }); peer && peer.destroy(); } catch (e) {} conns = []; peer = null; code = null; hud.style.display = 'none'; Object.keys(R).forEach(drop); }
+    function leave() { clearJoining(); hostWaiting=false; VOICE.stop(); NOTES.clear(); try { conns.forEach((c) => { try { c.send({ id: myId, bye: 1 }); } catch (e) {} c.close(); }); peer && peer.destroy(); } catch (e) {} conns = []; peer = null; code = null; myId=null; isHost=false; hud.style.display = 'none'; Object.keys(R).forEach(drop); }
     function drop(id) { VOICE.disconnect(id); const r = R[id]; if (!r) return; if(ROBOT_STYLE&&r.r0)ROBOT_STYLE.release(r.r0.root); S.scene.remove(r.w); S.scene.remove(r.tag); delete R[id]; if (code) upd(); }
     function recv(d) { const style=ROBOT_STYLE?ROBOT_STYLE.normalize({col:d.c,camo:d.ca,decal:d.decal||d.de}):null; let r = R[d.id]; if (!r || r.t !== d.t || r.c !== d.c || (style && (r.ca!==style.camo || r.de!==style.decal))) { if (r) drop(d.id); try { const r0 = ROBOT.build(Object.assign({}, MUTANTS.list[d.t % MUTANTS.list.length])); r0.update(3.7, 0.016, {}); if(style)ROBOT_STYLE.apply(r0.root,style,THREE); const w = new THREE.Group(); w.add(r0.root); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(10.5 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; tint(w, d.c); S.scene.add(w); const cv = document.createElement('canvas'); cv.width = 256; cv.height = 64; const g = cv.getContext('2d'); g.fillStyle = 'rgba(8,14,40,.8)'; g.beginPath(); g.roundRect ? g.roundRect(2, 8, 252, 48, 24) : g.rect(2, 8, 252, 48); g.fill(); g.fillStyle = d.c; g.font = '900 28px Arial'; g.textAlign = 'center'; g.fillText(String(d.n || 'Jugador').slice(0, 14), 128, 43); const tag = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cv), depthTest: false, transparent: true })); tag.scale.set(8, 2, 1); S.scene.add(tag); w.position.set(d.x, -8.9 + d.h, d.z); r = R[d.id] = { w, r0, tag, t: d.t, c: d.c, ca:style&&style.camo, de:style&&style.decal, p: V(d.x, -8.9 + d.h, d.z), wd: 0 }; upd(); if (!d.q) say('👋 ' + (d.n || 'Alguien') + ' ha entrado en la sala'); } catch (e) { return; } } r.d = d; r.last = performance.now(); }
     let pending = null; try { pending = new URLSearchParams(parent.location.search).get('room'); } catch (e) {} if (!pending) try { pending = new URLSearchParams(location.search).get('room'); } catch (e) {}
@@ -2360,12 +2556,18 @@
         const d={id:myId,kind:'chat',n:String(cfg.name||'Jugador').slice(0,20),text:q};
         conns.forEach((c)=>{if(c.open)try{c.send(d);}catch(_){}});
         return true;
-      }, get myName(){return String(cfg.name||'Jugador').slice(0,20);}, open(taller) { ui.classList.toggle('workshop',!!taller);ui.classList.add('on');paint(); $o('onN').value = cfg.name || (window.__STORYNAME && window.__STORYNAME()) || ''; $o('onNum').value = cfg.num || 27; msg(''); ui.querySelector('h3').textContent = taller ? '🔧 TALLER · personaliza tu robot' : '🌐 MODO ONLINE'; ui.querySelectorAll('.act').forEach((a, i) => (a.style.display = taller && i < 2 ? 'none' : 'flex')); ui.classList.add('on'); }, get on() { return !!code; }, get joining() { return !!joining; }, get audioPlayers() { return code ? Object.values(R) : []; }, voiceVisibility(v) { VOICE.visibility(v); },
+      }, create, join, joinPublic, get myName(){return String(cfg.name||'Jugador').slice(0,20);}, open(taller) { ui.classList.toggle('workshop',!!taller);ui.classList.add('on');paint(); $o('onN').value = cfg.name || (window.__STORYNAME && window.__STORYNAME()) || ''; $o('onNum').value = cfg.num || 27; msg(''); ui.querySelector('h3').textContent=taller?uiText('🔧 WORKSHOP · customize robot','🔧 TALLER · personaliza tu robot'):
+          uiText('🌐 ONLINE · JOIN A ROOM','🌐 ONLINE · UNIRSE A UNA SALA');
+        ui.querySelectorAll('.onl-connect').forEach(row=>row.style.display=taller?'none':'flex'); ui.classList.add('on'); }, get on() { return !!code; }, get waiting(){return !!hostWaiting;}, get joining() { return !!joining; }, get audioPlayers() { return code ? Object.values(R) : []; }, voiceVisibility(v) { VOICE.visibility(v); },
       tick(dt, t) { if (pending && ROAMS.on) { this.open(); $o('onCode').value = pending; msg('Te han invitado a la sala ' + pending + ' · elige tu robot y pulsa UNIRME'); pending = null; }
         if (!code || !peer) return; sendT -= dt; if (sendT <= 0 && myId) { sendT = 0.1; const d = { id: myId, n: cfg.name, c: cfg.col, t: cfg.type, ca:cfg.camo||'plain', de:cfg.image?'none':(cfg.decal||'none'), x: +ROAMS.p.x.toFixed(2), z: +ROAMS.p.z.toFixed(2), h: +(ROAMS.h || 0).toFixed(2), y: +((ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy)).toFixed(3), sc: NOTES.sc, f: ROAMS.fly ? 1 : 0, o: window.ATM_OUT ? 1 : 0, m: ROAMS.moving ? 1 : 0, v: VOICE.on ? 1 : 0, q: 1 }; conns.forEach((c) => { if (c.open) try { c.send(d); } catch (e) {} }); }
         if (NOTES.g) { NOTES.g.visible = !!window.ATM_OUT; const fy = -8.9 + (ROAMS.h || 0) + 5; NOTES.list.forEach((n, i) => { if (!n.on) return; n.sp.material.rotation = Math.sin(t * 2 + i) * 0.3; if (window.ATM_OUT && Math.abs(ROAMS.p.x - n.sp.position.x) < 7 && Math.abs(ROAMS.p.z - n.sp.position.z) < 7 && Math.abs(fy - n.sp.position.y) < 9) { NOTES.take(i, true); conns.forEach((c) => { if (c.open) try { c.send({ id: myId, nt: i }); } catch (e) {} }); upd(); } }); } NOTES.uT = (NOTES.uT || 0) - dt; if (NOTES.uT <= 0) { NOTES.uT = 1; upd(); } const now = performance.now(); Object.keys(R).forEach((id) => { const r = R[id], d = r.d; if (!d) return; if (now - r.last > 8000) { drop(id); return; } const vis = !!d.o === !!window.ATM_OUT; r.w.visible = r.tag.visible = vis; if (!vis) return; const tgt = V(d.x, -8.9 + d.h, d.z), mv = r.w.position.distanceTo(tgt); r.w.position.lerp(tgt, Math.min(1, dt * 8)); r.wd += Math.min(mv, 5); r.w.rotation.y = Math.atan2(Math.sin(d.y), -Math.cos(d.y)); r.tag.position.set(r.w.position.x, r.w.position.y + 13, r.w.position.z); r.r0.update(3.7, dt, { act: d.f ? 'fly' : d.m ? 'walk' : null, ph: d.m ? STEPPH(r.wd, 10.5, false) : t, mood: 'happy' }); }); VOICE.tick(dt); }, create, join, leave, link, saveMe() { save(); applyMe(); } };
   })();
-  { const g = (id) => document.getElementById(id); g('onNew').onclick = () => ONLINE.create(); g('onJoin').onclick = () => ONLINE.join(g('onCode').value); g('onX').onclick = () => { ONLINE.saveMe(); if (ONLINE.joining) ONLINE.leave(); g('onl').classList.remove('on'); };
+  { const g = (id) => document.getElementById(id); g('onNew').onclick=()=>ONLINE.create(false);
+    g('onHostPublic').onclick=()=>ONLINE.create(true);
+    g('onFind').onclick=()=>ONLINE.joinPublic();
+    g('onJoin').onclick=()=>ONLINE.join(g('onCode').value);
+    g('onX').onclick=()=>{ONLINE.saveMe();if(ONLINE.joining||ONLINE.waiting)ONLINE.leave();g('onl').classList.remove('on');};
     g('onlQ').onclick = () => { ONLINE.leave(); say('🌐 Has salido de la sala'); };
     g('onlInv').onclick = async () => { const l = ONLINE.link(), txt = '¡Ven a jugar conmigo a UNFIRE AUDIO! Sala: '; try { if (navigator.share) { await navigator.share({ title: 'UNFIRE AUDIO', text: txt, url: l }); return; } } catch (e) {} try { await navigator.clipboard.writeText(l); say('📨 Enlace copiado: ' + l + ' · pégalo a tus amigos'); } catch (e) { say('📨 Envía este enlace a tus amigos: ' + l); } }; }
   // ===== Reusable capsule inventory: pack, throw, deploy and collect without leaving roam =====

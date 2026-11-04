@@ -7,15 +7,13 @@ const game=text('audio/maletin/index.html');
 const lang=text('audio/maletin/language-onboarding.js');
 const engine=text('audio/maletin/game-engine-v50.js');
 const host=text('audio/index.html');
-test('the actual 3D game contains a persistent visible language switch beside the settings gear',()=>{
- assert.match(game,/language-onboarding\.js\?v=20261104visible2/);
- assert.match(lang,/id="ufLangQuickButton"/);
- assert.match(lang,/#ufLangQuick\{position:fixed/);
- assert.match(lang,/data-game-lang="en"/);
- assert.match(lang,/data-game-lang="es"/);
- assert.match(lang,/quickSettings\(\);/);
- assert.match(lang,/aria-expanded/);
- assert.match(lang,/commit\(item\.dataset\.gameLang\)/);
+test('English and Spanish are selected inside existing Settings without a floating button',()=>{
+ assert.match(game,/language-onboarding\.js\?v=20261104settings3/);
+ assert.match(lang,/const group=document\.createElement\('div'\);group\.id='ufLangSettings'/);
+ assert.match(lang,/sel\.id='ufLangSelect'/);
+ assert.match(lang,/sel\.innerHTML='<option value="en">English<\/option><option value="es">Español<\/option>'/);
+ assert.doesNotMatch(lang,/quickSettings\(\)/);
+ assert.doesNotMatch(lang,/ufLangQuickButton/);
 });
 test('HYPERWAVE uses opaque high contrast keys, restrained lid, legible display and stable animation',()=>{
  assert.match(game,/const pianoIvory = new THREE\.MeshPhysicalMaterial/);
@@ -36,9 +34,9 @@ test('mix HUD uses English labels on English locale without changing music handl
  assert.match(engine,/TON\.mode/);
 });
 test('browser freshness: host and game both load new asset versions',()=>{
- assert.match(host,/maletin\/index\.html\?v=20261104roster12/);
- assert.match(game,/<script src="game-engine-v50\.js\?v=20261104roster12"><\/script>/);
- assert.match(game,/<link rel="preload" href="game-engine-v50\.js\?v=20261104roster12"/);
+ assert.match(host,/maletin\/index\.html\?v=20261104hudmatch4/);
+ assert.match(game,/<script src="game-engine-v50\.js\?v=20261104hudmatch4"><\/script>/);
+ assert.match(game,/<link rel="preload" href="game-engine-v50\.js\?v=20261104hudmatch4"/);
 });
 
 test('Unknown computer app has no spoilers and retains bilingual neutral feedback',()=>{
