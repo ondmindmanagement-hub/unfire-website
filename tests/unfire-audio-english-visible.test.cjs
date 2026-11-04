@@ -49,4 +49,6 @@ test('public 3D game defaults to English and allows Spanish through the in-game 
  assert.match(game,/game-intro\.js\?v=20261029english1/);
  assert.match(game,/"ϟ RAYO": "ϟ LIGHTNING"/, 'sticker uses neutral LIGHTNING label, never the BOLT product name');
  assert.doesNotMatch(game,/"ϟ RAYO": "ϟ BOLT"/);
+ assert.match(game,/'Pulsa el botón MEGA de la tapa': 'Press the MEGA button on the lid'/);
+ assert.match(game,/typeof window\.T === 'function' \? window\.T\(t\) : t/, 'mission HUD passes through translation');
 });
