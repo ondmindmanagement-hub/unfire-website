@@ -1,0 +1,35 @@
+{
+  "status": "draft_not_for_publication",
+  "product_name": "Y2K ROBOTS",
+  "publisher_brand": "Unfire",
+  "primary_category": "Games",
+  "candidate_genre": "Adventure",
+  "short_description": "Explore a developing 3D world with robots, flight and secrets.",
+  "full_description": "Discover Y2K ROBOTS, a developing 3D adventure featuring unusual robots, exploration, flight and hidden places. The current browser experience is an evolving public beta. Features, performance and supported devices may change as the game develops.",
+  "base_game_pricing": "free",
+  "store_links": {
+    "website": "https://unfire.technology/audio/",
+    "support": "https://unfire.technology/contact/",
+    "privacy": "https://unfire.technology/audio/privacy.html"
+  },
+  "targets": {
+    "microsoft_store": {
+      "strategy": "PWA via PWABuilder, conditional",
+      "package_state": "not_built_or_certified",
+      "account_state": "unverified"
+    },
+    "google_play": {
+      "strategy": "native Android or policy-compliant TWA, conditional",
+      "package_state": "no_verified_AAB",
+      "account_state": "unverified"
+    }
+  },
+  "asset_provenance": "Only selected, approved game icon and genuine gameplay captures; pending release owner review.",
+  "badges_or_claims_approved": false,
+  "verified_platform_testing": false,
+  "required_owner_actions": [
+    "Identity and legal publisher classification",
+    "Any payment and binding agreements",
+    "Final store release approval"
+  ]
+}

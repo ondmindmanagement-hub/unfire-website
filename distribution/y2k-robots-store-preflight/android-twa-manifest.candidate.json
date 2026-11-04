@@ -1,0 +1,33 @@
+{
+  "_status": "CANDIDATE ONLY. NOT BUILT, SIGNED, ASSOCIATED, APPROVED OR SUBMITTED. Never use before owner authorization and deployed icon/manifest QA.",
+  "packageId": "technology.unfire.y2krobots",
+  "host": "unfire.technology",
+  "name": "Y2K ROBOTS",
+  "launcherName": "Y2K ROBOTS",
+  "display": "standalone",
+  "themeColor": "#08090c",
+  "themeColorDark": "#08090c",
+  "navigationColor": "#08090c",
+  "navigationColorDark": "#08090c",
+  "backgroundColor": "#08090c",
+  "enableNotifications": false,
+  "startUrl": "/audio/",
+  "iconUrl": "https://unfire.technology/audio/img/y2k-robots-icon-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "android"
+  },
+  "appVersionCode": 1,
+  "appVersion": "0.1.0",
+  "shortcuts": [],
+  "generatorApp": "bubblewrap",
+  "webManifestUrl": "https://unfire.technology/audio/game.webmanifest",
+  "fallbackType": "customtabs",
+  "minSdkVersion": 26,
+  "orientation": "default",
+  "additionalTrustedOrigins": [],
+  "features": {},
+  "isChromeOSOnly": false,
+  "isMetaQuest": false
+}
