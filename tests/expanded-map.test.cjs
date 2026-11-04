@@ -11,7 +11,7 @@ const engine = fs.readFileSync(path.join(root,'audio/maletin/game-engine-v50.js'
 const iframe = fs.readFileSync(path.join(root,'audio/maletin/index.html'),'utf8');
 const host = fs.readFileSync(path.join(root,'audio/index.html'),'utf8');
 
-function fixture(w,h) {
+function fixture(w,h,language='en') {
   const draws=[], handlers=new Map(), selectors=new Map(), classNames=new Set();
   class Element {
     constructor(id) { this.id=id||'';this.events={};this.hidden=false;this.attrs={};this.style={};this.width=0;this.height=0;this.tagName=id==='ufMapCanvas'?'CANVAS':'DIV'; }
@@ -34,7 +34,7 @@ function fixture(w,h) {
   container.classList={add:v=>classNames.add(v),remove:v=>classNames.delete(v)};
   container.appendChild=e=>{container.child=e;};
   const doc={body:container,activeElement:new Element('oldFocus'),createElement:()=>new Element('unfireExpandedMap')};
-  const win={devicePixelRatio:3,addEventListener:(k,fn)=>{(handlers.get(k)||handlers.set(k,[]).get(k)).push(fn);}};
+  const win={__LANG:language,devicePixelRatio:3,addEventListener:(k,fn)=>{(handlers.get(k)||handlers.set(k,[]).get(k)).push(fn);}};
   const ctx={window:win,document:doc,Map,Math,Date,Array,Number,String};
   vm.runInNewContext(js,ctx);
   const state={zone:'island',x:40,z:80,yaw:1.2,objective:{x:600,z:0}};
@@ -89,6 +89,15 @@ test('map handles three gameplay zones and mission marker without an external li
   assert.match(js,/objective/);
   assert.doesNotMatch(js,/new THREE\.|requestAnimationFrame|setInterval|fetch\(|XMLHttpRequest/);
 });
+
+test('house map labels follow English or Spanish and the modal is localized',()=>{
+  for(const [lang, expected] of [['en',['STUDIO','GALLERY','LIVING ROOM','DOOR']],['es',['ESTUDIO','GALERÍA','SALA','PUERTA']]]){
+    const f=fixture(640,520,lang);f.state.zone='house';f.api.show();
+    const drawn=f.draws.filter(d=>d.method==='fillText').map(d=>d.args[0]);
+    for(const label of expected)assert.ok(drawn.includes(label),lang+' map label '+label);
+    assert.equal(f.selectors.get('#ufMapHeader h2').textContent,lang==='en'?'🗺 WORLD MAP':'🗺 MAPA DEL MUNDO');
+  }
+});
 test('integration, CSS mobile safe areas and atomic host/engine cache',()=>{
   assert.match(engine,/c\.addEventListener\('click', e =>.*expanded\.show\(\)/);
   assert.match(engine,/const expanded = window\.UnfireExpandedMap/);
@@ -96,7 +105,7 @@ test('integration, CSS mobile safe areas and atomic host/engine cache',()=>{
   assert.match(engine,/if \(!MAP\.expandedOpen\) S\.renderer\.render\(S\.scene, cam\)/, 'no WebGL render while 2D map is open');
   assert.match(engine,/if \(MAP\.expandedOpen \|\| \(window\.UNFIRE_COINS && window\.UNFIRE_COINS\.isOpen\) \|\| storyMenuOpen\) \{[\s\S]*?clock\.getDelta\(\);[\s\S]*?if \(MAP\.expandedOpen\) MAP\.tick\(\);[\s\S]*?return;/, 'suspend heavy 3D updates under full map, modal shop or story menu');
   assert.match(iframe,/expanded-map\.css\?v=20261028nimbo3/);
-  assert.match(iframe,/expanded-map\.js\?v=20261029en2/);
+  assert.match(iframe,/expanded-map\.js\?v=20261104locale1/);
   assert.match(iframe,/game-engine-v50\.js\?v=20261028nimbo3/);
   assert.match(host,/maletin\/index\.html\?v=20261028nimbo3/);
   assert.match(css,/safe-area-inset-top/);

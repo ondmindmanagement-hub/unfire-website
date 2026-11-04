@@ -11,7 +11,7 @@ const { chromium }=require('playwright');
   await page.goto(origin+'?languageQA=1');
   await page.locator('#ufLangFirst').waitFor({timeout:12000});
   assert.equal(await page.locator('#ufLangFirst button[data-lang]').count(),2,'Only supported languages can be chosen');
-  assert.equal(await page.locator('#ufLangFirst button[data-lang="es"]').getAttribute('aria-pressed'),'true');
+  assert.equal(await page.locator('#ufLangFirst button[data-lang="en"]').getAttribute('aria-pressed'),'true');
   await page.locator('#ufLangFirst button[data-lang="en"]').click();
   assert.equal(await page.locator('#ufLangContinue').textContent(),'CONTINUE');
   await page.locator('#ufLangContinue').click();

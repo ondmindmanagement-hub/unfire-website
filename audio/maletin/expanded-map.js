@@ -14,6 +14,8 @@
     {x:2200,z:-1800,t:'TOWERS',size:145,col:'#a0bbff'}
   ];
   const clamp = (v,min,max) => Math.max(min,Math.min(max,v));
+  const tr = (english,spanish) => window.__LANG === 'es' ? spanish : english;
+  const ES_PLACE_NAMES = {HOUSE:'CASA',ATLANTIS:'ATLÁNTIDA',DESERT:'DESIERTO',HAIKU:'HAIKU','GREEN ISLAND':'ISLA VERDE','WHITE ISLAND':'ISLA BLANCA','VIOLET ISLAND':'ISLA VIOLETA',SURF:'SURF',TOWERS:'TORRES'};
   function create(getState, onOpen) {
     let root, board, canvas, context, closeButton, zoneLabel, previousFocus = null;
     let open = false, zone = '', centerX = 0, centerZ = 0, zoom = 1, dirty = true;
@@ -39,6 +41,27 @@
         + '<button type="button" id="ufMapCenter">⌖ CENTER</button>'
         + '<button type="button" id="ufMapPlus" aria-label="Zoom in">+</button></div></footer>'
         + '<p id="ufMapHelp">Drag to explore · pinch or use +/− to zoom · Esc to close</p></section>';
+      // Localize visible map UI at creation, not by a later DOM translation pass.
+      const labels = [
+        ['#ufMapHeader h2','🗺 WORLD MAP','🗺 MAPA DEL MUNDO'],
+        ['#ufMapClose span','CLOSE','CERRAR'],
+        ['#ufMapBadge','THE HOUSE','LA CASA'],
+        ['#ufMapLegend span:nth-child(1)','◆ PLAYER','◆ JUGADOR'],
+        ['#ufMapLegend span:nth-child(2)','★ MISSION','★ MISIÓN'],
+        ['#ufMapLegend span:nth-child(3)','● PLACES','● LUGARES'],
+        ['#ufMapCenter','⌖ CENTER','⌖ CENTRAR'],
+        ['#ufMapHelp','Drag to explore · pinch or use +/− to zoom · Esc to close','Arrastra para explorar · pellizca o usa +/− para ampliar · Esc para cerrar']
+      ];
+      for (const [selector,english,spanish] of labels) {
+        const element = root.querySelector(selector);
+        if (element) element.textContent = tr(english,spanish);
+      }
+      root.setAttribute('aria-label',tr('Expanded game map','Mapa ampliado del juego'));
+      root.querySelector('#ufMapPanel').setAttribute('aria-label',tr('World map','Mapa del mundo'));
+      root.querySelector('#ufMapClose').setAttribute('aria-label',tr('Close map','Cerrar mapa'));
+      root.querySelector('#ufMapCanvas').setAttribute('aria-label',tr('Map showing your position and active mission','Mapa con tu posición y la misión actual'));
+      root.querySelector('#ufMapMinus').setAttribute('aria-label',tr('Zoom out','Alejar'));
+      root.querySelector('#ufMapPlus').setAttribute('aria-label',tr('Zoom in','Acercar'));
       document.body.appendChild(root);
       canvas = root.querySelector('#ufMapCanvas');
       context = canvas.getContext('2d', {alpha:false});
@@ -188,22 +211,22 @@
       if (zone==='table') {
         rectArea(-13,-7.45,13,5.05,'#554636');
         rectArea(-2.9,-1.95,2.9,1.95,'#7a8ca5');
-        textLabel('MESA',0,-6,'#ffffff');
+        textLabel(tr('TABLE','MESA'),0,-6,'#ffffff');
       } else {
         if(zone==='island'){
           area(0,0,290,'rgba(49,169,97,.36)');
           PLACES.forEach(p => {
             if(p.t==='HOUSE')return;
             area(p.x,p.z,p.size,p.col+'66');
-            textLabel(p.t,p.x,p.z+p.size*.25,'#ffffff');
+            textLabel(tr(p.t,ES_PLACE_NAMES[p.t] || p.t),p.x,p.z+p.size*.25,'#ffffff');
           });
-          textLabel('MAR ABIERTO',-950,780,'#5ebde1');
+          textLabel(tr('OPEN SEA','MAR ABIERTO'),-950,780,'#5ebde1');
         }
         rectArea(-80,-16,80,96,zone==='house'?'rgba(229,239,255,.27)':'rgba(229,239,255,.63)');
         if(zone==='house'){
           rectArea(-13,-7.45,13,5.05,'rgba(222,191,149,.48)');
-          [[44,8,'ESTUDIO'],[38,44,'GALERÍA'],[-38,40,'SALA'],[-30,93,'PUERTA']].forEach(q => textLabel(q[2],q[0],q[1],'#d3ebff'));
-        }else textLabel('HOUSE',0,45,'#0a1831');
+          [[44,8,tr('STUDIO','ESTUDIO')],[38,44,tr('GALLERY','GALERÍA')],[-38,40,tr('LIVING ROOM','SALA')],[-30,93,tr('DOOR','PUERTA')]].forEach(q => textLabel(q[2],q[0],q[1],'#d3ebff'));
+        }else textLabel(tr('HOUSE','CASA'),0,45,'#0a1831');
       }
       const obj = s.objective;
       if(obj && Number.isFinite(obj.x) && Number.isFinite(obj.z) && (zone!=='table' || obj.mini)){
@@ -214,7 +237,7 @@
           g.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,r=i%2?5:12;
             const x=Math.cos(a)*r,y=Math.sin(a)*r;i?g.lineTo(x,y):g.moveTo(x,y);}
           g.closePath();g.fill();g.stroke();g.restore();
-          textLabel('MISSION',obj.x,obj.z+16/scale,'#ffe484');
+          textLabel(tr('MISSION','MISIÓN'),obj.x,obj.z+16/scale,'#ffe484');
         }
       }
       const player=P(Number(s.x)||0,Number(s.z)||0);
@@ -224,7 +247,7 @@
         g.fillStyle='#c0ff56';g.strokeStyle='#081825';g.lineWidth=3;g.fill();g.stroke();g.restore();
       }
       g.restore();
-      zoneLabel.textContent=zone==='table'?'THE TABLE':zone==='island'?'THE ISLAND':'THE HOUSE';
+      zoneLabel.textContent=zone==='table'?tr('THE TABLE','LA MESA'):zone==='island'?tr('THE ISLAND','LA ISLA'):tr('THE HOUSE','LA CASA');
       dirty=false;lastDraw=Date.now();
     }
     function tick(){

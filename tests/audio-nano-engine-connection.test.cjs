@@ -20,7 +20,7 @@ test('cache identifiers agree for iframe, physics script and engine',()=>{
  assert.match(host,/maletin\/index\.html\?v=20261028nimbo3/);
  assert.ok(page.includes('nano-physics.js?v='+shared));
  assert.ok(page.includes('game-engine-v50.js?v='+v));
- assert.ok(page.includes('expanded-map.js?v=20261029en2'));
+ assert.ok(page.includes('expanded-map.js?v=20261104locale1'));
  assert.ok(page.includes('coins-shop.js?v='+previous));
  assert.ok(!page.includes('game-engine-v50.js?v=20261024storytop1'));
 });

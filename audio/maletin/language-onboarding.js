@@ -6,7 +6,7 @@
  const param=new URLSearchParams(location.search);
  const stored=()=>{try{return localStorage.getItem(key)}catch(_){return null}};
  const save=(l)=>{try{localStorage.setItem(key,l)}catch(_){}};
- const pick=()=>String(navigator.language||'es').toLowerCase().startsWith('es')?'es':'en';
+ const pick=()=> 'en'; // Brand default; Spanish remains an explicit choice.
  let promptOpen=false,submitting=false;
  function style(){
   if(document.getElementById('ufLangStyle'))return;

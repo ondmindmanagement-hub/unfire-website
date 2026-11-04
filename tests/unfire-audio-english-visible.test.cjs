@@ -39,12 +39,14 @@ test('capsule filters and cart labels are English; IDs remain stable for deep li
  assert.match(audio,/aria-label="Spin the handle"/);
  for(const anchor of ['instrumentos','efectos','capsulas']) assert.match(audio,new RegExp('id="'+anchor+'"'));
 });
-test('public 3D game stays English even when locale storage is unavailable',()=>{
- assert.match(game,/window\.__UNFIRE_PUBLIC_ENGLISH_ONLY=true/);
- assert.match(intro,/window\.__UNFIRE_PUBLIC_ENGLISH_ONLY === true/);
- assert.doesNotMatch(game,/<script[^>]+src="language-onboarding\.js/);
+test('public 3D game defaults to English and allows Spanish through the in-game selector',()=>{
+ assert.doesNotMatch(game,/window\.__UNFIRE_PUBLIC_ENGLISH_ONLY=true/);
+ assert.match(game,/let L = 'en'/);
+ assert.match(game,/<script[^>]+src="language-onboarding\.js/);
  assert.match(game,/content:"↩ EXIT"/);
  assert.match(game,/RESTART GRAPHICS/);
  assert.match(game,/The device interrupted the 3D graphics/);
  assert.match(game,/game-intro\.js\?v=20261029english1/);
+ assert.match(game,/"ϟ RAYO": "ϟ LIGHTNING"/, 'sticker uses neutral LIGHTNING label, never the BOLT product name');
+ assert.doesNotMatch(game,/"ϟ RAYO": "ϟ BOLT"/);
 });
