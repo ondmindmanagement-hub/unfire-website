@@ -36,7 +36,26 @@ test('mix HUD uses English labels on English locale without changing music handl
  assert.match(engine,/TON\.mode/);
 });
 test('browser freshness: host and game both load new asset versions',()=>{
- assert.match(host,/maletin\/index\.html\?v=20261104hyperwave2/);
- assert.match(game,/<script src="game-engine-v50\.js\?v=20261104hyperwave2"><\/script>/);
- assert.match(game,/<link rel="preload" href="game-engine-v50\.js\?v=20261104hyperwave2"/);
+ assert.match(host,/maletin\/index\.html\?v=20261104hyperwave3/);
+ assert.match(game,/<script src="game-engine-v50\.js\?v=20261104hyperwave3"><\/script>/);
+ assert.match(game,/<link rel="preload" href="game-engine-v50\.js\?v=20261104hyperwave3"/);
+});
+
+test('Secret Access and Tube UI are translated at source in both languages',()=>{
+ assert.match(engine,/const uiText = \(english, spanish\) => window\.__LANG === 'es'/);
+ assert.match(engine,/set\('#pcSecret strong','\? · SECRET ACCESS'\)/);
+ assert.match(engine,/set\('#pcSecretGo','UNLOCK'\)/);
+ assert.match(engine,/set\('#pcSecretBack','← DESKTOP'\)/);
+ assert.match(engine,/set\('#pcDesktop small','Choose an application\.'\)/);
+ assert.match(engine,/code\.setAttribute\('aria-label','Secret code'\)/);
+ assert.match(engine,/uiText\('Code not recognized\.'/);
+ assert.match(engine,/uiText\('Could not save the unlock\. Check/);
+});
+test('Reference Hyperwave keyboard clears the chassis and all-open ends in the full 3D pose',()=>{
+ assert.match(game,/const KY = 0\.56, kw = 0\.205/);
+ assert.match(game,/const FEET = 0\.06, HB = 0\.46, CY = FEET \+ HB/);
+ assert.match(game,/Y2K\.polycarb\('#145ce6', \{ opacity: 0\.70/);
+ assert.match(engine,/if \(HW\) HW\.tg = 3\.6; say\('Todo abierto/);
+ assert.doesNotMatch(engine,/if \(HW\) HW\.tg = 1\.2; say\('Todo abierto/);
+ assert.match(engine,/dt \* 1\.8/);
 });

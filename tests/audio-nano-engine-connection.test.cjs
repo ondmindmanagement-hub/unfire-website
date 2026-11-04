@@ -16,8 +16,8 @@ test('isolated NANO size-aware physics is loaded before the live game engine',()
 });
 
 test('cache identifiers agree for iframe, physics script and engine',()=>{
- const v='20261104hyperwave2', previous='20261029en2', shared='20261024combinedqa1';
- assert.match(host,/maletin\/index\.html\?v=20261104hyperwave2/);
+ const v='20261104hyperwave3', previous='20261029en2', shared='20261024combinedqa1';
+ assert.match(host,/maletin\/index\.html\?v=20261104hyperwave3/);
  assert.ok(page.includes('nano-physics.js?v='+shared));
  assert.ok(page.includes('game-engine-v50.js?v='+v));
  assert.ok(page.includes('expanded-map.js?v=20261104locale1'));

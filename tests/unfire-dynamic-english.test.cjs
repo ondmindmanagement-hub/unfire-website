@@ -26,7 +26,8 @@ test('all public loading and assistant labels default to English, even in Spanis
 });
 test('map and HUD are English, with original render/input contracts kept',()=>{
  for(const text of ['WORLD MAP','THE HOUSE','THE ISLAND','Drag to explore','CLOSE','◆ PLAYER','★ MISSION'])assert.ok(map.includes(text),text);
- for(const old of ['MAPA DEL MUNDO','LA ISLA','Cerrar mapa','MISIÓN','JUGADOR'])assert.ok(!map.includes(old),old);
+ assert.match(map,/const tr = \(english,spanish\) => window\.__LANG === 'es'/);
+ for(const pair of ["tr('STUDIO','ESTUDIO')","tr('GALLERY','GALERÍA')","tr('LIVING ROOM','SALA')"])assert.ok(map.includes(pair),pair);
  assert.match(map,/window\.UnfireExpandedMap/);
  assert.match(map,/canvas\.addEventListener\('pointermove'/);
  assert.match(music,/♫ MUSIC · SETTINGS/);
@@ -58,8 +59,10 @@ test('cinema and studio recording status is English without changing capture lim
  assert.match(studio,/value="\$\{i\}\|\$\{m\}"/);
 });
 test('new cache versions are enabled for the game and site',()=>{
- for(const src of ['expanded-map','coins-shop','cinema-export','mobile-hud-guard'])
+ for(const src of ['coins-shop','cinema-export','mobile-hud-guard'])
   assert.ok(game.includes(src+'.js?v=20261029en2'),src);
+ assert.match(game,/expanded-map\.js\?v=20261104locale1/);
+ assert.match(game,/game-engine-v50\.js\?v=20261104hyperwave3/);
  assert.match(game,/unfire-adaptive-loading\.js\?v=20261029en2/);
  assert.match(host,/unfire-adaptive-loading\.js\?v=20261029en2/);
 });
