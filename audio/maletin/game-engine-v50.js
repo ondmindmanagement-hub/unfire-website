@@ -4,6 +4,20 @@
 (() => {
   const $ = (id) => document.getElementById(id);
   const uiText = (english, spanish) => window.__LANG === 'es' ? spanish : english;
+  // Robot roster policy. Normal play stops at 12 of 20, including the final prize.
+  // Fingerprint only: never publish a private access phrase in static source files.
+  const ROSTER_NORMAL_MAX=12,ROSTER_TOTAL=20,ROSTER_PROOF_KEY='unfire_roster_proof_v2';
+  const ROSTER_FINGERPRINT='39b3f7c5aea7b34183b1bc7829e1aeb06a838654597b43b8882c21c614e38d8e';
+  const ROSTER_SALT='dc0c80ef861ab8bd8b5b6394ef4fbc82';
+  const rosterProofValid=()=>{try{return localStorage.getItem(ROSTER_PROOF_KEY)===ROSTER_FINGERPRINT;}catch(_){return false;}};
+  const rosterCodeMatches=async(code)=>{
+    const normalized=String(code||'').toUpperCase().replace(/[\s-]/g,'');
+    if(normalized.length!==20||!/^[A-Z2-9]+$/.test(normalized)||!crypto?.subtle)return false;
+    const bytes=new TextEncoder().encode(ROSTER_SALT+':'+normalized);
+    const hash=await crypto.subtle.digest('SHA-256',bytes);
+    const hex=Array.from(new Uint8Array(hash),v=>v.toString(16).padStart(2,'0')).join('');
+    return hex===ROSTER_FINGERPRINT;
+  };
   const { clamp, lerp, ease, mesh, rbox } = Y2K;
   const H2 = Math.PI / 2, TAU = Math.PI * 2, V = (x, y, z) => new THREE.Vector3(x, y, z);
   // paso real: la fase de la pierna sale de la distancia recorrida y del tamaño (sin patinar, igual a cualquier escala)
@@ -1501,7 +1515,7 @@
       #tube .pcAction{padding:9px 16px;width:max-content;max-width:100%;font:700 12px Tahoma,Arial;background:#ece9d8;border:1px solid #fff;border-radius:6px;cursor:pointer}
       #tube #pcResult{min-height:24px;font-weight:700;line-height:1.5}
       @media(max-width:500px){#tube #pcDesktop,#tube #pcSecret{padding:14px}}
-    </style><div id="pcDesktop"><strong>UNFIRE 2000 · Escritorio</strong><div class="pcApps"><button type="button" class="pcApp" id="pcTubeApp"><span class="glyph">▶</span>Unfire Tube</button><button type="button" class="pcApp" id="pcMysteryApp"><span class="glyph">?</span>???</button></div><small>Selecciona una aplicación.</small></div><div id="pcSecret"><strong style="font-size:18px">? · ACCESO SECRETO</strong><p>Introduce el código para desbloquear los robots jugables de este dispositivo. La historia y las misiones se mantienen.</p><input id="pcSecretCode" maxlength="40" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="CÓDIGO" aria-label="Código secreto"><button class="pcAction" id="pcSecretGo" type="button">DESBLOQUEAR</button><div id="pcResult" aria-live="polite"></div><button class="pcAction" id="pcSecretBack" type="button">← ESCRITORIO</button></div>`);
+    </style><div id="pcDesktop"><strong>UNFIRE 2000 · Escritorio</strong><div class="pcApps"><button type="button" class="pcApp" id="pcTubeApp"><span class="glyph">▶</span>Unfire Tube</button><button type="button" class="pcApp" id="pcMysteryApp"><span class="glyph">?</span>???</button></div><small>Selecciona una aplicación.</small></div><div id="pcSecret"><strong style="font-size:18px">?</strong><p>···</p><input id="pcSecretCode" maxlength="40" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="···" aria-label="Input"><button class="pcAction" id="pcSecretGo" type="button">OK</button><div id="pcResult" aria-live="polite"></div><button class="pcAction" id="pcSecretBack" type="button">← ESCRITORIO</button></div>`);
     // This computer lives inside the 3D scene, and its HTML bypasses the early translation pass.
     // Translate it at source, including inputs, accessibility labels and secret-code feedback.
     if (window.__LANG !== 'es') {
@@ -1512,12 +1526,10 @@
       set('#tube .side p','Paste a link to play it here. Searches open on YouTube.');
       set('#pcDesktop strong','UNFIRE 2000 · Desktop');
       set('#pcDesktop small','Choose an application.');
-      set('#pcSecret strong','? · SECRET ACCESS');
-      set('#pcSecret p','Enter the code to unlock playable robots on this device. Story and mission progress will be preserved.');
-      set('#pcSecretGo','UNLOCK');
+      // No public instructions, reward descriptions or clues in the unknown app.
       set('#pcSecretBack','← DESKTOP');
       const query=d.querySelector('#tubeQ');if(query)query.placeholder='Paste a YouTube link or type a search';
-      const code=d.querySelector('#pcSecretCode');if(code){code.placeholder='CODE';code.setAttribute('aria-label','Secret code');}
+      const code=d.querySelector('#pcSecretCode');if(code){code.placeholder='···';code.setAttribute('aria-label','Input');}
     }
     d.insertAdjacentHTML('beforeend',`<style>
       #tube #pcSecret{align-items:flex-start;padding:clamp(20px,4vw,56px);gap:16px}
@@ -1534,18 +1546,22 @@
     d.querySelector('#pcTubeApp').onclick=()=>{desktop.style.display='none';mystery.style.display='none';};
     d.querySelector('#pcMysteryApp').onclick=()=>{desktop.style.display='none';mystery.style.display='flex';d.querySelector('#pcSecretCode').focus();};
     d.querySelector('#pcSecretBack').onclick=showDesktop;
-    const redeemRobots=()=>{
+    const redeemRobots=async()=>{
       const fld=d.querySelector('#pcSecretCode'),msg=d.querySelector('#pcResult');
-      if(fld.value.trim().toUpperCase()!=='ULTIMATEROBOTS'){msg.textContent=uiText('Code not recognized.','Código no reconocido.');fld.value='';return;}
+      const button=d.querySelector('#pcSecretGo');
+      if(button.disabled)return;
+      button.disabled=true;
       try{
-        const current=Math.max(0,Number(localStorage.getItem('unfire_unlock'))||0);
-        localStorage.setItem('unfire_unlock',String(Math.max(current,20)));
-        localStorage.setItem('unfire_secret_robots','1');
-      }catch(e){msg.textContent=uiText('Could not save the unlock. Check your browser storage.','No se pudo guardar el desbloqueo. Comprueba el almacenamiento del navegador.');return;}
-      msg.textContent=uiText('✓ All playable robots unlocked! Open ⚙ → 🔧 WORKSHOP to choose one. Mission progress is preserved.','✓ ¡Todos los robots jugables desbloqueados! Abre ⚙ → 🔧 TALLER para elegir uno. Las misiones conservan su progreso.');
-      fld.value='';
-      try{window.dispatchEvent(new Event('unfire:avatars-unlocked'));}catch(e){}
-      hap(0.4);
+        const valid=await rosterCodeMatches(fld.value);
+        if(!valid){msg.textContent=uiText('Not recognized.','No reconocido.');return;}
+        try{
+          localStorage.setItem(ROSTER_PROOF_KEY,ROSTER_FINGERPRINT);
+        }catch(_){msg.textContent=uiText('Unable to save.','No se pudo guardar.');return;}
+        msg.textContent=uiText('✓ Accepted.','✓ Aceptado.');
+        window.dispatchEvent(new Event('unfire:avatars-unlocked'));
+        hap(0.4);
+      }catch(_){msg.textContent=uiText('Not recognized.','No reconocido.');}
+      finally{fld.value='';button.disabled=false;}
     };
     d.querySelector('#pcSecretGo').onclick=redeemRobots;
     d.querySelector('#pcSecretCode').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();redeemRobots();}});
@@ -1869,7 +1885,9 @@
       DR.forEach((d, i) => { if (d.type === 'planet') { d.g.rotation.y += dt * 0.01; return; } if (d.type === 'ufo') { d.a += d.sp * dt; d.g.position.set(Math.cos(d.a) * d.R, d.y + Math.sin(t * 0.7 + i) * 60, Math.sin(d.a) * d.R); d.g.rotation.y += dt * 1.5; d.g.rotation.z = Math.sin(t * 0.9 + i) * 0.1; return; } if (d.type === 'tree') { d.g.rotation.y += dt * 0.004; d.g.scale.setScalar(1 + BD.b * 0.02); return; } if (d.type === 'dna') { d.g.rotation.y += dt * d.sp * (1 + BD.s * 3); d.g.scale.setScalar(1 + BD.d * 0.12); return; } if (d.type === 'bub') { d.BB.forEach((q, j) => { q.y += q.v * dt; if (q.y > 3600) q.y = 150; q.a += dt * 0.004; O3b.position.set(Math.cos(q.a) * q.R, q.y, Math.sin(q.a) * q.R); O3b.scale.setScalar(q.s * (1 + BD.b * 0.15)); O3b.updateMatrix(); d.bub.setMatrixAt(j, O3b.matrix); }); d.bub.instanceMatrix.needsUpdate = true; return; } if (d.type === 'mega') { d.a += d.sp * dt; d.w.position.set(Math.cos(d.a) * d.R, -10, Math.sin(d.a) * d.R); d.w.rotation.y = Math.atan2(-Math.sin(d.a) * Math.sign(d.sp), Math.cos(d.a) * Math.sign(d.sp)); d.wd += Math.abs(d.sp) * d.R * dt; if ((Math.floor(t * 15) + i) % 4 === 0) d.r0.update(3.7, dt * 4, { act: 'walk', ph: STEPPH(d.wd / d.w.scale.x, 3.7, false), mood: 'happy' }); return; }
         d.a += d.sp * dt; d.segs.forEach((s, j) => { const aa = d.a - Math.sign(d.sp) * j * 0.012; s.position.set(Math.cos(aa) * d.R, d.y + Math.sin(t * 1.3 + j * 0.45 + d.ph) * 60, Math.sin(aa) * d.R); }); const h0 = d.segs[2].position; d.wl.position.set(h0.x, h0.y + 20, h0.z); d.wr.position.copy(d.wl.position); const fl = Math.sin(t * 2.6 + d.ph) * 0.7; const yaw = -d.a; d.wl.rotation.set(fl, yaw, H2); d.wr.rotation.set(-fl, yaw, -H2); }); } }; })();
   // ===== MODO ONLINE: salas con código o enlace (P2P con PeerJS, sin servidor propio), personaje con color y tipo de robot elegidos =====
-  const ONLINE = (() => { const COLS = ['#3d8bff', '#ff2fb0', '#2bd96b', '#ffd21a', '#ff7a1f', '#9b6bff', '#ffffff', '#222222']; const ALLT = [4, 1, 7, 10, 13, 16, 2, 5, 8, 11, 14, 17, 3, 6, 9, 12, 15, 18, 0, 19].filter((i) => i < MUTANTS.list.length); const PERK = [['equilibrado', 1, 1], ['⚡ corre más', 1.25, 1], ['🪽 vuela más rápido', 1, 1.5], ['🏄 surfista', 1.1, 1.1], ['🚀 turbo total', 1.35, 1.35], ['🌀 ágil', 1.15, 1.25]]; const unl = () => { let u = 0; try { u = +localStorage.getItem('unfire_unlock') || 0; } catch (e) {} return Math.min(ALLT.length, 2 + u); }; let TYPES = ALLT;
+  const ONLINE = (() => { const COLS = ['#3d8bff', '#ff2fb0', '#2bd96b', '#ffd21a', '#ff7a1f', '#9b6bff', '#ffffff', '#222222']; const ALLT = [4, 1, 7, 10, 13, 16, 2, 5, 8, 11, 14, 17, 3, 6, 9, 12, 15, 18, 0, 19].filter((i) => i < MUTANTS.list.length); const PERK = [['equilibrado', 1, 1], ['⚡ corre más', 1.25, 1], ['🪽 vuela más rápido', 1, 1.5], ['🏄 surfista', 1.1, 1.1], ['🚀 turbo total', 1.35, 1.35], ['🌀 ágil', 1.15, 1.25]]; const unl = () => { if(rosterProofValid())return Math.min(ROSTER_TOTAL,ALLT.length);
+      let u=0;try{u=Math.max(0,Number(localStorage.getItem('unfire_unlock'))||0);}catch(_){}
+      return Math.min(ROSTER_NORMAL_MAX,ALLT.length,2+Math.min(10,u)); }; let TYPES = ALLT;
     let cfg = { name: '', col: '#3d8bff', type: 4, num: 27, camo: 'plain', decal: 'none', image: '' }; try { Object.assign(cfg, JSON.parse(localStorage.getItem('unfire_onl') || '{}')); } catch (e) {}
     const ROBOT_STYLE = window.UnfireRobotCustom;
     if (ROBOT_STYLE) Object.assign(cfg, ROBOT_STYLE.normalize(cfg));
@@ -2013,7 +2031,7 @@
     });
     addEventListener('unfire:avatars-unlocked',()=>{if(ui.classList.contains('on'))paint();});
     const save = () => { cfg.name = ($o('onN').value || '').trim().slice(0, 14) || 'Jugador'; cfg.num = Math.max(0, Math.min(99, parseInt($o('onNum').value, 10) || 27)); try { localStorage.setItem('unfire_onl', JSON.stringify(cfg)); } catch (e) {} };
-    function applyMe() { ROAMS.myType = cfg.type; ROAMS.myCol = cfg.col; ROAMS.myNum = cfg.num || 27; ROAMS.myStyle = ROBOT_STYLE ? ROBOT_STYLE.normalize(cfg) : null; const pk = PERK[Math.max(0, ALLT.indexOf(cfg.type)) % PERK.length]; ROAMS.perkV = pk[1]; ROAMS.perkF = pk[2]; if (ROAMS.av && ROAMS.av.w) { if(ROBOT_STYLE&&ROAMS.av.r0)ROBOT_STYLE.release(ROAMS.av.r0.root); S.scene.remove(ROAMS.av.w); } ROAMS.av = null; }
+    function applyMe() { if(!ALLT.slice(0,unl()).includes(cfg.type))cfg.type=ALLT[0]; ROAMS.myType = cfg.type; ROAMS.myCol = cfg.col; ROAMS.myNum = cfg.num || 27; ROAMS.myStyle = ROBOT_STYLE ? ROBOT_STYLE.normalize(cfg) : null; const pk = PERK[Math.max(0, ALLT.indexOf(cfg.type)) % PERK.length]; ROAMS.perkV = pk[1]; ROAMS.perkF = pk[2]; if (ROAMS.av && ROAMS.av.w) { if(ROBOT_STYLE&&ROAMS.av.r0)ROBOT_STYLE.release(ROAMS.av.r0.root); S.scene.remove(ROAMS.av.w); } ROAMS.av = null; }
     const tint = (o, col) => { const C = new THREE.Color(col); o.traverse((m) => { if (m.isMesh && m.name!=='unfire-personalized-sticker' && m.material && m.material.color) { m.material = m.material.clone(); m.material.color.lerp(C, 0.6); } }); };
     window.__tintAvatar = tint;
     window.__applyRobotStyle = root => { if(ROBOT_STYLE) ROBOT_STYLE.apply(root,cfg,THREE); };
@@ -2309,7 +2327,14 @@
     function drop(id) { VOICE.disconnect(id); const r = R[id]; if (!r) return; if(ROBOT_STYLE&&r.r0)ROBOT_STYLE.release(r.r0.root); S.scene.remove(r.w); S.scene.remove(r.tag); delete R[id]; if (code) upd(); }
     function recv(d) { const style=ROBOT_STYLE?ROBOT_STYLE.normalize({col:d.c,camo:d.ca,decal:d.decal||d.de}):null; let r = R[d.id]; if (!r || r.t !== d.t || r.c !== d.c || (style && (r.ca!==style.camo || r.de!==style.decal))) { if (r) drop(d.id); try { const r0 = ROBOT.build(Object.assign({}, MUTANTS.list[d.t % MUTANTS.list.length])); r0.update(3.7, 0.016, {}); if(style)ROBOT_STYLE.apply(r0.root,style,THREE); const w = new THREE.Group(); w.add(r0.root); const bb = new THREE.Box3().setFromObject(r0.root); w.scale.setScalar(10.5 / Math.max(bb.getSize(V(0, 0, 0)).y, 0.001)); r0.root.position.y -= bb.min.y; tint(w, d.c); S.scene.add(w); const cv = document.createElement('canvas'); cv.width = 256; cv.height = 64; const g = cv.getContext('2d'); g.fillStyle = 'rgba(8,14,40,.8)'; g.beginPath(); g.roundRect ? g.roundRect(2, 8, 252, 48, 24) : g.rect(2, 8, 252, 48); g.fill(); g.fillStyle = d.c; g.font = '900 28px Arial'; g.textAlign = 'center'; g.fillText(String(d.n || 'Jugador').slice(0, 14), 128, 43); const tag = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cv), depthTest: false, transparent: true })); tag.scale.set(8, 2, 1); S.scene.add(tag); w.position.set(d.x, -8.9 + d.h, d.z); r = R[d.id] = { w, r0, tag, t: d.t, c: d.c, ca:style&&style.camo, de:style&&style.decal, p: V(d.x, -8.9 + d.h, d.z), wd: 0 }; upd(); if (!d.q) say('👋 ' + (d.n || 'Alguien') + ' ha entrado en la sala'); } catch (e) { return; } } r.d = d; r.last = performance.now(); }
     let pending = null; try { pending = new URLSearchParams(parent.location.search).get('room'); } catch (e) {} if (!pending) try { pending = new URLSearchParams(location.search).get('room'); } catch (e) {}
-    window.__REWARD = (why) => { let u = 0; try { u = (+localStorage.getItem('unfire_unlock') || 0) + 1; localStorage.setItem('unfire_unlock', String(u)); } catch (e) {} const k = Math.min(ALLT.length - 1, 1 + u), nm = (MUTANTS.list[ALLT[k]] || {}).name || 'ROBOT'; say('🏆 ' + why + ' · 🎁 ¡Nueva transformación desbloqueada: ' + nm + ' (' + PERK[k % PERK.length][0] + ')! Cámbiala en ⚙ › 🔧 TALLER'); hap(1); try { if (window.__SPRAY) window.__SPRAY(ROAMS.p.x, -8.9 + (ROAMS.h || 0) + 6, ROAMS.p.z, 120, 10, 20); } catch (e) {} };
+    window.__REWARD = (why) => {
+      let u=0;try{u=Math.max(0,Math.min(10,(Number(localStorage.getItem('unfire_unlock'))||0)+1));localStorage.setItem('unfire_unlock',String(u));}catch(_){}
+      const k=Math.min(ROSTER_NORMAL_MAX-1,1+u),nm=(MUTANTS.list[ALLT[k]]||{}).name||'ROBOT';
+      const text=u>=10?uiText('🏆 Mission complete.','🏆 Misión completada.'):
+        uiText('🏆 New transformation: ','🏆 Nueva transformación: ')+nm;
+      say(text);hap(1);
+      try{if(window.__SPRAY)window.__SPRAY(ROAMS.p.x,-8.9+(ROAMS.h||0)+6,ROAMS.p.z,120,10,20);}catch(_){}
+    };
     // Attach workshop controls as soon as Story creates its HUD, including on throttled mobile tabs.
     const mountWorkshopControls = () => {
       const h=document.getElementById('storyHud');
@@ -2545,7 +2570,7 @@
         const w = Math.min(1, (u - 1) / 1.1); puffs.forEach((sp) => { sp.position.addScaledVector(sp.userData.v, 0.016 * (1 - w)); sp.scale.multiplyScalar(1.025); sp.material.opacity = 0.9 * (1 - w); }); const e = Math.min(1, (u - 1) / 0.6); caseG.scale.setScalar(sc0 * (e < 1 ? 0.55 + 0.45 * (1 - Math.cos(e * Math.PI * 2.5) * Math.exp(-e * 4) * 0.6) : 1)); if (w < 1) requestAnimationFrame(step); else { puffs.forEach((sp) => { S.scene.remove(sp); sp.material.dispose(); }); pt.dispose(); caseG.scale.setScalar(sc0); } };
       requestAnimationFrame(step); } catch (e) { console.warn('capsule', e); } };
   // ===== PREMIO FINAL: al terminar la historia =====
-  window.__PRIZE = () => { try { if (document.getElementById('ufPrize')) return; let nm = ''; try { nm = (JSON.parse(localStorage.getItem('unfire_save_v1') || '{}').name) || ''; } catch (e) {} try { localStorage.setItem('unfire_unlock', '99'); localStorage.setItem('unfire_story_prize', String(Date.now())); } catch (e) {} try { GS.cheer(); } catch (e) {}
+  window.__PRIZE = () => { try { if (document.getElementById('ufPrize')) return; let nm = ''; try { nm = (JSON.parse(localStorage.getItem('unfire_save_v1') || '{}').name) || ''; } catch (e) {} try { localStorage.setItem('unfire_unlock', '10'); localStorage.setItem('unfire_story_prize', String(Date.now())); } catch (e) {} try { GS.cheer(); } catch (e) {}
       try { if (ROAMS.av && ROAMS.av.w && window.__tintAvatar) window.__tintAvatar(ROAMS.av.w, '#ffd21a'); } catch (e) {}
       const dip = () => { const c = document.createElement('canvas'); c.width = 1600; c.height = 1000; const g = c.getContext('2d'); const gr = g.createLinearGradient(0, 0, 1600, 1000); gr.addColorStop(0, '#0d1a4a'); gr.addColorStop(1, '#3a0d4a'); g.fillStyle = gr; g.fillRect(0, 0, 1600, 1000); g.strokeStyle = '#ffd21a'; g.lineWidth = 14; g.strokeRect(40, 40, 1520, 920); g.fillStyle = '#ffd21a'; g.textAlign = 'center'; g.font = '900 64px Orbitron, Arial'; g.fillText('UNFIRE AUDIO', 800, 190); g.fillStyle = '#fff'; g.font = '700 42px Arial'; g.fillText('Diploma de Guardián del Segundo Perdido', 800, 300); g.font = '900 88px Arial'; g.fillText(nm || 'Jugador/a', 800, 470); g.font = '500 34px Arial'; g.fillText('ha completado la historia y devuelto el tiempo al maletín.', 800, 580); g.fillText('Todos los robots desbloqueados · Piel dorada', 800, 640); g.font = '500 28px Arial'; g.fillText(new Date().toLocaleDateString(), 800, 820); g.fillText('unfire.technology/audio', 800, 870); const a = document.createElement('a'); a.download = 'unfire-diploma.png'; a.href = c.toDataURL('image/png'); a.click(); };
       const d = document.createElement('div'); d.id = 'ufPrize'; d.style.cssText = 'position:fixed;inset:0;z-index:95;display:flex;align-items:center;justify-content:center;background:rgba(3,4,18,.72)'; d.innerHTML = '<div style="width:min(520px,92vw);background:linear-gradient(160deg,#0d1a4a,#3a0d4a);border:2px solid #ffd21a;border-radius:24px;padding:22px;color:#fff;font:500 15px/1.45 system-ui;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6)"><div style="font-size:54px">🏆</div><h2 style="font:900 20px Orbitron,Arial;color:#ffd21a;margin:6px 0 10px">¡HAS RECUPERADO EL SEGUNDO PERDIDO!</h2><p>Tu premio por terminar la historia:</p><p style="text-align:left;margin:8px auto;max-width:400px">✅ <b>Los 20 robots</b> desbloqueados para siempre, también online<br>✨ <b>Piel dorada</b> para tu robot<br>📜 <b>Diploma</b> con tu nombre</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button id="ufpD">📜 DESCARGAR DIPLOMA</button><button id="ufpH">🎹 VER HYPERWAVE</button><button id="ufpX">SEGUIR JUGANDO</button></div></div>';

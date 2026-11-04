@@ -36,20 +36,22 @@ test('mix HUD uses English labels on English locale without changing music handl
  assert.match(engine,/TON\.mode/);
 });
 test('browser freshness: host and game both load new asset versions',()=>{
- assert.match(host,/maletin\/index\.html\?v=20261104hyperwave3/);
- assert.match(game,/<script src="game-engine-v50\.js\?v=20261104hyperwave3"><\/script>/);
- assert.match(game,/<link rel="preload" href="game-engine-v50\.js\?v=20261104hyperwave3"/);
+ assert.match(host,/maletin\/index\.html\?v=20261104roster12/);
+ assert.match(game,/<script src="game-engine-v50\.js\?v=20261104roster12"><\/script>/);
+ assert.match(game,/<link rel="preload" href="game-engine-v50\.js\?v=20261104roster12"/);
 });
 
-test('Secret Access and Tube UI are translated at source in both languages',()=>{
+test('Unknown computer app has no spoilers and retains bilingual neutral feedback',()=>{
  assert.match(engine,/const uiText = \(english, spanish\) => window\.__LANG === 'es'/);
- assert.match(engine,/set\('#pcSecret strong','\? · SECRET ACCESS'\)/);
- assert.match(engine,/set\('#pcSecretGo','UNLOCK'\)/);
+ assert.match(engine,/id="pcMysteryApp"/);
+ assert.match(engine,/id="pcSecret"/);
+ assert.match(engine,/id="pcSecretGo" type="button">OK/);
+ assert.match(engine,/msg\.textContent=uiText\('Not recognized\.','No reconocido\.'/);
  assert.match(engine,/set\('#pcSecretBack','← DESKTOP'\)/);
  assert.match(engine,/set\('#pcDesktop small','Choose an application\.'\)/);
- assert.match(engine,/code\.setAttribute\('aria-label','Secret code'\)/);
- assert.match(engine,/uiText\('Code not recognized\.'/);
- assert.match(engine,/uiText\('Could not save the unlock\. Check/);
+ assert.doesNotMatch(engine,/ULTIMATEROBOTS/);
+ assert.doesNotMatch(engine,/Enter the code to unlock playable robots/);
+ assert.doesNotMatch(engine,/Introduc(e|e el) código para desbloquear los robots/);
 });
 test('Reference Hyperwave keyboard clears the chassis and all-open ends in the full 3D pose',()=>{
  assert.match(game,/const KY = 0\.56, kw = 0\.205/);
