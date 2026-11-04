@@ -36,7 +36,7 @@ function check(gates,mode){
      if(!Array.isArray(obj.evidence)||obj.evidence.length===0||
        obj.evidence.some(v=>typeof v!=='string'||v.trim().length<10))
        errors.push('verified gate lacks adequate evidence references: '+k);
-     if(typeof obj.reviewed_utc!=='string'||!/^20\\d\\d-\\d\\d-\\d\\d/.test(obj.reviewed_utc))
+     if(typeof obj.reviewed_utc!=='string'||!/^20\d\d-\d\d-\d\d/.test(obj.reviewed_utc))
        errors.push('verified gate lacks review date: '+k);
    }
  }
@@ -46,7 +46,7 @@ function check(gates,mode){
    }
    if(typeof gates.release_reviewer!=='string'||gates.release_reviewer.trim().length<2)
      errors.push('release_authorized without reviewer');
-   if(typeof gates.release_reviewed_utc!=='string'||!/^20\\d\\d-\\d\\d-\\d\\d/.test(gates.release_reviewed_utc))
+   if(typeof gates.release_reviewed_utc!=='string'||!/^20\d\d-\d\d-\d\d/.test(gates.release_reviewed_utc))
      errors.push('release_authorized without review date');
  }
  if(mode==='release'&&gates.release_authorized!==true)errors.push('Y2K Robots distribution not yet legally cleared');
