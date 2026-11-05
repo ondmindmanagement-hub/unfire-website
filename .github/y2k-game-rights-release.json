@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "product": "Y2K Robots",
+  "evaluated_utc": "2026-11-04",
+  "scope": "Browser game and packaged app editions. A green technical build is not legal clearance.",
+  "release_authorized": false,
+  "release_reviewer": null,
+  "release_reviewed_utc": null,
+  "checks": {
+    "asset_rights_chain_of_title": {
+      "status": "blocked",
+      "evidence": [],
+      "reviewed_utc": null
+    },
+    "voice_model_output_and_attribution": {
+      "status": "blocked",
+      "evidence": [],
+      "reviewed_utc": null
+    },
+    "sample_library_source_matching": {
+      "status": "blocked",
+      "evidence": [],
+      "reviewed_utc": null
+    },
+    "fonts_images_video_and_dependency_notices": {
+      "status": "blocked",
+      "evidence": [],
+      "reviewed_utc": null
+    },
+    "player_terms_license_privacy_visible_in_game": {
+      "status": "blocked",
+      "evidence": [],
+      "reviewed_utc": null
+    },
+    "privacy_data_flows_and_vendor_contracts": {
+      "status": "blocked",
+      "evidence": [],
+      "reviewed_utc": null
+    },
+    "online_reports_blocking_and_minors_safety": {
+      "status": "blocked",
+      "evidence": [],
+      "reviewed_utc": null
+    },
+    "operator_identity_and_consumer_compliance": {
+      "status": "blocked",
+      "evidence": [],
+      "reviewed_utc": null
+    },
+    "apple_google_microsoft_edition_specific_review": {
+      "status": "blocked",
+      "evidence": [],
+      "reviewed_utc": null
+    },
+    "legal_signoff_and_exact_release_build_qa": {
+      "status": "blocked",
+      "evidence": [],
+      "reviewed_utc": null
+    }
+  },
+  "notes": [
+    "Evidence references must be public-safe stable issue/PR URLs or private review identifiers, not private account numbers, identity documents, receipts or secret files.",
+    "Do not set any gate to verified based on AI assumptions, license-family names or a third party's PR claim.",
+    "The release-specific reviewer verifies actual app bundle, assets, online safety, consumer notices and licenses before approving a final build.",
+    "This JSON does not automatically stop App Store Connect, Google Play, Microsoft Store, GitHub Pages or direct distribution. Integrators must enforce --release before submissions until a mandatory pipeline is connected."
+  ]
+}
