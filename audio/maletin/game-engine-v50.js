@@ -2036,6 +2036,15 @@
       ui.appendChild(st);}
 
     const hud = document.createElement('div'); hud.id = 'onlHud'; hud.innerHTML = '<span id="onlT"></span><button id="onlInv">📨 INVITAR</button><button id="onlMic" type="button" aria-pressed="false" aria-label="Activar micrófono del chat de voz">🎤 ACTIVAR VOZ</button><button id="onlMute" type="button" aria-pressed="false" style="display:none">🎙️ MI MICRO</button><button id="onlVM" type="button" title="Con quién hablas">👥 SALA</button><button id="onlPl" type="button" title="Jugadores · silenciar">🔊 JUGADORES</button><div id="onlPlist" style="display:none;position:absolute;right:0;top:calc(100% + 6px);min-width:220px;max-height:50vh;overflow:auto;background:rgba(6,12,34,.95);border:2px solid #5fe0ff;border-radius:14px;padding:8px;font:700 12px Arial;color:#fff;z-index:95"></div><button class="q" id="onlQ">✕</button>'; document.body.appendChild(hud); hud.addEventListener('pointerdown', (e) => e.stopPropagation());
+    if(window.__LANG!=='es'){
+      for(const [id,text] of Object.entries({onlInv:'📨 INVITE',onlMic:'🎤 ENABLE VOICE',onlMute:'🎙️ MY MIC',onlVM:'👥 ROOM',onlPl:'🔊 PLAYERS'})){
+        const el=hud.querySelector('#'+id);if(el)el.textContent=text;
+      }
+      hud.querySelector('#onlMic').setAttribute('aria-label','Enable voice chat microphone');
+      hud.querySelector('#onlVM').title='Voice range';
+      hud.querySelector('#onlPl').title='Players · mute';
+      hud.querySelector('#onlQ').setAttribute('aria-label','Leave online room');
+    }
     const $o = (id) => document.getElementById(id), msg = (t) => { $o('onMsg').textContent = window.T ? window.T(t) : t; };
     // Portraits are captured from actual 3D robot models, one per idle frame.
     // Reuse the game's WebGL renderer/one tiny render target; no additional WebGL context.
@@ -2144,8 +2153,8 @@
     const load = (cb) => { if (window.Peer) return cb(); const s = document.createElement('script'); s.src = 'vendor/peerjs.min.js'; s.onload = cb; s.onerror = () => msg('No se pudo conectar con el servidor online. Revisa tu conexión.'); document.head.appendChild(s); };
     const rnd = () => Array.from({ length: 5 }, () => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random() * 32)]).join('');
     const link = () => { let base = ''; try { base = parent.location.origin + parent.location.pathname; } catch (e) { base = location.origin + location.pathname; } return base + '?room=' + code; };
-    const started = () => { ui.classList.remove('on'); hud.style.display = 'flex'; /* Voice remains opt-in; no microphone permission prompt merely for joining. */ NOTES.sc = 0; NOTES.build([...code].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) % 100000); upd(); say('🌐 Sala ' + code + ' lista · pulsa 📨 INVITAR para traer a tus amigos'); hap(0.5); };
-    const upd = () => { const rk = [[cfg.name || 'Tú', NOTES.sc]].concat(Object.values(R).map((r) => [r.d ? r.d.n : '?', r.d ? r.d.sc || 0 : 0])).sort((a, b) => b[1] - a[1]).slice(0, 3).map((x, i) => ['🥇', '🥈', '🥉'][i] + x[0] + ' ' + x[1]).join(' '); $o('onlT').textContent = '🌐 ' + code + ' · ' + (Object.keys(R).length + 1) + '👥 · ♪ ' + rk; };
+    const started = () => { ui.classList.remove('on'); hud.style.display = 'flex'; /* Voice remains opt-in; no microphone permission prompt merely for joining. */ NOTES.sc = 0; NOTES.build([...code].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) % 100000); upd(); say(uiText('🌐 Connected to room ' + code + '. Invite others to join.', '🌐 Conectado a la sala ' + code + '. Invita a más jugadores.')); hap(0.5); };
+    const upd = () => { const rk = [[cfg.name || uiText('You','Tú'), NOTES.sc]].concat(Object.values(R).map((r) => [r.d ? r.d.n : '?', r.d ? r.d.sc || 0 : 0])).sort((a, b) => b[1] - a[1]).slice(0, 3).map((x, i) => ['🥇', '🥈', '🥉'][i] + x[0] + ' ' + x[1]).join(' '); $o('onlT').textContent = '🌐 ' + code + ' · ' + (Object.keys(R).length + 1) + '👥 · ♪ ' + rk; };
     // PeerJS WebRTC voice is opt-in: the room never requests a mic on join.
     // Audio is spatialised locally only; no microphone media is stored in the game.
     const VOICE = (() => {
@@ -2159,9 +2168,9 @@
       const button = $o('onlMic');
       const status = (text) => {
         if (!button) return;
-        button.textContent = text || (enabled ? '🎙️ VOZ ON · APAGAR' : '🎤 ACTIVAR VOZ');
+        button.textContent = text || (enabled ? uiText('🎙️ VOICE ON · TURN OFF','🎙️ VOZ ON · APAGAR') : uiText('🎤 ENABLE VOICE','🎤 ACTIVAR VOZ'));
         button.setAttribute('aria-pressed', enabled ? 'true' : 'false');
-        button.title = enabled ? 'Micrófono activo. Escuchas a jugadores cercanos; pulsa para desconectar' : 'Pulsa para permitir el micrófono y escuchar jugadores cercanos';
+        button.title = enabled ? uiText('Microphone enabled. Select to disconnect.','Micrófono activo. Pulsa para desconectar.') : uiText('Allow the microphone to hear other players.','Permite el micrófono para escuchar a otros jugadores.');
       };
       const inRange = (id, padding = 0) => {
         const r = R[id];
@@ -2482,10 +2491,10 @@
     function join(c0) {
       save(); applyMe();
       const cc = (c0 || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
-      if (cc.length !== 5) { msg('El código tiene 5 letras o números'); return; }
-      if (joining) { msg('Conectando… si tarda demasiado podrás reintentarlo'); return; }
-      if (code && peer) { msg('Ya estás en una sala; sal antes de unirte a otra'); return; }
-      msg('Entrando en la sala ' + cc + '…');
+      if (cc.length !== 5) { msg(uiText('Room code must have 5 letters or numbers.','El código tiene 5 letras o números.')); return; }
+      if (joining) { msg(uiText('Connecting… you can retry if it takes too long.','Conectando… si tarda demasiado podrás reintentarlo.')); return; }
+      if (code && peer) { msg(uiText('You are already in a room. Leave it before joining another.','Ya estás en una sala; sal antes de unirte a otra.')); return; }
+      msg(uiText('Joining room '+cc+'…','Entrando en la sala '+cc+'…'));
       const task = { timer: null, current: null };
       joining = task;
       const failed = (reason) => {
@@ -2495,28 +2504,28 @@
         if (peer === task.current) { peer = null; code = null; myId = null; }
         msg(reason);
       };
-      task.timer = setTimeout(() => failed('La sala no responde. Comprueba la conexión o pide otro código e inténtalo de nuevo.'), 22000);
+      task.timer = setTimeout(() => failed(uiText('Room not responding. Check your connection or ask for a new code.','La sala no responde. Comprueba la conexión o pide otro código.')), 22000);
       load(() => {
         if (joining !== task) return;
         code = cc; isHost = false;
         let p;
-        try { p = new Peer(); } catch (_) { failed('No se pudo iniciar la conexión. Inténtalo otra vez.'); return; }
+        try { p = new Peer(); } catch (_) { failed(uiText('Could not start the connection. Try again.','No se pudo iniciar la conexión. Inténtalo otra vez.')); return; }
         peer = task.current = p; VOICE.bindPeer(p);
         p.on('open', (id) => {
           if (joining !== task) return;
           myId = id;
           let c;
           try { c = p.connect('unfire-sala-' + cc, { reliable: false }); }
-          catch (_) { failed('No se pudo conectar con esa sala. Inténtalo otra vez.'); return; }
-          if (!c) { failed('No se pudo abrir esa sala.'); return; }
+          catch (_) { failed(uiText('Could not connect to the room. Try again.','No se pudo conectar con esa sala. Inténtalo otra vez.')); return; }
+          if (!c) { failed(uiText('Could not open that room.','No se pudo abrir esa sala.')); return; }
           c.on('open', () => {
             if (joining !== task) { try { c.close(); } catch (_) {} return; }
             clearJoining(); setup(c); started();
           });
-          c.on('error', () => failed('Falló la conexión entre jugadores. Inténtalo de nuevo.'));
-          c.on('close', () => { if (joining === task) failed('No se pudo entrar en esa sala. Inténtalo otra vez.'); });
+          c.on('error', () => failed(uiText('Player connection failed. Try again.','Falló la conexión entre jugadores. Inténtalo de nuevo.')));
+          c.on('close', () => { if (joining === task) failed(uiText('Could not join the room. Try again.','No se pudo entrar en esa sala. Inténtalo de nuevo.')); });
         });
-        p.on('error', (e) => failed(e.type === 'peer-unavailable' ? 'Esa sala no existe o el anfitrión se ha ido' : 'Error de conexión online: ' + e.type));
+        p.on('error', (e) => failed(e.type === 'peer-unavailable' ? uiText('Room not found or host disconnected.','Esa sala no existe o el anfitrión se ha ido.') : uiText('Online connection error: ','Error de conexión online: ')+e.type));
       });
     }
     function leave() { clearJoining(); hostWaiting=false; VOICE.stop(); NOTES.clear(); try { conns.forEach((c) => { try { c.send({ id: myId, bye: 1 }); } catch (e) {} c.close(); }); peer && peer.destroy(); } catch (e) {} conns = []; peer = null; code = null; myId=null; isHost=false; hud.style.display = 'none'; Object.keys(R).forEach(drop); }
@@ -2559,7 +2568,7 @@
       }, create, join, joinPublic, get myName(){return String(cfg.name||'Jugador').slice(0,20);}, open(taller) { ui.classList.toggle('workshop',!!taller);ui.classList.add('on');paint(); $o('onN').value = cfg.name || (window.__STORYNAME && window.__STORYNAME()) || ''; $o('onNum').value = cfg.num || 27; msg(''); ui.querySelector('h3').textContent=taller?uiText('🔧 WORKSHOP · customize robot','🔧 TALLER · personaliza tu robot'):
           uiText('🌐 ONLINE · JOIN A ROOM','🌐 ONLINE · UNIRSE A UNA SALA');
         ui.querySelectorAll('.onl-connect').forEach(row=>row.style.display=taller?'none':'flex'); ui.classList.add('on'); }, get on() { return !!code; }, get waiting(){return !!hostWaiting;}, get joining() { return !!joining; }, get audioPlayers() { return code ? Object.values(R) : []; }, voiceVisibility(v) { VOICE.visibility(v); },
-      tick(dt, t) { if (pending && ROAMS.on) { this.open(); $o('onCode').value = pending; msg('Te han invitado a la sala ' + pending + ' · elige tu robot y pulsa UNIRME'); pending = null; }
+      tick(dt, t) { if (pending && ROAMS.on) { this.open(); $o('onCode').value = pending; msg(uiText('Room invitation '+pending+'. Choose your robot and select JOIN.','Invitación a la sala '+pending+'. Elige tu robot y pulsa UNIRME.')); pending = null; }
         if (!code || !peer) return; sendT -= dt; if (sendT <= 0 && myId) { sendT = 0.1; const d = { id: myId, n: cfg.name, c: cfg.col, t: cfg.type, ca:cfg.camo||'plain', de:cfg.image?'none':(cfg.decal||'none'), x: +ROAMS.p.x.toFixed(2), z: +ROAMS.p.z.toFixed(2), h: +(ROAMS.h || 0).toFixed(2), y: +((ROAMS.cy == null ? ROAMS.yaw : ROAMS.cy)).toFixed(3), sc: NOTES.sc, f: ROAMS.fly ? 1 : 0, o: window.ATM_OUT ? 1 : 0, m: ROAMS.moving ? 1 : 0, v: VOICE.on ? 1 : 0, q: 1 }; conns.forEach((c) => { if (c.open) try { c.send(d); } catch (e) {} }); }
         if (NOTES.g) { NOTES.g.visible = !!window.ATM_OUT; const fy = -8.9 + (ROAMS.h || 0) + 5; NOTES.list.forEach((n, i) => { if (!n.on) return; n.sp.material.rotation = Math.sin(t * 2 + i) * 0.3; if (window.ATM_OUT && Math.abs(ROAMS.p.x - n.sp.position.x) < 7 && Math.abs(ROAMS.p.z - n.sp.position.z) < 7 && Math.abs(fy - n.sp.position.y) < 9) { NOTES.take(i, true); conns.forEach((c) => { if (c.open) try { c.send({ id: myId, nt: i }); } catch (e) {} }); upd(); } }); } NOTES.uT = (NOTES.uT || 0) - dt; if (NOTES.uT <= 0) { NOTES.uT = 1; upd(); } const now = performance.now(); Object.keys(R).forEach((id) => { const r = R[id], d = r.d; if (!d) return; if (now - r.last > 8000) { drop(id); return; } const vis = !!d.o === !!window.ATM_OUT; r.w.visible = r.tag.visible = vis; if (!vis) return; const tgt = V(d.x, -8.9 + d.h, d.z), mv = r.w.position.distanceTo(tgt); r.w.position.lerp(tgt, Math.min(1, dt * 8)); r.wd += Math.min(mv, 5); r.w.rotation.y = Math.atan2(Math.sin(d.y), -Math.cos(d.y)); r.tag.position.set(r.w.position.x, r.w.position.y + 13, r.w.position.z); r.r0.update(3.7, dt, { act: d.f ? 'fly' : d.m ? 'walk' : null, ph: d.m ? STEPPH(r.wd, 10.5, false) : t, mood: 'happy' }); }); VOICE.tick(dt); }, create, join, leave, link, saveMe() { save(); applyMe(); } };
   })();
@@ -2568,8 +2577,8 @@
     g('onFind').onclick=()=>ONLINE.joinPublic();
     g('onJoin').onclick=()=>ONLINE.join(g('onCode').value);
     g('onX').onclick=()=>{ONLINE.saveMe();if(ONLINE.joining||ONLINE.waiting)ONLINE.leave();g('onl').classList.remove('on');};
-    g('onlQ').onclick = () => { ONLINE.leave(); say('🌐 Has salido de la sala'); };
-    g('onlInv').onclick = async () => { const l = ONLINE.link(), txt = '¡Ven a jugar conmigo a UNFIRE AUDIO! Sala: '; try { if (navigator.share) { await navigator.share({ title: 'UNFIRE AUDIO', text: txt, url: l }); return; } } catch (e) {} try { await navigator.clipboard.writeText(l); say('📨 Enlace copiado: ' + l + ' · pégalo a tus amigos'); } catch (e) { say('📨 Envía este enlace a tus amigos: ' + l); } }; }
+    g('onlQ').onclick = () => { ONLINE.leave(); say(uiText('🌐 You left the room.','🌐 Has salido de la sala.')); };
+    g('onlInv').onclick = async () => { const l = ONLINE.link(), txt = uiText('Join me in UNFIRE AUDIO! Room: ','¡Ven a jugar conmigo a UNFIRE AUDIO! Sala: '); try { if (navigator.share) { await navigator.share({ title: 'UNFIRE AUDIO', text: txt, url: l }); return; } } catch (e) {} try { await navigator.clipboard.writeText(l); say(uiText('📨 Invite link copied: '+l, '📨 Enlace de invitación copiado: '+l)); } catch (e) { say(uiText('📨 Share this invite link: '+l, '📨 Envía este enlace a tus amigos: '+l)); } }; }
   // ===== Reusable capsule inventory: pack, throw, deploy and collect without leaving roam =====
   const CAPS=(()=>{
     let capsule=null, flight=0, start=null, target=null, launchNano=false, upperShell=null, lowerShell=null, launchAt=0;
