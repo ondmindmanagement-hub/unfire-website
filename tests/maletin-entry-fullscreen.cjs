@@ -84,7 +84,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        const items=d.getElementById('ufActionItems'),toggle=d.getElementById('ufActionsToggle');
        if(!walk||!dock||!items||!toggle)throw Error('Missing compact Actions control');
        if(!items.hidden)toggle.click();
-       const initiallyCollapsed=items.hidden&&d.defaultView.getComputedStyle(walk).display==='none';
+       const initiallyCollapsed=items.hidden&&d.defaultView.getComputedStyle(items).display==='none'&&walk.getBoundingClientRect().width===0;
        toggle.click();
        const actionOpen=!items.hidden&&toggle.getAttribute('aria-expanded')==='true';
        const oldDisplay=walk.style.display;
