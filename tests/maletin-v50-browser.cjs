@@ -98,25 +98,35 @@ const assert=require('node:assert/strict');
   await f.evaluate(()=>document.getElementById('unfireCarryCase').click());
   const repacked=await f.evaluate(()=>({closed:window.__UNFIRE_CASE_QA.closed,carrying:window.__UNFIRE_CASE_QA.carrying,visible:window.__UNFIRE_CASE_QA.caseVisible,mission:window.__UNFIRE_CASE_QA.mission}));
   assert(repacked.closed&&repacked.carrying&&!repacked.visible&&repacked.mission===initial.mission,'Repacking capsule interrupted mission');
-  // In-game house computer: ? app, invalid code, then ULTIMATEROBOTS.
-  const secret=await f.evaluate(()=>{
+  // The house computer must reject an invalid phrase WITHOUT ever shipping a
+  // plaintext private code in a public browser test. Unlocking all 20 requires
+  // the user's private proof; ordinary mission progress stops at 12.
+  const secret=await f.evaluate(async()=>{
     const beforeQuest=window.__UNFIRE_CASE_QA.mission;
     const beforeSave=localStorage.getItem('unfire_save_v1');
+    const beforeProgress=localStorage.getItem('unfire_unlock');
+    const beforeProof=localStorage.getItem('unfire_roster_proof_v2');
     const tube=document.getElementById('tube');
     assertExists(tube&&document.getElementById('pcMysteryApp'),'House computer missing mystery app');
     tube.classList.add('on');
     document.getElementById('pcMysteryApp').click();
     const fld=document.getElementById('pcSecretCode');
     fld.value='not-a-code';document.getElementById('pcSecretGo').click();
-    const rejected=+(localStorage.getItem('unfire_unlock')||0)===0;
-    fld.value='ULTIMATEROBOTS';document.getElementById('pcSecretGo').click();
-    const unlocked=+(localStorage.getItem('unfire_unlock')||0)>=20;
+    await new Promise(resolve=>setTimeout(resolve,40));
     const confirmation=document.getElementById('pcResult').textContent;
+    const rejected=/(Not recognized|No reconocido)/.test(confirmation);
+    const progressUnchanged=localStorage.getItem('unfire_unlock')===beforeProgress;
+    const proofUnchanged=localStorage.getItem('unfire_roster_proof_v2')===beforeProof;
     document.getElementById('tubeX').click();
-    return {rejected,unlocked,confirmation,questStillActive:window.__UNFIRE_CASE_QA.mission===beforeQuest,storyUnchanged:localStorage.getItem('unfire_save_v1')===beforeSave};
+    return {rejected,progressUnchanged,proofUnchanged,
+      closed:!tube.classList.contains('on'),
+      questStillActive:window.__UNFIRE_CASE_QA.mission===beforeQuest,
+      storyUnchanged:localStorage.getItem('unfire_save_v1')===beforeSave};
     function assertExists(v,msg){if(!v)throw Error(msg);}
   });
-  assert(secret.rejected&&secret.unlocked&&secret.questStillActive&&secret.storyUnchanged&&secret.confirmation.includes('desbloqueados'),'Secret app unlock/persistence or mission isolation failed: '+JSON.stringify(secret));
+  assert(secret.rejected&&secret.progressUnchanged&&secret.proofUnchanged&&
+    secret.closed&&secret.questStillActive&&secret.storyUnchanged,
+    'Invalid secret input altered progress, revealed hidden robots or blocked computer close: '+JSON.stringify(secret));
   const rapid=await f.evaluate(()=>{const a=[],initial=window.__UNFIRE_CASE_QA.closed;for(let i=0;i<4;i++){window.__mal.toggleCase();a.push(window.__UNFIRE_CASE_QA.closed)}return {initial,states:a};});
   assert(rapid.states.every((v,i)=>v===(i%2===0?!rapid.initial:rapid.initial)),'Rapid click target-state toggle not alternating: '+JSON.stringify(rapid));
   const missions=await f.evaluate(()=>{
@@ -204,7 +214,7 @@ const assert=require('node:assert/strict');
         cancelled:!document.getElementById('onl').classList.contains('on')};
     } finally {window.Peer=original;}
   });
-  assert(/(Esa sala no existe|That room does not exist)/.test(peerQA.first)&&/(Esa sala no existe|That room does not exist)/.test(peerQA.second)
+  assert(/(Esa sala no existe|Room not found or host disconnected)/.test(peerQA.first)&&/(Esa sala no existe|Room not found or host disconnected)/.test(peerQA.second)
     &&peerQA.afterErrors>=2&&peerQA.destroyed>=3&&peerQA.cancelled,
     'PeerJS error/retry/close did not recover cleanly '+JSON.stringify(peerQA));
   console.log('PASS PeerJS error/retry/stalled cancellation without third-party network or polling delays');
@@ -227,7 +237,7 @@ const assert=require('node:assert/strict');
   assert.equal(firstErrors.length,0,'Newcomer browser errors: '+firstErrors.join(' | '));
   await firstPage.close();
   assert.equal(errors.length,0,'Browser JavaScript errors: '+errors.join(' | '));
-  console.log('PASS Chrome: capsule/repack, case camera, 20 3D workshop slots, 11 side missions, first-time chapter gate, no JS errors');
+  console.log('PASS Chrome: capsule/repack, case camera, normal robot selection, private-code rejection, 11 side missions, first-time chapter gate, no JS errors');
  }catch(e){console.error('FAIL',e.stack?.slice(0,1200));process.exitCode=1}
  finally{if(browser)await browser.close()}
 })();
