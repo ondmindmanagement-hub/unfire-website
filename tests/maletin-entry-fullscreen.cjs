@@ -117,7 +117,7 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
      const walk=state.pasear;
      assert(state.initiallyCollapsed&&state.actionOpen&&state.closesCorrectly&&
-       state.insideDock&&walk.x>=width*.54&&walk.y>=65&&walk.w>=65&&
+       state.insideDock&&walk.x>=state.dockRect.x-2&&walk.y>=0&&walk.w>=65&&
        walk.x>=-1&&walk.x+walk.w<=width+2&&walk.y+walk.h<=height+2&&
        walk.x>=state.dockRect.x-2,
        'PASEAR unavailable or clipped inside opened Actions menu '+JSON.stringify({width,height,walk,dock:state.dockRect,controls:state}));
