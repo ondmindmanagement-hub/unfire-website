@@ -10,7 +10,7 @@ Base: `main` `be39472fa3765846396f613f42a5196e74f600dd`.
 | Canonical URL | Primary query intent | Secondary topics | Change |
 |---|---|---|---|
 | https://unfire.technology/about/ | independent AI and creative technology studio | AI workflow oversight, audio software, interactive experiences | Title, description, Open Graph title/description |
-| https://unfire.technology/enterprise/ | AI workflow oversight and technology licensing | remote feasibility pilots, integration, custom development | Title, description, Open Graph title/description |
+| https://unfire.technology/enterprise/ | AI workflow oversight and technology licensing | remote feasibility pilots, integration, custom development | Title, description, Open Graph title/description; add existing canonical URL to sitemap |
 | https://unfire.technology/apps/ | Unfire apps and development previews | human-reviewed AI workflows, Mac gesture control, audio tools | Title, description, Open Graph title/description |
 | https://unfire.technology/ | Unfire company and technology portfolio | real portfolio and capabilities | **HOLD**: homepage owned by parallel release/integration work |
 | https://unfire.technology/bolt/ | human-approved AI workflows for Mac | permissions, review before file edits | **UNCHANGED**: existing metadata matches intent; product owner to approve future copy |
@@ -28,8 +28,8 @@ Base: `main` `be39472fa3765846396f613f42a5196e74f600dd`.
 
 ## Review and release gates
 
-1. Compare against exact base SHA. Scope must remain limited to metadata on the three named HTML files and this documentation.
-2. Confirm exactly one title, description, Open Graph title/description and canonical link per edited page.
+1. Compare against exact base SHA. Scope must remain limited to metadata on the three named HTML files, one additional existing canonical entry in `sitemap.xml`, and this documentation.
+2. Confirm exactly one title, description, Open Graph title/description and canonical link per edited page. Confirm exactly one `/enterprise/` URL in the sitemap, with no removal or changes to other URLs.
 3. Check all three descriptions are plain English, readable, unique and between 100–175 characters; titles must not materially misrepresent the page.
 4. Run existing relevant static/site checks, review final branch CI and review public-facing snippets.
 5. Obtain site owner's integration approval. Do not merge or publish while GitHub Pages pipeline is errored; prove publication from live URL after repaired deployment.
