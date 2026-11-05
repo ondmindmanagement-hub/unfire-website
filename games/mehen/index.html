@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#07141c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MEHEN">
+<link rel="apple-touch-icon" href="./icons/icon-180.png">
+<link rel="manifest" href="./manifest.webmanifest">
+  <meta name="description" content="MEHEN. An original modern interpretation of ancient Egypt's serpent board game by Unfire. Play against AI, locally or online.">
+  <title>MEHEN · The Eternal Serpent | Unfire Games</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js" defer></script>
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <div class="ambience" aria-hidden="true"></div>
+  <div class="layout">
+    <header class="masthead">
+      <a class="brand" href="https://unfire.technology/" aria-label="Unfire home">U<span>∕</span> UNFIRE <span class="subbrand">GAMES</span></a>
+      <span class="eyebrow">ANCIENT WORLD · REIMAGINED</span>
+      <button class="icon-button" id="howBtn" type="button" aria-label="How to play">? <span>HOW TO PLAY</span></button>
+    </header>
+    <main>
+      <section class="intro">
+        <div class="tiny-sun" aria-hidden="true">✧</div>
+        <p class="overline">A JOURNEY TO THE HEART OF THE SUN</p>
+        <h1>MEHEN<span class="small-star">✦</span></h1>
+        <p class="subtitle">THE ETERNAL SERPENT</p>
+        <p class="dek">Enter the coils. Guide your lions. Reach eternity.</p>
+      </section>
+      <div class="game-layout">
+        <section class="stage" aria-label="Game board">
+          <div class="stage-top"><span>THE SACRED SPIRAL</span><span id="sessionLabel">SOLO · AI</span></div>
+          <div class="board-frame">
+            <svg id="board" class="board" viewBox="0 0 800 800" role="img" aria-label="Mehen serpent board with 60 positions and six movable lions"></svg>
+          </div>
+          <div class="stage-bottom"><span>TAIL · BEGINNING</span><span>HEAD · ETERNITY</span></div>
+        </section>
+        <aside class="sidebar">
+          <div class="panel mode-panel">
+            <p class="section-label">01 · CHOOSE YOUR PATH</p>
+            <div class="mode-buttons" role="group" aria-label="Game mode">
+              <button type="button" class="mode active" id="aiBtn" aria-pressed="true">VS AI</button>
+              <button type="button" class="mode" id="localBtn" aria-pressed="false">LOCAL</button>
+              <button type="button" class="mode" id="onlineBtn" aria-pressed="false">ONLINE</button>
+            </div>
+          </div>
+          <div class="panel progress-panel">
+            <p class="section-label">02 · THE JOURNEY</p>
+            <div class="player gold" id="player0">
+              <div class="player-symbol">✹</div>
+              <div class="player-info"><strong>GOLDEN LIONS</strong><span id="progress0">0 / 2 AT THE HEART</span></div>
+              <span id="turn0" class="turn-dot"></span>
+            </div>
+            <div class="separator"></div>
+            <div class="player lapis" id="player1">
+              <div class="player-symbol">✧</div>
+              <div class="player-info"><strong>LAPIS LIONS</strong><span id="progress1">0 / 2 AT THE HEART</span></div>
+              <span id="turn1" class="turn-dot"></span>
+            </div>
+          </div>
+          <div class="panel action-panel">
+            <p class="section-label">03 · YOUR MOVE</p>
+            <div class="throw-display">
+              <div class="throw-glyph" id="dieFace" aria-hidden="true">✦</div>
+              <div><span class="die-caption">CASTING STICKS</span><div class="die-value" id="dieValue">READY</div></div>
+            </div>
+            <p id="status" class="status" role="status" aria-live="polite">The serpent awakens. Gold begins.</p>
+            <button type="button" id="rollBtn" class="primary">CAST THE STICKS <span>↗</span></button>
+            <button type="button" id="resetBtn" class="secondary">START NEW MATCH</button>
+          </div>
+          <div id="onlinePanel" class="panel online-panel" hidden>
+            <p class="section-label">ONLINE · PRIVATE MATCH</p>
+            <p class="helper">Create a private room, or enter a friend's invitation code. No account required.</p>
+            <button type="button" id="hostBtn" class="secondary outlined">CREATE A ROOM</button>
+            <div class="join-row">
+              <input id="roomInput" type="text" inputmode="text" autocapitalize="characters" maxlength="12" placeholder="ROOM CODE" aria-label="Invitation room code">
+              <button type="button" id="joinBtn" class="secondary outlined">JOIN</button>
+            </div>
+            <div id="inviteArea" hidden>
+              <span class="die-caption">YOUR INVITATION CODE</span>
+              <div class="join-row"><strong class="room-code" id="roomCode"></strong><button class="secondary outlined" id="copyBtn" type="button">COPY</button></div>
+            </div>
+            <p class="online-status" id="netStatus" role="status" aria-live="polite">Not connected.</p>
+            <button type="button" class="text-button" id="disconnectBtn" hidden>LEAVE ONLINE MATCH</button>
+          </div>
+          <p class="disclaimer">A MODERN UNFIRE INTERPRETATION. ORIGINAL ANCIENT RULES ARE UNKNOWN.</p>
+        </aside>
+      </div>
+      <section class="heritage" aria-label="Game history">
+        <div><span class="overline">THE ORIGIN</span><h2>Before kingdoms.<br>Before written rules.</h2></div>
+        <div><p>Mehen was played in ancient Egypt more than five thousand years ago. Its coiled serpent board may have represented the protective god surrounding the sun. The surviving objects do not preserve the original rules.</p><p>Our version is a new, playable strategy game inspired by its shape, lion pieces and journey toward the center. It does not claim to reconstruct historical gameplay.</p><a href="https://fitzmuseum.cam.ac.uk/explore-our-collection/highlights/EGA44641943" rel="noopener noreferrer" target="_blank">EXPLORE THE ORIGINAL ARTEFACT ↗</a></div>
+      </section>
+    </main>
+    <footer><span>© UNFIRE · MEHEN PROTOTYPE</span><span>ORIGINAL ARTWORK · NO ANALYTICS · MADE FOR PLAY</span></footer>
+  </div>
+  <dialog id="rulesDialog" aria-labelledby="rulesTitle">
+    <div class="dialog-content">
+      <button id="closeRules" type="button" class="close-dialog" aria-label="Close rules">✕</button>
+      <p class="overline">YOUR GUIDE TO THE SERPENT</p>
+      <h2 id="rulesTitle">How to play</h2>
+      <p>These are <strong>modern Unfire rules</strong>, not verified ancient Egyptian rules.</p>
+      <ol>
+        <li>Each side has three lions. Gold begins.</li>
+        <li>Cast the sticks to roll a number from 1 to 4.</li>
+        <li>Select one of your highlighted lions to advance that number of spaces toward the center.</li>
+        <li>Landing on a rival lion sends it back to the tail. Marked sanctuary spaces are safe from capture.</li>
+        <li>Reach the heart by an <strong>exact throw</strong>. Overshooting is not allowed. The first player to finish two lions wins.</li>
+        <li>If no move is possible, your turn passes automatically.</li>
+      </ol>
+      <p>Online is a private peer-to-peer prototype using a third-party signaling service that may process connection metadata. Keep the room link with trusted friends. Reconnection, availability and cheating protection are not guaranteed.</p>
+      <button type="button" class="primary" id="rulesPlay">BEGIN THE JOURNEY</button>
+    </div>
+  </dialog>
+</body>
+</html>
