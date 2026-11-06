@@ -29,6 +29,12 @@ test('App Store product names and independently translatable disclaimer remain c
   assert.match(html, /#work \.unfire-store-status p\{margin:0\}/);
 });
 
+test('compound Unfire product names remain intact for galleries and browser translation', () => {
+  for (const name of ['Unfire Synthesizer', 'Unfire Control', 'Unfire KeyBridge']) {
+    assert.ok(html.includes('class="notranslate">' + name + '</span>'), name);
+  }
+});
+
 test('Bolt links use their visible, machine-translatable labels as accessible names', () => {
   assert.match(html, /<a class="button primary" href="https:\/\/apps\.apple\.com\/us\/app\/bolt-trusted-ai-bridge\/id6814615903"[^>]*>Get Bolt on the Mac App Store<\/a>/);
   assert.match(html, /<a class="button" href="\/bolt\/">How Bolt works →<\/a>/);
