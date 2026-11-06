@@ -65,7 +65,7 @@ test('high-speed travel retains swept NANO collisions and bounded delta', () => 
 
 test('higher flight FPS is conditional; slow devices and hidden tabs retain protection', () => {
   assert.match(engine,/window\.ATM_OUT \? \(ROAMS\.fly \? 15 : 33\) : 25/);
-  assert.match(engine,/LOWDEV \? \(DEVICE\.tier==='compact' \? \(!DEVICE\.touch && \(navigator\.hardwareConcurrency\|\|4\)>=6 \? 30 : 42\) : 33\)/);
+  assert.match(engine,/DEVICE\.touch && \(navigator\.hardwareConcurrency\|\|4\)>=8 && !SOFTWARE_WEBGL/);
   assert.match(engine,/SOFTWARE_WEBGL && previousRenderAt && now - previousRenderAt < 80/);
   assert.match(engine,/window\.ATM_OUT\?\(ROAMS\.fly\?1\/50:1\/30\):1\/35/);
   assert.match(engine,/if \(document\.hidden \|\| !frameVisible\)/);
@@ -73,19 +73,22 @@ test('higher flight FPS is conditional; slow devices and hidden tabs retain prot
 });
 
 
-test('compact pacing upgrades only capable non-touch browsers, preserving mobile/slow guards', () => {
+test('compact pacing upgrades capable non-touch and high-core touch, retaining slow/software guards', () => {
   const pacingExpression = extract(
     /previousRenderAt < \((.+)\)\) return;/,
     'outdoor and compact render interval expression'
   );
-  const pace = new Function('LOWDEV','DEVICE','navigator','window','ROAMS',
+  const pace = new Function('LOWDEV','DEVICE','navigator','window','ROAMS','SOFTWARE_WEBGL',
     'return (' + pacingExpression + ');'
   );
-  const evalPacing = (tier, touch, cores, lowDev = true, outside = true, flying = true) =>
-    pace(lowDev, {tier,touch}, {hardwareConcurrency:cores}, {ATM_OUT:outside}, {fly:flying});
+  const evalPacing = (tier, touch, cores, lowDev = true, outside = true, flying = true, software = false) =>
+    pace(lowDev, {tier,touch}, {hardwareConcurrency:cores}, {ATM_OUT:outside}, {fly:flying}, software);
   assert.equal(evalPacing('compact',false,12),30,'fast non-touch compact can render at 30ms');
   assert.equal(evalPacing('compact',false,6),30,'six-core non-touch compact can render at 30ms');
-  assert.equal(evalPacing('compact',true,12),42,'touch hardware retains thermal budget');
+  assert.equal(evalPacing('compact',true,12),30,'high-core accelerated touch can trial 30ms');
+  assert.equal(evalPacing('compact',true,8),30,'eight-core accelerated touch can trial 30ms');
+  assert.equal(evalPacing('compact',true,7),42,'seven-core touch retains 42ms');
+  assert.equal(evalPacing('compact',true,12,true,true,true,true),42,'software WebGL touch retains 42ms');
   assert.equal(evalPacing('compact',true,4),42,'low-core touch retains 42ms');
   assert.equal(evalPacing('compact',false,4),42,'low-core desktop retains 42ms');
   assert.equal(evalPacing('balanced',false,12),33,'balanced device unchanged');
