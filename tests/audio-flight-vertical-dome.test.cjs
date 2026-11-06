@@ -19,7 +19,7 @@ function step(cfg={}) {
   const vars={ROAMS,K,window,clamp:(v,a,b)=>Math.max(a,Math.min(b,v)),
     miniFlight:cfg.miniScale??1,fw:cfg.fw??0,fl:cfg.fl??0,
     hov:cfg.fl??22,dt:cfg.dt??1/30,t:0,NANO_SCALE:0.15,Math,
-    flightProp:out?(cfg.prop??1):1};
+    flightProp:out?(cfg.prop??1):1,flightDt:cfg.dt??1/30};
   vm.runInNewContext(motion,vars,{timeout:300});
   return {ROAMS,window};
 }
