@@ -3745,7 +3745,7 @@
     // Limit draw frequency (not pointer/touch handlers) so UI can return from modals.
     if (SOFTWARE_WEBGL && previousRenderAt && now - previousRenderAt < 80) return;
     // Cap this heavy 3D scene to ~30-40fps on accelerated hardware; input remains unthrottled.
-    if (previousRenderAt && now - previousRenderAt < (LOWDEV ? (DEVICE.tier==='compact' ? 42 : 33) : window.ATM_OUT ? (ROAMS.fly ? 15 : 33) : 25)) return;
+    if (previousRenderAt && now - previousRenderAt < (LOWDEV ? (DEVICE.tier==='compact' ? (!DEVICE.touch && (navigator.hardwareConcurrency||4)>=6 ? 30 : 42) : 33) : window.ATM_OUT ? (ROAMS.fly ? 15 : 33) : 25)) return;
     // Case/camera animations must use real foreground elapsed time even if
     // WebGL renders only a few frames per second. Physics keeps its bounded
     // delta, and the hidden-tab branch resets previousRenderAt for safe resume.
