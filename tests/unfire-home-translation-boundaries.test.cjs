@@ -40,3 +40,13 @@ test('Bolt links use their visible, machine-translatable labels as accessible na
   assert.match(html, /<a class="button" href="\/bolt\/">How Bolt works →<\/a>/);
   assert.doesNotMatch(html, /aria-label="Learn about BOLT in English"/);
 });
+
+// Additional owner-approved pages audited in the same bounded public-site pass.
+test('contact, pilot and early-access protect every inline brand/word boundary', () => {
+  const fragile = /<span\b(?=[^>]*\bnotranslate\b)(?=[^>]*\btranslate="no")[^>]*>[^<>]*<\/span>(?: +|&nbsp;)(?=[A-Za-z])/g;
+  for (const name of ['contact/index.html', 'pilot/index.html', 'early-access/index.html']) {
+    const page = fs.readFileSync(path.resolve(__dirname, '..', name), 'utf8');
+    assert.match(page, /<html[^>]*lang="en"/i, name);
+    assert.deepEqual([...page.matchAll(fragile)].map(m => m[0]), [], name);
+  }
+});
