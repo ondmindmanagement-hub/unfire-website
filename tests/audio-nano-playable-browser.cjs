@@ -46,6 +46,46 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         return !!b && b.style.display === 'block'
           && window.__UNFIRE_CASE_QA.lid >= .998;
       }, null, {timeout: 30000, polling: 150});
+      // The compact mobile Actions menu is intentionally collapsed on first open.
+      // A button's inline display:block does NOT make it hittable while its
+      // ancestor #ufActionItems is hidden. Follow the exact player touch path.
+      await page.locator('#ufActionsToggle').waitFor({state:'visible', timeout: 12000});
+      const menuTarget = await page.locator('#ufActionsToggle').evaluate(el => {
+        const r = el.getBoundingClientRect();
+        const x = r.left + r.width / 2, y = r.top + r.height / 2;
+        const hit = document.elementFromPoint(x, y);
+        const items = document.getElementById('ufActionItems');
+        return {
+          x, y, width: r.width, height: r.height,
+          unobstructed: hit === el || el.contains(hit),
+          collapsed: !!items?.hidden,
+          expanded: el.getAttribute('aria-expanded')
+        };
+      });
+      assert(menuTarget.unobstructed && menuTarget.width >= 40 && menuTarget.height >= 39,
+        'Actions toggle must be a visible, unobstructed touch target: ' + JSON.stringify(menuTarget));
+      assert.equal(menuTarget.collapsed, true, 'Actions menu should start collapsed');
+      assert.equal(menuTarget.expanded, 'false', 'Action toggle must announce collapsed state');
+      await page.touchscreen.tap(menuTarget.x, menuTarget.y);
+      await page.locator('#ufActionItems').waitFor({state:'visible', timeout: 12000});
+      await page.locator('#roamB').waitFor({state:'visible', timeout: 12000});
+      const walkTarget = await page.locator('#roamB').evaluate(el => {
+        const r = el.getBoundingClientRect();
+        const x = r.left + r.width / 2, y = r.top + r.height / 2;
+        const hit = document.elementFromPoint(x, y);
+        const items = document.getElementById('ufActionItems');
+        return {
+          x, y, width: r.width, height: r.height,
+          unobstructed: hit === el || el.contains(hit),
+          menuHidden: !!items?.hidden,
+          expanded: document.getElementById('ufActionsToggle')?.getAttribute('aria-expanded')
+        };
+      });
+      assert(walkTarget.unobstructed && !walkTarget.menuHidden &&
+        walkTarget.width >= 40 && walkTarget.height >= 39 &&
+        walkTarget.expanded === 'true',
+        'PASEAR must be accessible after expanding Actions: ' + JSON.stringify(walkTarget));
+      console.log('NANO_FIRST_WALK_TOUCH_TARGET', JSON.stringify({menuTarget, walkTarget}));
       // Record input events only in browser QA to identify a lost first tap.
       await page.evaluate(() => {
         window.__unfireQaTapEvents = [];
@@ -54,7 +94,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
           b.addEventListener(type, () => window.__unfireQaTapEvents.push(type), {capture: true});
         }
       });
-      await page.locator('#roamB').tap({timeout: 25000});
+      await page.touchscreen.tap(walkTarget.x, walkTarget.y);
       // The software-GPU runner may starve Playwright's polling even after the tap worked.
       const entered=await page.evaluate(() => !!window.__UNFIRE_CASE_QA.roam);
       try {
