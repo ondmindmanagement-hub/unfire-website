@@ -34,9 +34,9 @@ test('mix HUD uses English labels on English locale without changing music handl
  assert.match(engine,/TON\.mode/);
 });
 test('browser freshness: host and game both load new asset versions',()=>{
- assert.match(host,/maletin\/index\.html\?v=20261104hudmatch4/);
- assert.match(game,/<script src="game-engine-v50\.js\?v=20261104hudmatch4"><\/script>/);
- assert.match(game,/<link rel="preload" href="game-engine-v50\.js\?v=20261104hudmatch4"/);
+ assert.match(host,/maletin\/index\.html\?v=20261108smoothfly1/);
+ assert.match(game,/<script src="game-engine-v50\.js\?v=20261108smoothfly1"><\/script>/);
+ assert.match(game,/<link rel="preload" href="game-engine-v50\.js\?v=20261108smoothfly1"/);
 });
 
 test('Unknown computer app has no spoilers and retains bilingual neutral feedback',()=>{

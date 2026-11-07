@@ -45,6 +45,6 @@ test('online puts joining real existing rooms first; no made-up room list or sol
  assert.doesNotMatch(src,/onFind[^\n]*\.create\(/);
 });
 test('host and iframe assets have matching freshness versions',()=>{
- assert.match(host,/maletin\/index\.html\?v=20261104hudmatch4/);
- assert.match(game,/game-engine-v50\.js\?v=20261104hudmatch4/);
+ assert.match(host,/maletin\/index\.html\?v=20261108smoothfly1/);
+ assert.match(game,/game-engine-v50\.js\?v=20261108smoothfly1/);
 });

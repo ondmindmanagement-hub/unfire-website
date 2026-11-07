@@ -103,6 +103,9 @@
     document.documentElement.dataset.unfireSoftwareWebgl = 'low';
   }
   if (LOWDEV) { S.renderer.shadowMap.enabled = false; }
+  // Production: skip three.js's synchronous getProgramInfoLog/getShaderInfoLog checks, which force a blocking
+  // shader compile mid-flight (~7ms hitches) whenever a new material appears on screen.
+  if (S.renderer.debug) S.renderer.debug.checkShaderErrors = false;
   else { S.renderer.shadowMap.autoUpdate = false; S.renderer.shadowMap.needsUpdate = true; }
   // LIGHTFIX: el número de luces del escenario se mantiene constante (luces "proxy" en la raíz),
   // así encender/apagar/ocultar luces dentro o fuera de casa ya no recompila todos los shaders.
