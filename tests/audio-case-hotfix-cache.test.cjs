@@ -14,7 +14,9 @@ test('one fresh cache token for host iframe, fallback and both engine loads',()=
   assert.equal(new Set(hostVersions).size,1);
   assert.equal(new Set(engineVersions).size,1);
   assert.equal(hostVersions[0],engineVersions[0]);
-  assert.equal(hostVersions[0],'20261028nimbo3english4');
+  // Pin the shape (dated token) and reject retired tokens, instead of a single stale value.
+  assert.match(hostVersions[0],/^2026\d{4}[a-z0-9]+$/);
+  for (const retired of ['20261028nimbo3english4','20261104hudmatch4']) assert.notEqual(hostVersions[0],retired);
 });
 test('the actual canvas accepts tap without browser scroll cancellation',()=>{
   assert.match(frame,/#cv\s*\{[^}]*touch-action:none/);
