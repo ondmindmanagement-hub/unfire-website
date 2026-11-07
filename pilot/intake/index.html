@@ -62,21 +62,23 @@ footer .wrap{display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap}
 <section class="card" aria-labelledby="intakeTitle">
 <h2 id="intakeTitle">Request a feasibility discussion</h2>
 <p class="small">Required fields are marked *. Your answers stay in this browser until you choose to send an email. We do not run a form backend or add analytics to this page.</p>
+<noscript><p class="disclaimer" role="alert">JavaScript is required to prepare your message locally. Nothing has been submitted. Please contact us directly at <a href="mailto:hello@unfire.technology">hello@unfire.technology</a>.</p></noscript>
+<!-- Privacy safeguard: form fields intentionally have no name attributes, so failed-JS fallback GET cannot append their values to the URL. -->
 <form id="intake" novalidate>
 <div class="grid">
-<div class="field"><label for="org">Organization or initiative <span class="required">*</span></label><input id="org" name="org" maxlength="100" required autocomplete="organization" placeholder="Company or team"></div>
-<div class="field"><label for="contact">Work email <span class="required">*</span></label><input id="contact" name="contact" type="email" maxlength="150" required autocomplete="email" placeholder="name@organization.com"></div>
-<div class="field"><label for="sector">Operating area</label><select id="sector" name="sector"><option value="Not specified">Select an area</option><option>Logistics / warehousing</option><option>Industrial / manufacturing</option><option>Enterprise software</option><option>Textiles / supply chain</option><option>Professional services</option><option>Other</option></select></div>
-<div class="field"><label for="owner">Can you identify the process owner?</label><select id="owner" name="owner"><option value="Not yet identified">Not yet</option><option>Yes — I own this workflow</option><option>Yes — I can introduce the owner</option></select></div>
+<div class="field"><label for="org">Organization or initiative <span class="required">*</span></label><input id="org" maxlength="100" required autocomplete="organization" placeholder="Company or team"></div>
+<div class="field"><label for="contact">Work email <span class="required">*</span></label><input id="contact" type="email" maxlength="150" required autocomplete="email" placeholder="name@organization.com"></div>
+<div class="field"><label for="sector">Operating area</label><select id="sector"><option value="Not specified">Select an area</option><option>Logistics / warehousing</option><option>Industrial / manufacturing</option><option>Enterprise software</option><option>Textiles / supply chain</option><option>Professional services</option><option>Other</option></select></div>
+<div class="field"><label for="owner">Can you identify the process owner?</label><select id="owner"><option value="Not yet identified">Not yet</option><option>Yes — I own this workflow</option><option>Yes — I can introduce the owner</option></select></div>
 </div>
-<div class="field"><label for="problem">What exception or recurring failure should be reviewed? <span class="required">*</span></label><textarea id="problem" name="problem" maxlength="750" minlength="20" required placeholder="Example: order says shipped, but the carrier event is missing; a person must review conflicting statuses before updating the case."></textarea><p class="help">Do not include real customer names, live data, secrets or confidential documents.</p></div>
-<div class="field"><label for="outcome">What would a useful result look like? <span class="required">*</span></label><textarea id="outcome" name="outcome" maxlength="500" minlength="12" required placeholder="Example: a reproducible report that identifies conflicting cases and records whether a proposed action is allowed, held for review or blocked."></textarea></div>
+<div class="field"><label for="problem">What exception or recurring failure should be reviewed? <span class="required">*</span></label><textarea id="problem" maxlength="750" minlength="20" required placeholder="Example: order says shipped, but the carrier event is missing; a person must review conflicting statuses before updating the case."></textarea><p class="help">Do not include real customer names, live data, secrets or confidential documents.</p></div>
+<div class="field"><label for="outcome">What would a useful result look like? <span class="required">*</span></label><textarea id="outcome" maxlength="500" minlength="12" required placeholder="Example: a reproducible report that identifies conflicting cases and records whether a proposed action is allowed, held for review or blocked."></textarea></div>
 <div class="grid">
-<div class="field"><label for="scope">Indicative review budget</label><select id="scope" name="scope"><option>Budget not confirmed</option><option>EU feasibility — around EUR 3,000 + tax</option><option>EU extended study — around EUR 5,000 + tax</option><option>US discussion — around USD 6,500 + tax</option><option>Different scope — discuss by email</option></select></div>
-<div class="field"><label for="timing">Decision horizon</label><select id="timing" name="timing"><option>Exploratory / no date</option><option>Within 30 days</option><option>Within 90 days</option><option>More than 90 days</option></select></div>
+<div class="field"><label for="scope">Indicative review budget</label><select id="scope"><option>Budget not confirmed</option><option>EU feasibility — around EUR 3,000 + tax</option><option>EU extended study — around EUR 5,000 + tax</option><option>US discussion — around USD 6,500 + tax</option><option>Different scope — discuss by email</option></select></div>
+<div class="field"><label for="timing">Decision horizon</label><select id="timing"><option>Exploratory / no date</option><option>Within 30 days</option><option>Within 90 days</option><option>More than 90 days</option></select></div>
 </div>
 <div class="disclaimer">Bolt is an early, internally tested macOS prototype, not a validated production integration or certified assurance product. We start with fabricated inputs. Prices are non-binding discussion ranges; availability, legal eligibility, taxes and a signed scope must be confirmed before any paid work.</div>
-<div class="actions"><button class="primary" type="submit">Prepare written enquiry →</button><a class="btn" href="/pilot/">Review offer first</a></div>
+<div class="actions"><button class="primary" id="prepareEnquiry" type="submit" disabled>Prepare written enquiry →</button><a class="btn" href="/pilot/">Review offer first</a></div>
 <p id="status" role="status" aria-live="polite"></p>
 </form>
 <div id="previewBox" hidden>
@@ -109,6 +111,7 @@ footer .wrap{display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap}
   box.hidden=false;status.textContent='Draft prepared locally. Nothing has been sent.';
   box.scrollIntoView({behavior:'smooth',block:'start'});
  });
+ $('prepareEnquiry').disabled=false; // Enable only after local draft-preparation handler is installed.
  $('openEmail').addEventListener('click',()=>{
   if(!preview.value.trim())return;
   const url='mailto:hello@unfire.technology?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(preview.value);
