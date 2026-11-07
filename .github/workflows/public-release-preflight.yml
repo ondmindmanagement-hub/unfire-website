@@ -1,0 +1,30 @@
+name: Public release preflight
+on:
+  pull_request:
+    branches: [gh-pages]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  production-preflight:
+    name: production-preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify public source and custom domain
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f .nojekyll
+          test "$(cat CNAME)" = "unfire.technology"
+          test -s index.html
+          test -s privacy.html
+          test -s cookies.html
+          test -s legal.html
+          test -s pilot/intake/index.html
+          test -s audio/index.html
+      - name: Run privacy, CSP and commerce release controls
+        run: node --test tests/pilot-intake-privacy.test.cjs tests/pilot-intake-csp.test.cjs .github/tests/audio-commerce-release-gate.test.cjs
