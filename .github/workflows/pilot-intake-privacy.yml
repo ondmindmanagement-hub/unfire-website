@@ -1,0 +1,28 @@
+name: Pilot intake privacy fallback
+on:
+  pull_request:
+    paths:
+      - 'pilot/intake/index.html'
+      - 'tests/pilot-intake-privacy.test.cjs'
+      - 'tests/pilot-intake-csp.test.cjs'
+      - '.github/workflows/pilot-intake-privacy.yml'
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'pilot/intake/index.html'
+      - 'tests/pilot-intake-privacy.test.cjs'
+      - 'tests/pilot-intake-csp.test.cjs'
+      - '.github/workflows/pilot-intake-privacy.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check pilot intake privacy fallback and explicit email controls
+        run: node --test tests/pilot-intake-privacy.test.cjs tests/pilot-intake-csp.test.cjs
