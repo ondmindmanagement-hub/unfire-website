@@ -19,4 +19,6 @@
 
 The repository ruleset **"Unfire public gh-pages: PR and preflight"** targets only `gh-pages`. It requires a PR and successful `production-preflight`, and blocks branch deletion and force pushes. There are **zero mandatory human reviews** to avoid deadlocking a single-owner workflow; this is a technical gate, not a substitute for legal or owner approval.
 
+The required `production-preflight` result must come from the **GitHub Actions** GitHub App (integration ID `15368`), not an arbitrary status emitter. Verify that the check originates from the approved app before treating a passing status as release evidence.
+
 Never upload secrets, client correspondence, undisclosed contracts or private local evidence to this public repository. No payment checkout is authorised solely by passing automated tests.
