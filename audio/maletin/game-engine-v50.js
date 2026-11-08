@@ -143,7 +143,7 @@
       for (let i = 0; i < CAND.length; i++) {
         const o = CAND[i], st = o.__sub; if (st.r < 0 || !o.parent) { st.hide = false; continue; }
         wc.copy(st.c).applyMatrix4(o.matrixWorld); const r = st.r * (o.matrixWorld.getMaxScaleOnAxis() || 1), d = wc.distanceTo(cp);
-        st.hide = d > r * 1.05 + 2 && (r * f) / d < PX;
+        st.hide = d > r * 1.05 + 2 && (r * f) / d < Math.max(PX, window.__UNFIRE_CULL_TH || 0);
       }
     }
     const render0 = R.render.bind(R);
@@ -367,7 +367,7 @@
       // Umbral adaptativo: si hay demasiadas llamadas de dibujo, se ocultan antes los detalles lejanos más pequeños.
       // Los shaders ya compilados no se tiran aunque se borre su material: al volver a entrar no hay que recompilar.
       if (main && FR % 30 === 1) { const P = this.info.programs; if (P) for (let i = 0; i < P.length; i++) if (!P[i].__keep) { P[i].__keep = true; P[i].usedTimes++; } }
-      if (main) { const c = this.info.render.calls; TH = Math.min(3, Math.max(0.8, TH * (c > 2400 ? 1.04 : c < 1600 ? 0.985 : 1))); }
+      if (main) { const c = this.info.render.calls; /* per-device draw-call budget: desktop targets were applied to phones, which LOWERED the threshold there */ const cmp = window.__LOWDEV && window.__UNFIRE_ACTIVE_DEVICE && window.__UNFIRE_ACTIVE_DEVICE.tier === 'compact'; const hi = cmp ? 320 : window.__LOWDEV ? 900 : 2400, lo = cmp ? 220 : window.__LOWDEV ? 600 : 1600, mx = cmp ? 6 : window.__LOWDEV ? 4 : 3; TH = Math.min(mx, Math.max(0.8, TH * (c > hi ? 1.04 : c < lo ? 0.985 : 1))); window.__UNFIRE_CULL_TH = TH; }
       return x;
     };
     // El motor de audio se prepara durante la carga (en pausa hasta el primer toque/tecla); antes se creaba al cruzar la puerta y congelaba ~1-2 s.

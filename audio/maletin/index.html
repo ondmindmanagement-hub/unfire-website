@@ -438,6 +438,20 @@ body.unfire-roaming #cv{touch-action:none}
   // Physical-only properties assigned later are absorbed so they can never re-enable heavy shader paths.
   DROP.forEach(k=>Object.defineProperty(LitePhysicalMaterial.prototype,k,{configurable:true,get(){return 0;},set(){}}));
   THREE.MeshPhysicalMaterial=LitePhysicalMaterial; window.__UNFIRE_LITE_MATERIALS=true;
+  // Geometry budget for 'compact' phones (entry/mid GPUs): same shapes, fewer segments. At the phone's reduced
+  // render scale a 4-segment rounded corner or a 64-segment ring is indistinguishable from 2 / 24 segments, but the
+  // moto g06 drew 138k triangles for the player robot alone. Desktop and capable touch devices are untouched.
+  if (C.tier==='compact' && new URLSearchParams(location.search).get('geometry')!=='full') {
+    const clamp=(v,d,m)=>Math.min(v===undefined?d:v,m);
+    const wrap=(Name,fix)=>{ const Base=THREE[Name]; if(!Base) return; THREE[Name]=class extends Base{ constructor(...a){ fix(a); super(...a); } }; };
+    wrap('RoundedBoxGeometry',a=>{ a[3]=clamp(a[3],2,2); });                         // (w,h,d,segments,radius)
+    wrap('SphereGeometry',a=>{ a[1]=clamp(a[1],32,20); a[2]=clamp(a[2],16,14); });    // (r,widthSeg,heightSeg,...)
+    wrap('CylinderGeometry',a=>{ a[3]=clamp(a[3],32,20); });                          // (rt,rb,h,radialSeg,...)
+    wrap('ConeGeometry',a=>{ a[2]=clamp(a[2],32,20); });                              // (r,h,radialSeg,...)
+    wrap('TorusGeometry',a=>{ a[2]=clamp(a[2],12,10); a[3]=clamp(a[3],48,32); });   // (r,tube,radialSeg,tubularSeg)
+    wrap('CircleGeometry',a=>{ a[1]=clamp(a[1],32,32); });                            // (r,segments)
+    window.__UNFIRE_GEOMETRY_BUDGET='compact';
+  }
   document.documentElement.dataset.unfireMaterials='lite';
 })();</script>
 <script>/* Caché de cajas redondeadas: misma forma = copia en vez de recalcular. */(() => { const RB = THREE.RoundedBoxGeometry; if (!RB) return; const C = new Map(); function R(...a) { const k = a.join(","); let g = C.get(k); if (!g) { g = new RB(...a); if (C.size > 600) return g; C.set(k, g); } const c = new THREE.BufferGeometry().copy(g); c.type = g.type; c.parameters = g.parameters; return c; } R.prototype = RB.prototype; THREE.RoundedBoxGeometry = R; })();</script>
