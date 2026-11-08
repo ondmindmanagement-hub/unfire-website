@@ -106,6 +106,59 @@
   // Production: skip three.js's synchronous getProgramInfoLog/getShaderInfoLog checks, which force a blocking
   // shader compile mid-flight (~7ms hitches) whenever a new material appears on screen.
   if (S.renderer.debug) S.renderer.debug.checkShaderErrors = false;
+  // SUB-PIXEL SUBTREE SKIP (Claude 2026-11-08, low-power devices only).
+  // A moto g06 (Helio G81 / Mali-G52) spent ~400 ms per flight frame walking ~11,500 meshes, although 60% of them
+  // sit in groups whose whole bounding sphere covers < 1.5 px (the case far behind you, the house interior, distant
+  // islands). The existing per-mesh pixel cull already stops drawing those meshes; this only lets the renderer
+  // skip walking them. The skip applies ONLY while renderer.render() runs: game logic, collisions and menus read
+  // the true .visible. Groups containing lights or the camera are never skipped.
+  if (LOWDEV) (() => {
+    const R = S.renderer, scene = S.scene, CAND = [], box = new THREE.Box3(), sph = new THREE.Sphere(),
+      wc = new THREE.Vector3(), cp = new THREE.Vector3(), PX = 1.5;
+    let RENDERING = false, lastBuild = -1e9, lastCheck = 0, rr = 0;
+    const meshCount = (o) => { let n = 0; o.traverse((x) => { if (x.isMesh || x.isPoints) n++; }); return n; };
+    const unsafe = (o) => { let bad = false; o.traverse((x) => { if (x.isLight || x.isCamera) bad = true; }); return bad; };
+    function localSphere(o, st) {
+      box.setFromObject(o); if (box.isEmpty()) { st.r = -1; return; }
+      box.getBoundingSphere(sph); o.updateMatrixWorld();
+      const sc = o.matrixWorld.getMaxScaleOnAxis() || 1;
+      st.c = o.worldToLocal(sph.center.clone()); st.r = sph.radius / sc;
+    }
+    function manage(o) {
+      if (o.__sub) return; const st = o.__sub = { hide: false, c: null, r: -1 }; let v = o.visible;
+      Object.defineProperty(o, 'visible', { configurable: true, enumerable: true,
+        get() { return RENDERING ? (v && !st.hide) : v; }, set(x) { v = !!x; } });
+      localSphere(o, st); CAND.push(o);
+    }
+    function build() {
+      const walk = (o, d) => { for (const c of o.children) { if (c.isCamera || c.isLight) continue; const n = meshCount(c); if (n < 25) continue;
+        if (!c.__sub && !unsafe(c)) { box.setFromObject(c); box.getBoundingSphere(sph); if (!box.isEmpty() && sph.radius < 3000) manage(c); }
+        if (d < 5) walk(c, d + 1); } };
+      walk(scene, 0);
+    }
+    function check(cam) {
+      cam.updateMatrixWorld(); cp.setFromMatrixPosition(cam.matrixWorld);
+      const f = (R.domElement.height / 2) / Math.tan((cam.fov * Math.PI) / 360) / Math.max(cam.zoom || 1, 1e-3);
+      for (let k = 0; k < 8 && CAND.length; k++) { const o = CAND[rr++ % CAND.length]; localSphere(o, o.__sub); } // refresh moving content gradually
+      for (let i = 0; i < CAND.length; i++) {
+        const o = CAND[i], st = o.__sub; if (st.r < 0 || !o.parent) { st.hide = false; continue; }
+        wc.copy(st.c).applyMatrix4(o.matrixWorld); const r = st.r * (o.matrixWorld.getMaxScaleOnAxis() || 1), d = wc.distanceTo(cp);
+        st.hide = d > r * 1.05 + 2 && (r * f) / d < PX;
+      }
+    }
+    const render0 = R.render.bind(R);
+    R.render = function (sc, cam) {
+      if (sc === scene && cam && cam.isPerspectiveCamera) {
+        const now = performance.now();
+        if (now - lastBuild > 10000) { lastBuild = now; build(); }
+        if (now - lastCheck > 250) { lastCheck = now; check(cam); }
+        RENDERING = true;
+        try { return render0(sc, cam); } finally { RENDERING = false; }
+      }
+      return render0(sc, cam);
+    };
+    window.__UNFIRE_SUBPIXEL_SKIP = { count: () => CAND.length, hidden: () => CAND.filter((o) => o.__sub.hide).length };
+  })();
   else { S.renderer.shadowMap.autoUpdate = false; S.renderer.shadowMap.needsUpdate = true; }
   // LIGHTFIX: el número de luces del escenario se mantiene constante (luces "proxy" en la raíz),
   // así encender/apagar/ocultar luces dentro o fuera de casa ya no recompila todos los shaders.
