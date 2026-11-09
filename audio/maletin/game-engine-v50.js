@@ -112,7 +112,7 @@
   // islands). The existing per-mesh pixel cull already stops drawing those meshes; this only lets the renderer
   // skip walking them. The skip applies ONLY while renderer.render() runs: game logic, collisions and menus read
   // the true .visible. Groups containing lights or the camera are never skipped.
-  if (LOWDEV) (() => {
+  if (true) (() => {
     const R = S.renderer, scene = S.scene, CAND = [], box = new THREE.Box3(), sph = new THREE.Sphere(),
       wc = new THREE.Vector3(), cp = new THREE.Vector3(), PX = 1.5;
     let RENDERING = false, lastBuild = -1e9, lastCheck = 0, rr = 0;
@@ -367,7 +367,7 @@
       // Umbral adaptativo: si hay demasiadas llamadas de dibujo, se ocultan antes los detalles lejanos más pequeños.
       // Los shaders ya compilados no se tiran aunque se borre su material: al volver a entrar no hay que recompilar.
       if (main && FR % 30 === 1) { const P = this.info.programs; if (P) for (let i = 0; i < P.length; i++) if (!P[i].__keep) { P[i].__keep = true; P[i].usedTimes++; } }
-      if (main) { const c = this.info.render.calls; /* per-device draw-call budget: desktop targets were applied to phones, which LOWERED the threshold there */ const cmp = window.__LOWDEV && window.__UNFIRE_ACTIVE_DEVICE && window.__UNFIRE_ACTIVE_DEVICE.tier === 'compact'; const hi = cmp ? 320 : window.__LOWDEV ? 900 : 2400, lo = cmp ? 220 : window.__LOWDEV ? 600 : 1600, mx = cmp ? 6 : window.__LOWDEV ? 4 : 3; TH = Math.min(mx, Math.max(0.8, TH * (c > hi ? 1.04 : c < lo ? 0.985 : 1))); window.__UNFIRE_CULL_TH = TH; }
+      if (main) { const c = this.info.render.calls; /* per-device draw-call budget: desktop targets were applied to phones, which LOWERED the threshold there */ const cmp = window.__LOWDEV && window.__UNFIRE_ACTIVE_DEVICE && window.__UNFIRE_ACTIVE_DEVICE.tier === 'compact'; const hi = cmp ? 320 : window.__LOWDEV ? 900 : 1300, lo = cmp ? 220 : window.__LOWDEV ? 600 : 850, mx = cmp ? 6 : window.__LOWDEV ? 4 : 4; TH = Math.min(mx, Math.max(0.8, TH * (c > hi ? 1.04 : c < lo ? 0.985 : 1))); window.__UNFIRE_CULL_TH = TH; }
       return x;
     };
     // El motor de audio se prepara durante la carga (en pausa hasta el primer toque/tecla); antes se creaba al cruzar la puerta y congelaba ~1-2 s.
@@ -3792,7 +3792,13 @@
     // Limit draw frequency (not pointer/touch handlers) so UI can return from modals.
     if (SOFTWARE_WEBGL && previousRenderAt && now - previousRenderAt < 80) return;
     // Cap this heavy 3D scene to ~30-40fps on accelerated hardware; input remains unthrottled.
-    if (previousRenderAt && now - previousRenderAt < (LOWDEV ? (DEVICE.tier==='compact' ? 42 : 33) : window.ATM_OUT ? 33 : 25)) return;
+    // Frame pacing (Claude 2026-11-09): a fixed 33 ms gate on a 60 Hz display dropped to 50 ms whenever rAF jitter landed a
+    // tick at 33.2 ms, which is the stutter while flying. Gate a few ms under the 2-vsync interval so the cadence locks to a
+    // steady 30, and when the measured CPU cost of a frame is small (fast desktops) run at the display rate (max ~60).
+    const fc = window.__UNFIRE_FRAMECOST || 20; if (!LOWDEV) window.__UNFIRE_FULLRATE = window.__UNFIRE_FULLRATE ? fc < 14.5 : fc < 10.5;
+    const gateMs = LOWDEV ? (DEVICE.tier==='compact' ? 42 : 29) : window.__UNFIRE_FULLRATE ? 13 : (window.ATM_OUT ? 29 : 25);
+    if (previousRenderAt && now - previousRenderAt < (window.__UNFIRE_GATE != null ? window.__UNFIRE_GATE : gateMs)) return;
+    const __fs = performance.now(); queueMicrotask(() => { const c = performance.now() - __fs; window.__UNFIRE_FRAMECOST = (window.__UNFIRE_FRAMECOST || c) * 0.9 + c * 0.1; });
     // Case/camera animations must use real foreground elapsed time even if
     // WebGL renders only a few frames per second. Physics keeps its bounded
     // delta, and the hidden-tab branch resets previousRenderAt for safe resume.
