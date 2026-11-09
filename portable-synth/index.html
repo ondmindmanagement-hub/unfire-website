@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070b13">
+<meta name="description" content="Portable Synth Daw by Unfire — a free Android music studio with four synth engines, six-track recording, effects and WAV export. Official direct-download edition.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://unfire.technology/portable-synth/">
+<link rel="icon" href="/favicon.ico">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Portable Synth Daw — Music starts here | Unfire">
+<meta property="og:description" content="Build your sound. Six tracks, four synth engines and expressive effects, directly on your Android device. Free, no account required.">
+<meta property="og:url" content="https://unfire.technology/portable-synth/">
+<meta property="og:image" content="https://unfire.technology/portable-synth/collage-portrait-v1.0.5.png">
+<title>Portable Synth Daw — Free Android Music Studio | Unfire</title>
+<style>
+:root{color-scheme:dark;--bg:#070b13;--ink:#f4f8ff;--muted:#a5b3c5;--blue:#57d7ff;--orange:#ffad39;--line:#28394a;--panel:#0e1521;--green:#66e0b3}
+*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;overflow-x:hidden;background:var(--bg);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}body::before{content:"";pointer-events:none;position:absolute;inset:0 0 auto;height:970px;background:radial-gradient(ellipse 60% 48% at 76% 26%,#123f65a8 0%,transparent 73%),radial-gradient(ellipse 35% 30% at 4% 0%,#40301977 0%,transparent 86%);z-index:-1}
+a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:4px}a:hover{color:#a4ecff}a:focus-visible,button:focus-visible{outline:3px solid var(--orange);outline-offset:5px}.shell{max-width:1200px;margin:auto;padding:0 32px}
+header{height:88px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid #344b5a88}.logo{color:var(--ink);text-decoration:none;font-size:1.12rem;font-weight:900;letter-spacing:.22em}.brandmark{display:inline-block;width:12px;height:12px;border-radius:3px;transform:rotate(45deg);background:linear-gradient(140deg,var(--blue),#006ca7);box-shadow:0 0 22px #2bc8ff77;margin-right:14px}
+nav{display:flex;align-items:center;flex-wrap:wrap;gap:26px}nav a{color:#c8d6e7;font-size:.87rem;text-decoration:none;font-weight:650}nav a:hover{color:white}.navnote{font-size:.69rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid #446176;border-radius:99px;color:#a8dfff;padding:5px 10px}
+.hero{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(285px,.94fr);align-items:center;gap:70px;padding-top:86px;padding-bottom:97px}.overline{color:var(--blue);font-size:.79rem;font-weight:750;letter-spacing:.19em;text-transform:uppercase}.hero h1{font-size:clamp(3.25rem,6.8vw,6.2rem);letter-spacing:-.075em;line-height:1.035;max-width:660px;margin:21px 0 25px;font-weight:830}.hero h1 span{color:var(--orange)}.lead{color:#c9d6e5;font-size:clamp(1.08rem,1.8vw,1.34rem);line-height:1.55;max-width:565px}.tagrow{display:flex;flex-wrap:wrap;gap:9px;margin:28px 0 30px}.tag{border:1px solid #36536b;border-radius:100px;color:#d5e3ef;background:#102135;padding:7px 13px;font-size:.81rem;font-weight:680}
+.actions{display:flex;align-items:center;gap:17px;flex-wrap:wrap}.download{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:linear-gradient(110deg,#56dcff,#2a95ff);color:#03111c!important;border:1px solid #b3f0ff;border-radius:12px;text-decoration:none;font-weight:840;padding:16px 25px;box-shadow:0 15px 44px #087fa64b;min-height:56px}.download:hover{background:linear-gradient(110deg,#a4efff,#54b6ff);transform:translateY(-1px)}.secondary{display:inline-block;font-weight:700;color:#d8e9f7;font-size:.91rem}.fine{font-size:.85rem;color:var(--muted);max-width:550px;margin:23px 0 0;line-height:1.6}
+.device{position:relative;max-width:335px;margin:0 auto;filter:drop-shadow(0 35px 65px #000a)}.device::before{content:"";position:absolute;inset:12% -18%;background:radial-gradient(ellipse,#1f8bcc55,transparent 68%);filter:blur(45px);z-index:-1}.device-frame{border-radius:35px;border:3px solid #637c90;padding:9px;background:linear-gradient(140deg,#253747,#010306 65%,#2c404d);box-shadow:0 0 0 5px #15202a,0 0 0 6px #49607355;overflow:hidden}.device-frame img{display:block;width:100%;height:auto;border-radius:23px;background:#05070a}.device-caption{font-size:.73rem;letter-spacing:.16em;text-align:center;text-transform:uppercase;color:#94acc0;margin-top:23px}
+section{scroll-margin-top:35px}.sectionhead{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:27px}.sectionhead h2,.sectiontitle{font-size:clamp(2rem,3.2vw,3.2rem);line-height:1.15;letter-spacing:-.05em;margin:9px 0 0}.sectionhead p{max-width:355px;color:var(--muted);margin:0 0 4px}
+.features{padding:60px 0 93px;border-top:1px solid #23364a}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.feature{min-height:240px;padding:26px 23px;border:1px solid #314559;border-radius:20px;background:linear-gradient(145deg,#111e2e,#09101a);position:relative;overflow:hidden}.feature::after{content:"";position:absolute;right:-34px;bottom:-48px;width:145px;height:145px;border-radius:50%;background:#0f5d8a3c;filter:blur(38px)}.number{color:var(--orange);font-size:.77rem;font-weight:780;letter-spacing:.14em}.feature h3{font-size:1.22rem;margin:27px 0 9px;letter-spacing:-.023em}.feature p{color:var(--muted);font-size:.89rem;margin:0;line-height:1.55}
+.security{margin-bottom:92px;padding:39px;border:1px solid #31516b;border-radius:23px;background:linear-gradient(135deg,#0b2030,#0a101a 72%)}.securityhead{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}.securityhead p{color:var(--muted);max-width:620px}.status{color:var(--green);font-weight:700;border:1px solid #3d967855;background:#103e2b66;font-size:.78rem;border-radius:100px;padding:7px 12px}.security-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-top:25px}.security h3{font-size:1rem;margin:0 0 11px}.security p{font-size:.89rem;line-height:1.75}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#dae8f6;word-break:break-all;font-size:.76rem}.hash{padding:14px 15px;background:#050b13;border:1px solid #34516a;border-radius:12px;line-height:1.75}.note{color:#b8c7d7;font-size:.86rem}.warning{border-left:3px solid var(--orange);padding-left:16px;margin-top:21px}
+.install{padding:9px 0 95px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:34px 0}.step{border-top:2px solid #51738d;padding:18px 14px 8px 0}.step b{font-size:.79rem;color:var(--blue);letter-spacing:.12em}.step h3{margin:13px 0 6px;font-size:1.08rem}.step p{color:var(--muted);font-size:.89rem;margin:0}.spanish{border:1px solid #2d4254;border-radius:14px;background:#0e1520;margin-top:24px;padding:17px 20px;color:#cedaeb}.spanish summary{cursor:pointer;font-weight:750}.spanish p{font-size:.92rem;margin:15px 0 0}
+.bottom{padding:34px 0 43px;border-top:1px solid var(--line);display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;align-items:center;color:var(--muted);font-size:.82rem}.bottom a{color:#cbdce8}.bottomnav{display:flex;gap:19px;flex-wrap:wrap}.copyright{letter-spacing:.03em}
+@media(max-width:920px){.hero{gap:27px}.grid{grid-template-columns:repeat(2,1fr)}.security-grid{grid-template-columns:1fr}.device{max-width:280px}}
+@media(max-width:680px){.shell{padding:0 19px}header{height:76px}nav{gap:12px}nav a:not(.keep){display:none}.hero{grid-template-columns:1fr;padding:57px 0 66px}.hero h1{font-size:clamp(3rem,12vw,5.3rem)}.hero .lead{max-width:100%}.device{max-width:250px}.sectionhead{display:block}.sectionhead p{margin-top:13px}.features{padding:43px 0 65px}.grid{grid-template-columns:1fr 1fr}.feature{min-height:204px;padding:21px 18px}.feature h3{font-size:1.05rem;margin:21px 0 9px}.security{padding:25px 20px;margin-bottom:72px}.steps{grid-template-columns:1fr;gap:10px}.step{padding-bottom:12px}.bottom{align-items:flex-start}}
+@media(max-width:440px){.grid{grid-template-columns:1fr}.feature{min-height:150px}.feature h3{margin-top:11px}.hero .download{width:100%}.actions{align-items:stretch}.device{max-width:235px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.download:hover{transform:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header><a class="logo" href="/" aria-label="Unfire home"><span class="brandmark" aria-hidden="true"></span>UNFIRE</a><nav aria-label="Navigation"><a href="#features">Features</a><a href="#safety">Security</a><a href="#install">Install</a><a class="keep" href="./direct/privacy/">Privacy</a><span class="navnote">Android · Direct</span></nav></header>
+<main>
+<section class="hero" aria-labelledby="main-title">
+<div>
+<div class="overline">Unfire Audio / Android</div>
+<h1 id="main-title">Portable<br>Synth <span>Daw.</span></h1>
+<p class="lead">Music ideas, made tangible. Four sound engines, a six-track tape and expressive controls — built for creating wherever inspiration starts.</p>
+<div class="tagrow"><span class="tag">Free forever</span><span class="tag">Works offline</span><span class="tag">No account</span><span class="tag">Android 8.0+</span></div>
+<div class="actions"><a class="download" href="https://github.com/ondmindmanagement-hub/unfire-website/releases/download/portable-synth-daw-android-direct-v1.0.5/Portable-Synth-Daw-Direct-v1.0.5.apk" aria-label="Download Portable Synth Daw Direct Edition for Android">↓ &nbsp; Download for Android</a><a class="secondary" href="#install">How to install</a></div>
+<p class="fine">Official Unfire direct edition · Version 1.0.5 · 41.4 MB APK · Signed by Unfire. This is a separate installation channel from Google Play.</p>
+</div>
+<div><figure class="device" aria-label="Portable Synth Daw on a Motorola Android device"><div class="device-frame"><img src="./collage-portrait-v1.0.5.png" alt="Real Motorola screenshot of Portable Synth Daw Collage FX interface with animated visualizer, sound controls, synth engines and keyboard" width="720" height="1640" loading="eager"></div><figcaption class="device-caption">Actual Android device capture · v1.0.5</figcaption></figure></div>
+</section>
+<section class="features" id="features"><div class="sectionhead"><div><div class="overline">Play / Record / Build</div><h2>One studio. Your sound.</h2></div><p>From a first synth note to a complete arrangement, without leaving your phone.</p></div><div class="grid">
+<article class="feature"><div class="number">01 / SOURCE</div><h3>Four synth engines</h3><p>Analog, FM, Glass and Sample sounds, with hands-on tone, color, shape and space.</p></article>
+<article class="feature"><div class="number">02 / TAPE</div><h3>Six-track recording</h3><p>Layer musical ideas across six tracks, with independent mix, volume, mute and recording controls.</p></article>
+<article class="feature"><div class="number">03 / PERFORMANCE</div><h3>Sound in motion</h3><p>Step sequencer, effects, a musical keyboard and a live XY collage control.</p></article>
+<article class="feature"><div class="number">04 / FINISH</div><h3>Export your music</h3><p>Shape an arrangement with recording tools and export audio as WAV for your own workflow.</p></article>
+</div></section>
+<section class="security" id="safety"><div class="securityhead"><div><div class="overline">Distribution transparency</div><h2 class="sectiontitle">Signed. Verifiable.<br>Independent.</h2></div><span class="status">Official Unfire download</span></div>
+<div class="security-grid">
+<div><h3>Version &amp; origin</h3><p class="note">Edition: Portable Synth Daw — Direct · 1.0.5 (96)<br>Package: <span class="mono">technology.unfire.synth.direct</span><br>Minimum OS: Android 8.0 (API 26)<br>Permission: microphone for optional voice recording<br>Price: Free</p></div>
+<div><h3>Verify your download</h3><p class="note">SHA-256 of the exact APK:</p><div class="hash mono" id="apk-hash">b09bb213af294ceca6f6f5d18df97b86930a81a02c9f2f4772b7b017a2f555ec</div><p class="note">Signing certificate SHA-256:<br><span class="mono">f63b3e8b88cab5c445f15625eb5ebce7bd199aa6df3695452fca94fed6e5cfbf</span></p></div>
+</div>
+<p class="warning note"><strong>Two independent editions.</strong> The direct-download edition has its own package identifier and signing key. It can coexist with the Google Play edition, but projects and recordings do not automatically move between them. Updates from one channel do not install over the other. Export important audio before uninstalling any edition. We do not ask you to disable Android security protections.</p>
+</section>
+<section id="install" class="install"><div class="overline">Official distribution · Android</div><h2 class="sectiontitle">Install in three steps.</h2>
+<div class="steps"><div class="step"><b>01 / DOWNLOAD</b><h3>Get the official APK</h3><p>Use the download link on this page. The file is hosted with Unfire's official GitHub release.</p></div><div class="step"><b>02 / OPEN</b><h3>Review Android's prompt</h3><p>Open the downloaded file. Android may request permission for your browser or file manager to install apps from this source.</p></div><div class="step"><b>03 / CREATE</b><h3>Start making music</h3><p>Confirm the app name and install. Microphone access is optional and only requested when needed for recording.</p></div></div>
+<p class="note">Only install files you trust. If Android flags a security or malware risk, do not bypass the warning. Contact <a href="mailto:hello@unfire.technology">hello@unfire.technology</a> instead. Google Play remains the separate official store-testing channel.</p>
+
+</section>
+</main>
+<footer class="bottom"><div><span class="copyright">© 2026 Unfire</span> · Built for music makers. · <a href="mailto:hello@unfire.technology">hello@unfire.technology</a></div><div class="bottomnav"><a href="./direct/privacy/">Direct edition privacy</a><a href="https://unfire.technology/">Unfire</a><a href="#main-title">Back to top</a></div></footer>
+</div>
+</body>
+</html>
