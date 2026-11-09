@@ -37,7 +37,7 @@ test('selector never exposes x20 or x45 and preserves x8 as the maximum',()=>{
   for(let i=0;i<12;i++)rig.up();
   assert.ok(rig.advance(2.5)>7.8);
   rig.hud();
-  assert.match(rig.elements.get('prT').textContent,/PROPULSIÓN x8/);
+  assert.match(rig.elements.get('prT').textContent,/(PROPULSIÓN|BOOST) x8/);
   assert.doesNotMatch(rig.elements.get('prT').textContent,/x(?:20|45)/);
 });
 
@@ -49,10 +49,10 @@ test('flight slows smoothly before the main island and recovers the stored selec
   r.ROAMS.p.x=40;r.ROAMS.p.z=0;
   const slowed=r.advance(3);
   assert.ok(slowed<4, 'at the shore it is slow enough for approach');
-  r.hud();assert.match(r.elements.get('prT').textContent,/cerca x/);
+  r.hud();assert.match(r.elements.get('prT').textContent,/(cerca|near) x/);
   r.ROAMS.p.x=3500;r.ROAMS.p.z=2800;
   const restored=r.advance(3);assert.ok(restored>7.8);
-  r.hud();assert.match(r.elements.get('prT').textContent,/PROPULSIÓN x8/);
+  r.hud();assert.match(r.elements.get('prT').textContent,/(PROPULSIÓN|BOOST) x8/);
 });
 
 test('the house, secondary islands and raised approach are handled without sudden values',()=>{
