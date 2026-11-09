@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080a0d"><meta name="robots" content="index,follow">
+<meta name="description" content="Prueba gratis Portable Synth Daw para Android. Únete al grupo de testers, acepta la beta oficial de Google Play y ayúdanos a mejorar esta aplicación musical.">
+<meta property="og:type" content="website"><meta property="og:title" content="Portable Synth Daw · Prueba cerrada Android de Unfire">
+<meta property="og:description" content="Probadores reales para una aplicación de creación musical. Gratis y con feedback sincero, 14 días.">
+<meta property="og:url" content="https://unfire.technology/portable-synth/beta/es/">
+<link rel="canonical" href="https://unfire.technology/portable-synth/beta/es/">
+<link rel="alternate" hreflang="en" href="https://unfire.technology/portable-synth/beta/">
+<link rel="alternate" hreflang="es" href="https://unfire.technology/portable-synth/beta/es/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Portable Synth Daw · Prueba cerrada Android — Unfire</title>
+<style>
+    :root{color-scheme:dark;--bg:#080a0d;--card:#11151a;--card2:#151b21;--ink:#f4f7f7;--muted:#9aa9b4;--line:#29343c;--accent:#cff6bb;--accent2:#7dbdd1;--focus:#ffe7b0}
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(ellipse at 85% 5%,#17323a 0%,transparent 33%),radial-gradient(ellipse at 7% 30%,#16251a 0%,transparent 31%),var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif}
+    a{color:inherit;text-decoration:none}
+    a:focus-visible,button:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+    .wrap{max-width:1140px;padding:0 32px;margin:auto}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px 0;border-bottom:1px solid var(--line)}
+    .brand{font-weight:800;letter-spacing:.24em;font-size:18px}
+    .topnote,.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:750}
+    main{padding-bottom:70px}
+    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center;padding:86px 0 76px}
+    .hero h1{font-size:clamp(46px,6.8vw,92px);letter-spacing:-.07em;line-height:.99;margin:20px 0 22px;font-weight:750}
+    .hero h1 em{font-style:normal;color:var(--accent)}
+    .lead{font-size:clamp(17px,2vw,21px);color:#becbd2;max-width:650px;margin:0 0 26px}
+    .status{display:inline-flex;align-items:center;gap:10px;color:#d4ecdc;font-size:14px;padding:9px 14px;border:1px solid #365343;border-radius:50px;background:#12241b}
+    .dot{width:8px;height:8px;background:#a8efa2;border-radius:50%}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin:30px 0 20px}
+    .button{display:inline-flex;align-items:center;justify-content:center;padding:15px 22px;border-radius:12px;font-weight:750;min-height:52px;transition:transform .14s ease,background .14s ease}
+    .button:hover{transform:translateY(-2px)}
+    .button.primary{background:var(--accent);color:#0b1712}
+    .button.secondary{border:1px solid #58707e;background:#182028}
+    .micro{font-size:13px;color:var(--muted);max-width:590px}
+    .visual{min-width:0;position:relative;border:1px solid #294147;border-radius:28px;aspect-ratio:4/4.5;padding:26px;background:linear-gradient(145deg,#141e24,#0c1015 60%);box-shadow:0 30px 90px #0008;overflow:hidden}
+    .visual:before{content:"";position:absolute;inset:-40% -25% auto auto;width:80%;aspect-ratio:1;background:radial-gradient(circle,#83dbe744,transparent 60%);pointer-events:none}
+    .visualHead{position:relative;display:flex;justify-content:space-between;gap:12px;align-items:center;color:#c2d4dc;font-size:12px;letter-spacing:.15em;font-weight:700}
+    .screen{position:relative;margin-top:35px;border-radius:17px;padding:22px 20px;background:#070b0e;border:1px solid #2e4144;box-shadow:inset 0 0 40px #12343c44}
+    .screenTitle{font-size:13px;letter-spacing:.15em;color:#b6d9d7}
+    .wave{height:130px;display:flex;align-items:center;justify-content:center;gap:4px;overflow:hidden}
+    .wave span{display:block;width:5px;border-radius:5px;background:linear-gradient(#d2fac5,#6bb5c9);height:calc(8px + var(--h)*1px);opacity:.85}
+    .minirow{display:flex;gap:9px;margin:19px 0}
+    .minirow span{height:8px;flex:1;border-radius:5px;background:#27434a}
+    .minirow span:nth-child(3n){background:#b3e9b1}
+    .keys{display:flex;gap:3px;height:94px;margin-top:35px}
+    .keys span{background:#f0f3ef;border-radius:0 0 6px 6px;flex:1}
+    .keys span:nth-child(2),.keys span:nth-child(5),.keys span:nth-child(7){background:#151c22;flex:.67;height:62%;z-index:1;margin:0 -8px}
+    .visualFoot{position:relative;margin-top:26px;display:flex;justify-content:space-between;color:#9aaeb3;font-size:12px;letter-spacing:.08em}
+    h2{font-size:clamp(30px,4.8vw,52px);letter-spacing:-.055em;line-height:1.12;margin:10px 0 28px}
+    section{padding:54px 0;border-top:1px solid var(--line)}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .step,.feature,.notice{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px}
+    .num{color:var(--accent);font-weight:800;font-size:14px;letter-spacing:.14em}
+    .step h3,.feature h3{font-size:20px;letter-spacing:-.025em;margin:14px 0 8px}
+    .step p,.feature p{color:var(--muted);margin:0 0 22px}
+    .step a{color:var(--accent);font-weight:750;text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+    .featuregrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .feature{padding:22px}
+    .feature h3{font-size:18px}
+    .feature p{margin-bottom:0}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .notice{padding:26px}
+    .notice h3{font-size:22px;letter-spacing:-.03em;margin:0 0 10px}
+    .notice p{margin:0;color:var(--muted)}
+    .notice a{text-decoration:underline;text-underline-offset:3px;color:var(--accent)}
+    footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:15px;padding:30px 0 46px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+    footer strong{color:var(--ink);letter-spacing:.18em}
+    footer a{text-decoration:underline;text-underline-offset:3px}
+    @media(max-width:850px){.hero{grid-template-columns:1fr;gap:30px;padding:64px 0}.visual{max-width:480px}.steps{grid-template-columns:1fr}.featuregrid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){.wrap{padding:0 20px}.topnote{font-size:10px}.topbar{padding:20px 0}.hero{padding:54px 0}.visual{padding:18px;border-radius:22px}.screen{margin-top:22px}.featuregrid,.split{grid-template-columns:1fr}.button{width:100%}section{padding:42px 0}footer{padding-top:24px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}.button:hover{transform:none}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar"><a class="brand" href="/" aria-label="Inicio de Unfire">UNFIRE</a><div class="topnote"><a href="/portable-synth/beta/" lang="en" hreflang="en" style="text-decoration:underline;text-underline-offset:4px">English</a> <span aria-hidden="true">·</span> PRUEBA ANDROID</div></header>
+<main>
+<div class="hero">
+<div>
+<div class="eyebrow">Portable Synth Daw · Acceso anticipado</div>
+<h1>Crea sonido.<br><em>Ayúdanos a mejorarlo.</em></h1>
+<p class="lead">Estamos creando una aplicación musical independiente para Android. Buscamos músicos, productores y personas con curiosidad que quieran explorar una versión temprana y compartir sus opiniones sinceras.</p>
+<div class="status"><span class="dot" aria-hidden="true"></span>Buscamos voluntarios con Android</div>
+<div class="actions"><a class="button primary" href="#join">Unirme gratis a la beta</a><a class="button secondary" href="#explore">Qué podemos probar</a></div>
+<p class="micro">Participación gratuita · Sin compras ni reseñas públicas obligatorias · Android 12L o posterior (API 32+)</p>
+</div>
+<div class="visual" role="img" aria-label="Ilustración estilizada de sintetizador, secuenciador y teclado musical">
+<div class="visualHead"><span>UNFIRE / AUDIO</span><span>PORTABLE SYNTH</span></div>
+<div class="screen"><div class="screenTitle">ENGINE / SOUND LAB</div>
+<div class="wave" aria-hidden="true"><span style="--h:21"></span><span style="--h:41"></span><span style="--h:70"></span><span style="--h:103"></span><span style="--h:75"></span><span style="--h:44"></span><span style="--h:21"></span><span style="--h:59"></span><span style="--h:98"></span><span style="--h:65"></span><span style="--h:31"></span><span style="--h:17"></span><span style="--h:49"></span><span style="--h:93"></span><span style="--h:70"></span><span style="--h:29"></span><span style="--h:17"></span><span style="--h:49"></span><span style="--h:75"></span><span style="--h:51"></span><span style="--h:23"></span></div>
+<div class="minirow" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<div class="keys" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+</div><div class="visualFoot"><span>CREAR / GRABAR / EXPORTAR</span><span>ALPHA</span></div></div>
+</div>
+<section id="join" aria-labelledby="join-title"><div class="eyebrow">Tres pasos · La misma cuenta de Google</div><h2 id="join-title">Únete desde Google Play.</h2>
+<div class="steps">
+<div class="step"><div class="num">01 / ACCESO</div><h3>Entra en el grupo</h3><p>Únete al grupo autorizado de testers con la misma cuenta de Google que usas en tu teléfono Android.</p><a href="https://groups.google.com/g/testers-community">Unirme al grupo de Google ↗</a></div>
+<div class="step"><div class="num">02 / INSCRIPCIÓN</div><h3>Acepta la beta</h3><p>Abre el enlace oficial de pruebas de Google Play y pulsa «Convertirme en tester». Es un paso imprescindible.</p><a href="https://play.google.com/apps/testing/technology.unfire.synth">Aceptar la prueba cerrada ↗</a></div>
+<div class="step"><div class="num">03 / INSTALACIÓN</div><h3>Instala y experimenta</h3><p>Instala la versión de acceso anticipado desde Google Play. Después, ábrela y prueba las herramientas musicales.</p><a href="https://play.google.com/store/apps/details?id=technology.unfire.synth">Abrir en Google Play ↗</a></div>
+</div>
+<p class="micro" style="margin-top:20px">Si la aplicación no aparece disponible, comprueba que has entrado en el grupo y aceptado la prueba con la misma cuenta. Los permisos de acceso pueden tardar en aplicarse. Escríbenos si tienes dificultades.</p>
+</section>
+<section id="explore" aria-labelledby="explore-title"><div class="eyebrow">Pruebas auténticas en dispositivos reales</div><h2 id="explore-title">Cuatro funciones que explorar.</h2>
+<div class="featuregrid">
+<div class="feature"><div class="num">01</div><h3>Motores de sonido</h3><p>Toca las teclas y prueba los sonidos Analog, FM, Glass y Sample. Escucha si aparecen cortes, ruido o silencios.</p></div>
+<div class="feature"><div class="num">02</div><h3>Secuenciador</h3><p>Crea y reproduce patrones musicales. Comprueba el ritmo, la navegación y los controles táctiles.</p></div>
+<div class="feature"><div class="num">03</div><h3>Grabación</h3><p>Prueba los controles de grabación y reproducción disponibles. Indica si hay latencia o interrupciones.</p></div>
+<div class="feature"><div class="num">04</div><h3>Exportación</h3><p>Exporta un audio WAV y comprueba si el archivo resultante se reproduce correctamente.</p></div>
+</div></section>
+<section aria-labelledby="commitment-title"><div class="eyebrow">La prueba de 14 días</div><h2 id="commitment-title">Mantén la inscripción. Opina con sinceridad.</h2>
+<div class="split">
+<div class="notice"><h3>¿Por qué 14 días?</h3><p>Google Play exige al menos 12 personas reales inscritas en una prueba cerrada durante 14 días consecutivos antes de que podamos solicitar acceso a producción. Agradecemos que mantengas la inscripción durante al menos 14 días, preferiblemente 16, y pruebes la app varias veces. La aprobación final no es automática.</p></div>
+<div class="notice"><h3>¿Dónde comunicar problemas?</h3><p>Escribe a <a href="mailto:hello@unfire.technology?subject=Portable%20Synth%20Daw%20Android%20beta%20feedback">hello@unfire.technology</a> indicando tu modelo de teléfono, versión de Android, pasos para reproducir el fallo y tus sugerencias. No envíes contraseñas, archivos privados ni datos sensibles. Las críticas nos ayudan a mejorar.</p></div>
+</div>
+<p class="micro" style="margin-top:22px">Esta página no tiene formularios de registro, scripts analíticos de terceros ni cobros. Google Play y Google Groups son servicios externos con sus propias condiciones y políticas de privacidad.</p>
+</section>
+</main>
+<footer><a href="/"><strong>UNFIRE</strong> · Iniciativa tecnológica independiente</a><span>Portable Synth Daw · Prueba cerrada Android</span><a href="https://unfire.technology/portable-synth/privacy/">Privacidad de la app</a></footer>
+</div></body></html>
