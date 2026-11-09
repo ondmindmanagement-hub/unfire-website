@@ -62,7 +62,7 @@ test('new cache versions are enabled for the game and site',()=>{
  for(const src of ['coins-shop','cinema-export','mobile-hud-guard'])
   assert.ok(game.includes(src+'.js?v=20261029en2'),src);
  assert.match(game,/expanded-map\.js\?v=20261104locale1/);
- assert.match(game,/game-engine-v50\.js\?v=20261109snowsoft1/);
+ assert.match(game,/game-engine-v50\.js\?v=20261109snowall1/);
  assert.match(game,/unfire-adaptive-loading\.js\?v=20261029en2/);
  assert.match(host,/unfire-adaptive-loading\.js\?v=20261029en2/);
 });
