@@ -1156,7 +1156,7 @@
   mesh2.visible = false; const rings = []; { const ov = mesh(new THREE.TorusGeometry(1, 0.022, 8, 96).rotateX(H2), CHROME); ov.scale.set(2.45, 1, 0.92); ov.position.set(0, -0.012, -0.85); const ovl = mesh(new THREE.TorusGeometry(1, 0.007, 6, 96).rotateX(H2), Y2K.led('#3d8bff', 2)); ovl.scale.set(2.36, 1, 0.84); ovl.position.set(0, -0.016, -0.85); }
   for (const sx of [-1, 1]) { const rg = new THREE.Group(); rg.position.set(sx * 2.3, -0.012, 0.6); rg.scale.setScalar(0.72); lid.add(rg); rg.add(mesh(new THREE.CylinderGeometry(0.4, 0.42, 0.02, 48), M.blackGloss)); for (let k = 1; k < 6; k++) { const gr = mesh(new THREE.TorusGeometry(0.06 * k, 0.006, 6, 40).rotateX(H2), M.graphite); gr.position.y = -0.012; rg.add(gr); } rg.add(mesh(new THREE.TorusGeometry(0.42, 0.025, 10, 48).rotateX(H2), CHROME));
     [0.36, 0.27, 0.18].forEach((r, i) => { const m = mesh(new THREE.TorusGeometry(r, 0.018, 8, 48, Math.PI * (1.2 + i * 0.3)).rotateX(H2), Y2K.led(['#3d8bff', '#b6ff3b', '#ff4fd8'][i], 2.4)); m.position.y = -0.015; rg.add(m); rings.push({ m, i, sx }); }); }
-  function say(t) { LOG.push(t); while (LOG.length > 5) LOG.shift(); scrT = 0; }
+  function say(t) { if (window.__LANG === 'en' && typeof window.T === 'function') t = window.T(String(t)); LOG.push(t); while (LOG.length > 5) LOG.shift(); scrT = 0; }
   function drawScr(tt, song, cine) { const g = SG; { const bg = g.createLinearGradient(0, 0, 0, 300); bg.addColorStop(0, '#0b2a63'); bg.addColorStop(0.55, '#06183d'); bg.addColorStop(1, '#0d3b7a'); g.fillStyle = bg; g.fillRect(0, 0, 1024, 300); g.globalAlpha = 0.22; for (let k = 0; k < 4; k++) { g.strokeStyle = ['#3d8bff', '#ff4fd8', '#b6ff3b', '#7fd0ff'][k]; g.lineWidth = 10; g.beginPath(); for (let x = 0; x <= 1024; x += 16) g.lineTo(x, 230 + Math.sin(x * 0.01 + tt * (0.6 + k * 0.3) + k) * (20 + LV * 60) - k * 18); g.stroke(); } g.globalAlpha = 1; } g.strokeStyle = 'rgba(61,139,255,.15)'; for (let x = 0; x < 1024; x += 32) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 300); g.stroke(); }
     g.fillStyle = '#3d8bff'; g.font = '700 30px Michroma, Arial'; g.fillText('UNFIRE AUDIO', 24, 46); g.fillStyle = cine ? '#ff4fd8' : '#2bd96b'; g.font = '700 24px "Share Tech Mono", monospace'; g.fillText(cine ? '● MODO CINE' : '● EN LÍNEA', 840, 44);
     g.fillStyle = '#9fffc4'; g.font = '24px "Share Tech Mono", monospace'; g.fillText(('♪ ' + (song || 'RADIO UNFIRE · en espera')).slice(0, 38), 24, 84);
@@ -2782,8 +2782,8 @@
       const on=far();chip.style.display=on?'flex':'none';
       if(on){
         const actual=window.__PROP();
-        document.getElementById('prT').textContent='🚀 PROPULSIÓN x'+LV[li]+
-          (approaching?' · cerca x'+actual.toFixed(1):'')+' (+/−)';
+        const en=window.__LANG!=='es';document.getElementById('prT').textContent=(en?'🚀 BOOST x':'🚀 PROPULSIÓN x')+LV[li]+
+          (approaching?(en?' · near x':' · cerca x')+actual.toFixed(1):'')+' (+/−)';
       }
     },250); }
   // líneas de velocidad alrededor de la cámara cuando vuelas muy rápido (sensación de velocidad, suave y sin cargar)

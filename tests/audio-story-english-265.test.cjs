@@ -12,7 +12,7 @@ assert.ok(Object.keys(lines).length>=265,'Original English dialogue set must not
 assert.equal(lines['Hoy he volado hasta las nubes de verdad.'],'Today I flew all the way up to the real clouds.');
 assert.equal(lines['Desde las nubes se tiene que ver toda la isla.'],'You must be able to see the whole island from the clouds.');
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-assert.match(html,/<script src="locale-story-en\.js\?v=20261028caseen1"><\/script>/);
+assert.match(html,/<script src="locale-story-en\.js\?v=20261110en2"><\/script>/);
 assert.match(html,/Object\.assign\(EN, window\.__UNFIRE_EN_ADDITIONS_20261026\)/);
 assert.ok(html.indexOf('locale-story-en.js')<html.indexOf('const EN = {'), 'Locale mapping must load before the ES/EN dictionary is built');
 assert.ok(html.indexOf('Object.assign(EN, window.__UNFIRE_EN_ADDITIONS_20261026)')<html.indexOf('const PAIRS = Object.entries(EN)'), 'Translations must be added before the sorted dictionary is built');
