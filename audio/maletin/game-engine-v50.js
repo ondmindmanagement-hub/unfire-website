@@ -9,14 +9,16 @@
   const ROSTER_NORMAL_MAX=12,ROSTER_TOTAL=20,ROSTER_PROOF_KEY='unfire_roster_proof_v2';
   const ROSTER_FINGERPRINT='39b3f7c5aea7b34183b1bc7829e1aeb06a838654597b43b8882c21c614e38d8e';
   const ROSTER_SALT='dc0c80ef861ab8bd8b5b6394ef4fbc82';
+  // Extra accepted roster codes (fingerprints only, same salt).
+  const ROSTER_ALT_FINGERPRINTS=['c3ff4df24b2f654016e05166b902f4c7042484bc6d5776120de594313ed57a3e'];
   const rosterProofValid=()=>{try{return localStorage.getItem(ROSTER_PROOF_KEY)===ROSTER_FINGERPRINT;}catch(_){return false;}};
   const rosterCodeMatches=async(code)=>{
     const normalized=String(code||'').toUpperCase().replace(/[\s-]/g,'');
-    if(normalized.length!==20||!/^[A-Z2-9]+$/.test(normalized)||!crypto?.subtle)return false;
+    if(!/^[A-Z0-9]{8,32}$/.test(normalized)||!crypto?.subtle)return false;
     const bytes=new TextEncoder().encode(ROSTER_SALT+':'+normalized);
     const hash=await crypto.subtle.digest('SHA-256',bytes);
     const hex=Array.from(new Uint8Array(hash),v=>v.toString(16).padStart(2,'0')).join('');
-    return hex===ROSTER_FINGERPRINT;
+    return hex===ROSTER_FINGERPRINT||ROSTER_ALT_FINGERPRINTS.includes(hex);
   };
   const { clamp, lerp, ease, mesh, rbox } = Y2K;
   const H2 = Math.PI / 2, TAU = Math.PI * 2, V = (x, y, z) => new THREE.Vector3(x, y, z);
