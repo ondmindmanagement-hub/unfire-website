@@ -17,7 +17,7 @@ a{color:inherit}button,input,textarea,select{font:inherit}button{cursor:pointer}
 .wrap{width:min(1140px,calc(100% - 48px));margin:auto}.topline{height:3px;background:linear-gradient(90deg,#6c8870,#dbe4d2 54%,#647b8b)}
 header{border-bottom:1px solid #222a33}.navbar{display:flex;justify-content:space-between;align-items:center;gap:20px;min-height:78px}
 .brand{font-size:20px;font-weight:720;letter-spacing:-.06em;text-decoration:none}.brand span{font-size:11px;letter-spacing:.19em;vertical-align:middle;margin-left:15px;color:var(--muted);font-weight:650}
-nav{display:flex;gap:25px;font-size:12px;color:#c2c9d0}nav a{text-decoration:none}nav a:hover{text-decoration:underline}
+nav{display:flex;gap:25px;font-size:12px;color:#c2c9d0}nav a{text-decoration:none;display:inline-flex;align-items:center;min-height:28px}nav a:hover{text-decoration:underline}
 .hero{padding:94px 0 73px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr);gap:70px;align-items:end}
 .eyebrow{font-size:11px;letter-spacing:.17em;text-transform:uppercase;font-weight:730;color:var(--accent)}
 h1,h2,h3,p{margin-top:0}h1{font-size:clamp(46px,5.9vw,83px);line-height:1.02;letter-spacing:-.065em;font-weight:660;margin:22px 0 26px}
@@ -37,7 +37,7 @@ section{padding:77px 0;border-top:1px solid #25303a}.section-copy{font-size:15px
 .tier-num{font-size:11px;letter-spacing:.16em;color:#a4b4ae}.tier-label{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:#cbdcca;border:1px solid #475b4d;border-radius:50px;padding:4px 10px;white-space:nowrap}
 .tier p{color:#bdc7cf;line-height:1.62;font-size:14px;max-width:490px;margin:0 0 20px}
 .tier a{color:#e4eee0;font-size:13px;font-weight:650;margin-top:auto;text-decoration:none;display:inline-flex;gap:8px;align-items:center}
-.tier a:hover{text-decoration:underline}
+.tier a:hover{text-decoration:underline}.tier a{min-height:28px}
 .flow-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;margin-top:30px}
 .flow{border-top:1px solid #4c5b63;padding-top:16px}.flow .num{color:#b5ccb1;letter-spacing:.16em;font-size:11px}.flow h3{font-size:18px;margin:13px 0 8px}.flow p{font-size:14px;color:var(--muted)}
 .quality-note{background:#111821;border:1px solid #394754;border-radius:20px;padding:24px 28px;margin-top:38px;color:#b9c5cf;font-size:13px}
@@ -58,10 +58,10 @@ textarea{min-height:108px;resize:vertical}input::placeholder,textarea::placehold
 #preview{min-height:220px;width:100%;font-size:12px;line-height:1.6;white-space:pre-wrap}
 .button-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px}
 .disclaimer{color:#b7c1cc;font-size:12px;line-height:1.75;border-left:2px solid #819d82;padding-left:16px;margin-top:26px}
-footer{border-top:1px solid #2e3741;padding:30px 0 48px;font-size:12px;color:#a7b3bd}
+footer{border-top:1px solid #2e3741;padding:30px 0 48px;font-size:12px;color:#a7b3bd}footer a{display:inline-flex;align-items:center;min-height:28px}
 .footer-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
 @media(max-width:880px){.hero,.form-grid{grid-template-columns:1fr;gap:30px}.hero{padding-top:70px}.hero-note{max-width:590px}.flow-grid{gap:15px}}
-@media(max-width:620px){.wrap{width:min(100% - 38px,1140px)}header .brand span{display:none}nav{gap:13px;font-size:11px}.navbar{min-height:64px}.hero{padding:53px 0 57px}.tier-grid,.flow-grid,.fieldrow{grid-template-columns:1fr}.tier{min-height:240px;padding:23px}.tier-head{margin-bottom:21px}.flow{padding-top:13px}.enquiry-panel{padding:23px}section{padding:59px 0}.hero-note{font-size:13px}}
+@media(max-width:620px){.wrap{width:min(100% - 38px,1140px)}header .brand span{display:none}nav{gap:5px 10px;font-size:11px;flex-wrap:wrap;justify-content:flex-end;min-width:0}.navbar{min-height:64px;gap:12px}.hero{padding:53px 0 57px}.tier-grid,.flow-grid,.fieldrow{grid-template-columns:1fr}.tier{min-height:240px;padding:23px}.tier-head{margin-bottom:21px;flex-wrap:wrap}.flow{padding-top:13px}.enquiry-panel{padding:23px}section{padding:59px 0}.hero-note{font-size:13px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
