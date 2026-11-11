@@ -1,0 +1,26 @@
+name: Y2K ROBOTS official microsite draft QA
+
+on:
+  pull_request:
+    paths:
+      - 'games/y2k-robots/**'
+      - 'tests/y2k-game-microsite.test.mjs'
+      - '.github/workflows/y2k-game-microsite.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-microsite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check genuine Y2K branding and approved art
+        run: node --test tests/y2k-game-microsite.test.mjs
