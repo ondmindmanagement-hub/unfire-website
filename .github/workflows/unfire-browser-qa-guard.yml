@@ -1,0 +1,40 @@
+name: Unfire browser QA process guard
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/unfire-browser-qa-guard.cjs'
+      - 'tests/unfire-browser-qa-guard.test.cjs'
+      - 'scripts/unfire-frame-metrics.cjs'
+      - 'tests/unfire-frame-metrics.test.cjs'
+      - 'tests/unfire-frame-profile-browser.cjs'
+      - '.github/workflows/unfire-browser-qa-guard.yml'
+  workflow_dispatch:
+
+jobs:
+  guard-unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate own-process cleanup and timeout behavior
+        run: |
+          node --check scripts/unfire-browser-qa-guard.cjs
+          node --test tests/unfire-browser-qa-guard.test.cjs tests/unfire-frame-metrics.test.cjs
+
+  frame-profile-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install isolated Chromium test tools
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium
+      - name: Sample frame timing in software Chromium (diagnostic only)
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/unfire-profile-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          sleep 2
+          node scripts/unfire-browser-qa-guard.cjs --timeout-ms=175000 -- node tests/unfire-frame-profile-browser.cjs
