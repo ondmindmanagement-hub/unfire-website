@@ -1,7 +1,7 @@
 {
-  "name": "Unfire Audio",
-  "short_name": "Unfire Audio",
-  "description": "Juego gratuito de aventura y exploración 3D con robots transformables, vuelo, misiones y secretos.",
+  "name": "Y2K ROBOTS",
+  "short_name": "Y2K ROBOTS",
+  "description": "Explore a developing 3D world with robots, flight, missions and secrets.",
   "start_url": "./",
   "scope": "./",
   "id": "/audio/",
@@ -15,16 +15,17 @@
   "orientation": "any",
   "icons": [
     {
-      "src": "../apple-touch-icon.png",
-      "sizes": "180x180",
+      "src": "img/y2k-robots-icon-192.png",
+      "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "img/logo-unfire-256.webp",
-      "sizes": "256x256",
-      "type": "image/webp",
+      "src": "img/y2k-robots-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any"
     }
-  ]
+  ],
+  "lang": "en"
 }
