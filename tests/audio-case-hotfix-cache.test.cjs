@@ -6,7 +6,7 @@ const host=fs.readFileSync('audio/index.html','utf8');
 const frame=fs.readFileSync('audio/maletin/index.html','utf8');
 const engine=fs.readFileSync('audio/maletin/game-engine-v50.js','utf8');
 const collect=(source,pattern)=>[...source.matchAll(pattern)].map(match=>match[1]);
-test('one fresh cache token for host iframe, fallback and both engine loads',()=>{
+test('one coherent dated cache token for host iframe, fallback and both engine loads',()=>{
   const hostVersions=collect(host,/maletin\/index\.html\?v=([a-zA-Z0-9_-]+)/g);
   const engineVersions=collect(frame,/game-engine-v50\.js\?v=([a-zA-Z0-9_-]+)/g);
   assert.equal(hostVersions.length,2);
@@ -14,7 +14,8 @@ test('one fresh cache token for host iframe, fallback and both engine loads',()=
   assert.equal(new Set(hostVersions).size,1);
   assert.equal(new Set(engineVersions).size,1);
   assert.equal(hostVersions[0],engineVersions[0]);
-  assert.equal(hostVersions[0],'20261028nimbo3english4');
+  assert.match(hostVersions[0],/^20[0-9]{6}[a-zA-Z0-9_-]+$/, 'both entrypoints must use a dated cache-busting release token');
+  assert.notEqual(hostVersions[0],'20261028nimbo3english4', 'retired version must not silently reappear');
 });
 test('the actual canvas accepts tap without browser scroll cancellation',()=>{
   assert.match(frame,/#cv\s*\{[^}]*touch-action:none/);
