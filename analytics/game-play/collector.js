@@ -36,14 +36,23 @@
     since=null;return true;
   }
   function resume(){
-    if(!active || since!==null || (doc && doc.hidden))return false;
+    if(!active || !reported || since!==null || (doc && doc.hidden))return false;
     since=now();return true;
   }
   function start(){
     if(active)return false;
     active=true;milliseconds=0;
-    since=doc && doc.hidden?null:now();
-    reported=emit('unfire_game_start');return reported;
+    since=null; // Never count time before permission and tracker readiness.
+    reported=emit('unfire_game_start');
+    if(reported && !(doc && doc.hidden))since=now();
+    return reported;
+  }
+  function onTrackerReady(){
+    if(!active || reported || !allowed())return false;
+    milliseconds=0;since=null; // Start counting at consent, not earlier.
+    reported=emit('unfire_game_start');
+    if(reported && !(doc && doc.hidden))since=now();
+    return reported;
   }
   function end(){
     if(!active)return false;
@@ -56,7 +65,7 @@
   if(typeof root.addEventListener==='function')
     root.addEventListener('pagehide',end,{passive:true});
   root.UnfirePlayMetrics=Object.freeze({
-    start:start,end:end,pause:pause,resume:resume,
+    start:start,end:end,pause:pause,resume:resume,onTrackerReady:onTrackerReady,
     isActive:function(){return active;}
   });
 })(typeof window==='object'?window:null);
