@@ -374,8 +374,8 @@ footer a:hover{color:var(--gold2)}
   </div>
   <div class="shell">
    <div class="facts reveal" role="list">
-    <div role="listitem"><b>≈ 46 × 24 cm</b><span>closed footprint in the digital model, about 10 cm tall</span></div>
-    <div role="listitem"><b>≈ 68 cm</b><span>width with both speaker pods deployed</span></div>
+    <div role="listitem"><b>≈ 60 × 24 cm</b><span>closed, speaker pods docked; body about 10 cm tall</span></div>
+    <div role="listitem"><b>≈ 74 cm</b><span>width with both speaker pods deployed</span></div>
     <div role="listitem"><b>≈ 4.7 s</b><span>complete digital transformation sequence</span></div>
     <div role="listitem"><b>25 · 9 · 2</b><span>keys, rotary controls and expression wheels</span></div>
    </div>
@@ -524,7 +524,7 @@ footer a:hover{color:var(--gold2)}
     <p class="reveal">On screen, geometry can stretch freely. In metal and glass, every movement needs a drive, a bearing, a sensor, a load path, a cable route and a safe way to stop. Reproducing Hyperwave's choreography faithfully — quietly, repeatably and safely around a musician's hands — is a robotics programme in its own right. That is a large part of its value, and the reason we will not shortcut it.</p>
    </div>
    <div class="systems">
-    <article class="system reveal"><span class="n">i.</span><h3>Motors</h3><dl><dt>Digital today</dt><dd>Lid, tray, panel, keys, controls and pods animate on scripted keyframes.</dd><dt>Physical proposal</dt><dd>Roughly 8–18 powered axes if keys and controls are cam-synchronised; potentially more than 30 if every element moves independently.</dd></dl></article>
+    <article class="system reveal"><span class="n">i.</span><h3>Motors</h3><dl><dt>Digital today</dt><dd>Lid, tray, panel, keys, controls and pods animate on scripted keyframes.</dd><dt>Physical proposal</dt><dd>Twelve quiet stepper axes in Unfire’s design v0.1 — keys and knobs are cam-synchronised, so twenty-five keys need one camshaft, not twenty-five motors.</dd></dl></article>
     <article class="system reveal"><span class="n">ii.</span><h3>Sensors</h3><dl><dt>Digital today</dt><dd>Positions are known exactly in software.</dd><dt>Physical proposal</dt><dd>Absolute encoders, limit switches, current sensing and pinch detection on every moving assembly.</dd></dl></article>
     <article class="system reveal"><span class="n">iii.</span><h3>Articulations</h3><dl><dt>Digital today</dt><dd>The canopy rotates about 92°; the panel lifts and inclines.</dd><dt>Physical proposal</dt><dd>Precision hinges and linkages sized from real mass and clearance, with counterbalance on the canopy.</dd></dl></article>
     <article class="system reveal"><span class="n">iv.</span><h3>Transmissions</h3><dl><dt>Digital today</dt><dd>Keys arrive in a staggered wave; controls rise and turn.</dd><dt>Physical proposal</dt><dd>Camshafts, lead screws and gear trains — custom where the sequence demands it.</dd></dl></article>
@@ -535,11 +535,11 @@ footer a:hover{color:var(--gold2)}
     <article class="system reveal"><span class="n">ix.</span><h3>Mechanical safety</h3><dl><dt>Digital today</dt><dd>No physical forces.</dd><dt>Physical proposal</dt><dd>Force and current limits, stable power-off positions, manual recovery and assessment by qualified conformity specialists.</dd></dl></article>
    </div>
    <div class="verdicts">
-    <div class="verdict g reveal"><b>Achievable with known mechanisms</b><ul><li>Canopy and display opening</li><li>Keyboard tray lift and advance</li><li>Panel lift and tilt</li><li>Speaker pod extension and rotation</li></ul></div>
-    <div class="verdict a reveal"><b>Requires custom transmissions</b><ul><li>Staggered arrival of 25 keys over a playable keybed</li><li>Nine controls that rise and turn yet stay fully manual</li><li>Original 4.7-second timing at real masses</li></ul></div>
-    <div class="verdict r reveal"><b>Needs redesign to be exact</b><ul><li>Continuously stretching surfaces and struts of the 3D model</li><li>Packaging every mechanism inside a ~10 cm closed body</li></ul></div>
+    <div class="verdict g reveal"><b>Engineered with known mechanisms</b><ul><li>Counterbalanced, geared canopy with brake</li><li>Two-track cam for the keyboard tray</li><li>Lead-screw panel lift on scissor guides</li><li>Four-stage telescopic speaker arms</li></ul></div>
+    <div class="verdict a reveal"><b>Custom transmissions designed</b><ul><li>25-lobe camshaft for the key wave</li><li>Helix-and-slot bar: nine knobs rise, turn once, then turn freely</li><li>Wrist turntable inside each speaker pod</li></ul></div>
+    <div class="verdict r reveal"><b>Corrected for real physics</b><ul><li>Speaker pods now dock outside the body instead of passing through it</li><li>Stretching struts replaced by rigid telescopes and scissors</li><li>No part bounces or overshoots</li></ul></div>
    </div>
-   <p class="eng-note">Desk feasibility only. These judgements come from Unfire's review of the digital source and public component data; they have not yet been validated by kinematic CAD, an independent mechatronic engineer or a built mechanism.</p>
+   <p class="eng-note">Unfire engineering design v0.1: every movement of the digital instrument was audited for collisions and then corrected, with zero interferences measured across the whole transformation. Twelve-axis motion firmware with interlocks and pinch, stall and power-loss handling was verified in simulation. Not yet built, measured or certified.</p>
   </div>
  </section>
 
@@ -580,7 +580,7 @@ footer a:hover{color:var(--gold2)}
    <h2 id="status-title" class="sr">Development status</h2>
    <div class="truth">
     <div class="reveal"><strong>Exists</strong><h3>The digital instrument</h3><p>A real, playable 3D synthesizer that runs in the browser and transforms on command. <a href="../audio/hyperwave/">Open it</a>.</p></div>
-    <div class="reveal"><strong>In feasibility</strong><h3>The physical mechanism</h3><p>Mechanism architecture, actuators, electronics, safety and costs are under desk study; specialist engineering firms have been approached for independent feasibility opinions.</p></div>
+    <div class="reveal"><strong>In feasibility</strong><h3>The physical mechanism</h3><p>Mechanisms, drives, electronics and safety logic are designed (v0.1) and verified in simulation; physical demonstrators come next.</p></div>
     <div class="reveal"><strong>Not yet</strong><h3>Hardware &amp; orders</h3><p>No physical prototype, certification, manufacturing partner, delivery date or order book exists yet.</p></div>
    </div>
   </div>

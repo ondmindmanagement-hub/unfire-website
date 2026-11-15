@@ -36,3 +36,21 @@
 - **Gmail:** 0 replies and 0 bounces to the 10 first-wave messages. **5 new drafts created, not sent** (M.A.D.Gallery Geneva, bitforms NYC, Audio Exotics Singapore, Portier HiFi Geneva, Ideaworks Monaco) — awaiting owner review. No duplicates found in Gmail.
 - No supplier quotes requested; no spend; no payments or reservations implemented.
 - PR stays draft and unmerged; publication requires the release gates in `README.md`.
+
+---
+
+## Engineering pass (2026-11-15, 19:10–23:15) — owner: "tú eres el ingeniero"
+
+**Changed `audio/hyperwave/index.html` on this draft branch only** (via `tools/patch-physical-model.py`) to make the transformation physically buildable: pods dock outside the body, rigid 4-stage telescopic arms, wrist inside the pod, scissor-guided lifts, no overshoot on heavy parts. Not merged, not deployed; the live site is unchanged.
+
+| Evidence | Result |
+|---|---|
+| `tools/physics-audit.cjs` before → after (`engineering/physics-audit-before.json`, `-after.json`) | pods through shell 9.9 → 0 mm; floating pods 100 → 0 samples; stretching parts 6 → 0; pop-in parts 8 → 0; all other checks 0 |
+| Negative control (panel raised 45 mm under closed canopy) | detectors fire: 3,998 crossings, 9,443 protruding vertices |
+| `tools/smoke-instrument.cjs` | opens, plays 2 voices, HYPER, closes; 0 errors |
+| `tests/*hyperwave*.test.cjs` | pass |
+| `engineering/firmware/host_test.cpp` (12-axis motion core, interlocks, pinch/stall/jam/power-loss) | ALL MOTION TESTS PASSED, no compiler warnings |
+| Presentation re-captured from the corrected model (hero, sequence, details, studies, film) and dossier PDF re-rendered | Chrome 4 viewports re-run; dossier 11 pages, no overflow |
+
+New: `ENGINEERING_DESIGN_v0.1.md`, `engineering/gen_choreography.py`, `engineering/choreography.json`, `engineering/firmware/*`, `tools/physics-audit.cjs`, `tools/patch-physical-model.py`, `tools/smoke-instrument.cjs`, `tools/probe-structure.cjs`.
+Owner review needed for: the 600 mm closed width (was 492 mm), and whether `audio/**` changes should go to production after the audio owner (#13) reviews them.

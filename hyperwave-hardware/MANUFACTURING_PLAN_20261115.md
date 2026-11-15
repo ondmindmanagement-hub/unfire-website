@@ -18,7 +18,7 @@
 | 8 | Speaker pods extend on telescopic arms and articulate (T 3–4) | Yes — per pod one telescopic linear stage + one rotary joint | Telescopic arm with internal cable chain | Yes (2 per pod = 4) | Left/right can be mirrored from one controller | **No** — the 3D strut stretches continuously; physical arms need nested sections and a visible joint |
 | 9 | Light, LEDs, VFD, speaker pumping | Electronics | — | — | — | Yes (audio-reactive cone motion is real driver excursion) |
 
-**Recommended baseline architecture ("A"):** 8–10 powered axes — canopy (2, mirrored), tray (1), key camshaft (1), panel (1), knob cam bar (1), pods (4). This is the most reliable route to a visually faithful opening. Architecture "B" (fully independent keys/knobs, 30+ axes) multiplies cost, noise and failure modes without a visible benefit; reject unless the owner explicitly wants it.
+**Superseded by `ENGINEERING_DESIGN_v0.1.md` (12 axes, verified in simulation).** Original recommendation — **baseline architecture ("A"):** 8–10 powered axes — canopy (2, mirrored), tray (1), key camshaft (1), panel (1), knob cam bar (1), pods (4). This is the most reliable route to a visually faithful opening. Architecture "B" (fully independent keys/knobs, 30+ axes) multiplies cost, noise and failure modes without a visible benefit; reject unless the owner explicitly wants it.
 
 ## 2. Noise, heat, force, safety, maintenance
 

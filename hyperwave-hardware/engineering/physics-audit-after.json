@@ -1,0 +1,43 @@
+{
+ "summary": {
+  "podVsBody_mm": 0,
+  "podVsLid_mm": 0,
+  "podBelowFloor_mm": 0,
+  "lidSweepHits": 0,
+  "lidCrossings": 0,
+  "bodyWallBreachVertices": 0,
+  "screenHits": 0,
+  "closedProtrusionVertices": 0,
+  "stretchingParts": [],
+  "popInParts": [],
+  "podUnsupportedSamples": 0,
+  "podVsInternalsHits": 0,
+  "armVsInternalsHits": 0,
+  "armBelowFloor": 0,
+  "parts": {
+   "lid": true,
+   "panel": true,
+   "kbd": true,
+   "pods": 2,
+   "lifts": 6,
+   "armTubes": 10,
+   "dockX": 2.66,
+   "internalsSolids": 161
+  },
+  "podUnsupportedMax_mm": 0
+ },
+ "detail": {
+  "podVsBody": [],
+  "podVsLid": [],
+  "podFloor": [],
+  "lid": [],
+  "lidCross": [],
+  "wall": [],
+  "screen": [],
+  "protrude": [],
+  "unsupported": [],
+  "podInt": [],
+  "arm": []
+ },
+ "pageErrors": []
+}
