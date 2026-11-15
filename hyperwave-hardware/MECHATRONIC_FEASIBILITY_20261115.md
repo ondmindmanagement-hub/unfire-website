@@ -1,10 +1,10 @@
 # Hyperwave 2000 — Electromechanical feasibility, risk and cost study
 
-**Date:** 2026-11-15. **Status:** DESK FEASIBILITY ONLY / NOT A PRODUCTION QUOTE. **Owner:** Unfire / GitHub issue #329, branch \`feature/hyperwave-hardware-interest-20261115\`. **Single product:** one Hyperwave 2000, not multiple editions.
+**Date:** 2026-11-15. **Status:** DESK FEASIBILITY ONLY / NOT A PRODUCTION QUOTE. **Owner:** Unfire / GitHub issue #329, branch `feature/hyperwave-hardware-interest-20261115`. **Single product:** one Hyperwave 2000, not multiple editions.
 
 ## Executive engineering verdict
 
-**Possible in principle, not yet mechanically demonstrated.** The currently implemented \`audio/hyperwave/index.html\` is a real interactive browser-based 3D/Web Audio synthesizer, **not** a physics-tested mechanism, CAD assembly, motor-controller firmware, tooling package or manufactured physical unit. Most scripted movements appear achievable using mechatronic mechanisms, but reproducing the *same shape, timing, motion and sound at real scale* is **UNPROVEN**. The 3D engine stretches some render primitives freely; real mechanisms require discrete telescoping parts, clearance, cable routing and load paths. Do not claim an exact physical replica, certifiable design, or shippable unit until proven.
+**Possible in principle, not yet mechanically demonstrated.** The currently implemented `audio/hyperwave/index.html` is a real interactive browser-based 3D/Web Audio synthesizer, **not** a physics-tested mechanism, CAD assembly, motor-controller firmware, tooling package or manufactured physical unit. Most scripted movements appear achievable using mechatronic mechanisms, but reproducing the *same shape, timing, motion and sound at real scale* is **UNPROVEN**. The 3D engine stretches some render primitives freely; real mechanisms require discrete telescoping parts, clearance, cable routing and load paths. Do not claim an exact physical replica, certifiable design, or shippable unit until proven.
 
 **Indicative budgeting, excluding tax, NOT offers from vendors:**
 - **Full initial engineering programme + integrated working prototype:** **EUR 200k–1m+**; larger if exact visual behavior requires many independent micro-actuators, complex tooling, redesigns or multiple certification cycles.
@@ -20,14 +20,16 @@ Primary source: https://github.com/ondmindmanagement-hub/unfire-website/blob/mai
 
 Code explicitly states:
 - Procedural Three.js **transformable digital model**, Web Audio synthesizer, 32-voice virtual-analogue display claim. The device's future physical capabilities must not be assumed from display label.
-- Geometry scale comment **1 unit ≈ 10 cm**. Main body \`A=2.3\`, \`C=1.2\`: **approximately 46 cm wide × 24 cm deep** before deployment; casing base/lid depths indicate an approximately 10 cm closed envelope (illustrative only; zero mechanical clearance analysis).
-- Stereo speaker pod centres reach about \`x=±3.08\` with pod half-width \`0.34\` -> approximately **68 cm deployed overall width** by the code's scale.
-- A roughly 21 cm × 7.4 cm virtual display (\`SW=2.1\`, \`SH=0.74\`) is suspended under a rotating lid; actual manufacturable display dimensions/format unresolved.
+- Geometry scale comment **1 unit ≈ 10 cm**. Main body `A=2.3`, `C=1.2`: **approximately 46 cm wide × 24 cm deep** before deployment; casing base/lid depths indicate an approximately 10 cm closed envelope (illustrative only; zero mechanical clearance analysis).
+- Stereo speaker pod centres reach about `x=±3.08` with pod half-width `0.34` -> approximately **68 cm deployed overall width** by the code's scale.
+- A roughly 21 cm × 7.4 cm virtual display (`SW=2.1`, `SH=0.74`) is suspended under a rotating lid; actual manufacturable display dimensions/format unresolved.
 - A **25-note** keyboard from MIDI notes 48–72 emerges sequentially with staggered digital keyframe animation. It is *not* proof that 25 motors are required: a common motor and cams may reproduce the pattern; conversely exact independence might necessitate many actuators.
 - **8 parameter knobs + a MASTER knob** animate emergent motion and rotational motion; 2 pitch/mod wheels emerge. User input must remain manually accessible after movement.
 - 2 speaker pods each extend/reposition/rotate in space; digital telescoping struts change their shape via render scaling (not physically validated).
 - Lid lifts then rotates ~1.6 radians (~92°); panel rises and inclines ~0.2 radians; keyboard tray lifts and advances.
-- Animation time parameter \`TMAX=4\`, speed \`SPEED=0.85\` -> a complete digital sequence nominally ~**4.7 seconds**. Physical mass, speed, torque, noise, cable flex and safety may require slower real motion.
+- Animation time parameter `TMAX=4`, speed `SPEED=0.85` -> a complete digital sequence nominally ~**4.7 seconds**. Physical mass, speed, torque, noise, cable flex and safety may require slower real motion.
+- **First-pass trajectory velocities (derived from digital keyframes, not measurements):** keyboard tray lifts ~14mm over ~0.41s (**~34mm/s**); control panel rises ~23mm in ~0.41s (**~56mm/s**); an early speaker pod extends ~34mm in ~0.47s (**~72mm/s**). The cited Actuonix L12-210 actuator is only **6.5mm/s at zero load**, so it is **far too slow** for those movements at original timing. Faster drives and force/risk assessment are required; end-stop shocks and synchronization increase complexity.
+- **Illustrative hinge sizing only:** if a lid assembly were 2kg with its centre of mass 0.10m from a horizontal hinge, gravity moment at the worst orientation is about **1.96N·m** before acceleration, friction and safety factors. ROBOTIS XH430-W350-T advertises a **0.68N·m rated continuous torque** (versus a much larger stall torque), so this hypothetical lid cannot be sized with one such motor at 1:1. The actual lid mass and lever arm are unknown; counterbalance, gearing or a more capable motor may solve it.
 - SFX labelled servo/clack are synthetic digital audio; they are **not measured real motor sounds**.
 
 ## Physical motion architecture — *concept, not a verified mechanism design*
