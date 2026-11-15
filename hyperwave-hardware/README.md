@@ -4,7 +4,7 @@ Status: **DRAFT — NOT RELEASED** (2026-11-15). Owning issue: #329. Coordinatio
 
 ## Product truthfulness and commercial intent
 - **Only one physical model**: Hyperwave 2000. No tiers or separately named limited editions.
-- **Retail price: TBD after engineering and supplier quotations.** The former USD 4,999 figure is withdrawn as a pricing anchor or ceiling. Cost is not capped; do not publish a numeric price or bind consumers before proper specification, prototype and cost evidence.
+- **Retail price: aspirational USD 120,000 starting position, subject to manufacturing and engineering validation.** The former USD 4,999 figure is withdrawn as a pricing anchor or ceiling. Production cost is not capped; numeric ranges in the private commissioning concept are non-binding until technical and legal release gates are met.
 - **Digital product:** existing playable browser Web Audio/3D experience at `/audio/hyperwave/`. This is a digital demonstration only.
 - **Physical product:** not built, certified, manufactured, priced by suppliers or currently available to reserve with a guaranteed allocation.
 - **Demand signal:** clicking “Email your interest” opens a prefilled message to `hello@unfire.technology`; no on-site database or payments. This is a non-binding inquiry, not a real queue position or binding reservation.
@@ -15,8 +15,19 @@ Status: **DRAFT — NOT RELEASED** (2026-11-15). Owning issue: #329. Coordinatio
 - **Do not compromise the identity or physical transformation to fit the former estimate.** Engineer the intended real transforming unit, then quote its complete product cost.
 - BOM must explicitly consider movable display lid, deploying keyboard tray/keys, pop-up controls, expandable speaker modules, actuators/manual mechanisms, bearings, hinges, cable chains/flex circuits, interlocks/pinch protection, enclosure rigidity, repairability, quality testing and long-term mechanical cycles. These visual features exist digitally; physical counterparts require proof of engineering feasibility.
 - Price from verified all-in unit economics: assembly/materials + amortized NRE/tooling + QA/yield + compliance + packaging/import/shipping + warranty/returns + payment fees/taxes where applicable + sustainable gross margin. Account separately for sunk/prototype costs and cash-flow financing.
-- With no verified cost structure, **do not state that USD 4,999 is enough or that USD 6,000/10,000/etc. is necessary**. Analyze willingness to pay after firm supplier quotes. A higher luxury price is acceptable if evidence supports it.
+- With no verified cost structure, **do not claim USD 120,000 will be enough**, or that any particular bespoke budget is justified. Analyze willingness to pay after firm supplier quotes. Reprice upward if the full design requires it.
 - No manufacturing orders, payments, commitments, launch dates or automatic emails without separate authorization.
+
+## Private commissions directive — 2026-11-15
+- **ONE Hyperwave 2000 physical model**, with multiple optional **client-selected finishing and bespoke scope items**, not new named product editions.
+- **Commercial starting target:** **USD 120,000** for an as-yet-unbuilt physical instrument. **This is a proposed market position, not a final validated price or an order currently open for payment.** A hypothetical USD 60,000 all-in unit cost would leave USD 60,000 contribution per sale before recovering programme development/NRE, financing, sales tax, aftercare and other excluded expenses. If factory quotes make this unrealistic, renegotiate the price rather than cutting the instrument's defining mechanics.
+- **Heavily bespoke private commissions:** **USD 200,000–3,000,000** indicative total commission budget, quoted by actual work scope and materials. These are not three different hardware models or guaranteed upgrades; extra costs at that scale must reflect substantial custom engineering, fine craftsmanship, precious materials, special installations or artist collaboration, not a merely cosmetic colour change.
+- **Customer discovery:** UHNW collectors and specialist advisors in Abu Dhabi, Dubai, other GCC markets, Switzerland, Monaco, Singapore, selected United States art/music collectors. Do not assume nationality or wealth predicts purchase; select evidence-backed professional channels that actually trade expensive instruments, art or bespoke audio. Never publish private client data.
+- **Public-interest form:** email-only at hello@unfire.technology until independent prototype, supply agreement, legal compliance and refund/fulfilment gates. Do not advertise that a queue position or paid deposit is currently available.
+- **Future payments model to negotiate (NOT LIVE):** a signed bespoke order after vetted feasibility; independent legal review of consumer status and withdrawal rules, supplier production milestones, delivery date/range with remedies, documented specs, escrow or safeguarded client deposits, refunds in event of impossibility or non-delivery. Example finance *discussion*, not offer: 50% at approved signed commencement, 40% at tested factory acceptance, 10% at delivery/acceptance, with protected releases and remedies. Never claim any part automatically nonrefundable.
+- **Seller economics:** every quote includes NRE amortisation, insured shipping, installation, protective packaging, VAT/import/duties depending on destination, warranties, insurance and specialist maintenance as well as mechatronic manufacturing.
+- **Evidence:** https://www.steinway.com/pianos/steinway/bespoke ; https://store.msteinert.com/products/steinway-b-220204 ; https://www.highenddubai.ae/pages/brands ; https://www.worldpianonews.com/new-product/art-case/is-goldfinchs-imperial-egg-the-most-expensive-piano-ever-made/ ; https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/ecommerce-distance-selling/index_en.htm ; https://u.ae/en/information-and-services/justice-safety-and-the-law/consumer-protection .
+- **Partner channels, NOT verified partners:** luxury audio Dubai Audio, High End Dubai, Steinway & Sons Dubai/House of Pianos, Bang & Olufsen Abu Dhabi Atelier. Any introduction is exploratory; no claim they agreed to sell a Hyperwave.
 
 ## Supply-chain route (research, not contracted)
 1. Confirm whether the existing audio code can run on an embedded host with acceptable latency, controls, thermal, memory and licensing footprint. Investigate digital-license obligations separately.
@@ -47,7 +58,7 @@ hello@unfire.technology
 
 ## QA and release checklist
 - [x] Separate scoped new page, no edits to current `audio/**` source or homepage
-- [x] One physical version only / price to be determined / no fabricated stock or delivery dates
+- [x] One physical version only / indicative luxury commission targets only / no fabricated stock or delivery dates
 - [x] Real existing digital demo linked
 - [x] Digital image labeled as concept (not real physical photograph)
 - [x] CTA is email without payment, subscriptions or hidden data collection
