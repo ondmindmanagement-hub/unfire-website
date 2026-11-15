@@ -4,12 +4,19 @@ Status: **DRAFT — NOT RELEASED** (2026-11-15). Owning issue: #329. Coordinatio
 
 ## Product truthfulness and commercial intent
 - **Only one physical model**: Hyperwave 2000. No tiers or separately named limited editions.
-- **Indicative target retail price:** USD 4,999; not a binding price, order, payment or taxable checkout quote.
+- **Retail price: TBD after engineering and supplier quotations.** The former USD 4,999 figure is withdrawn as a pricing anchor or ceiling. Cost is not capped; do not publish a numeric price or bind consumers before proper specification, prototype and cost evidence.
 - **Digital product:** existing playable browser Web Audio/3D experience at `/audio/hyperwave/`. This is a digital demonstration only.
 - **Physical product:** not built, certified, manufactured, priced by suppliers or currently available to reserve with a guaranteed allocation.
 - **Demand signal:** clicking “Email your interest” opens a prefilled message to `hello@unfire.technology`; no on-site database or payments. This is a non-binding inquiry, not a real queue position or binding reservation.
 - **Images:** existing source asset `/audio/img/hyperwave-open.webp` is digital 3D art, explicitly labeled as such; no claim that a generated actor plays a real unit.
 - **Publication:** page intentionally includes `robots=noindex,nofollow` until review and approval. New path only; current site navigation is unchanged.
+
+## Owner pricing directive — updated 2026-11-15
+- **Do not compromise the identity or physical transformation to fit the former estimate.** Engineer the intended real transforming unit, then quote its complete product cost.
+- BOM must explicitly consider movable display lid, deploying keyboard tray/keys, pop-up controls, expandable speaker modules, actuators/manual mechanisms, bearings, hinges, cable chains/flex circuits, interlocks/pinch protection, enclosure rigidity, repairability, quality testing and long-term mechanical cycles. These visual features exist digitally; physical counterparts require proof of engineering feasibility.
+- Price from verified all-in unit economics: assembly/materials + amortized NRE/tooling + QA/yield + compliance + packaging/import/shipping + warranty/returns + payment fees/taxes where applicable + sustainable gross margin. Account separately for sunk/prototype costs and cash-flow financing.
+- With no verified cost structure, **do not state that USD 4,999 is enough or that USD 6,000/10,000/etc. is necessary**. Analyze willingness to pay after firm supplier quotes. A higher luxury price is acceptable if evidence supports it.
+- No manufacturing orders, payments, commitments, launch dates or automatic emails without separate authorization.
 
 ## Supply-chain route (research, not contracted)
 1. Confirm whether the existing audio code can run on an embedded host with acceptable latency, controls, thermal, memory and licensing footprint. Investigate digital-license obligations separately.
@@ -40,7 +47,7 @@ hello@unfire.technology
 
 ## QA and release checklist
 - [x] Separate scoped new page, no edits to current `audio/**` source or homepage
-- [x] One version / one target price / no fabricated stock or delivery dates
+- [x] One physical version only / price to be determined / no fabricated stock or delivery dates
 - [x] Real existing digital demo linked
 - [x] Digital image labeled as concept (not real physical photograph)
 - [x] CTA is email without payment, subscriptions or hidden data collection
