@@ -116,7 +116,7 @@ section{scroll-margin-top:35px}
 .motion-foot{margin-top:38px;font-size:12px;color:#a6a8aa}
 .atelier{background:#141512;padding:145px 0 0;position:relative;overflow:hidden}
 .atelier:before{content:"";position:absolute;top:-100px;right:-200px;width:600px;height:600px;border:1px solid rgba(224,187,125,.07);border-radius:50%;box-shadow:0 0 0 60px rgba(224,187,125,.025),0 0 0 120px rgba(224,187,125,.02)}
-.atelier-inner{position:relative;z-index:1;display:grid;grid-template-columns:55% 45%;gap:6vw;align-items:center;padding-bottom:140px}
+.atelier-inner{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:min(6vw,80px);align-items:center;padding-bottom:140px}
 .atelier h2{margin-top:25px}
 .atelier p{font-size:14px;color:#c5c3bb;line-height:1.95;margin-top:25px}
 .swatches{display:flex;align-items:center;gap:17px;margin-top:44px}
@@ -133,7 +133,7 @@ section{scroll-margin-top:35px}
 .atelier-list small{font-size:10px;letter-spacing:.11em;color:#b9b3a6;text-align:right;text-transform:uppercase}
 .atelier-fine{font-size:11px!important;color:#b8b5ac!important;margin-top:22px!important}
 .value{padding:150px 0;background:#0b0e12}
-.value-grid{display:grid;grid-template-columns:53% 47%;gap:65px;align-items:center}
+.value-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:65px;align-items:center}
 .value h2{margin:23px 0 28px}
 .value p{color:var(--sub);font-size:14px;line-height:1.85}
 .price-card{padding:53px 50px;background:linear-gradient(140deg,#202226,#12161b);border:1px solid rgba(224,187,125,.32);position:relative}
