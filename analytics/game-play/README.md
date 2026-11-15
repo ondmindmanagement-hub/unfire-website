@@ -39,3 +39,23 @@ Synthetic local QA on 15 Nov 2026: node --test collector.test.cjs -> 10 PASS / 0
 Before release: single integrating game owner, CI against combined SHA, real browser + iOS/Android QA, check no extra WebGL/audio overhead, validate data sent only for permitted users, network inspection, verify only expected event names and duration buckets, public site /audio/ verification, a real provider dashboard with test-mode entries (distinguish synthetic QA from actual players), and rollback.
 
 Do NOT merge or deploy this draft automatically, send data to unapproved endpoints, interpret visits as unique players, or claim any historical player count.
+
+
+## Secure manual loader added on 15 Nov 2026 (no vendor account created)
+
+New files: loader.js, loader.test.cjs, integration.test.cjs. Test command:
+node --test analytics/game-play/*.test.cjs
+On the connected Mac: **20 tests PASS, 0 FAIL**, including a synthetic complete user entry after pageview and revocation blocking subsequent game events. This is local QA, NOT proof of production transmission.
+
+The approved website integrator must load collector.js and loader.js on the SAME top-level /audio/ page; neither script loads a vendor automatically. After a REAL legal/privacy gate and production release signoff, the integrator may authorize:
+- window.__UNFIRE_ANALYTICS_RELEASE_APPROVED = true (verified owner release decision);
+- window.__UNFIRE_ANALYTICS_PRIVACY_GATE = true (actual approved lawful basis/consent logic, not blindly hardcoded true);
+- window.UnfirePlayMetricsLoader.enable(REAL_UMAMI_WEBSITE_UUID); this is a public website UUID, NOT an API token or admin secret.
+
+The loader validates a UUID, exact HTTPS hostname, release and privacy flags, Do Not Track/GPC, injects https://cloud.umami.is/script.js once and sends ONE manually invoked pageview after onload. Automatic pageviews are disabled via data-auto-pageview=false to minimize unexpected activity; URL search and hash are excluded. The collector separately gates EVERY game event on active release/privacy flags. Consent revocation should call loader.revoke(), which blocks future custom events but cannot undo earlier vendor processing. The website privacy integrator must consider whether complete vendor unload/reload is required. Do not load the vendor in an iframe.
+
+**Event-based active-player report once live:** open Umami website Reports/Overview and filter Event = unfire_game_start; read Visitors for an estimated number of distinct visitors who triggered a play event in the selected date interval. Read the Events metric for total starts. This is not a count of authenticated distinct humans; privacy resets, browser/device changes, blockers and revisits make it approximate. Umami documentation: https://docs.umami.is/docs/filters and https://docs.umami.is/docs/cohorts .
+
+Umami Cloud Hobby is free for one website up to 100K events/month with 6-month retention (subject to provider changes). The cloud free plan does not advertise API access; a verified dashboard or read-only share URL is the supported way to inspect statistics. Set EU data region when creating the account if appropriate, while noting subprocessor traffic may extend outside the EU. References: https://umami.is/pricing and https://docs.umami.is/docs/cloud/faq .
+
+Last read-only live-site probe: 15 November, /audio/ returned HTTP 200 and showed none of Umami, Plausible, GA, Matomo, PostHog or Cloudflare Insights in its public HTML. **NO LIVE TRACKING VERIFIED.** No account, website ID or dashboard has been created or claimed by this PR.
