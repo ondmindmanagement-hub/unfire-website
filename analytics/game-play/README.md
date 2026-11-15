@@ -59,3 +59,23 @@ The loader validates a UUID, exact HTTPS hostname, release and privacy flags, Do
 Umami Cloud Hobby is free for one website up to 100K events/month with 6-month retention (subject to provider changes). The cloud free plan does not advertise API access; a verified dashboard or read-only share URL is the supported way to inspect statistics. Set EU data region when creating the account if appropriate, while noting subprocessor traffic may extend outside the EU. References: https://umami.is/pricing and https://docs.umami.is/docs/cloud/faq .
 
 Last read-only live-site probe: 15 November, /audio/ returned HTTP 200 and showed none of Umami, Plausible, GA, Matomo, PostHog or Cloudflare Insights in its public HTML. **NO LIVE TRACKING VERIFIED.** No account, website ID or dashboard has been created or claimed by this PR.
+
+
+## 15 Nov 2026 follow-up: actual-host dry-run and safer late-consent handling
+
+Verified read-only canonical source: main/audio/index.html Git blob SHA 85fd14372102e2f835d09b040f218688b1e449e0; matches GitHub source SHA. The dry-run generated a candidate in the isolated local workspace, WITHOUT changing the website or game code. It introduces exactly two deferred first-party adapter script references before the closing head tag and three calls in genuine enterGame/resumeGame/exitGame. All existing gameplay remains untouched.
+
+Run this owner-only preview from repository root (not an installer):
+
+    node analytics/game-play/host-integration-preview.cjs audio/index.html > /tmp/unfire-audio-candidate.html
+    diff -u audio/index.html /tmp/unfire-audio-candidate.html
+
+The generator refuses changed lifecycle anchors and repeated integration; it writes no input file and configures no third party, UUID, privacy flag or deployment. The owner must approve the exact diff, the source assets on the publishing branch, and final CI and mobile checks.
+
+Delayed tracker: if the player enters before authorized Umami finishes loading, the collector may report the ongoing real session ONLY from the time of authorization and readiness, excluding earlier time. An already ended game is not retroactively counted. After revocation, re-enable requires fresh navigation. The loader now sets data-auto-track=false, disabling automatic vendor path-change/click tracking; only explicit guarded calls remain. No local/session storage, cookies, persistent identifiers, credentials or account tokens in these candidate files.
+
+Validation on the connected Mac: 27 Node tests PASS / 0 FAIL, including source-only host preview, late authorization and end-to-end synthetic revocation. This is NOT live Umami transmission proof.
+
+Account status: Umami Cloud signup page opened in Safari; account and website UUID NOT authenticated or confirmed. An attempted automated registration was prevented by security controls; no credential was submitted. Unused temporary Keychain credential was deleted with verified absence. Actual service onboarding requires the user to complete the provider's identity/email verification and choose EU data region. No need to share password or six-digit code in GitHub or chat. Free Hobby tier lacks API/MCP access; authorized account holder may later inspect event-filtered Visitors (estimate, not authenticated unique people) in Umami dashboard.
+
+NO production tracking, no deployment, no historical player count, no spending.
