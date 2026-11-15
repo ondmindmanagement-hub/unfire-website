@@ -8,7 +8,8 @@ Status: **DRAFT — NOT RELEASED** (2026-11-15). Owning issue: #329. Coordinatio
 - **Digital product:** existing playable browser Web Audio/3D experience at `/audio/hyperwave/`. This is a digital demonstration only.
 - **Physical product:** not built, certified, manufactured, priced by suppliers or currently available to reserve with a guaranteed allocation.
 - **Demand signal:** clicking “Email your interest” opens a prefilled message to `hello@unfire.technology`; no on-site database or payments. This is a non-binding inquiry, not a real queue position or binding reservation.
-- **Images:** existing source asset `/audio/img/hyperwave-open.webp` is digital 3D art, explicitly labeled as such; no claim that a generated actor plays a real unit.
+- **Images:** all presentation imagery in `hyperwave-hardware/media/` is captured from the unmodified real-time digital instrument (`audio/hyperwave/index.html`) and labelled "Digital concept visualisation" (finish studies: "Digital finish study"); no claim of physical hardware.
+- **Second session (15 Nov, evening):** see `SESSION_LOG_20261115_PRESENTATION.md`, `MANUFACTURING_PLAN_20261115.md` and `COMMERCIAL_STRATEGY_20261115.md`.
 - **Publication:** page intentionally includes `robots=noindex,nofollow` until review and approval. New path only; current site navigation is unchanged.
 
 ## Owner pricing directive — updated 2026-11-15
@@ -64,7 +65,12 @@ hello@unfire.technology
 - [x] CTA is email without payment, subscriptions or hidden data collection
 - [x] English-only page copy
 - [x] Semantic headings, image alt, focus-visible, reduced-motion and responsive CSS authored
-- [ ] Browser viewport and keyboard QA on desktop and mobile (not yet run)
+- [x] Browser viewport QA on desktop, tablet and mobile — Chrome headless (4 viewports) and WebKit iPhone emulation, 15 Nov second session (see `SESSION_LOG_20261115_PRESENTATION.md`)
+- [ ] Physical iPhone / iPad / desktop Safari check and full keyboard-only walkthrough
+- [x] Cinematic presentation rebuilt from authentic captures of the real digital instrument (`media/`, `tools/capture-digital-transformation.cjs`); film labelled "Digital concept visualisation"
+- [x] Live 3D atelier recolours the real model in-browser; no prices generated; brief sent only by the visitor's own email client
+- [x] English dossier source (`dossier/dossier.html`); PDF kept out of the public repo
+- [x] Third-party font requests removed (system font stacks)
 - [ ] Supplier engineering feasibility and pricing confirmed
 - [ ] Liability, privacy, marketing language and consumer-law review (#140)
 - [ ] Product owner approval of final price and terms
