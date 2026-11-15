@@ -94,3 +94,28 @@ hello@unfire.technology
 - [ ] Customer acquisition outreach with lead deduplication and proof of each actual send
 - [ ] First buyer enquiry recorded and qualified (currently no such claim)
 - [ ] First paid reservation lawfully accepted (currently no such claim)
+
+## Verified commercial and engineering outreach — 2026-11-15
+
+**Gmail account:** hello@unfire.technology. **Total unique professional first-contact messages SENT with Gmail SENT labels: 10** (5 pre-existing first-wave sales channels, 2 additional sales channels, 3 mechanical engineering studios). **Not 10 buyers, not sales, no LOI, no supplier quotes, no income.**
+
+| Scope | Business | Public recipient | Status |
+|---|---|---|---|
+| Collector-market channel | High End Dubai | info@highenddubai.ae | Gmail SENT 2026-11-15 |
+| Collector-market channel | Dubai Audio | info@dubaiaudio.com | Gmail SENT 2026-11-15 |
+| Collector-market channel | Rivos / Burmester Dubai | info@rivos.ae | Gmail SENT 2026-11-15 |
+| Luxury instruments | House of Pianos (Dubai) | salespianos@admiralworld.com | Gmail SENT 2026-11-15 |
+| Luxury audio | Bang & Olufsen, The Galleria Abu Dhabi | galleriamall.dxb@beostores.com | Gmail SENT 2026-11-15 |
+| Collector-market channel | Audio Deluxe, Dubai | info@audiodeluxe.ae | Gmail SENT 2026-11-15 |
+| Bespoke AV / luxury integration | MKB Bespoke Audio, Dubai | sales.online@mkbbespokeaudio.com | Gmail SENT 2026-11-15 |
+| Kinetic engineering | Helldorfer Engineering, Berlin | philipp@helldorfer-engineering.com | Gmail SENT 2026-11-15 |
+| Luxury art / kinetic mechatronics | Toolman Custom, Berlin | office@toolmancustom.com | Gmail SENT 2026-11-15 |
+| Electromechanical design / prototype / DFM | Delta Kinetic, Southampton | info@deltakinetic.com | Gmail SENT 2026-11-15 |
+
+**New messages in second wave:** Audio Deluxe and MKB received tailored brand-appropriate presentations linking to the verifiable actual digital Hyperwave demo and clearly stating lack of a physical prototype. Engineering firms were asked for a no-charge capability-fit answer *only*, rough budget for a subsequent paid study and feasibility of 1/5/10/25-unit manufacture, with NO work authorized or charges accepted. All sent with true and cautious statements.
+
+**Evidence — official public contact websites:** https://audiodeluxe.ae/contact/ ; https://mkbbespokeaudio.com/pages/contact ; https://www.helldorfer-engineering.com/contact ; https://toolmancustom.com/ ; https://www.deltakinetic.com/engineering/design/
+
+**Delivery/reply confirmation:** each message's `SENT` label verified through Gmail read after send. No recipient response or bounce was returned by scoped Gmail searches immediately afterward. `SENT` confirms sending, **not inbox delivery or readership**.
+
+**Do not duplicate sends.** This campaign has been logged in owning GitHub issue #329. Next concrete event to act on is an actual recipient reply, technical capability decision or a buyer introduction. Work through existing Unfire mailbox tracking, retaining evidence, no calls and no advance-charge acceptance. **Physical sales still unready**: before deposits, physical engineering/prototype, firm manufacturer and legally reviewed protected payment/refund/delivery agreements remain necessary.
