@@ -39,6 +39,7 @@ test('approved loader creates only one script with protective attributes',()=>{
  const s=f.appended[0];assert.equal(s.src,'https://cloud.umami.is/script.js');
  assert.equal(s.attrs['data-website-id'],uuid);
  assert.equal(s.attrs['data-auto-pageview'],'false');
+ assert.equal(s.attrs['data-auto-track'],'false');
  assert.equal(s.attrs['data-exclude-search'],'true');
  assert.equal(s.attrs['data-do-not-track'],'true');
  assert.equal(f.tracked(),0);
@@ -63,4 +64,12 @@ test('DNT suppresses script injection',()=>{
 test('script has no fixed website identifier or credentials',()=>{
  assert.doesNotMatch(source,/Bearer |access_token|secret_key|apiKey\s*:/i);
  assert.doesNotMatch(source,/[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i);
+});
+
+test('after revocation a re-enable requires a fresh navigation',()=>{
+ const f=fixture({release:true,privacy:true}),api=f.window.UnfirePlayMetricsLoader;
+ api.enable(uuid);f.appended[0].onload();api.revoke();
+ f.window.__UNFIRE_ANALYTICS_PRIVACY_GATE=true;
+ assert.equal(api.enable(uuid),false);
+ assert.equal(f.appended.length,1);
 });
