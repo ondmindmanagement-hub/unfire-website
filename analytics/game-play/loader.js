@@ -4,7 +4,7 @@
 (function(root){
   'use strict';
   if(!root || root.UnfirePlayMetricsLoader)return;
-  var doc=root.document,nav=root.navigator||{},loaded=false,started=false;
+  var doc=root.document,nav=root.navigator||{},loaded=false,started=false,revoked=false;
   var src='https://cloud.umami.is/script.js';
   function permitted(){
     var loc=root.location||{};
@@ -16,7 +16,7 @@
       nav.msDoNotTrack!=='1' && root.doNotTrack!=='1');
   }
   function enable(id){
-    if(started || !permitted() || typeof id!=='string' ||
+    if(started || revoked || !permitted() || typeof id!=='string' ||
        !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id))
        return false;
     started=true;
@@ -30,11 +30,13 @@
       s.setAttribute('data-exclude-search','true');
       s.setAttribute('data-exclude-hash','true');
       s.setAttribute('data-auto-pageview','false');
+      s.setAttribute('data-auto-track','false'); // No vendor auto clicks or path changes.
       s.onload=function(){
         if(!permitted() || !root.umami || typeof root.umami.track!=='function')return;
         loaded=true;
         root.__UNFIRE_ANALYTICS_APPROVED=true;
         try{var p=root.umami.track();if(p&&typeof p.catch==='function')p.catch(function(){});}catch(_){}
+        try{if(root.UnfirePlayMetrics && typeof root.UnfirePlayMetrics.onTrackerReady==='function')root.UnfirePlayMetrics.onTrackerReady();}catch(_){}
       };
       s.onerror=function(){started=false;root.__UNFIRE_ANALYTICS_APPROVED=false;};
       doc.head.appendChild(s);
@@ -42,6 +44,7 @@
     }catch(_){started=false;return false;}
   }
   function revoke(){
+    revoked=true; // Fail closed: require a fresh navigation before re-enabling.
     root.__UNFIRE_ANALYTICS_APPROVED=false;
     root.__UNFIRE_ANALYTICS_PRIVACY_GATE=false;
     // The external script has already loaded: revocation blocks custom events
