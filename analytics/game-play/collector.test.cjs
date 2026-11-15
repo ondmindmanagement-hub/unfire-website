@@ -12,6 +12,8 @@ function fixture(o={}){
     document,navigator:Object.assign({globalPrivacyControl:false,doNotTrack:'0'},o.navigator),
     location:{protocol:'https:',hostname:o.hostname||'unfire.technology'},
     __UNFIRE_ANALYTICS_APPROVED:o.approved!==false,
+    __UNFIRE_ANALYTICS_RELEASE_APPROVED:o.release!==false,
+    __UNFIRE_ANALYTICS_PRIVACY_GATE:o.privacy!==false,
     performance:{now:()=>clock},
     umami:o.tracker===false?undefined:{track(n,p){events.push({name:n,data:p});return Promise.resolve();}},
     addEventListener(n,fn){windowHandlers[n]=fn;}
@@ -66,4 +68,13 @@ test('vendor errors are isolated from gameplay',()=>{
 });
 test('no storage or direct transmission in adapter',()=>{
  assert.doesNotMatch(source,/localStorage|sessionStorage|document\.cookie|sendBeacon|fetch\s*\(|XMLHttpRequest|identify\s*\(|setInterval|new\s+Worker/);
+});
+
+test('revocation and release freeze block subsequent game events',()=>{
+ const f=fixture(),m=f.window.UnfirePlayMetrics;
+ m.start();f.window.__UNFIRE_ANALYTICS_PRIVACY_GATE=false;m.end();
+ assert.deepEqual(f.events.map(e=>e.name),['unfire_game_start']);
+ const g=fixture(),n=g.window.UnfirePlayMetrics;
+ g.window.__UNFIRE_ANALYTICS_RELEASE_APPROVED=false;n.start();n.end();
+ assert.equal(g.events.length,0);
 });
