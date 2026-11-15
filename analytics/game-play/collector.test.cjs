@@ -78,3 +78,22 @@ test('revocation and release freeze block subsequent game events',()=>{
  g.window.__UNFIRE_ANALYTICS_RELEASE_APPROVED=false;n.start();n.end();
  assert.equal(g.events.length,0);
 });
+
+test('late tracker authorization counts active session from approval, not from earlier play',()=>{
+ const f=fixture({approved:false}),m=f.window.UnfirePlayMetrics;
+ assert.equal(m.start(),false);
+ f.step(600000);
+ f.window.__UNFIRE_ANALYTICS_APPROVED=true;
+ assert.equal(m.onTrackerReady(),true);
+ f.step(65000);
+ m.end();
+ assert.deepEqual(f.events.map(e=>e.name),['unfire_game_start','unfire_game_end']);
+ assert.equal(f.events[1].data.duration_bucket,'1_to_5m');
+});
+test('entry completed before permission never creates a retroactive player',()=>{
+ const f=fixture({approved:false}),m=f.window.UnfirePlayMetrics;
+ m.start();f.step(23000);m.end();
+ f.window.__UNFIRE_ANALYTICS_APPROVED=true;
+ assert.equal(m.onTrackerReady(),false);
+ assert.equal(f.events.length,0);
+});
