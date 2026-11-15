@@ -8,6 +8,8 @@
   function allowed(){
     var loc=root.location||{};
     return root.__UNFIRE_ANALYTICS_APPROVED===true &&
+      root.__UNFIRE_ANALYTICS_RELEASE_APPROVED===true &&
+      root.__UNFIRE_ANALYTICS_PRIVACY_GATE===true &&
       loc.protocol==='https:' && loc.hostname==='unfire.technology' &&
       nav.globalPrivacyControl!==true && nav.doNotTrack!=='1' &&
       nav.msDoNotTrack!=='1' && root.doNotTrack!=='1' &&
