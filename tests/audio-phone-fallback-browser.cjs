@@ -62,13 +62,17 @@ function gameRequests(list){return list.filter(u=>/\/audio\/maletin\/index\.html
     // 2: A direct Android link must redirect to the safe host before engine fetch.
     {
       const ctx=await contextFor(uaPhone,true,true,393,850);
-      const page=await ctx.newPage(),requests=[];
+      const page=await ctx.newPage(),requests=[],completed=[],failed=[];
       page.on('request',r=>requests.push(r.url()));
+      page.on('requestfinished',r=>completed.push(r.url()));
+      page.on('requestfailed',r=>failed.push(r.url()));
       await page.goto(origin+'/audio/maletin/index.html?quality=compact',{waitUntil:'domcontentloaded',timeout:25000});
       await page.waitForURL(url=>url.pathname==='/audio/',{timeout:10000});
       await page.locator('#ufPhoneNotice').waitFor({state:'visible',timeout:10000});
-      assert.equal(requests.filter(u=>/game-engine-v50\.js/.test(u)).length,0,'direct phone route must not preload engine');
-      console.log('PASS direct Android game URL redirected before engine download');
+      const finishedEngine=completed.filter(u=>/game-engine-v50\.js/.test(u));
+      assert.equal(finishedEngine.length,0,'direct phone route must not complete engine download');
+      assert.equal(await page.locator('#malFrame').getAttribute('src'),null,'redirect destination must not start WebGL');
+      console.log('PASS direct Android game URL redirected: '+requests.filter(u=>/game-engine-v50\.js/.test(u)).length+' speculative requests, '+failed.filter(u=>/game-engine-v50\.js/.test(u)).length+' cancelled, 0 completed engine downloads');
       await ctx.close();
     }
     // 3: Desktop and tablets retain existing game route; route the heavy engine to a stub.
