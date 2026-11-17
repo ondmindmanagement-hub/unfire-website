@@ -13,7 +13,7 @@ assert.ok(page.indexOf('id="ufDirectWebPhoneGuard"') < page.indexOf('rel="preloa
 
 function run({name, ua, width = 390, pointer = true, mobileFlag = false,
   href = 'https://unfire.technology/audio/maletin/index.html?quality=compact',
-  appSession = false, expectedRedirect = true}) {
+  appSession = false, storageBlocked = false, expectedRedirect = true}) {
   test(name, () => {
     const redirect = [];
     const url = new URL(href);
@@ -23,7 +23,7 @@ function run({name, ua, width = 390, pointer = true, mobileFlag = false,
       matchMedia: () => ({matches:pointer && width<=540}),
       location:loc,
       URL,
-      sessionStorage:{getItem:k=>k==='unfire_app' && appSession ? '1' : null}
+      sessionStorage:{getItem:k=>{if(storageBlocked)throw Error('Storage access denied');return k==='unfire_app' && appSession ? '1' : null}}
     };
     vm.runInNewContext(match[1], env, {timeout:300});
     assert.equal(redirect.length, expectedRedirect?1:0, 'unexpected redirect state');
@@ -43,3 +43,4 @@ run({name:'Native iOS app user agent is exempt',ua:'Mozilla/5.0 (iPhone; CPU iPh
 run({name:'Native app custom URL scheme is exempt',ua:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)',href:'y2k://bundle/audio/maletin/index.html',expectedRedirect:false});
 run({name:'Native app session is exempt',ua:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)',appSession:true,expectedRedirect:false});
 run({name:'User-Agent Client Hints phone redirects',ua:'TestBrowser',mobileFlag:true,expectedRedirect:true});
+run({name:'Phone still redirects when sessionStorage is blocked',ua:'Mozilla/5.0 (Linux; Android 15; moto g06) Chrome/127 Mobile Safari/537.36',storageBlocked:true,expectedRedirect:true});
