@@ -1,4 +1,23 @@
 <!doctype html><html lang="en"><head>
+<script id="ufDirectWebPhoneGuard">(function(){
+  // Direct browser links must not bypass the phone safety screen on the parent site.
+  // Native Apple app bundles are deliberately exempt: same HTML is used by WKWebView.
+  try {
+    var ua=String(navigator.userAgent||'');
+    var nativeApp=!/^https?:$/i.test(location.protocol) ||
+      /Y2KRobotsApp/i.test(ua) ||
+      /(?:[?&])app=1(?:&|$)/.test(location.search) ||
+      sessionStorage.getItem('unfire_app')==='1';
+    if(nativeApp)return;
+    var android=/Android/i.test(ua);
+    var isPhone=!!(navigator.userAgentData&&navigator.userAgentData.mobile===true)||
+      /iPhone|iPod|Windows Phone/i.test(ua)||
+      (android&&/Mobile/i.test(ua))||
+      (android&&matchMedia('(max-width: 540px) and (pointer: coarse)').matches);
+    if(!isPhone)return;
+    location.replace(new URL('../#hero',location.href).href);
+  } catch(e) { /* A navigation failure must not corrupt native application startup. */ }
+})();</script>
 <!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
 <script src="app-mode.js?v=20261027app2"></script>
 <script id="ufAdaptiveBoot">(function(){
