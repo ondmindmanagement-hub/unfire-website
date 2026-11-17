@@ -55,7 +55,7 @@ function gameRequests(list){return list.filter(u=>/\/audio\/maletin\/index\.html
       assert.equal(gameRequests(requests).length,0,'phone host must not request the game engine');
       assert.equal(await page.evaluate(()=>window.__unfireWebGLAttempts),0,'phone host must not probe WebGL');
       assert.match(await page.locator('#ufPhoneTitle').innerText(),/bigger screen/i);
-      assert.ok(await page.locator('a[href="#instrumentos"]').first().isVisible());
+      assert.ok(await page.locator('#ufPhoneNotice a.ufPhoneCta').isVisible());
       console.log('PASS browser Motorola landing: static notice, 0 game requests, 0 WebGL contexts');
       await ctx.close();
     }
