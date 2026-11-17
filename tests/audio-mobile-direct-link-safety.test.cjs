@@ -9,7 +9,8 @@ const page = fs.readFileSync(path.join(__dirname, '../audio/maletin/index.html')
 const match = page.match(/<script id="ufDirectWebPhoneGuard">([\s\S]*?)<\/script>/);
 assert.ok(match, 'direct-web-phone guard exists');
 assert.ok(page.indexOf('id="ufDirectWebPhoneGuard"') < page.indexOf('src="app-mode.js'), 'guard runs before any potentially heavy scripts');
-assert.ok(page.indexOf('id="ufDirectWebPhoneGuard"') < page.indexOf('rel="preload"'), 'guard runs before game-engine preload');
+assert.ok(page.indexOf('id="ufDirectWebPhoneGuard"') < page.indexOf('id="ufConditionalEnginePreload"'), 'guard runs before conditional game-engine preload');
+assert.ok(!/<link rel="preload"[^>]*game-engine-v50\.js/.test(page), 'game engine must not have an unconditional static preload');
 
 function run({name, ua, width = 390, pointer = true, mobileFlag = false,
   href = 'https://unfire.technology/audio/maletin/index.html?quality=compact',
@@ -19,6 +20,7 @@ function run({name, ua, width = 390, pointer = true, mobileFlag = false,
     const url = new URL(href);
     const loc = {href, protocol:url.protocol, search:url.search, replace(x){redirect.push(x)}};
     const env = {
+      window: {},
       navigator: {userAgent:ua,userAgentData:{mobile:mobileFlag}},
       matchMedia: () => ({matches:pointer && width<=540}),
       location:loc,
@@ -27,7 +29,10 @@ function run({name, ua, width = 390, pointer = true, mobileFlag = false,
     };
     vm.runInNewContext(match[1], env, {timeout:300});
     assert.equal(redirect.length, expectedRedirect?1:0, 'unexpected redirect state');
-    if(expectedRedirect) assert.equal(redirect[0],new URL('../#hero',href).href);
+    if(expectedRedirect) {
+      assert.equal(redirect[0],new URL('../#hero',href).href);
+      assert.equal(env.window.__ufDirectBrowserPhone,true,'phone flag must cancel engine preload');
+    }
   });
 }
 
