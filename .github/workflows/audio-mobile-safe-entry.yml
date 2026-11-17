@@ -7,16 +7,20 @@ on:
       - 'tests/audio-mobile-safe-entry.test.cjs'
       - 'tests/audio-phone-desktop-fallback.test.cjs'
       - 'tests/audio-mobile-direct-link-safety.test.cjs'
+      - 'tests/audio-phone-fallback-browser.cjs'
       - '.github/workflows/audio-mobile-safe-entry.yml'
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   compositor-safe-entry:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Validate real mobile WebGL opening contract
         run: |
           node --check tests/audio-mobile-safe-entry.test.cjs
@@ -24,3 +28,8 @@ jobs:
           node --check tests/audio-phone-desktop-fallback.test.cjs
           node --check tests/audio-mobile-direct-link-safety.test.cjs
           node --test tests/audio-phone-desktop-fallback.test.cjs tests/audio-mobile-direct-link-safety.test.cjs
+      - name: Browser smoke with bounded Chromium runtime
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+          node tests/audio-phone-fallback-browser.cjs
