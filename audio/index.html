@@ -1,4 +1,13 @@
 <!doctype html><html lang="en"><head>
+<script id="ufPhoneGate">(function(){
+  // No game initialization on phones until supported by physical-device QA.
+  var ua=navigator.userAgent||'',android=/Android/i.test(ua);
+  var phone=!!(navigator.userAgentData&&navigator.userAgentData.mobile===true)||
+    /iPhone|iPod|Windows Phone/i.test(ua)||
+    (android&&/Mobile/i.test(ua))||
+    (android&&matchMedia('(max-width: 540px) and (pointer: coarse)').matches);
+  if(phone)document.documentElement.classList.add('uf-phone-safe');
+})();</script>
 <!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
 <script id="ufAdaptiveBoot">(function(){
   try {
@@ -33,6 +42,35 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=IM+Fell+English+SC&family=Michroma&family=Pirata+One&family=Righteous&family=Cormorant+SC:wght@700&family=Playfair+Display+SC:ital,wght@1,900&family=Black+Ops+One&family=Comfortaa:wght@700&family=Audiowide&family=Poiret+One&family=Orbitron:wght@800&family=Marcellus+SC&family=Bodoni+Moda:ital,wght@1,700&family=Bungee&family=Fraunces:ital,wght@1,700&family=Silkscreen:wght@700&family=VT323&family=New+Rocker&family=Special+Elite&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=IM+Fell+English+SC&family=Michroma&family=Pirata+One&family=Righteous&family=Cormorant+SC:wght@700&family=Playfair+Display+SC:ital,wght@1,900&family=Black+Ops+One&family=Comfortaa:wght@700&family=Audiowide&family=Poiret+One&family=Orbitron:wght@800&family=Marcellus+SC&family=Bodoni+Moda:ital,wght@1,700&family=Bungee&family=Fraunces:ital,wght@1,700&family=Silkscreen:wght@700&family=VT323&family=New+Rocker&family=Special+Elite&display=swap"></noscript>
 <link rel="preload" as="image" href="img/maletin-real-first-frame-desktop.webp" media="(min-width:601px)" fetchpriority="high">
 <link rel="preload" as="image" href="img/maletin-real-first-frame-mobile.webp?v=20261023-realworld2" media="(max-width:600px)" fetchpriority="high">
+<style id="ufPhoneSafety">
+#ufPhoneNotice{display:none}
+html.uf-phone-safe #malFrame,html.uf-phone-safe #unfireCaseFirstFrame,
+html.uf-phone-safe #unfireMobileTapHint,html.uf-phone-safe #heroCopy,
+html.uf-phone-safe #sndBtn,html.uf-phone-safe #noWebglLink,
+html.uf-phone-safe #unfireReturnPortal,html.uf-phone-safe #field{display:none!important}
+html.uf-phone-safe #hero{height:auto!important;min-height:0!important}
+html.uf-phone-safe #heroPin{
+  position:relative!important;top:auto!important;height:auto!important;min-height:440px;
+  padding:clamp(32px,8vw,85px) 20px!important;display:grid!important;place-items:center!important;
+  background:radial-gradient(ellipse at 50% 16%,#1b3c61,#0c1729 48%,#08090c 84%)!important
+}
+html.uf-phone-safe #heroPin::before,html.uf-phone-safe #heroPin::after{content:none!important}
+html.uf-phone-safe #ufPhoneNotice{
+  display:flex!important;flex-direction:column;align-items:center;text-align:center;gap:18px;
+  z-index:6;position:relative;max-width:610px;margin:auto;padding:20px 8px;color:#f2f6fc;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif
+}
+#ufPhoneNotice .eyebrow{color:#9dccff}
+#ufPhoneNotice h1{font:800 clamp(30px,7.5vw,52px)/1.06 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:-.04em}
+#ufPhoneNotice p{max-width:46ch;color:#c2cfe2;font-size:15px;line-height:1.6}
+#ufPhoneNotice .ufPhoneCta{
+  display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 23px;
+  border:1px solid #8cc7ff;border-radius:999px;background:#eaf5ff;color:#0a1f3a;
+  text-decoration:none;font-weight:750;font-size:14px
+}
+#ufPhoneNotice .ufPhoneCta:focus-visible{outline:3px solid #fff;outline-offset:4px}
+#ufPhoneNotice small{color:#90a6be;font-size:12px}
+</style>
 <style>
 /* UNFIRE AUDIO — "El equipaje".
    Cada categoría vive en su propio contenedor: maletín de vuelo (inicio), flight case (instrumentos),
@@ -582,6 +620,13 @@ footer a{color:var(--soft)}
 <!-- 0 · El maletín 3D con inmersión -->
 <div class="hero" id="hero" data-field="0">
   <div class="hero-pin" id="heroPin">
+    <section id="ufPhoneNotice" role="region" aria-labelledby="ufPhoneTitle">
+      <span class="eyebrow">UNFIRE GAMES · Y2K ROBOTS</span>
+      <h1 id="ufPhoneTitle">Your adventure awaits on a bigger screen.</h1>
+      <p>The 3D web game is designed for desktop browsers. To avoid freezes and slow loading, gameplay is disabled on phones. Continue on a PC or Mac.</p>
+      <a class="ufPhoneCta" href="#instrumentos">Explore Unfire Audio</a>
+      <small>You can still browse this website on your phone.</small>
+    </section>
     <!-- Actual gameplay captured from the live WebGL case; available before WebGL boots. -->
     <picture id="unfireCaseFirstFrame" role="button" tabindex="0" aria-label="Enter the Unfire Audio world through the real in-game case">
       <source media="(max-width:600px)" srcset="img/maletin-real-first-frame-mobile.webp?v=20261023-realworld2">
@@ -926,6 +971,7 @@ const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e)
    0 maletín: seno suave · 1 instrumentos: sierra · 2 efectos: escalonada (bitcrush)
    3 juguetes: rebotes · 4 cápsulas: puntos · 5 bolsa: ondas cálidas · 6 licencia: casi plana */
 const Field=(()=>{
+  if(document.documentElement.classList.contains('uf-phone-safe'))return {setMode(){},setTint(){}};
   const cv=$('#field'),c=cv.getContext('2d');let W=0,H=0,dpr=1,t=0,raf=0,vel=0,lastY=scrollY,mx=.5,my=.5,visible=true;
   const SPEC=[
     {w:[1,0,0,0],a:[61,139,255],b:[201,208,217],amp:.9,speed:.35},
@@ -992,7 +1038,8 @@ const rv=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
 document.querySelectorAll('.reveal').forEach(el=>rv.observe(el));
 
 /* ---- Sonido del maletín (se activa con el primer clic o con el botón) ---- */
-const CaseSfx=(()=>{let on=false,ctx=null;const btn=$('#sndBtn');
+const CaseSfx=(()=>{if(document.documentElement.classList.contains('uf-phone-safe'))return {play(){}};
+  let on=false,ctx=null;const btn=$('#sndBtn');
   const unlock=()=>{if(on)return;try{ctx=UA.init();on=true;btn.setAttribute('aria-pressed','true');btn.textContent='🔊 Sonido'}catch(e){}};
   btn.onclick=()=>{if(on){on=false;btn.setAttribute('aria-pressed','false');btn.textContent='🔈 Sound'}else unlock()};
   addEventListener('pointerdown',unlock,{once:true});addEventListener('keydown',unlock,{once:true});
@@ -1008,6 +1055,7 @@ const CaseSfx=(()=>{let on=false,ctx=null;const btn=$('#sndBtn');
 /* Prepare the full 3D scene after the first paint; start earlier when the visitor engages.
    Keep the original scene and interaction code unchanged. */
 const UNFIRE_SCENE=(()=>{
+  if(document.documentElement.classList.contains('uf-phone-safe'))return {start(){},onReady(){},isReady(){return false}};
   const frame=document.getElementById('malFrame');
   const pin=document.getElementById('heroPin');
   let started=false,skipUntil=0,ready=false,waiting=[],generation=0;
@@ -1274,8 +1322,8 @@ const Gacha=(()=>{
 let rot=0,current=null;const ball=$('#ball');
 $('#crank').onclick=()=>{rot+=360;$('#crank').style.transform=`rotate(${rot}deg)`;ball.classList.remove('out');current=Gacha.spin();
   setTimeout(()=>{ball.style.setProperty('--c',current[3]);ball.classList.add('out');{const pi=CAPS.indexOf(current),P=$('#prizeImg');P.dataset.cap=pi;P.dataset.o='0';P.src=CAPAT.thumb(pi)||capSvg(current[3]);}$('#prizeImg').alt='Capsule '+current[1];$('#prizeFam').textContent=FAMS[current[2]][0];$('#prizeName').textContent=current[1];$('#prizeTxt').textContent='Tap the capsule to open it.';Field.setTint(current[3])},900)};
-function showDev(c){let fr=$('#prizeFr');if(!fr){fr=document.createElement('iframe');fr.id='prizeFr';fr.title='3D device';fr.style.cssText='width:100%;max-width:360px;aspect-ratio:1;border:0;border-radius:18px;background:#05070d;display:block;margin:8px auto';$('#prizeImg').after(fr)}const n=parseInt(c[0].slice(1))-1;fr.src='maletin/index.html?ver='+n;$('#prizeImg').style.display='none'}
-ball.onclick=()=>{if(!current)return;showDev(current);$('#prizeTxt').innerHTML=`${current[4]}. <a href="#hero">Drag to rotate it · <a href="catalogo/index.html#serie1">view the full catalog</a></a>`;ball.classList.remove('out')};
+function showDev(c){if(document.documentElement.classList.contains('uf-phone-safe'))return;let fr=$('#prizeFr');if(!fr){fr=document.createElement('iframe');fr.id='prizeFr';fr.title='3D device';fr.style.cssText='width:100%;max-width:360px;aspect-ratio:1;border:0;border-radius:18px;background:#05070d;display:block;margin:8px auto';$('#prizeImg').after(fr)}const n=parseInt(c[0].slice(1))-1;fr.src='maletin/index.html?ver='+n;$('#prizeImg').style.display='none'}
+ball.onclick=()=>{if(!current)return;if(document.documentElement.classList.contains('uf-phone-safe')){$('#prizeTxt').textContent='3D previews are available on PC and Mac.';ball.classList.remove('out');return;}showDev(current);$('#prizeTxt').innerHTML=`${current[4]}. <a href="#hero">Drag to rotate it · <a href="catalogo/index.html#serie1">view the full catalog</a></a>`;ball.classList.remove('out')};
 
 /* ================= Instrumentos: pestañas ================= */
 document.querySelectorAll('.devtabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.devtabs button').forEach(x=>x.setAttribute('aria-selected',x===b));document.querySelectorAll('[data-shot]').forEach(s=>s.hidden=s.dataset.shot!==b.dataset.dev)});
