@@ -4,10 +4,12 @@
   // Native Apple app bundles are deliberately exempt: same HTML is used by WKWebView.
   try {
     var ua=String(navigator.userAgent||'');
+    var nativeSession=false;
+    try { nativeSession=sessionStorage.getItem('unfire_app')==='1'; } catch(storageError) {}
     var nativeApp=!/^https?:$/i.test(location.protocol) ||
       /Y2KRobotsApp/i.test(ua) ||
       /(?:[?&])app=1(?:&|$)/.test(location.search) ||
-      sessionStorage.getItem('unfire_app')==='1';
+      nativeSession;
     if(nativeApp)return;
     var android=/Android/i.test(ua);
     var isPhone=!!(navigator.userAgentData&&navigator.userAgentData.mobile===true)||
