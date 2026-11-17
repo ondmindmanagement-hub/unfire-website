@@ -3,7 +3,10 @@ on:
   pull_request:
     paths:
       - 'audio/index.html'
+      - 'audio/maletin/index.html'
       - 'tests/audio-mobile-safe-entry.test.cjs'
+      - 'tests/audio-phone-desktop-fallback.test.cjs'
+      - 'tests/audio-mobile-direct-link-safety.test.cjs'
       - '.github/workflows/audio-mobile-safe-entry.yml'
   workflow_dispatch:
 permissions:
@@ -18,3 +21,6 @@ jobs:
         run: |
           node --check tests/audio-mobile-safe-entry.test.cjs
           node tests/audio-mobile-safe-entry.test.cjs
+          node --check tests/audio-phone-desktop-fallback.test.cjs
+          node --check tests/audio-mobile-direct-link-safety.test.cjs
+          node --test tests/audio-phone-desktop-fallback.test.cjs tests/audio-mobile-direct-link-safety.test.cjs
