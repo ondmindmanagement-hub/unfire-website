@@ -18,6 +18,8 @@
       (android&&matchMedia('(max-width: 540px) and (pointer: coarse)').matches);
     if(!isPhone)return;
     window.__ufDirectBrowserPhone=true;
+    // Stop the original HTML fetch so the speculative parser cannot keep prefetching assets.
+    if(typeof window.stop==='function')window.stop();
     location.replace(new URL('../#hero',location.href).href);
   } catch(e) { /* A navigation failure must not corrupt native application startup. */ }
 })();</script>
