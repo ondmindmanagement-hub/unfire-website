@@ -10,6 +10,7 @@
 })();</script>
 <!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
 <script id="ufAdaptiveBoot">(function(){
+  if(document.documentElement.classList.contains("uf-phone-safe"))return;
   try {
     var coarse=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
     var memory=Number(navigator.deviceMemory||0), cores=Number(navigator.hardwareConcurrency||0);
@@ -600,7 +601,7 @@ footer a{color:var(--soft)}
   </div>
 </div>
 
-<script>(function(){try{var c=document.createElement('canvas');if(!c.getContext('webgl2')&&!c.getContext('webgl'))document.documentElement.classList.add('no-webgl');}catch(e){document.documentElement.classList.add('no-webgl');}})();</script>
+<script>(function(){if(document.documentElement.classList.contains('uf-phone-safe'))return;try{var c=document.createElement('canvas');if(!c.getContext('webgl2')&&!c.getContext('webgl'))document.documentElement.classList.add('no-webgl');}catch(e){document.documentElement.classList.add('no-webgl');}})();</script>
 <canvas id="field" aria-hidden="true"></canvas>
 <div class="page">
 <div class="draft"><div class="wrap"><span>UNFIRE AUDIO · INTERACTIVE PREVIEW</span><span>Prices and release plans may change. Payments are currently disabled.</span></div></div>
