@@ -37,7 +37,7 @@ test('phone fallback is accessible, truthful and retains the rest of Unfire Audi
   assert.match(html, /id="ufPhoneTitle"/);
   assert.match(html, /Continue on a PC or Mac\./);
   assert.match(html, /href="#instrumentos">Explore Unfire Audio/);
-  assert.match(html, /html\.uf-phone-safe #ufPhoneNotice\{display:flex!important/);
+  assert.match(html, /html\.uf-phone-safe #ufPhoneNotice\{\s*display:flex!important/);
   assert.match(html, /html\.uf-phone-safe #malFrame/);
   assert.match(html, /html\.uf-phone-safe #field/);
   assert.match(html, /<iframe id="malFrame" data-src="maletin\/index\.html/);
