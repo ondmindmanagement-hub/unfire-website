@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;; object-src &#x27;none&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; img-src &#x27;self&#x27; data:; font-src &#x27;self&#x27; data:; connect-src &#x27;none&#x27;; frame-src &#x27;none&#x27;; media-src &#x27;self&#x27;">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;; object-src &#x27;none&#x27;; script-src &#x27;self&#x27; &#x27;sha256-1yPRg7v/ezkmA/MIVZeovVSgoYoP5B9doKI3UFjQJ8Q=&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; img-src &#x27;self&#x27; data:; font-src &#x27;self&#x27; data:; connect-src &#x27;none&#x27;; frame-src &#x27;none&#x27;; media-src &#x27;self&#x27;">
 <title translate="no">Request an Unfire paid workflow QA assessment | Unfire</title>
 <meta name="description" content="Describe a non-critical workflow exception and prepare a private written enquiry for Unfire. Optional EUR 950 synthetic QA scope; no accounts, analytics or upload required.">
 <link rel="canonical" href="https://unfire.technology/pilot/intake/">
@@ -91,7 +91,41 @@ footer .wrap{display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap}
 </section>
 </div></main>
 <footer><div class="wrap"><span><span class="notranslate" translate="no">Unfire</span> · Founder-led initiative in Catalonia, Spain</span><span><a href="/privacy.html">Privacy</a> · <a href="/legal.html">Legal</a> · <a href="/pilot/">Pilot overview</a></span></div></footer>
-<script src="/assets/js/unfire-pilot-intake-20261120.js?v=1" defer></script>
+<script>
+'use strict';
+(function(){
+ const $=id=>document.getElementById(id),form=$('intake'),status=$('status'),box=$('previewBox'),preview=$('preview');
+ const clean=(v,max)=>v.trim().replace(/[\r\n\t]+/g,' ').slice(0,max);
+ let subject='Unfire written workflow assessment enquiry';
+ form.addEventListener('submit',event=>{
+  event.preventDefault();status.textContent='';
+  if(!form.checkValidity()){form.reportValidity();status.textContent='Please complete the required fields with a valid email address.';return;}
+  const org=clean($('org').value,100),email=clean($('contact').value,150);
+  const problem=$('problem').value.trim().slice(0,750),outcome=$('outcome').value.trim().slice(0,500);
+  if(problem.length<20||outcome.length<12){status.textContent='Please give a little more detail about the issue and intended result.';return;}
+  subject='Unfire workflow assessment — '+org.slice(0,65);
+  preview.value=['Hello Unfire,','', 'I would like a written-only discussion of a non-binding, synthetic-data feasibility review.','',
+    'Organization: '+org, 'Reply-to email: '+email, 'Operating area: '+$('sector').value,
+    'Process owner: '+$('owner').value,'','Recurring problem:',' '+problem,'','Desired measurable outcome:',' '+outcome,
+    '','Indicative budget: '+$('scope').value,'Decision horizon: '+$('timing').value,'',
+    'I understand this is a preliminary enquiry, not a booking, contract or commitment. Please reply by email.'].join('\n');
+  box.hidden=false;status.textContent='Draft prepared locally. Nothing has been sent.';
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+ });
+ $('prepareEnquiry').disabled=false; // Enable only after local draft-preparation handler is installed.
+ $('openEmail').addEventListener('click',()=>{
+  if(!preview.value.trim())return;
+  const url='mailto:hello@unfire.technology?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(preview.value);
+  if(url.length>4500){status.textContent='Please shorten the draft slightly before opening your email app.';return;}
+  window.location.href=url;
+ });
+ $('copyEmail').addEventListener('click',async()=>{
+  if(!preview.value.trim())return;
+  try{await navigator.clipboard.writeText('To: hello@unfire.technology\nSubject: '+subject+'\n\n'+preview.value);status.textContent='Email details copied. Paste into your email app to send.';}
+  catch{preview.focus();preview.select();status.textContent='Select and copy the text above manually.';}
+ });
+})();
+</script>
 
 <!-- Sr. Dante: Unfire public web assistant (speech opt-in) -->
 <script src="/assets/js/ask-unfire.js?v=20261020-3" defer></script>
