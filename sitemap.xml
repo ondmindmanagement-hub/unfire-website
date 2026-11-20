@@ -23,6 +23,8 @@
   <url><loc>https://unfire.technology/archer/press/</loc><priority>0.6</priority></url>
   <url><loc>https://unfire.technology/archer/faq/</loc><priority>0.7</priority></url>
   <url><loc>https://unfire.technology/apps/</loc><priority>0.8</priority></url>
+  <url><loc>https://unfire.technology/signals/</loc><priority>0.7</priority></url>
+  <url><loc>https://unfire.technology/signals/privacy/</loc><priority>0.4</priority></url>
   <url><loc>https://unfire.technology/apps/archer-mobile/</loc><priority>0.8</priority></url>
   <url><loc>https://unfire.technology/apps/power/</loc><priority>0.8</priority></url>
   <url><loc>https://unfire.technology/apps/bolt-mobile/</loc><priority>0.8</priority></url>
