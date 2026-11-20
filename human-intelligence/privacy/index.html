@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'; script-src 'none'; frame-ancestors 'none'">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Privacy notice for Unfire Human Intelligence, a local macOS decision-analysis app.">
+  <link rel="canonical" href="https://unfire.technology/human-intelligence/privacy/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <title>Unfire Human Intelligence — Privacy</title>
+  <style>
+    :root{color-scheme:dark;--bg:#090d15;--surface:#131c29;--border:#2b3d50;--ink:#f4f8ff;--soft:#bdccdc;--accent:#91c7ff}
+    *{box-sizing:border-box}html{background:var(--bg)}
+    body{margin:0;color:var(--ink);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(ellipse at 65% -10%,#284f8138,transparent 46%),var(--bg)}
+    a{color:#acd6ff;text-underline-offset:4px}a:focus-visible{outline:3px solid #91c7ff;outline-offset:5px}
+    main{max-width:990px;margin:auto;padding:34px 22px 96px}
+    header{display:flex;justify-content:space-between;gap:18px;align-items:center;border-bottom:1px solid var(--border);padding-bottom:25px}
+    .brand{text-decoration:none;color:var(--ink);font-size:13px;font-weight:800;letter-spacing:.22em}.nav{font-size:13px}
+    .eyebrow{font-size:12px;font-weight:800;letter-spacing:.19em;color:var(--accent);text-transform:uppercase}
+    h1{font-size:clamp(40px,7vw,72px);letter-spacing:-.06em;line-height:1.06;margin:15px 0 20px}
+    h1 span{color:var(--accent)}.intro{max-width:770px;color:var(--soft);font-size:clamp(17px,2.3vw,22px);line-height:1.55}
+    .hero{padding:75px 0 45px}.meta{font-size:13px;color:#a6bad0;margin:24px 0}
+    .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0 40px}
+    .fact{padding:22px;border:1px solid var(--border);background:linear-gradient(140deg,#1b2c40,#101823);border-radius:19px}
+    .fact strong{display:block;font-size:17px;margin-bottom:5px}.fact small{color:var(--soft);font-size:13px}
+    section{padding:31px 0;border-top:1px solid var(--border);max-width:800px}
+    h2{font-size:clamp(22px,3.2vw,31px);letter-spacing:-.035em;margin:0 0 15px}
+    p,li{color:var(--soft);margin:0 0 14px}ul{padding-left:22px}
+    .foot{border-top:1px solid var(--border);padding-top:24px;margin-top:35px;color:#a8b9c9;font-size:13px}
+    @media(max-width:700px){.facts{grid-template-columns:1fr}.hero{padding-top:55px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+<main>
+<header><a class="brand" href="/">UNFIRE</a><div class="nav"><a href="mailto:hello@unfire.technology">Privacy contact</a></div></header>
+<div class="hero"><div class="eyebrow">Privacy by design · macOS</div><h1>Human Intelligence.<br><span>Your work stays local.</span></h1>
+<p class="intro">Unfire Human Intelligence is a rule-based decision-analysis workspace. This notice describes how the macOS app version 0.2.3 handles information on your device.</p>
+<p class="meta">Effective 20 November 2026 · Publisher: Omar Baró (Unfire independent technology initiative)</p></div>
+<div class="facts">
+<div class="fact"><strong>No account</strong><small>Use the app without creating an Unfire login.</small></div>
+<div class="fact"><strong>No server uploads</strong><small>The app does not transmit entered text or analysis reports to Unfire.</small></div>
+<div class="fact"><strong>Explicit clipboard</strong><small>Reports are copied only when you choose the Copy action.</small></div>
+</div>
+<section><h2>1. What the app processes</h2><p>You may enter company names, project descriptions, proposed evidence, metrics and other text into analysis fields. The app analyzes that information locally using built-in rules. It does not call a cloud AI model or send your submissions to our servers.</p><p>Please do not enter passwords, authentication codes, medical information or other unnecessary sensitive data.</p></section>
+<section><h2>2. What it stores</h2><p>Entered form values and generated reports are kept in the current app session, not written by the app to a separate user-content database. The app stores one local preference: whether its STOP switch is active, through macOS UserDefaults.</p><p>The Clear Session control clears the input fields and displayed report. Quitting the app ends the in-memory session. Operating-system-managed backups and diagnostics are governed separately by your device settings.</p></section>
+<section><h2>3. Clipboard and device access</h2><p>If you click Copy, the selected result is placed on the macOS clipboard. Other software may access the clipboard under macOS rules. The app does not automatically read your screen, email, microphone or camera.</p><p>The source-verified version described here does not contain a proprietary analytics service, telemetry endpoint or Unfire advertising tracker.</p></section>
+<section><h2>4. Data sharing and collection</h2><p>Unfire Human Intelligence does not collect or sell personal information from within the app. No account, network transfer or in-app advertising is necessary for its documented offline functions. Apple and macOS may independently process App Store, purchase, diagnostic or device information under their own terms and settings.</p></section>
+<section><h2>5. Controls, limitations and changes</h2><p>You remain responsible for the information you enter and the decisions you take. Its advisory rules do not provide legal, professional, financial or security certification. Future builds that introduce new data processing will require a reviewed update to this notice and App Store privacy disclosures before release.</p></section>
+<section><h2>6. Contact</h2><p>For privacy or product-support questions, email <a href="mailto:hello@unfire.technology">hello@unfire.technology</a>.</p></section>
+<div class="foot">Unfire Human Intelligence is a product of the independent Unfire technology initiative. This document covers the described macOS version only.</div>
+</main>
+</body>
+</html>
