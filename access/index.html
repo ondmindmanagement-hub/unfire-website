@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090b12">
+<meta name="description" content="Unfire Access explores alternative computer interaction for people with disabilities. We are inviting disability-led, research-stage usability collaborations.">
+<link rel="canonical" href="https://unfire.technology/access/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Unfire Access | Inclusive Computer Interaction Research</title>
+<meta property="og:title" content="Unfire Access | Inclusive Computer Interaction Research">
+<meta property="og:description" content="Disability-led evaluation of exploratory hands and voice interaction on macOS.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://unfire.technology/access/">
+<style>
+:root{color-scheme:dark;--bg:#08090c;--panel:#11141c;--border:#2c3442;--text:#f7f8fb;--muted:#bac3d2;--accent:#bbddff;--soft:#151d2c}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 85% 6%,#1c2944 0%,transparent 33%),var(--bg);color:var(--text);font:16px/1.7 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif}
+a{color:var(--accent)}a:focus-visible,button:focus-visible{outline:3px solid #fff;outline-offset:4px;border-radius:4px}
+.skip{position:absolute;left:10px;top:-60px;padding:8px 12px;background:#fff;color:#000;z-index:20}.skip:focus{top:10px}
+.wrap{width:min(1050px,calc(100% - 48px));margin:auto}
+header{border-bottom:1px solid var(--border)}.top{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0}.brand{font-size:22px;font-weight:750;letter-spacing:.015em;color:var(--text);text-decoration:none}.top nav{display:flex;gap:22px;flex-wrap:wrap}.top nav a{color:var(--muted);font-size:14px;text-decoration:none}
+.hero{padding:100px 0 85px}.eyebrow{font-size:12px;color:var(--accent);font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin:0 0 25px}
+h1{font-size:clamp(3.6rem,9vw,7rem);letter-spacing:-.057em;line-height:.96;margin:0 0 30px;font-weight:680}
+.lead{font-size:clamp(1.15rem,2.5vw,1.55rem);color:#d0d7e4;max-width:730px;margin:0}
+.status{display:inline-block;padding:7px 13px;border:1px solid #536781;color:#d2e5ff;font-size:13px;border-radius:99px;margin-top:27px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:42px}.button{display:inline-block;padding:12px 20px;border-radius:12px;background:#e5eefc;color:#0c1420;text-decoration:none;font-weight:700}.button.alt{background:transparent;color:var(--text);border:1px solid #546275}
+section{padding:75px 0;border-top:1px solid var(--border)}h2{font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.1;letter-spacing:-.035em;margin:0 0 22px}
+p{max-width:760px}.intro{color:var(--muted);font-size:18px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+.card{padding:27px;border:1px solid var(--border);border-radius:20px;background:linear-gradient(140deg,#162033,#0c1018)}.card h3{font-size:20px;margin:0 0 10px}.card p{color:var(--muted);font-size:15px;margin:0}
+.steps{counter-reset:item;display:grid;gap:14px;max-width:850px;margin-top:30px}.step{padding:21px 24px;border-radius:15px;background:var(--panel);border:1px solid var(--border)}.step strong{display:block}.step span{color:var(--muted)}
+.note{max-width:870px;padding:26px;border:1px solid #516078;border-radius:18px;background:var(--soft);color:#dbe5f5}
+footer{padding:38px 0 65px;color:var(--muted);font-size:13px}footer a{color:#e7effe}
+@media(max-width:720px){.hero{padding:65px 0}.grid{grid-template-columns:1fr}section{padding:58px 0}.top{align-items:flex-start}.top nav{justify-content:flex-end;gap:10px}.wrap{width:min(1050px,calc(100% - 34px))}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header><div class="wrap top"><a href="/" class="brand">Unfire</a><nav aria-label="Main navigation"><a href="/apps/unfire-control/">Unfire Control</a><a href="/research/">Research</a><a href="/contact/">Contact</a></nav></div></header>
+<main id="main">
+<div class="wrap hero"><p class="eyebrow">Unfire / Accessibility research</p><h1>Technology<br>for more people.</h1><p class="lead">Unfire Access is an exploratory initiative to make everyday computer interaction more inclusive. We are seeking organisations and researchers who can help evaluate alternative Mac input methods with the people who may benefit from them.</p><div class="status">Research-stage initiative · Not a clinically validated or publicly released assistive product</div><div class="actions"><a class="button" href="mailto:hello@unfire.technology?subject=Unfire%20Access%20%7C%20Research%20collaboration">Discuss a written collaboration</a><a class="button alt" href="/apps/unfire-control/">Explore Unfire Control</a></div></div>
+<section><div class="wrap"><p class="eyebrow">What we are studying</p><h2>Different ways to use a computer.</h2><p class="intro">Our macOS prototype explores camera-based hand gestures and voice commands as alternatives or complements to conventional input. These modes may not be appropriate or accessible for every person.</p><div class="grid"><div class="card"><h3>Hands</h3><p>Explore pointer movement, click and scroll interactions using hand tracking, subject to camera conditions and software limitations.</p></div><div class="card"><h3>Voice</h3><p>Explore spoken commands for selected actions, while evaluating recognition errors, accents, noise and user preferences.</p></div><div class="card"><h3>Choice and control</h3><p>Review consent, permissions, stop mechanisms, alternative controls and the ability to fall back to existing assistive technologies.</p></div></div></div></section>
+<section><div class="wrap"><p class="eyebrow">Collaborative evaluation</p><h2>A small pilot. Meaningful evidence.</h2><p class="intro">We propose beginning with a remote written scoping discussion and a technical demonstration. Any user study would require an agreed protocol, appropriate safeguarding, informed consent and the partner's required approvals.</p><div class="steps"><div class="step"><strong>01 — Define the real accessibility need</strong><span>Identify user groups, existing solutions and one specific task worth investigating, with direct input from people with disabilities.</span></div><div class="step"><strong>02 — Validate technical readiness</strong><span>Agree a supported Mac configuration, test build, reproducible task, known limitations and an emergency stop or fallback.</span></div><div class="step"><strong>03 — Evaluate only with appropriate approvals</strong><span>Measure task completion, errors, comfort and user-reported experience. No patient recruitment or clinical claims without the partner's proper oversight.</span></div><div class="step"><strong>04 — Share a transparent report</strong><span>Document what worked, what failed, possible improvements and whether further development is justified. Publication requires separate permission.</span></div></div></div></section>
+<section><div class="wrap"><p class="eyebrow">Safety and transparency</p><h2>Respect comes first.</h2><div class="note"><p><strong>Current status:</strong> Unfire Control is a development preview. Public downloads, medical suitability, clinical outcomes, accessibility compliance and production deployment have not been verified.</p><p><strong>Privacy:</strong> Initial discussion requires no health records, diagnoses, credentials or identifiable participant data. We do not request sensitive data through ordinary email.</p><p><strong>Commercial scope:</strong> Preliminary written scoping can be discussed without fees. Any formal development, testing or delivery requires a separate written agreement. Unfire is currently an independent founder-led initiative, not a separately incorporated company.</p></div><div class="actions"><a class="button" href="mailto:hello@unfire.technology?subject=Unfire%20Access%20%7C%20Research%20collaboration">Contact Unfire Access</a></div></div></section>
+</main>
+<footer><div class="wrap">© 2026 Unfire · Independent technology initiative · <a href="/privacy.html">Privacy</a> · <a href="/public-record/">Public record</a> · <a href="mailto:hello@unfire.technology">hello@unfire.technology</a></div></footer>
+</body>
+</html>
