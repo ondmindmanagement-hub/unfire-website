@@ -9,7 +9,7 @@ test("Y2K landing is separate from live web beta and safely non-indexable pendin
  assert.match(html,/https:\/\/unfire\.technology\/games\/y2k-robots\//);
  assert.match(html,/not a Steam listing/i);
  assert.match(html,/not actual gameplay footage/i);
- assert.match(html,/separate from the existing Unfire browser game/i);
+ assert.match(html,/planned public identity for Unfire\x27s evolving robot-world project/i);
  assert.match(html,/No verified Steam purchase link/i);
  assert.ok(!/href="https:\/\/store\.steampowered\.com/.test(html));
  assert.equal((html.match(/<h1\b/g)||[]).length,1);
