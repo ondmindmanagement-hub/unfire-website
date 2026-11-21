@@ -147,3 +147,15 @@ test('browser device filter reveals published browser utilities only',()=>{
   state.select('device','all');
   verifyFilter(state,'audio','all');
 });
+
+test('Privacy Lens and File Prep appear once with accurate browser limitations',()=>{
+ for(const url of ['/apps/privacy-lens/','/apps/file-prep/']){
+  assert.equal((html.match(new RegExp('href="'+url+'"','g'))||[]).length,1,'duplicate or missing '+url);
+ }
+ assert.match(html,/Privacy Lens Web Lab/);
+ assert.match(html,/File Prep Web Lab/);
+ assert.match(html,/Pattern checks are limited/);
+ assert.match(html,/no AI API, PDF or Word conversion/);
+ const state=simulate();state.select('device','web');verifyFilter(state,'all','web');
+ assert.ok(state.cards.filter(x=>!x.hidden).length>=7);
+});
