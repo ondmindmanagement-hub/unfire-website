@@ -1,0 +1,28 @@
+name: Portable Synth Sequencer Lab checks
+on:
+  pull_request:
+    paths:
+      - "labs/portable-synth-sequencer/**"
+      - ".github/workflows/portable-synth-sequencer-lab.yml"
+  push:
+    branches: [main]
+    paths:
+      - "labs/portable-synth-sequencer/**"
+      - ".github/workflows/portable-synth-sequencer-lab.yml"
+permissions:
+  contents: read
+jobs:
+  pure-node-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Static JavaScript syntax
+        run: |
+          node --check labs/portable-synth-sequencer/engine.js
+          node --check labs/portable-synth-sequencer/audio.js
+          node --check labs/portable-synth-sequencer/app.js
+          node --check labs/portable-synth-sequencer/engine.test.cjs
+          node --check labs/portable-synth-sequencer/static.test.cjs
+      - name: Validate timing, WAV and security assumptions
+        run: node --test labs/portable-synth-sequencer/*.test.cjs
