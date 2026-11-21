@@ -1,0 +1,26 @@
+name: AI Token Counter Web checks
+on:
+  pull_request:
+    paths:
+      - "apps/ai-token-counter/**"
+      - ".github/workflows/ai-token-counter-web-checks.yml"
+  push:
+    branches: [main]
+    paths:
+      - "apps/ai-token-counter/**"
+      - ".github/workflows/ai-token-counter-web-checks.yml"
+permissions:
+  contents: read
+jobs:
+  local-engine-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run dependency-free engine tests
+        run: node --test apps/ai-token-counter/engine.test.cjs
+      - name: Verify JavaScript syntax
+        run: |
+          node --check apps/ai-token-counter/engine.js
+          node --check apps/ai-token-counter/app.js
+          node --check apps/ai-token-counter/engine.test.cjs
