@@ -1,38 +1,195 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
+<script id="ufAdaptiveBoot">(function(){
+  try {
+    var coarse=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    var memory=Number(navigator.deviceMemory||0), cores=Number(navigator.hardwareConcurrency||0);
+    var unknown=!memory&&!cores&&Math.min(innerWidth,innerHeight)<400;
+    if(coarse&&((memory>0&&memory<=4)||(cores>0&&cores<=4)||unknown))
+      document.documentElement.classList.add('uf-load-pending');
+    // A network failure must never leave a permanent overlay.
+    setTimeout(function(){document.documentElement.classList.remove('uf-load-pending');},9000);
+  } catch(e) {}
+})();</script>
+<link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261023adaptive1">
+<script defer src="/assets/js/unfire-adaptive-loading.js?v=20261023adaptive1"></script>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'">
-<meta name="theme-color" content="#090b12">
-<meta name="description" content="Pocket Capture by Unfire is a portable recorder and WAV editor with local recordings, waveform trimming, playback and export.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pocket Capture — Record, trim and export WAV on iPhone &amp; iPad</title>
+<meta name="description" content="Pocket Capture is a free recorder and sample editor for iPhone and iPad. Record with the microphone, trim a real waveform with anti-click fades and export 16-bit, 24-bit or 32-bit float WAV. Everything stays on your device.">
 <link rel="canonical" href="https://unfire.technology/apps/pocket-capture/">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#efe9df">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Pocket Capture | Unfire">
-<meta property="og:description" content="Pocket Capture by Unfire is a portable recorder and WAV editor with local recordings, waveform trimming, playback and export.">
+<meta property="og:title" content="Pocket Capture — Record. Trim. Share WAV.">
+<meta property="og:description" content="A free, local recorder and sample editor for iPhone and iPad.">
 <meta property="og:url" content="https://unfire.technology/apps/pocket-capture/">
-<title translate="no">Pocket Capture | Unfire</title>
-<style>:root{color-scheme:dark;--bg:#090b12;--surface:#141925;--line:#293346;--text:#f7f9fc;--muted:#b4bbca;--accent:#a8cdfa}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}.wrap{width:min(1050px,calc(100% - 44px));margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:25px 0;border-bottom:1px solid var(--line)}.brand{font-size:23px;font-weight:700;letter-spacing:0.008em;text-decoration:none}.back{font-size:13px;color:var(--muted);text-decoration:none}.hero{padding:94px 0 84px}.label{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent);font-weight:700}h1{font-size:clamp(52px,8vw,100px);letter-spacing:0.008em;line-height:1.05;margin:16px 0 24px;font-weight:650}h2{font-size:clamp(28px,4vw,44px);letter-spacing:0.008em;line-height:1.15;margin:0 0 17px}.lead{font-size:clamp(17px,2vw,23px);max-width:740px;color:#d4ddeb}.status{display:inline-block;margin-top:31px;padding:10px 15px;border:1px solid #41506b;border-radius:999px;font-size:13px;color:#d1dcf0}section.features{border-top:1px solid var(--line);padding:64px 0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;margin-top:28px}.card{background:linear-gradient(130deg,#171f2e,#101622);border:1px solid var(--line);padding:28px;border-radius:20px;min-height:195px}.card strong{font-size:19px;letter-spacing:0.008em}.card p,.small{color:var(--muted);font-size:14px;margin-top:11px}.faq{border-top:1px solid var(--line);padding:65px 0}.faq dl{max-width:790px}.faq dt{font-weight:700;margin-top:28px}.faq dd{margin:8px 0 0;color:var(--muted)}.links{display:flex;gap:12px;flex-wrap:wrap;margin-top:33px}.links a{padding:11px 17px;border:1px solid #4e6482;border-radius:11px;text-decoration:none;font-size:14px}.links a:hover{background:#202b3c}footer{border-top:1px solid var(--line);padding:34px 0 52px;color:var(--muted);font-size:13px}footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}@media(max-width:700px){.hero{padding:63px 0}.grid{grid-template-columns:1fr}.card{min-height:140px}.faq{padding:48px 0}}</style>
-
-<meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Unfire","item":"https://unfire.technology/"},{"@type":"ListItem","position":2,"name":"Apps","item":"https://unfire.technology/apps/"},{"@type":"ListItem","position":3,"name":"Pocket Capture","item":"https://unfire.technology/apps/pocket-capture/"}]}</script>
-<link rel="stylesheet" href="/assets/css/unfire-display-typography-20261019.css?v=2">
-<link rel="stylesheet" href="/assets/css/unfire-compact-system-20261019.css?v=2">
+<meta property="og:image" content="https://unfire.technology/assets/products/apps-2026/pocket-capture-iphone-1000.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Unfire Pocket Capture","alternateName":"Pocket Capture","operatingSystem":"iOS, iPadOS","applicationCategory":"MultimediaApplication","applicationSubCategory":"Music","description":"Recorder and sample editor that records PCM WAV, trims a selection with optional anti-click fades and exports WAV.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"downloadUrl":"https://apps.apple.com/app/id6823107299","url":"https://unfire.technology/apps/pocket-capture/","image":"https://unfire.technology/assets/products/apps-2026/pocket-capture-icon-512.webp","publisher":{"@type":"Organization","name":"Unfire","url":"https://unfire.technology"}}</script>
+<style>
+:root{--paper:#efe9df;--paper-2:#e6dfd2;--ink:#17150f;--ink-2:#5c564a;--rule:#cfc6b6;--rec:#e2412b;--serif:"Instrument Serif",Georgia,serif;--sans:Inter,system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}img{display:block;max-width:100%;height:auto}
+.wrap{width:min(1180px,100% - 48px);margin-inline:auto}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+header,main,footer{position:relative;z-index:1}
+/* top bar */
+.bar{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--rule)}
+.bar .home{font:500 13px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
+.bar nav{display:flex;gap:26px;align-items:center;font-size:14px}
+.bar nav a{text-decoration:none;color:var(--ink-2)}.bar nav a:hover{color:var(--ink)}
+.bar .get{color:var(--ink)!important;border:1px solid var(--ink);padding:9px 16px;border-radius:2px}
+/* hero */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(32px,6vw,96px);align-items:center;padding:clamp(48px,9vw,120px) 0 clamp(56px,8vw,110px)}
+.rec{display:inline-flex;align-items:center;gap:12px;font:500 12px/1 var(--mono);letter-spacing:.14em;color:var(--ink-2);text-transform:uppercase}
+.rec i{width:10px;height:10px;border-radius:50%;background:var(--rec);box-shadow:0 0 0 4px rgba(226,65,43,.15);animation:blink 1.6s steps(2,jump-none) infinite}
+.rec b{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+@keyframes blink{50%{opacity:.25}}
+h1{font:400 clamp(54px,8.4vw,118px)/.92 var(--serif);letter-spacing:-.025em;margin:26px 0 0}
+h1 em{font-style:italic;color:var(--rec)}
+.lede{max-width:34ch;margin:30px 0 0;font-size:clamp(17px,1.5vw,19px);color:var(--ink-2)}
+.cta{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;margin-top:40px}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--ink);color:var(--paper);text-decoration:none;padding:16px 24px 16px 20px;border-radius:2px;font-weight:600;font-size:15px;transition:transform .15s ease}
+.btn:hover{transform:translateY(-1px)}.btn svg{width:18px;height:18px}
+.cta small{font:400 12.5px/1.5 var(--mono);color:var(--ink-2);letter-spacing:.02em}
+.device{justify-self:center;position:relative;width:min(340px,80vw)}
+.device .shell{border-radius:52px;padding:11px;background:linear-gradient(145deg,#2a2823,#0e0d0a);box-shadow:0 1px 0 #fff3 inset,0 40px 80px -30px rgba(40,30,10,.55),0 18px 30px -18px rgba(40,30,10,.5)}
+.device img{border-radius:42px}
+.device figcaption{margin:18px auto 0;width:max-content;font:400 11.5px/1.5 var(--mono);color:var(--ink-2);border-top:1px solid var(--ink);padding-top:8px}
+/* wave divider */
+.tape{border-block:1px solid var(--ink);padding:26px 0;overflow:hidden}
+.tape svg{width:100%;height:84px;display:block}
+.tape path{fill:none;stroke:var(--ink);stroke-width:1.2}
+.tape .sel{fill:rgba(226,65,43,.12);stroke:none}
+.tape .mark{stroke:var(--rec);stroke-width:1.5}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--rule)}
+.step{padding:44px 34px 52px 0}
+.step+.step{padding-left:34px;border-left:1px solid var(--rule)}
+.step .n{font:500 12px/1 var(--mono);color:var(--rec);letter-spacing:.1em}
+.step h2{font:400 clamp(30px,3vw,40px)/1.05 var(--serif);margin:16px 0 12px}
+.step p{margin:0;color:var(--ink-2);max-width:32ch}
+/* spec sheet */
+.spec{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(30px,6vw,90px);padding:clamp(64px,9vw,120px) 0}
+.spec h2{font:400 clamp(40px,5vw,64px)/1 var(--serif);margin:0;letter-spacing:-.02em}
+.spec h2 em{font-style:italic}
+.spec .side p{color:var(--ink-2);max-width:30ch;margin:22px 0 0}
+dl{margin:0;border-top:1px solid var(--ink)}
+dl div{display:grid;grid-template-columns:190px 1fr;gap:20px;padding:18px 0;border-bottom:1px solid var(--rule)}
+dt{font:500 12px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--ink-2)}
+dd{margin:0}
+/* questions */
+.faq{background:var(--ink);color:var(--paper)}
+.faq .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.faq article{padding:64px 36px 72px 0}
+.faq article+article{padding-left:36px;border-left:1px solid #39352c}
+.faq h3{font:400 28px/1.1 var(--serif);margin:0 0 14px}
+.faq p{margin:0;color:#bdb5a6}
+/* footer */
+footer{padding:44px 0 56px;font-size:13.5px;color:var(--ink-2)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px}
+footer nav{display:flex;flex-wrap:wrap;gap:18px}
+footer a{text-decoration:none}footer a:hover{color:var(--ink)}
+a:focus-visible{outline:2px solid var(--rec);outline-offset:3px}
+@media (max-width:900px){
+ .hero{grid-template-columns:1fr}.device{width:min(260px,68vw)}
+ .steps,.faq .wrap{grid-template-columns:1fr}
+ .step,.step+.step{padding:34px 0;border-left:0;border-top:1px solid var(--rule)}
+ .faq article,.faq article+article{padding:40px 0;border-left:0;border-top:1px solid #39352c}
+ .spec{grid-template-columns:1fr}dl div{grid-template-columns:1fr;gap:4px}
+ .bar nav a:not(.get){display:none}
+}
+@media (prefers-reduced-motion:reduce){.rec i{animation:none}.btn{transition:none}}
+</style>
 </head>
 <body>
-<div class="wrap"><header class="top"><a class="brand" href="/"><span class="notranslate" translate="no">Unfire</span></a><a class="back" href="/apps/">All apps ↗</a></header></div>
-<main class="wrap">
-<div class="hero"><div class="label"><span class="notranslate" translate="no">Unfire</span> Audio / iPhone & iPad</div><h1>Pocket Capture</h1><p class="lead">A recorder-inspired workspace for capturing sounds, trimming a real waveform and exporting WAV files, all from your iPhone or iPad.</p><span class="status">Available on the App Store · iPhone &amp; iPad</span><div class="links"><a href="https://apps.apple.com/app/id6823107299" target="_blank" rel="noopener noreferrer">View on App Store ↗</a><a href="/apps/">Explore <span class="notranslate" translate="no">Unfire</span> apps</a><a href="mailto:hello@unfire.technology?subject=Unfire%20Pocket%20Capture%20support">Contact support</a></div></div>
-<section class="features"><div class="label">Designed for real workflows</div><h2>A focused experience.</h2><div class="grid"><div class="card"><strong>Capture sound</strong><p>Record with the device microphone and keep takes in your local library.</p></div>
-<div class="card"><strong>Edit the waveform</strong><p>Select the part you want, adjust start and end points and add optional anti-click fades.</p></div>
-<div class="card"><strong>Export WAV</strong><p>Preview a selection and export WAV to Files or another compatible app.</p></div></div></section>
-<section class="faq"><div class="label">Essential details</div><h2>What to know.</h2><dl><dt>Does it upload my audio?</dt><dd>Recording and editing are performed locally. You choose whether to share exported audio.</dd>
-<dt>What formats are supported?</dt><dd>Pocket Capture records PCM WAV. Export options include 16-bit, 24-bit and floating-point WAV.</dd>
-<dt>Where do I find the app?</dt><dd>The iPhone and iPad edition is listed on the App Store. Use the link above to check current device, regional and version availability.</dd></dl></section>
-</main>
-<footer><div class="wrap"><span>© 2026 <span class="notranslate" translate="no">Unfire</span> · Independent technology initiative</span><span><a href="/support/">Support</a> · <a href="/privacy.html">Privacy</a> · <a href="mailto:hello@unfire.technology"><span class="notranslate" translate="no">hello@unfire.technology</span></a></span></div><p style="margin:15px 0 0;font-size:13px"><a href="/contact/" style="color:inherit">Contact <span class="notranslate" translate="no">Unfire</span> →</a></p><div class="unfire-commerce-legal-links" style="font-size:12.5px;line-height:1.9;margin:16px auto 0;text-align:center;color:#86868b;max-width:900px"><a href="/terms.html" style="color:inherit;text-decoration:none">Sales Terms</a> <span aria-hidden="true">&middot;</span> <a href="/software-license.html" style="color:inherit;text-decoration:none">Software License</a> <span aria-hidden="true">&middot;</span> <a href="/refunds.html" style="color:inherit;text-decoration:none">Refunds</a></div></footer>
+<div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
+  <div class="uf-load-card">
+    <span class="uf-load-emblem" aria-hidden="true"></span>
+    <strong class="uf-load-brand" translate="no">UNFIRE</strong>
+    <span class="uf-load-label" id="ufAdaptiveLabel">Preparing the experience…</span>
+  </div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+<header class="wrap bar">
+  <a class="home" href="/apps/">Unfire / Apps</a>
+  <nav aria-label="Pocket Capture"><a href="#details">Details</a><a href="/support/">Support</a><a href="/privacy.html">Privacy</a><a class="get" href="https://apps.apple.com/app/id6823107299">App Store</a></nav>
+</header>
+<main>
+  <section class="wrap hero">
+    <div>
+      <p class="rec"><i aria-hidden="true"></i> Pocket Capture <b id="tc">00:00:00.00</b></p>
+      <h1>Record it.<br>Trim it.<br><em>Keep the WAV.</em></h1>
+      <p class="lede">A recorder and sample editor for iPhone and iPad. Catch a sound, cut the exact part you want and export a clean WAV file.</p>
+      <div class="cta">
+        <a class="btn" href="https://apps.apple.com/app/id6823107299"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.4 12.6c0-2.4 2-3.6 2.1-3.6-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9 0 0-2.9-1.1-2.9-4.4zM13.9 5.3c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5z"/></svg>Free on the App Store</a>
+        <small>iPhone &amp; iPad &nbsp;·&nbsp; No account &nbsp;·&nbsp; No data collected</small>
+      </div>
+    </div>
+    <figure class="device">
+      <div class="shell"><img src="/assets/products/apps-2026/pocket-capture-iphone-600.webp" srcset="/assets/products/apps-2026/pocket-capture-iphone-600.webp 600w,/assets/products/apps-2026/pocket-capture-iphone-1000.webp 1000w" sizes="(max-width:900px) 260px, 340px" width="600" height="1305" alt="Pocket Capture on iPhone: the Record sound button, the library and a selected waveform ready to trim" fetchpriority="high"></div>
+      <figcaption>Actual App Store screenshot. iPhone.</figcaption>
+    </figure>
+  </section>
 
-<!-- Sr. Dante: Unfire public web assistant (speech opt-in) -->
-<script src="/assets/js/ask-unfire.js?v=20261020-3" defer></script>
-</body></html>
+  <div class="tape" aria-hidden="true"><div class="wrap">
+    <svg viewBox="0 0 1180 84" preserveAspectRatio="none">
+      <rect class="sel" x="430" y="0" width="300" height="84"/>
+      <path id="wave" d="M0 42"/>
+      <line class="mark" x1="430" y1="0" x2="430" y2="84"/><line class="mark" x1="730" y1="0" x2="730" y2="84"/>
+    </svg>
+  </div></div>
+
+  <section class="wrap steps" aria-label="How it works">
+    <div class="step"><span class="n">01 / CAPTURE</span><h2>Press record.</h2><p>Use the device microphone and keep every take in the app’s local library.</p></div>
+    <div class="step"><span class="n">02 / TRIM</span><h2>Find the part.</h2><p>Set start and end points on the real waveform and add optional anti-click fades.</p></div>
+    <div class="step"><span class="n">03 / EXPORT</span><h2>Take it anywhere.</h2><p>Preview the selection, then export WAV to Files or another compatible app.</p></div>
+  </section>
+
+  <section class="wrap spec" id="details">
+    <div class="side">
+      <h2>The short<br><em>spec sheet.</em></h2>
+      <p>Built for musicians, producers and sound designers who just need the sound, trimmed and ready.</p>
+    </div>
+    <dl>
+      <div><dt>Records</dt><dd>PCM WAV</dd></div>
+      <div><dt>Exports</dt><dd>WAV at 16-bit, 24-bit or 32-bit floating point</dd></div>
+      <div><dt>Editing</dt><dd>Start and end points, optional anti-click fades, selection preview</dd></div>
+      <div><dt>Privacy</dt><dd>Recording and editing happen on the device. The App Store listing reports no data collected.</dd></div>
+      <div><dt>Devices</dt><dd>iPhone and iPad</dd></div>
+      <div><dt>Price</dt><dd>Free</dd></div>
+    </dl>
+  </section>
+
+  <section class="faq" aria-label="Questions">
+    <div class="wrap">
+      <article><h3>Does it upload my audio?</h3><p>No. Recording and editing are performed locally. You decide when and where to share an exported file.</p></article>
+      <article><h3>Which file do I get?</h3><p>A standard WAV file. Choose 16-bit, 24-bit or 32-bit float depending on where it is going next.</p></article>
+      <article><h3>Need help?</h3><p>Write to <a href="mailto:hello@unfire.technology?subject=Pocket%20Capture%20support">hello@unfire.technology</a>. Check the App Store listing for current device and regional availability.</p></article>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap">
+  <span>© 2026 Unfire · Independent technology initiative</span>
+  <nav aria-label="Legal"><a href="/apps/">All apps</a><a href="/support/">Support</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Sales Terms</a><a href="/software-license.html">Software License</a><a href="/refunds.html">Refunds</a></nav>
+</div></footer>
+<script>
+(function(){
+  // Decorative waveform (illustration, not app output).
+  var p=document.getElementById('wave'),d='M0 42',x=0,s=7;
+  for(x=0;x<=1180;x+=4){var env=Math.exp(-Math.pow((x-580)/330,2))*0.9+0.08;var y=42+Math.sin(x*0.09+Math.sin(x*0.013)*4)*36*env*(0.55+0.45*Math.sin(x*0.031+s));d+=' L'+x+' '+y.toFixed(1);}
+  p.setAttribute('d',d);
+  var tc=document.getElementById('tc');if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  var t0=performance.now();function f(n){return(n<10?'0':'')+n}
+  (function tick(now){var t=(now-t0)/1000,s=Math.floor(t),c=Math.floor((t-s)*100);tc.textContent='00:'+f(Math.floor(s/60)%60)+':'+f(s%60)+'.'+f(c);requestAnimationFrame(tick)})(t0);
+})();
+</script>
+</body>
+</html>

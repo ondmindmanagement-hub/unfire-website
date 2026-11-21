@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UNFIRE Mutants — Free 3D robot adventure in your browser</title>
+<meta name="description" content="Fly over pastel islands, explore the house, meet transforming robots and play with a friend in temporary online rooms. UNFIRE Mutants is a free 3D game that runs in your browser.">
+<link rel="canonical" href="https://unfire.technology/mutants/">
+<meta name="theme-color" content="#bfe3ff">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Unfire Games">
+<meta property="og:title" content="UNFIRE Mutants — Play free in your browser">
+<meta property="og:description" content="A free 3D world of transforming robots, flight, music and islands.">
+<meta property="og:url" content="https://unfire.technology/mutants/">
+<meta property="og:image" content="https://unfire.technology/assets/games/mutants/05-sky-flight-day-1280.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" as="image" href="/assets/games/mutants/05-sky-flight-day-1280.webp" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;900&family=Silkscreen&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"UNFIRE Mutants","url":"https://unfire.technology/mutants/","description":"Free 3D adventure with transforming robots, flight, music, islands and temporary online rooms. Runs in a web browser.","gamePlatform":"Web browser","applicationCategory":"Game","genre":["Adventure","Exploration"],"inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"image":"https://unfire.technology/assets/games/mutants/05-sky-flight-day-1280.webp","publisher":{"@type":"Organization","name":"Unfire","url":"https://unfire.technology"}}</script>
+<style>
+:root{--sky:#bfe3ff;--sky-2:#e8f5ff;--ink:#1b1747;--ink-2:#4d4a7c;--pink:#ff6fb5;--mint:#62e6c2;--sun:#ffd23f;--lav:#9b8cff;--round:"Rubik",system-ui,sans-serif;--pix:"Silkscreen",ui-monospace,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--sky-2);color:var(--ink);font:500 17px/1.6 var(--round);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}img{display:block;max-width:100%;height:auto}
+.wrap{width:min(1200px,100% - 40px);margin-inline:auto}
+.top{position:absolute;inset:0 0 auto;z-index:4}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.chip{font:400 12px/1 var(--pix);background:#fff;border:2px solid var(--ink);border-radius:999px;padding:8px 13px;text-decoration:none;box-shadow:3px 3px 0 var(--ink)}
+.top nav{display:flex;gap:10px}
+.hero{position:relative;min-height:min(92svh,860px);display:grid;align-items:end;isolation:isolate;overflow:hidden;border-bottom:3px solid var(--ink)}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(191,227,255,0) 38%,rgba(27,23,71,.55) 100%)}
+.hero .wrap{padding:0 0 clamp(34px,6vh,64px)}
+.title{margin:0;color:#fff;font:900 clamp(56px,11.5vw,170px)/.84 var(--round);letter-spacing:-.045em;text-transform:uppercase;text-shadow:0 4px 0 var(--ink),0 8px 0 rgba(27,23,71,.35)}
+.title span{display:block;color:var(--sun)}
+.hero p{margin:22px 0 0;color:#fff;max-width:38ch;font-size:clamp(17px,1.6vw,20px);text-shadow:0 2px 10px rgba(27,23,71,.6)}
+.go{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:28px}
+.play{display:inline-flex;align-items:center;gap:14px;background:var(--pink);color:#fff;text-decoration:none;font:900 clamp(20px,2vw,24px)/1 var(--round);text-transform:uppercase;letter-spacing:.02em;padding:20px 32px 20px 26px;border:3px solid var(--ink);border-radius:999px;box-shadow:6px 6px 0 var(--ink);transition:transform .12s ease,box-shadow .12s ease}
+.play:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink)}
+.play:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.play svg{width:22px;height:22px}
+.go small{font:400 12px/1.5 var(--pix);color:#fff;text-shadow:0 1px 6px rgba(27,23,71,.7)}
+.ticker{background:var(--ink);color:var(--sun);font:400 14px/1 var(--pix);overflow:hidden;white-space:nowrap;border-bottom:3px solid var(--ink)}
+.ticker div{display:inline-block;padding:14px 0;animation:roll 38s linear infinite}
+.ticker span{margin:0 26px}
+@keyframes roll{to{transform:translateX(-50%)}}
+.moves{padding:clamp(70px,9vw,120px) 0}
+.moves h2,.gallery h2,.play2 h2{font:900 clamp(38px,5.4vw,76px)/.95 var(--round);letter-spacing:-.035em;margin:0;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px}
+.card{background:#fff;border:3px solid var(--ink);border-radius:26px;padding:26px 22px;box-shadow:6px 6px 0 var(--ink)}
+.card:nth-child(1){background:#fff1f8}.card:nth-child(2){background:#eafff8}.card:nth-child(3){background:#fff9df}.card:nth-child(4){background:#f0edff}
+.card b{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;border:3px solid var(--ink);font:400 13px/1 var(--pix);margin-bottom:18px}
+.card:nth-child(1) b{background:var(--pink)}.card:nth-child(2) b{background:var(--mint)}.card:nth-child(3) b{background:var(--sun)}.card:nth-child(4) b{background:var(--lav)}
+.card h3{font:900 26px/1 var(--round);margin:0 0 10px;text-transform:uppercase;letter-spacing:-.01em}
+.card p{margin:0;color:var(--ink-2);font-size:16px}
+.gallery{background:var(--sky);border-block:3px solid var(--ink);padding:clamp(70px,9vw,120px) 0}
+.gallery header{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.gallery header p{margin:0;font:400 12px/1.6 var(--pix);max-width:34ch}
+.shots{display:grid;grid-template-columns:repeat(6,1fr);gap:18px;margin-top:40px}
+.shots figure{margin:0;border:3px solid var(--ink);border-radius:20px;overflow:hidden;background:#fff;box-shadow:6px 6px 0 var(--ink);display:flex;flex-direction:column}
+.shots img{flex:1;object-fit:cover;width:100%}
+.shots figcaption{font:400 11px/1.4 var(--pix);padding:10px 12px;border-top:3px solid var(--ink)}
+.s1{grid-column:span 4;grid-row:span 2}.s2,.s3,.s4,.s5,.s6{grid-column:span 2}
+.play2{padding:clamp(70px,9vw,120px) 0}
+.play2 .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,70px);align-items:start}
+.play2 p{color:var(--ink-2);max-width:40ch}
+.spec{margin:0;background:#fff;border:3px solid var(--ink);border-radius:26px;box-shadow:6px 6px 0 var(--ink);overflow:hidden}
+.spec div{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:16px 22px;border-bottom:2px dashed #c9c5ee}
+.spec div:last-child{border-bottom:0}
+.spec dt{font:400 12px/1.6 var(--pix);color:var(--ink-2)}.spec dd{margin:0;font-weight:700}
+footer{background:var(--ink);color:#d9d6ff;padding:34px 0 44px;font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+footer nav{display:flex;flex-wrap:wrap;gap:18px}footer a{text-decoration:none}footer a:hover{color:var(--sun)}
+a:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+@media (max-width:960px){.grid{grid-template-columns:1fr 1fr}.shots{grid-template-columns:1fr 1fr}.s1{grid-column:span 2;grid-row:auto}.s2,.s3,.s4,.s5,.s6{grid-column:span 1}.play2 .wrap{grid-template-columns:1fr}}
+@media (max-width:560px){.grid{grid-template-columns:1fr}.top nav .chip:not(:last-child){display:none}.spec div{grid-template-columns:1fr;gap:2px}}
+@media (prefers-reduced-motion:reduce){.ticker div{animation:none}.play{transition:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="chip" href="/games/">UNFIRE GAMES</a>
+  <nav aria-label="UNFIRE Mutants"><a class="chip" href="#world">The world</a><a class="chip" href="#play">How to play</a></nav>
+</div></header>
+<main>
+  <section class="hero">
+    <img src="/assets/games/mutants/05-sky-flight-day-1280.webp" srcset="/assets/games/mutants/05-sky-flight-day-720.webp 720w,/assets/games/mutants/05-sky-flight-day-1280.webp 1280w" sizes="100vw" width="1280" height="720" alt="A robot flying over the pastel islands of UNFIRE Mutants on a sunny day" fetchpriority="high">
+    <div class="wrap">
+      <h1 class="title">Unfire<span>Mutants</span></h1>
+      <p>Fly over pastel islands, wander the house, meet transforming robots and turn up the music. A free 3D world that runs in your browser.</p>
+      <div class="go">
+        <a class="play" href="/audio/maletin/index.html?v=20261105onlineen5&amp;quality=desktop"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.4v11.2L13.5 8z" fill="currentColor"/></svg>Play free</a>
+        <small>No download · No account · Best on a computer</small>
+      </div>
+    </div>
+  </section>
+  <div class="ticker" aria-hidden="true"><div><span>★ FLY</span><span>★ EXPLORE</span><span>★ TRANSFORM</span><span>★ MUSIC</span><span>★ CAPSULES</span><span>★ ONLINE ROOMS</span><span>★ FREE</span><span>★ FLY</span><span>★ EXPLORE</span><span>★ TRANSFORM</span><span>★ MUSIC</span><span>★ CAPSULES</span><span>★ ONLINE ROOMS</span><span>★ FREE</span></div></div>
+  <section class="wrap moves" id="world">
+    <h2>What you do<br>in there.</h2>
+    <div class="grid">
+      <article class="card"><b>01</b><h3>Fly</h3><p>Take off from the island and glide across the sea, by day, at sunset or under the stars.</p></article>
+      <article class="card"><b>02</b><h3>Explore</h3><p>Walk the house, the beach and the islands. There are secrets in the corners.</p></article>
+      <article class="card"><b>03</b><h3>Transform</h3><p>Meet robots that change from objects into machines, piece by piece.</p></article>
+      <article class="card"><b>04</b><h3>Play together</h3><p>Open a temporary room and invite someone. It depends on the host and the network.</p></article>
+    </div>
+  </section>
+  <section class="gallery" aria-labelledby="g">
+    <div class="wrap">
+      <header><h2 id="g">Real frames.<br>No mock-ups.</h2><p>Every picture on this page is a capture of the actual game. It is a beta and keeps changing.</p></header>
+      <div class="shots">
+        <figure class="s1"><img src="/assets/games/mutants/09-night-flight-panorama-1280.webp" width="1280" height="720" alt="Night flight over the islands with a starry sky" loading="lazy"><figcaption>Night flight</figcaption></figure>
+        <figure class="s2"><img src="/assets/games/mutants/06-sky-flight-sunset-720.webp" width="720" height="405" alt="Robot flying among giant candy-coloured trees at sunset" loading="lazy"><figcaption>Sunset</figcaption></figure>
+        <figure class="s3"><img src="/assets/games/mutants/04-island-exploration-720.webp" width="720" height="405" alt="Robot running on the island lawn near the house and the beach" loading="lazy"><figcaption>On the island</figcaption></figure>
+        <figure class="s4"><img src="/assets/games/mutants/02-house-interior-720.webp" width="720" height="405" alt="Robot inside the house with a checkerboard floor" loading="lazy"><figcaption>The house</figcaption></figure>
+        <figure class="s5"><img src="/assets/games/mutants/01-inside-house-720.webp" width="720" height="405" alt="The desk with the Unfire case, toys and a spiral rug" loading="lazy"><figcaption>The desk</figcaption></figure>
+        <figure class="s6"><img src="/assets/games/mutants/03-house-exterior-720.webp" width="720" height="405" alt="Robot standing outside the Unfire house" loading="lazy"><figcaption>Outside</figcaption></figure>
+      </div>
+    </div>
+  </section>
+  <section class="play2" id="play">
+    <div class="wrap">
+      <div>
+        <h2>Press play.<br>That’s it.</h2>
+        <p>The game opens full screen in your browser. Use the keyboard and mouse or a trackpad. Online rooms need an internet connection and someone hosting.</p>
+        <div class="go"><a class="play" href="/audio/maletin/index.html?v=20261105onlineen5&amp;quality=desktop"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.4v11.2L13.5 8z" fill="currentColor"/></svg>Play free</a></div>
+      </div>
+      <dl class="spec">
+        <div><dt>PRICE</dt><dd>Free</dd></div>
+        <div><dt>PLATFORM</dt><dd>Web browser with WebGL</dd></div>
+        <div><dt>BEST ON</dt><dd>Desktop or laptop computer</dd></div>
+        <div><dt>PHONES</dt><dd>Not recommended yet</dd></div>
+        <div><dt>ONLINE</dt><dd>Temporary peer-to-peer rooms</dd></div>
+        <div><dt>STATUS</dt><dd>Beta, updated often</dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap">
+  <span>© 2026 Unfire Games · <a href="mailto:hello@unfire.technology?subject=UNFIRE%20Mutants">hello@unfire.technology</a></span>
+  <nav aria-label="More"><a href="/games/">Unfire Games</a><a href="/audio/">Unfire Audio</a><a href="/audio/press/">Press</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a></nav>
+</div></footer>
+</body>
+</html>
