@@ -1,0 +1,96 @@
+name: Unfire OS Layer · Research QA
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/unfire-os-layer/**'
+      - '.github/workflows/unfire-os-layer-research.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: unfire-os-layer-research-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  node-research:
+    name: Isolated Node validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out proposed branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in experiments/unfire-os-layer/*.mjs; do
+            node --check "$file"
+          done
+      - name: Verify local research contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test \
+            experiments/unfire-os-layer/core.test.mjs \
+            experiments/unfire-os-layer/superchat.test.mjs \
+            experiments/unfire-os-layer/memory.test.mjs \
+            experiments/unfire-os-layer/mission-service.test.mjs \
+            experiments/unfire-os-layer/agent-identity.test.mjs \
+            experiments/unfire-os-layer/agent-gateway.test.mjs \
+            experiments/unfire-os-layer/fenced-results.test.mjs \
+            experiments/unfire-os-layer/control-plane.test.mjs \
+            experiments/unfire-os-layer/coordinator.test.mjs \
+            experiments/unfire-os-layer/pure-verifier.test.mjs
+
+  browser-console:
+    name: Isolated Chrome console check
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - name: Check out proposed branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Browser QA with temporary test-only dependency
+        shell: bash
+        run: |
+          set -euo pipefail
+          temp="$RUNNER_TEMP/unfire-os-browser-qa"
+          mkdir -p "$temp"
+          npm install --prefix "$temp" --no-save --no-package-lock --ignore-scripts --no-audit --no-fund puppeteer-core@24.28.0
+          export UNFIRE_PUPPETEER_MODULE
+          UNFIRE_PUPPETEER_MODULE=$(node -e "console.log(require.resolve('puppeteer-core',{paths:[process.env.RUNNER_TEMP+'/unfire-os-browser-qa']}))")
+          export UNFIRE_CHROME_EXECUTABLE
+          UNFIRE_CHROME_EXECUTABLE=$(command -v google-chrome || command -v google-chrome-stable)
+          node experiments/unfire-os-layer/mission-console.browser-qa.mjs
+
+  native-macos-sandbox:
+    name: macOS App Sandbox deny-by-default research
+    runs-on: macos-15
+    timeout-minutes: 8
+    steps:
+      - name: Check out proposed branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node 22 for bounded broker tests
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Compile, sign, and probe only synthetic targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash experiments/unfire-os-layer/macos-worker/verify-sandbox.sh

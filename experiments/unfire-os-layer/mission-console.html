@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0d121c"><title>Unfire OS | Mission Memory</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1018;--card:#17202b;--line:#324153;--ink:#f1f5fd;--muted:#a7b4c6}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -25%,#294366,#0b1018 60%);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
+main{max-width:1100px;margin:auto;padding:30px 18px 80px}.top,.actions,.metrics{display:flex;align-items:center;gap:12px}.top{justify-content:space-between}.logo{font-size:16px;font-weight:750;letter-spacing:.19em}.status,.tag{border:1px solid var(--line);padding:7px 11px;border-radius:22px;color:#b9ceeb;font-size:11px}.eyebrow{font-size:11px;color:#a8c7ff;letter-spacing:.18em;margin-top:30px}
+h1{font-weight:650;letter-spacing:-.05em;font-size:clamp(34px,5vw,54px);line-height:1.09;margin:9px 0}h2{font-size:18px;margin:0 0 11px}h3{font-size:14px;margin:15px 0 7px}
+p,small{color:var(--muted)}p{max-width:680px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);margin:25px 0 19px}.stat,.panel{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:18px}
+.stat small{display:block;font-size:11px}.stat strong{display:block;font-size:27px;margin-top:4px}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:15px}.note{border:1px solid #445d79;background:#1b2a3b;border-radius:12px;padding:12px 15px;margin-bottom:18px;color:#cfdef3;font-size:12px}
+label{display:block;color:#c5d3e5;font-size:12px;font-weight:600}input{display:block;width:100%;margin-top:6px;border-radius:10px;border:1px solid #48607a;background:#0e1620;padding:11px;color:white;font:inherit}
+.actions{flex-wrap:wrap;margin:13px 0 23px}button{font:inherit;font-weight:650;color:white;background:#273a53;border:1px solid #527092;border-radius:10px;padding:10px 13px;cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,input:focus-visible{outline:2px solid #b4c9ff;outline-offset:3px}.primary{background:#b1c8ff;color:#17243b}.stop{background:#482831;border-color:#925667}
+#records{display:grid;gap:9px;max-height:440px;overflow:auto}.record,.empty{padding:12px;border-radius:11px;border:1px solid var(--line);background:#202d3c}.record b{display:block;font-size:12px}.record small{display:block;font-size:11px;margin-top:5px;overflow-wrap:anywhere}
+#feedback{min-height:43px;font-size:12px}#feedback[data-error=true]{color:#ffbdc7}.divider{border:0;border-top:1px solid var(--line);margin:20px 0}footer{margin-top:22px;border-top:1px solid var(--line);padding-top:13px;color:var(--muted);font-size:11px}
+@media(max-width:700px){.layout{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.stat{padding:12px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style><script type="module" src="/mission-console.mjs"></script></head>
+<body><main><header class="top"><div class="logo">UNFIRE <span style="color:#9ebce9">OS</span></div><div class="status" id="connection">Local research · Initializing</div></header>
+<div class="eyebrow">MISSION MEMORY · RESEARCH v0.2</div><h1>Every mission.<br>One record.</h1>
+<p>Manual checkpoints, ownership and STOP with a persistent local journal. This prototype does not run models, control devices or connect to other chats.</p>
+<section class="metrics" aria-label="Mission metrics">
+<div class="stat"><small>Real agents</small><strong>0</strong></div><div class="stat"><small>Journal events</small><strong id="event-count">0</strong></div>
+<div class="stat"><small>Reservations</small><strong id="claim-count">0</strong></div><div class="stat"><small>Mission</small><strong id="mission-state">New</strong></div></section>
+<div class="note">Research service on this device only. The operator role is a temporary local session, not verified system-user identity. Checkpoints are manual, not evidence of completed AI work. Do not enter confidential data.</div>
+<div class="layout"><section class="panel" aria-labelledby="control-title"><h2 id="control-title">Mission controls</h2>
+<div class="tag">Active mission · <b id="mission-label">Connecting</b></div>
+<div class="actions"><button class="primary" id="create" disabled>Create mission</button><button id="refresh">Refresh</button><button class="stop" id="stop" disabled>STOP</button></div>
+<hr class="divider"><h3>Artifact reservation</h3><label for="artifact">Artifact identifier<input id="artifact" maxlength="40" value="report" autocomplete="off"></label>
+<div class="actions"><button id="claim" disabled>Claim</button><button id="release" disabled>Release</button></div>
+<h3>Manual checkpoint</h3><label for="task">Task identifier<input id="task" maxlength="40" value="review" autocomplete="off"></label>
+<div class="actions"><button id="complete" disabled>Record checkpoint</button></div>
+<p id="feedback" role="status" aria-live="polite">Connecting to local service…</p>
+</section><section class="panel" aria-labelledby="history-title"><h2 id="history-title">Journal history</h2>
+<p>Events are hash-linked to detect common corruption. This does not make the journal tamper-proof.</p><div id="records"><div class="empty">No events yet.</div></div></section></div>
+<footer>UNFIRE · Research only · Loopback service · No live agents or external integrations</footer>
+</main></body></html>
