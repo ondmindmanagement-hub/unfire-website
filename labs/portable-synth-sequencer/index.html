@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#080b13">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Unfire Portable Synth Sequencer Lab: a private experimental 16-step browser music sequencer with local WAV and pattern export.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./engine.js" defer></script>
+  <script src="./audio.js" defer></script>
+  <script src="./app.js" defer></script>
+  <title>Unfire Step Lab — Portable Synth Sequencer Prototype</title>
+</head>
+<body>
+  <a class="skip" href="#studio">Skip to music sequencer</a>
+  <div class="shell">
+    <header class="topbar">
+      <a href="/" class="brand" aria-label="Unfire home"><span class="symbol">✦</span> UNFIRE <span class="brand-suffix">/ SOUND LAB</span></a>
+      <nav aria-label="Primary navigation"><a href="/portable-synth/">Portable Synth <span aria-hidden="true">↗</span></a></nav>
+    </header>
+    <main id="studio">
+      <section class="hero" aria-labelledby="title">
+        <div class="eyebrow"><span class="pulse" aria-hidden="true"></span> UNFIRE AUDIO / EXPERIMENTAL WORKSPACE</div>
+        <h1 id="title">Make a beat.<br><span class="gradient">Shape a sound.</span></h1>
+        <p class="subtitle">A sixteen-step browser sequencer with four procedural instruments. Build a loop, hear it instantly and export your music. No account. No audio uploads. Zero server processing.</p>
+        <div class="chips"><span>16-STEP SEQUENCER</span><span>4 VOICES</span><span>LOCAL WAV EXPORT</span></div>
+      </section>
+
+      <section class="studio" aria-labelledby="seq-heading">
+        <div class="studio-heading">
+          <div><p class="overline">01 / COMPOSE</p><h2 id="seq-heading">Your pattern. Your rhythm.</h2></div>
+          <span class="pill">BROWSER PROTOTYPE</span>
+        </div>
+        <div class="settings">
+          <div class="setting"><label for="tempo">Tempo</label><div class="with-unit"><input id="tempo" type="number" min="50" max="200" step="1" value="112" inputmode="numeric"><span>BPM</span></div></div>
+          <div class="setting"><label for="swing">Swing <output id="swing-label" for="swing">12%</output></label><input id="swing" type="range" min="0" max="45" step="1" value="12"></div>
+          <div class="setting"><label for="wave">Synth wave</label><select id="wave"><option value="sawtooth" selected>Sawtooth</option><option value="triangle">Triangle</option><option value="sine">Sine</option><option value="square">Square</option></select></div>
+          <div class="setting"><label for="volume">Volume <output id="volume-label" for="volume">55%</output></label><input id="volume" type="range" min="0" max="85" step="1" value="55"></div>
+        </div>
+
+        <div class="transport">
+          <div class="transport-buttons">
+            <button id="play" class="btn primary" type="button"><span aria-hidden="true">▶</span> Play loop</button>
+            <button id="stop" class="btn secondary" type="button" disabled><span aria-hidden="true">■</span> Stop</button>
+          </div>
+          <div class="time-info"><span class="led" id="led" aria-hidden="true"></span><span id="transport-label">READY / 112 BPM</span></div>
+        </div>
+
+        <div class="seq-top">
+          <div><h3>Pattern editor</h3><p>Tap a step to toggle a drum. For the synth, select a note and tap a step to place or remove it.</p></div>
+          <label class="note-select" for="bass-note">SYNTH NOTE <select id="bass-note" aria-describedby="note-help"></select></label>
+        </div>
+        <p class="sr-only" id="note-help">The selected synth note is assigned when you press a synth step.</p>
+        <div class="grid-wrap" tabindex="0" role="region" aria-label="Sequencer pattern, scroll sideways on smaller screens">
+          <div id="step-grid" class="step-grid" role="group" aria-label="Four track sixteen-step pattern"></div>
+        </div>
+        <div class="grid-foot"><span><span class="square active" aria-hidden="true"></span> Active</span><span><span class="square" aria-hidden="true"></span> Empty</span><span>Each row: 16 steps / one bar</span></div>
+        <div class="edit-bar">
+          <button id="demo" class="small-btn" type="button">Restore example</button>
+          <button id="random" class="small-btn" type="button">Randomize</button>
+          <button id="clear" class="small-btn warn" type="button">Clear pattern</button>
+          <p>Changes during playback take effect from the next scheduled step.</p>
+        </div>
+
+        <section class="exports" aria-labelledby="export-title">
+          <div><p class="overline">02 / EXPORT</p><h2 id="export-title">Keep the idea.</h2><p>Render WAV on your device or save the editable pattern as JSON. Neither export sends your music to a server.</p></div>
+          <div class="export-actions">
+            <label for="bars">WAV bars <select id="bars"><option value="1">1</option><option value="2" selected>2</option><option value="4">4</option></select></label>
+            <button id="wav" class="btn export" type="button">Export WAV <span aria-hidden="true">↓</span></button>
+            <button id="save" class="btn secondary" type="button">Save pattern</button>
+            <label for="import" class="file-button">Load pattern <span aria-hidden="true">↑</span><input id="import" type="file" accept=".json,application/json" aria-label="Load a saved pattern JSON file"></label>
+          </div>
+        </section>
+        <p id="status" class="status" role="status" aria-live="polite">Ready. Press Play to enable your browser audio.</p>
+      </section>
+
+      <aside class="disclaimer"><span aria-hidden="true" class="info">i</span><div><strong>A creative experiment, not the full DAW</strong><p>This self-contained step sequencer is distinct from the existing <a href="/portable-synth/play/">Portable Synth browser keyboard</a> and the native Android Portable Synth Daw. It does not offer multitrack recording, effects chains, MIDI controller support or native format compatibility. Audio playback needs a browser with Web Audio; WAV export additionally needs OfflineAudioContext. Sound levels and export formats should be checked in your browser before release.</p></div></aside>
+    </main>
+    <footer class="footer"><span>© Unfire · Independent technology initiative</span><nav aria-label="Footer"><a href="/portable-synth/">Product overview</a><a href="/privacy.html">Privacy</a><a href="mailto:hello@unfire.technology">Support</a></nav></footer>
+  </div>
+</body>
+</html>
