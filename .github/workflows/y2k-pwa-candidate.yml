@@ -1,0 +1,35 @@
+name: Y2K ROBOTS PWA candidate QA
+
+on:
+  pull_request:
+    paths:
+      - 'audio/game.webmanifest'
+      - 'audio/y2k-service-worker.js'
+      - 'audio/js/y2k-pwa-register.js'
+      - 'audio/img/y2k-robots-icon-192.png'
+      - 'audio/img/y2k-robots-icon-512.png'
+      - 'tests/y2k-pwa-manifest.test.mjs'
+      - 'tests/y2k-pwa-service-worker.test.mjs'
+      - '.github/workflows/y2k-pwa-candidate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-pwa-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check syntax of inert PWA candidates
+        run: |
+          node --check audio/y2k-service-worker.js
+          node --check audio/js/y2k-pwa-register.js
+      - name: Verify approved game identity, icon SHA256 and scope rules
+        run: node --test tests/y2k-pwa-manifest.test.mjs tests/y2k-pwa-service-worker.test.mjs
