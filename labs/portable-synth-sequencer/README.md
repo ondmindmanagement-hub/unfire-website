@@ -46,7 +46,7 @@ No npm packages or API keys are required. Only current free static hosting resou
 
 - 12 of 12 Node engine tests passed after a correction to the asynchronous rejection test, with JS syntax checks clean.
 - Chrome headless, isolated temporary profile on the Mac: validated 64 buttons, edited drum and synth steps, changed tempo, started and stopped Web Audio, downloaded and reloaded an edited JSON pattern, and downloaded a non-silent 44.1 kHz 16-bit stereo WAV (192,760 frames). Responsive no-overflow checks passed at 320, 390, 768, 1024 and 1440 CSS pixels, with horizontal grid scroll inside the container.
-- The asynchronous race fix is later than that E2E run; repeat final-head QA before integrating.
+- After the async race fix, the complete 16-test Node suite passed on the latest code. A second isolated Chrome smoke test proved that interrupted AudioContext.resume cannot restart stopped audio, playback recovers correctly, and an older delayed JSON import cannot overwrite a newer pattern. Remaining Safari/mobile release checks are still required.
 
 ## Release gates (not yet passed in full)
 
