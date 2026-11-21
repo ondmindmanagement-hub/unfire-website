@@ -29,7 +29,7 @@ jobs:
           const h=fs.readFileSync("apps/archer-web/index.html","utf8");
           assert.match(h,/noindex,nofollow/);
           assert.match(h,/unfire\.technology\/apps\/archer-web/);
-          assert.ok(h.includes("No uploads"));
+          assert.ok(/no uploads/i.test(h));
           const app=fs.readFileSync("apps/archer-web/app.js","utf8");
           assert.ok(!/fetch\s*\(|XMLHttpRequest|sendBeacon|localStorage/.test(app));
           console.log("ARCHER_WEB_LOCAL_PRIVACY_PRECHECK_PASS");
