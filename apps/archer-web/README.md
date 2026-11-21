@@ -30,10 +30,18 @@ No npm packages or API keys. Browser supported: recent Safari, Chrome, Firefox w
 - Original audio remains untouched. WAV encoding clips any sample beyond full scale; export is lossy when decoded input was lossy or float and output is 16-bit.
 - No analytics, external scripts, external fonts, service worker, storage, file uploads, microphone permissions, backend or payments.
 
-## Release gate (manual, NOT yet completed)
+## Verification already completed (21 November 2026)
+
+- **Node.js on macOS:** 8/8 DSP and WAV encoder tests passed; syntax checks for all JS files passed.
+- **GitHub Actions for initial PR revision:** Archer Web Lab checks, public security baseline, adaptive loading safety and brand metadata passed. Later revisions require their own green CI runs.
+- **Chrome headless on macOS:** exercised actual browser WAV decoding, waveform UI, gain adjustment, playback and stop; real button-triggered WAV export downloaded and inspected (mono, 44.1 kHz, 44,100 frames, 16 bits). Responsive document overflow checks passed at 320, 390, 768 and 1440 px.
+- **Safari WebDriver:** blocked by existing Safari setting (Allow remote automation disabled). No browser setting was changed and this does **not** count as Safari QA.
+
+## Release gate (remaining)
 
 - [ ] Safari desktop: import WAV and MP3, play, adjust live, stop/restart, download and play resulting WAV.
-- [ ] Chrome desktop and Firefox: import, preview, export; compare length, sample rate, channels; check developer console.
+- [x] Chrome headless macOS: import a WAV, adjust live gain, preview and stop, export/download and inspect WAV header and length, check responsive overflow.
+- [ ] Chrome normal interactive desktop session and Firefox: verify codec support, audible output, downloadable results and developer console.
 - [ ] Safari iOS + Chrome Android: codec-specific behavior, download flow, audio unlock on gesture, acceptable memory.
 - [ ] Accessible keyboard-only operation, focus and screen reader labels; responsive widths 320/390/768/1440.
 - [ ] Test bad files, huge or long audio, repeated imports/exports, failure states and source privacy with network inspection.
