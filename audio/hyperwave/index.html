@@ -1915,9 +1915,11 @@ const HYPERWAVE = (() => {
     }
 
     // ===== Orejas-altavoz laterales =====
+    // FÍSICA: los altavoces se acoplan FUERA de los extremos de la carcasa (antes la atravesaban) y viajan sobre un brazo telescópico real.
+    const POD_DOCK = 2.66, POD_WRIST = 0.15, ARM_ROOT = 2.08, ARM_Y = 0.47, ARM_STAGE = 0.34, ARM_OVERLAP = 0.03;
     const podMat = Y2K.polycarb('#ff5a00', { opacity: 0.72 }), pods = {};
     for (const s of [-1, 1]) {
-      const k = s < 0 ? 'L' : 'R', g = new THREE.Group(); g.position.set(s * 2.12, 0.5, 0); root.add(g); pods[k] = g;
+      const k = s < 0 ? 'L' : 'R', g = new THREE.Group(); g.position.set(s * POD_DOCK, 0.5, 0); root.add(g); pods[k] = g;
       const PS = { a: 0.34, b: 0.36, c: 0.6, e1: 0.6, e2: 0.62 };
       const shellP = mesh(Y2K.superG({ ...PS, su: 28, sv: 72 }), podMat, { cast: false }); g.add(shellP);
       // líneas de despiece: junta vertical (la tapa exterior se separa) y estrías tipo hombrera de armadura
@@ -1940,14 +1942,14 @@ const HYPERWAVE = (() => {
       const gl = Y2K.glow(BLUE, 1.2, 0); gl.position.set(0, 0, 0.1); wf.add(gl); g.userData.glow = gl;
       // chasis interior visible a través del policarbonato
       g.add(at(mesh(new THREE.CylinderGeometry(0.2, 0.22, 0.24, 32), M.graphite), -s * 0.02, 0, 0, 0, 0, Math.PI / 2));
-      g.add(at(mesh(Y2K.rbox(0.05, 0.4, 0.6, 0.02), M.pcb), -s * 0.12, 0, 0));
+      g.add(at(mesh(Y2K.rbox(0.03, 0.34, 0.5, 0.012), M.pcb), s * 0.135, 0, 0));
       g.add(at(mesh(new THREE.TorusGeometry(0.36, 0.012, 8, 64), Y2K.led(BLUE, 0.4)), 0, 0, 0, Math.PI / 2, 0, 0)); g.userData.ring = g.children[g.children.length - 1];
       const out = s * 3.08;
-      anim(g, [{ t: 0, p: [s * 2.12, 0.5, 0], r: [0, 0, 0] }, { t: 1.0 }, { t: 1.4, p: [s * 2.46, 0.5, 0], e: 'back' }, { t: 3.0 }, { t: 3.45, p: [s * 2.9, 0.6, 0], e: 'out' }, { t: 3.95, p: [out, 1.02, 0.18], r: [-0.12, -s * Math.PI / 2, 0], e: 'back' }]);
+      anim(g, [{ t: 0, p: [s * POD_DOCK, 0.5, 0], r: [0, 0, 0] }, { t: 1.0 }, { t: 1.4, p: [s * (POD_DOCK + 0.1), 0.5, 0], e: 'smooth' }, { t: 3.0 }, { t: 3.45, p: [s * 2.96, 0.66, 0], e: 'smooth' }, { t: 3.95, p: [out, 1.02, POD_WRIST], r: [-0.12, -s * Math.PI / 2, 0], e: 'smooth' }]);
     }
     // brazos telescópicos de los altavoces (se estiran entre la carcasa y la oreja)
     const struts = [];
-    for (const s of [-1, 1]) { const st = new THREE.Group(); root.add(st); const t1 = mesh(new THREE.CylinderGeometry(0.045, 0.045, 1, 20), M.chrome), t2 = mesh(new THREE.CylinderGeometry(0.07, 0.07, 1, 20), M.graphite); st.add(t1, t2); const b1 = mesh(new THREE.SphereGeometry(0.09, 24, 16), M.chrome), b2 = mesh(new THREE.SphereGeometry(0.08, 24, 16), M.chrome); root.add(b1, b2); struts.push({ st, t1, t2, s, b1, b2 }); }
+    for (const s of [-1, 1]) { const tubes = [0.07, 0.058, 0.047, 0.037].map((r, i) => { const t = mesh(new THREE.CylinderGeometry(r, r, ARM_STAGE, 24), i === 0 ? M.graphite : M.chrome); root.add(t); return t; }); const b1 = mesh(new THREE.SphereGeometry(0.085, 24, 16), M.chrome), b2 = mesh(new THREE.SphereGeometry(0.06, 24, 16), M.chrome); root.add(b1, b2); struts.push({ tubes, s, b1, b2 }); }
 
     // ===== Tapa (policarbonato) con pantalla VFD =====
     const lid = new THREE.Group(); lid.position.set(0, CY, -C + 0.06); root.add(lid);
@@ -1998,11 +2000,11 @@ const HYPERWAVE = (() => {
       const pl = new THREE.Mesh(new THREE.PlaneGeometry(LW, (LW * 96) / 2048), new THREE.MeshBasicMaterial({ map: Y2K.toTex(c, { color: true }), transparent: true })); pl.rotation.x = Math.PI / 2; pl.position.set(0, -0.0258, LZ); scr.add(pl); }
     // tweeters a los lados de la pantalla
     for (const s of [-1, 1]) { const tw = new THREE.Group(); tw.position.set(s * (SW / 2 + 0.03), -0.03, SZ); scr.add(tw); tw.add(at(mesh(new THREE.SphereGeometry(0.05, 24, 12, 0, TAU, 0, Math.PI / 2), M.chrome), 0, 0, 0, Math.PI, 0, 0)); }
-    anim(lid, [{ t: 0, p: [0, CY, -C + 0.06], r: [0, 0, 0] }, { t: 0.14 }, { t: 0.3, p: [0, CY + 0.05, -C + 0.04], r: [-0.04, 0, 0], e: 'out' }, { t: 0.95, p: [0, CY, -C + 0.06], r: [-1.6, 0, 0], e: 'back' }, { t: 3.55 }, { t: 4, p: [0, CY + 0.1, -C - 0.02], r: [-1.66, 0, 0] }]);
+    anim(lid, [{ t: 0, p: [0, CY, -C + 0.06], r: [0, 0, 0] }, { t: 0.14 }, { t: 0.3, p: [0, CY + 0.05, -C + 0.04], r: [-0.04, 0, 0], e: 'out' }, { t: 0.95, p: [0, CY, -C + 0.06], r: [-1.6, 0, 0], e: 'smooth' }, { t: 3.55 }, { t: 4, p: [0, CY + 0.1, -C - 0.02], r: [-1.66, 0, 0] }]);
 
     // ===== Panel de control (sube y se inclina) =====
     const panelH = new THREE.Group(); panelH.position.set(0, 0.4, -0.06); root.add(panelH);
-    anim(panelH, [{ t: 0, p: [0, 0.4, -0.06], r: [0, 0, 0] }, { t: 2.0 }, { t: 2.35, p: [0, 0.63, -0.06], e: 'out' }, { t: 2.7, r: [0.2, 0, 0], e: 'back' }]);
+    anim(panelH, [{ t: 0, p: [0, 0.4, -0.06], r: [0, 0, 0] }, { t: 2.0 }, { t: 2.35, p: [0, 0.63, -0.06], e: 'out' }, { t: 2.7, r: [0.2, 0, 0], e: 'smooth' }]);
     panelH.add(at(mesh(Y2K.rbox(PANEL.w + 0.06, 0.07, PANEL.d + 0.06, 0.03), M.graphite), 0, 0.025, -PANEL.d / 2));
     { const pts = Y2K.rrShape(PANEL.w + 0.03, PANEL.d + 0.03, 0.04).getSpacedPoints(160).map((p) => V(p.x, 0.062, -PANEL.d / 2 - p.y)); panelH.add(mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), 320, 0.012, 8, true), M.chrome, { cast: false })); }
     const PW = 2048, PHh = 512, px = (x) => ((x + PANEL.w / 2) / PANEL.w) * PW, pz = (z) => ((z + PANEL.d) / PANEL.d) * PHh, PU = PW / PANEL.w;
@@ -2058,7 +2060,7 @@ const HYPERWAVE = (() => {
       const lift = new THREE.Group(); holder.add(lift);
       const rot = new THREE.Group(); lift.add(rot);
       rot.add(at(mesh(knobGeo.skirt, M.softTouch), 0, 0.008, 0)); rot.add(at(mesh(knobGeo.body, M.knurlRubber), 0, 0.05, 0)); rot.add(at(mesh(knobGeo.cap, M.spun), 0, 0.091, 0)); rot.add(at(mesh(knobGeo.ptr, ptrMat), 0, 0.099, -0.036));
-      anim(lift, [{ t: 0, p: [0, -0.075, 0], r: [0, 0, 0] }, { t: 2.2 + ki * 0.07 }, { t: 2.5 + ki * 0.07, p: [0, 0, 0], r: [0, -TAU, 0], e: 'back' }], ki % 2 === 0);
+      anim(lift, [{ t: 0, p: [0, -0.075, 0], r: [0, 0, 0] }, { t: 2.2 + ki * 0.07 }, { t: 2.5 + ki * 0.07, p: [0, 0, 0], r: [0, -TAU, 0], e: 'out' }], ki % 2 === 0);
       reg(id, 'knob', rot, { label: lab, rot }); ki++;
     }
     // MASTER (cromo grande con anillo de LEDs)
@@ -2068,14 +2070,14 @@ const HYPERWAVE = (() => {
       rot.add(at(mesh(new THREE.CylinderGeometry(0.118, 0.125, 0.1, 64), kc), 0, 0.05, 0)); rot.add(at(mesh(new THREE.CylinderGeometry(0.1, 0.112, 0.02, 64), M.spun), 0, 0.108, 0));
       rot.add(at(mesh(Y2K.rbox(0.016, 0.008, 0.06, 0.004), ptrMat), 0, 0.12, -0.07));
       const dots = []; for (let i = 0; i < 15; i++) { const a = Math.PI * 0.75 + (i / 14) * Math.PI * 1.5; const d = at(new THREE.Mesh(new THREE.SphereGeometry(0.011, 12, 8), Y2K.led(BLUE, 0.2)), Math.cos(a) * 0.165, 0.004, Math.sin(a) * 0.165); holder.add(d); dots.push(d); }
-      anim(lift, [{ t: 0, p: [0, -0.1, 0], r: [0, 0, 0] }, { t: 2.55 }, { t: 2.9, p: [0, 0, 0], r: [0, TAU, 0], e: 'back' }]);
+      anim(lift, [{ t: 0, p: [0, -0.1, 0], r: [0, 0, 0] }, { t: 2.55 }, { t: 2.9, p: [0, 0, 0], r: [0, TAU, 0], e: 'out' }]);
       reg('volume', 'knob', rot, { label: 'MASTER', rot, dots }); }
     // botones de forma de onda (gel azul) y patch (goma con LED)
     WAVES.forEach(([id, lab], i) => {
       const b = new THREE.Group(); b.position.copy(P(-0.04 + i * 0.24, -0.74)); panelH.add(b);
       b.add(at(mesh(Y2K.rbox(0.2, 0.02, 0.125, 0.03), M.chrome), 0, 0.006, 0));
       const cap = new THREE.Group(); b.add(cap); const gm = Y2K.gel(BLUE, { albedo: 0.6 }); gm.transparent = false; gm.opacity = 1; cap.add(at(mesh(Y2K.rbox(0.18, 0.045, 0.105, 0.028, 6), gm), 0, 0.03, 0));
-      anim(cap, [{ t: 0, p: [0, -0.04, 0] }, { t: 2.45 + i * 0.05 }, { t: 2.7 + i * 0.05, p: [0, 0, 0], e: 'back' }], false);
+      anim(cap, [{ t: 0, p: [0, -0.04, 0] }, { t: 2.45 + i * 0.05 }, { t: 2.7 + i * 0.05, p: [0, 0, 0], e: 'out' }], false);
       reg('wave:' + id, 'button', cap, { press: cap, gel: gm, inner: cap, radio: 'wave', value: id });
     });
     const rubberBtn = new THREE.MeshPhysicalMaterial({ color: 0x3d424a, roughness: 0.62, metalness: 0, bumpMap: L.T.grain, bumpScale: 0.0015 });
@@ -2083,14 +2085,14 @@ const HYPERWAVE = (() => {
       const b = new THREE.Group(); b.position.copy(P(-0.08 + i * 0.112, -0.42)); panelH.add(b);
       const cap = new THREE.Group(); b.add(cap); cap.add(at(mesh(Y2K.rbox(0.085, 0.04, 0.075, 0.018), rubberBtn), 0, 0.016, 0));
       const lm = Y2K.led(BLUE, 0.15); const led = at(new THREE.Mesh(new THREE.SphereGeometry(0.012, 12, 8), lm), 0, 0.004, -0.08); b.add(led);
-      anim(cap, [{ t: 0, p: [0, -0.035, 0] }, { t: 2.5 + i * 0.03 }, { t: 2.7 + i * 0.03, p: [0, 0, 0], e: 'back' }], false);
+      anim(cap, [{ t: 0, p: [0, -0.035, 0] }, { t: 2.5 + i * 0.03 }, { t: 2.7 + i * 0.03, p: [0, 0, 0], e: 'out' }], false);
       reg('patch:' + i, 'button', cap, { press: cap, led: lm, radio: 'patch', value: i });
     }
     for (const [id, x, z, col] of [['arp', 0.98, -0.74, ORANGE], ['hold', 1.2, -0.74, ORANGE], ['octdn', 0.98, -0.42, BLUE], ['octup', 1.2, -0.42, BLUE]]) {
       const b = new THREE.Group(); b.position.copy(P(x, z)); panelH.add(b);
       b.add(at(mesh(new THREE.TorusGeometry(0.06, 0.012, 10, 40), M.chrome), 0, 0.004, 0, Math.PI / 2, 0, 0));
       const cap = new THREE.Group(); b.add(cap); const gm = Y2K.gel(col); cap.add(at(mesh(new THREE.CylinderGeometry(0.05, 0.053, 0.04, 40), gm), 0, 0.022, 0));
-      anim(cap, [{ t: 0, p: [0, -0.04, 0] }, { t: 2.6 }, { t: 2.85, p: [0, 0, 0], e: 'back' }], false);
+      anim(cap, [{ t: 0, p: [0, -0.04, 0] }, { t: 2.6 }, { t: 2.85, p: [0, 0, 0], e: 'out' }], false);
       reg(id, 'button', cap, { press: cap, gel: gm });
     }
     // cinta HYPER (ribbon)
@@ -2102,7 +2104,7 @@ const HYPERWAVE = (() => {
 
     // ===== Bandeja de teclado (sube y avanza) =====
     const kbd = new THREE.Group(); root.add(kbd);
-    anim(kbd, [{ t: 0, p: [0, 0, 0] }, { t: 1.0 }, { t: 1.35, p: [0, 0.14, 0], e: 'out' }, { t: 1.7, p: [0, 0.14, 0.08], e: 'back' }]);
+    anim(kbd, [{ t: 0, p: [0, 0, 0] }, { t: 1.0 }, { t: 1.35, p: [0, 0.14, 0], e: 'out' }, { t: 1.7, p: [0, 0.14, 0.08], e: 'smooth' }]);
     const KY = 0.37, kw = 0.205, X0 = -1.42, KZ0 = 0.06;
     kbd.add(at(mesh(Y2K.rbox(3.72, 0.075, 1.06, 0.03), M.blackGloss), -0.1, KY + 0.035, 0.53));
     kbd.add(at(mesh(new THREE.CylinderGeometry(0.018, 0.018, 3.62, 16), M.chrome), -0.1, KY + 0.06, 1.06, 0, 0, Math.PI / 2));
@@ -2119,7 +2121,7 @@ const HYPERWAVE = (() => {
       if (white) { x = X0 + wi * kw + kw / 2; wi++; press.add(at(mesh(wGeo, M.ivory), 0, 0.045, 0.475)); piv.position.set(x, KY + 0.075, KZ0); }
       else { x = X0 + wi * kw + ({ 1: -0.02, 3: 0.02, 6: -0.03, 8: 0, 10: 0.03 })[pc]; press.add(at(mesh(bGeo, M.ebony), 0, 0.045, 0.3)); piv.position.set(x, KY + 0.075 + 0.07, KZ0); }
       const k = reg('key:' + m, 'key', press, { midi: m, press, white, pressed: 0, vis: 0 }); keys.push(k);
-      const idx = m - 48; anim(piv, [{ t: 0, p: [x, piv.position.y - 0.06, KZ0] }, { t: 1.3 + idx * 0.022 }, { t: 1.55 + idx * 0.022, p: [x, piv.position.y, KZ0], e: 'back' }], idx % 4 === 0);
+      const idx = m - 48; anim(piv, [{ t: 0, p: [x, piv.position.y - 0.06, KZ0] }, { t: 1.3 + idx * 0.022 }, { t: 1.55 + idx * 0.022, p: [x, piv.position.y, KZ0], e: 'out' }], idx % 4 === 0);
     }
     // ruedas pitch / mod
     { const wb = new THREE.Group(); wb.position.set(-1.72, KY + 0.075, 0.55); kbd.add(wb);
@@ -2133,18 +2135,24 @@ const HYPERWAVE = (() => {
         rot.add(at(mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.07, 48), M.knurlRubber), 0, 0, 0, 0, 0, Math.PI / 2));
         for (const s of [-1, 1]) rot.add(at(new THREE.Mesh(new THREE.RingGeometry(0.06, 0.075, 32), Y2K.led(BLUE, 0.6)), s * 0.0355, 0, 0, 0, s * Math.PI / 2, 0));
         rot.add(at(mesh(Y2K.rbox(0.072, 0.018, 0.03, 0.006), M.chrome), 0, 0.125, 0));
-        anim(flip, [{ t: 0, p: [0, -0.1, 0] }, { t: 1.45 }, { t: 1.8, p: [0, 0.02, 0], e: 'back' }], id === 'pitch');
+        anim(flip, [{ t: 0, p: [0, -0.1, 0] }, { t: 1.45 }, { t: 1.8, p: [0, 0.02, 0], e: 'out' }], id === 'pitch');
         reg(id, 'wheel', rot, { rot, spring: id === 'pitch' });
       }); }
     // pistones: bandeja y panel
     const pistons = [];
-    for (const [x, z, tgt] of [[-1.3, 0.55, 'kbd'], [1.3, 0.55, 'kbd'], [-1.6, -0.85, 'panel'], [1.6, -0.85, 'panel']]) { const g = new THREE.Group(); root.add(g); const a = mesh(new THREE.CylinderGeometry(0.04, 0.04, 1, 16), M.chrome), b = mesh(new THREE.CylinderGeometry(0.055, 0.055, 1, 16), M.graphite); g.add(a, b); pistons.push({ g, a, b, x, z, tgt }); }
+    for (const [x, z, tgt, L] of [[-1.3, 0.55, 'kbd', 0.34], [1.3, 0.55, 'kbd', 0.34], [-1.6, -0.85, 'panel', 0.5], [1.6, -0.85, 'panel', 0.5], [-1.6, -0.25, 'panel', 0.5], [1.6, -0.25, 'panel', 0.5]]) { const g = new THREE.Group(); root.add(g); const b1 = mesh(Y2K.rbox(L, 0.022, 0.03, 0.008), M.chrome), b2 = mesh(Y2K.rbox(L, 0.022, 0.03, 0.008), M.graphite); b2.position.z = 0.032; const pin = mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.08, 12), M.chrome); pin.rotation.x = Math.PI / 2; pin.position.z = 0.016; g.add(b1, b2, pin); pistons.push({ g, b1, b2, x, z, tgt, L }); }
 
     // ===== Luz de suelo (HYPER) =====
     const under = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: Y2K.glowTex('255,255,255'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false, opacity: 0 })); under.rotation.x = -Math.PI / 2; under.position.set(0, 0.012, 0.15); under.scale.set(8, 4.2, 1); under.userData.noReflect = true; under.userData.noGround = true; root.add(under);
 
     // ---------- Actualización por fotograma ----------
     const _v = new THREE.Vector3(), _w = new THREE.Vector3(), _up = V(0, 1, 0), _q = new THREE.Quaternion();
+    // brazo telescópico: tubos rígidos de longitud fija que se deslizan unos dentro de otros (no se estiran)
+    function telescope(tubes, p0, p1) { _v.subVectors(p1, p0); const L = _v.length(), n = tubes.length; _q.setFromUnitVectors(_up, _v.clone().normalize());
+      const ext = clamp((L - ARM_STAGE) / (n - 1) / (ARM_STAGE - ARM_OVERLAP)) * (ARM_STAGE - ARM_OVERLAP);
+      tubes.forEach((t, i) => { t.quaternion.copy(_q); t.position.copy(p0).addScaledVector(_v.clone().normalize(), i * ext + ARM_STAGE / 2); }); }
+    // tijera rígida: dos barras de longitud fija que se cruzan; la altura sale del ángulo
+    function scissor(sc, x, y0, h, z) { const a = Math.asin(clamp(h / sc.L, 0, 0.98)); sc.g.position.set(x, y0 + h / 2, z); sc.b1.rotation.z = a; sc.b2.rotation.z = -a; sc.g.visible = true; }
     function stretch(g, p0, p1, t1, t2) { _v.subVectors(p1, p0); const L = _v.length(); g.position.copy(p0).addScaledVector(_v, 0.5); _q.setFromUnitVectors(_up, _v.normalize()); g.quaternion.copy(_q); t1.scale.set(1, L, 1); t2.scale.set(1, L * 0.5, 1); t2.position.y = -L * 0.25; g.visible = L > 0.05; }
     let flash = 0;
     function update(T, dt, st) {
@@ -2179,8 +2187,8 @@ const HYPERWAVE = (() => {
       under.material.opacity = hyp * (0.35 + beat * 0.3); under.material.color.set(st.hue || BLUE);
       // brazos y pistones
       root.updateMatrixWorld(true);
-      struts.forEach(({ st: g, t1, t2, s, b1, b2 }) => { const k = s < 0 ? 'L' : 'R'; pods[k].getWorldPosition(_w); root.worldToLocal(_w); const a0 = V(s * 2.0, 0.47, 0.0); stretch(g, a0, _w, t1, t2); g.visible = hyp > 0.02; b1.position.copy(a0); b2.position.copy(_w).lerp(a0, 0.12); b1.visible = b2.visible = g.visible; });
-      pistons.forEach((p) => { const tgtY = p.tgt === 'kbd' ? kbd.position.y + KY : (panelH.position.y + Math.sin(panelH.rotation.x) * (-p.z - 0.06)) - 0.0; stretch(p.g, V(p.x, 0.37, p.z), V(p.x, tgtY + 0.0, p.z + (p.tgt === 'kbd' ? kbd.position.z : 0)), p.a, p.b); p.g.visible = tgtY - 0.37 > 0.03; });
+      struts.forEach(({ tubes, s, b1, b2 }) => { const k = s < 0 ? 'L' : 'R'; _w.set(-s * POD_WRIST, 0, 0); pods[k].localToWorld(_w); root.worldToLocal(_w); const a0 = V(s * ARM_ROOT, ARM_Y, 0); telescope(tubes, a0, _w); b1.position.copy(a0); b2.position.copy(_w); });
+      pistons.forEach((p) => { const tgtY = p.tgt === 'kbd' ? kbd.position.y + KY : (panelH.position.y + Math.sin(panelH.rotation.x) * (-p.z - 0.06)) - 0.0; scissor(p, p.x, 0.37, Math.max(0, tgtY - 0.37), p.z + (p.tgt === 'kbd' ? kbd.position.z : 0)); });
       vfdTex.needsUpdate = !!st.screenDirty;
       tick.forEach((f) => f(T, dt, st));
     }
