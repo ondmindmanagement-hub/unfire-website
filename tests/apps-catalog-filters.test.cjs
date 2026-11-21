@@ -49,38 +49,55 @@ function simulate() {
   };
 }
 
-test('exactly seven existing cards categorized with real device labels',()=>{
+
+function verifyFilter(s,topic,device){
+  const visible=s.cards.filter(x=>!x.hidden);
+  const expected=s.cards.filter(x=>(topic==='all'||x.dataset.topics.split(/\s+/).includes(topic))&&(device==='all'||x.dataset.devices.split(/\s+/).includes(device)));
+  assert.equal(visible.length,expected.length,'incorrect number of filtered results');
+  assert.deepEqual(visible.map(x=>x.dataset),expected.map(x=>x.dataset),'wrong cards visible');
+  if(expected.length===0)assert.match(s.status.textContent,/No matching apps/);
+  else assert.equal(s.status.textContent,'Showing '+expected.length+' of '+s.cards.length+' products');
+}
+test('catalogue cards remain categorized with real device labels',()=>{
   const s=simulate();
-  assert.equal(s.cards.length,7);
+  assert.ok(s.cards.length>=11,'browser products must not displace existing apps');
   assert.equal(s.families.length,4);
-  assert.equal(s.status.textContent,'Showing 7 of 7 products');
+  verifyFilter(s,'all','all');
   assert.ok(s.cards.every(x=>x.dataset.devices&&x.dataset.topics));
   assert.ok(s.cards.every(x=>!x.hidden),'all cards start visible');
 });
-test('independent topic + device controls and no-results state',()=>{
+test('independent topic + device filters with genuine no-results state',()=>{
   const s=simulate();
   s.select('topic','capture');
-  assert.equal(s.status.textContent,'Showing 1 of 7 products');
-  assert.equal(s.families.filter(x=>!x.hidden).length,1);
+  verifyFilter(s,'capture','all');
+  assert.equal(s.cards.filter(x=>!x.hidden).length,1);
   s.select('device','mac');
-  assert.match(s.status.textContent,/No matching apps/);
+  verifyFilter(s,'capture','mac');
   assert.ok(s.families.every(x=>x.hidden));
   s.select('topic','developer');
-  assert.equal(s.status.textContent,'Showing 1 of 7 products');
+  verifyFilter(s,'developer','mac');
   s.select('device','iphone');
-  assert.equal(s.status.textContent,'Showing 1 of 7 products');
+  verifyFilter(s,'developer','iphone');
   s.select('topic','all');
-  assert.equal(s.status.textContent,'Showing 4 of 7 products');
+  verifyFilter(s,'all','iphone');
   assert.equal(s.buttons.filter(x=>x.attributes['aria-pressed']==='true').length,2);
 });
-test('family anchor resets filters so sections cannot be stranded hidden',()=>{
+test('family anchor clears filters without leaving sections stranded',()=>{
   const s=simulate();
-  s.select('topic','utility');
+  s.select('topic','capture');
   s.select('device','mac');
   assert.ok(s.families.every(x=>x.hidden));
   s.links[0].click();
   assert.ok(s.families.every(x=>!x.hidden));
-  assert.equal(s.status.textContent,'Showing 7 of 7 products');
+  verifyFilter(s,'all','all');
+});
+test('new web-app cards are honest and link to distinct browser experiments',()=>{
+  for(const url of ['/apps/archer-web/','/portable-synth/studio/','/apps/ai-token-counter/'])
+    assert.ok(html.includes('href="'+url+'"'),'missing browser utility '+url);
+  assert.match(html,/not the full Android DAW/i);
+  assert.match(html,/distinct from the native ARCHER plugin/i);
+  assert.match(html,/not official model tokenization or live prices/i);
+  assert.match(html,/data-topics="developer productivity utility" data-devices="mac iphone ipad"/);
 });
 test('no stale review claims; links and accessibility present',()=>{
   assert.doesNotMatch(html,/App Store review in progress|Mac App Store review in progress/i);
