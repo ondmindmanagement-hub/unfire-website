@@ -59,3 +59,16 @@ test("neither test-track status nor uploaded IPA is described as a public releas
  assert.match(html,/An uploaded IPA does not mean approval/);
  assert.match(html,/21 November 2026/);
 });
+
+test("official current native lava-lamp icon is used without substitution",()=>{
+ const crypto=require("node:crypto");
+ const icon="/apps/gods-lamp/media/gods-lamp-app-icon-1024.png";
+ assert.ok(html.includes('src="'+icon+'"'));
+ assert.ok(html.includes('content="https://unfire.technology'+icon+'"'));
+ const data=fs.readFileSync(path.join(root,icon));
+ assert.equal(crypto.createHash("sha256").update(data).digest("hex"),
+   "5aef1293812bd2877e817eeb4e76696d7a10e5ca5f0784d606ffb9d9acd9472c");
+ assert.match(html,/Official God's Lamp app icon depicting a vibrant purple and orange lava lamp/);
+ assert.match(html,/brand artwork, not a product screenshot/);
+ assert.ok(!html.includes("Abstract visual identity"));
+});
