@@ -97,7 +97,7 @@ test('new web-app cards are honest and link to distinct browser experiments',()=
   assert.match(html,/not the full Android DAW/i);
   assert.match(html,/distinct from the native ARCHER plugin/i);
   assert.match(html,/not official model tokenization or live prices/i);
-  assert.match(html,/data-topics="developer productivity utility" data-devices="mac iphone ipad"/);
+  assert.match(html,/data-topics="developer productivity utility" data-devices="mac iphone ipad web"/);
 });
 test('no stale review claims; links and accessibility present',()=>{
   assert.doesNotMatch(html,/App Store review in progress|Mac App Store review in progress/i);
@@ -134,4 +134,16 @@ test('Power browser experiment is discoverable but separate from the native iPho
   assert.match(browser,/noindex,nofollow/);
   assert.match(browser,/NO LIVE PRICES/);
   assert.match(browser,/connect-src 'none'/);
+});
+
+test('browser device filter reveals published browser utilities only',()=>{
+  const state=simulate();
+  state.select('device','web');
+  verifyFilter(state,'all','web');
+  assert.ok(state.cards.filter(card=>!card.hidden).length>=5);
+  assert.ok(state.cards.filter(card=>!card.hidden).every(card=>card.dataset.devices.split(/\\s+/).includes('web')));
+  state.select('topic','audio');
+  verifyFilter(state,'audio','web');
+  state.select('device','all');
+  verifyFilter(state,'audio','all');
 });
