@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050505">
+<meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'">
+<title>Technical Research | Unfire</title>
+<meta name="description" content="Explore Unfire's technical research agenda across reliable AI agents, software infrastructure, human-computer interaction, audio engineering and verification.">
+<link rel="canonical" href="https://unfire.technology/research/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Technical Research | Unfire">
+<meta property="og:description" content="Research questions, methods, evidence and limitations across Unfire engineering.">
+<meta property="og:url" content="https://unfire.technology/research/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Technical Research | Unfire","url":"https://unfire.technology/research/","description":"Unfire's technical research areas and methodology.","about":{"@type":"Thing","name":"Software and engineering research"},"publisher":{"@type":"Organization","name":"Unfire","url":"https://unfire.technology/"}}</script>
+<style>
+:root{color-scheme:dark;--bg:#050505;--surface:#0d0d0f;--line:#242427;--text:#f5f5f7;--muted:#a1a1a6;--low:#77777f;--accent:#cf594b}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;color:var(--text);background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:2px solid #eda69c;outline-offset:5px;border-radius:3px}
+.wrap{width:min(1060px,calc(100% - 48px));margin:auto}
+header{position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(255,255,255,.09);background:rgba(5,5,5,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.topbar{min-height:68px;display:flex;justify-content:space-between;align-items:center;gap:22px}
+.brand{display:inline-flex;align-items:center;gap:12px;font-size:18px;font-weight:650;letter-spacing:.005em;white-space:nowrap}
+.brand img{height:25px;width:25px}
+nav{display:flex;align-items:center;flex-wrap:wrap;gap:clamp(14px,2.8vw,30px);font-size:13px;color:#a8a8ae}
+nav a:hover,nav a[aria-current="page"]{color:#fff}
+.hero{padding:125px 0 110px;border-bottom:1px solid var(--line)}
+.kicker,.eyebrow{font-size:11px;font-weight:650;line-height:1.5;letter-spacing:.17em;text-transform:uppercase;color:#b56f68}
+.kicker{margin:0 0 29px}
+h1,h2,h3,p{margin-top:0}
+h1{max-width:1000px;margin:0 0 36px;font-size:clamp(3.6rem,8vw,7.4rem);font-weight:600;line-height:.99;letter-spacing:-.055em}
+h1 span{color:#77777f}
+.lead{max-width:740px;margin:0;color:#b0b0b6;font-size:clamp(18px,2vw,23px);line-height:1.58}
+.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:42px}
+.button{min-height:46px;display:inline-flex;align-items:center;justify-content:center;padding:11px 21px;border:1px solid #35353a;border-radius:999px;font-size:13px;font-weight:560;transition:background .18s}
+.button.primary{background:#f5f5f7;border-color:#f5f5f7;color:#080808}
+.button:hover{background:#28282d}.button.primary:hover{background:#e5e5e8}
+.hero-note{margin:26px 0 0;color:var(--low);font-size:12px;line-height:1.7}
+section.content{padding:100px 0;border-bottom:1px solid var(--line);scroll-margin-top:90px}
+h2{max-width:880px;font-size:clamp(2.5rem,5vw,4.4rem);font-weight:600;letter-spacing:-.04em;line-height:1.07;margin:18px 0 28px}
+.section-intro{max-width:760px;color:var(--muted);font-size:16px;line-height:1.75;margin:0 0 48px}
+.research-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.research-card{display:flex;flex-direction:column;min-height:275px;padding:33px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(155deg,#111114,#09090b)}
+.card-index{font-size:11px;letter-spacing:.16em;color:var(--accent);margin-bottom:40px}
+.research-card h3{font-size:clamp(23px,2.5vw,30px);line-height:1.17;letter-spacing:-.025em;font-weight:600;margin:0 0 16px}
+.research-card p{font-size:14px;color:var(--muted);line-height:1.7;margin:0}
+.card-status{margin-top:auto;padding-top:26px;font-size:11px;color:#72727b;letter-spacing:.04em}
+.protocol{border-top:1px solid var(--line)}
+.protocol-row{display:grid;grid-template-columns:70px 190px minmax(0,1fr);gap:28px;align-items:start;border-bottom:1px solid var(--line);padding:28px 0}
+.protocol-row .num{font-size:12px;color:var(--accent)}
+.protocol-row strong{font-size:16px;font-weight:580}
+.protocol-row p{color:var(--muted);font-size:14px;line-height:1.65;margin:0}
+.notice{margin-top:35px;padding:24px 27px;border:1px solid #333034;border-radius:18px;background:#111013}
+.notice strong{font-size:14px}
+.notice p{color:var(--muted);font-size:13px;line-height:1.65;margin:10px 0 0}
+.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.text-link{border-bottom:1px solid #80534e;padding-bottom:5px;font-size:14px;color:#f2dad7}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:end}
+.contact-grid p{line-height:1.75;color:var(--muted);font-size:15px}
+.email{display:inline-block;margin-top:18px;border-bottom:1px solid var(--accent);font-size:16px;padding-bottom:6px}
+footer{padding:34px 0 65px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:25px;font-size:12px;color:#77777e}
+footer a:hover{color:#fff}
+@media(max-width:780px){.hero{padding:86px 0 85px}section.content{padding:75px 0}.research-grid,.contact-grid{grid-template-columns:1fr}.protocol-row{grid-template-columns:40px 1fr;gap:12px 18px}.protocol-row p{grid-column:2}}
+@media(max-width:520px){.wrap{width:calc(100% - 34px)}.topbar{gap:12px;min-height:70px}.brand{font-size:15px}.brand img{height:21px;width:21px}nav{gap:11px;font-size:11px}h1{font-size:clamp(3.05rem,13.6vw,4.3rem)}.hero{padding:73px 0}.research-card{min-height:0;padding:27px}.card-index{margin-bottom:27px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap topbar">
+<a class="brand" href="/" aria-label="Unfire home"><img src="/favicon.svg" width="25" height="25" alt=""><span>Unfire</span></a>
+<nav aria-label="Research navigation"><a href="/">Home</a><a href="/#work">Work</a><a href="/research/" aria-current="page">Research</a><a href="/contact/">Contact</a></nav>
+</div></header>
+<main>
+<section class="hero"><div class="wrap">
+<p class="kicker">Unfire / Engineering &amp; research</p>
+<h1>Technical research.<br><span>Evidence before claims.</span></h1>
+<p class="lead">We study how intelligent systems, software infrastructure and human interfaces can become more reliable, measurable and useful. Research begins with a question and advances through controlled testing, not assumptions.</p>
+<div class="actions"><a class="button primary" href="#areas">Explore research areas</a><a class="button" href="#method">Our research method</a></div>
+<p class="hero-note">Independent research agenda · Public scope updated 17 November 2026</p>
+</div></section>
+<section class="content" id="areas" aria-labelledby="areas-title"><div class="wrap">
+<p class="eyebrow">Research areas</p><h2 id="areas-title">Questions worth testing.</h2>
+<p class="section-intro">These are engineering research directions, not claims of validated products or published breakthroughs. Each topic progresses only when its assumptions can be tested.</p>
+<div class="research-grid">
+<article class="research-card"><div class="card-index">01 / AI SYSTEMS</div><h3>Reliable agents &amp; handover</h3><p>Bounded tool execution, human approval, recoverable workflows, traceable decisions and safe transfer of work between cooperating systems.</p><div class="card-status">Research direction · Evaluation required</div></article>
+<article class="research-card"><div class="card-index">02 / INFRASTRUCTURE</div><h3>Runtime reliability</h3><p>Concurrency, queues, backpressure, CPU and memory limits, disk budgets, logging, caching and failure recovery under constrained resources.</p><div class="card-status">Research direction · Evaluation required</div></article>
+<article class="research-card"><div class="card-index">03 / INTERACTION</div><h3>Human-computer interfaces</h3><p>Gesture, gaze and voice input; calibration, precision, accessibility, latency and safeguards against unintended commands.</p><div class="card-status">Research direction · Evaluation required</div></article>
+<article class="research-card"><div class="card-index">04 / AUDIO ENGINEERING</div><h3>Sound &amp; embedded systems</h3><p>Digital signal processing, portable audio workflows, real-time performance and the engineering constraints of compact synthesis hardware.</p><div class="card-status">Research direction · Evaluation required</div></article>
+<article class="research-card"><div class="card-index">05 / ASSURANCE</div><h3>Verification &amp; security</h3><p>Repeatable tests, adversarial evaluation, provenance, permission boundaries, audit evidence, safe rollback and meaningful quality thresholds.</p><div class="card-status">Research direction · Evaluation required</div></article>
+<article class="research-card"><div class="card-index">06 / APPLIED SYSTEMS</div><h3>From research to deployment</h3><p>Synthetic-data pilots, measurable feasibility criteria, human oversight and the gap between a controlled prototype and production readiness.</p><div class="card-status">Research direction · Evaluation required</div></article>
+</div></div></section>
+<section class="content" id="method" aria-labelledby="method-title"><div class="wrap">
+<p class="eyebrow">Research method</p><h2 id="method-title">Make the evidence inspectable.</h2>
+<p class="section-intro">A research note should make clear what was asked, how it was tested, what was observed and what remains unknown.</p>
+<div class="protocol">
+<div class="protocol-row"><span class="num">01</span><strong>Question</strong><p>Define the problem, hypothesis, scope and measurable success criteria before testing.</p></div>
+<div class="protocol-row"><span class="num">02</span><strong>Method</strong><p>Record the environment, inputs, baselines, versions, relevant constraints and repeatable procedure.</p></div>
+<div class="protocol-row"><span class="num">03</span><strong>Evidence</strong><p>Separate observation from interpretation. Retain test results and appropriately shareable artifacts.</p></div>
+<div class="protocol-row"><span class="num">04</span><strong>Limitations</strong><p>Disclose failed cases, uncertainty, external dependencies and what has not been independently verified.</p></div>
+<div class="protocol-row"><span class="num">05</span><strong>Decision</strong><p>Continue, redesign, archive or prepare a controlled pilot based on the evidence, not a marketing target.</p></div>
+</div>
+<div class="notice"><strong>Public evidence register</strong><p>This page establishes the research scope and publication standard. RB-001 is a published synthetic benchmark fixture and evaluation method, not a test of real AI models or independently validated products. No peer-reviewed studies or completed external validations are claimed. Future notes must distinguish planned, internally tested, independently reproduced and peer-reviewed work.</p></div>
+<div class="links"><a class="text-link" href="https://github.com/ondmindmanagement-hub/unfire-website/tree/main/research/benchmarks/approval-decisions-v0.1/">RB-001 · Synthetic benchmark &amp; offline evaluator</a><a class="text-link" href="/education/">University research &amp; education</a><a class="text-link" href="/public-record/#archives">Four archived open research repositories</a><a class="text-link" href="/pilot/">Controlled pilot enquiries</a></div>
+</div></section>
+<section class="content" id="collaborate" aria-labelledby="collaborate-title"><div class="wrap contact-grid">
+<div><p class="eyebrow">Technical collaboration</p><h2 id="collaborate-title">Start with a problem.</h2></div>
+<div><p>Unfire welcomes focused research questions, reproducibility discussions and written proposals for technical collaboration. Institutional relationships are considered individually; none is implied by this page.</p><p>Initial communication is by email. Please do not send secrets, access credentials or personal datasets.</p><a class="email" href="mailto:hello@unfire.technology?subject=Unfire%20technical%20research%20enquiry">hello@unfire.technology ↗</a></div>
+</div></section>
+</main>
+<footer><div class="wrap"><span>© 2026 Unfire · Independent technology initiative</span><span><a href="/about/">About</a> · <a href="/privacy.html">Privacy</a> · <a href="/legal.html">Legal</a></span></div></footer>
+</body></html>
