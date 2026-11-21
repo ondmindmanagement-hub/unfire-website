@@ -89,10 +89,10 @@ test("stereo encoding interleaves and sanitizes nonfinite samples",()=>{
   assert.equal(v.getInt16(44,true),32767);assert.equal(v.getInt16(46,true),-32768);
   assert.equal(v.getInt16(48,true),0);assert.equal(v.getInt16(50,true),0);
 });
-test("audio output rejects unbounded buffers",()=>{
+test("audio output rejects unbounded buffers",async()=>{
   assert.throws(()=>E.wav({numberOfChannels:3,length:20,sampleRate:44100}));
   assert.throws(()=>E.wav({numberOfChannels:1,length:2000001,sampleRate:44100}));
-  assert.throws(()=>A.render(E.initialPattern(),5),RangeError);
+  await assert.rejects(A.render(E.initialPattern(),5),RangeError);
 });
 test("live audio setup must receive a Web Audio context",()=>{
   assert.throws(()=>A.setup(null,E.initialPattern()),TypeError);
