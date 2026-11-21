@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fictional incident review lab | Unfire Autonomy</title>
+<meta name="description" content="An inspectable, deterministic, synthetic-only illustration of human-reviewed operational incident handling. Not generative AI or a customer deployment.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://unfire.technology/autonomy/demo/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root{color-scheme:dark;--bg:#090b0f;--panel:#14171d;--line:#363c45;--fg:#f1f4f7;--muted:#a7b0bd;--aqua:#8be6de}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.63 -apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif}a{color:var(--aqua)}a:focus-visible,button:focus-visible{outline:3px solid var(--aqua);outline-offset:3px}.wrap{width:min(1040px,calc(100% - 40px));margin:0 auto}
+header{border-bottom:1px solid var(--line);padding:20px 0;font-weight:650}header .wrap{display:flex;align-items:center;justify-content:space-between;gap:15px}
+main{padding:70px 0 85px}.eyebrow{color:var(--aqua);text-transform:uppercase;font-size:.74rem;letter-spacing:.13em}h1{font-size:clamp(2.3rem,6vw,4.3rem);line-height:1.1;letter-spacing:-.035em;margin:18px 0}h2{font-size:1.2rem;margin:0 0 14px}p{color:var(--muted)}.intro{max-width:780px;font-size:1.1rem}
+.layout{display:grid;grid-template-columns: minmax(260px,.9fr) minmax(320px,1.1fr);gap:22px;margin-top:45px}.panel{padding:25px;border:1px solid var(--line);border-radius:18px;background:var(--panel)}.picker{display:flex;flex-direction:column;gap:8px}
+button{width:100%;text-align:left;border:1px solid #39424b;color:var(--fg);padding:13px 15px;border-radius:11px;background:#1b2027;cursor:pointer;font:inherit}button:hover,button[aria-pressed="true"]{border-color:var(--aqua);background:#1a3232}
+.small{font-size:.85rem}.record{background:#0d1115;border:1px solid #344049;padding:19px;border-radius:12px;margin-bottom:15px;word-break:break-word}
+dl{display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:8px;margin:0}dt{color:var(--muted)}dd{margin:0;overflow-wrap:anywhere}
+.value{font-weight:750;color:#d2e6e3}code{background:#0d1115;padding:2px 4px}footer{padding:30px 0;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted)}
+@media(max-width:760px){.layout{grid-template-columns:1fr}main{padding:45px 0}}
+</style>
+</head><body>
+<header><div class="wrap"><span>UNFIRE / AUTONOMY</span><a href="/autonomy/">Back to overview</a></div></header>
+<main class="wrap">
+<div class="eyebrow">Synthetic-only / local demonstration / version 1</div>
+<h1>Incident triage, with explicit human boundaries.</h1>
+<p class="intro">Choose a fictional operational incident and inspect a deterministic classification and decision gate. This page runs locally in your browser. It does not contact external APIs, process customer records, use a live language model or take action in an ERP.</p>
+<div class="layout">
+<section class="panel" aria-labelledby="cases-heading"><h2 id="cases-heading">Fictional inputs</h2>
+<p class="small">Eight deliberately invented scenarios. Choose one; nothing is submitted.</p><div class="picker" id="cases"></div></section>
+<section class="panel" aria-labelledby="report-heading"><h2 id="report-heading">Read-only decision report</h2><div aria-live="polite" id="report"></div></section>
+</div>
+<section style="margin-top:45px;max-width:790px">
+<h2>What this does and does not demonstrate</h2>
+<p><strong>Demonstrates:</strong> repeatable rules for detecting a few severity cues, default-denying unknown actions, blocking refund/data-export requests and requiring explicit review for any record update. Each outcome has a traceable explanation.</p>
+<p><strong>Does not demonstrate:</strong> model-based natural-language comprehension, reliable incident prioritization in the field, real human approval, production integration, security certification, business value or suitability for a particular buyer.</p>
+<p><strong>Tested offline:</strong> the eight built-in scenarios and an unknown-action check passed developer assertions at publication. These are only controlled software assertions, not an external audit. <a href="evaluator.js">View the evaluator source</a>.</p>
+<p>We can discuss a separate, fixed-scope paid feasibility study once a buyer specifies a real process, responsible owner and authorized budget. <a href="mailto:hello@unfire.technology?subject=Unfire%20Autonomy%20%7C%20Incident%20workflow%20enquiry">Email a non-confidential enquiry</a>.</p>
+</section>
+</main><footer><div class="wrap">© 2026 Unfire · Independent founder-led R&amp;D initiative · No customer endorsement or production claims. <a href="/public-record/">Public record</a></div></footer>
+<script src="evaluator.js"></script>
+<script>
+(function(){
+'use strict';
+var api=window.UnfireTriage;
+var choices=document.getElementById('cases'),output=document.getElementById('report');
+if(!api||!Array.isArray(api.cases)){output.textContent='The local evaluation script did not load.';return;}
+function item(term,value){var dt=document.createElement('dt');dt.textContent=term;var dd=document.createElement('dd');dd.textContent=value;return [dt,dd];}
+function render(index){
+ var incident=api.cases[index],result=api.evaluate(incident);
+ Array.prototype.forEach.call(choices.children,function(button,i){button.setAttribute('aria-pressed',String(i===index));});
+ output.replaceChildren();
+ var desc=document.createElement('div');desc.className='record';var d=document.createElement('dl');
+ [['Case ID',incident.id],['Channel',incident.channel],['Fictional description',incident.description],['Requested action',incident.requestedAction.replaceAll('_',' ')]].forEach(function(pair){d.append(...item(pair[0],pair[1]));});desc.append(d);output.append(desc);
+ var report=document.createElement('div');report.className='record';var rd=document.createElement('dl');
+ [['Priority (illustrative)',result.priority],['Decision',result.decision],['Why classified',result.reason],['Policy boundary',result.policy],['Executed actions','None'],['External API calls','0']].forEach(function(pair){rd.append(...item(pair[0],pair[1]));});report.append(rd);output.append(report);
+}
+api.cases.forEach(function(c,i){var b=document.createElement('button');b.type='button';b.setAttribute('aria-pressed','false');b.textContent=c.id+' — '+c.description.slice(0,58);b.addEventListener('click',function(){render(i);});choices.append(b);});render(0);
+})();
+</script>
+</body></html>
