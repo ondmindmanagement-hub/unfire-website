@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09111b">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Unfire Power Web Lab is a private, local-first electricity cost simulator for user-provided Spanish hourly PVPC data. Not a live price feed or energy bill quote.">
+  <link rel="canonical" href="https://unfire.technology/apps/power-web/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; img-src 'self' data:; script-src 'self'; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; font-src 'self'">
+  <title>Power Web Lab — Electricity Cost Simulator | Unfire</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./engine.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+<header class="topbar">
+  <a class="logo" href="/" aria-label="Unfire home"><span class="logo-mark" aria-hidden="true">✦</span> UNFIRE <span class="logo-ext">/ POWER</span></a>
+  <nav aria-label="Primary navigation"><a href="/apps/">All apps</a><a href="/apps/power/">Power for iPhone</a><a href="/contact/">Contact</a></nav>
+</header>
+<main id="main">
+  <section class="hero" aria-labelledby="title">
+    <div class="eyebrow"><span class="live-dot" aria-hidden="true"></span> UNFIRE ENERGY / BROWSER EXPERIMENT</div>
+    <h1 id="title">Understand the cost.<br><span>Find the better hour.</span></h1>
+    <p class="intro">Explore how hourly electricity prices affect running an appliance. Paste your own rates or import an official REData JSON file. Calculations stay in your browser.</p>
+    <div class="chips"><span>NO ACCOUNT</span><span>NO UPLOADS</span><span>NO LIVE PRICES</span><span>USER-PROVIDED DATA</span></div>
+  </section>
+
+  <section class="layout" aria-label="Electricity simulation workspace">
+    <div class="left-panel">
+      <section class="panel" aria-labelledby="import-title">
+        <div class="section-index">01 / INPUT</div>
+        <h2 id="import-title">Choose your reference.</h2>
+        <p class="muted">Use 23, 24 or 25 hourly values depending on Spain's daylight-saving calendar. Numbers must be in <strong>€/kWh</strong>, one per line.</p>
+        <div class="field">
+          <label for="day">Spanish price date</label>
+          <input id="day" type="date" required>
+        </div>
+        <div class="actions">
+          <button id="sample" class="secondary" type="button">Load synthetic example</button>
+          <a id="official-source" class="text-link" href="https://www.ree.es/es/datos/apidatos" target="_blank" rel="noopener noreferrer">Official REData reference ↗</a>
+        </div>
+        <label class="field" for="manual">
+          <span>Hourly prices · €/kWh</span>
+          <textarea id="manual" rows="5" maxlength="16384" placeholder="0.1524&#10;0.1483&#10;0.1356&#10;..."></textarea>
+        </label>
+        <button id="load-manual" class="primary" type="button">Calculate from pasted prices <span aria-hidden="true">↗</span></button>
+        <div class="file-input">
+          <label for="import-json">Or import official REData JSON saved on your device</label>
+          <input id="import-json" type="file" accept=".json,application/json">
+          <p class="caption">Select only a REData result containing PVPC indicator <strong>1001</strong>. The wholesale spot indicator 600 is intentionally ignored.</p>
+        </div>
+        <div class="ref-note">
+          <span class="info-ico" aria-hidden="true">i</span>
+          <p>For a given date, you may open the <a id="official-api" href="https://www.ree.es/es/datos/apidatos" target="_blank" rel="noopener noreferrer">official REData JSON request</a> in a separate tab and save it yourself. Unfire makes no automatic request to REData and does not store or redistribute its data.</p>
+        </div>
+      </section>
+      <section class="panel settings" aria-labelledby="appliance-title">
+        <div class="section-index">02 / SIMULATE</div>
+        <h2 id="appliance-title">Your appliance.</h2>
+        <div class="fields-grid">
+          <div class="field">
+            <label for="power">Consumption while running · kW</label>
+            <input id="power" type="number" min="0.01" max="100" step="0.01" inputmode="decimal" value="1.50">
+          </div>
+          <div class="field">
+            <label for="duration">Continuous running time</label>
+            <select id="duration">
+              <option value="1">1 hour</option><option value="2" selected>2 hours</option>
+              <option value="3">3 hours</option><option value="4">4 hours</option>
+              <option value="5">5 hours</option><option value="6">6 hours</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="fixed">Optional fixed tariff comparison · €/kWh</label>
+          <input id="fixed" type="number" min="-2" max="10" step="0.0001" inputmode="decimal" placeholder="e.g. 0.1800">
+        </div>
+        <p class="caption">Assumes constant power over whole hours. Excludes standing power charges, taxes, meter rental, discounts and other bill components. No advice to switch suppliers.</p>
+      </section>
+    </div>
+
+    <div class="right-panel">
+      <section class="panel results" aria-labelledby="results-title">
+        <div class="results-top">
+          <div><div class="section-index">03 / COMPARE</div><h2 id="results-title">Your cost window.</h2></div>
+          <span class="result-pill">LOCALLY COMPUTED</span>
+        </div>
+        <p id="state" role="status" aria-live="polite" class="state">No prices loaded. Select an example, paste your own prices, or import a JSON file.</p>
+        <div class="metrics">
+          <div class="metric featured"><div class="metric-label">Lowest-cost window</div><div class="metric-value" id="best-price">—</div><div class="metric-sub" id="best-window">Awaiting data</div></div>
+          <div class="metric"><div class="metric-label">Highest-cost window</div><div class="metric-value" id="worst-price">—</div><div class="metric-sub" id="worst-window">Awaiting data</div></div>
+          <div class="metric"><div class="metric-label">Difference</div><div class="metric-value" id="savings-price">—</div><div class="metric-sub">Best versus worst slot</div></div>
+          <div class="metric"><div class="metric-label">Fixed-tariff comparison</div><div class="metric-value" id="fixed-cost">—</div><div class="metric-sub">Same kWh at entered fixed rate</div></div>
+        </div>
+        <div class="source-strip"><span><strong>Source:</strong> <span id="source-label">No hourly series</span></span><span><strong>Date:</strong> <span id="data-date">—</span></span><span><strong>Published/updated:</strong> <span id="updated">Not verified</span></span></div>
+      </section>
+      <section class="panel chart-panel" aria-labelledby="chart-title">
+        <div class="chart-heading"><div class="section-index">04 / HOURS</div><h2 id="chart-title">Hourly price shape.</h2><p class="muted">Each bar is €/kWh. The suggested start time is highlighted after an hourly dataset is loaded.</p></div>
+        <div id="hour-list" class="hour-list" role="list" aria-label="Hourly electricity price bars"><p class="empty">Hourly chart will appear here after you load prices.</p></div>
+        <div class="chart-footer"><span>Spain mainland · Europe/Madrid local time</span><button id="export" class="secondary" type="button" disabled>Export local CSV</button></div>
+      </section>
+    </div>
+  </section>
+  <section class="disclaimer" aria-label="Source, privacy and limitations">
+    <div><span class="section-index">ABOUT THIS TOOL</span><h2>Useful numbers.<br>No hidden assumptions.</h2></div>
+    <div class="disclaimer-body">
+      <p><strong>Not a live electricity feed.</strong> Example values are fictional. Manual prices are supplied by you; imported REData JSON is processed entirely inside your browser and displays its own date and source. Always confirm the original publication and licence before further use.</p>
+      <p><strong>PVPC is not the wholesale spot price.</strong> We accept only official indicator 1001 in the JSON import and convert its €/MWh values into €/kWh. Your contracted price may be different, particularly on a free-market tariff.</p>
+      <p><strong>Credit and official data:</strong> Red Eléctrica de España, S.A.U. · <a href="https://www.ree.es/es/datos/apidatos" target="_blank" rel="noopener noreferrer">REData API documentation</a> · <a href="https://www.ree.es/es/aviso-legal" target="_blank" rel="noopener noreferrer">Legal conditions</a>. No affiliation or endorsement. The native <a href="/apps/power/">Power Energy Prices for iPhone</a> is a different product.</p>
+    </div>
+  </section>
+</main>
+<footer><span>© 2026 Unfire · Independent technology initiative</span><div><a href="/apps/">Apps</a><a href="/privacy.html">Privacy</a><a href="/legal.html">Legal</a><a href="mailto:hello@unfire.technology">Support</a></div></footer>
+</div>
+</body>
+</html>
