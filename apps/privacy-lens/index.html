@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="theme-color" content="#080d16">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Privacy Lens Web Lab: check text for selected sensitive patterns and prepare a redacted copy entirely in your browser. Pattern recognition is limited, not a compliance audit.">
+  <link rel="canonical" href="https://unfire.technology/apps/privacy-lens/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <title>Privacy Lens Web Lab — Review before sharing | Unfire</title>
+  <script src="./engine.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#workspace">Skip to workspace</a>
+<header class="header">
+  <div class="wrap header-inner">
+    <a class="logo" href="/" aria-label="Unfire home"><span class="glyph" aria-hidden="true">✦</span> UNFIRE <span class="logo-note">/ INTELLIGENCE TOOLS</span></a>
+    <nav aria-label="Unfire"><a href="/apps/">All apps</a><a href="/privacy.html">Privacy</a></nav>
+  </div>
+</header>
+<main id="workspace" class="wrap">
+  <section class="hero">
+    <div class="eyebrow"><span class="pulse" aria-hidden="true"></span> LOCAL-FIRST WORKFLOW <span class="separator">/</span> EXPERIMENTAL</div>
+    <h1>Review before<br><em>you share.</em></h1>
+    <p class="lead">Look for recognizable sensitive details in your text. Create a redacted copy, then decide what to share. No account, upload or external analysis.</p>
+    <div class="facts"><span>ON-DEVICE PATTERN CHECKS</span><span>NO SERVER</span><span>EXPLICIT EXPORT</span></div>
+  </section>
+  <div class="notice" role="note"><div class="notice-mark" aria-hidden="true">!</div><div><strong>Limited detection, not a security guarantee.</strong><p>Privacy Lens recognizes a small set of patterns. It can miss secrets, personal details or context-sensitive information. Always review the entire output before copying or sending it. It is not an AI classifier, legal advice or a compliance certification.</p></div></div>
+  <div class="studio">
+    <section class="panel source" aria-labelledby="source-title">
+      <div class="panel-head">
+        <div><div class="step">01 / INPUT</div><h2 id="source-title">Your text</h2></div>
+        <span class="local-pill">STAYS IN THIS TAB</span>
+      </div>
+      <label for="input" class="small-label">Paste text to review</label>
+      <textarea id="input" placeholder="Paste content here. Nothing is transmitted." rows="10" spellcheck="false" autocomplete="off" aria-describedby="input-help"></textarea>
+      <div class="input-under">
+        <span id="input-help">200,000 characters maximum</span>
+        <output id="chars" aria-live="polite">0 / 200,000</output>
+      </div>
+      <div class="load-row"><label for="file" class="file-label"><span aria-hidden="true">↑</span> Load local text file</label><input id="file" type="file" accept=".txt,.md,.csv,.json,text/plain,text/markdown,text/csv,application/json" aria-describedby="file-note"></div>
+      <p class="micro" id="file-note">UTF-8 TXT, MD, CSV or JSON only, up to 512 KB. No PDF, images or document conversion.</p>
+      <div class="rule"></div>
+      <div class="panel-head select-head"><div><div class="step">02 / FILTERS</div><h2>What to detect</h2></div><span class="secondary-note">CHECKED BY DEFAULT</span></div>
+      <div id="categories" class="categories" role="group" aria-label="Sensitive pattern categories"></div>
+      <div class="actions">
+        <button id="analyze" type="button" class="primary">Analyze &amp; redact <span aria-hidden="true">↗</span></button>
+        <button id="clear" type="button" class="ghost">Clear everything</button>
+      </div>
+    </section>
+    <section class="panel result" aria-labelledby="result-title">
+      <div class="panel-head">
+        <div><div class="step">03 / RESULT</div><h2 id="result-title">Redacted copy</h2></div>
+        <span class="result-chip" id="result-chip">NOT ANALYZED</span>
+      </div>
+      <div class="result-summary">
+        <div class="big-number" id="total">—</div>
+        <div><strong>Patterns matched</strong><p>Counts only. Detected values are never shown in the results summary.</p></div>
+      </div>
+      <div id="counts" class="counts" aria-label="Matched pattern counts"></div>
+      <label for="output" class="small-label">Review this output before sharing</label>
+      <textarea id="output" readonly spellcheck="false" rows="11" placeholder="Your reviewed, redacted text will appear here." aria-describedby="result-warning"></textarea>
+      <p id="result-warning" class="micro">A result with zero detected patterns is not proof that the source text is safe.</p>
+      <div class="export-actions">
+        <button id="copy" class="secondary" type="button" disabled>Copy redacted text</button>
+        <button id="download" class="outline" type="button" disabled>Export .txt</button>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite">Ready. Enter text and choose Analyze &amp; redact.</p>
+      <div class="privacy-foot"><strong>How your data is handled</strong><p>This experiment performs regular-expression checks inside your browser and does not contact any server. Nothing is saved to an account, local storage or analytics service. Text remains in this tab until you clear it or close the page. Export and clipboard actions require you to click.</p></div>
+    </section>
+  </div>
+</main>
+<footer class="wrap footer"><span>© Unfire · Privacy Lens Web Lab</span><a href="/apps/">Explore other tools</a><span>Experimental · Privacy-conscious, not infallible</span></footer>
+</body>
+</html>
