@@ -53,3 +53,11 @@ jobs:
           pid=$!
           trap 'kill $pid || true' EXIT
           node tests/ai-token-counter-browser.cjs
+      - name: Attach synthetic browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-token-counter-browser-captures
+          path: artifacts/token-browser/*.png
+          retention-days: 7
+          if-no-files-found: ignore
