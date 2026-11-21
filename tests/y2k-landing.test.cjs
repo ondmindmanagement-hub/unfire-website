@@ -40,3 +40,17 @@ test("landing remains lightweight, accessible, separate from heavy WebGL",()=>{
   assert.match(html,/href="\/audio\/"/);
   assert.ok(!/google-analytics|gtag|facebook\.com\/tr/i.test(html));
 });
+
+test("the game landing stylesheet is structurally balanced",()=>{
+  const css=html.match(/<style>([\s\S]*?)<\/style>/)?.[1];
+  assert.ok(css && css.length > 800,"expected inline stylesheet");
+  let level=0;
+  for(const ch of css){
+    if(ch==="{") level++;
+    if(ch==="}") level--;
+    assert.ok(level>=0,"CSS closes too many blocks");
+  }
+  assert.equal(level,0,"CSS contains an unclosed rule or @media block");
+  assert.match(css,/\.capture-grid\s*\{/);
+  assert.match(css,/\.art \.caption\s*\{/);
+});
