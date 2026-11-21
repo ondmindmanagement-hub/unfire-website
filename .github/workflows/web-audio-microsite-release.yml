@@ -1,0 +1,53 @@
+name: Public Unfire Sound Lab release QA
+on:
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'assets/css/unfire-microsites.css'
+      - 'portable-synth/**'
+      - 'apps/index.html'
+      - 'sitemap.xml'
+      - 'tests/web-audio-microsite*.cjs'
+      - '.github/workflows/web-audio-microsite-release.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Source and DOM structure checks
+        run: |
+          node --check portable-synth/play/synth.js
+          node --test tests/web-audio-microsite.test.cjs
+  browsers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated browser engines
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Responsive + interactive Chromium and WebKit smoke
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/unfire-web-audio-http.log 2>&1 &
+          echo $! > /tmp/unfire-web-audio-http.pid
+          trap 'kill $(cat /tmp/unfire-web-audio-http.pid) || true' EXIT
+          node tests/web-audio-microsite-browser.cjs
+      - name: Attach authentic CI browser screenshots for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-audio-microsite-browser-captures
+          path: artifacts/product-microsites/*.png
+          retention-days: 7
+          if-no-files-found: ignore
