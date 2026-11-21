@@ -1,0 +1,28 @@
+name: Archer Web Lab checks
+on:
+  pull_request:
+    paths:
+      - "apps/archer-web/**"
+      - ".github/workflows/archer-web-lab-checks.yml"
+  push:
+    branches: [main]
+    paths:
+      - "apps/archer-web/**"
+      - ".github/workflows/archer-web-lab-checks.yml"
+permissions:
+  contents: read
+jobs:
+  dsp-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Node.js version
+        run: node --version
+      - name: Test Archer browser DSP and WAV encoding
+        run: node --test apps/archer-web/dsp.test.cjs
+      - name: JavaScript syntax check
+        run: |
+          node --check apps/archer-web/dsp.js
+          node --check apps/archer-web/app.js
+          node --check apps/archer-web/dsp.test.cjs
