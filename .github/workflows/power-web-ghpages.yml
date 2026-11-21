@@ -1,0 +1,69 @@
+name: Unfire Power Web experimental release QA
+on:
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'apps/power-web/**'
+      - 'tests/power-web-browser.cjs'
+      - '.github/workflows/power-web-ghpages.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax and tariff math
+        run: |
+          node --check apps/power-web/engine.js
+          node --check apps/power-web/app.js
+          node --check apps/power-web/engine.test.cjs
+          node --check tests/power-web-browser.cjs
+          node --test apps/power-web/engine.test.cjs
+      - name: Fail closed on misleading live data and altered native app
+        run: |
+          node - <<'NODE'
+          const assert=require('node:assert/strict'),fs=require('node:fs');
+          const h=fs.readFileSync('apps/power-web/index.html','utf8');
+          const a=fs.readFileSync('apps/power-web/app.js','utf8');
+          const n=fs.readFileSync('apps/power/index.html','utf8');
+          assert.match(h,/noindex,nofollow/);
+          assert.match(h,/connect-src 'none'/);
+          assert.match(h,/NO LIVE PRICES/);
+          assert.match(h,/synthetic/i);
+          assert.match(h,/indicator.*1001/i);
+          assert.ok(!/\bfetch\s*\(|XMLHttpRequest|WebSocket|sendBeacon|localStorage/.test(a));
+          assert.match(n,/apps\.apple\.com\/app\/id6815880143/);
+          console.log('POWER_SOURCE_PRIVACY_AND_NATIVE_INTEGRITY_PASS');
+          NODE
+  browsers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium and WebKit
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Exercise actual imports, date changes and offline export
+        run: |
+          python3 -m http.server 8768 --bind 127.0.0.1 > /tmp/power-web.log 2>&1 &
+          pid=$!
+          trap 'kill $pid || true' EXIT
+          node tests/power-web-browser.cjs
+      - name: Attach synthetic-data browser captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: power-web-browser-captures
+          path: artifacts/power-web/*.png
+          retention-days: 7
+          if-no-files-found: ignore
