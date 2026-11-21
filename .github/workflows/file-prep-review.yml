@@ -1,0 +1,61 @@
+name: File Prep browser-lab review
+on:
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'apps/file-prep/**'
+      - 'tests/file-prep-browser.cjs'
+      - '.github/workflows/file-prep-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test deterministic text algorithms, syntax and network isolation
+        run: |
+          node --check apps/file-prep/engine.js
+          node --check apps/file-prep/app.js
+          node --check tests/file-prep-browser.cjs
+          node --test apps/file-prep/engine.test.cjs
+          node - <<'NODE'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const h=fs.readFileSync('apps/file-prep/index.html','utf8');
+          const js=fs.readFileSync('apps/file-prep/app.js','utf8');
+          assert.match(h,/noindex,nofollow/);
+          assert.match(h,/connect-src 'none'/);
+          assert.match(h,/does not call an AI model/i);
+          assert.ok(!/fetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|localStorage|sessionStorage|indexedDB/.test(js));
+          console.log('FILE_PREP_STATIC_PRIVACY_PASS');
+          NODE
+  browsers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium and WebKit
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Execute real browser import/format/chunk/export QA
+        run: |
+          python3 -m http.server 8772 --bind 127.0.0.1 > /tmp/file-prep-http.log 2>&1 &
+          pid=$!
+          trap 'kill $pid || true' EXIT
+          node tests/file-prep-browser.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: file-prep-browser-captures
+          path: artifacts/file-prep/*.png
+          retention-days: 7
+          if-no-files-found: ignore

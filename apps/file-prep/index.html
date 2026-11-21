@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="theme-color" content="#0b0e14"><meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="File Prep Web Lab by Unfire: normalize local text, format JSON and split text into character-based chunks without uploads or external services. Experimental browser utility.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="canonical" href="https://unfire.technology/apps/file-prep/">
+  <link rel="stylesheet" href="./style.css">
+  <title>File Prep Web Lab — Prepare your text locally | Unfire</title>
+  <script defer src="./engine.js"></script><script defer src="./app.js"></script>
+</head>
+<body>
+<a class="skip" href="#workspace">Skip to editor</a>
+<header class="topbar"><div class="wrap top-inner">
+  <a class="brand" href="/" aria-label="Unfire home"><span aria-hidden="true">✦</span> UNFIRE <small>/ UTILITY LAB</small></a>
+  <nav aria-label="Site"><a href="/apps/">All apps</a><a href="/privacy.html">Privacy</a></nav>
+</div></header>
+<main class="wrap" id="workspace">
+  <section class="hero">
+    <div class="eyebrow"><span class="dot" aria-hidden="true"></span> TEXT WORKSPACE <span class="slash">/</span> BROWSER EXPERIMENT</div>
+    <h1>Ready for your<br><em>next idea.</em></h1>
+    <p class="lead">Prepare text for your workflow without installing anything. Normalize line endings, format JSON, or split long documents into clearly labeled chunks — all in your browser.</p>
+    <div class="facts"><span>NO CLOUD PROCESSING</span><span>NO ACCOUNT</span><span>EXPLICIT DOWNLOADS</span></div>
+  </section>
+  <div class="notice" role="note"><strong>Designed for text, not every file type.</strong> This experiment does not read PDF, Word or binary files, does not convert documents, and does not call an AI model. Character chunks are not token counts. Text may still contain private information; review it before sharing.</div>
+  <div class="workspace">
+    <section class="panel" aria-labelledby="input-title">
+      <div class="section-head"><div><div class="step">01 / SOURCE</div><h2 id="input-title">Bring your text.</h2></div><span class="chip">ON THIS DEVICE</span></div>
+      <label for="source" class="label">Source text</label>
+      <textarea id="source" rows="10" placeholder="Paste your text or load a local .txt, .md, .csv, or .json file." spellcheck="false" autocomplete="off"></textarea>
+      <div class="under"><span>Max 200,000 characters</span><output id="source-count">0 / 200,000</output></div>
+      <div class="file-row"><label for="file" class="file-label">↑ Load text file</label><input id="file" type="file" accept=".txt,.md,.csv,.json,text/plain,text/markdown,text/csv,application/json" aria-describedby="file-help"></div>
+      <p class="micro" id="file-help">UTF-8 only. 512 KB maximum. Files remain on your device.</p>
+      <div class="line"></div>
+      <div class="section-head"><div><div class="step">02 / TRANSFORM</div><h2>Choose a workflow.</h2></div></div>
+      <div class="field"><label for="mode" class="label">Output mode</label>
+        <select id="mode"><option value="clean">Clean text</option><option value="json">Format &amp; validate JSON</option><option value="chunk">Split into chunks</option></select>
+      </div>
+      <div id="clean-options" class="options">
+        <label><input id="trailing" type="checkbox"> Remove trailing spaces (may change Markdown line breaks)</label>
+        <label><input id="blank" type="checkbox"> Reduce 3+ consecutive blank lines</label>
+        <label><input id="outer" type="checkbox"> Trim leading and trailing whitespace</label>
+        <p class="micro">Line endings are standardized to LF in this mode. All other changes are opt-in.</p>
+      </div>
+      <p id="json-options" class="micro" hidden>JSON is parsed and pretty-printed with 2-space indentation. Invalid JSON is rejected without modifying your original.</p>
+      <div id="chunk-options" hidden>
+        <div class="numbers">
+          <div class="field"><label class="label" for="chunk-size">Characters per chunk</label><input id="chunk-size" type="number" min="300" max="12000" step="100" value="4000"></div>
+          <div class="field"><label class="label" for="overlap">Overlap (characters)</label><input id="overlap" type="number" min="0" max="1000" step="50" value="200"></div>
+        </div>
+        <p class="micro">Splits near whitespace when possible. Overlap repeats context between adjacent chunks. These are character counts, not tokens.</p>
+      </div>
+      <div class="actions"><button type="button" id="run" class="primary">Prepare text <span aria-hidden="true">↗</span></button><button type="button" id="clear" class="ghost">Clear everything</button></div>
+    </section>
+    <section class="panel results" aria-labelledby="output-title">
+      <div class="section-head"><div><div class="step">03 / RESULT</div><h2 id="output-title">Your prepared copy.</h2></div><span id="result-chip" class="chip">NOT PROCESSED</span></div>
+      <div class="numbers stats">
+        <div class="stat"><span>Input characters</span><strong id="in-size">—</strong></div>
+        <div class="stat"><span>Output characters</span><strong id="out-size">—</strong></div>
+        <div class="stat"><span>Number of chunks</span><strong id="part-size">—</strong></div>
+      </div>
+      <label class="label" for="output">Review the generated text</label>
+      <textarea id="output" rows="17" readonly placeholder="Your prepared text will appear here." spellcheck="false"></textarea>
+      <p class="micro">The original source is not overwritten. For chunked output, each part is clearly labeled and can repeat text because of overlap.</p>
+      <div class="actions export"><button type="button" id="copy" class="secondary" disabled>Copy prepared text</button><button type="button" id="download" class="outline" disabled>Download .txt</button></div>
+      <p class="status" id="status" role="status" aria-live="polite">Ready. Choose Prepare text when you are done editing.</p>
+      <div class="privacy"><strong>Privacy boundary</strong><p>All processing uses built-in browser functions. No account, tracking, network requests, uploads, cookies or persistent storage. The content remains on this page until cleared or closed. System clipboard and downloaded files are outside this page's control.</p></div>
+    </section>
+  </div>
+</main>
+<footer class="wrap footer"><span>© Unfire · File Prep Web Lab</span><a href="/apps/">Browse tools</a><span>Experimental local-only prototype</span></footer>
+</body></html>
