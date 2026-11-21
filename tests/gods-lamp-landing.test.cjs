@@ -31,3 +31,23 @@ test("zero-cost lightweight, structurally balanced and accessible",()=>{
  assert.ok(!/<script\b|<iframe\b|<canvas\b/.test(html));
  assert.ok(!/google-analytics|tracker|gtag\(/i.test(html));
 });
+
+test("owner-supplied original screenshots are real immutable source crops, not product release renders",()=>{
+ const crypto=require("node:crypto");
+ const media=[
+  {name:"original-song-reference.png",digest:"bd308c54e76d475c54081d7222c54dffa472c021b3c6064ab22ab10bdfd99e6f"},
+  {name:"original-step-reference.png",digest:"0e2d4f0f8f5ddf62fe117fea5823e0a4a0961a6e26d00d8f6c07fbd93499c5b7"}
+ ];
+ for(const img of media){
+  const p="/apps/gods-lamp/media/"+img.name;
+  assert.ok(html.includes('src="'+p+'"'),p+" gallery");
+  const bytes=fs.readFileSync(path.join(root,p));
+  assert.equal(crypto.createHash("sha256").update(bytes).digest("hex"),img.digest,img.name+" provenance");
+  assert.ok(bytes.length>100000&&bytes.length<600000);
+ }
+ assert.match(html,/Only the phone status bar was removed/);
+ assert.match(html,/not.*verified screenshots of the shipping iOS/i);
+ assert.match(html,/Not an App Store screenshot/);
+ assert.match(html,/RC73 source-port effort/);
+ assert.match(html,/noindex,nofollow/);
+});
