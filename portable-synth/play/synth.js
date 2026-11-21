@@ -15,6 +15,7 @@
   }
   let ctx = null, master = null;
   const active = new Map();
+  const pending = new Set();
   const keyMap = "awsedftgyhuj";
   const noteAt = semitone => 12 * (Number(octave.value) + 1) + semitone;
   const frequency = midi => 440 * Math.pow(2, (midi - 69) / 12);
@@ -37,6 +38,7 @@
     status.textContent = "Audio enabled. Hold notes or try another waveform.";
   }
   function stop(source) {
+    pending.delete(source);
     const voice = active.get(source);
     if (!voice || !ctx) return;
     active.delete(source);
@@ -49,10 +51,12 @@
     voice.button.classList.remove("is-down");
   }
   async function start(source, button) {
-    if (active.has(source) || !button) return;
+    if (active.has(source) || pending.has(source) || !button) return;
+    pending.add(source);
     try {
       await ready();
-      if (active.has(source)) return;
+      if (!pending.has(source) || active.has(source)) return;
+      pending.delete(source);
       const midi = noteAt(Number(button.dataset.semitone));
       const osc = ctx.createOscillator();
       const envelope = ctx.createGain();
@@ -67,6 +71,7 @@
       button.classList.add("is-down");
       osc.start(now);
     } catch (_) {
+      pending.delete(source);
       status.textContent = "Audio could not start. Try interacting with a key again or check browser audio permissions.";
     }
   }
