@@ -27,6 +27,9 @@ async function run(type,name){
    assert.equal(await page.locator("main").count(),1);
    assert.equal(await page.locator('a[href="/audio/"]').count(),1);
    assert.equal(await page.locator('meta[name="robots"][content="noindex,nofollow"]').count(),1);
+   // Load intentionally lazy images before asserting decode success; WebKit does not request them until they enter view.
+   await page.evaluate(()=>{document.querySelectorAll('img[loading="lazy"]').forEach(img=>{img.loading="eager"});});
+   await page.waitForFunction(()=>[...document.images].every(img=>img.complete && img.naturalWidth>0),null,{timeout:12000});
    const dims=await page.evaluate(()=>({
      doc:document.documentElement.scrollWidth,
      view:window.innerWidth,
