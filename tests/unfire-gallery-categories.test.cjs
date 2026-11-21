@@ -5,7 +5,7 @@ const { chromium } = require('playwright');
 const base = process.env.UNFIRE_GALLERY_URL || 'http://127.0.0.1:8771/';
 const expected = {
   'apps-ai': ['BOLT', 'BOLT Mobile'],
-  'apps-audio': ['ARCHER', 'ARCHER Mobile', 'Pocket Capture', 'Unfire Synthesizer'],
+  'apps-audio': ['ARCHER', 'ARCHER Mobile', 'Pocket Capture', 'Unfire Synthesizer I'],
   'apps-control': ['Unfire Control', 'Unfire KeyBridge'],
   'apps-energy': ['Power'],
 };
@@ -53,7 +53,7 @@ const viewports = [
           };
         }, expected);
         assert.equal(summary.cards, 9);
-        assert.equal(summary.images, 9); // Two authentic ARCHER Mobile device images; KeyBridge stays text-only
+        assert.equal(summary.images, 10); // Authentic paired ARCHER Mobile and Synth I screenshots; KeyBridge stays text-only
         assert.equal(summary.emptyAlt, 0);
         assert.equal(await page.locator('#apps .uf-gallery-card--control img').count(), 1, 'Control must use its original app icon');
         assert.equal(await page.locator('#apps .uf-gallery-card--control a[href="/apps/unfire-control/"]').count(), 1, 'Control must offer product details');
@@ -63,8 +63,8 @@ const viewports = [
         assert.equal(summary.categoryHeadersWithin, true, 'Category headings spill out at ' + viewport.width);
         assert.deepEqual(summary.nav, Object.keys(expected).map(x => '#' + x));
         assert.deepEqual(summary.groups, Object.entries(expected).map(([id,headings])=>({ id,headings })));
-        // Use the current live product statuses while preserving #75's Control image and link assertions.
-        for (const status of ['Product preview · upcoming design, not the current App Store version', 'Development preview', 'Original app icon · Development preview', 'Lab prototype · not a production sign-in system']) {
+        // Assert current Control and Synth I disclaimers together; no private media.
+        for (const status of ['Product preview · upcoming design, not the current App Store version', 'Development previews · not the approved App Store release', 'Original app icon · Development preview', 'Lab prototype · not a production sign-in system']) {
           assert(summary.tags.includes(status), 'Missing disclaimer ' + status);
         }
         assert(summary.footnote.includes('features and release status may change'));
@@ -73,7 +73,7 @@ const viewports = [
           await image.evaluate(el => el.decode());
           assert.equal(await image.evaluate(el => el.naturalWidth > 0 && el.naturalHeight > 0), true, 'Failed product image');
         }
-        console.log('PASS gallery viewport ' + viewport.width + 'x' + viewport.height + ': 4 categories, 9 cards, no overflow, real images');
+        console.log('PASS gallery viewport ' + viewport.width + 'x' + viewport.height + ': 4 categories, 9 cards, 10 genuine images, no overflow');
       } finally { await page.close(); }
     }
   } finally { await browser.close(); }
