@@ -8,6 +8,7 @@ on:
       - 'apps/index.html'
       - 'sitemap.xml'
       - 'tests/web-audio-microsite*.cjs'
+      - 'tests/portable-synth-studio*.cjs'
       - '.github/workflows/web-audio-microsite-release.yml'
   workflow_dispatch:
 permissions:
@@ -24,7 +25,11 @@ jobs:
       - name: Source and DOM structure checks
         run: |
           node --check portable-synth/play/synth.js
-          node --test tests/web-audio-microsite.test.cjs
+          node --check portable-synth/studio/engine.js
+          node --check portable-synth/studio/audio.js
+          node --check portable-synth/studio/app.js
+          node --check tests/portable-synth-studio-browser.cjs
+          node --test tests/web-audio-microsite.test.cjs tests/portable-synth-studio.test.cjs portable-synth/studio/*.test.cjs
   browsers:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -43,6 +48,7 @@ jobs:
           echo $! > /tmp/unfire-web-audio-http.pid
           trap 'kill $(cat /tmp/unfire-web-audio-http.pid) || true' EXIT
           node tests/web-audio-microsite-browser.cjs
+          node tests/portable-synth-studio-browser.cjs
       - name: Attach authentic CI browser screenshots for review
         if: always()
         uses: actions/upload-artifact@v4

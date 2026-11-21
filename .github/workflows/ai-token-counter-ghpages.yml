@@ -1,0 +1,63 @@
+name: AI Token Counter public-source QA
+on:
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'apps/ai-token-counter/**'
+      - 'tests/ai-token-counter-browser.cjs'
+      - '.github/workflows/ai-token-counter-ghpages.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax and local token maths
+        run: |
+          node --check apps/ai-token-counter/engine.js
+          node --check apps/ai-token-counter/app.js
+          node --check tests/ai-token-counter-browser.cjs
+          node --test apps/ai-token-counter/engine.test.cjs
+      - name: Check local-only page and noindex on candidate
+        run: |
+          node - <<'NODE'
+          const fs=require("node:fs"),assert=require("node:assert/strict");
+          const h=fs.readFileSync("apps/ai-token-counter/index.html","utf8");
+          assert.match(h,/connect-src 'none'/);
+          assert.match(h,/noindex,nofollow/);
+          assert.match(h,/https:\/\/unfire\.technology\/apps\/ai-token-counter\//);
+          assert.ok(!/https?:\/\/[^"']+\.js/.test(h));
+          console.log("TOKEN_RELEASE_SOURCE_PRECHECK_PASS");
+          NODE
+  browsers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser engines for isolated checks
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Browser billing and privacy end-to-end
+        run: |
+          python3 -m http.server 8766 --bind 127.0.0.1 > /tmp/token-browser.log 2>&1 &
+          pid=$!
+          trap 'kill $pid || true' EXIT
+          node tests/ai-token-counter-browser.cjs
+      - name: Attach synthetic browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-token-counter-browser-captures
+          path: artifacts/token-browser/*.png
+          retention-days: 7
+          if-no-files-found: ignore
