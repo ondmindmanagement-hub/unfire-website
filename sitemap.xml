@@ -38,4 +38,8 @@
   <url><loc>https://unfire.technology/public-record/</loc><priority>0.8</priority></url>
   <url><loc>https://unfire.technology/press/</loc><lastmod>2026-11-21</lastmod><priority>0.8</priority></url>
   <url><loc>https://unfire.technology/press/ai-human-oversight/</loc><lastmod>2026-11-21</lastmod><priority>0.7</priority></url>
+  <url><loc>https://unfire.technology/portable-synth/</loc><priority>0.8</priority></url>
+  <url><loc>https://unfire.technology/portable-synth/play/</loc><lastmod>2026-11-21</lastmod><priority>0.7</priority></url>
+  <url><loc>https://unfire.technology/portable-synth/beta/</loc><priority>0.8</priority></url>
+  <url><loc>https://unfire.technology/audio/tienda/</loc><priority>0.8</priority></url>
 </urlset>
