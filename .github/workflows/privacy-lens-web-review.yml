@@ -1,0 +1,62 @@
+name: Privacy Lens browser-lab review
+on:
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'apps/privacy-lens/**'
+      - 'tests/privacy-lens-browser.cjs'
+      - '.github/workflows/privacy-lens-web-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate privacy assertions and synthetic pattern tests
+        run: |
+          node --check apps/privacy-lens/engine.js
+          node --check apps/privacy-lens/app.js
+          node --check tests/privacy-lens-browser.cjs
+          node --test apps/privacy-lens/engine.test.cjs
+          node - <<'NODE'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const html=fs.readFileSync('apps/privacy-lens/index.html','utf8');
+          const source=fs.readFileSync('apps/privacy-lens/app.js','utf8');
+          assert.match(html,/noindex,nofollow/);
+          assert.match(html,/connect-src 'none'/);
+          assert.match(html,/not a security guarantee/i);
+          assert.match(html,/No account, upload or external analysis/i);
+          assert.ok(!/fetch\s*\(|XMLHttpRequest|WebSocket|sendBeacon|localStorage|sessionStorage|indexedDB/.test(source));
+          console.log('PRIVACY_LENS_NO_NETWORK_STATIC_PASS');
+          NODE
+  browsers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser QA
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: End-to-end synthetic privacy review in Chromium and WebKit
+        run: |
+          python3 -m http.server 8770 --bind 127.0.0.1 > /tmp/privacy-lens-http.log 2>&1 &
+          pid=$!
+          trap 'kill $pid || true' EXIT
+          node tests/privacy-lens-browser.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: privacy-lens-browser-captures
+          path: artifacts/privacy-lens/*.png
+          retention-days: 7
+          if-no-files-found: ignore
