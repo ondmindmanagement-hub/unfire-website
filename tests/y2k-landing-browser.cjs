@@ -40,6 +40,12 @@ async function run(type,name){
    assert.deepEqual(errors,[],name+" "+size.name+" runtime");
    assert.deepEqual(failed,[],name+" "+size.name+" asset loading");
    assert.ok(!requests.some(x=>/\/(?:maletin|game-engine|peerjs|tracker|analytics)\//i.test(x)), "Unexpected game engine or tracker load");
+   // Verify the gallery while actually scrolled into view; WebKit paints offscreen images lazily even after decoding.
+   await page.locator(".capture-grid").scrollIntoViewIfNeeded();
+   await page.waitForTimeout(160);
+   await page.screenshot({path:path.join(dest,name+"-"+size.name+"-gallery.png"),animations:"disabled"});
+   await page.evaluate(()=>window.scrollTo(0,0));
+   await page.waitForTimeout(160);
    await page.screenshot({path:path.join(dest,name+"-"+size.name+".png"),fullPage:true,animations:"disabled"});
    console.log("PASS "+name+" "+size.name+" screenshots and no WebGL auto-load");
    await context.close();
