@@ -6,6 +6,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const mobile = fs.readFileSync(path.join(root, 'apps/archer-mobile/index.html'), 'utf8');
+// apps/archer-mobile/ is now a redirect to /archer/#iphone (unified ARCHER page, 2026-11-22).
 const iphone = 'archer-mobile-iphone-ui-20261029.webp';
 const ipad = 'archer-mobile-ipad-ui-20261029.webp';
 const mac = 'archer-nocturne-app-preview-20261028.webp';
@@ -24,16 +25,14 @@ test('cards show both interfaces without overflow or deceptive previews', () => 
   assert.match(home, /@media\(max-width:620px\)/);
   assert.match(home, /#apps \.uf-archer-device img\{[^}]*object-fit:contain/);
   assert.match(home, /Product preview · upcoming design, not the current App Store version/);
-  assert.match(mobile, /Development previews?/i);
-  assert.match(mobile, /not screenshots of the currently published App Store version/);
-  assert.match(mobile, /mobile-preview-stage/);
-  assert.match(mobile, /@media\(max-width:430px\)/);
+  assert.match(mobile, /url=\/archer\/#iphone/);
+  assert.match(mobile, /\/apps\/archer-mobile\/support\//);
+  assert.match(mobile, /\/apps\/archer-mobile\/privacy\//);
 });
 test('device images exist and are small enough for a landing page', () => {
   for (const name of [iphone, ipad]) {
     const p = path.join(root, 'assets/products', name);
     assert.ok(fs.existsSync(p), name);
     assert.ok(fs.statSync(p).size < 180_000, name);
-    assert.match(mobile, new RegExp(name));
   }
 });

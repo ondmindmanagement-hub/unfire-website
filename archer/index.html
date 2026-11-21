@@ -15,41 +15,103 @@
 })();</script>
 <link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261023adaptive1">
 <script defer src="/assets/js/unfire-adaptive-loading.js?v=20261023adaptive1"></script>
-
-<meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'">
-
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title translate="no">ARCHER Clipper | Unfire Audio</title>
-<meta name="description" content="Archer by Unfire is a macOS clipping tool with Gain, Threshold and Atmosphere. See the audio demonstration and check the live price in your Mac App Store region.">
-<meta property="og:title" content="ARCHER Clipper | Unfire Audio">
-<meta property="og:description" content="Focused clipping for macOS. Gain, Threshold and Atmosphere. Listen to the demo and see the current price in the Mac App Store.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://unfire.technology/archer/">
-<meta property="og:image" content="https://unfire.technology/assets/products/archer-nocturne-app-preview-20261028.webp">
-<meta property="og:image:alt" content="Authentic preview of the upcoming ARCHER by Unfire Audio interface">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://unfire.technology/assets/products/archer-nocturne-app-preview-20261028.webp">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ARCHER — Audio clipper for Mac, iPhone and iPad · Unfire Audio</title>
+<meta name="description" content="ARCHER is a real-time audio clipper with three controls: Gain, Threshold and Atmosphere. Standalone and Audio Unit on Mac, standalone and AUv3 on iPhone and iPad. Local processing, no account.">
 <link rel="canonical" href="https://unfire.technology/archer/">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Archer by Unfire","applicationCategory":"MusicApplication","operatingSystem":"macOS","description":"A focused clipping tool for producers and mix engineers built around Gain, Threshold and Atmosphere.","publisher":{"@type":"Organization","name":"Unfire","url":"https://unfire.technology"}}
-</script>
+<meta name="theme-color" content="#05070d">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ARCHER — Gain. Threshold. Atmosphere.">
+<meta property="og:description" content="A real-time audio clipper for Mac, iPhone and iPad from Unfire Audio.">
+<meta property="og:url" content="https://unfire.technology/archer/">
+<meta property="og:image" content="https://unfire.technology/assets/products/apps-2026/archer-mac-window-1-1100.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"ARCHER Audio Clipper","operatingSystem":"macOS 12.0 or later, Apple silicon","applicationCategory":"MultimediaApplication","applicationSubCategory":"Music","description":"Real-time audio clipping effect with Gain, Threshold and Atmosphere. Standalone app and Audio Unit effect.","offers":{"@type":"Offer","price":"9.99","priceCurrency":"USD"},"downloadUrl":"https://apps.apple.com/app/id6812968924","url":"https://unfire.technology/archer/","publisher":{"@type":"Organization","name":"Unfire","url":"https://unfire.technology"}},{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Archer for iPhone & iPad","operatingSystem":"iOS 18.0 or later, iPadOS 18.0 or later","applicationCategory":"MultimediaApplication","applicationSubCategory":"Music","description":"Audio clipper with Gain, Threshold and Atmosphere as a standalone app and an Audio Unit v3 effect.","offers":{"@type":"Offer","price":"1.99","priceCurrency":"USD"},"downloadUrl":"https://apps.apple.com/app/id6822109610","url":"https://unfire.technology/archer/#iphone","publisher":{"@type":"Organization","name":"Unfire","url":"https://unfire.technology"}}]</script>
 <style>
-:root{--bg:#000;--text:#f5f5f7;--muted:#9a9aa1;--line:#1d1d21;--lava:#d84f3d;--max:980px}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
-.wrap{width:min(calc(100% - 40px),var(--max));margin:auto}
-header{padding:22px 0;border-bottom:1px solid var(--line)}header .wrap{display:flex;justify-content:space-between;align-items:center}.brand{font-weight:650}.back{color:var(--muted);font-size:13px}
-main{padding:96px 0 120px}.eyebrow{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#777;margin-bottom:22px}
-h1{font-size:clamp(3.4rem,8vw,7.2rem);line-height:.96;letter-spacing:0.008em;margin:0 0 28px;max-width:920px}
-.lead{font-size:clamp(19px,2.2vw,25px);line-height:1.55;color:var(--muted);max-width:760px;margin:0}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;border-radius:999px;border:1px solid #2b2b30;background:#111114;font-size:14px}.button.primary{background:var(--lava);border-color:var(--lava);color:white}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:72px}.card{border:1px solid var(--line);border-radius:22px;padding:28px;background:#0a0a0c}.card span{display:block;color:#666;font-size:10px;margin-bottom:26px}.card strong{display:block;font-size:24px;margin-bottom:10px}.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.65}
-.next-preview{margin-top:66px;border:0;border-radius:0;overflow:visible;background:transparent;box-shadow:none}.next-preview-copy{padding:clamp(23px,4vw,38px)}.next-preview .eyebrow{color:#96c9ef;margin:0 0 12px}.next-preview h2{font-size:clamp(26px,3.8vw,42px);line-height:1.16;margin:0 0 14px;letter-spacing:.005em}.next-preview p{max-width:76ch;color:#b3c0ce;line-height:1.7;font-size:15px;margin:0 0 13px}.next-preview figure{margin:0;padding:0}.next-preview img{display:block;width:100%;height:auto;border:0;border-radius:0;box-shadow:none;background:transparent}.next-preview figcaption{color:#a6b8c9;font-size:12px;line-height:1.55;padding:12px 8px 4px}.next-preview .preview-status{color:#eef2f8;font-size:13px;margin-top:17px}.gallery{margin-top:58px}.gallery h2{font-size:clamp(24px,3vw,32px);font-weight:650;letter-spacing:0.008em;margin:0 0 9px}.gallery p{color:var(--muted);font-size:14px;margin:0 0 20px;line-height:1.6}.gallery-images{display:grid;grid-template-columns:1fr 1fr;gap:14px}.gallery-images a{display:block;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#0a0a0c}.gallery-images img{display:block;width:100%;height:auto;aspect-ratio:8/5;object-fit:contain}.gallery-note{margin-top:12px!important;font-size:12px!important}@media(max-width:760px){.gallery-images{grid-template-columns:1fr}}.note{margin-top:46px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;line-height:1.7}.regions{font-size:13px;color:var(--muted);margin-top:17px;display:flex;gap:14px;flex-wrap:wrap}.regions a{color:var(--text);text-decoration:underline;text-decoration-color:#555;text-underline-offset:3px}.proof{margin-top:34px;color:var(--muted);font-size:14px;line-height:1.7}.proof a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
-footer{padding:30px 0 60px;border-top:1px solid var(--line);color:#666;font-size:11px}
-@media(max-width:760px){main{padding-top:70px}.grid{grid-template-columns:1fr}.actions{flex-direction:column}.button{width:100%}}
+:root{--night:#05070d;--deep:#0b1020;--ink:#e9edf5;--dim:#8a93a8;--line:#1d2436;--chrome:linear-gradient(180deg,#ffffff 0%,#c9d1de 30%,#6f7a8f 52%,#e6ebf2 70%,#9aa5b8 100%);--ice:#9cc4ff;--disp:Unbounded,system-ui,sans-serif;--body:"Space Grotesk",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--night);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}img{display:block;max-width:100%;height:auto}
+.wrap{width:min(1280px,100% - 48px);margin-inline:auto}
+.chrome{background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* nav */
+.nav{position:absolute;inset:0 0 auto;z-index:5}
+.nav .wrap{display:flex;justify-content:space-between;align-items:center;padding:24px 0}
+.nav .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font:500 12px/1 var(--disp);letter-spacing:.24em}
+.nav .brand img{width:30px;height:30px;border-radius:8px}
+.nav nav{display:flex;gap:28px;font-size:14px}
+.nav nav a{text-decoration:none;color:var(--dim)}.nav nav a:hover{color:var(--ink)}
+/* hero */
+.hero{position:relative;min-height:100svh;display:grid;align-content:center;padding:120px 0 80px;isolation:isolate;
+ background:radial-gradient(60% 50% at 50% 58%,#1b2a52 0%,rgba(11,16,32,0) 70%),radial-gradient(120% 80% at 50% 120%,#0b1430 0%,var(--night) 60%)}
+.word{position:absolute;left:50%;top:clamp(70px,9vh,110px);transform:translateX(-50%);z-index:-1;margin:0;white-space:nowrap;
+ font:800 clamp(90px,22vw,340px)/.8 var(--disp);letter-spacing:-.04em;opacity:.16;user-select:none}
+.win{position:relative;width:min(980px,100%,calc((100svh - 330px) * 1.41));min-width:min(100%,420px);margin:0 auto;transform:perspective(1800px) rotateX(9deg);transform-origin:50% 100%}
+.win img{border-radius:10px;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 60px 120px -40px rgba(80,130,255,.45),0 30px 60px -30px #000}
+.win::after{content:"";position:absolute;left:4%;right:4%;top:100%;height:42%;background:linear-gradient(180deg,rgba(156,196,255,.14),transparent);filter:blur(30px);transform:scaleY(.6);transform-origin:top}
+.hero-copy{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end;margin-top:clamp(36px,6vh,72px)}
+.hero h1{margin:0;font:300 clamp(30px,4vw,56px)/1.05 var(--disp);letter-spacing:-.02em;max-width:18ch}
+.hero h1 b{font-weight:800}
+.buy{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;flex-direction:column;gap:4px;text-decoration:none;padding:15px 22px;border-radius:14px;min-width:200px;transition:transform .15s ease,background .15s ease}
+.btn small{font:500 11px/1 var(--disp);letter-spacing:.14em;text-transform:uppercase;opacity:.65}
+.btn span{font-weight:500;font-size:17px}
+.btn.solid{background:var(--chrome);color:#0a0e18}.btn.solid small{opacity:.7}
+.btn.ghost{border:1px solid #33405e;background:rgba(255,255,255,.02)}
+.btn:hover{transform:translateY(-2px)}
+.cap{margin:22px 0 0;font-size:12.5px;color:var(--dim)}
+/* controls */
+.controls{padding:clamp(90px,12vw,170px) 0 clamp(70px,9vw,120px)}
+.controls header{display:flex;justify-content:space-between;align-items:end;gap:30px;border-bottom:1px solid var(--line);padding-bottom:28px}
+.controls h2{margin:0;font:800 clamp(34px,5vw,72px)/.95 var(--disp);letter-spacing:-.03em}
+.controls header p{margin:0;max-width:34ch;color:var(--dim)}
+.knobs{display:grid;grid-template-columns:repeat(3,1fr)}
+.knob{padding:44px 36px 10px 0}
+.knob+.knob{padding-left:36px;border-left:1px solid var(--line)}
+.knob .dial{width:96px;height:96px;border-radius:50%;position:relative;margin-bottom:34px;background:conic-gradient(from 225deg,var(--ice) 0 var(--v),#1a2238 var(--v) 75%,transparent 75%);-webkit-mask:radial-gradient(circle,transparent 38px,#000 39px);mask:radial-gradient(circle,transparent 38px,#000 39px)}
+.knob h3{margin:0 0 6px;font:500 13px/1 var(--disp);letter-spacing:.28em}
+.knob .big{font:800 clamp(40px,4.4vw,64px)/1 var(--disp);letter-spacing:-.03em;margin:0 0 18px}
+.knob p{margin:0;color:var(--dim);max-width:30ch}
+/* platforms */
+.plat{border-top:1px solid var(--line);background:linear-gradient(180deg,var(--deep),var(--night) 70%)}
+.plat .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(30px,5vw,80px);padding:clamp(80px,10vw,140px) 0}
+.card{border:1px solid var(--line);border-radius:22px;padding:clamp(24px,3vw,40px);background:rgba(255,255,255,.015)}
+.card .k{font:500 11px/1 var(--disp);letter-spacing:.24em;color:var(--ice);text-transform:uppercase}
+.card h2{font:800 clamp(28px,3.2vw,44px)/1 var(--disp);margin:16px 0 18px;letter-spacing:-.03em}
+.card ul{list-style:none;padding:0;margin:0 0 28px;display:grid;gap:10px;color:#c4cbda}
+.card li{padding-left:22px;position:relative}.card li::before{content:"";position:absolute;left:0;top:.7em;width:10px;height:1px;background:var(--ice)}
+.card .price{display:flex;align-items:baseline;gap:14px;border-top:1px solid var(--line);padding-top:22px;margin-bottom:22px}
+.card .price b{font:800 34px/1 var(--disp)}.card .price span{font-size:13px;color:var(--dim)}
+.macshot{margin-top:28px}.macshot img{border-radius:8px;box-shadow:0 0 0 1px rgba(255,255,255,.1)}
+.phone{display:grid;grid-template-rows:auto 1fr;gap:26px}
+.phone .shot{justify-self:center;width:min(260px,70vw);border-radius:40px;padding:9px;background:linear-gradient(160deg,#4a5368,#11151f);box-shadow:0 30px 70px -30px rgba(80,130,255,.5)}
+.phone .shot img{border-radius:32px}
+.figcap{font-size:12px;color:var(--dim);margin:10px 0 0;text-align:center}
+/* more */
+.more{padding:clamp(70px,9vw,120px) 0;border-top:1px solid var(--line)}
+.more .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.more a{display:block;text-decoration:none;border-top:1px solid #33405e;padding-top:18px}
+.more a b{display:block;font:500 15px/1.3 var(--disp);margin-bottom:6px}
+.more a span{color:var(--dim);font-size:14px}
+.more a:hover b{color:var(--ice)}
+footer{border-top:1px solid var(--line);padding:30px 0 46px;color:var(--dim);font-size:13.5px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+footer nav{display:flex;flex-wrap:wrap;gap:20px}footer a{text-decoration:none}footer a:hover{color:var(--ink)}
+a:focus-visible{outline:2px solid var(--ice);outline-offset:3px}
+@media (max-width:900px){
+ .nav nav a:not(:last-child){display:none}
+ .hero-copy{grid-template-columns:1fr}.win{transform:none}
+ .knobs{grid-template-columns:1fr}.knob,.knob+.knob{padding:36px 0;border-left:0;border-top:1px solid var(--line)}
+ .controls header{flex-direction:column;align-items:start}
+ .plat .wrap{grid-template-columns:1fr}.more .wrap{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}}
 </style>
-<link rel="stylesheet" href="/assets/css/unfire-display-typography-20261019.css?v=2">
-<link rel="stylesheet" href="/assets/css/unfire-compact-system-20261019.css?v=2">
 </head>
 <body>
 <div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
@@ -59,57 +121,74 @@ footer{padding:30px 0 60px;border-top:1px solid var(--line);color:#666;font-size
     <span class="uf-load-label" id="ufAdaptiveLabel">Preparing the experience…</span>
   </div>
 </div>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="/audio/"><img src="/assets/products/apps-2026/archer-icon-256.webp" width="30" height="30" alt="">UNFIRE AUDIO</a>
+  <nav aria-label="ARCHER"><a href="#controls">Controls</a><a href="#mac">Mac</a><a href="#iphone">iPhone &amp; iPad</a><a href="/archer/faq/">Help</a></nav>
+</div></header>
+<main>
+  <section class="hero">
+    <p class="word chrome" aria-hidden="true">ARCHER</p>
+    <div class="wrap">
+      <figure class="win" style="margin:0 auto">
+        <img src="/assets/products/apps-2026/archer-mac-window-1-1100.webp" width="1100" height="779" alt="ARCHER on macOS: chrome interface with Gain, Threshold and Atmosphere dials and an input-output meter" fetchpriority="high">
+      </figure>
+      <div class="hero-copy">
+        <div>
+          <h1>Clip the peaks. <b>Keep the life.</b></h1>
+          <p class="cap">Real ARCHER window, cropped from the Mac App Store screenshot.</p>
+        </div>
+        <div class="buy">
+          <a class="btn solid" href="https://apps.apple.com/app/id6812968924"><small>Mac App Store</small><span>ARCHER for Mac</span></a>
+          <a class="btn ghost" href="https://apps.apple.com/app/id6822109610"><small>App Store</small><span>iPhone &amp; iPad</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<header><div class="wrap"><a class="brand" href="/"><span class="notranslate" translate="no">Unfire</span></a><a class="back" href="/">Back to <span class="notranslate" translate="no">Unfire</span></a></div></header>
-<main><div class="wrap">
-<div class="eyebrow">Audio production · Current version in the App Store</div>
-<h1>Archer by <span class="notranslate" translate="no">Unfire</span></h1>
-<p class="lead">Shape peaks and explore clipping character in your Mac production and mixing workflow. Three direct controls — Gain, Threshold and Atmosphere — without a crowded interface.</p>
-<div class="actions">
-<a class="button primary" href="https://apps.apple.com/app/id6812968924" target="_blank" rel="noopener">Get current ARCHER for Mac</a>
-<a class="button" href="https://apps.apple.com/app/id6822109610" target="_blank" rel="noopener noreferrer">Get ARCHER for iPhone &amp; iPad</a>
-<a class="button" href="https://apps.apple.com/app/id6812968924" target="_blank" rel="noopener">Watch &amp; hear the App Store demo</a>
-<a class="button" href="/archer/press/">Press / review information</a>
-<a class="button" href="/archer/faq/">Installation &amp; support</a>
-</div>
-<div class="regions"><span>Other stores:</span><a href="https://apps.apple.com/app/id6812968924" target="_blank" rel="noopener">UK Mac App Store</a><a href="https://apps.apple.com/app/id6812968924" target="_blank" rel="noopener">Spain Mac App Store</a><a href="https://apps.apple.com/app/id6812968924" target="_blank" rel="noopener">Germany Mac App Store</a></div>
-<p class="gallery-note">The current Mac and iPhone/iPad App Store listings are separate products. The upcoming visual refresh shown below is not part of the currently published versions.</p>
-<p class="gallery-note">For clarity: the current Mac App Store listing still uses the current app <strong>Archer by <span class="notranslate" translate="no">Unfire</span></strong>. It is the same app (Apple ID 6812968924), now presented under the <span class="notranslate" translate="no">Unfire</span> brand here.</p>
-<p id="archerIntroSale" style="display:none" aria-live="off"><strong>Limited-time ARCHER offer: $1.99 (US) / €1.99 (Spain), October 13–26.</strong> Check the live price in your App Store before buying.</p>
-<p class="proof"><a href="/archer/logic-pro/">Using Logic Pro? Explore the AUv3 workflow →</a></p>
-<p class="proof">Covered by <a href="https://www.audiopluginguy.com/news-unfire-has-released-archer-by-unfair-a-compact-clipping-tool-for-producers-and-mix-engineers-for-macos" target="_blank" rel="noopener">Audio Plugin Guy</a> · <a href="https://www.producthunt.com/products/archer-by-unfair" target="_blank" rel="noopener">ARCHER on Product Hunt</a></p>
-<div class="grid">
-<div class="card"><span>01</span><strong>Gain</strong><p>Drive the signal into the clipping stage and set the intensity quickly.</p></div>
-<div class="card"><span>02</span><strong>Threshold</strong><p>Control where clipping begins and shape peak behaviour with a direct workflow.</p></div>
-<div class="card"><span>03</span><strong>Atmosphere</strong><p>Add clipping character without turning the interface into a dense parameter set.</p></div>
-</div>
-<section class="next-preview" id="next-preview" aria-labelledby="next-preview-title">
-<div class="next-preview-copy"><p class="eyebrow">ARCHER · next update preview</p><h2 id="next-preview-title">A new visual chapter for ARCHER.</h2>
-<p>Explore the upcoming midnight-blue interface with Gain, Threshold and Color. Values appear below each control. The design shown is a local development preview, not the version currently published by Apple.</p>
-<p class="preview-status"><strong>Version 1.0.3 preview — not yet released on the App Store.</strong> The currently available Mac and iPhone/iPad editions can still be purchased from their official Apple listings above.</p></div>
-<figure><img src="/assets/products/archer-nocturne-app-preview-20261028.webp" alt="Authentic local preview of the next ARCHER interface: gothic moonlit blue artwork, three metal knobs labeled Gain, Threshold and Color, and values below each knob" loading="lazy" decoding="async" width="1120" height="743"><figcaption>Captured from a running desktop preview on 28 October 2026. Not a screenshot of the currently published App Store version.</figcaption></figure>
-</section>
+  <section class="wrap controls" id="controls">
+    <header><h2>Three dials.<br><span class="chrome">Nothing else.</span></h2><p>ARCHER is a real-time clipper for producers, musicians and mix engineers who would rather listen than scroll through parameters.</p></header>
+    <div class="knobs">
+      <article class="knob"><div class="dial" style="--v:52%" aria-hidden="true"></div><h3>GAIN</h3><p class="big">Drive.</p><p>Sets the input level before the clipping stage. Push it to decide how hard the signal hits.</p></article>
+      <article class="knob"><div class="dial" style="--v:34%" aria-hidden="true"></div><h3>THRESHOLD</h3><p class="big">Ceiling.</p><p>Sets where clipping begins, so you choose exactly how far the peaks are allowed to go.</p></article>
+      <article class="knob"><div class="dial" style="--v:63%" aria-hidden="true"></div><h3>ATMOSPHERE</h3><p class="big">Character.</p><p>Shapes the colour of the clipping, from discreet to clearly audible, without extra menus.</p></article>
+    </div>
+  </section>
 
-<p class="note"><strong>Platform:</strong> macOS 12 or later (per Mac App Store). <strong>Availability:</strong> Mac App Store. <strong>Price:</strong> Check the latest local price in the Mac App Store. The product listing includes an audio demonstration.</p>
-</div></main>
-<footer><div class="wrap">© 2026 <span class="notranslate" translate="no">Unfire</span> · <span class="notranslate" translate="no">hello@unfire.technology</span></div><div class="unfire-commerce-legal-links" style="font-size:12.5px;line-height:1.9;margin:16px auto 0;text-align:center;color:#86868b;max-width:900px"><a href="/terms.html" style="color:inherit;text-decoration:none">Sales Terms</a> <span aria-hidden="true">&middot;</span> <a href="/software-license.html" style="color:inherit;text-decoration:none">Software License</a> <span aria-hidden="true">&middot;</span> <a href="/refunds.html" style="color:inherit;text-decoration:none">Refunds</a></div></footer>
-<script>
-(function() {
-  var now=Date.now();
-  var begins=Date.UTC(2026,9,13,9), ends=Date.UTC(2026,9,27); // Start 02:00 PDT on Oct 13; US offer must not be advertised during Oct 12 there.
-  var note=document.getElementById('archerIntroSale');
-  if (now>=begins && now<ends) {
-    if (note) note.style.display='block';
-    // Apple-generated App Store Connect campaign: no analytics scripts or cookies here.
-    var campaign='https://apps.apple.com/app/apple-store/id6812968924?pt=129469597&ct=ARCHEROct26Website&mt=8';
-    document.querySelectorAll('a[href*="apps.apple.com"][href*="id6812968924"]').forEach(function(link) {
-      link.href=campaign;
-    });
-  }
-})();
-</script>
+  <section class="plat">
+    <div class="wrap">
+      <article class="card" id="mac">
+        <span class="k">macOS</span>
+        <h2>ARCHER Audio Clipper</h2>
+        <ul><li>Standalone app and Audio Unit effect in compatible hosts</li><li>Input and output metering with the transfer curve</li><li>Local processing, no account required</li><li>macOS 12 or later, Apple silicon (M1 or later)</li></ul>
+        <div class="price"><b>$9.99</b><span>US Mac App Store price. Check your local store.</span></div>
+        <a class="btn solid" href="https://apps.apple.com/app/id6812968924"><small>Mac App Store</small><span>Get ARCHER for Mac</span></a>
+        <figure class="macshot" style="margin:28px 0 0"><img src="/assets/products/apps-2026/archer-mac-window-2-1100.webp" width="1100" height="771" alt="Second ARCHER Mac screenshot showing the three dials with values" loading="lazy"></figure>
+      </article>
+      <article class="card phone" id="iphone">
+        <div>
+          <span class="k">iOS &amp; iPadOS</span>
+          <h2>Archer for iPhone &amp; iPad</h2>
+          <ul><li>Standalone app and Audio Unit v3 effect</li><li>Optional microphone input, starts muted to avoid feedback</li><li>iOS 18 or iPadOS 18 or later</li></ul>
+          <div class="price"><b>$1.99</b><span>US App Store price.</span></div>
+          <a class="btn ghost" href="https://apps.apple.com/app/id6822109610"><small>App Store</small><span>Get Archer for iPhone</span></a>
+        </div>
+        <figure style="margin:0"><div class="shot"><img src="/assets/products/apps-2026/archer-iphone-600.webp" width="600" height="1304" alt="Archer on iPhone: Gain, Threshold and Atmosphere stacked vertically, with the microphone shown muted" loading="lazy"></div><p class="figcap">iPhone capture of the store build (simulator).</p></figure>
+      </article>
+    </div>
+  </section>
 
-<!-- Sr. Dante: Unfire public web assistant (speech opt-in) -->
-<script src="/assets/js/ask-unfire.js?v=20261020-3" defer></script>
+  <section class="more" aria-label="More about ARCHER">
+    <div class="wrap">
+      <a href="/archer/logic-pro/"><b>Using Logic Pro</b><span>The Audio Unit workflow, step by step.</span></a>
+      <a href="/archer/faq/"><b>Help &amp; installation</b><span>Common questions and support.</span></a>
+      <a href="/archer/press/"><b>Press</b><span>Review information and assets.</span></a>
+      <a href="https://www.audiopluginguy.com/news-unfire-has-released-archer-by-unfair-a-compact-clipping-tool-for-producers-and-mix-engineers-for-macos"><b>Coverage</b><span>Featured by Audio Plugin Guy.</span></a>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap">
+  <span>© 2026 Unfire Audio · <a href="mailto:hello@unfire.technology?subject=ARCHER">hello@unfire.technology</a></span>
+  <nav aria-label="Legal"><a href="/audio/">Unfire Audio</a><a href="/apps/">All apps</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Sales Terms</a><a href="/software-license.html">License</a><a href="/refunds.html">Refunds</a></nav>
+</div></footer>
 </body>
 </html>
