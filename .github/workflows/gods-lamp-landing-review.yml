@@ -1,0 +1,21 @@
+name: God's Lamp review-only landing validation
+on:
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'apps/gods-lamp/**'
+      - 'tests/gods-lamp-landing.test.cjs'
+      - '.github/workflows/gods-lamp-landing-review.yml'
+permissions:
+  contents: read
+jobs:
+  static-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audio identity, platform, privacy, noindex and CSS guards
+        run: node --test tests/gods-lamp-landing.test.cjs
