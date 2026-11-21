@@ -19,7 +19,7 @@ test("platform disclosures linked and remain clearly separate",()=>{
   assert.match(html,new RegExp('href="'+p.replace(/\//g,"\\/")+'"'));
   assert.ok(fs.existsSync(path.join(root,p,"index.html")),p);
  }
- assert.match(html,/does not claim approval, availability or feature parity/);
+ assert.match(html,/does not establish review approval, release, availability or feature parity/);
  assert.match(html,/Android privacy notice/);
  assert.match(html,/iOS notice/);
 });
@@ -50,4 +50,12 @@ test("owner-supplied original screenshots are real immutable source crops, not p
  assert.match(html,/Not an App Store screenshot/);
  assert.match(html,/RC73 source-port effort/);
  assert.match(html,/noindex,nofollow/);
+});
+
+test("neither test-track status nor uploaded IPA is described as a public release",()=>{
+ assert.match(html,/active Google Play closed-testing track/);
+ assert.match(html,/Production access and public availability are not confirmed/);
+ assert.match(html,/successfully uploaded to Apple's processing service/);
+ assert.match(html,/An uploaded IPA does not mean approval/);
+ assert.match(html,/21 November 2026/);
 });
