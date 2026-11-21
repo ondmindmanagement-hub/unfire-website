@@ -48,17 +48,18 @@
     if(!file)return;
     if(!['image/png','image/jpeg','image/webp'].includes(file.type)){status('Choose PNG, JPEG or WebP; previous image unchanged.',true);return;}
     if(!Number.isFinite(file.size)||file.size>20*1024*1024){status('Image exceeds 20 MB; previous image unchanged.',true);return;}
-    var own=++generation,url=URL.createObjectURL(file),img=new Image();
+    var own=++generation,img=new Image(),reader=new FileReader();
     status('Opening image on this device…');
     img.onload=function(){
-      URL.revokeObjectURL(url);
       if(own!==generation)return;
       if(img.naturalWidth*img.naturalHeight>24000000){status('Image exceeds 24 million source pixels.',true);return;}
       source=img;name=file.name||'artwork';
       ui.meta.textContent=name+' · '+img.naturalWidth+' × '+img.naturalHeight;redraw();
     };
-    img.onerror=function(){URL.revokeObjectURL(url);if(own===generation)status('Cannot read this image. Try PNG or JPEG.',true);};
-    img.src=url;
+    img.onerror=function(){if(own===generation)status('Cannot read this image. Try PNG or JPEG.',true);};
+    reader.onload=function(){if(own===generation && typeof reader.result==='string')img.src=reader.result;};
+    reader.onerror=function(){if(own===generation)status('Could not read the selected image.',true);};
+    reader.readAsDataURL(file);
   }
   ui.file.addEventListener('change',function(){load(ui.file.files[0]);});
   ['dragenter','dragover'].forEach(function(type){ui.drop.addEventListener(type,function(e){e.preventDefault();ui.drop.classList.add('dragging');});});
