@@ -1,32 +1,162 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'">
-<meta name="theme-color" content="#090a0e">
-<meta name="description" content="Power Energy Prices helps you explore electricity price references, compare markets and estimate energy costs with a readable iPhone interface.">
+<!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
+<script id="ufAdaptiveBoot">(function(){
+  try {
+    var coarse=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
+    var memory=Number(navigator.deviceMemory||0), cores=Number(navigator.hardwareConcurrency||0);
+    var unknown=!memory&&!cores&&Math.min(innerWidth,innerHeight)<400;
+    if(coarse&&((memory>0&&memory<=4)||(cores>0&&cores<=4)||unknown))
+      document.documentElement.classList.add('uf-load-pending');
+    // A network failure must never leave a permanent overlay.
+    setTimeout(function(){document.documentElement.classList.remove('uf-load-pending');},9000);
+  } catch(e) {}
+})();</script>
+<link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261023adaptive1">
+<script defer src="/assets/js/unfire-adaptive-loading.js?v=20261023adaptive1"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Power Energy Prices — Electricity prices and daily cost on iPhone</title>
+<meta name="description" content="Power Energy Prices is a free iPhone app to check electricity price references for your market, set your daily consumption and see an estimated daily cost. No account, no personal data collected.">
 <link rel="canonical" href="https://unfire.technology/apps/power/">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#ffffff">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Power Energy Prices | Unfire">
-<meta property="og:description" content="Power Energy Prices helps you explore electricity price references, compare markets and estimate energy costs with a readable iPhone interface.">
+<meta property="og:title" content="Power Energy Prices — Electricity prices, made clearer">
+<meta property="og:description" content="Price references, your consumption and an estimated daily cost, in one calm iPhone screen.">
 <meta property="og:url" content="https://unfire.technology/apps/power/">
-<title translate="no">Power Energy Prices | Unfire</title>
-<style>:root{color-scheme:dark;--bg:#090a0e;--fg:#f7f7fa;--muted:#abb0bc;--line:#292e38;--accent:#c0d4ff}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}a:focus-visible{outline:2px solid var(--accent);outline-offset:5px}.wrap{width:min(1030px,calc(100% - 40px));margin:auto}header{border-bottom:1px solid var(--line)}header .wrap{display:flex;justify-content:space-between;align-items:center;padding:20px 0}header a{text-decoration:none;font-size:14px}.logo{font-size:22px;font-weight:700;letter-spacing:0.008em}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent)}.hero{padding:120px 0 100px}h1{font-size:clamp(50px,9vw,112px);letter-spacing:0.008em;line-height:1.02;font-weight:650;margin:20px 0}h2{font-size:clamp(27px,4vw,43px);letter-spacing:0.008em;line-height:1.12}.lead{font-size:clamp(18px,2.5vw,24px);max-width:650px;color:var(--muted)}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}.action{border:1px solid #465168;border-radius:999px;padding:12px 19px;text-decoration:none;font-size:14px;font-weight:600}.action.primary{background:#f1f3f7;color:#131821;border-color:#f1f3f7}.action:hover{opacity:.82}.features{border-top:1px solid var(--line);padding:65px 0 90px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.feature{border:1px solid var(--line);border-radius:22px;padding:28px;background:#11141d}.feature h3{font-size:18px;margin:0 0 10px}.feature p,.details p{color:var(--muted);margin:0}.details{padding:50px 0 90px;border-top:1px solid var(--line)}.note{border-left:2px solid #718bc0;padding:12px 20px;color:var(--muted);margin-top:30px;font-size:14px}footer{border-top:1px solid var(--line);padding:35px 0 60px;color:var(--muted);font-size:13px}footer a{color:var(--fg)}@media(max-width:740px){.grid{grid-template-columns:1fr}.hero{padding:80px 0 75px}}</style>
-
-<meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Unfire","item":"https://unfire.technology/"},{"@type":"ListItem","position":2,"name":"Apps","item":"https://unfire.technology/apps/"},{"@type":"ListItem","position":3,"name":"Power Energy Prices","item":"https://unfire.technology/apps/power/"}]}</script>
-<link rel="stylesheet" href="/assets/css/unfire-display-typography-20261019.css?v=2">
-<link rel="stylesheet" href="/assets/css/unfire-compact-system-20261019.css?v=2">
+<meta property="og:image" content="https://unfire.technology/assets/products/apps-2026/power-iphone-1000.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Power Energy Prices","operatingSystem":"iOS 18.0 or later","applicationCategory":"UtilitiesApplication","description":"Check electricity price references for your market, adjust daily consumption and see an estimated daily electricity cost.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"downloadUrl":"https://apps.apple.com/app/id6815880143","url":"https://unfire.technology/apps/power/","image":"https://unfire.technology/assets/products/apps-2026/power-icon-512.webp","softwareVersion":"1.0.1","publisher":{"@type":"Organization","name":"Unfire","url":"https://unfire.technology"}}</script>
+<style>
+:root{--bg:#fff;--ink:#0b0b0b;--ink-2:#5e5e5e;--line:#e3e3e3;--volt:#c6ff1a;--sans:"Inter Tight",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}img{display:block;max-width:100%;height:auto}
+.wrap{width:min(1240px,100% - 48px);margin-inline:auto}
+.mono{font-family:var(--mono)}
+mark{background:linear-gradient(transparent 58%,var(--volt) 58%);color:inherit;padding:0 .06em}
+/* header */
+.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:20px 0;font:500 13px/1 var(--mono)}
+.top .l{display:flex;gap:10px;align-items:center;text-decoration:none}
+.top .l img{width:26px;height:26px;border-radius:7px}
+.top .c{color:var(--ink-2)}
+.top nav{justify-self:end;display:flex;gap:22px}
+.top nav a{text-decoration:none;color:var(--ink-2)}.top nav a:hover{color:var(--ink)}
+/* hero grid */
+.hero{border-top:2px solid var(--ink);display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;padding-top:28px}
+.hero .idx{grid-column:1/4;font:500 12px/1.6 var(--mono);color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em}
+.hero h1{grid-column:4/13;margin:0;font-weight:800;font-size:clamp(56px,10.5vw,168px);line-height:.86;letter-spacing:-.055em}
+.hero h1 span{display:block}
+.hero .unit{grid-column:4/9;margin-top:44px;font-size:clamp(18px,1.6vw,21px);color:#262626;max-width:30ch}
+.hero .act{grid-column:9/13;margin-top:44px;align-self:end}
+.store{display:flex;justify-content:space-between;align-items:center;width:100%;background:var(--ink);color:#fff;text-decoration:none;padding:20px 22px;font-weight:700;font-size:16px;transition:background .15s ease}
+.store:hover{background:#222}.store i{font-style:normal;font-family:var(--mono);font-weight:400;color:var(--volt)}
+.act p{margin:12px 0 0;font:400 12.5px/1.6 var(--mono);color:var(--ink-2)}
+/* showcase */
+.show{display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;margin-top:clamp(70px,9vw,130px);border-top:1px solid var(--line)}
+.show .phone{grid-column:2/6;margin-top:-1px;padding:48px 0 0}
+.phone .frame{border:1px solid #d7d7d7;border-radius:48px;padding:10px;background:#f4f4f4}
+.phone img{border-radius:39px;border:1px solid #ececec}
+.phone p{font:400 12px/1.5 var(--mono);color:var(--ink-2);margin:14px 0 0;text-align:center}
+.rows{grid-column:7/13;padding-top:48px}
+.row{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:26px 0;border-bottom:1px solid var(--line)}
+.row:first-child{border-top:2px solid var(--ink)}
+.row b{font:500 13px/1.8 var(--mono)}
+.row h2{font-size:clamp(24px,2.2vw,30px);line-height:1.1;letter-spacing:-.025em;margin:0 0 8px;font-weight:700}
+.row p{margin:0;color:var(--ink-2);max-width:42ch}
+/* equation */
+.eq{margin-top:clamp(80px,10vw,150px);background:var(--ink);color:#fff}
+.eq .wrap{display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;padding:clamp(56px,7vw,96px) 0}
+.eq .k{grid-column:1/4;font:500 12px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:#9a9a9a}
+.eq .f{grid-column:4/13;font-weight:700;font-size:clamp(30px,4.6vw,66px);line-height:1.02;letter-spacing:-.04em;margin:0}
+.eq .f em{font-style:normal;color:var(--volt)}
+.eq .f small{display:block;margin-top:26px;font:400 15px/1.6 var(--mono);letter-spacing:0;color:#b9b9b9;max-width:60ch}
+/* facts */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:2px solid var(--ink);margin-top:clamp(70px,9vw,120px)}
+.facts div{padding:24px 20px 30px 0;border-top:2px solid var(--ink)}
+.facts div+div{padding-left:20px;border-left:1px solid var(--line)}
+.facts dt{font:500 12px/1.6 var(--mono);color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em}
+.facts dd{margin:8px 0 0;font-weight:700;font-size:clamp(22px,2.2vw,30px);letter-spacing:-.03em;line-height:1.1}
+.note{display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;padding:40px 0 0}
+.note p{grid-column:4/11;margin:0;color:var(--ink-2);font-size:15px}
+footer{margin-top:clamp(70px,9vw,120px);padding:28px 0 44px;border-top:1px solid var(--line);font:400 13px/1.6 var(--mono);color:var(--ink-2)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 26px;justify-content:space-between}
+footer nav{display:flex;flex-wrap:wrap;gap:20px}footer a{text-decoration:none}footer a:hover{color:var(--ink)}
+a:focus-visible{outline:3px solid var(--volt);outline-offset:3px}
+@media (max-width:900px){
+ .top{grid-template-columns:1fr auto}.top .c,.top nav a:not([href="/support/"]){display:none}.top .l{white-space:nowrap}
+ .hero .idx,.hero h1,.hero .unit,.hero .act,.show .phone,.rows,.eq .k,.eq .f,.note p{grid-column:1/-1}
+ .hero .idx{margin-bottom:18px}.hero .act{margin-top:28px}
+ .show .phone{width:min(280px,72vw);justify-self:center}
+ .facts{grid-template-columns:1fr 1fr}.facts div:nth-child(3){padding-left:0;border-left:0}
+ .eq .k{margin-bottom:16px}
+}
+@media (prefers-reduced-motion:reduce){.store{transition:none}}
+</style>
 </head>
 <body>
-<header><div class="wrap"><a class="logo notranslate" translate="no" href="/">Unfire</a><a href="/apps/">All apps ↗</a></div></header>
-<main class="wrap">
-<section class="hero"><div class="eyebrow"><span class="notranslate" translate="no">Unfire</span> Utilities / iPhone</div><h1>Energy. At a glance.</h1><p class="lead">See electricity price references and understand estimated energy costs from one clear interface, without unnecessary complexity.</p><div class="actions"><a class="action primary" href="https://apps.apple.com/app/id6815880143" target="_blank" rel="noopener noreferrer">View on App Store ↗</a><a class="action" href="https://unfire.technology/support/">Support</a></div></section>
-<section class="features"><h2>Made for the work.</h2><div class="grid"><article class="feature"><h3>Price references</h3><p>View electricity pricing information in a focused, readable format.</p></article><article class="feature"><h3>Choose your market</h3><p>Select supported market settings to review a relevant reference.</p></article><article class="feature"><h3>Understand cost</h3><p>Explore estimates based on energy usage rather than guessing what everyday electricity consumption means.</p></article></div></section>
-<section class="details"><h2>Designed by <span class="notranslate" translate="no">Unfire</span>.</h2><p>Focused software, carefully considered controls and a straightforward experience. Available features and compatibility are specific to each version and device.</p><div class="note">Figures and estimates are informational references, not a guarantee of a utility bill or a supplier quotation. Check the App Store listing for supported markets and current features.</div></section>
-</main><footer><div class="wrap">© 2026 <span translate="no" class="notranslate">Unfire</span> · Independent technology initiative · <a href="mailto:hello@unfire.technology">Contact by email</a> · <a href="/apps/">Explore all products</a></div><p style="margin:15px 0 0;font-size:13px"><a href="/contact/" style="color:inherit">Contact <span class="notranslate" translate="no">Unfire</span> →</a></p><div class="unfire-commerce-legal-links" style="font-size:12.5px;line-height:1.9;margin:16px auto 0;text-align:center;color:#86868b;max-width:900px"><a href="/terms.html" style="color:inherit;text-decoration:none">Sales Terms</a> <span aria-hidden="true">&middot;</span> <a href="/software-license.html" style="color:inherit;text-decoration:none">Software License</a> <span aria-hidden="true">&middot;</span> <a href="/refunds.html" style="color:inherit;text-decoration:none">Refunds</a></div></footer>
+<div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
+  <div class="uf-load-card">
+    <span class="uf-load-emblem" aria-hidden="true"></span>
+    <strong class="uf-load-brand" translate="no">UNFIRE</strong>
+    <span class="uf-load-label" id="ufAdaptiveLabel">Preparing the experience…</span>
+  </div>
+</div>
+<header class="wrap top">
+  <a class="l" href="/apps/"><img src="/assets/products/apps-2026/power-icon-256.webp" width="26" height="26" alt="">Power Energy Prices</a>
+  <span class="c">by Unfire</span>
+  <nav aria-label="Power"><a href="#how">How it works</a><a href="/support/">Support</a><a href="/privacy.html">Privacy</a></nav>
+</header>
+<main>
+  <section class="wrap hero">
+    <p class="idx">iPhone app<br>Utilities<br>Free</p>
+    <h1><span>Electricity</span><span>prices,</span><span><mark>made clearer.</mark></span></h1>
+    <p class="unit">Pick your market, see the price reference, set what you use in a day. Power tells you roughly what that day of electricity costs.</p>
+    <div class="act">
+      <a class="store" href="https://apps.apple.com/app/id6815880143">Get it on the App Store <i>→</i></a>
+      <p>Requires iOS 18 or later. No account. No personal data collected.</p>
+    </div>
+  </section>
 
-<!-- Sr. Dante: Unfire public web assistant (speech opt-in) -->
-<script src="/assets/js/ask-unfire.js?v=20261020-3" defer></script>
-</body></html>
+  <section class="wrap show" id="how">
+    <figure class="phone">
+      <div class="frame"><img src="/assets/products/apps-2026/power-iphone-600.webp" srcset="/assets/products/apps-2026/power-iphone-600.webp 600w,/assets/products/apps-2026/power-iphone-1000.webp 1000w" sizes="(max-width:900px) 280px, 30vw" width="600" height="1304" alt="Power on iPhone: location set to Spain, a market selector, a price reference in euros per kilowatt-hour and a daily usage slider" loading="lazy"></div>
+      <p>Actual App Store screenshot · iPhone · version 1.0.1</p>
+    </figure>
+    <div class="rows">
+      <div class="row"><b>01</b><div><h2>Choose your market.</h2><p>Set your country or market, and Power shows the pricing data available for it.</p></div></div>
+      <div class="row"><b>02</b><div><h2>Read the reference.</h2><p>One price, large and legible, instead of a page of tables.</p></div></div>
+      <div class="row"><b>03</b><div><h2>Slide your usage.</h2><p>Adjust your daily consumption and watch the estimate change with it.</p></div></div>
+      <div class="row"><b>04</b><div><h2>Understand the day.</h2><p>See what a day of electricity roughly costs at that rate, without doing the maths.</p></div></div>
+    </div>
+  </section>
+
+  <section class="eq" aria-label="How the estimate works">
+    <div class="wrap">
+      <p class="k">The idea</p>
+      <p class="f">Price reference <em>×</em> your daily kWh <em>=</em> an estimated daily cost.
+        <small>An estimate is a reference, not a bill or a supplier quote. Taxes, fixed charges, contracts and tariffs vary. Data availability and update frequency depend on the region and source.</small></p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <dl class="facts">
+      <div><dt>Price</dt><dd>Free</dd></div>
+      <div><dt>Device</dt><dd>iPhone</dd></div>
+      <div><dt>Requires</dt><dd>iOS 18+</dd></div>
+      <div><dt>Data collected</dt><dd>None</dd></div>
+    </dl>
+    <div class="note"><p>Check the App Store listing for current markets and features. Questions or a market request: <a href="mailto:hello@unfire.technology?subject=Power%20Energy%20Prices">hello@unfire.technology</a>.</p></div>
+  </section>
+</main>
+<footer><div class="wrap">
+  <span>© 2026 Unfire · Independent technology initiative</span>
+  <nav aria-label="Legal"><a href="/apps/">All apps</a><a href="/support/">Support</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Sales Terms</a><a href="/software-license.html">License</a><a href="/refunds.html">Refunds</a></nav>
+</div></footer>
+</body>
+</html>

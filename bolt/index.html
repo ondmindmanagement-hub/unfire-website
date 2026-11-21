@@ -15,55 +15,104 @@
 })();</script>
 <link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261023adaptive1">
 <script defer src="/assets/js/unfire-adaptive-loading.js?v=20261023adaptive1"></script>
-
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="BOLT lets you review AI-proposed file changes, check permissions and explicitly approve or reject before execution. Available for compatible Mac computers; optional live AI uses your own API keys.">
-<meta name="theme-color" content="#080809">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BOLT — Human-approved AI workflows | Unfire">
-<meta property="og:description" content="See what an AI proposes before it changes your Mac files. Local test mode, approval gates and optional API-key workflows.">
-<meta property="og:url" content="https://unfire.technology/bolt/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BOLT — Review AI-proposed file changes before they happen · Mac app</title>
+<meta name="description" content="BOLT for Mac puts a review step between an AI instruction and your files: a builder model proposes, local rules check, an independent auditor reviews, and you approve or reject. Simulated mode needs no API keys.">
 <link rel="canonical" href="https://unfire.technology/bolt/">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<title translate="no">BOLT — Human-approved AI workflows | Unfire</title>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Bolt","applicationCategory":"ProductivityApplication","operatingSystem":"macOS 14 or later","description":"A macOS app for reviewing AI-proposed file edits, local rules, separate audit step and human approval. Offers simulated local mode; live AI requires the user's own provider API keys.","url":"https://unfire.technology/bolt/","downloadUrl":"https://apps.apple.com/us/app/bolt-trusted-ai-bridge/id6814615903","softwareVersion":"1.1.0","publisher":{"@type":"Organization","name":"Unfire","url":"https://unfire.technology/"}}</script>
+<meta name="theme-color" content="#f7f6f2">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BOLT — AI proposes. You decide.">
+<meta property="og:description" content="Inspect AI-proposed changes to files on your Mac before anything is applied.">
+<meta property="og:url" content="https://unfire.technology/bolt/">
+<meta property="og:image" content="https://unfire.technology/assets/products/apps-2026/bolt-step-4-review-1200.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"BOLT: Trusted AI Bridge","operatingSystem":"macOS 14.0 or later","applicationCategory":"DeveloperApplication","description":"Review step between an AI instruction and file changes on your Mac: proposal, local checks, independent audit and explicit human approval. Simulated mode without API keys; optional live mode with your own OpenAI or Anthropic keys.","offers":{"@type":"Offer","price":"1.99","priceCurrency":"USD"},"softwareVersion":"1.1.1","downloadUrl":"https://apps.apple.com/us/app/bolt-trusted-ai-bridge/id6814615903","url":"https://unfire.technology/bolt/","publisher":{"@type":"Organization","name":"Unfire","url":"https://unfire.technology"}}</script>
 <style>
-:root{color-scheme:dark;--bg:#080809;--card:#131316;--line:#323238;--fg:#f6f6f8;--muted:#adb0ba;--warm:#dba399}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:var(--fg)}a:hover{color:var(--warm)}:focus-visible{outline:2px solid var(--warm);outline-offset:4px}
-.wrap{width:min(1070px,calc(100% - 42px));margin-inline:auto}
-header{border-bottom:1px solid #27272c;background:#09090a}header .wrap{display:flex;justify-content:space-between;align-items:center;gap:18px;min-height:70px}
-.brand{font-weight:700;font-size:20px;text-decoration:none;letter-spacing:0.008em}nav{display:flex;align-items:center;flex-wrap:wrap;gap:22px}nav a{font-size:12px;text-decoration:none;color:var(--muted)}
-.hero{padding:105px 0 100px}.eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--warm);font-weight:700}
-h1{font-size:clamp(3.2rem,8vw,7rem);font-weight:600;line-height:1.04;letter-spacing:0.008em;margin:20px 0 26px;max-width:900px}
-h2{font-size:clamp(1.65rem,3.5vw,2.8rem);font-weight:580;letter-spacing:0.008em;line-height:1.16;margin:0 0 20px}
-h3{font-size:19px;letter-spacing:0.008em;margin:0 0 9px}.lead{font-size:clamp(18px,2.2vw,22px);color:#c5c6ce;max-width:760px;margin:0}
-.actions{display:flex;flex-wrap:wrap;gap:12px;margin:30px 0 15px}
-.btn{display:inline-flex;justify-content:center;align-items:center;min-height:47px;padding:12px 24px;text-decoration:none;border-radius:100px;border:1px solid #42424a;font-weight:550;background:transparent}
-.btn.primary{background:#f4f4f7;color:#080809;border-color:#f4f4f7;font-weight:650}.btn.primary:hover{background:#d7d7dc}
-.meta{color:var(--muted);font-size:12px;margin-top:15px}
-.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:74px}
-.stat{padding:20px 0;border-top:1px solid var(--line)}.stat strong{display:block;font-weight:600;font-size:15px}.stat span{font-size:12px;color:var(--muted)}
-section.content{padding:100px 0;border-top:1px solid #25252a}
-.intro{color:var(--muted);max-width:730px;font-size:16px;margin-bottom:40px}
-.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:19px;padding:29px 25px;min-height:235px}
-.card .num{font-size:11px;letter-spacing:.1em;color:var(--warm);display:block;margin-bottom:34px}.card p{color:var(--muted);margin:0;font-size:13px}
-.sequence{margin:20px 0 0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;list-style:none;padding:0}
-.sequence li{border:1px solid var(--line);padding:18px 14px;border-radius:12px;background:#101012;font-size:13px}.sequence .step{display:block;color:var(--warm);font-size:10px;margin-bottom:10px}.sequence span{color:var(--muted)}
-.modegrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{border:1px solid var(--line);border-radius:20px;padding:34px;background:#101013}.panel p{color:var(--muted);font-size:14px;margin-top:12px}.panel ul{padding-left:20px;color:#c9cad0;font-size:14px}.panel li{margin-bottom:8px}
-.faq{max-width:760px}.faq details{border-bottom:1px solid var(--line);padding:23px 0}.faq summary{cursor:pointer;font-size:16px;font-weight:600}.faq p{color:var(--muted);font-size:14px;margin:12px 0 0}
-.limit{padding:28px 32px;border:1px solid #483a39;border-radius:15px;background:#171213;color:#cfc1c0;margin-top:35px;font-size:13px}
-.cta{border-top:1px solid var(--line);padding:78px 0 90px}footer{border-top:1px solid var(--line);padding:27px 0 45px;color:var(--muted);font-size:12px}footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px}footer a{color:var(--muted)}
-@media(max-width:800px){.sequence{grid-template-columns:repeat(2,minmax(0,1fr))}.cards{grid-template-columns:1fr}.modegrid{grid-template-columns:1fr}.card{min-height:unset}.strip{grid-template-columns:1fr;gap:5px}.hero{padding:68px 0 75px}section.content{padding:65px 0}}
-@media(max-width:520px){nav{gap:10px}header .wrap{align-items:flex-start;padding-block:13px;flex-direction:column}h1{font-size:3.2rem}.sequence{grid-template-columns:1fr}.actions{flex-direction:column}.btn{width:100%}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+:root{--paper:#f7f6f2;--card:#fff;--ink:#121212;--ink-2:#5b5b57;--line:#dddbd3;--blue:#2457f5;--add:#0f8a4a;--add-bg:#e5f5ec;--del:#c0362c;--del-bg:#fbe9e7;--sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}img{display:block;max-width:100%;height:auto}
+.wrap{width:min(1200px,100% - 48px);margin-inline:auto}
+code,.mono{font-family:var(--mono)}
+/* header */
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);font:500 13px/1 var(--mono)}
+.top .id{display:flex;align-items:center;gap:10px;text-decoration:none}
+.top .id img{width:28px;height:28px;border-radius:7px}
+.top nav{display:flex;gap:24px}.top nav a{text-decoration:none;color:var(--ink-2)}.top nav a:hover{color:var(--ink)}
+/* hero */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px);align-items:center;padding:clamp(56px,8vw,110px) 0}
+.tag{display:inline-flex;gap:8px;align-items:center;font:500 12.5px/1 var(--mono);color:var(--ink-2);border:1px solid var(--line);background:var(--card);padding:7px 10px;border-radius:6px}
+.tag i{width:7px;height:7px;border-radius:50%;background:var(--add)}
+h1{font-weight:700;font-size:clamp(46px,6.6vw,92px);line-height:.98;letter-spacing:-.035em;margin:24px 0 0}
+h1 span{color:var(--blue)}
+.lede{margin:26px 0 0;max-width:38ch;font-size:clamp(17px,1.5vw,19px);color:#333}
+.cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:34px}
+.b1{background:var(--ink);color:#fff;text-decoration:none;font-weight:600;padding:15px 22px;border-radius:8px;display:inline-flex;gap:10px;align-items:center}
+.b1:hover{background:#2a2a2a}
+.b2{text-decoration:none;font-weight:500;padding:15px 18px;border-radius:8px;border:1px solid var(--line);background:var(--card)}
+.req{margin-top:18px;font:400 12.5px/1.6 var(--mono);color:var(--ink-2)}
+/* diff card */
+.diff{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 30px 60px -40px rgba(0,0,0,.35);overflow:hidden;font:400 13.5px/1.75 var(--mono)}
+.diff .h{display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line);color:var(--ink-2);font-size:12.5px}
+.diff .h b{color:var(--ink);font-weight:600}
+.diff pre{margin:0;padding:10px 0;overflow:auto;white-space:normal}
+.diff .l{display:block;padding:0 16px;white-space:pre}
+.diff .a{background:var(--add-bg);color:var(--add)}.diff .d{background:var(--del-bg);color:var(--del)}
+.diff .f{display:flex;gap:10px;justify-content:flex-end;align-items:center;padding:12px 16px;border-top:1px solid var(--line);background:#fbfaf7}
+.diff .f .wait{margin-right:auto;font-size:12px;color:var(--ink-2)}
+.pill{padding:7px 12px;border-radius:6px;font-weight:600;font-size:12.5px;border:1px solid var(--line);background:var(--card)}
+.pill.ok{background:var(--add);border-color:var(--add);color:#fff}
+.example{font:400 12px/1.5 var(--mono);color:var(--ink-2);margin-top:10px;text-align:right}
+/* pipeline */
+.pipe{border-top:1px solid var(--line);padding:clamp(70px,9vw,120px) 0}
+.pipe h2,.modes h2,.faq h2{font-weight:700;font-size:clamp(32px,4vw,52px);letter-spacing:-.03em;line-height:1.02;margin:0}
+.pipe .intro{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:56px}
+.pipe .intro p{margin:0;color:var(--ink-2);max-width:46ch}
+.log{list-style:none;margin:0;padding:0;border-left:2px solid var(--ink);margin-left:8px}
+.log li{position:relative;display:grid;grid-template-columns:200px 1fr;gap:28px;padding:0 0 64px 34px}
+.log li::before{content:"";position:absolute;left:-9px;top:6px;width:16px;height:16px;border-radius:50%;background:var(--paper);border:2px solid var(--ink)}
+.log li.me::before{background:var(--blue);border-color:var(--blue)}
+.log .k{font:600 13px/1.5 var(--mono)}
+.log .k small{display:block;font-weight:400;color:var(--ink-2)}
+.log h3{margin:0 0 8px;font-size:22px;letter-spacing:-.015em}
+.log p{margin:0 0 20px;color:var(--ink-2);max-width:56ch}
+.log figure{margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#1e1e1e;box-shadow:0 20px 50px -35px rgba(0,0,0,.5)}
+.log li:last-child{padding-bottom:0}
+.lang{margin:22px 0 0 42px;font:400 12.5px/1.6 var(--mono);color:var(--ink-2)}
+/* modes */
+.modes{background:var(--ink);color:#f3f3f0;padding:clamp(70px,9vw,120px) 0}
+.modes .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px}
+.mode{border:1px solid #333;border-radius:12px;padding:30px}
+.mode .k{font:500 12.5px/1 var(--mono);color:#9fb4ff}
+.mode h3{font-size:26px;letter-spacing:-.02em;margin:14px 0 12px}
+.mode p{color:#b9b9b4;margin:0 0 18px}
+.mode ul{margin:0;padding:0;list-style:none;font:400 14px/1.9 var(--mono);color:#dcdcd6}
+.mode li::before{content:"+ ";color:#4ad18a}
+.mode li.no::before{content:"− ";color:#ff8a7f}
+/* faq */
+.faq{padding:clamp(70px,9vw,120px) 0}
+.faq .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 56px;margin-top:40px}
+.faq details{border-top:1px solid var(--line);padding:20px 0}
+.faq summary{cursor:pointer;font-weight:600;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:20px}
+.faq summary::after{content:"+";font-family:var(--mono);color:var(--ink-2)}
+.faq details[open] summary::after{content:"−"}
+.faq details p{margin:12px 0 0;color:var(--ink-2)}
+.warn{margin-top:46px;border:1px solid var(--line);border-left:4px solid var(--ink);background:var(--card);padding:20px 24px;border-radius:6px;color:#333;font-size:15px}
+footer{border-top:1px solid var(--line);padding:28px 0 44px;font:400 13px/1.6 var(--mono);color:var(--ink-2)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+footer nav{display:flex;flex-wrap:wrap;gap:20px}footer a{text-decoration:none}footer a:hover{color:var(--ink)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+@media (max-width:900px){
+ .hero,.pipe .intro,.modes .grid,.faq .grid{grid-template-columns:1fr}
+ .log li{grid-template-columns:1fr;gap:10px}
+ .top nav a:not(:last-child){display:none}
+}
 </style>
-
-<meta name="twitter:card" content="summary">
-<link rel="stylesheet" href="/assets/css/unfire-display-typography-20261019.css?v=2">
-<link rel="stylesheet" href="/assets/css/unfire-compact-system-20261019.css?v=2">
 </head>
 <body>
 <div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
@@ -73,67 +122,79 @@ section.content{padding:100px 0;border-top:1px solid #25252a}
     <span class="uf-load-label" id="ufAdaptiveLabel">Preparing the experience…</span>
   </div>
 </div>
-
-<header><div class="wrap"><a class="brand" href="/"><span class="notranslate" translate="no">Unfire</span></a><nav aria-label="Primary"><a href="#how">How it works</a><a href="#modes">Modes</a><a href="#questions">FAQ</a><a href="/pilot/">Enterprise feasibility</a></nav></div></header>
+<header class="wrap top">
+  <a class="id" href="/apps/"><img src="/assets/products/apps-2026/bolt-icon-256.webp" width="28" height="28" alt="">BOLT for Mac</a>
+  <nav aria-label="BOLT"><a href="#flow">Workflow</a><a href="#modes">Modes</a><a href="#faq">FAQ</a><a href="/pilot/">For teams</a></nav>
+</header>
 <main>
-<div class="wrap hero">
-  <div class="eyebrow">Bolt · macOS</div>
-  <h1>AI proposes.<br>You decide.</h1>
-  <p class="lead">Bolt helps you inspect AI-proposed changes to files on your Mac, with local checks, a separate review step and a decision you approve before execution.</p>
-  <div class="actions">
-    <a class="btn primary" href="https://apps.apple.com/us/app/bolt-trusted-ai-bridge/id6814615903" target="_blank" rel="noopener">Get Bolt on the Mac App Store →</a>
-    <a class="btn" href="#how">Understand the workflow</a>
-  </div>
-  <p class="meta">macOS 14 or later · Version 1.1.0 · Store prices vary by region · Optional live AI requires your own API keys and may incur provider charges.</p>
-  <div class="strip">
-    <div class="stat"><strong>Human approval</strong><span>Inspect proposals before file changes</span></div>
-    <div class="stat"><strong>Local test mode</strong><span>Explore simulated workflows without API keys</span></div>
-    <div class="stat"><strong>Your provider credentials</strong><span>Optional OpenAI and Anthropic connections</span></div>
-  </div>
-</div>
-<section class="content" id="how"><div class="wrap">
-  <p class="eyebrow">Designed to keep you involved</p>
-  <h2>A review step between the instruction and the action.</h2>
-  <p class="intro">Choose a folder and describe a task. Bolt coordinates a proposal, checks its boundaries and lets you inspect the suggested changes. It does not replace your judgment or promise that AI-generated code is correct.</p>
-  <ol class="sequence">
-    <li><span class="step">01 / SCOPE</span><strong>Choose</strong><span> a local folder and the intended task</span></li>
-    <li><span class="step">02 / BUILD</span><strong>Propose</strong><span> candidate changes using the chosen model</span></li>
-    <li><span class="step">03 / CHECK</span><strong>Apply</strong><span> local permission and boundary checks</span></li>
-    <li><span class="step">04 / REVIEW</span><strong>Audit</strong><span> the proposal in a separate model step</span></li>
-    <li><span class="step">05 / APPROVE</span><strong>Decide</strong><span> whether any proposed edit should proceed</span></li>
-  </ol>
-  <div class="limit">Bolt is software to support reviewed AI workflows, not an independently certified security product. No automated check can eliminate all mistakes or risks. Confirm each proposed change, back up valuable files and avoid testing unfamiliar workflows on irreplaceable projects.</div>
-</div></section>
-<section class="content" id="modes"><div class="wrap">
-  <p class="eyebrow">Start small</p>
-  <h2>Try the workflow before connecting a live model.</h2>
-  <div class="modegrid">
-    <div class="panel"><h3>Simulated local mode</h3><p>Explore the proposal and approval flow with simulated model responses. Useful for understanding Bolt without entering API credentials.</p>
-      <ul><li>No provider API keys required</li><li>Test scenarios run locally</li><li>Simulated output is not live AI</li></ul>
+  <section class="wrap hero">
+    <div>
+      <span class="tag"><i></i>Mac App Store · v1.1.1</span>
+      <h1>AI proposes.<br><span>You decide.</span></h1>
+      <p class="lede">BOLT puts a review step between an AI instruction and the files on your Mac. Nothing is applied until you have seen the change and said yes.</p>
+      <div class="cta">
+        <a class="b1" href="https://apps.apple.com/us/app/bolt-trusted-ai-bridge/id6814615903">Get BOLT on the Mac App Store <span aria-hidden="true">→</span></a>
+        <a class="b2" href="#flow">See the workflow</a>
+      </div>
+      <p class="req">macOS 14 or later · $1.99 US (prices vary by region) · Live AI uses your own API keys, billed by your provider.</p>
     </div>
-    <div class="panel"><h3>Live AI mode (BYOK)</h3><p>Bring your own supported provider credentials for AI-assisted file tasks. Live requests can send data to the configured providers after the required approval.</p>
-      <ul><li>Supports OpenAI and Anthropic API credentials</li><li>Credentials stored using macOS Keychain</li><li>Set a usage limit; provider costs are separate</li></ul>
+    <div>
+      <div class="diff" aria-label="Example of a proposed change waiting for approval">
+        <div class="h"><b>README.md</b><span>proposal 1 of 1 · audited</span></div>
+<pre><span class="l"> # Project</span>
+<span class="l d">-Notes go here.</span>
+<span class="l a">+## Getting started</span>
+<span class="l a">+1. Install the dependencies.</span>
+<span class="l a">+2. Run the tests.</span>
+<span class="l"> </span>
+<span class="l"> See LICENSE for details.</span></pre>
+        <div class="f"><span class="wait">Waiting for you</span><span class="pill">Reject</span><span class="pill ok">Approve</span></div>
+      </div>
+      <p class="example">Illustration of the idea. The real app screens are below.</p>
     </div>
-  </div>
-</div></section>
-<section class="content" id="questions"><div class="wrap faq">
-  <p class="eyebrow">Before purchasing</p><h2>Common questions.</h2>
-  <details><summary>Is Bolt a subscription?</summary><p>The macOS app is sold through the Mac App Store at the price Apple displays for your region. If you choose live AI mode, provider API usage can incur separate charges from OpenAI or Anthropic under your own provider account.</p></details>
-  <details><summary>Does Bolt edit my files without review?</summary><p>The app is designed to show proposed file changes and request your approval before applying them. Treat the permission checks as safeguards, not a guarantee. Inspect the final scope of every edit yourself.</p></details>
-  <details><summary>Can I use Bolt without paying for AI API calls?</summary><p>You can explore the local simulated test mode without API keys. Live model-generated content requires your own supported provider credentials and may incur usage costs.</p></details>
-  <details><summary>What does Bolt require?</summary><p>A compatible Mac with macOS 14 or later. For live provider mode, you need your own OpenAI and/or Anthropic API access. Check the Mac App Store listing for the latest compatibility and price.</p></details>
-  <details><summary>Is the Mac App Store app the same as a custom enterprise pilot?</summary><p>No. The retail app is a general macOS product. A proposed business feasibility study is a separate, scoped engagement, subject to written agreement, contractual eligibility and technical validation. <a href="/pilot/">See the non-binding B2B offer</a>. For background, <a href="/pilot/evidence/">inspect a separate synthetic research example</a>; this does not demonstrate a deployed customer integration or add functionality to the retail app.</p></details>
-</div></section>
-<section class="cta"><div class="wrap">
-  <p class="eyebrow">BOLT · macOS</p>
-  <h2>Your Mac. Your files. Your final decision.</h2>
-  <p class="intro">Try the simulated workflow, inspect the real App Store listing and decide whether the tool fits your work.</p>
-  <div class="actions"><a class="btn primary" href="https://apps.apple.com/us/app/bolt-trusted-ai-bridge/id6814615903" target="_blank" rel="noopener">View Bolt in the Mac App Store →</a><a class="btn" href="mailto:hello@unfire.technology?subject=Bolt%20Mac%20app%20support">Ask a written question</a></div>
-</div></section>
-</main>
-<footer><div class="wrap"><span>© 2026 <span class="notranslate" translate="no">Unfire</span> · <a href="mailto:hello@unfire.technology"><span class="notranslate" translate="no">hello@unfire.technology</span></a></span><span><a href="/privacy.html">Privacy</a> · <a href="/legal.html">Legal</a> · <a href="/pilot/">Business pilots</a></span></div><div class="unfire-commerce-legal-links" style="font-size:12.5px;line-height:1.9;margin:16px auto 0;text-align:center;color:#86868b;max-width:900px"><a href="/terms.html" style="color:inherit;text-decoration:none">Sales Terms</a> <span aria-hidden="true">&middot;</span> <a href="/software-license.html" style="color:inherit;text-decoration:none">Software License</a> <span aria-hidden="true">&middot;</span> <a href="/refunds.html" style="color:inherit;text-decoration:none">Refunds</a></div></footer>
+  </section>
 
-<!-- Sr. Dante: Unfire public web assistant (speech opt-in) -->
-<script src="/assets/js/ask-unfire.js?v=20261020-3" defer></script>
+  <section class="wrap pipe" id="flow">
+    <div class="intro"><h2>Four screens.<br>One decision.</h2><p>Choose a folder and describe a task. A builder model proposes changes, BOLT checks them against its own rules, a separate auditor model reviews them, and then the decision is yours.</p></div>
+    <ol class="log">
+      <li><div class="k">01 · SCOPE<small>choose a project</small></div><div><h3>Pick the folder BOLT may touch.</h3><p>Work is limited to the local folder you choose.</p><figure><img src="/assets/products/apps-2026/bolt-step-1-project-1200.webp" srcset="/assets/products/apps-2026/bolt-step-1-project-1200.webp 1200w,/assets/products/apps-2026/bolt-step-1-project-2000.webp 2000w" sizes="(max-width:900px) 100vw, 760px" width="1200" height="750" alt="BOLT screen to choose a project folder" loading="lazy"></figure></div></li>
+      <li><div class="k">02 · ASK<small>describe the task</small></div><div><h3>Say what you want in one sentence.</h3><p>For example, a README with a short getting-started guide.</p><figure><img src="/assets/products/apps-2026/bolt-step-2-task-1200.webp" srcset="/assets/products/apps-2026/bolt-step-2-task-1200.webp 1200w,/assets/products/apps-2026/bolt-step-2-task-2000.webp 2000w" sizes="(max-width:900px) 100vw, 760px" width="1200" height="750" alt="BOLT screen asking what you want it to do, with a typed task" loading="lazy"></figure></div></li>
+      <li><div class="k">03 · PLAN<small>proposal and checks</small></div><div><h3>Read the plan before anything runs.</h3><p>BOLT shows what it intends to do, which mode it will use and what it checks.</p><figure><img src="/assets/products/apps-2026/bolt-step-3-plan-1200.webp" srcset="/assets/products/apps-2026/bolt-step-3-plan-1200.webp 1200w,/assets/products/apps-2026/bolt-step-3-plan-2000.webp 2000w" sizes="(max-width:900px) 100vw, 760px" width="1200" height="750" alt="BOLT screen describing the plan, the mode and the checks" loading="lazy"></figure></div></li>
+      <li class="me"><div class="k">04 · DECIDE<small>review the changes</small></div><div><h3>Approve the change, or don’t.</h3><p>Inspect the full proposed diff with the audit result, then approve or reject it.</p><figure><img src="/assets/products/apps-2026/bolt-step-4-review-1200.webp" srcset="/assets/products/apps-2026/bolt-step-4-review-1200.webp 1200w,/assets/products/apps-2026/bolt-step-4-review-2000.webp 2000w" sizes="(max-width:900px) 100vw, 760px" width="1200" height="750" alt="BOLT review screen with the proposed file content, audit notes and approve and reject buttons" loading="lazy"></figure></div></li>
+    </ol>
+    <p class="lang">Actual Mac App Store screenshots of version 1.1.1. The current interface is in Spanish.</p>
+  </section>
+
+  <section class="modes" id="modes">
+    <div class="wrap">
+      <h2>Start small.</h2>
+      <div class="grid">
+        <article class="mode"><span class="k">MODE A · SIMULATED</span><h3>Try it with no keys.</h3><p>Explore the whole proposal and approval flow with simulated model responses, offline.</p><ul><li>No provider API keys</li><li>Runs locally, no internet needed</li><li class="no">Simulated output is not live AI</li></ul></article>
+        <article class="mode"><span class="k">MODE B · LIVE (BRING YOUR OWN KEY)</span><h3>Use your own models.</h3><p>Connect your own OpenAI and Anthropic credentials. After approval, requests go to the providers you configured.</p><ul><li>Keys stored in the macOS Keychain</li><li>Spending cap you set yourself</li><li class="no">Provider costs are separate</li></ul></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap faq" id="faq">
+    <h2>Before you buy.</h2>
+    <div class="grid">
+      <div>
+        <details><summary>Is it a subscription?</summary><p>No. BOLT is a one-time Mac App Store purchase at the price Apple shows for your region. Live AI mode can incur separate charges from OpenAI or Anthropic on your own account.</p></details>
+        <details><summary>Will it edit files without asking?</summary><p>It is designed to show proposed changes and ask for your approval before applying them. Treat the checks as safeguards, not a guarantee, and inspect every edit yourself.</p></details>
+        <details><summary>Can I use it without paying for API calls?</summary><p>Yes, in simulated mode. Live model output needs your own provider credentials and may cost money.</p></details>
+      </div>
+      <div>
+        <details><summary>What does it need?</summary><p>A Mac with macOS 14 or later. For live mode, your own OpenAI and/or Anthropic API access.</p></details>
+        <details><summary>Does BOLT collect data?</summary><p>The developer reports no accounts and no analytics. Live requests go only to the providers you configure, after approval.</p></details>
+        <details><summary>Is this the same as a business pilot?</summary><p>No. The app is a general Mac product. A business feasibility study is a separate, scoped engagement under written agreement. See <a href="/pilot/">Unfire for teams</a>.</p></details>
+      </div>
+    </div>
+    <p class="warn">BOLT supports reviewed AI workflows. It is not an independently certified security product, and no automated check removes every mistake. Back up valuable files and start with projects you can afford to experiment on.</p>
+  </section>
+</main>
+<footer><div class="wrap">
+  <span>© 2026 Unfire · <a href="mailto:hello@unfire.technology?subject=BOLT%20Mac%20app%20support">hello@unfire.technology</a></span>
+  <nav aria-label="Legal"><a href="/apps/">All apps</a><a href="/privacy.html">Privacy</a><a href="/legal.html">Legal</a><a href="/terms.html">Sales Terms</a><a href="/software-license.html">License</a><a href="/refunds.html">Refunds</a></nav>
+</div></footer>
 </body>
 </html>
