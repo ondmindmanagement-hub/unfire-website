@@ -1,0 +1,69 @@
+{
+  "record_type": "public software research evidence index",
+  "version": "1.0",
+  "verified_on": "2026-11-21",
+  "publisher": {
+    "name": "Unfire",
+    "legal_status": "independent founder-led technology initiative, not separately incorporated",
+    "founder": "Omar Baró",
+    "url": "https://unfire.technology/",
+    "contact": "hello@unfire.technology"
+  },
+  "canonical_url": "https://unfire.technology/public-record/evidence.json",
+  "scope": "Previously publicly released MIT-licensed research demonstrators only; no non-public Unfire applications or credentials.",
+  "disclaimer": "Self-authored public evidence summary. Software Heritage references confirm source preservation, not independent evaluation, governmental recognition, catalogue admission, public-sector deployment or grant funding.",
+  "projects": [
+    {
+      "id": "bolt-agent-control-plane",
+      "name": "BOLT Agent Control Plane",
+      "status": "public experimental source code",
+      "license": "MIT (public repository only)",
+      "repository": "https://github.com/ondmindmanagement-hub/bolt-agent-control-plane",
+      "license_url": "https://github.com/ondmindmanagement-hub/bolt-agent-control-plane/blob/main/LICENSE",
+      "software_heritage_snapshot": "swh:1:snp:80c15542344169822e532670c05c66475e64ce29",
+      "software_heritage_url": "https://archive.softwareheritage.org/browse/snapshot/80c15542344169822e532670c05c66475e64ce29/",
+      "description": "Read-only AI action policy classification research prototype; no external execution or real authenticated human approvals.",
+      "evidence_limitations": "BOLT research preview v0.1.0 passed 12 of 12 offline tests in a local checkout; not an independent audit.",
+      "third_party_validation": "not established"
+    },
+    {
+      "id": "bolt-vision-gate",
+      "name": "BOLT Vision Gate",
+      "status": "public experimental source code",
+      "license": "MIT (public repository only)",
+      "repository": "https://github.com/ondmindmanagement-hub/bolt-vision-gate",
+      "license_url": "https://github.com/ondmindmanagement-hub/bolt-vision-gate/blob/main/LICENSE",
+      "software_heritage_snapshot": "swh:1:snp:85038e3e0bb973f32414008338c53c1a7b56370c",
+      "software_heritage_url": "https://archive.softwareheritage.org/browse/snapshot/85038e3e0bb973f32414008338c53c1a7b56370c/",
+      "description": "Experimental OpenCV image-quality gate; distinct from proprietary Unfire Control Vision and not a certified accessibility or safety control.",
+      "evidence_limitations": "Synthetic visual-quality test evidence in the public repository; not a certified deployment.",
+      "third_party_validation": "not established"
+    },
+    {
+      "id": "unfire-energy-lens",
+      "name": "Unfire Energy Lens",
+      "status": "public experimental source code",
+      "license": "MIT (public repository only)",
+      "repository": "https://github.com/ondmindmanagement-hub/unfire-energy-lens",
+      "license_url": "https://github.com/ondmindmanagement-hub/unfire-energy-lens/blob/main/LICENSE",
+      "software_heritage_snapshot": "swh:1:snp:f3b4f0da1da561ccf7c1c06b666bf3a680ad32dd",
+      "software_heritage_url": "https://archive.softwareheritage.org/browse/snapshot/f3b4f0da1da561ccf7c1c06b666bf3a680ad32dd/",
+      "description": "Synthetic household and clinic energy-cost scenarios; no live meter integration, real tariffs or measured savings.",
+      "evidence_limitations": "Illustrative planning prototype, not operational energy savings.",
+      "third_party_validation": "not established"
+    },
+    {
+      "id": "bolt-spatial-control-plane",
+      "name": "BOLT Spatial Control Plane",
+      "status": "public experimental source code",
+      "license": "MIT (public repository only)",
+      "repository": "https://github.com/ondmindmanagement-hub/bolt-spatial-control-plane",
+      "license_url": "https://github.com/ondmindmanagement-hub/bolt-spatial-control-plane/blob/main/LICENSE",
+      "software_heritage_snapshot": "swh:1:snp:defbff292b2d338c7aca68d85364bd3c1a3ff7fb",
+      "software_heritage_url": "https://archive.softwareheritage.org/browse/snapshot/defbff292b2d338c7aca68d85364bd3c1a3ff7fb/",
+      "description": "WebXR demonstration of fictional approval review using emulator-based hand interactions, not real Quest device validation.",
+      "evidence_limitations": "Simulation-only review workflow, with no external actions.",
+      "third_party_validation": "not established"
+    }
+  ]
+}
