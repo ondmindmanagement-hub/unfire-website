@@ -39,13 +39,17 @@ chk('Clicking maletin from avatar returns to identical case view',
   engine.includes('if(ray.intersectObject(caseG,true).length){')&&
   engine.includes('if(window.ATM_OUT)showCaseView();else exitRoam();')&&
   engine.includes("roamB.textContent = '🚶 PASEAR'"));
-chk('Same PASEAR button stays in the safe right dock in both case and roam',
-  engine.includes("if(roamB.parentElement!==dock)dock.appendChild(roamB);")&&
-  engine.includes("if(roamB.style.position!=='static')roamB.style.position='static';")&&
-  game.includes('body:not(.unfire-roaming) #ctlDock{')&&
-  game.includes('#ctlDock #roamB{')&&
-  game.includes('body:has(#storyHud.cfgOn) #ctlDock')&&
-  !game.includes('body:not(.unfire-roaming) #roamB{')&&
+chk('Same PASEAR action stays reachable in the compact right menu in case and roam',
+  engine.includes("const target=dock.querySelector('#ufActionItems')||dock;")&&
+  engine.includes('if(roamB.parentElement!==target)target.appendChild(roamB);')&&
+  engine.includes("actionItems.id='ufActionItems'")&&
+  engine.includes("actionToggle.id='ufActionsToggle'")&&
+  engine.includes("actionItems.hidden=true")&&
+  engine.includes("actionToggle.setAttribute('aria-controls','ufActionItems')")&&
+  engine.includes("actionItems.hidden=!v")&&
+  engine.includes("#ufActionItems[hidden]{display:none!important}")&&
+  engine.includes("right:max(12px,env(safe-area-inset-right))!important")&&
+  engine.includes("bottom:max(12px,calc(env(safe-area-inset-bottom) + 12px))!important")&&
   !engine.includes('const container=ROAMS.on?dock:document.body;'));
 chk('Gacha procedural FX reveal uses a side-on avatar approach, never central occlusion',
   engine.includes('const side = V(-d.z, 0, d.x); const p = V(CT.x + d.x * 12 + side.x * 9')&&
@@ -84,12 +88,13 @@ chk('Workshop attaches to story HUD without timer polling',engine.includes('cons
 chk('Case view stops walk shortcuts while allowing piano notes',engine.includes('if (CASE_VIEW.on) return; const k = e.key.length === 1'));
 chk('Case view G note does not pack capsule',engine.includes('&&ROAMS.on&&!CASE_VIEW.on&&portableUnlocked()'));
 chk('Case mobile pinch zooms inspection camera',engine.includes('CASE_VIEW.dist=clamp(CASE_VIEW.dist*f,window.ATM_OUT?6.8:5.4,window.ATM_OUT?17:14.5)'));
-chk('PASEAR never overlaps center captions and stays accessible without duplicates',
-  game.includes('top:calc(env(safe-area-inset-top) + 135px)!important')&&
-  game.includes('top:calc(env(safe-area-inset-top) + 112px)!important')&&
-  game.includes('top:calc(env(safe-area-inset-top) + 110px)!important')&&
+chk('PASEAR is visible on demand without a second overlapping character button',
   game.includes('#ctlDock #roamB{min-height:34px!important')&&
-  engine.includes("roamB.textContent=CASE_VIEW.on?'↩ VOLVER AL PERSONAJE'")&&
+  engine.includes("const label=CASE_VIEW.on?'↩ VOLVER AL PERSONAJE':'↩ VOLVER AL MALETÍN'")&&
+  engine.includes("actionItems.hidden=!v")&&
+  engine.includes("max-height:min(67dvh,470px)!important")&&
+  engine.includes("right:max(12px,env(safe-area-inset-right))!important")&&
+  engine.includes("actionToggle.setAttribute('aria-expanded',String(v))")&&
   !engine.includes('characterEntryButton'));
 chk('No blue artificial case illustration in any initial viewport or compatibility fallback',
   !html.includes('unfire-case-preview.svg') && !html.includes('background:url("img/hyperwave-open.webp")'));
@@ -105,7 +110,7 @@ chk('Outdoor case camera keeps the avatar in place and widens the horizon',
   engine.includes('if(window.ATM_OUT)showCaseView();else exitRoam();')&&
   engine.includes("CASE_VIEW.elevation=window.ATM_OUT?0.52:0.78")&&
   engine.includes('const panoramic=window.ATM_OUT')&&
-  engine.includes("roamB.textContent=CASE_VIEW.on?'↩ VOLVER AL PERSONAJE'"));
+  engine.includes("const label=CASE_VIEW.on?'↩ VOLVER AL PERSONAJE'"));
 chk('Portrait and landscape HUD use safe areas and leave story legible',
   game.includes('id="unfireMobileNoOverlap20261023"')&&
   game.includes('#tip{left:50%!important;top:calc(env(safe-area-inset-top) + 10px)!important;')&&
@@ -131,8 +136,18 @@ const storySource=game.slice(game.indexOf('window.STORY_INIT = function (H) {'),
 new vm.Script(storySource,{filename:'story-inline.js'});
 chk('Open Hyperwave is recognized even when opened before mission prompt',storySource.includes("S0.wait.ev==='hwopen'")&&engine.includes('isHyperwaveOpen: () =>'));
 chk('In-house PC mystery application',engine.includes('id="pcMysteryApp"')&&engine.includes('id="pcSecretCode"'));
-chk('Correct unique unlock code',engine.includes("fld.value.trim().toUpperCase()!=='ULTIMATEROBOTS'"));
-chk('Only local avatar entitlements updated',engine.includes("localStorage.setItem('unfire_unlock',String(Math.max(current,20)))"));
+chk('Private robot code validated by SHA-256 without cleartext or the old code',
+  engine.includes('ROSTER_FINGERPRINT')&&
+  engine.includes('ROSTER_SALT')&&
+  engine.includes("crypto.subtle.digest('SHA-256',bytes)")&&
+  !engine.includes('ULTIMATEROBOTS'));
+
+chk('Story rewards stop at 12 of 20; private proof alone enables full roster',
+  engine.includes('ROSTER_NORMAL_MAX=12,ROSTER_TOTAL=20')&&
+  engine.includes('if(rosterProofValid())return Math.min(ROSTER_TOTAL,ALLT.length)')&&
+  engine.includes("localStorage.setItem('unfire_unlock', '10')")&&
+  !engine.includes('Math.max(current,20)'));
+
 chk('Story saves protected from corrupted data',storySource.includes('Validate older/corrupted saves'));
 chk('Twelve playable story chapters', (storySource.match(/\{\s*t:\s*['\"][^'\"]+['\"],\s*steps:/g)||[]).length===12 && storySource.includes('const FREE = 12'));
 chk('Map chapter goals can be completed with Nimbo assistance',storySource.includes("w.ev==='reach'")&&engine.includes('navigateTo: (quest)'));
