@@ -54,7 +54,7 @@
       gainNode=e.gain;end=e.end;source=osc;
     }else{
       const snare=track==="snare";
-      const e=envelope(ctx,t,snare?.32:.18,.003,snare?.19:.07,.02);
+      const e=envelope(ctx,t,snare ? .32 : .18,.003,snare ? .19 : .07,.02);
       const noise=ctx.createBufferSource();noise.buffer=graph.noise;
       filter=ctx.createBiquadFilter();
       filter.type="highpass";filter.frequency.setValueAtTime(snare?1100:6200,t);
