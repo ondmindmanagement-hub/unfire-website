@@ -45,6 +45,6 @@ test("studio semantic controls remain labelled",()=>{
 });
 test("studio and product do not claim a complete native DAW port",()=>{
   assert.ok(/not the full Android DAW/i.test(studio));
-  const visibleText=key.replace(/<[^>]*>/g," ").replace(/\\s+/g," ");
+  const visibleText=key.replace(/<[^>]*>/g," ").replace(/\s+/g," ");
   assert.ok(/not the full Portable Synth Daw Android application/i.test(visibleText));
 });
