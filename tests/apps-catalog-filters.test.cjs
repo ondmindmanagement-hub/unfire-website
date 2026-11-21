@@ -141,7 +141,7 @@ test('browser device filter reveals published browser utilities only',()=>{
   state.select('device','web');
   verifyFilter(state,'all','web');
   assert.ok(state.cards.filter(card=>!card.hidden).length>=5);
-  assert.ok(state.cards.filter(card=>!card.hidden).every(card=>card.dataset.devices.split(/\\s+/).includes('web')));
+  assert.ok(state.cards.filter(card=>!card.hidden).every(card=>card.dataset.devices.split(/\s+/).includes('web')));
   state.select('topic','audio');
   verifyFilter(state,'audio','web');
   state.select('device','all');
