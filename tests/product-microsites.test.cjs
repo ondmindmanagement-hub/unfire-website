@@ -15,7 +15,7 @@ function targetExists(url) {
   if (!url.startsWith("/") || url.startsWith("//")) return false;
   const pathname = url.split(/[?#]/)[0];
   const local = path.resolve(root, "." + pathname);
-  if (!local.startsWith(root + path.sep)) return false;
+  if (local !== root && !local.startsWith(root + path.sep)) return false;
   return fs.existsSync(local) && fs.statSync(local).isFile() ||
     fs.existsSync(path.join(local, "index.html"));
 }
