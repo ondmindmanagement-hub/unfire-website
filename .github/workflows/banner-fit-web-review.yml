@@ -30,7 +30,7 @@ jobs:
           const a=fs.readFileSync('apps/banner-fit/app.js','utf8');
           assert.match(h,/noindex,nofollow/);
           assert.match(h,/connect-src 'none'/);
-          assert.match(h,/local processing/i);
+          assert.match(h,/processing remains on this device/i);
           assert.ok(!/fetch\s*\(|XMLHttpRequest|sendBeacon|localStorage|indexedDB/.test(a));
           console.log('BANNER_FIT_STATIC_PRIVACY_PASS');
           NODE
