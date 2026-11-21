@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#080b12">
+  <meta name="description" content="Unfire AI Token Counter: estimate text tokens and plan AI costs privately in your browser. Manual prices, no uploads and no accounts.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./engine.js" defer></script>
+  <script src="./app.js" defer></script>
+  <title>AI Token Counter — Unfire Web Lab</title>
+</head>
+<body>
+  <a class="skip-link" href="#tool">Skip to calculator</a>
+  <div class="shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Unfire home"><span class="brand-glyph" aria-hidden="true">✦</span> Unfire<span class="brand-tail"> / tools</span></a>
+      <nav aria-label="Main"><a href="/apps/">All apps <span aria-hidden="true">↗</span></a></nav>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="eyebrow"><span class="pulse" aria-hidden="true"></span> UNFIRE WEB LAB <span class="separator">/</span> PRIVATE CALCULATOR</div>
+        <h1 id="page-title">Know your<br><span class="gradient-text">AI budget.</span></h1>
+        <p class="hero-lead">Estimate token usage. Explore input and output costs. Plan your monthly spend. All without sending your text anywhere.</p>
+        <div class="trust-strip" aria-label="Tool characteristics">
+          <span><span class="dot green" aria-hidden="true"></span> Runs on your device</span>
+          <span><span class="dot blue" aria-hidden="true"></span> No account or API key</span>
+          <span><span class="dot violet" aria-hidden="true"></span> No live prices</span>
+        </div>
+      </section>
+
+      <section class="workspace" id="tool" aria-label="AI token and cost calculator">
+        <div class="workspace-head">
+          <div><p class="section-kicker">WORKSPACE 01</p><h2>Calculate your usage</h2></div>
+          <button id="reset" type="button" class="text-button">Clear all <span aria-hidden="true">↺</span></button>
+        </div>
+        <div class="studio-grid">
+          <div class="editors">
+            <div class="editor-card">
+              <div class="card-head"><div><span class="step-num">01</span><h3>Input text</h3></div><span class="subtle-pill">Prompt</span></div>
+              <label class="visually-hidden" for="input-text">Input or prompt text for estimating tokens</label>
+              <textarea id="input-text" rows="8" maxlength="250000" placeholder="Paste your prompt, instructions, or source content here…" spellcheck="false" aria-describedby="input-help"></textarea>
+              <div class="editor-meta" id="input-help"><span><strong id="input-chars">0</strong> characters</span><span><strong id="input-words">0</strong> words</span><span><strong id="input-lines">0</strong> lines</span></div>
+            </div>
+            <div class="editor-card">
+              <div class="card-head"><div><span class="step-num">02</span><h3>Output text</h3></div><span class="subtle-pill">Response</span></div>
+              <label class="visually-hidden" for="output-text">Output or response text for estimating tokens</label>
+              <textarea id="output-text" rows="6" maxlength="250000" placeholder="Optional: paste a response, or supply its exact token count below…" spellcheck="false" aria-describedby="output-help"></textarea>
+              <div class="editor-meta" id="output-help"><span><strong id="output-chars">0</strong> characters</span><span><strong id="output-words">0</strong> words</span><span><strong id="output-lines">0</strong> lines</span></div>
+            </div>
+            <div class="editor-actions"><button id="example" class="outline-button" type="button">Use sample text</button><span class="microcopy">Sample data only; nothing is uploaded.</span></div>
+          </div>
+
+          <div class="analysis-pane">
+            <div class="summary-card">
+              <div class="kicker">ESTIMATED USAGE <span class="estimate-mark">≈</span></div>
+              <div class="big-number" id="combined-tokens">0</div>
+              <div class="big-subtitle">tokens for this exchange</div>
+              <div class="breakdown">
+                <div><span>Input tokens</span><strong id="input-tokens">0</strong><small id="input-source">Estimated</small></div>
+                <div><span>Output tokens</span><strong id="output-tokens">0</strong><small id="output-source">Estimated</small></div>
+              </div>
+              <p class="estimate-note">Text-to-token conversion is a <strong>rough heuristic</strong>, not a model tokenizer. Actual billable usage can be very different, especially for code, symbols and non-English text.</p>
+            </div>
+            <div class="settings-card">
+              <div class="settings-head"><span class="step-num">03</span><h3>Calibrate counts</h3></div>
+              <div class="setting-row"><label for="chars-per-token">Characters per estimated token</label><input id="chars-per-token" type="number" min="1" max="12" step=".5" value="4" inputmode="decimal"></div>
+              <p class="hint">Default 4 is a general English-text rule of thumb, not an exact count. Adjust for your content.</p>
+              <div class="two-fields">
+                <div><label for="exact-input">Exact input tokens <span class="optional">(optional)</span></label><input id="exact-input" type="number" min="0" max="1000000000" step="1" placeholder="Use estimate" inputmode="numeric"></div>
+                <div><label for="exact-output">Exact output tokens <span class="optional">(optional)</span></label><input id="exact-output" type="number" min="0" max="1000000000" step="1" placeholder="Use estimate" inputmode="numeric"></div>
+              </div>
+              <p class="hint">Paste exact counts from your provider's usage report for a more reliable cost calculation.</p>
+            </div>
+          </div>
+        </div>
+
+        <section class="pricing-section" aria-labelledby="pricing-heading">
+          <div class="pricing-heading"><div><p class="section-kicker">WORKSPACE 02</p><h2 id="pricing-heading">Cost simulator</h2><p>Enter your provider's current prices. We do not preload or verify model rates.</p></div><span class="currency-chip">USD / 1M TOKENS</span></div>
+          <div class="pricing-grid">
+            <div class="price-fields">
+              <div class="price-field"><label for="input-rate">Input price <span>USD per 1 million tokens</span></label><div class="input-wrap"><span class="prefix">$</span><input id="input-rate" type="number" step="any" min="0" max="100000" inputmode="decimal" placeholder="Enter price"></div></div>
+              <div class="price-field"><label for="output-rate">Output price <span>USD per 1 million tokens</span></label><div class="input-wrap"><span class="prefix">$</span><input id="output-rate" type="number" step="any" min="0" max="100000" inputmode="decimal" placeholder="Enter price"></div></div>
+              <div class="price-field"><label for="calls">Calls per month <span>scenario volume</span></label><div class="input-wrap"><span class="prefix">#</span><input id="calls" type="number" step="1" min="1" max="1000000" value="1" inputmode="numeric"></div></div>
+            </div>
+            <div class="cost-results" aria-label="Calculated costs">
+              <div class="cost-block"><span>Cost per exchange</span><strong id="per-call-cost">Add your rates</strong></div>
+              <div class="cost-line"><span>Input share</span><strong id="input-cost">—</strong></div>
+              <div class="cost-line"><span>Output share</span><strong id="output-cost">—</strong></div>
+              <div class="cost-divider"></div>
+              <div class="cost-block monthly"><span>Monthly scenario</span><strong id="monthly-cost">—</strong></div>
+              <p class="cost-note">Illustrative only. Excludes caching tiers, tool use, taxes, credits, currency conversion and other provider charges.</p>
+            </div>
+          </div>
+        </section>
+        <div class="bottom-actions">
+          <div><p class="footer-label">YOUR DATA IS YOURS</p><p class="bottom-desc">Export only aggregate counts and cost assumptions — never the text you entered.</p></div>
+          <div class="action-buttons"><button id="copy-report" class="outline-button" type="button">Copy summary</button><button id="download-report" class="solid-button" type="button">Export CSV <span aria-hidden="true">↓</span></button></div>
+        </div>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </section>
+      <aside class="footnote"><span aria-hidden="true" class="info-glyph">i</span><div><strong>Accuracy and privacy</strong><p>This tool estimates tokens with a character-based heuristic; it does not implement OpenAI, Anthropic, Gemini or other provider-specific tokenizers. Exact counts, when provided, override the estimate but are not independently verified. The page uses local browser computations and does not transmit pasted text. Check your provider's billing usage and price list before relying on any financial result.</p></div></aside>
+    </main>
+    <footer class="site-footer"><span>© Unfire · Independent technology initiative</span><nav aria-label="Footer"><a href="/apps/">All apps</a><a href="/privacy.html">Privacy</a><a href="mailto:hello@unfire.technology">Support</a></nav></footer>
+  </div>
+</body>
+</html>
