@@ -10,7 +10,7 @@
   const controls = ["gain", "threshold", "mix"];
   const settings = { gainDb: 0, thresholdDb: -9, mix: 1 };
   let context = null, buffer = null, source = null, chain = null;
-  let startedAt = 0, progressFrame = 0, exporting = false, sourceName = "audio";
+  let startedAt = 0, progressFrame = 0, exporting = false, sourceName = "audio", loadVersion = 0;
 
   function announce(message, kind = "info") {
     state.textContent = message;
@@ -134,6 +134,7 @@
   window.addEventListener("resize", renderWave, { passive: true });
   async function loadFile(file) {
     if (!file) return;
+    const version = ++loadVersion;
     if (exporting) { announce("Finish the current export before loading a new file.", "error"); return; }
     stopPlayback(); buffer = null; setReady(false);
     const extension = (file.name.split(".").pop() || "").toLowerCase();
@@ -147,7 +148,9 @@
     try {
       context = context || new (window.AudioContext || window.webkitAudioContext)();
       const raw = await file.arrayBuffer();
+      if (version !== loadVersion) return; // Ignore an outdated file selection.
       const decoded = await context.decodeAudioData(raw);
+      if (version !== loadVersion) return;
       const maxPcm = decoded.length * decoded.numberOfChannels * 4;
       if (decoded.duration > 180 || decoded.numberOfChannels > 2 || decoded.sampleRate > 96000 ||
           maxPcm > 80000000 || decoded.length < 1)
@@ -159,6 +162,7 @@
       setReady(true); renderWave();
       announce("Audio ready. Preview or export a processed WAV.", "success");
     } catch (error) {
+      if (version !== loadVersion) return;
       buffer = null; meta.textContent = "No audio loaded";
       filename.textContent = "Choose an audio file";
       setReady(false); renderWave();
