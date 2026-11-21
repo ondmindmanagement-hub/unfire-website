@@ -119,3 +119,19 @@ test('Pocket Capture listing verified in both catalogue and product details',()=
   assert.match(guide,/6823107299/);
   assert.match(guide,/Public App Store verification/);
 });
+
+
+test('Power browser experiment is discoverable but separate from the native iPhone release',()=>{
+  const native=fs.readFileSync(path.join(__dirname,'../apps/power/index.html'),'utf8');
+  const browser=fs.readFileSync(path.join(__dirname,'../apps/power-web/index.html'),'utf8');
+  const links=[...html.matchAll(/href="\/apps\/power-web\/"/g)];
+  assert.equal(links.length,1,'one unambiguous catalogue link to Power Web');
+  assert.match(html,/Power Web Lab/);
+  assert.match(html,/No automatic live prices/i);
+  assert.match(native,/apps\.apple\.com\/app\/id6815880143/);
+  assert.match(native,/href="\/apps\/power-web\/"/);
+  assert.match(native,/separate, experimental browser simulator/i);
+  assert.match(browser,/noindex,nofollow/);
+  assert.match(browser,/NO LIVE PRICES/);
+  assert.match(browser,/connect-src 'none'/);
+});
