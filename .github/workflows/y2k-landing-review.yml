@@ -1,0 +1,47 @@
+name: Y2K ROBOTS standalone landing — review QA
+on:
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'games/y2k-robots/**'
+      - 'tests/y2k-landing*.cjs'
+      - '.github/workflows/y2k-landing-review.yml'
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify identity, provenance, noindex gate and safety
+        run: node --test tests/y2k-landing.test.cjs
+  browsers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated browser engines
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Review responsive design in Chromium and WebKit
+        run: |
+          python3 -m http.server 8870 --bind 127.0.0.1 > /tmp/unfire-y2k-land-http.log 2>&1 &
+          echo $! > /tmp/unfire-y2k-land-http.pid
+          trap 'kill $(cat /tmp/unfire-y2k-land-http.pid) || true' EXIT
+          node tests/y2k-landing-browser.cjs
+      - name: Save real test-rendered preview captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: y2k-landing-browser-captures
+          path: artifacts/y2k-landing/*.png
+          retention-days: 7
+          if-no-files-found: ignore
