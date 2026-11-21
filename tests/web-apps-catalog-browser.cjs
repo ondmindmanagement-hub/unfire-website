@@ -2,7 +2,7 @@
 const assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path");
 const {chromium,webkit}=require("playwright");
 const BASE="http://127.0.0.1:8765";
-const ROUTES=["/portable-synth/studio/","/apps/ai-token-counter/","/apps/archer-web/","/apps/power-web/","/apps/banner-fit/"];
+const ROUTES=["/portable-synth/studio/","/apps/ai-token-counter/","/apps/archer-web/","/apps/power-web/","/apps/banner-fit/","/apps/privacy-lens/","/apps/file-prep/"];
 const screenDir=path.resolve("artifacts/product-microsites");
 fs.mkdirSync(screenDir,{recursive:true});
 async function run(type,name){
