@@ -41,9 +41,11 @@
     var drawHeight = sourceHeight * scale;
     var fx = clamp(focusX, 0, 100) / 100;
     var fy = clamp(focusY, 0, 100) / 100;
+    var px = (targetWidth - drawWidth) * fx;
+    var py = (targetHeight - drawHeight) * fy;
     return {
-      x: (targetWidth - drawWidth) * fx,
-      y: (targetHeight - drawHeight) * fy,
+      x: px === 0 ? 0 : px,
+      y: py === 0 ? 0 : py,
       width: drawWidth,
       height: drawHeight
     };
