@@ -48,7 +48,7 @@ async function check(type,name){
     await page.locator("#power").fill("2");
     await page.locator("#duration").selectOption("2");
     await page.locator("#fixed").fill("0.18");
-    await page.waitForFunction(()=>document.getElementById("best-price").textContent.includes("0.400"));
+    await page.waitForFunction(()=>document.getElementById("best-price").textContent.includes("0.200"));
     assert.match(await page.locator("#worst-price").innerText(),/1\.600/);
     assert.match(await page.locator("#savings-price").innerText(),/1\.400/);
     assert.match(await page.locator("#fixed-cost").innerText(),/0\.720/);
