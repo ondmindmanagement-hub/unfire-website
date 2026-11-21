@@ -1,0 +1,32 @@
+name: Y2K ROBOTS store distribution preflight
+
+on:
+  pull_request:
+    paths:
+      - 'distribution/y2k-robots-store-preflight/**'
+      - '.github/workflows/y2k-store-distribution-preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-store-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Safe parser and metadata checks
+        run: |
+          node --check distribution/y2k-robots-store-preflight/preflight.mjs
+          node --check distribution/y2k-robots-store-preflight/live-readiness.mjs
+          node --check distribution/y2k-robots-store-preflight/service-worker.candidate.js
+          node --check distribution/y2k-robots-store-preflight/assetlinks-preview.mjs
+      - name: Validate package identity, official PNGs and signing gate
+        run: |
+          node --test distribution/y2k-robots-store-preflight/store-candidate.test.mjs distribution/y2k-robots-store-preflight/assetlinks-preview.test.mjs
