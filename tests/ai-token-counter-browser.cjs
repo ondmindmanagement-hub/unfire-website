@@ -43,6 +43,10 @@ async function exercise(type,name){
     assert.equal(await page.locator("#output-text").inputValue(),"");
     assert.equal(await page.locator("#input-rate").inputValue(),"");
     assert.equal(await page.locator("#combined-tokens").innerText(),"0");
+    await page.locator("#example").click(); // Synthetic copy only; no user data in captures.
+    const captures=path.resolve("artifacts/token-browser");
+    fs.mkdirSync(captures,{recursive:true});
+    await page.screenshot({path:path.join(captures,name+"-"+width+"-token-counter.png"),fullPage:true,animations:"disabled"});
     assert.deepEqual(errors,[],name+" runtime exceptions");
     process.stdout.write("PASS "+name+" "+width+" token math, invalid guard, privacy export/reset, layout\n");
     await page.close();
