@@ -6,7 +6,7 @@
   const E=window.UnfireSequencerEngine,A=window.UnfireSequencerAudio;
   const $=id=>document.getElementById(id);
   let pattern=E.initialPattern();
-  let context=null,graph=null,interval=null,running=false,startAt=0,stepNumber=0,nextTime=0,visualStep=-1,rendering=false;
+  let context=null,graph=null,interval=null,running=false,starting=false,startEpoch=0,importEpoch=0,startAt=0,stepNumber=0,nextTime=0,visualStep=-1,rendering=false;
   const barNames=["C","C♯","D","D♯","E","F","F♯","G","G♯","A","A♯","B"];
   const tones={kick:"K",snare:"S",hat:"H",bass:""};
   const N=midi=>barNames[midi%12]+(Math.floor(midi/12)-1);
@@ -81,6 +81,9 @@
     }
   }
   function stop(showStatus=true){
+    startEpoch++;
+    importEpoch++;
+    starting=false;
     running=false;
     disposeAudio();clearHighlights();
     $("play").disabled=false;$("stop").disabled=true;
@@ -117,15 +120,20 @@
     highlight(step);
   }
   async function play(){
-    if(running)return;
+    if(running||starting)return;
     const AudioFactory=window.AudioContext||window.webkitAudioContext;
     if(!AudioFactory){status("Web Audio is unavailable in this browser.","error");return;}
+    const epoch=++startEpoch;
+    starting=true;
+    $("play").disabled=true;
     try{
       const p=E.valid(pattern);
       const next=new AudioFactory();
       context=next;
-      if(context.state==="suspended")await context.resume();
-      if(context.state!=="running")throw new Error("Browser audio did not start");
+      if(next.state==="suspended")await next.resume();
+      if(epoch!==startEpoch)return;
+      if(document.hidden){stop(false);status("Playback cancelled while tab was hidden.");return;}
+      if(next.state!=="running")throw new Error("Browser audio did not start");
       graph=A.setup(context,p);
       startAt=context.currentTime+.07;stepNumber=0;nextTime=startAt;
       running=true;
@@ -136,8 +144,9 @@
       interval=setInterval(pump,35);
       status("Live loop playing. Edits take effect on upcoming steps.","success");
     }catch(err){
-      stop(false);
-      status("Could not start audio: "+err.message,"error");
+      if(epoch===startEpoch){stop(false);status("Could not start audio: "+err.message,"error");}
+    }finally{
+      if(epoch===startEpoch){starting=false;if(!running)$("play").disabled=false;}
     }
   }
   function getTempo(){
@@ -210,8 +219,10 @@
     if(!file)return;
     event.target.value="";
     if(file.size>16384){status("Pattern file exceeds 16 KiB.","error");return;}
+    const version=++importEpoch;
     try{
       const source=await file.text();
+      if(version!==importEpoch)return;
       const imported=E.parse(source);
       stop(false);pattern=imported;buildGrid();synchronize();
       status("Pattern loaded from local JSON. No upload occurred.","success");
@@ -233,8 +244,8 @@
     }catch(err){status("Audio export unavailable: "+err.message,"error");}
     finally{rendering=false;$("wav").disabled=false;}
   });
-  window.addEventListener("blur",()=>{if(running)stop(false);});
-  document.addEventListener("visibilitychange",()=>{if(document.hidden&&running)stop(false);});
+  window.addEventListener("blur",()=>{if(running||starting)stop(false);});
+  document.addEventListener("visibilitychange",()=>{if(document.hidden&&(running||starting))stop(false);});
   for(let midi=36;midi<=72;midi++){
     const option=document.createElement("option");option.value=String(midi);option.textContent=N(midi);
     if(midi===48)option.selected=true;
