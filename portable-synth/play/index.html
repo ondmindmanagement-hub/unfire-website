@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b12"><meta name="robots" content="index,follow">
+<title>Browser Sound Lab — Play a Free Web Synth | Unfire</title>
+<meta name="description" content="Play notes with a free, private browser synthesizer prototype from Unfire. Explore waveforms and volume without an account, download or server. Separate from the Portable Synth Daw Android beta.">
+<link rel="canonical" href="https://unfire.technology/portable-synth/play/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Unfire">
+<meta property="og:title" content="Browser Sound Lab — Unfire"><meta property="og:description" content="A small interactive synth that runs locally in your browser. No account or download.">
+<meta property="og:url" content="https://unfire.technology/portable-synth/play/">
+<link rel="stylesheet" href="/assets/css/unfire-microsites.css">
+<style>
+.lab{padding:30px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(160deg,#19212c,#0b111b);box-shadow:0 20px 75px rgba(0,0,0,.14)}.lab-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}.controls{display:flex;flex-wrap:wrap;gap:22px;margin:28px 0 26px}.field{display:grid;gap:7px;min-width:150px}.field label{font-size:.76rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#c5d4e2}.field select{border:1px solid #485567;background:#111b26;color:white;border-radius:9px;padding:12px 14px;font:inherit;min-height:46px}.field input{width:180px;min-height:46px;accent-color:var(--accent)}.field select:focus-visible,.field input:focus-visible{outline:3px solid var(--focus);outline-offset:3px}.keyboard{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px}.key{border:1px solid #45536b;border-radius:9px;padding:15px 2px 12px;min-height:154px;background:linear-gradient(180deg,#fafcff,#cbd4df);color:#141c2a;display:flex;flex-direction:column;justify-content:space-between;align-items:center;touch-action:none;cursor:pointer;user-select:none;font:inherit}.key.sharp{background:linear-gradient(180deg,#344256,#141c2a);color:#e4edfa;border-color:#55677f}.key.is-down{background:var(--accent);color:#0b1720;transform:translateY(2px)}.key .note{font-size:.81rem;font-weight:800}.key .shortcut{font-size:.7rem;opacity:.8}.key:focus-visible{outline:3px solid var(--focus);outline-offset:2px}.lab-status{font-size:.87rem;margin:18px 0 0;color:#d5e1ec;min-height:1.5em}.explain{margin-top:20px;font-size:.89rem;color:#aebdd0}
+@media(max-width:680px){.lab{padding:14px}.keyboard{gap:3px}.key{min-height:112px;border-radius:6px;padding:9px 0 8px}.key .note{font-size:.65rem}.key .shortcut{font-size:.58rem}.controls{gap:14px}.field{min-width:130px}.field input{width:140px}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Unfire Browser Sound Lab","url":"https://unfire.technology/portable-synth/play/","applicationCategory":"MusicApplication","operatingSystem":"Web browser","description":"A limited local-first Web Audio synthesizer demonstration, distinct from Portable Synth Daw for Android.","isAccessibleForFree":true}</script>
+</head>
+<body class="synth">
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<header><a class="brand" href="/" aria-label="Unfire home"><img src="/favicon.svg" alt="" width="30" height="30"> UNFIRE <span>/ SOUND LAB</span></a>
+<nav class="nav" aria-label="Primary navigation"><a href="/portable-synth/">Portable Synth</a><a href="/portable-synth/beta/">Android beta</a><a href="/apps/">All apps</a><a href="/contact/">Contact</a></nav></header>
+<main id="main">
+<section class="hero" aria-labelledby="title"><div class="eyebrow">Unfire Audio / Experimental browser instrument</div><h1 id="title">Shape a sound.<br><em>Play a note.</em></h1>
+<p class="lead">A small, functioning Web Audio instrument that runs on your device. Explore four oscillator shapes with an on-screen keyboard or desktop shortcuts. It is a separate browser experiment, <strong>not</strong> the full Portable Synth Daw Android application.</p>
+<div class="hero-meta"><span class="pill">Free browser prototype</span><span class="pill">No login</span><span class="pill">No server processing</span></div></section>
+<section class="section" aria-labelledby="lab-title"><div class="section-head"><div class="eyebrow">Interactive / 12-note octave</div><h2 id="lab-title">Browser Sound Lab</h2><p>Tap, click or hold a key to play. On a desktop keyboard, use A W S E D F T G Y H U J from C to B. Audio starts only after your interaction.</p></div>
+<div class="lab">
+<div class="lab-top"><strong>UNFIRE / LOCAL SYNTH</strong><span class="pill">Web Audio · Live</span></div>
+<div class="controls">
+<div class="field"><label for="wave">Waveform</label><select id="wave"><option value="sine">Sine</option><option value="triangle" selected>Triangle</option><option value="sawtooth">Sawtooth</option><option value="square">Square</option></select></div>
+<div class="field"><label for="octave">Octave</label><select id="octave"><option value="3">C3–B3</option><option value="4" selected>C4–B4</option><option value="5">C5–B5</option></select></div>
+<div class="field"><label for="volume">Volume</label><input id="volume" type="range" min="0" max="100" value="50" step="1" aria-label="Synth output volume"></div>
+</div>
+<div class="keyboard" role="group" aria-label="Synthesizer keyboard">
+<button type="button" class="key" data-semitone="0" aria-label="Play C"><span class="note">C</span><span class="shortcut">A</span></button>
+<button type="button" class="key sharp" data-semitone="1" aria-label="Play C sharp"><span class="note">C♯</span><span class="shortcut">W</span></button>
+<button type="button" class="key" data-semitone="2" aria-label="Play D"><span class="note">D</span><span class="shortcut">S</span></button>
+<button type="button" class="key sharp" data-semitone="3" aria-label="Play D sharp"><span class="note">D♯</span><span class="shortcut">E</span></button>
+<button type="button" class="key" data-semitone="4" aria-label="Play E"><span class="note">E</span><span class="shortcut">D</span></button>
+<button type="button" class="key" data-semitone="5" aria-label="Play F"><span class="note">F</span><span class="shortcut">F</span></button>
+<button type="button" class="key sharp" data-semitone="6" aria-label="Play F sharp"><span class="note">F♯</span><span class="shortcut">T</span></button>
+<button type="button" class="key" data-semitone="7" aria-label="Play G"><span class="note">G</span><span class="shortcut">G</span></button>
+<button type="button" class="key sharp" data-semitone="8" aria-label="Play G sharp"><span class="note">G♯</span><span class="shortcut">Y</span></button>
+<button type="button" class="key" data-semitone="9" aria-label="Play A"><span class="note">A</span><span class="shortcut">H</span></button>
+<button type="button" class="key sharp" data-semitone="10" aria-label="Play A sharp"><span class="note">A♯</span><span class="shortcut">U</span></button>
+<button type="button" class="key" data-semitone="11" aria-label="Play B"><span class="note">B</span><span class="shortcut">J</span></button>
+</div><p id="status" class="lab-status" role="status" aria-live="polite">Ready. Tap a key to enable audio.</p>
+</div>
+<p class="explain">Notes are synthesized on your own device. The demo makes no network requests and does not upload or record sound. It does not include the Android app's sequencing, recording or WAV export flows.</p>
+</section>
+<section class="section" aria-labelledby="next-title"><div class="eyebrow">Beyond this experiment</div><h2 id="next-title">The Android project is separate.</h2><p>Portable Synth Daw for Android has its own closed-testing programme and feature roadmap. If you want to explore its actual mobile build, follow the Android testing guide.</p><div class="actions"><a class="button primary" href="/portable-synth/beta/">Explore Android closed testing →</a><a class="button secondary" href="/portable-synth/">Product overview</a></div></section>
+</main><footer class="footer"><span>© 2026 Unfire · Independent technology initiative</span><div><a href="/privacy.html">Privacy</a> · <a href="/legal.html">Legal</a> · <a href="/contact/">Contact</a></div></footer>
+</div>
+<script src="/portable-synth/play/synth.js" defer></script>
+</body></html>
