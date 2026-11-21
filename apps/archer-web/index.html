@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#070a12">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="canonical" href="https://unfire.technology/apps/archer-web/">
+  <meta name="description" content="Archer Web Lab by Unfire: try an experimental local-audio soft clipper in your browser. Preview and export processed WAV files. No uploads.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <title>Archer Web Lab — Audio in your browser | Unfire</title>
+  <script src="./dsp.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#workspace">Skip to workspace</a>
+  <div class="shell">
+    <header class="nav">
+      <a class="brand" href="/" aria-label="Unfire home"><span class="brand-mark" aria-hidden="true">✦</span> Unfire<span class="brand-muted"> / audio</span></a>
+      <a class="nav-link" href="/apps/">All apps <span aria-hidden="true">↗</span></a>
+    </header>
+    <main id="workspace">
+      <div class="intro">
+        <div class="eyebrow"><span class="live-dot" aria-hidden="true"></span> BROWSER AUDIO ENGINE <span class="slash">/</span> EXPERIMENTAL</div>
+        <h1>ARCHER<span class="highlight">.</span><br><span class="secondary">Web Lab</span></h1>
+        <p class="lead">Shape your sound. Hear the difference. Export a WAV. No installation, no account, no uploads.</p>
+        <div class="facts" aria-label="Technical information">
+          <span>LOCAL PROCESSING</span><span>MONO + STEREO</span><span>16-BIT WAV EXPORT</span>
+        </div>
+      </div>
+
+      <section class="studio" aria-label="Archer audio workspace">
+        <div class="section-header">
+          <div><p class="overline">01 / SOURCE</p><h2>Your audio</h2></div>
+          <span class="privacy-chip"><span aria-hidden="true">●</span> Private by design</span>
+        </div>
+        <label class="dropzone" id="dropzone" for="audio-file">
+          <input id="audio-file" class="file-input" type="file" accept="audio/*,.wav,.mp3,.aif,.aiff,.m4a,.ogg,.flac,.aac" aria-describedby="upload-help">
+          <span class="upload-mark" aria-hidden="true">↥</span>
+          <span class="upload-title" id="filename">Choose an audio file</span>
+          <span class="upload-subtitle">Select a file or drag and drop it here</span>
+          <span class="upload-meta" id="meta">No audio loaded</span>
+        </label>
+        <p class="microcopy" id="upload-help">Up to 30 MB, 3 minutes, mono or stereo. Supported formats depend on your browser. Audio stays on this device.</p>
+        <div class="wave-card" aria-label="First-channel waveform preview">
+          <div class="wave-head"><span>WAVEFORM / INPUT</span><span id="time" aria-live="off">0:00 / 0:00</span></div>
+          <div class="wave-canvas"><canvas id="waveform" aria-label="Audio waveform" role="img">Waveform visualization</canvas><div id="playhead" class="playhead" aria-hidden="true"></div></div>
+          <div class="transport">
+            <div class="transport-left"><button id="play" class="button button-primary" disabled type="button">Play preview</button><button id="stop" class="button button-ghost" disabled type="button">Stop</button></div>
+            <span class="quiet">Live parameter changes</span>
+          </div>
+        </div>
+
+        <div class="section-header controls-header">
+          <div><p class="overline">02 / SHAPE</p><h2>Three controls. Your sound.</h2></div>
+          <button id="reset" class="reset" type="button">Reset controls ↺</button>
+        </div>
+        <div class="controls">
+          <div class="control">
+            <div class="control-head"><label for="gain">Input gain</label><output id="gain-out" for="gain">0 dB</output></div>
+            <input id="gain" type="range" min="-12" max="12" value="0" step="1" aria-describedby="gain-help">
+            <div class="scale"><span>−12 dB</span><span>+12 dB</span></div>
+            <p id="gain-help">Drive the signal into the clipper.</p>
+          </div>
+          <div class="control">
+            <div class="control-head"><label for="threshold">Threshold</label><output id="threshold-out" for="threshold">−9 dB</output></div>
+            <input id="threshold" type="range" min="-24" max="0" value="-9" step="1" aria-describedby="threshold-help">
+            <div class="scale"><span>−24 dB</span><span>0 dB</span></div>
+            <p id="threshold-help">Lower values increase soft saturation.</p>
+          </div>
+          <div class="control">
+            <div class="control-head"><label for="mix">Blend</label><output id="mix-out" for="mix">100%</output></div>
+            <input id="mix" type="range" min="0" max="100" value="100" step="1" aria-describedby="mix-help">
+            <div class="scale"><span>Original</span><span>Processed</span></div>
+            <p id="mix-help">Blend original and shaped audio.</p>
+          </div>
+        </div>
+        <div class="export-panel">
+          <div class="export-copy"><p class="overline">03 / EXPORT</p><h2>Take it with you.</h2><p>Export a processed 16-bit PCM WAV at the source sample rate. Your original file is never modified.</p></div>
+          <button id="export" class="button button-export" disabled type="button"><span aria-hidden="true">↓</span> Export WAV</button>
+        </div>
+        <p class="status" id="state" role="status" aria-live="polite">Preparing browser audio…</p>
+      </section>
+
+      <aside class="disclaimer">
+        <span class="disclaimer-icon" aria-hidden="true">i</span>
+        <div><strong>About this web experiment</strong><p>Archer Web Lab uses its own Web Audio soft-clipping algorithm. It is <strong>not</strong> the native Archer DSP or an AU/VST plugin, and results may differ from the desktop app. Export uses 16-bit PCM; clipping may be audible at aggressive settings. We recommend auditioning at a comfortable volume. No backend or third-party audio service is used.</p></div>
+      </aside>
+    </main>
+    <footer><span>© Unfire · Independent technology initiative</span><nav aria-label="Footer"><a href="/archer/">Archer for desktop</a><a href="/privacy.html">Privacy</a><a href="mailto:hello@unfire.technology">Support</a></nav></footer>
+  </div>
+</body>
+</html>
