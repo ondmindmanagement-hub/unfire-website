@@ -92,7 +92,7 @@ test('family anchor clears filters without leaving sections stranded',()=>{
   verifyFilter(s,'all','all');
 });
 test('new web-app cards are honest and link to distinct browser experiments',()=>{
-  for(const url of ['/apps/archer-web/','/portable-synth/studio/','/apps/ai-token-counter/'])
+  for(const url of ['/apps/archer-web/','/portable-synth/studio/','/apps/ai-token-counter/','/apps/banner-fit/'])
     assert.ok(html.includes('href="'+url+'"'),'missing browser utility '+url);
   assert.match(html,/not the full Android DAW/i);
   assert.match(html,/distinct from the native ARCHER plugin/i);
@@ -140,7 +140,7 @@ test('browser device filter reveals published browser utilities only',()=>{
   const state=simulate();
   state.select('device','web');
   verifyFilter(state,'all','web');
-  assert.ok(state.cards.filter(card=>!card.hidden).length>=5);
+  assert.ok(state.cards.filter(card=>!card.hidden).length>=6);
   assert.ok(state.cards.filter(card=>!card.hidden).every(card=>card.dataset.devices.split(/\s+/).includes('web')));
   state.select('topic','audio');
   verifyFilter(state,'audio','web');
