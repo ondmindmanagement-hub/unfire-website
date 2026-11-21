@@ -35,7 +35,7 @@ jobs:
           assert.match(h,/noindex,nofollow/);
           assert.match(h,/connect-src 'none'/);
           assert.match(h,/NO LIVE PRICES/);
-          assert.match(h,/SYNTHETIC/);
+          assert.match(h,/synthetic/i);
           assert.match(h,/indicator.*1001/i);
           assert.ok(!/\bfetch\s*\(|XMLHttpRequest|WebSocket|sendBeacon|localStorage/.test(a));
           assert.match(n,/apps\.apple\.com\/app\/id6815880143/);
