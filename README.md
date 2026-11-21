@@ -9,6 +9,7 @@ Unfire is an independent, founder-led software and creative technology initiativ
 ## Technology and product areas
 
 - [Bolt](https://unfire.technology/bolt/) — permission-aware AI workflow prototypes, human review and recovery controls.
+- [Unfire Autonomy](https://unfire.technology/autonomy/) — written-first operational workflow feasibility with [fictional review demonstration](https://unfire.technology/autonomy/demo/); no validated production integration.
 - [Unfire Control](https://unfire.technology/apps/unfire-control/) — exploratory hands/voice interaction and accessibility-oriented interface research.
 - [Archer](https://unfire.technology/archer/) — digital audio software.
 - [Power](https://unfire.technology/apps/power/) — energy information tools.
@@ -33,4 +34,4 @@ Unfire separates publicly verified third-party listings from vendor accounts, pe
 
 This repository hosts the official website. Publicly viewable source files do not imply a blanket open-source licence; consult any licence information associated with each project.
 
-**Updated:** 19 November 2026.
+**Updated:** 21 November 2026.
