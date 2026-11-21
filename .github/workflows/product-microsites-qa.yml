@@ -28,7 +28,8 @@ jobs:
         run: node --test tests/product-microsites.test.cjs
 
   browser-visual-qa:
-    runs-on: ubuntu-latest
+    # Explicit 24.04: Playwright 1.56.1 does not support Ubuntu 26.04 (ubuntu-latest).
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
