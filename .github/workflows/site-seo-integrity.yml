@@ -1,0 +1,34 @@
+name: Unfire static sitemap SEO integrity
+on:
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - '**/*.html'
+      - 'sitemap.xml'
+      - 'scripts/audit_site_seo.py'
+      - 'tests/test_site_seo_audit.py'
+      - '.github/workflows/site-seo-integrity.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sitemap-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test parser safeguards and URL handling
+        run: python3 -m unittest discover -s tests -p 'test_site_seo_audit.py' -v
+      - name: Audit actual public sitemap against checked-in files
+        run: python3 scripts/audit_site_seo.py
+      - name: Attach nonblocking SEO backlog and full inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unfire-sitemap-seo-audit
+          path: artifacts/site-seo/
+          retention-days: 14
+          if-no-files-found: ignore
