@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark"><meta name="theme-color" content="#07080a">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'">
+<title>Reproducible Website QA Smoke Test — Unfire Self-Example</title>
+<meta name="description" content="Public, reproducible 9-route HTTP and HTML metadata smoke test of Unfire's own website. Transparent self-evidence, not a client case study or accessibility certification.">
+<meta property="og:title" content="Unfire | Self-site QA work sample">
+<meta property="og:description" content="Nine public routes tested, reproducible Python checker and explicit limitations. Internal self-evidence only.">
+<meta property="og:type" content="website"><meta property="og:url" content="https://unfire.technology/freelance/qa-example/">
+<link rel="canonical" href="https://unfire.technology/freelance/qa-example/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root{color-scheme:dark;--bg:#07080a;--ink:#f6f6f8;--sub:#aeb1b9;--line:#292b31;--card:#13151a;--accent:#e2a197;--ok:#b4d9c3}
+*{box-sizing:border-box}html{background:var(--bg);scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.65}a{color:inherit}a:focus-visible{outline:2px solid #ffcdba;outline-offset:5px}.wrap{width:min(1030px,calc(100% - 40px));margin:auto}
+header{border-bottom:1px solid var(--line)}header .wrap{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}header .logo{font-size:19px;font-weight:750;letter-spacing:-.04em;text-decoration:none}nav{display:flex;gap:22px;flex-wrap:wrap}nav a{font-size:13px;color:var(--sub);text-decoration:none}nav a:hover{color:var(--ink)}
+.hero{padding:108px 0 78px;background:radial-gradient(ellipse 55% 70% at 95% 0%,#36202070,transparent 80%)}.eyebrow{margin:0 0 23px;font-weight:760;font-size:11px;letter-spacing:.19em;text-transform:uppercase;color:var(--accent)}h1{margin:0;max-width:900px;font-size:clamp(3.4rem,8vw,6.9rem);letter-spacing:-.065em;font-weight:620;line-height:.98}h2{margin:0 0 18px;font-size:clamp(2.2rem,4.6vw,3.9rem);letter-spacing:-.048em;line-height:1.08;font-weight:620}h3{font-size:20px;line-height:1.3;margin:0 0 11px}.lead{font-size:clamp(17px,2.2vw,21px);max-width:760px;color:#c6c9d0;margin:28px 0 0}.muted{font-size:14px;color:var(--sub);max-width:740px}
+.buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:31px}.button{border:1px solid #54565e;border-radius:999px;display:inline-flex;min-height:47px;padding:9px 20px;align-items:center;justify-content:center;text-decoration:none;font-size:13px;font-weight:700}.button.primary{background:var(--ink);border-color:var(--ink);color:#111}.button:hover{border-color:#fff}
+section.content{border-top:1px solid var(--line);padding:80px 0}.score{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch;margin:36px 0}.score-card{padding:37px 37px 33px;border:1px solid #34463d;border-radius:23px;background:linear-gradient(145deg,#11241a,#121518)}.score-card b{font-size:clamp(4.6rem,9vw,7rem);line-height:1;font-weight:630;color:var(--ok);letter-spacing:-.08em;display:block}.score-card p{margin:17px 0 0;color:#bed0c5;font-size:14px}.score-info{border:1px solid var(--line);background:var(--card);border-radius:23px;padding:31px}.score-info strong{display:block;font-size:14px;margin-bottom:9px}.score-info p{font-size:14px;color:var(--sub);margin:0}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:28px}th{text-align:left;color:#959aa4;font-size:11px;text-transform:uppercase;letter-spacing:.11em;font-weight:670;padding:13px 11px;border-bottom:1px solid #52545b}td{padding:14px 11px;border-bottom:1px solid var(--line)}td:first-child{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#e3e5ea;font-size:12px}td:last-child{color:var(--ok);font-weight:680}th:last-child{text-align:right}td:last-child{text-align:right}.scroll{overflow-x:auto}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:31px 0}.tile{border:1px solid var(--line);border-radius:18px;background:var(--card);padding:25px}.tile .i{display:block;color:var(--accent);font-size:11px;letter-spacing:.11em;margin-bottom:24px;font-weight:700}.tile p{color:var(--sub);margin:0;font-size:13px}
+.note{padding:24px 27px;background:#171217;border-left:2px solid var(--accent);color:#c9c0c7;font-size:14px;line-height:1.8;border-radius:0 15px 15px 0}.note strong{color:var(--ink)}
+pre{background:#0c0d10;border:1px solid #34353c;border-radius:13px;padding:20px;white-space:pre-wrap;overflow-wrap:anywhere;color:#c5ddd0;font-size:13px;line-height:1.55}code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+footer{border-top:1px solid var(--line);padding:35px 0 54px;font-size:12px;color:#9b9ea8}footer .wrap{display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap}
+@media(max-width:700px){.hero{padding:75px 0 65px}.score,.grid{grid-template-columns:1fr}section.content{padding:59px 0}.score-card,.score-info{padding:27px}.wrap{width:calc(100% - 32px)}.buttons .button{width:100%}header .wrap{flex-wrap:wrap;padding:16px 0}h1{font-size:clamp(3rem,12vw,4.8rem)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="logo" href="/">Unfire</a><nav aria-label="Site"><a href="/freelance/">Freelance services</a><a href="#results">Results</a><a href="#method">Method</a><a href="mailto:hello@unfire.technology">Email</a></nav></div></header>
+<main>
+<section class="hero"><div class="wrap"><p class="eyebrow">Public work sample / Self-directed QA / 21 November 2026</p>
+<h1>Evidence first.<br>Claims second.</h1>
+<p class="lead">A small, reproducible smoke test of Unfire's <em>own</em> public website. Nine selected routes, basic metadata assertions, and complete source code that anyone can inspect or rerun.</p>
+<div class="buttons"><a class="button primary" href="#results">See measured checks</a><a class="button" href="https://github.com/ondmindmanagement-hub/unfire-website/blob/gh-pages/freelance/qa-example/check.py" rel="noopener noreferrer">Read Python checker</a><a class="button" href="/freelance/">Browse freelance services</a></div>
+<p class="muted">This is a founder-created demonstration, not a client engagement, independent audit, compliance certification or proof of external delivery history.</p></div></section>
+<section class="content" id="results"><div class="wrap"><p class="eyebrow">01 / Observed snapshot</p><h2>Nine routes.<br>One transparent result.</h2>
+<p class="muted">Snapshot collected on 21 November 2026 from the public GitHub Pages domain. Each selected route returned HTML with HTTP 200, a non-empty title, exactly one H1, a viewport meta tag and a canonical link.</p>
+<div class="score"><div class="score-card"><b>9/9</b><p>Selected route smoke checks passed in the recorded run.</p></div><div class="score-info"><strong>What this result actually means</strong><p>Basic availability and HTML structure were present at the time of observation. It does not establish WCAG conformance, mobile usability, security, server reliability over time, lack of broken links, or bug-free production software.</p></div></div>
+<div class="scroll"><table><thead><tr><th scope="col">Public route</th><th scope="col">Snapshot outcome</th></tr></thead><tbody>
+<tr><td>/</td><td>HTTP 200 · structure present</td></tr>
+<tr><td>/freelance/</td><td>HTTP 200 · structure present</td></tr>
+<tr><td>/pilot/</td><td>HTTP 200 · structure present</td></tr>
+<tr><td>/pilot/kit/</td><td>HTTP 200 · structure present</td></tr>
+<tr><td>/pilot/intake/</td><td>HTTP 200 · structure present</td></tr>
+<tr><td>/pilot/partners/</td><td>HTTP 200 · structure present</td></tr>
+<tr><td>/pilot/evidence/</td><td>HTTP 200 · structure present</td></tr>
+<tr><td>/research/</td><td>HTTP 200 · structure present</td></tr>
+<tr><td>/contact/</td><td>HTTP 200 · structure present</td></tr></tbody></table></div>
+</div></section>
+<section class="content" id="method"><div class="wrap"><p class="eyebrow">02 / Reproducibility</p><h2>Inspect the test.<br>Run it yourself.</h2><p class="muted">The checker uses only Python's standard library, performs read-only HTTPS requests against nine predetermined Unfire pages and prints structured JSON. No login, tracking identifier, customer data or paid service is required.</p>
+<div class="grid"><article class="tile"><span class="i">01 / FETCH</span><h3>Public GET</h3><p>Request a fixed allowlist of own-site routes, with a finite network timeout.</p></article><article class="tile"><span class="i">02 / PARSE</span><h3>HTML basics</h3><p>Check status, media type, title, one H1, responsive viewport metadata and canonical URL presence.</p></article><article class="tile"><span class="i">03 / REPORT</span><h3>Explicit failures</h3><p>Emit JSON with per-route observations and exit with an error if any check fails.</p></article></div>
+<pre><code>python3 check.py
+# Outputs: total, passed, and per-route JSON details.
+# Exits 0 on pass; exits 1 if a selected check fails.</code></pre>
+<div class="buttons"><a class="button primary" href="https://github.com/ondmindmanagement-hub/unfire-website/blob/gh-pages/freelance/qa-example/check.py" rel="noopener noreferrer">Inspect full source</a><a class="button" href="mailto:hello@unfire.technology?subject=Unfire%20%7C%20Fixed-scope%20QA%20enquiry">Discuss a funded QA task</a></div>
+<div class="note"><strong>Boundaries matter.</strong> A paid customer audit would require a separate written scope, agreed target, consent to test, risk limits, acceptance criteria and proper legal and payment arrangements. This public self-example must not be represented as independent client work.</div>
+</div></section></main>
+<footer><div class="wrap"><span>© 2026 Unfire · Independent founder-led software work · Spain</span><span><a href="/freelance/">Freelance</a> · <a href="/pilot/kit/">Commercial kit</a> · <a href="mailto:hello@unfire.technology">hello@unfire.technology</a></span></div></footer>
+</body></html>
