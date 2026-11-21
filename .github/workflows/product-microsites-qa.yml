@@ -1,0 +1,27 @@
+name: Unfire product microsites - static QA
+on:
+  pull_request:
+    paths:
+      - 'assets/css/unfire-microsites.css'
+      - 'portable-synth/**'
+      - 'games/y2k-robots/**'
+      - 'games/index.html'
+      - 'sitemap.xml'
+      - 'tests/product-microsites.test.cjs'
+      - '.github/workflows/product-microsites-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: node --check portable-synth/play/synth.js
+      - name: Product structure, links, sitemap and privacy checks
+        run: node --test tests/product-microsites.test.cjs
