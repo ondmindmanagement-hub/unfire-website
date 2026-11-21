@@ -1,0 +1,61 @@
+name: Banner Fit Web Lab review
+on:
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'apps/banner-fit/**'
+      - 'tests/banner-fit-browser.cjs'
+      - '.github/workflows/banner-fit-web-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Static validation, privacy and image math
+        run: |
+          node --check apps/banner-fit/engine.js
+          node --check apps/banner-fit/app.js
+          node --check tests/banner-fit-browser.cjs
+          node --test apps/banner-fit/engine.test.cjs
+          node - <<'NODE'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const h=fs.readFileSync('apps/banner-fit/index.html','utf8');
+          const a=fs.readFileSync('apps/banner-fit/app.js','utf8');
+          assert.match(h,/noindex,nofollow/);
+          assert.match(h,/connect-src 'none'/);
+          assert.match(h,/local processing/i);
+          assert.ok(!/fetch\s*\(|XMLHttpRequest|sendBeacon|localStorage|indexedDB/.test(a));
+          console.log('BANNER_FIT_STATIC_PRIVACY_PASS');
+          NODE
+  browsers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser QA dependencies
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Test real image import and local exports
+        run: |
+          python3 -m http.server 8768 --bind 127.0.0.1 > /tmp/banner-fit-http.log 2>&1 &
+          pid=$!
+          trap 'kill $pid || true' EXIT
+          node tests/banner-fit-browser.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: banner-fit-browser-review
+          path: artifacts/banner-fit/*.png
+          retention-days: 7
+          if-no-files-found: ignore
