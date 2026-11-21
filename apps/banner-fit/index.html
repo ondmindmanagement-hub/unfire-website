@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="theme-color" content="#080b13">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Banner Fit Web Lab by Unfire. Resize and export creator artwork privately in your browser with accurate cropping and no uploads. Experimental browser beta.">
+  <link rel="canonical" href="https://unfire.technology/apps/banner-fit/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <title>Banner Fit Web Lab — Resize art privately | Unfire</title>
+  <script defer src="./engine.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to editor</a>
+<header class="topbar wrap">
+  <a class="brand" href="/" aria-label="Unfire home"><span class="brand-symbol" aria-hidden="true">✦</span> UNFIRE <span class="muted">/ CREATOR LAB</span></a>
+  <nav><a href="/apps/">All apps</a><a href="/contact/">Contact</a></nav>
+</header>
+<main id="main" class="wrap">
+  <div class="hero">
+    <div class="eyebrow"><span class="signal"></span> CREATOR UTILITY <span class="sep">/</span> BROWSER BETA</div>
+    <h1>Make every image <em>fit.</em></h1>
+    <p class="lead">One image, the right dimensions. Crop, position and export artwork in your browser—without uploading it anywhere.</p>
+    <div class="features"><span>LOCAL BY DESIGN</span><span>PNG + JPEG</span><span>NO ACCOUNT</span></div>
+  </div>
+  <div class="editor">
+    <section class="controls" aria-label="Image editor controls">
+      <div class="step"><span>01</span><h2>Artwork</h2></div>
+      <div class="upload" id="dropzone">
+        <label for="file" class="drop-label">
+          <span class="upload-icon" aria-hidden="true">↑</span>
+          <span class="upload-title">Choose an image</span>
+          <span class="upload-copy">or drag a PNG, JPEG or WebP here</span>
+        </label>
+        <input id="file" type="file" accept="image/png,image/jpeg,image/webp" aria-describedby="file-hint">
+      </div>
+      <p class="help" id="file-hint">Maximum 20 MB and 24 million source pixels. Image processing remains on this device.</p>
+      <p class="file-meta" id="file-meta">No image selected</p>
+      <div class="rule"></div>
+      <div class="step"><span>02</span><h2>Canvas size</h2></div>
+      <div class="field">
+        <label for="preset">Format</label>
+        <select id="preset"></select>
+      </div>
+      <div class="size-grid" id="custom-fields" hidden>
+        <div class="field"><label for="width">Width (px)</label><input id="width" inputmode="numeric" type="number" min="64" max="8192" step="1" value="1280"></div>
+        <div class="field"><label for="height">Height (px)</label><input id="height" inputmode="numeric" type="number" min="64" max="8192" step="1" value="720"></div>
+      </div>
+      <div class="field">
+        <span class="label">Image fitting</span>
+        <div class="segmented" role="group" aria-label="How the image should fit the canvas">
+          <button type="button" id="cover" aria-pressed="true" class="active">Fill &amp; crop</button>
+          <button type="button" id="contain" aria-pressed="false">Fit entire image</button>
+        </div>
+      </div>
+      <div class="field sliders">
+        <div class="range-title"><label for="focus-x">Horizontal focus</label><output for="focus-x" id="focus-x-value">50%</output></div>
+        <input id="focus-x" type="range" min="0" max="100" step="1" value="50">
+        <div class="range-title"><label for="focus-y">Vertical focus</label><output for="focus-y" id="focus-y-value">50%</output></div>
+        <input id="focus-y" type="range" min="0" max="100" step="1" value="50">
+      </div>
+      <div class="field color-row">
+        <label for="background">Empty-space color</label>
+        <input type="color" id="background" value="#101827" aria-label="Background fill color for fit entire image">
+      </div>
+      <div class="rule"></div>
+      <div class="step"><span>03</span><h2>Export</h2></div>
+      <div class="field">
+        <label for="format">File format</label>
+        <select id="format"><option value="png">PNG · lossless</option><option value="jpg">JPEG · high quality</option></select>
+      </div>
+      <button class="download" type="button" id="download" disabled><span aria-hidden="true">↓</span> Export image <span aria-hidden="true">↗</span></button>
+      <p class="privacy">No accounts, no tracking and no image uploads from this editor.</p>
+    </section>
+    <section class="preview" aria-label="Image preview">
+      <div class="preview-top">
+        <div><span class="preview-kicker">LIVE PREVIEW</span><h2>Your canvas</h2></div>
+        <output id="dimension-label">2560 × 1440 px</output>
+      </div>
+      <div class="canvas-stage"><canvas id="canvas" role="img" aria-label="Rendered artwork preview">Your artwork preview will appear here.</canvas></div>
+      <div class="preview-foot"><span id="status" role="status" aria-live="polite">Choose an image to begin.</span><span>LOCAL RENDER</span></div>
+      <div class="info"><strong>About this browser experiment</strong><p>Banner Fit Web Lab is an independent local canvas utility, not a native UnfireSuite build. Cropping changes the frame, never your original file. Platform dimension presets are convenience templates and may differ from current platform requirements. Double-check the requirements for each upload destination.</p></div>
+    </section>
+  </div>
+</main>
+<footer class="wrap foot"><span>© Unfire · Banner Fit Web Lab</span><a href="/privacy.html">Privacy</a><a href="/apps/">Explore apps</a></footer>
+</body>
+</html>
