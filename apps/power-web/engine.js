@@ -99,7 +99,7 @@
   }
   function csv(data){
     if(!data||!Array.isArray(data.rows))throw Error("No data to export.");
-    const clean=x=>'"'+String(x??"").replace(/"/g,'""').replace(/^[=+\-@\t\r]/,"'")+'"';
+    const clean=x=>'"'+String(x??"").replace(/"/g,'""').replace(/^[=+\-@\t\r]/,m=>"'"+m)+'"';
     const list=[["Local date","Local hour","Offset","UTC timestamp","EUR per kWh","Source","Last source update"]];
     for(const row of data.rows)list.push([data.day,row.label,row.offset,row.utc,row.price.toFixed(6),data.source,data.updated||"not supplied"]);
     return "\uFEFF"+list.map(r=>r.map(clean).join(",")).join("\r\n")+"\r\n";
