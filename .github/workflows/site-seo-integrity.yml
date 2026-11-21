@@ -29,6 +29,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: unfire-sitemap-seo-audit
-          path: artifacts/site-seo/*.json
+          path: artifacts/site-seo/
           retention-days: 14
           if-no-files-found: ignore
