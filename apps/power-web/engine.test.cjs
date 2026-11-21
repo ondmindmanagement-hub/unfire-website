@@ -72,7 +72,7 @@ test("constant draw cost window optimization and fixed tariff comparison are det
   const cost=E.calculate(d,"2","2","0.18");
   assert.equal(cost.best.start,2);assert.equal(cost.worst.start,5);
   assert.equal(cost.best.price,.2);assert.equal(cost.worst.price,1.6);
-  assert.equal(cost.savings,1.4);assert.equal(cost.fixedCost,.72);
+  assert.ok(Math.abs(cost.savings-1.4)<1e-10);assert.ok(Math.abs(cost.fixedCost-.72)<1e-10);
   assert.equal(cost.kwh,4);assert.equal(cost.windowCount,23);
 });
 test("runtime and power bounds reject physically invalid configurations",()=>{
