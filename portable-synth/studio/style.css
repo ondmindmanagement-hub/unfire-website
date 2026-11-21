@@ -100,3 +100,9 @@ h2{font-size:clamp(23px,3.6vw,32px);font-weight:670;letter-spacing:-.04em;line-h
 @media(max-width:600px){.shell{width:calc(100% - 26px)}.topbar{height:66px}.topbar nav{font-size:11px}.hero{padding:60px 0 39px}.hero h1{font-size:clamp(56px,12.6vw,86px)}.subtitle{font-size:17px}.studio{padding:16px;border-radius:18px}.studio-heading{align-items:flex-start;flex-direction:column}.setting{padding:13px}.transport{align-items:stretch;flex-direction:column;padding:13px}.transport-buttons .btn{flex:1}.seq-top{align-items:flex-start;flex-direction:column;gap:14px}.note-select{width:100%;justify-content:space-between}.grid-wrap{margin-top:11px}.step-grid{padding:10px}.exports{margin-top:28px;padding-top:26px}.export-actions .btn,.file-button{flex:1}.export-actions>label:first-child{flex-basis:100%;margin-bottom:4px}.disclaimer{padding:18px}.footer nav{gap:12px}}
 @media(max-width:360px){.brand-suffix{display:none}.settings{gap:8px}.setting{padding:10px}.setting label{font-size:9px}.studio-heading h2{font-size:22px}.transport-buttons .btn{padding:0 11px;font-size:12px}.edit-bar{gap:7px}.small-btn{padding:0 10px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+/* Unified local music tools: one product family, two honest browser modes. */
+.mode-switch{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:24px}
+.mode-switch a,.mode-switch [aria-current="page"]{display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:0 16px;border-radius:11px;border:1px solid rgba(164,202,246,.25);background:rgba(21,35,57,.9);color:#d3e8fb;font-size:12px;font-weight:730}
+.mode-switch a:hover{background:#263951;text-decoration:none}
+.mode-switch [aria-current="page"]{background:linear-gradient(125deg,#abebfa,#cebeff);border-color:transparent;color:#091522}
