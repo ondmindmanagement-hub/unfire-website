@@ -17,13 +17,13 @@
 <script defer src="/assets/js/unfire-adaptive-loading.js?v=20261023adaptive1"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ARCHER — Audio clipper for Mac, iPhone and iPad · Unfire Audio</title>
-<meta name="description" content="ARCHER is a real-time audio clipper with three controls: Gain, Threshold and Atmosphere. Standalone and Audio Unit on Mac, standalone and AUv3 on iPhone and iPad. Local processing, no account.">
+<title>ARCHER — Audio clipper for Mac · Unfire Audio</title>
+<meta name="description" content="ARCHER is a real-time audio clipper with three controls: Gain, Threshold and Atmosphere. Standalone app and Audio Unit effect on Mac. Local processing, no account.">
 <link rel="canonical" href="https://unfire.technology/archer/">
 <meta name="theme-color" content="#05070d">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ARCHER — Gain. Threshold. Atmosphere.">
-<meta property="og:description" content="A real-time audio clipper for Mac, iPhone and iPad from Unfire Audio.">
+<meta property="og:description" content="A real-time audio clipper for Mac from Unfire Audio.">
 <meta property="og:url" content="https://unfire.technology/archer/">
 <meta property="og:image" content="https://unfire.technology/assets/products/apps-2026/archer-mac-window-1-1100.webp">
 <meta name="twitter:card" content="summary_large_image">
@@ -31,7 +31,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"ARCHER Audio Clipper","operatingSystem":"macOS 12.0 or later, Apple silicon","applicationCategory":"MultimediaApplication","applicationSubCategory":"Music","description":"Real-time audio clipping effect with Gain, Threshold and Atmosphere. Standalone app and Audio Unit effect.","offers":{"@type":"Offer","price":"9.99","priceCurrency":"USD"},"downloadUrl":"https://apps.apple.com/app/id6812968924","url":"https://unfire.technology/archer/","publisher":{"@type":"Organization","name":"Unfire","url":"https://unfire.technology"}},{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Archer for iPhone & iPad","operatingSystem":"iOS 18.0 or later, iPadOS 18.0 or later","applicationCategory":"MultimediaApplication","applicationSubCategory":"Music","description":"Audio clipper with Gain, Threshold and Atmosphere as a standalone app and an Audio Unit v3 effect.","offers":{"@type":"Offer","price":"1.99","priceCurrency":"USD"},"downloadUrl":"https://apps.apple.com/app/id6822109610","url":"https://unfire.technology/archer/#iphone","publisher":{"@type":"Organization","name":"Unfire","url":"https://unfire.technology"}}]</script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"ARCHER Audio Clipper","operatingSystem":"macOS 12.0 or later, Apple silicon","applicationCategory":"MultimediaApplication","applicationSubCategory":"Music","description":"Real-time audio clipping effect with Gain, Threshold and Atmosphere. Standalone app and Audio Unit effect.","offers":{"@type":"Offer","price":"9.99","priceCurrency":"USD"},"downloadUrl":"https://apps.apple.com/app/id6812968924","url":"https://unfire.technology/archer/","publisher":{"@type":"Organization","name":"Unfire","url":"https://unfire.technology"}}]</script>
 <style>
 :root{--night:#05070d;--deep:#0b1020;--ink:#e9edf5;--dim:#8a93a8;--line:#1d2436;--chrome:linear-gradient(180deg,#ffffff 0%,#c9d1de 30%,#6f7a8f 52%,#e6ebf2 70%,#9aa5b8 100%);--ice:#9cc4ff;--disp:Unbounded,system-ui,sans-serif;--body:"Space Grotesk",system-ui,sans-serif}
 *{box-sizing:border-box}
@@ -79,7 +79,7 @@ a{color:inherit}img{display:block;max-width:100%;height:auto}
 .knob p{margin:0;color:var(--dim);max-width:30ch}
 /* platforms */
 .plat{border-top:1px solid var(--line);background:linear-gradient(180deg,var(--deep),var(--night) 70%)}
-.plat .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(30px,5vw,80px);padding:clamp(80px,10vw,140px) 0}
+.plat .wrap:has(> #iphone[hidden]){grid-template-columns:1fr}.plat .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(30px,5vw,80px);padding:clamp(80px,10vw,140px) 0}
 .card{border:1px solid var(--line);border-radius:22px;padding:clamp(24px,3vw,40px);background:rgba(255,255,255,.015)}
 .card .k{font:500 11px/1 var(--disp);letter-spacing:.24em;color:var(--ice);text-transform:uppercase}
 .card h2{font:800 clamp(28px,3.2vw,44px)/1 var(--disp);margin:16px 0 18px;letter-spacing:-.03em}
@@ -123,6 +123,7 @@ a:focus-visible{outline:2px solid var(--ice);outline-offset:3px}
 }
 @media (prefers-reduced-motion:reduce){.btn{transition:none}}
 </style>
+<style data-archer-mobile-pending-style>[data-archer-mobile-pending]{display:none!important}</style>
 <link rel="stylesheet" href="/assets/css/unfire-global-bar-20261122.css?v=1" data-unfire-global-bar>
 </head>
 <body>
@@ -137,7 +138,7 @@ a:focus-visible{outline:2px solid var(--ice);outline-offset:3px}
 </div>
 <header class="nav"><div class="wrap">
   <a class="brand" href="/audio/"><img src="/assets/products/apps-2026/archer-icon-256.webp" width="30" height="30" alt="">UNFIRE AUDIO</a>
-  <nav aria-label="ARCHER"><a href="#controls">Controls</a><a href="#mac">Mac</a><a href="#iphone">iPhone &amp; iPad</a><a href="/archer/faq/">Help</a></nav>
+  <nav aria-label="ARCHER"><a href="#controls">Controls</a><a href="#mac">Mac</a><a href="#iphone" data-archer-mobile-pending hidden>iPhone &amp; iPad</a><a href="/archer/faq/">Help</a></nav>
 </div></header>
 <main>
   <section class="hero">
@@ -153,7 +154,7 @@ a:focus-visible{outline:2px solid var(--ice);outline-offset:3px}
         </div>
         <div class="buy">
           <a class="btn solid" href="https://apps.apple.com/app/id6812968924"><small>Mac App Store</small><span>ARCHER for Mac</span></a>
-          <a class="btn ghost" href="https://apps.apple.com/app/id6822109610"><small>App Store</small><span>iPhone &amp; iPad</span></a>
+          <a class="btn ghost" href="https://apps.apple.com/app/id6822109610" data-archer-mobile-pending hidden><small>App Store</small><span>iPhone &amp; iPad</span></a>
         </div>
       </div>
     </div>
@@ -178,7 +179,7 @@ a:focus-visible{outline:2px solid var(--ice);outline-offset:3px}
         <a class="btn solid" href="https://apps.apple.com/app/id6812968924"><small>Mac App Store</small><span>Get ARCHER for Mac</span></a>
         <figure class="macshot" style="margin:28px 0 0"><img src="/assets/products/apps-2026/archer-mac-window-2-1100.webp" width="1100" height="771" alt="Second ARCHER Mac screenshot showing the three dials with values" loading="lazy"></figure>
       </article>
-      <article class="card phone" id="iphone">
+      <article class="card phone" id="iphone" data-archer-mobile-pending hidden>
         <div>
           <span class="k">iOS &amp; iPadOS</span>
           <h2>Archer for iPhone &amp; iPad</h2>
@@ -191,7 +192,7 @@ a:focus-visible{outline:2px solid var(--ice);outline-offset:3px}
     </div>
   </section>
 
-  <section class="next-mobile" id="next-preview" aria-labelledby="next-mobile-title"><div class="wrap shell">
+  <section class="next-mobile" id="next-preview" aria-labelledby="next-mobile-title" data-archer-mobile-pending hidden><div class="wrap shell">
   <div class="copy"><span class="k">Unfire Audio / iPhone &amp; iPad</span><h2 id="next-mobile-title">ARCHER Mobile.</h2>
     <p>Made for touch. This unreleased development interface brings Gain, Threshold and Color together with a nocturnal blue-and-chrome design.</p>
     <div class="buttons"><a class="blue" href="/audio/#archer-mobile-preview">Explore the mobile interface ↗</a><a class="orange" href="https://apps.apple.com/es/app/archer-for-iphone-ipad/id6822109610" target="_blank" rel="noopener noreferrer">Current iPhone &amp; iPad app ↗</a></div>

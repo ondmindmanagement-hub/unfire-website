@@ -29,7 +29,8 @@ const viewports = [
           const root = document.querySelector('#apps');
           const groupIds = Object.keys(expected);
           const groups = [...root.querySelectorAll('.uf-gallery-category')];
-          const allCards = [...root.querySelectorAll('.uf-gallery-card')];
+          // Cards parked with data-archer-mobile-pending are intentionally not displayed yet.
+          const allCards = [...root.querySelectorAll('.uf-gallery-card:not([data-archer-mobile-pending])')];
           const tags = [...root.querySelectorAll('.uf-gallery-availability')].map(x => x.textContent.trim());
           const nav = root.querySelector('.uf-gallery-taxonomy');
           const images = [...root.querySelectorAll('.uf-gallery-card img')];
@@ -52,7 +53,7 @@ const viewports = [
             footnote: root.querySelector('.uf-gallery-footnote')?.textContent || '',
           };
         }, expected);
-        assert.equal(summary.cards, 9);
+        assert.equal(summary.cards, 8); // ARCHER Mobile card is parked (data-archer-mobile-pending) until the iPhone/iPad build is finished
         assert.equal(summary.images, 9); // Two authentic ARCHER Mobile device images; KeyBridge stays text-only
         assert.equal(summary.emptyAlt, 0);
         assert.equal(await page.locator('#apps .uf-gallery-card--control img').count(), 1, 'Control must use its original app icon');
@@ -68,7 +69,7 @@ const viewports = [
           assert(summary.tags.includes(status), 'Missing disclaimer ' + status);
         }
         assert(summary.footnote.includes('features and release status may change'));
-        for (const image of await page.locator('#apps .uf-gallery-card img').all()) {
+        for (const image of await page.locator('#apps .uf-gallery-card:not([data-archer-mobile-pending]) img').all()) {
           await image.scrollIntoViewIfNeeded();
           await image.evaluate(el => el.decode());
           assert.equal(await image.evaluate(el => el.naturalWidth > 0 && el.naturalHeight > 0), true, 'Failed product image');

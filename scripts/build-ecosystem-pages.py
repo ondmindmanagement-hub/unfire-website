@@ -122,13 +122,13 @@ def edition_html(ed, statuses, product=None):
 
 
 def row(p, fam, statuses):
-    plats = sorted({PLATFORM[x] for ed in p["editions"] for x in ed["platforms"]})
+    plats = sorted({PLATFORM[x] for ed in p["editions"] if ed.get("public", True) for x in ed["platforms"]})
     v = p.get("visual")
     if v and v.get("type") == "icon":
         mark = f'<img src="{e(v["src"])}" alt="" width="52" height="52" loading="lazy" decoding="async">'
     else:
         mark = e(p["name"][0])
-    eds = "".join(edition_html(ed, statuses, p) for ed in p["editions"])
+    eds = "".join(edition_html(ed, statuses, p) for ed in p["editions"] if ed.get("public", True))
     plat_txt = f' <span class="ue-sr">Platforms: {e(", ".join(plats))}.</span>' if plats else ""
     return (f'<li class="ue-row" data-fam="{fam["id"]}">'
             f'<div class="ue-mark" aria-hidden="true">{mark}</div><div>'
@@ -205,7 +205,7 @@ def page_audio(reg):
 <section class="ue-hero"><div class="ue-wrap">
 <p class="ue-kicker"><a href="/apps/">Products</a> / Audio</p>
 <h1>{e(fam["tagline"])}</h1>
-<p class="ue-lede">{e(fam["summary"])} Native apps on Apple platforms and Android, plus instruments that run directly in your browser.</p>
+<p class="ue-lede">{e(fam["summary"])} Native apps for Mac and Android, plus instruments that run directly in your browser.</p>
 <div class="ue-actions"><a class="ue-btn ue-btn--primary" href="/archer/">Explore ARCHER</a><a class="ue-btn" href="/audio/">Enter the 3D world</a></div>
 {media}
 </div></section>
