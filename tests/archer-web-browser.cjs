@@ -34,6 +34,8 @@ async function exercise(type,name){
     assert.equal(await page.locator("#play").isEnabled(),true);
     await page.locator("#gain").evaluate(el=>{el.value="6";el.dispatchEvent(new Event("input",{bubbles:true}));});
     assert.equal(await page.locator("#gain-out").innerText(),"+6 dB");
+    // The fixture lasts one second: bring the transport into view first so the Stop click needs no scroll while the preview plays.
+    await page.locator("#stop").scrollIntoViewIfNeeded();
     await page.locator("#play").click();
     await page.waitForFunction(()=>document.getElementById("state").textContent.includes("Preview playing"),null,{timeout:7000});
     await page.locator("#stop").click();
