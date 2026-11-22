@@ -1,0 +1,64 @@
+name: App Ready browser-lab review
+on:
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'apps/app-ready/**'
+      - 'tests/app-ready-browser.cjs'
+      - '.github/workflows/app-ready-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify syntax and local-only model
+        run: |
+          node --check apps/app-ready/app.js
+          node --check apps/app-ready/engine.js
+          node --check tests/app-ready-browser.cjs
+          node --test apps/app-ready/engine.test.cjs
+          node - <<'NODE'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const html=fs.readFileSync('apps/app-ready/index.html','utf8');
+          const app=fs.readFileSync('apps/app-ready/app.js','utf8');
+          const engine=fs.readFileSync('apps/app-ready/engine.js','utf8');
+          assert.match(html,/noindex,nofollow/);
+          assert.match(html,/connect-src 'none'/);
+          assert.match(html,/not an Apple verification service/);
+          assert.match(html,/not affiliated with or endorsed by Apple/);
+          assert.doesNotMatch(app+engine,/\b(?:fetch|XMLHttpRequest|WebSocket|sendBeacon|localStorage|sessionStorage|indexedDB)\s*(?:\.|\()/);
+          assert.match(app,/textContent/);
+          console.log('APP_READY_PRIVACY_STATIC_PASS');
+          NODE
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 17
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser and accessibility tools
+        run: |
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3
+          npx playwright install --with-deps chromium webkit
+      - name: Run Chromium/WebKit E2E and WCAG automation
+        run: |
+          python3 -m http.server 8784 --bind 127.0.0.1 > /tmp/app-ready-http.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" || true' EXIT
+          node tests/app-ready-browser.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-ready-browser-captures
+          path: artifacts/app-ready/*.png
+          retention-days: 7
+          if-no-files-found: ignore
