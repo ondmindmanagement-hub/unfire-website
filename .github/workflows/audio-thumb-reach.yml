@@ -11,7 +11,7 @@ permissions:
   contents: read
 jobs:
   thumb-reach-contracts:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # Playwright 1.56.1 does not support ubuntu-26.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
