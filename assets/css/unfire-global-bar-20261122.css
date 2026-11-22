@@ -1,0 +1,29 @@
+/* Unfire global bar — 22 November 2026.
+   One shared, static, script-free bar above each page's own header.
+   Fully namespaced under #unfire-global-bar so page styles neither leak in nor out.
+   The bar is in normal flow (never fixed) and the page's local header stays its sub-navigation. */
+#unfire-global-bar{all:initial;display:block;position:relative;z-index:900;background:#090b10;color:#f4f5f7;border-bottom:1px solid rgba(206,214,230,.14);font:14px/1.2 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+#unfire-global-bar *,#unfire-global-bar *::before,#unfire-global-bar *::after{box-sizing:border-box;margin:0;padding:0;font:inherit;color:inherit;letter-spacing:normal;text-transform:none;text-shadow:none;background:none;border:0;line-height:inherit}
+#unfire-global-bar .ugb-in{display:flex;align-items:center;gap:20px;width:min(1180px,calc(100% - 32px));min-height:44px;margin:0 auto}
+#unfire-global-bar a{text-decoration:none;color:#aab2c1;border-radius:6px}
+#unfire-global-bar a:hover{color:#f4f5f7;text-decoration:underline;text-underline-offset:.25em}
+#unfire-global-bar a:focus-visible,#unfire-global-bar summary:focus-visible{outline:3px solid #ffd98a;outline-offset:2px}
+#unfire-global-bar .ugb-brand{display:inline-flex;align-items:center;min-height:44px;color:#f4f5f7;font-weight:700;letter-spacing:.14em;font-size:13px}
+#unfire-global-bar .ugb-brand:hover{text-decoration:none}
+#unfire-global-bar ul{list-style:none;display:flex;gap:2px;margin-left:auto}
+#unfire-global-bar li{display:block}
+#unfire-global-bar .ugb-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;white-space:nowrap}
+#unfire-global-bar a[aria-current="page"],#unfire-global-bar a[aria-current="true"]{color:#f4f5f7;box-shadow:inset 0 -2px 0 #7798ff;border-radius:0}
+#unfire-global-bar .ugb-menu{display:none;margin-left:auto;position:relative}
+#unfire-global-bar summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border:1px solid rgba(206,214,230,.3);border-radius:8px;color:#f4f5f7}
+#unfire-global-bar summary::-webkit-details-marker{display:none}
+#unfire-global-bar .ugb-menu ul{display:block;position:absolute;right:0;top:calc(100% + 6px);min-width:220px;padding:6px;background:#151923;border:1px solid rgba(206,214,230,.28);border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,.5)}
+#unfire-global-bar .ugb-menu a{display:flex;align-items:center;min-height:44px;padding:0 12px;color:#f4f5f7}
+@media (max-width:860px){
+  #unfire-global-bar .ugb-links{display:none}
+  #unfire-global-bar .ugb-menu{display:block}
+}
+/* Pages whose own header is absolute at top:0 (listed in apply-global-bar.py) */
+#unfire-global-bar[data-offset-header] ~ header{top:44px}
+@media print{#unfire-global-bar{display:none}}
+@media (forced-colors:active){#unfire-global-bar{border-bottom:1px solid CanvasText}}
