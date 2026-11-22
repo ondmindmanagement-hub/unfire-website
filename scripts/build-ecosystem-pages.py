@@ -218,7 +218,15 @@ def page_audio(reg):
 </div></section>
 </main>
 """
-    return (head("Unfire Audio — Audio software, instruments and experiences", "Unfire Audio: ARCHER clipper for Mac, iPhone and iPad, Portable Synth Daw for Android, browser instruments and the interactive 3D Unfire Audio world.", "/unfire-audio/", "audio")
+    archer = next((p for p in prods if p["id"] == "archer"), None)
+    names = []
+    if archer:
+        for ed in archer["editions"]:
+            if ed.get("public", True):
+                names += [PLATFORM[x] for x in ed["platforms"] if PLATFORM[x] not in names]
+    archer_where = (", ".join(names[:-1]) + " and " + names[-1]) if len(names) > 1 else (names[0] if names else "Apple platforms")
+    desc = f"Unfire Audio: ARCHER clipper for {archer_where}, Portable Synth Daw for Android, browser instruments and the interactive 3D Unfire Audio world."
+    return (head("Unfire Audio — Audio software, instruments and experiences", desc, "/unfire-audio/", "audio")
             + header("/unfire-audio/") + body + footer())
 
 
