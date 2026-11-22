@@ -12,9 +12,26 @@
     var root = host.attachShadow({mode:"open"});
     var sheet = document.createElement("link");
     sheet.rel = "stylesheet";
-    sheet.href = "/assets/css/ask-unfire.css?v=20261020-3";
-    sheet.onload = function () { host.style.visibility = "visible"; };
-    sheet.onerror = function () { host.style.visibility = "visible"; };
+    var CSS_URL = "/assets/css/ask-unfire.css?v=20261122-1";
+    sheet.href = CSS_URL;
+    // Safari can leave a shadow-root <link> unapplied (stale cache or translation
+    // rewrites). Verify the styles took effect; otherwise inline the same stylesheet.
+    var styled = function () {
+      var panel = root.getElementById("panel");
+      return !!(panel && getComputedStyle(panel).position === "fixed");
+    };
+    var inlined = false;
+    var ensureStyles = function () {
+      if (styled() || inlined) { host.style.visibility = "visible"; return; }
+      inlined = true;
+      fetch(CSS_URL, {credentials: "same-origin"}).then(function (r) { return r.ok ? r.text() : ""; })
+        .then(function (css) {
+          if (css) { var st = document.createElement("style"); st.textContent = css; root.insertBefore(st, root.firstChild); }
+        }).catch(function () {}).then(function () { host.style.visibility = "visible"; });
+    };
+    sheet.onload = function () { setTimeout(ensureStyles, 0); };
+    sheet.onerror = ensureStyles;
+    setTimeout(ensureStyles, 2500);
     root.appendChild(sheet);
 
     var face = '<span class="assistant-mark" aria-hidden="true">' +
