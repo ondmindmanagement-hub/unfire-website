@@ -1,0 +1,29 @@
+name: Unfire product registry gate
+on:
+  pull_request:
+    paths:
+      - 'assets/data/unfire-products.json'
+      - 'assets/css/unfire-ecosystem-20261122.css'
+      - 'scripts/build-ecosystem-pages.py'
+      - 'scripts/check-product-registry.py'
+      - 'tests/product-registry-gate.test.py'
+      - 'apps/index.html'
+      - 'ai-systems/**'
+      - 'unfire-audio/**'
+      - 'assets/products/source-provenance.json'
+      - '.github/workflows/product-registry.yml'
+  schedule:
+    - cron: '17 6 * * 1'   # weekly: flags store checks older than 120 days
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  registry:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Registry gate (truth, dedup, links, captures, leaks, CSP, sync)
+        run: python3 scripts/check-product-registry.py
+      - name: Negative tests — every defect class must be caught
+        run: python3 tests/product-registry-gate.test.py

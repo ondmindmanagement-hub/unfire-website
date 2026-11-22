@@ -9,8 +9,11 @@ const paths=[
   'about/index.html','apps/index.html','archer/index.html','bolt/index.html',
   'contact/index.html','education/index.html','enterprise/index.html',
   'pilot/index.html','early-access/index.html','support/index.html',
-  'unfire-audio/index.html','ai4climate-power/index.html'
+  'ai4climate-power/index.html'
 ];
+// unfire-audio/index.html left this list on 2026-11-22: it is no longer a redirect stub to the
+// 3D world but a static, script-light hub with a strict CSP (no inline boot script). It carries
+// no loading overlay by design; the 3D world keeps its overlay at audio/index.html.
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const css=read('assets/css/unfire-adaptive-loading.css');
 const script=read('assets/js/unfire-adaptive-loading.js');
