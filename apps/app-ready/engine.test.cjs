@@ -57,8 +57,9 @@ test("invalid and unfamiliar report content is rejected",()=>{
  const r=E.makeReport(E.blankState("macos"));
  r.checks["__proto__"]="checked";
  assert.throws(()=>E.loadReport('{"document_type":"unfire-app-ready-self-review","schema_version":1,"platform":"macos","checks":{"__proto__":"checked"}}'),/Unknown check/);
- r.checks["screens-ios"]="checked";
- assert.throws(()=>E.loadReport(JSON.stringify(r)),/Invalid check state/);
+ const wrongPlatform=E.makeReport(E.blankState("macos"));
+ wrongPlatform.checks["screens-ios"]="checked";
+ assert.throws(()=>E.loadReport(JSON.stringify(wrongPlatform)),/Invalid check state/);
 });
 test("oversized file and app name are rejected",()=>{
  assert.throws(()=>E.loadReport("a".repeat(65537)),/too large/);
