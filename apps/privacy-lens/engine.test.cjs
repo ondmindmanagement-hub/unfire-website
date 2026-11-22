@@ -51,3 +51,10 @@ test("does not flag ordinary text or invalid examples",()=>{
  const r=e.report("Memo 12345678A, 999.12.1.1, ES91 2100 0418 4502 0005 1333");
  assert.equal(r.matches.length,0);
 });
+
+test("axe-core accessibility: category count container has a named grouping role",()=>{
+  const fs=require("node:fs"),path=require("node:path");
+  const html=fs.readFileSync(path.join(__dirname,"index.html"),"utf8");
+  assert.match(html,/<div id="counts"[^>]*role="group"[^>]*aria-label="Matched pattern counts"/);
+  assert.doesNotMatch(html,/<div id="counts"[^>]*class="counts" aria-label="Matched pattern counts"/);
+});
