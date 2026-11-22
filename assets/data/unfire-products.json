@@ -1,0 +1,964 @@
+{
+  "schema_version": 1,
+  "updated": "2026-11-22",
+  "policy": "Single source of truth for Unfire product names, families, editions, release status and evidence. Every public claim must be backed by an evidence entry. Store facts were checked against the public store page on the date given. Entries with listed=false are tracked to prevent duplicates and accidental publication; they are never rendered on public hubs. Families follow 20261122_UNFIRE_MASTER_BRAND_WEB_ARCHITECTURE_v1_PRIVATE (editorial labels, not subsidiaries); store states reconciled with 07_appstore_connect_versiones_20261122.",
+  "statuses": {
+    "available": "Available",
+    "free-download": "Free download",
+    "web-lab": "Web Lab · free in your browser",
+    "beta": "Public beta",
+    "closed-test": "Closed test",
+    "awaiting-store": "Awaiting publication on the App Store",
+    "preview": "Development preview · not available for download",
+    "service": "Written-first service",
+    "research": "In Research",
+    "internal": "Internal · not public"
+  },
+  "families": [
+    {
+      "id": "ai-systems",
+      "name": "Unfire AI & Systems",
+      "short": "AI & Systems",
+      "hub": "/ai-systems/",
+      "accent": "#5b7cff",
+      "tagline": "AI that proposes. People who decide.",
+      "summary": "Software and feasibility work for AI-assisted workflows with explicit permissions, human review, STOP controls and recoverable state."
+    },
+    {
+      "id": "apps-tools",
+      "name": "Unfire Apps & Tools",
+      "short": "Apps & Tools",
+      "hub": "/apps/",
+      "accent": "#2fc9b4",
+      "tagline": "Focused tools for everyday work.",
+      "summary": "Native apps and private browser tools for energy, capture, text, files, AI cost planning and release preparation."
+    },
+    {
+      "id": "audio",
+      "name": "Unfire Audio",
+      "short": "Audio",
+      "hub": "/unfire-audio/",
+      "accent": "#b98cff",
+      "tagline": "Sound you can shape, play and finish.",
+      "summary": "Audio effects, mobile music studios, browser instruments and interactive audiovisual experiences."
+    },
+    {
+      "id": "games",
+      "name": "Unfire Games",
+      "short": "Games",
+      "hub": "/games/",
+      "accent": "#ff7a45",
+      "tagline": "Worlds to explore in the browser.",
+      "summary": "Free browser games and interactive 3D worlds, published while in active beta."
+    },
+    {
+      "id": "research",
+      "name": "Unfire Research & Technology",
+      "short": "Research",
+      "hub": "/research/",
+      "accent": "#9fb4d8",
+      "tagline": "Evidence before claims.",
+      "summary": "Research questions, reproducible synthetic tests and shared technology, published with their limits."
+    },
+    {
+      "id": "business",
+      "name": "Unfire for Business",
+      "short": "For Business",
+      "hub": "/enterprise/",
+      "accent": "#e7e9ef",
+      "tagline": "Scoped work, agreed in writing.",
+      "summary": "Remote, written-first QA, AI workflow feasibility, freelance development and interactive 3D experiences."
+    }
+  ],
+  "products": [
+    {
+      "id": "bolt",
+      "name": "BOLT",
+      "family": "ai-systems",
+      "kind": "app",
+      "listed": true,
+      "url": "/bolt/",
+      "summary": "Review AI-proposed file changes before anything touches your files. A builder model proposes, local rules check, you decide.",
+      "visual": {
+        "src": "/assets/products/apps-2026/bolt-icon-256.webp",
+        "type": "icon",
+        "alt": "BOLT app icon"
+      },
+      "editions": [
+        {
+          "label": "Mac",
+          "platforms": [
+            "mac"
+          ],
+          "status": "available",
+          "store": {
+            "name": "Mac App Store",
+            "url": "https://apps.apple.com/us/app/bolt-trusted-ai-bridge/id6814615903",
+            "listing_name": "BOLT: Trusted AI Bridge",
+            "version": "1.1.1",
+            "requires": "macOS 14.0 or later",
+            "verified_on": "2026-11-22"
+          }
+        },
+        {
+          "label": "iPhone & iPad",
+          "platforms": [
+            "iphone",
+            "ipad"
+          ],
+          "status": "awaiting-store",
+          "url": "/apps/bolt-mobile/",
+          "note": "iOS 0.2.0 is 'Pending Developer Release' in App Store Connect (read-only check 2026-11-22). Not a public release until the App Store listing is live."
+        }
+      ],
+      "evidence": [
+        "/bolt/",
+        "/apps/bolt-mobile/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "autonomy",
+      "name": "Unfire Autonomy",
+      "family": "ai-systems",
+      "kind": "service",
+      "listed": true,
+      "url": "/autonomy/",
+      "summary": "Written-first feasibility for complex operational workflows: map the handoffs, set approval boundaries, test on synthetic cases.",
+      "editions": [
+        {
+          "label": "Feasibility review",
+          "platforms": [
+            "web"
+          ],
+          "status": "service"
+        },
+        {
+          "label": "Fictional review lab",
+          "platforms": [
+            "web"
+          ],
+          "status": "web-lab",
+          "url": "/autonomy/demo/"
+        }
+      ],
+      "claims_on_target": [
+        "not yet validated"
+      ],
+      "evidence": [
+        "/autonomy/",
+        "/autonomy/demo/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "unfire-control",
+      "name": "Unfire Control",
+      "family": "ai-systems",
+      "kind": "app",
+      "listed": true,
+      "url": "/apps/unfire-control/",
+      "summary": "Hand-gesture and voice interaction for the Mac, with transparent macOS permissions.",
+      "visual": {
+        "src": "/assets/products/unfire-control-icon.webp",
+        "type": "icon",
+        "alt": "Unfire Control app icon"
+      },
+      "editions": [
+        {
+          "label": "Mac",
+          "platforms": [
+            "mac"
+          ],
+          "status": "preview"
+        }
+      ],
+      "claims_on_target": [
+        "not yet verified"
+      ],
+      "evidence": [
+        "/apps/unfire-control/"
+      ],
+      "note": "macOS 1.0 was rejected in App Store Connect (2026-11-22). Keep as development preview; no store link.",
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "continuum",
+      "name": "Continuum",
+      "family": "ai-systems",
+      "kind": "research",
+      "listed": false,
+      "summary": "Workflow continuity research. A public research demo exists outside this site; the native engine stays private.",
+      "editions": [
+        {
+          "label": "Research",
+          "platforms": [],
+          "status": "internal"
+        }
+      ],
+      "note": "Public name is 'Continuum' (publisher credit by Unfire), per CONTINUUM_FUNCTIONAL_WEB_RELEASE_HANDOFF_20261122. Research demo at https://ondmindmanagement-hub.github.io/continuum-web/ (commit e0ab507). Kept unlisted: the brand architecture brief lists Continuum as hidden until validated. Listing it as 'In Research' with the external demo link is an owner decision.",
+      "evidence": [],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "convergence",
+      "name": "Unfire Convergence",
+      "family": "ai-systems",
+      "kind": "research",
+      "listed": false,
+      "summary": "Named in the brand brief. No product page, build or release evidence found in the website repository.",
+      "editions": [
+        {
+          "label": "Unverified",
+          "platforms": [],
+          "status": "internal"
+        }
+      ],
+      "note": "Only a locally verified synthetic-fixture hash exists (WEB_TERMINAL_INTEGRATION_V02_HANDOFF). No producer, signature or approved integration. Hidden until validated.",
+      "evidence": [],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "power",
+      "name": "Power Energy Prices",
+      "family": "apps-tools",
+      "kind": "app",
+      "listed": true,
+      "url": "/apps/power/",
+      "summary": "Electricity price references for your market and a clear view of your daily cost.",
+      "visual": {
+        "src": "/assets/products/apps-2026/power-icon-256.webp",
+        "type": "icon",
+        "alt": "Power Energy Prices app icon"
+      },
+      "editions": [
+        {
+          "label": "iPhone",
+          "platforms": [
+            "iphone"
+          ],
+          "status": "available",
+          "price": "Free",
+          "store": {
+            "name": "App Store",
+            "url": "https://apps.apple.com/app/id6815880143",
+            "listing_name": "Power Energy Prices",
+            "version": "1.0.1",
+            "requires": "iOS 18.0 or later",
+            "verified_on": "2026-11-22"
+          }
+        }
+      ],
+      "note": "App Store page header says 'Only for iPhone'. /apps/ currently labels it 'iPhone & iPad' — correct that label in the owning PR.",
+      "evidence": [
+        "/apps/power/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "power-web",
+      "name": "Power Web Lab",
+      "family": "apps-tools",
+      "kind": "web-app",
+      "listed": true,
+      "url": "/apps/power-web/",
+      "summary": "Simulate hourly electricity costs and appliance run times with prices you supply. Runs locally; no live prices or supplier advice.",
+      "editions": [
+        {
+          "label": "Browser",
+          "platforms": [
+            "web"
+          ],
+          "status": "web-lab"
+        }
+      ],
+      "evidence": [
+        "/apps/power-web/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "pocket-capture",
+      "name": "Pocket Capture",
+      "family": "apps-tools",
+      "kind": "app",
+      "listed": true,
+      "url": "/apps/pocket-capture/",
+      "summary": "Record, trim to the exact part you want and export a clean WAV. No account.",
+      "visual": {
+        "src": "/assets/products/apps-2026/pocket-capture-icon-256.webp",
+        "type": "icon",
+        "alt": "Pocket Capture app icon"
+      },
+      "editions": [
+        {
+          "label": "iPhone & iPad",
+          "platforms": [
+            "iphone",
+            "ipad"
+          ],
+          "status": "available",
+          "price": "Free",
+          "store": {
+            "name": "App Store",
+            "url": "https://apps.apple.com/app/id6823107299",
+            "listing_name": "Unfire Pocket Capture",
+            "requires": "iOS 17.0 or later",
+            "verified_on": "2026-11-22"
+          }
+        }
+      ],
+      "evidence": [
+        "/apps/pocket-capture/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "ai-token-counter",
+      "name": "AI Token Counter",
+      "family": "apps-tools",
+      "kind": "web-app",
+      "listed": true,
+      "url": "/apps/ai-token-counter/",
+      "summary": "Estimate tokens and plan AI costs with your own prices, privately in the browser. Estimates, not official tokenization.",
+      "editions": [
+        {
+          "label": "Browser",
+          "platforms": [
+            "web"
+          ],
+          "status": "web-lab"
+        }
+      ],
+      "evidence": [
+        "/apps/ai-token-counter/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "app-ready",
+      "name": "App Ready",
+      "family": "apps-tools",
+      "kind": "web-app",
+      "listed": true,
+      "url": "/apps/app-ready/",
+      "summary": "A local, self-reported App Store preparation checklist by platform. Does not inspect binaries or contact Apple.",
+      "editions": [
+        {
+          "label": "Browser",
+          "platforms": [
+            "web"
+          ],
+          "status": "web-lab"
+        }
+      ],
+      "evidence": [
+        "/apps/app-ready/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "privacy-lens",
+      "name": "Privacy Lens",
+      "family": "apps-tools",
+      "kind": "web-app",
+      "listed": true,
+      "url": "/apps/privacy-lens/",
+      "summary": "Check text for selected sensitive patterns and prepare a redacted copy on your device. Never a guarantee that text is safe.",
+      "editions": [
+        {
+          "label": "Browser",
+          "platforms": [
+            "web"
+          ],
+          "status": "web-lab"
+        }
+      ],
+      "evidence": [
+        "/apps/privacy-lens/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "file-prep",
+      "name": "File Prep",
+      "family": "apps-tools",
+      "kind": "web-app",
+      "listed": true,
+      "url": "/apps/file-prep/",
+      "summary": "Normalize text, validate JSON and split documents into chunks, locally.",
+      "editions": [
+        {
+          "label": "Browser",
+          "platforms": [
+            "web"
+          ],
+          "status": "web-lab"
+        }
+      ],
+      "evidence": [
+        "/apps/file-prep/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "banner-fit",
+      "name": "Banner Fit",
+      "family": "apps-tools",
+      "kind": "web-app",
+      "listed": true,
+      "url": "/apps/banner-fit/",
+      "summary": "Resize and export creator artwork privately, with accurate cropping for common banner sizes.",
+      "editions": [
+        {
+          "label": "Browser",
+          "platforms": [
+            "web"
+          ],
+          "status": "web-lab"
+        }
+      ],
+      "evidence": [
+        "/apps/banner-fit/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "signals",
+      "name": "Unfire Signals",
+      "family": "apps-tools",
+      "kind": "extension",
+      "listed": true,
+      "url": "/signals/",
+      "summary": "A browser extension that shows which ChatGPT conversations are responding, complete or idle.",
+      "editions": [
+        {
+          "label": "Browser extension",
+          "platforms": [
+            "web"
+          ],
+          "status": "preview",
+          "note": "Version 1.4 release candidate. Not available for download."
+        }
+      ],
+      "claims_on_target": [
+        "release candidate"
+      ],
+      "evidence": [
+        "/signals/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "human-intelligence",
+      "name": "Unfire Human Intelligence",
+      "family": "apps-tools",
+      "kind": "app",
+      "listed": false,
+      "summary": "Local macOS decision-analysis app. Only a privacy notice is published.",
+      "editions": [
+        {
+          "label": "Mac",
+          "platforms": [
+            "mac"
+          ],
+          "status": "internal"
+        }
+      ],
+      "note": "No product page or verified store listing. Keep unlisted.",
+      "evidence": [
+        "/human-intelligence/privacy/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "archer",
+      "name": "ARCHER",
+      "family": "audio",
+      "kind": "app",
+      "listed": true,
+      "url": "/archer/",
+      "summary": "A real-time audio clipper with three controls — Gain, Threshold and Atmosphere. Standalone and Audio Unit.",
+      "visual": {
+        "src": "/assets/products/apps-2026/archer-icon-256.webp",
+        "type": "icon",
+        "alt": "ARCHER app icon"
+      },
+      "editions": [
+        {
+          "label": "Mac",
+          "platforms": [
+            "mac"
+          ],
+          "status": "available",
+          "store": {
+            "name": "Mac App Store",
+            "url": "https://apps.apple.com/app/id6812968924",
+            "listing_name": "ARCHER Audio Clipper",
+            "version": "1.0.2",
+            "requires": "macOS 12.0 or later, Apple silicon",
+            "verified_on": "2026-11-22"
+          }
+        },
+        {
+          "label": "iPhone & iPad",
+          "platforms": [
+            "iphone",
+            "ipad"
+          ],
+          "status": "available",
+          "store": {
+            "name": "App Store",
+            "url": "https://apps.apple.com/app/id6822109610",
+            "listing_name": "Archer for iPhone & iPad",
+            "version": "1.0.2",
+            "requires": "iOS 18.0 or later",
+            "verified_on": "2026-11-22"
+          }
+        }
+      ],
+      "evidence": [
+        "/archer/",
+        "/archer/logic-pro/",
+        "/archer/faq/"
+      ],
+      "evidence_checked_at": "2026-11-22",
+      "routes": [
+        "/archer/",
+        "/apps/archer-mobile/"
+      ]
+    },
+    {
+      "id": "archer-web",
+      "name": "ARCHER Web Lab",
+      "family": "audio",
+      "kind": "web-app",
+      "listed": true,
+      "url": "/apps/archer-web/",
+      "summary": "Load audio locally, preview experimental soft clipping and export WAV. A separate web engine, not the native plugin.",
+      "editions": [
+        {
+          "label": "Browser",
+          "platforms": [
+            "web"
+          ],
+          "status": "web-lab"
+        }
+      ],
+      "evidence": [
+        "/apps/archer-web/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "portable-synth",
+      "name": "Portable Synth Daw",
+      "family": "audio",
+      "kind": "app",
+      "listed": true,
+      "url": "/portable-synth/",
+      "summary": "A free Android music studio: four synth engines, six-track recording, effects and WAV export. Works offline.",
+      "editions": [
+        {
+          "label": "Android · Direct",
+          "platforms": [
+            "android"
+          ],
+          "status": "free-download",
+          "price": "Free",
+          "note": "Official signed APK, version 1.0.5."
+        },
+        {
+          "label": "Android · Google Play",
+          "platforms": [
+            "android"
+          ],
+          "status": "closed-test",
+          "url": "/portable-synth/beta/"
+        }
+      ],
+      "claims_on_target": [
+        "1.0.5",
+        "Android 8.0"
+      ],
+      "evidence": [
+        "/portable-synth/",
+        "/portable-synth/beta/"
+      ],
+      "note": "The separate iOS build was rejected in App Store Connect (2026-11-22); do not imply an iOS edition.",
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "portable-synth-studio",
+      "name": "Portable Synth Studio",
+      "family": "audio",
+      "kind": "web-app",
+      "listed": true,
+      "url": "/portable-synth/studio/",
+      "summary": "Build 16-step drum and synth loops in the browser and export WAV or JSON. Not the full Android studio.",
+      "editions": [
+        {
+          "label": "Browser",
+          "platforms": [
+            "web"
+          ],
+          "status": "web-lab"
+        }
+      ],
+      "evidence": [
+        "/portable-synth/studio/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "sound-lab",
+      "name": "Browser Sound Lab",
+      "family": "audio",
+      "kind": "web-app",
+      "listed": true,
+      "url": "/portable-synth/play/",
+      "summary": "A small Web Audio instrument: four oscillator shapes, an on-screen keyboard and desktop shortcuts.",
+      "editions": [
+        {
+          "label": "Browser",
+          "platforms": [
+            "web"
+          ],
+          "status": "web-lab"
+        }
+      ],
+      "evidence": [
+        "/portable-synth/play/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "hyperwave-2000",
+      "name": "HYPERWAVE 2000",
+      "family": "audio",
+      "kind": "web-app",
+      "listed": true,
+      "url": "/audio/hyperwave/",
+      "summary": "An interactive 3D synthesizer that transforms as you play. Keyboard, rotate and zoom in the browser.",
+      "visual": {
+        "src": "/audio/img/hyperwave-open.webp",
+        "type": "capture",
+        "alt": "HYPERWAVE 2000 synthesizer open in the browser"
+      },
+      "editions": [
+        {
+          "label": "Browser · desktop recommended",
+          "platforms": [
+            "web"
+          ],
+          "status": "web-lab"
+        }
+      ],
+      "evidence": [
+        "/audio/hyperwave/",
+        "/games/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "gods-lamp",
+      "name": "God's Lamp",
+      "family": "audio",
+      "kind": "app",
+      "listed": false,
+      "summary": "Privacy policies published for Android and iOS. Product presentation is in draft PR #382 (not a release).",
+      "editions": [
+        {
+          "label": "Android / iOS",
+          "platforms": [
+            "android",
+            "iphone",
+            "ipad"
+          ],
+          "status": "internal"
+        }
+      ],
+      "note": "Do not list until the owner merges a verified product page with authentic captures.",
+      "evidence": [
+        "/privacy/gods-lamp/",
+        "/privacy/gods-lamp-ios/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "audio-shield",
+      "name": "Unfire Audio Shield",
+      "family": "audio",
+      "kind": "app",
+      "listed": false,
+      "summary": "Native macOS app in preparation for App Store submission. Only a privacy page is published.",
+      "editions": [
+        {
+          "label": "Mac",
+          "platforms": [
+            "mac"
+          ],
+          "status": "internal"
+        }
+      ],
+      "note": "App Store Connect 6827997310: 'Prepare for Submission' (2026-11-22). List only after a verified live listing and authentic captures.",
+      "evidence": [
+        "/audio-shield-privacy.html"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "unfire-mutants",
+      "name": "UNFIRE Mutants",
+      "family": "games",
+      "kind": "game",
+      "listed": true,
+      "url": "/mutants/",
+      "aliases": [
+        "Y2K ROBOTS",
+        "3D Robot Adventure"
+      ],
+      "routes": [
+        "/mutants/",
+        "/audio/",
+        "/games/",
+        "/games/y2k-robots/"
+      ],
+      "summary": "A free 3D robot world in the browser: fly over islands, explore the house, meet transforming robots and play with a friend in temporary rooms.",
+      "visual": {
+        "src": "/assets/games/mutants/09-night-flight-panorama-1280.webp",
+        "type": "capture",
+        "alt": "Night flight over the islands — actual browser beta capture"
+      },
+      "editions": [
+        {
+          "label": "Browser · desktop recommended",
+          "platforms": [
+            "web"
+          ],
+          "status": "beta",
+          "price": "Free"
+        }
+      ],
+      "note": "One game, several entry routes. /audio/ is the immersive entry and must be preserved. Y2K ROBOTS is the planned public title (see /games/y2k-robots/); the final name is an owner decision. Private audit 09_aliases records Mutants, Y2K ROBOTS and the /audio/ world as one game (canonical family 'Y2K ROBOTS'). Native Y2K Robots: iOS rejected, macOS in preparation — no store link.",
+      "evidence": [
+        "/mutants/",
+        "/games/",
+        "/games/y2k-robots/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "research-agenda",
+      "name": "Technical Research",
+      "family": "research",
+      "kind": "research",
+      "listed": true,
+      "url": "/research/",
+      "summary": "Reliable AI agents, software infrastructure and human–computer interaction, studied through controlled tests.",
+      "editions": [
+        {
+          "label": "Research agenda",
+          "platforms": [
+            "web"
+          ],
+          "status": "research"
+        }
+      ],
+      "evidence": [
+        "/research/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "human-oversight-note",
+      "name": "Who authorises an AI agent's next action?",
+      "family": "research",
+      "kind": "research",
+      "listed": true,
+      "url": "/press/ai-human-oversight/",
+      "summary": "A source-linked research note on separating AI action proposals from permission to execute.",
+      "editions": [
+        {
+          "label": "Research note",
+          "platforms": [
+            "web"
+          ],
+          "status": "research"
+        }
+      ],
+      "evidence": [
+        "/press/ai-human-oversight/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "performance-research",
+      "name": "Performance & AI Efficiency",
+      "family": "research",
+      "kind": "research",
+      "listed": true,
+      "url": "/enterprise/performance/",
+      "summary": "Reproducible synthetic test evidence on software and AI workflow efficiency.",
+      "editions": [
+        {
+          "label": "Research",
+          "platforms": [
+            "web"
+          ],
+          "status": "research"
+        }
+      ],
+      "evidence": [
+        "/enterprise/performance/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "ai4climate-power",
+      "name": "Power · AI Energy Response",
+      "family": "research",
+      "kind": "research",
+      "listed": true,
+      "url": "/ai4climate-power/",
+      "summary": "A research demo that ranks electricity-use windows, explains the trade-off and leaves every decision with the person. Synthetic data.",
+      "editions": [
+        {
+          "label": "Research demo",
+          "platforms": [
+            "web"
+          ],
+          "status": "research"
+        }
+      ],
+      "claims_on_target": [
+        "synthetic"
+      ],
+      "evidence": [
+        "/ai4climate-power/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "bolt-evidence",
+      "name": "BOLT pilot evidence",
+      "family": "research",
+      "kind": "research",
+      "listed": true,
+      "url": "/pilot/evidence/",
+      "summary": "Inspectable synthetic evidence and local model test results for BOLT. A research proof, not a production deployment.",
+      "editions": [
+        {
+          "label": "Evidence",
+          "platforms": [
+            "web"
+          ],
+          "status": "research"
+        }
+      ],
+      "evidence": [
+        "/pilot/evidence/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "pilot",
+      "name": "AI Workflow Pilots",
+      "family": "business",
+      "kind": "service",
+      "listed": true,
+      "url": "/pilot/",
+      "summary": "Fixed-scope, synthetic-data QA and feasibility for one narrowly defined workflow, agreed in writing.",
+      "editions": [
+        {
+          "label": "Remote · written-first",
+          "platforms": [
+            "web"
+          ],
+          "status": "service",
+          "price": "From €950 · indicative"
+        }
+      ],
+      "claims_on_target": [
+        "€950"
+      ],
+      "evidence": [
+        "/pilot/",
+        "/pilot/example/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "audit",
+      "name": "Audit & Assurance",
+      "family": "business",
+      "kind": "service",
+      "listed": true,
+      "url": "/audit/",
+      "summary": "Remote technical QA: website reviews and AI workflow control checks, with reproducible written findings.",
+      "editions": [
+        {
+          "label": "Remote · written-first",
+          "platforms": [
+            "web"
+          ],
+          "status": "service",
+          "price": "From €490 · indicative"
+        }
+      ],
+      "claims_on_target": [
+        "€490"
+      ],
+      "evidence": [
+        "/audit/",
+        "/audit/example/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "freelance",
+      "name": "Freelance Development & QA",
+      "family": "business",
+      "kind": "service",
+      "listed": true,
+      "url": "/freelance/",
+      "summary": "JavaScript and Python QA, small automation tools and testable prototypes — one agreed problem at a time.",
+      "editions": [
+        {
+          "label": "Remote · written-first",
+          "platforms": [
+            "web"
+          ],
+          "status": "service"
+        }
+      ],
+      "evidence": [
+        "/freelance/",
+        "/freelance/qa-example/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    },
+    {
+      "id": "showrooms",
+      "name": "Interactive 3D Showrooms",
+      "family": "business",
+      "kind": "service",
+      "listed": true,
+      "url": "/enterprise/showrooms/",
+      "summary": "Custom interactive 3D product cases and digital showrooms, built on Unfire's own 3D work.",
+      "editions": [
+        {
+          "label": "Project-based",
+          "platforms": [
+            "web"
+          ],
+          "status": "service"
+        }
+      ],
+      "evidence": [
+        "/enterprise/showrooms/"
+      ],
+      "evidence_checked_at": "2026-11-22"
+    }
+  ]
+}
