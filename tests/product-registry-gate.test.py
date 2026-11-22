@@ -68,6 +68,10 @@ def _(r): r["products"] = [p for p in r["products"] if p["id"] != "power-web"]
 @case("catalog links a product the registry keeps unlisted", "[LEAKS]")
 def _(r): prod(r, "file-prep")["listed"] = False
 
+@case("catalog card claims a platform the registry did not verify", "[PLATFORMS]")
+def _(r): prod(r, "pocket-capture")["editions"][0]["platforms"] = ["iphone"]
+
+
 def main():
     rc, out = run(BASE)
     assert rc == 0, "baseline registry must pass:\n" + out
