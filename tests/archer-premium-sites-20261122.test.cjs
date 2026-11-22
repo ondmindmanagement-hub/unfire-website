@@ -46,6 +46,6 @@ test('marketing images retain more than 2 pixels per CSS device pixel at maximum
   const a=read('audio/index.html');
   assert.ok(640>=2*168 && 720>=2*264);
   assert.match(a,/width="640" height="1317"/);
-  assert.match(a,/width="720" height="1283"/);
+  assert.match(a,/width="960" height="1280"/);
   for(const n of [phone,ipad])assert.ok(fs.existsSync(path.join(root,'assets/products',n)));
 });

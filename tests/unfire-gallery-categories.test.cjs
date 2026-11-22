@@ -53,7 +53,7 @@ const viewports = [
             footnote: root.querySelector('.uf-gallery-footnote')?.textContent || '',
           };
         }, expected);
-        assert.equal(summary.cards, 8); // ARCHER Mobile card is parked (data-archer-mobile-pending) until the iPhone/iPad build is finished
+        assert.equal(summary.cards, 9);
         assert.equal(summary.images, 9); // Two authentic ARCHER Mobile device images; KeyBridge stays text-only
         assert.equal(summary.emptyAlt, 0);
         assert.equal(await page.locator('#apps .uf-gallery-card--control img').count(), 1, 'Control must use its original app icon');
