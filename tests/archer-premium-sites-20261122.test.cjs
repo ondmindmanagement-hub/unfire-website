@@ -31,7 +31,7 @@ test('interactive purchase and preview links are distinct and functional destina
   assert.match(s,/href="https:\/\/apps\.apple\.com\/es\/app\/archer-for-iphone-ipad\/id6822109610"/);
   assert.match(s,/href="\/audio\/#archer-mobile-preview"/);
   assert.match(read('audio/index.html'),/href="\/apps\/archer-mobile\/"/);
-  assert.match(read('audio/tienda/index.html'),/cta--store/);
+  assert.match(read('audio/tienda/index.html'),/class=\"cta cta--store\" href=\"#archer-current-app\"/);
 });
 test('mobile rendering has legible layouts and keyboard access',()=>{
   const a=read('audio/index.html'),d=read('archer/index.html'),t=read('audio/tienda/index.html');
