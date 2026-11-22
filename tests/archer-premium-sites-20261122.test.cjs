@@ -7,7 +7,7 @@ const root=path.resolve(__dirname,'..');
 const read=(p)=>fs.readFileSync(path.join(root,p),'utf8');
 const pages=['index.html','audio/index.html','audio/tienda/index.html','audio/catalogo/index.html','archer/index.html'];
 const phone='archer-mobile-iphone-ui-20261029.webp';
-const ipad='archer-mobile-ipad-ui-20261029.webp';
+const ipad='archer-mobile-ipad-landscape-20261122.webp';
 
 test('all five public Archer touchpoints use actual existing separate mobile assets',()=>{
   for(const file of pages){
@@ -46,6 +46,6 @@ test('marketing images retain more than 2 pixels per CSS device pixel at maximum
   const a=read('audio/index.html');
   assert.ok(640>=2*168 && 720>=2*264);
   assert.match(a,/width="640" height="1317"/);
-  assert.match(a,/width="960" height="1280"/);
+  assert.match(a,/width="1280" height="894"/);
   for(const n of [phone,ipad])assert.ok(fs.existsSync(path.join(root,'assets/products',n)));
 });

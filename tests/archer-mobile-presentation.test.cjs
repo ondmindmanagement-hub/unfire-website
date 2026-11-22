@@ -8,7 +8,7 @@ const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const mobile = fs.readFileSync(path.join(root, 'apps/archer-mobile/index.html'), 'utf8');
 // apps/archer-mobile/ is now a redirect to /archer/#iphone (unified ARCHER page, 2026-11-22).
 const iphone = 'archer-mobile-iphone-ui-20261029.webp';
-const ipad = 'archer-mobile-ipad-ui-20261029.webp';
+const ipad = 'archer-mobile-ipad-landscape-20261122.webp';
 const mac = 'archer-nocturne-app-preview-20261028.webp';
 test('real device-specific mobile renders never reuse the Mac preview', () => {
   const gallery = home.slice(home.indexOf('id="apps-audio"'), home.indexOf('id="apps-capture"') > 0 ? home.indexOf('id="apps-capture"') : home.indexOf('id="apps-audio"') + 7000);
