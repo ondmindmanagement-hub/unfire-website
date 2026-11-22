@@ -159,3 +159,11 @@ test('Privacy Lens and File Prep appear once with accurate browser limitations',
  const state=simulate();state.select('device','web');verifyFilter(state,'all','web');
  assert.ok(state.cards.filter(x=>!x.hidden).length>=7);
 });
+
+test('App Ready is one discoverable functional browser experiment without Apple submission claims',()=>{
+ assert.equal((html.match(/href="\/apps\/app-ready\/"/g)||[]).length,1);
+ assert.match(html,/App Ready Web Lab/);
+ assert.match(html,/Does not inspect binaries, submit to Apple or certify approval/);
+ const state=simulate();state.select('device','web');verifyFilter(state,'all','web');
+ assert.ok(state.cards.filter(x=>!x.hidden).length>=8);
+});

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b1016">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="App Ready Web Lab by Unfire: a local, self-reported App Store preparation checklist with platform-specific steps, review progress and optional JSON export. No login or Apple account connection.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://unfire.technology/apps/app-ready/">
+<link rel="stylesheet" href="./style.css">
+<title>App Ready Web Lab — Release preparation, without guesswork | Unfire</title>
+<script defer src="./engine.js"></script>
+<script defer src="./app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to workspace</a>
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="/"><span class="brand-star" aria-hidden="true">✦</span> UNFIRE <span class="brand-soft">/ TOOLS</span></a>
+    <nav aria-label="Site navigation"><a href="/apps/">All apps</a><a href="/privacy.html">Privacy</a></nav>
+  </div>
+</header>
+<main id="main" class="shell">
+  <section class="intro" aria-labelledby="title">
+    <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> BROWSER LAB <span class="slash">/</span> RELEASE WORKSPACE</p>
+    <h1 id="title">Ship prepared.<br><span>Not by guesswork.</span></h1>
+    <p class="lede">One focused place to review what matters before an App Store submission. Choose your platform, mark what you have actually checked and export a review record you control.</p>
+    <div class="pills" aria-label="Tool features"><span>LOCAL TO THIS TAB</span><span>NO APPLE CONNECTION</span><span>NO ACCOUNT</span></div>
+  </section>
+  <section class="notice" aria-label="Scope and limitations">
+    <span class="notice-icon" aria-hidden="true">!</span>
+    <div><strong>An independent preparation tool, not an Apple verification service.</strong><p>Every status is self-reported. This checklist does not inspect your binary, collect screenshots, sign files, submit an app, verify licenses or guarantee approval. Apple's requirements can change. Never paste review passwords or sensitive data here.</p></div>
+  </section>
+  <div class="workspace">
+    <section class="review panel" aria-labelledby="review-title">
+      <div class="panel-top"><span class="overline">01 / YOUR RELEASE</span><h2 id="review-title">Set up your review.</h2><p>A separate review for each target platform keeps the checklist honest.</p></div>
+      <div class="fields">
+        <div><label for="app-name">App name <span class="optional">(optional)</span></label><input id="app-name" type="text" maxlength="80" autocomplete="off" placeholder="e.g. My Release" spellcheck="false"></div>
+        <div><label for="platform">Target platform</label><select id="platform"><option value="macos">macOS</option><option value="ios">iOS · iPhone</option><option value="ipados">iPadOS · iPad</option></select></div>
+      </div>
+      <div class="metric-grid" aria-label="Review progress">
+        <div class="metric"><span>Marked checked</span><strong id="done">0</strong></div>
+        <div class="metric"><span>Needs attention</span><strong id="pending">—</strong></div>
+        <div class="metric"><span>Not applicable</span><strong id="na">0</strong></div>
+      </div>
+      <div class="meter-caption"><label for="progress">Self-review progress</label><output id="progress-text">0%</output></div>
+      <progress id="progress" value="0" max="100">0%</progress>
+      <p id="progress-note" class="small">No checks completed yet.</p>
+      <div class="actions">
+        <button type="button" id="export" class="button primary">Download review JSON <span aria-hidden="true">↗</span></button>
+        <label class="button secondary file-button" for="import">Import saved review</label>
+        <input id="import" type="file" accept=".json,application/json" aria-describedby="import-help">
+        <button type="button" id="reset" class="button ghost">Reset review</button>
+      </div>
+      <p id="import-help" class="small">JSON export stays on your device until you decide to share it. Import supports files created by this lab, up to 64 KB. No automatic saving.</p>
+      <p id="live-status" class="live" role="status" aria-live="polite">Ready. Mark only checks you've actually completed.</p>
+    </section>
+    <aside class="aside panel" aria-labelledby="method-title">
+      <span class="overline">THE METHOD</span>
+      <h2 id="method-title">Evidence over optimism.</h2>
+      <p class="aside-lede">A checklist can't prove a release is ready. It can make missing work visible before submission.</p>
+      <div class="method-step"><span>01</span><div><strong>Choose a platform</strong><p>Device media and review requirements can differ.</p></div></div>
+      <div class="method-step"><span>02</span><div><strong>Mark what you verified</strong><p>Unchecked remains pending. N/A is limited to conditional tasks.</p></div></div>
+      <div class="method-step"><span>03</span><div><strong>Keep your evidence</strong><p>Export a dated JSON snapshot for your own records.</p></div></div>
+      <div class="aside-foot"><span class="small-sigil" aria-hidden="true">✦</span><div><strong>Your files. Your decision.</strong><p>This page runs fully in your browser, without a backend or persistent storage.</p></div></div>
+    </aside>
+  </div>
+  <section class="tasks" aria-labelledby="checklist-title">
+    <div class="tasks-heading">
+      <div><span class="overline">02 / RELEASE GATES</span><h2 id="checklist-title">The review checklist.</h2><p>Use <strong>Checked</strong> only after manual verification. <strong>N/A</strong> is available for conditional items.</p></div>
+      <div class="filter-wrap"><label for="filter">Show checks</label><select id="filter"><option value="all">All checks</option><option value="pending">Needs attention</option><option value="checked">Marked checked</option><option value="na">Marked N/A</option></select></div>
+    </div>
+    <div id="task-sections"></div>
+    <p id="empty-filter" class="empty-filter" hidden>No checks match this filter.</p>
+  </section>
+  <section class="reference" aria-labelledby="reference-title">
+    <span class="overline">03 / OFFICIAL SOURCE</span><h2 id="reference-title">Verify against Apple's current guidance.</h2>
+    <p>These links lead to Apple Developer documentation. The requirements and submission flow belong to Apple and may change without this tool updating.</p>
+    <div class="ref-grid">
+      <a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer"><strong>App Review Guidelines</strong><span>Review completeness, rights, privacy and metadata ↗</span></a>
+      <a href="https://developer.apple.com/help/app-store-connect/manage-submissions-to-app-review/submit-an-app" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer"><strong>Submission workflow</strong><span>Select the build and review your submission ↗</span></a>
+      <a href="https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer"><strong>Screenshot requirements</strong><span>Check current supported display sizes ↗</span></a>
+    </div>
+    <p class="small attribution">App Ready Web Lab is an independent Unfire experiment and is not affiliated with or endorsed by Apple. No Apple services are called.</p>
+  </section>
+</main>
+<footer class="shell footer"><span>© 2026 Unfire · App Ready Web Lab</span><a href="/apps/">Browse Unfire apps</a><span>Experimental local checklist · No certification</span></footer>
+</body>
+</html>
