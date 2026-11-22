@@ -60,7 +60,7 @@ h2{font-size:clamp(23px,3.6vw,32px);font-weight:670;letter-spacing:-.04em;line-h
 .grid-row[data-track=snare]{--tone:#bda7ff}
 .grid-row[data-track=hat]{--tone:#e6d093}
 .grid-row[data-track=bass]{--tone:#9ce6be}
-.step-number{font-size:10px;text-align:center;color:#687d98;font-weight:700}
+.step-number{font-size:10px;text-align:center;color:#91accb;font-weight:700}
 .step-number.bar-start{color:#d0dcec}
 .step{border:1px solid rgba(168,192,227,.13);background:#19253a;border-radius:6px;height:45px;min-width:0;padding:2px;display:grid;place-items:center;color:#8196b3;font-size:10px;font-weight:800;transition:transform .13s,background .13s;overflow:hidden}
 .step:nth-child(4n + 5){box-shadow:-2px 0 0 #8d9cba28}
