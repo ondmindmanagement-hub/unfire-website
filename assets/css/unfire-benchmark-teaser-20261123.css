@@ -1,0 +1,28 @@
+/* Unfire · Selected external presentation benchmarks · 23 Nov 2026.
+   Namespaced. Remote YouTube thumbnail requests are lazy-loaded.
+   No fonts, external JS, cookies or asset copies included. */
+#uf-benchmark-teaser{position:relative;isolation:isolate;padding:clamp(64px,9vw,112px) 0;background:linear-gradient(145deg,#06080c 0%,#090b10 52%,#050507 100%);border-top:1px solid #20232b;border-bottom:1px solid #20232b;color:#f4f5f8}
+#uf-benchmark-teaser *,#uf-benchmark-teaser *::before,#uf-benchmark-teaser *::after{box-sizing:border-box}
+#uf-benchmark-teaser .ufbm-container{width:min(1140px,calc(100% - 48px));margin:0 auto}
+#uf-benchmark-teaser .ufbm-top{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:31px}
+#uf-benchmark-teaser .ufbm-eyebrow{display:block;font-size:11px;letter-spacing:.17em;text-transform:uppercase;color:#d0a3ac;font-weight:700;margin:0 0 16px}
+#uf-benchmark-teaser h2{font-size:clamp(28px,4.1vw,52px);line-height:1.07;letter-spacing:-.043em;font-weight:650;margin:0 0 14px;color:#f5f5f7;max-width:780px}
+#uf-benchmark-teaser .ufbm-description{font-size:15px;line-height:1.65;color:#aeb2bd;margin:0;max-width:690px}
+#uf-benchmark-teaser .ufbm-all{display:inline-flex;align-items:center;white-space:nowrap;gap:9px;padding:12px 17px;border:1px solid #39404c;border-radius:999px;font-size:13px;color:#f5f5f7;text-decoration:none}
+#uf-benchmark-teaser .ufbm-all:hover,#uf-benchmark-teaser .ufbm-all:focus-visible{background:#1d2531;border-color:#8c9eb9}
+#uf-benchmark-teaser .ufbm-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+#uf-benchmark-teaser .ufbm-card{min-width:0;border:1px solid #252a33;border-radius:22px;overflow:hidden;background:linear-gradient(158deg,#11151b,#0b0d12);transition:transform .2s ease,border-color .2s ease}
+#uf-benchmark-teaser .ufbm-card:hover{transform:translateY(-3px);border-color:#657186}
+#uf-benchmark-teaser .ufbm-image{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,#1c2632,#111820)}
+#uf-benchmark-teaser .ufbm-image img{display:block;width:100%;height:100%;object-fit:cover}
+#uf-benchmark-teaser .ufbm-image::after{content:'VIEW OFFICIAL VIDEO ↗';position:absolute;right:14px;bottom:14px;border:1px solid #4c5665;border-radius:999px;background:rgba(5,8,12,.88);color:white;font-size:10px;letter-spacing:.08em;padding:8px 11px;backdrop-filter:blur(8px)}
+#uf-benchmark-teaser .ufbm-cardtext{padding:23px}
+#uf-benchmark-teaser .ufbm-meta{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#c4afbb;font-weight:650;margin:0 0 12px}
+#uf-benchmark-teaser h3{font-weight:620;font-size:clamp(19px,2vw,24px);letter-spacing:-.02em;line-height:1.2;margin:0 0 10px;color:#f5f5f7}
+#uf-benchmark-teaser .ufbm-cardtext p{font-size:13px;line-height:1.65;color:#b6bac4;margin:0 0 14px}
+#uf-benchmark-teaser .ufbm-lesson{font-size:12px;color:#dbdee5;border-top:1px solid #30343c;padding-top:14px;line-height:1.55}
+#uf-benchmark-teaser .ufbm-note{margin:20px 0 0;color:#949da9;font-size:12px;line-height:1.6}
+#uf-benchmark-teaser a:focus-visible{outline:3px solid #f6c76f;outline-offset:4px}
+@media(max-width:900px){#uf-benchmark-teaser .ufbm-top{align-items:start;flex-direction:column}#uf-benchmark-teaser .ufbm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){#uf-benchmark-teaser{padding:60px 0}#uf-benchmark-teaser .ufbm-container{width:calc(100% - 34px)}#uf-benchmark-teaser .ufbm-grid{grid-template-columns:1fr;gap:14px}#uf-benchmark-teaser .ufbm-top{margin-bottom:25px}#uf-benchmark-teaser .ufbm-cardtext{padding:20px}#uf-benchmark-teaser .ufbm-image::after{font-size:9px}}
+@media(prefers-reduced-motion:reduce){#uf-benchmark-teaser .ufbm-card{transition:none}#uf-benchmark-teaser .ufbm-card:hover{transform:none}}
