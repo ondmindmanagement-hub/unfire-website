@@ -183,6 +183,8 @@ def main():
             for u in [p.get("url")] + p.get("routes", []) + [ed.get("url") for ed in p["editions"]]:
                 if u: known[u] = p
         ch = cat.read_text(encoding="utf-8", errors="ignore")
+        # The shared global bar is site navigation, not catalogue content.
+        ch = re.sub(r"<!-- unfire-global-bar:start -->[\s\S]*?<!-- unfire-global-bar:end -->", "", ch)
         L = Links(); L.feed(ch)
         site_paths = {h for h in L.hrefs if h.startswith("/") and h.count("/") >= 2
                       and not h.startswith(("/assets/", "/contact/", "/early-access/", "/terms", "/software-license", "/refunds", "/privacy"))}
