@@ -16,7 +16,7 @@ permissions:
   contents: read
 jobs:
   static-regression:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # Playwright 1.56.1 does not support ubuntu-26.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +30,7 @@ jobs:
           node --check audio/maletin/coins-shop.js
           node --test tests/audio-companion-natural-and-hud.test.cjs tests/unfire-conversations-20261024.test.cjs tests/audio-nano-engine-connection.test.cjs tests/offline-coins-day-isolation.test.cjs tests/offline-coins-mini-robot.test.cjs
   layout-regression:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # Playwright 1.56.1 does not support ubuntu-26.04
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
