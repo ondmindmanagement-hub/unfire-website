@@ -31,7 +31,7 @@ const TASKS=Object.freeze([
  {id:"in-app-purchases",section:"Rights & business",title:"Verify in-app purchases or subscriptions if used",detail:"Check that configured paid items work and can be reviewed, and disclosures are accurate.",optional:true},
  {id:"availability",section:"Rights & business",title:"Confirm final pricing, regions and release setting",detail:"Review the planned distribution and avoid claiming availability before it is confirmed."}
 ].map(x=>Object.freeze(x)));
-const TASK_MAP=Object.fromEntries(TASKS.map(x=>[x.id,x]));
+const TASK_MAP=Object.assign(Object.create(null),Object.fromEntries(TASKS.map(x=>[x.id,x])));
 function platformValid(platform){return PLATFORMS.includes(platform);}
 function activeTasks(platform){
  if(!platformValid(platform))throw Error("Choose a supported platform.");
@@ -43,6 +43,7 @@ function blankState(platform="macos",appName=""){
 }
 function cleanName(name){
  if(typeof name!=="string")throw Error("App name must be text.");
+ if(/[\u0000-\u001f\u007f]/.test(name))throw Error("App name contains control characters.");
  const trimmed=name.trim().replace(/\s+/g," ");
  if(trimmed.length>80)throw Error("App name is limited to 80 characters.");
  if(/[\u0000-\u001f\u007f]/.test(trimmed))throw Error("App name contains control characters.");
