@@ -75,6 +75,9 @@ def _(r): prod(r, "pocket-capture")["editions"][0]["platforms"] = ["iphone"]
 @case("catalog says Available for a product the registry does not list as available", "[STATUS]")
 def _(r): prod(r, "power")["editions"][0].update(status="preview"); prod(r, "power")["editions"][0].pop("store", None)
 
+@case("an edition kept off public pages is still linked visibly", "[PENDING]")
+def _(r): prod(r, "pocket-capture")["editions"][0]["public"] = False
+
 def main():
     rc, out = run(BASE)
     assert rc == 0, "baseline registry must pass:\n" + out

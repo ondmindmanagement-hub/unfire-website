@@ -1,0 +1,66 @@
+{
+ "archer/index.html": [
+  [
+   "<title>ARCHER — Audio clipper for Mac · Unfire Audio</title>",
+   "<title>ARCHER — Audio clipper for Mac, iPhone and iPad · Unfire Audio</title>"
+  ],
+  [
+   "Standalone app and Audio Unit effect on Mac. Local processing, no account.",
+   "Standalone and Audio Unit on Mac, standalone and AUv3 on iPhone and iPad. Local processing, no account."
+  ],
+  [
+   "content=\"A real-time audio clipper for Mac from Unfire Audio.\"",
+   "content=\"A real-time audio clipper for Mac, iPhone and iPad from Unfire Audio.\""
+  ],
+  [
+   "@@LD@@",
+   ",{\"@context\":\"https://schema.org\",\"@type\":\"SoftwareApplication\",\"name\":\"Archer for iPhone & iPad\",\"operatingSystem\":\"iOS 18.0 or later, iPadOS 18.0 or later\",\"applicationCategory\":\"MultimediaApplication\",\"applicationSubCategory\":\"Music\",\"description\":\"Audio clipper with Gain, Threshold and Atmosphere as a standalone app and an Audio Unit v3 effect.\",\"offers\":{\"@type\":\"Offer\",\"price\":\"1.99\",\"priceCurrency\":\"USD\"},\"downloadUrl\":\"https://apps.apple.com/app/id6822109610\",\"url\":\"https://unfire.technology/archer/#iphone\",\"publisher\":{\"@type\":\"Organization\",\"name\":\"Unfire\",\"url\":\"https://unfire.technology\"}}"
+  ],
+  [
+   ".plat .wrap:has(> #iphone[hidden]){grid-template-columns:1fr}",
+   ""
+  ]
+ ],
+ "archer/press/index.html": [
+  [
+   "ARCHER audio clipping software on macOS.\"",
+   "ARCHER audio clipping software on macOS, iPhone and iPad.\""
+  ],
+  [
+   "Mac App Store; a separate iPhone/iPad edition is listed on the App Store.",
+   "Separate Mac and iPhone/iPad editions on the App Store."
+  ]
+ ],
+ "audio/tienda/index.html": [
+  [
+   "discover ARCHER for Mac, alongside BOLT.",
+   "discover ARCHER for Mac, iPhone and iPad, alongside BOLT."
+  ],
+  [
+   " remains available",
+   " remain available"
+  ],
+  [
+   "The current Mac release and iPhone and iPad releases remain available",
+   "The current Mac, iPhone and iPad releases remain available"
+  ]
+ ],
+ "early-access/index.html": [
+  [
+   "workflows.</p><a href=\"/archer/\">Explore ARCHER →</a>",
+   "workflows.</p><a href=\"/apps/archer-mobile/\">Explore ARCHER →</a>"
+  ]
+ ],
+ "apps/index.html": [
+  [
+   "<article class=\"card-pending\" data-pending-class=\"card\"",
+   "<article class=\"card\""
+  ]
+ ],
+ "audio/index.html": [
+  [
+   "<span data-archer-mac-only>is</span>",
+   ""
+  ]
+ ]
+}

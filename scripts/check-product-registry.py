@@ -77,6 +77,23 @@ class Links(HTMLParser):
         if tag == "script": self._in_script = False
 
 
+class Visible(HTMLParser):
+    """Collect hrefs that are not inside hidden or pending elements."""
+    VOID = {"area","base","br","col","embed","hr","img","input","link","meta","source","track","wbr"}
+    def __init__(self):
+        super().__init__(); self.stack = []; self.visible_hrefs = []
+    def handle_starttag(self, tag, attrs):
+        a = dict(attrs)
+        hid = ("hidden" in a) or ("data-archer-mobile-pending" in a) or tag in ("script", "template", "noscript")
+        if tag not in self.VOID:
+            self.stack.append(hid)
+        if tag == "a" and a.get("href") and not hid and not any(self.stack[:-1] if tag not in self.VOID else self.stack):
+            self.visible_hrefs.append(a["href"])
+    def handle_endtag(self, tag):
+        if tag not in self.VOID and self.stack:
+            self.stack.pop()
+
+
 def main():
     today = dt.date.today()
     if "--today" in sys.argv:
@@ -185,6 +202,7 @@ def main():
         ch = cat.read_text(encoding="utf-8", errors="ignore")
         # The shared global bar is site navigation, not catalogue content.
         ch = re.sub(r"<!-- unfire-global-bar:start -->[\s\S]*?<!-- unfire-global-bar:end -->", "", ch)
+        ch = re.sub(r"<article class=\"card-pending\"[\s\S]*?</article>", "", ch)
         L = Links(); L.feed(ch)
         site_paths = {h for h in L.hrefs if h.startswith("/") and h.count("/") >= 2
                       and not h.startswith(("/assets/", "/contact/", "/early-access/", "/terms", "/software-license", "/refunds", "/privacy"))}
@@ -219,7 +237,7 @@ def main():
             stm = re.search(r'class="status[^"]*"[^>]*>(.*?)</', card)
             if stm:
                 label = re.sub(r"<[^>]+>", "", stm.group(1)).strip().lower()
-                eds_live = [edition] if edition else [ed for ed in prod["editions"] if ed["status"] != "internal"]
+                eds_live = [edition] if edition else [ed for ed in prod["editions"] if ed["status"] != "internal" and ed.get("public", True)]
                 sts = {ed["status"] for ed in eds_live}
                 if label.startswith("available") and not sts & {"available", "free-download"}:
                     err("STATUS", f"{CATALOG}: {prod['name']} card says '{label}' but the registry has {sorted(sts)}")
@@ -227,7 +245,7 @@ def main():
                     err("STATUS", f"{CATALOG}: {prod['name']} card says web lab but the registry has {sorted(sts)}")
                 if "not available" in label and sts & {"available", "free-download"}:
                     err("STATUS", f"{CATALOG}: {prod['name']} card says not available but the registry lists it as available")
-            eds = [ed for ed in prod["editions"] if ed["status"] != "internal"]
+            eds = [ed for ed in prod["editions"] if ed["status"] != "internal" and ed.get("public", True)]
             native = {pl for ed in eds for pl in ed["platforms"] if pl != "web"}
             has_web = any("web" in ed["platforms"] for ed in eds)
             # Cards may present one edition, so the claim must be a subset of verified native platforms.
@@ -235,6 +253,29 @@ def main():
                 err("PLATFORMS", f"{CATALOG}: card for {prod['name']} claims {sorted(devices - native)} not verified in the registry ({sorted(native)})")
             if has_web and any(ed["status"] == "web-lab" for ed in eds) and "web" not in devices:
                 err("PLATFORMS", f"{CATALOG}: web lab {prod['name']} is not filterable as a browser tool")
+    # PENDING — an edition marked public=false must not be visible on any public page.
+    pending = []
+    for p in reg["products"]:
+        for ed in p["editions"]:
+            if ed.get("public", True) is False:
+                ids = {m3 for m3 in re.findall(r"/id(\d+)", (ed.get("store") or {}).get("url", ""))}
+                if ed.get("url"): ids.add(ed["url"])
+                pending.append((p["name"] + " " + ed["label"], ids))
+    if pending:
+        exempt = ("/privacy/", "/support/")
+        for f in sorted(ROOT.glob("**/*.html")):
+            rel = f.relative_to(ROOT).as_posix()
+            if rel.startswith(("tests/", "docs/", ".github/", "node_modules/")) or any(x in "/" + rel for x in exempt):
+                continue
+            h = f.read_text(encoding="utf-8", errors="ignore")
+            if 'http-equiv="refresh"' in h.lower():
+                continue
+            V = Visible(); V.feed(h)
+            for name, ids in pending:
+                for ident in ids:
+                    needle = ("/id" + ident) if ident.isdigit() else ident
+                    if any(needle in x for x in V.visible_hrefs):
+                        err("PENDING", f"{rel}: visible link to {name} ({needle}) while it is not public")
     # SYNC
     r = subprocess.run([sys.executable, str(ROOT / "scripts/build-ecosystem-pages.py"), "--check"], capture_output=True, text=True)
     if r.returncode: err("SYNC", (r.stdout + r.stderr).strip()[-600:])

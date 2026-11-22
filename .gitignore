@@ -35,3 +35,4 @@ audio/tests/
 /index*BROKEN*.html
 /privacy*before*.html
 /privacy*BEFORE*.html
+__pycache__/

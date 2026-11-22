@@ -478,7 +478,7 @@
       "kind": "app",
       "listed": true,
       "url": "/archer/",
-      "summary": "A real-time audio clipper with three controls — Gain, Threshold and Atmosphere. Standalone and Audio Unit.",
+      "summary": "A real-time audio clipper for Mac with three controls — Gain, Threshold and Atmosphere. Standalone and Audio Unit.",
       "visual": {
         "src": "/assets/products/apps-2026/archer-icon-256.webp",
         "type": "icon",
@@ -515,7 +515,9 @@
             "requires": "iOS 18.0 or later",
             "verified_on": "2026-11-22"
           },
-          "url": "/apps/archer-mobile/"
+          "url": "/apps/archer-mobile/",
+          "public": false,
+          "note": "Kept off public pages until the updated iPhone and iPad build is finished in its owning session (owner decision 2026-11-22). The App Store listing stays live; its privacy and support pages stay published. Restore: set public=true, remove data-archer-mobile-pending markers (see ARCHER_MOBILE_PENDING_RESTORE.md)."
         }
       ],
       "evidence": [
