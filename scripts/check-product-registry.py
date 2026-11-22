@@ -194,18 +194,39 @@ def main():
                 err("CATALOG", f"{CATALOG} links {hp}, which is not in the product registry")
             elif not known[hp]["listed"]:
                 err("LEAKS", f"{CATALOG} links unlisted product {known[hp]['name']}")
-        # PLATFORMS — a catalogue card may only claim the native platforms the registry verified.
-        store_map = {}
+        # PLATFORMS / STATUS — a catalogue card may only claim what the registry verified.
+        def app_id(u):
+            m2 = re.search(r"/id(\d+)", u or "")
+            return m2.group(1) if m2 else None
+        store_map, store_ed, url_ed = {}, {}, {}
         for p in reg["products"]:
             for ed in p["editions"]:
-                if ed.get("store"): store_map[ed["store"]["url"]] = p
+                if ed.get("store"):
+                    store_map[ed["store"]["url"]] = p
+                    if app_id(ed["store"]["url"]): store_ed[app_id(ed["store"]["url"])] = (p, ed)
+                if ed.get("url"): url_ed[ed["url"]] = (p, ed)
         for m in re.finditer(r'<article class="card"[^>]*data-devices="([^"]*)"[\s\S]*?</article>', ch):
             card, devices = m.group(0), set(m.group(1).split())
-            prod = None
+            prod, edition = None, None
             for href in re.findall(r'href="([^"]+)"', card):
-                prod = known.get(href.split("#")[0]) or store_map.get(href)
-                if prod: break
+                hit = store_ed.get(app_id(href)) if app_id(href) else url_ed.get(href.split("#")[0])
+                if hit: prod, edition = hit; break
+            if not prod:
+                for href in re.findall(r'href="([^"]+)"', card):
+                    prod = known.get(href.split("#")[0]) or store_map.get(href)
+                    if prod: break
             if not prod: continue
+            stm = re.search(r'class="status[^"]*"[^>]*>(.*?)</', card)
+            if stm:
+                label = re.sub(r"<[^>]+>", "", stm.group(1)).strip().lower()
+                eds_live = [edition] if edition else [ed for ed in prod["editions"] if ed["status"] != "internal"]
+                sts = {ed["status"] for ed in eds_live}
+                if label.startswith("available") and not sts & {"available", "free-download"}:
+                    err("STATUS", f"{CATALOG}: {prod['name']} card says '{label}' but the registry has {sorted(sts)}")
+                if "experimental browser tool" in label and "web-lab" not in sts:
+                    err("STATUS", f"{CATALOG}: {prod['name']} card says web lab but the registry has {sorted(sts)}")
+                if "not available" in label and sts & {"available", "free-download"}:
+                    err("STATUS", f"{CATALOG}: {prod['name']} card says not available but the registry lists it as available")
             eds = [ed for ed in prod["editions"] if ed["status"] != "internal"]
             native = {pl for ed in eds for pl in ed["platforms"] if pl != "web"}
             has_web = any("web" in ed["platforms"] for ed in eds)
