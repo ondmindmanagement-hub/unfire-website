@@ -1,0 +1,65 @@
+/* Unfire Research / Presentation benchmarks · 2026-11-23; CSS only; no new dependencies */
+:root{color-scheme:dark;--bg:#060609;--panel:#0d1118;--panel-hi:#131923;--text:#f5f6f8;--muted:#abb2bf;--quiet:#8c94a2;--line:#252c36;--accent:#b6cfff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;background:radial-gradient(ellipse at 80% 10%,rgba(47,63,90,.19),transparent 34%),var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:3px solid #f5cb77;outline-offset:5px;border-radius:7px}
+.wrap{width:min(1150px,calc(100% - 50px));margin:0 auto}
+header{position:sticky;top:0;z-index:20;background:rgba(5,7,11,.95);border-bottom:1px solid var(--line);backdrop-filter:blur(16px)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:65px}
+.brand{font-size:18px;font-weight:700;letter-spacing:.13em}
+nav{display:flex;gap:clamp(11px,2vw,25px);flex-wrap:wrap}
+nav a{color:#b3b7c1;font-size:13px}
+nav a:hover,nav a[aria-current="page"]{color:white}
+.hero{padding:clamp(75px,12vw,158px) 0 clamp(55px,7vw,85px);border-bottom:1px solid var(--line)}
+.eyebrow{color:#c9a4b5;letter-spacing:.19em;font-weight:700;font-size:11px;text-transform:uppercase;margin:0 0 25px}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(45px,8.3vw,105px);line-height:.98;font-weight:640;letter-spacing:-.058em;max-width:1030px;margin:0 0 29px}
+h1 span{color:#909cab}
+.lead{font-size:clamp(18px,2.3vw,23px);line-height:1.6;max-width:750px;color:#bec2cd;margin:0}
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:13px;margin:36px 0 0}
+.button{display:inline-flex;align-items:center;min-height:47px;padding:12px 20px;border:1px solid #515b6a;border-radius:999px;font-size:13px;font-weight:600}
+.button:hover{background:#232b3a}
+.button.strong{background:#f5f6f8;color:#141820;border-color:#f5f6f8}
+.button.strong:hover{background:#d9e4f4}
+.scope{color:#a2a9b6;font-size:12px;margin:25px 0 0;line-height:1.7}
+.page-section{padding:clamp(65px,9vw,110px) 0;border-bottom:1px solid var(--line)}
+.section-title{font-size:clamp(33px,5vw,55px);letter-spacing:-.045em;line-height:1.1;margin:10px 0 17px;font-weight:640}
+.section-intro{color:#abb1bd;max-width:770px;font-size:16px;line-height:1.7;margin:0 0 40px}
+.project-list{display:grid;gap:19px}
+.project{display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);gap:0;background:linear-gradient(147deg,#111721,#0a0d13);border:1px solid #2c3340;border-radius:28px;overflow:hidden}
+.visual{display:flex;flex-direction:column;padding:18px 18px 14px;border-right:1px solid var(--line)}
+.visual a{display:block;aspect-ratio:16/9;position:relative;overflow:hidden;border-radius:17px;background:#1e2936}
+.visual img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease}
+.visual a:hover img{transform:scale(1.025)}
+.visual a:after{content:'PLAY ON YOUTUBE ↗';position:absolute;right:13px;bottom:13px;background:rgba(7,11,19,.92);border:1px solid #5d6776;border-radius:99px;padding:9px 13px;color:#fff;font-size:10px;letter-spacing:.07em;font-weight:700}
+.visual .source{font-size:11px;color:#949dac;line-height:1.5;margin:12px 2px 0}
+.copy{padding:clamp(22px,3.6vw,44px)}
+.tag{font-size:10px;color:#d9b1bd;letter-spacing:.13em;text-transform:uppercase;font-weight:750;margin:0 0 15px}
+h3{font-size:clamp(26px,3.3vw,41px);letter-spacing:-.039em;margin:0 0 12px;font-weight:650;line-height:1.1}
+.copy>p{color:#c5c9d1;font-size:15px;line-height:1.66;margin:0 0 24px;max-width:560px}
+.lesson{display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:1px solid #333a46;padding-top:20px}
+.lesson dt{font-size:11px;letter-spacing:.09em;font-weight:700;color:#b9c5da;text-transform:uppercase;margin:0 0 9px}
+.lesson dd{margin:0;font-size:13px;line-height:1.62;color:#aeb5c1}
+.official{display:inline-block;font-size:13px;margin-top:25px;border-bottom:1px solid #8396ad;padding-bottom:5px;font-weight:620}
+.official:hover{color:#cbdcff}
+.principles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.principle{padding:29px;border:1px solid #2a3140;border-radius:21px;background:linear-gradient(155deg,#121722,#0b0f16)}
+.principle .number{display:block;font-size:11px;letter-spacing:.12em;color:#b3bbc8;margin:0 0 29px}
+.principle h3{font-size:21px;letter-spacing:-.02em;margin:0 0 13px}
+.principle p{font-size:14px;color:#abb3bf;line-height:1.7;margin:0}
+.disclosure{border:1px solid #3e4653;padding:25px 29px;background:#101620;border-radius:18px;max-width:990px}
+.disclosure strong{font-size:15px;display:block;margin:0 0 8px}
+.disclosure p{font-size:13px;line-height:1.7;color:#b4beca;margin:0}
+.disclosure a{text-decoration:underline;text-underline-offset:3px}
+footer{padding:35px 0 65px;color:#a1a9b5;font-size:12px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer a{color:#ccd3dd}
+footer a:hover{text-decoration:underline}
+@media(max-width:850px){.project{grid-template-columns:1fr}.visual{border-right:0;border-bottom:1px solid var(--line)}.principles{grid-template-columns:1fr}.lesson{gap:14px}}
+@media(max-width:520px){.wrap{width:calc(100% - 32px)}.bar{min-height:68px;align-items:center}.brand{font-size:15px}nav{gap:11px}nav a{font-size:11px}h1{font-size:clamp(42px,12vw,60px)}.hero{padding:68px 0}.page-section{padding:60px 0}.project{border-radius:21px}.visual{padding:10px 10px 13px}.copy{padding:23px}.lesson{grid-template-columns:1fr}.principle{padding:25px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.visual img{transition:none}.visual a:hover img{transform:none}}
+
+.visual .ufbm-player{position:relative;display:block;aspect-ratio:16/9;background:#05070b;overflow:hidden;border-radius:17px}
+.visual .ufbm-player iframe{position:absolute;inset:0;width:100%;height:100%;display:block;border:0}
