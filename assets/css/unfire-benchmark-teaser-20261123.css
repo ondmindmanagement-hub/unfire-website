@@ -26,3 +26,8 @@
 @media(max-width:900px){#uf-benchmark-teaser .ufbm-top{align-items:start;flex-direction:column}#uf-benchmark-teaser .ufbm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){#uf-benchmark-teaser{padding:60px 0}#uf-benchmark-teaser .ufbm-container{width:calc(100% - 34px)}#uf-benchmark-teaser .ufbm-grid{grid-template-columns:1fr;gap:14px}#uf-benchmark-teaser .ufbm-top{margin-bottom:25px}#uf-benchmark-teaser .ufbm-cardtext{padding:20px}#uf-benchmark-teaser .ufbm-image::after{font-size:9px}}
 @media(prefers-reduced-motion:reduce){#uf-benchmark-teaser .ufbm-card{transition:none}#uf-benchmark-teaser .ufbm-card:hover{transform:none}}
+
+#uf-benchmark-teaser .ufbm-player{display:block;position:relative;aspect-ratio:16/9;background:#020408;border-radius:0;overflow:hidden}
+#uf-benchmark-teaser .ufbm-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+#uf-benchmark-teaser .ufbm-source{padding-top:10px;margin:6px 0 0;font-size:12px}
+#uf-benchmark-teaser .ufbm-source a{color:#e5e7f0;text-decoration:underline;text-underline-offset:3px}

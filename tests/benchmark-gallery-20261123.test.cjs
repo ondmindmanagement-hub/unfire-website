@@ -52,3 +52,23 @@ test('responsive, motion and accessibility gates',()=>{
   assert.match(page,/alt="/);
  }
 });
+
+test('creator videos load only after a first-party activation of official YouTube player',()=>{
+ const script=read('assets/js/unfire-benchmark-embed-20261123.js');
+ assert.match(script,/www\.youtube-nocookie\.com\/embed/);
+ assert.match(script,/event\.preventDefault\(\)/);
+ assert.match(script,/allowFullscreen=true/);
+ assert.match(script,/replaceWith\(player\)/);
+ assert.match(script,/event\.metaKey/);
+ for(const page of [home,gallery]){
+  assert.match(page,/unfire-benchmark-embed-20261123\.js/);
+  for(const id of ids)assert.match(page,new RegExp('data-ufbm-video="'+id+'"'));
+  assert.doesNotMatch(page,/<iframe\b/i);
+ }
+});
+test('explicit source and privacy disclosures remain attached to both surfaces',()=>{
+ assert.match(home,/YouTube may receive connection and playback data/);
+ assert.match(gallery,/YouTube may receive connection and playback data/);
+ assert.match(home,/Original video on YouTube/);
+ assert.match(gallery,/separate direct link to its creator/);
+});
