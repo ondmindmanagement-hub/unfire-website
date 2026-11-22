@@ -52,7 +52,7 @@ function separated(a,b,slack=1) {
               overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth};
           });
           assert.ok(open.headerHeight>=240 && open.headerHeight<=400,`${width} expanded menu not in flow: ${open.headerHeight}`);
-          assert.equal(open.links.length,9);
+          assert.equal(open.links.length,7);
           assert.ok(open.overflow<=2,`${width} expanded horizontal overflow ${open.overflow}`);
           for(let j=0;j<open.links.length;j++){
             assert.ok(open.links[j].right<=width+1 && open.links[j].left>=-1,`${width} link ${j} offscreen`);
@@ -62,12 +62,14 @@ function separated(a,b,slack=1) {
           await page.keyboard.press('Escape');
           assert.equal(await page.locator('#unfire-mobile-menu-toggle').getAttribute('aria-expanded'),'false');
           await page.locator('#unfire-mobile-menu-toggle').click();
-          await page.locator('#unfire-mobile-site-nav a[href="#company"]').click();
+          // Nav items are page links now; keep the page in place to verify the menu closes on selection.
+          await page.locator('#unfire-mobile-site-nav a[href="/about/"]').evaluate(a=>a.addEventListener('click',e=>e.preventDefault(),{once:true}));
+          await page.locator('#unfire-mobile-site-nav a[href="/about/"]').click();
           assert.equal(await page.locator('#unfire-mobile-menu-toggle').getAttribute('aria-expanded'),'false');
           if(width===320 || width===390){
             await page.locator('#unfire-mobile-menu-toggle').click();
             await page.locator('#unfire-mobile-site-nav').evaluate((nav)=>{
-              const labels=['Compañía','Trabajar','Aplicaciones','Juegos','Audio','Sistema','Escala','Fondos','Contacto'];
+              const labels=['Productos','IA y sistemas','Audio','Juegos','Para empresas','Compañía','Contacto'];
               Array.from(nav.querySelectorAll('a')).forEach((a,i)=>{a.textContent=labels[i]});
             });
             const spans=await page.locator('#unfire-mobile-site-nav a').evaluateAll(nodes=>nodes.map(a=>{
