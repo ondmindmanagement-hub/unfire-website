@@ -192,6 +192,26 @@ def main():
                 err("CATALOG", f"{CATALOG} links {hp}, which is not in the product registry")
             elif not known[hp]["listed"]:
                 err("LEAKS", f"{CATALOG} links unlisted product {known[hp]['name']}")
+        # PLATFORMS — a catalogue card may only claim the native platforms the registry verified.
+        store_map = {}
+        for p in reg["products"]:
+            for ed in p["editions"]:
+                if ed.get("store"): store_map[ed["store"]["url"]] = p
+        for m in re.finditer(r'<article class="card"[^>]*data-devices="([^"]*)"[\s\S]*?</article>', ch):
+            card, devices = m.group(0), set(m.group(1).split())
+            prod = None
+            for href in re.findall(r'href="([^"]+)"', card):
+                prod = known.get(href.split("#")[0]) or store_map.get(href)
+                if prod: break
+            if not prod: continue
+            eds = [ed for ed in prod["editions"] if ed["status"] != "internal"]
+            native = {pl for ed in eds for pl in ed["platforms"] if pl != "web"}
+            has_web = any("web" in ed["platforms"] for ed in eds)
+            # Cards may present one edition, so the claim must be a subset of verified native platforms.
+            if native and not has_web and not devices <= native:
+                err("PLATFORMS", f"{CATALOG}: card for {prod['name']} claims {sorted(devices - native)} not verified in the registry ({sorted(native)})")
+            if has_web and any(ed["status"] == "web-lab" for ed in eds) and "web" not in devices:
+                err("PLATFORMS", f"{CATALOG}: web lab {prod['name']} is not filterable as a browser tool")
     # SYNC
     r = subprocess.run([sys.executable, str(ROOT / "scripts/build-ecosystem-pages.py"), "--check"], capture_output=True, text=True)
     if r.returncode: err("SYNC", (r.stdout + r.stderr).strip()[-600:])
