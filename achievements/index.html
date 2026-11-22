@@ -54,6 +54,7 @@ a:focus-visible{outline:2px solid var(--bronze-light);outline-offset:5px;border-
 .medal::before{content:"";position:absolute;inset:13px;border:1px solid rgba(49,25,15,.55);border-radius:50%}
 .medal::after{content:"";position:absolute;inset:21px;border:1px solid rgba(255,229,197,.35);border-radius:50%}
 .medal .mark{font:650 76px/1 Georgia,serif;color:#3d241b;text-shadow:0 1px 1px rgba(255,231,204,.45);margin-top:-6px}
+.official-badge{width:min(67%,235px);height:auto;aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 20px 35px rgba(0,0,0,.3))}
 .medal-caption{position:absolute;left:26px;bottom:25px;color:#b79d89;font-size:10px;letter-spacing:.2em;text-transform:uppercase}
 .award-body{padding:clamp(28px,5vw,58px);display:flex;flex-direction:column;align-items:flex-start;min-width:0}
 .kicker{font-size:11px;color:var(--bronze-light);letter-spacing:.12em;text-transform:uppercase;font-weight:710}
@@ -103,7 +104,7 @@ footer a{text-decoration:none}
 <section aria-labelledby="awards-heading">
 <div class="section-top"><div><div class="eyebrow">Award winners</div><h2 id="awards-heading">Awards &amp; recognition</h2></div><span class="count">01 award won</span></div>
 <article class="award" id="bolt-award" aria-labelledby="award-title">
-<div class="medal-field" aria-hidden="true"><div class="medal"><span class="mark">III</span></div><span class="medal-caption">Bronze · 2026</span></div>
+<div class="medal-field"><img class="official-badge" src="/assets/awards/inai-bronze-winner-2026.png" width="235" height="235" alt="Official International AI Awards 2026 Bronze Winner badge" decoding="async"><span class="medal-caption">Official award badge · 2026</span></div>
 <div class="award-body">
 <div class="kicker">21 November 2026 · International AI Awards</div>
 <h3 id="award-title">BOLT Trusted AI Bridge</h3>
@@ -118,6 +119,7 @@ footer a{text-decoration:none}
 <a class="cta" href="https://www.inaiawards.com/winners/omar-bar%C3%B3-unfire" target="_blank" rel="noopener noreferrer" aria-label="Verify the BOLT Bronze Winner result on the International AI Awards official website">Verify official result <span aria-hidden="true">↗</span></a>
 </div>
 </article>
+<p class="evidence">Official Bronze Winner badge © International AI Awards, reproduced with the organizer’s permission for non-sponsored award coverage.</p>
 <p class="caveat">The award is supported by an organizer-issued certificate dated 21 November 2026 and a public winner profile. It recognizes submitted project materials, not independent security or performance certification, a customer deployment, government endorsement, funding or a signed contract.</p>
 </section>
 <section class="selection-wrap" aria-labelledby="selections-heading">
