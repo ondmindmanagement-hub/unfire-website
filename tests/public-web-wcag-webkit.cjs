@@ -7,7 +7,8 @@ const paths=[
 "/apps/","/apps/archer-web/","/apps/ai-token-counter/","/portable-synth/studio/",
 "/games/y2k-robots/","/autonomy/demo/","/apps/power-web/","/apps/banner-fit/",
 "/apps/privacy-lens/","/apps/file-prep/","/mutants/","/archer/",
-"/apps/pocket-capture/","/apps/power/","/bolt/","/apps/bolt-mobile/","/apps/unfire-control/"
+"/apps/pocket-capture/","/apps/power/","/bolt/","/apps/bolt-mobile/","/apps/unfire-control/",
+"/ai-systems/","/unfire-audio/"
 ];
 const widths=[390,1440];
 const tags=["wcag2a","wcag2aa","wcag21a","wcag21aa","wcag22aa"];

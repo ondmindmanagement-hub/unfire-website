@@ -15,6 +15,8 @@ on:
       - 'mutants/**'
       - 'apps/pocket-capture/**'
       - 'bolt/**'
+      - 'ai-systems/**'
+      - 'unfire-audio/**'
       - 'tests/public-web-wcag-webkit.cjs'
       - '.github/workflows/public-apps-wcag-webkit.yml'
   workflow_dispatch:
