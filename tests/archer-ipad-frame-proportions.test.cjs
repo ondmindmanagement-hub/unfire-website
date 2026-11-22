@@ -6,16 +6,16 @@ const path=require('node:path');
 const root=path.resolve(__dirname,'..');
 const read=(p)=>fs.readFileSync(path.join(root,p),'utf8');
 const pages=[
-  ['Corporate gallery','index.html',/\.uf-archer-device--ipad\{[^}]*aspect-ratio:3\/4;[^}]*height:auto/],
-  ['Unfire Audio','audio/index.html',/\.am-device--ipad\{[^}]*aspect-ratio:3\/4;[^}]*height:auto/],
-  ['Unfire Audio Store','audio/tienda/index.html',/\.am-frame--ipad\{[^}]*aspect-ratio:3\/4;[^}]*height:auto/],
-  ['Unfire Audio Catalog','audio/catalogo/index.html',/\.card--archer-ipad \.im img\{[^}]*aspect-ratio:3\/4/]
+  ['Corporate gallery','index.html',/\.uf-archer-device--ipad\{[^}]*aspect-ratio:1280\/894;[^}]*height:auto/],
+  ['Unfire Audio','audio/index.html',/\.am-device--ipad\{[^}]*aspect-ratio:1280\/894;[^}]*height:auto/],
+  ['Unfire Audio Store','audio/tienda/index.html',/\.am-frame--ipad\{[^}]*aspect-ratio:1280\/894;[^}]*height:auto/],
+  ['Unfire Audio Catalog','audio/catalogo/index.html',/\.card--archer-ipad \.im img\{[^}]*aspect-ratio:1280\/894/]
 ];
 test('all ARCHER website iPad previews use true tablet frames',()=>{
   for(const [label,file,css] of pages){
     const html=read(file);
     assert.match(html,css,label);
-    assert.match(html,/archer-mobile-ipad-ui-20261029\.webp/,label);
+    assert.match(html,/archer-mobile-ipad-landscape-20261122\.webp/,label);
     assert.match(html,/object-fit:contain/,label);
   }
 });

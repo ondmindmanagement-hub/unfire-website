@@ -7,7 +7,7 @@ const root=path.resolve(__dirname,'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const [audio,catalog,store]=['audio/index.html','audio/catalogo/index.html','audio/tienda/index.html'].map(read);
 const iphone='archer-mobile-iphone-ui-20261029.webp';
-const ipad='archer-mobile-ipad-ui-20261029.webp';
+const ipad='archer-mobile-ipad-landscape-20261122.webp';
 const mac='archer-nocturne-app-preview-20261028.webp';
 test('distinct mobile visuals are present on all three Unfire Audio pages',()=>{
   for(const [name,html] of [['main',audio],['catalog',catalog],['store',store]]){
