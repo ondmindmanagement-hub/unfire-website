@@ -1,0 +1,48 @@
+name: Public apps WebKit WCAG release review
+on:
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'apps/index.html'
+      - 'apps/archer-web/**'
+      - 'apps/ai-token-counter/**'
+      - 'portable-synth/studio/**'
+      - 'games/y2k-robots/**'
+      - 'apps/power-web/**'
+      - 'apps/banner-fit/**'
+      - 'apps/privacy-lens/**'
+      - 'apps/file-prep/**'
+      - 'mutants/**'
+      - 'apps/pocket-capture/**'
+      - 'bolt/**'
+      - 'tests/public-web-wcag-webkit.cjs'
+      - '.github/workflows/public-apps-wcag-webkit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  wcag:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install free open-source accessibility and browser test dependencies
+        run: |
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3
+          npx playwright install --with-deps webkit
+      - name: Test public app routes with axe-core in WebKit at phone and desktop widths
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/unfire-wcag-http.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" || true' EXIT
+          node tests/public-web-wcag-webkit.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-webkit-wcag-audit
+          path: artifacts/public-wcag/
+          retention-days: 7
+          if-no-files-found: ignore
