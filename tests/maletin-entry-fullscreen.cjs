@@ -77,15 +77,27 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
        // measuring the case-view-only PASEAR button: storyOn hides it by design.
        d.body.classList.remove('storyOn');story.classList.remove('on');
        const rect=(el)=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}};
-       // The SAME original PASEAR now lives inside the right-hand action dock.
-       // It may be hidden by the story overlay; measure before re-enabling it.
-       const walk=d.getElementById('roamB'), dock=d.getElementById('ctlDock'),oldDisplay=walk.style.display;
+       // The same PASEAR action is deliberately HIDDEN until the user opens
+       // the single Actions menu. Verify collapsed + expanded states, then
+       // restore the menu and story overlay to the initial layout.
+       const walk=d.getElementById('roamB'),dock=d.getElementById('ctlDock');
+       const items=d.getElementById('ufActionItems'),toggle=d.getElementById('ufActionsToggle');
+       if(!walk||!dock||!items||!toggle)throw Error('Missing compact Actions control');
+       if(!items.hidden)toggle.click();
+       const initiallyCollapsed=items.hidden&&d.defaultView.getComputedStyle(items).display==='none'&&walk.getBoundingClientRect().width===0;
+       toggle.click();
+       const actionOpen=!items.hidden&&toggle.getAttribute('aria-expanded')==='true';
+       const oldDisplay=walk.style.display;
        walk.style.display='block';
-       const pasear=rect(walk),dockRect=rect(dock),insideDock=walk.parentElement===dock;
+       const pasear=rect(walk),dockRect=rect(dock);
+       const insideDock=walk.parentElement===items&&items.parentElement===dock;
+       const toggleRect=rect(toggle);
        const map=rect(d.getElementById('minimap'));
        const zoomHud=rect(d.getElementById('hud'));
        const cfg=rect(d.getElementById('cfgB'));
        walk.style.display=oldDisplay;
+       toggle.click();
+       const closesCorrectly=items.hidden&&toggle.getAttribute('aria-expanded')==='false';
        d.body.classList.add('storyOn');story.classList.add('on');
        const box=rect(story.querySelector('.box'));
        const touch=['unfireTouchPad','unfireFly','unfireTalk','unfireDown']
@@ -96,17 +108,24 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
          clientWidth:exitButton.clientWidth,whiteSpace:style.whiteSpace,
          compactCaption:getComputedStyle(exitButton,'::after').content};
        const tipEl=d.getElementById('tip'),tip=rect(tipEl);
-       return {box,touch,exit,label,tip,pasear,dockRect,insideDock,cfg,map,zoomHud};
+       return {box,touch,exit,label,tip,pasear,dockRect,toggleRect,
+         insideDock,initiallyCollapsed,actionOpen,closesCorrectly,cfg,map,zoomHud};
 
        function assertExists(x){if(!x)throw Error('Story overlay missing');}
      });
      const intersects=(a,b)=>a.w>0&&a.h>0&&b.w>0&&b.h>0&&
        a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
      const walk=state.pasear;
-     assert(state.insideDock&&walk.x>=width*.54&&walk.y>=65&&walk.w>=65&&
+     assert(state.initiallyCollapsed&&state.actionOpen&&state.closesCorrectly&&
+       state.insideDock&&walk.x>=state.dockRect.x-2&&walk.y>=0&&walk.w>=65&&
        walk.x>=-1&&walk.x+walk.w<=width+2&&walk.y+walk.h<=height+2&&
        walk.x>=state.dockRect.x-2,
-       'PASEAR not inside the safe right action dock '+JSON.stringify({width,height,walk,dock:state.dockRect}));
+       'PASEAR unavailable or clipped inside opened Actions menu '+JSON.stringify({width,height,walk,dock:state.dockRect,controls:state}));
+     assert(state.toggleRect.w>=90&&state.toggleRect.h>=40&&
+       state.toggleRect.x>=width*.5&&state.toggleRect.y>=0&&
+       state.toggleRect.x+state.toggleRect.w<=width+2&&
+       state.toggleRect.y+state.toggleRect.h<=height+2,
+       'Collapsed Actions button is not reachable '+JSON.stringify({width,height,toggle:state.toggleRect}));
      assert(!intersects(walk,state.exit)&&!intersects(walk,state.cfg)&&
        !intersects(walk,state.map)&&!intersects(walk,state.zoomHud)&&!intersects(walk,state.tip),
        'PASEAR overlaps exit, gear, minimap, zoom HUD or captions '+JSON.stringify({width,height,walk,exit:state.exit,cfg:state.cfg,map:state.map,hud:state.zoomHud,tip:state.tip}));
@@ -159,12 +178,17 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
      if(before.roam||before.lid<.94)throw Error('Opened case jumped to avatar');
      game.document.body.classList.remove('storyOn');
      game.document.getElementById('story').classList.remove('on');
-     const button=game.document.getElementById('roamB');
-     if(button.style.display==='none') throw Error('PASEAR missing after lid opened');
+     const d=game.document,button=d.getElementById('roamB');
+     const actionItems=d.getElementById('ufActionItems'),actionToggle=d.getElementById('ufActionsToggle');
+     if(button.style.display==='none')throw Error('PASEAR missing after lid opened');
+     if(actionItems.hidden)actionToggle.click();
+     if(actionItems.hidden||d.defaultView.getComputedStyle(button).display==='none')
+       throw Error('PASEAR is not available inside expanded Actions menu');
      button.click();
      const exploring=game.__UNFIRE_CASE_QA.roam;
      const hiddenOnWalking=!button.textContent.includes('PASEAR');
-     game.document.getElementById('roamB').click();
+     if(actionItems.hidden)actionToggle.click();
+     button.click();
      return {exploring,hiddenOnWalking,returned:!game.__UNFIRE_CASE_QA.roam,
        lid:game.__UNFIRE_CASE_QA.lid,caseVisible:game.__UNFIRE_CASE_QA.caseVisible};
    });

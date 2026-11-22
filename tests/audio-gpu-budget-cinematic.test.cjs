@@ -62,7 +62,8 @@ test('sustained low frame rate lowers DPR gradually, never oscillates it upward'
     if(i)assert.ok(r.writes[i]<=r.writes[i-1],'never increases during the same play session');
   }
   assert.equal(r.resizes.length,r.writes.length,'renderer resize paired with DPR change');
-  assert.equal(r.document.documentElement.dataset.unfireAdaptiveQuality,'on');
+  assert.equal(r.document.documentElement.dataset.unfireAdaptiveQuality,'adjusted',
+    'lowered DPR must expose the truthful adjusted-quality state');
 });
 
 test('healthy desktop, outdoor and indoor target framerate: quality stays crisp',()=>{
