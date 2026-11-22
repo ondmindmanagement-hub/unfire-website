@@ -1,0 +1,56 @@
+[
+  {
+    "id": "UGC-001",
+    "title": "AI Reliability & Human Control",
+    "category": "AI Reliability & Safety",
+    "brief": "Reproducible synthetic demonstrations of human approval, STOP, and evidence logging.",
+    "state": "CONCEPT",
+    "written_only": true,
+    "live_attendance_required": false,
+    "travel_required": false,
+    "entry_fee_eur": 0,
+    "purchase_required": false,
+    "selection_method": "skill_jury",
+    "random_tie_break": false,
+    "organizer_may_compete": false,
+    "sell_participant_data": false,
+    "entrant_retains_ip": true,
+    "minimum_age": 18,
+    "intake": {
+      "enabled": false
+    },
+    "public_claims": {
+      "winners_announced": false,
+      "named_partners_confirmed": false,
+      "cash_prize_advertised": false,
+      "open_for_entries": false
+    }
+  },
+  {
+    "id": "UGC-002",
+    "title": "Audio & Voice Quality",
+    "category": "Audio & Voice Quality",
+    "brief": "Original, rights-cleared audio comparisons with written methodology; unauthorized voice impersonation excluded.",
+    "state": "CONCEPT",
+    "written_only": true,
+    "live_attendance_required": false,
+    "travel_required": false,
+    "entry_fee_eur": 0,
+    "purchase_required": false,
+    "selection_method": "skill_jury",
+    "random_tie_break": false,
+    "organizer_may_compete": false,
+    "sell_participant_data": false,
+    "entrant_retains_ip": true,
+    "minimum_age": 18,
+    "intake": {
+      "enabled": false
+    },
+    "public_claims": {
+      "winners_announced": false,
+      "named_partners_confirmed": false,
+      "cash_prize_advertised": false,
+      "open_for_entries": false
+    }
+  }
+]
