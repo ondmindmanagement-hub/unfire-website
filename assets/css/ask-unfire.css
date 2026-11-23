@@ -160,3 +160,6 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid #a9e4
 @media(prefers-reduced-motion:reduce) {
   #launcher {transition:none!important}
 }
+/* Panel sits above the launcher, higher on screen · 23 Nov 2026 */
+@media (min-width:651px){#panel{bottom:calc(max(18px,env(safe-area-inset-bottom)) + 76px)!important;height:min(500px,calc(100dvh - 150px))!important;max-height:calc(100dvh - 120px)!important;}}
+@media (max-width:650px){#panel{bottom:calc(max(12px,env(safe-area-inset-bottom)) + 56px)!important;max-height:calc(100dvh - 100px)!important;}}
