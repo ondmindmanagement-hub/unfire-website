@@ -101,7 +101,7 @@
     LOWDEV = true;
     DEVICE.maxDpr = Math.min(DEVICE.maxDpr, 0.50);
     S.renderer.setPixelRatio(Math.min(S.renderer.getPixelRatio(), DEVICE.maxDpr));
-    window.__LOWDEV = true;
+    window.__LOWDEV = true; window.__UNFIRE_SOFTWARE_WEBGL = true;
     document.documentElement.dataset.unfireSoftwareWebgl = 'low';
   }
   if (LOWDEV) { S.renderer.shadowMap.enabled = false; }
@@ -3698,7 +3698,7 @@
     // Preserve the existing __perf telemetry contract (used by recovery/QA).
     const initial=S.renderer.getPixelRatio();
     const Q=window.__perf||(window.__perf={
-      a:LOWDEV?1/25:1/33,t:0,dpr:initial,max:Math.max(Math.min(initial,DEVICE.maxDpr),SOFTWARE_WEBGL?0:Math.min(DEVICE.ceilDpr||0,(window.devicePixelRatio||1))),f:0
+      a:LOWDEV?1/25:1/33,t:0,dpr:initial,max:Math.max(Math.min(initial,DEVICE.maxDpr),window.__UNFIRE_SOFTWARE_WEBGL?0:Math.min(DEVICE.ceilDpr||0,(window.devicePixelRatio||1))),f:0
     });
     Q.a=Q.a*0.88+frameSeconds*0.12;
     Q.f=(Q.f||0)+1;
