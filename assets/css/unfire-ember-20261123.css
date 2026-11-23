@@ -314,3 +314,14 @@ html body #work-with-us .uf-lines-note{margin:32px 0 0;font-size:12px;line-heigh
 @media (prefers-reduced-motion:reduce){#reach .uf-tier-media img{transition:none;}#reach .uf-tier:hover .uf-tier-media img{transform:none;}}
 
 #reach .uf-tier-bring .uf-mono,#fields .uf-f-today .uf-mono,.uf-spec li span:first-child{white-space:nowrap;}
+
+/* ---------- Explorer 3D (v11) ---------- */
+.uf-3d{position:absolute;inset:0;opacity:0;transition:opacity .6s ease;cursor:grab;touch-action:none;}
+.uf-3d canvas{display:block;}
+.uf-3d:active{cursor:grabbing;}
+.uf-dlg.is3d .uf-3d{opacity:1;}
+.uf-dlg.is3d .uf-dlg-media video{opacity:0;transition:opacity .4s ease;}
+.uf-3d-hint{position:absolute;left:50%;top:22px;transform:translateX(-50%);color:var(--uf-ink2);background:rgba(225,223,219,.9);padding:7px 12px;border-radius:99px;white-space:nowrap;transition:opacity .6s ease;pointer-events:none;}
+.uf-3d.used .uf-3d-hint{opacity:0;}
+.uf-dlg.loading3d .uf-dlg-media::after{content:"Loading 3D model";position:absolute;left:50%;top:22px;transform:translateX(-50%);font-family:var(--uf-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--uf-mute);background:rgba(225,223,219,.9);padding:7px 12px;border-radius:99px;}
+.uf-dlg.is3d .uf-dlg-badge{z-index:2;}
