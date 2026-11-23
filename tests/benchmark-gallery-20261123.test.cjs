@@ -23,10 +23,10 @@ test('third-party award videos, previews and embed hooks are absent from public 
 });
 
 test('presentation standards stay accessible without implying external awards are Unfire achievements', () => {
-  assert.match(research, /href="\\/research\\/benchmarks\\/"/);
+  assert.ok(research.includes('href="/research/benchmarks/"'));
   assert.match(research, /Presentation standards · Authentic Unfire demonstrations/);
   assert.match(standards, /<html lang="en">/);
-  assert.match(standards, /<link rel="canonical" href="https:\\/\\/unfire\\.technology\\/research\\/benchmarks\\/"/);
+  assert.ok(standards.includes('<link rel="canonical" href="https://unfire.technology/research/benchmarks/"'));
   assert.match(standards, /id="what-we-apply"/);
   assert.match(standards, /Demonstrate the real build/);
   assert.match(standards, /Original, rights-cleared media only/);
@@ -35,6 +35,6 @@ test('presentation standards stay accessible without implying external awards ar
 
 test('homepage keeps the actual Unfire products and adjacent sections', () => {
   assert.match(home, /id="scale"/);
-  assert.match(home, /<h3 class="notranslate" translate="no">Bolt<\\/h3>/);
+  assert.ok(home.includes('<h3 class="notranslate" translate="no">Bolt</h3>'));
   assert.match(home, /id="work"/);
 });
