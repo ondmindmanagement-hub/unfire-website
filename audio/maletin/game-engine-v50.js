@@ -91,7 +91,7 @@
   // Apply the touch-device framebuffer cap BEFORE WebGL allocation: no
   // mid-boot resize or second governor, keeping startup memory predictable.
   if (LOWDEV && DEVICE.touch) {
-    const bootDpr = DEVICE.tier === 'compact' ? 0.70 : 0.85;
+    const bootDpr = DEVICE.tier === 'compact' ? 0.70 : 1.0;
     DEVICE.maxDpr = Math.min(DEVICE.maxDpr, bootDpr);
   }
   const S = Y2K.stage(cv, { reflect: false, zoom: false, exposure: 0.98, shadow: 0.38,
@@ -283,6 +283,35 @@
     const BOXB = new T.Group(); BOXB.name = 'unfireBatches'; BOXB.userData.noCollide = true; scene.add(BOXB);
     const CLS = new Set(), OBR = T.Object3D.prototype.onBeforeRender, _nm = new T.Matrix3(), _w = new T.Vector3(), AOK = { position: 1, normal: 1, uv: 1, color: 1 };
     let queue = [], built = 0;
+    // SIGNATURE BATCHING (2026-11-23, phones/tablets): many static meshes carry their own copy of an identical
+    // material, which kept them out of the batches above (one draw call each). Meshes whose materials are visually
+    // identical (every property, texture and shader hook equal) now share a batch. A per-frame snapshot of the
+    // properties that animations touch dissolves the batch the moment any member's material changes.
+    const SIGB = (window.__LOWDEV || /[?&]batch=sig\b/.test(location.search)) && !/[?&]batch=uuid\b/.test(location.search);
+    const MSKIP = { uuid: 1, name: 1, id: 1, version: 1, userData: 1, _listeners: 1, uniformsNeedUpdate: 1, needsUpdate: 1 };
+    const MATP = T.Material.prototype;
+    function msig(m) {
+      if (m.__sigV === m.version && m.__sigS) return m.__sigS;
+      let out = m.type;
+      if (m.onBeforeCompile !== MATP.onBeforeCompile || m.customProgramCacheKey !== MATP.customProgramCacheKey) out = m.uuid;
+      else for (const k of Object.keys(m).sort()) {
+        if (MSKIP[k] || k.charCodeAt(0) === 95) continue; const v = m[k];
+        if (v === null || v === undefined) { out += '|' + k + ':-'; continue; }
+        const t = typeof v;
+        if (t === 'number' || t === 'boolean' || t === 'string') out += '|' + k + ':' + (t === 'number' ? +v.toFixed(5) : v);
+        else if (v.isColor) out += '|' + k + ':' + v.getHexString() ;
+        else if (v.isTexture) out += '|' + k + ':' + v.uuid;
+        else if (v.isVector2 || v.isVector3 || v.isEuler) out += '|' + k + ':' + v.toArray().map((x) => +x.toFixed(5)).join(',');
+        else if (Array.isArray(v) && v.every((x) => typeof x !== 'object')) out += '|' + k + ':[' + v.join(',') + ']';
+        else if (k === 'defines') { try { out += '|defines:' + JSON.stringify(v); } catch (_) { out = m.uuid; break; } }
+        else { out = m.uuid; break; } // unknown object (e.g. clipping planes, custom uniforms): never merge
+      }
+      m.__sigV = m.version; m.__sigS = out; return out;
+    }
+    // Cheap per-frame snapshot of what animations change (colour, glow, opacity, PBR, map, visibility, version).
+    function msnap(m) { return [m.color ? m.color.r + m.color.g * 3 + m.color.b * 7 : 0, m.emissive ? m.emissive.r + m.emissive.g * 3 + m.emissive.b * 7 : 0, m.emissiveIntensity || 0, m.opacity, m.roughness || 0, m.metalness || 0, m.map ? m.map.id : -1, m.visible ? 1 : 0, m.version]; }
+    function msame(m, a) { return a[0] === (m.color ? m.color.r + m.color.g * 3 + m.color.b * 7 : 0) && a[1] === (m.emissive ? m.emissive.r + m.emissive.g * 3 + m.emissive.b * 7 : 0) && a[2] === (m.emissiveIntensity || 0) && a[3] === m.opacity && a[4] === (m.roughness || 0) && a[5] === (m.metalness || 0) && a[6] === (m.map ? m.map.id : -1) && a[7] === (m.visible ? 1 : 0) && a[8] === m.version; }
+    window.__UNFIRE_MSIG = msig;
     function okMesh(o) {
       if (!o.isMesh || o.isInstancedMesh || o.isSkinnedMesh || o.__lfB || o.userData.__lfProxy || o.frustumCulled === false || o.renderOrder !== 0) return false;
       const m = o.material, g = o.geometry;
@@ -295,7 +324,7 @@
       if (g.index && g.index.isInterleavedBufferAttribute) return false;
       return o.matrixWorld.determinant() > 0;
     }
-    function walk(o) { let v = true, a = null, b = null, p = o; while (p.parent) { if (!p.visible) v = false; b = a; a = p; p = p.parent; } return { v, root: p, dom: b || a }; }
+    function walk(o) { let v = true, a = null, b = null, p = o; while (p.parent) { if (!p.visible) v = false; b = a; a = p; p = p.parent; } return { v, root: p, dom: b || a, top: a }; }
     function sig(g) { return Object.keys(g.attributes).sort().map((k) => k + g.attributes[k].itemSize).join(','); }
     function scanBatches() {
       const B = new Map();
@@ -303,7 +332,7 @@
         if (!okMesh(o)) return; const need = 3000 * Math.pow(2, Math.min(o.__lfN || 0, 5)); if (NOW - (o.__lfT || 0) < need) return;
         const w = walk(o); if (!w.v || w.root !== scene) return;
         const e = o.matrixWorld.elements, cell = Math.floor(e[12] / 48) + ':' + Math.floor(e[13] / 48) + ':' + Math.floor(e[14] / 48);
-        const key = o.material.uuid + '|' + sig(o.geometry) + '|' + o.castShadow + o.receiveShadow + '|' + (w.dom ? w.dom.id : 0) + '|' + cell;
+        const key = (SIGB ? msig(o.material) : o.material.uuid) + '|' + sig(o.geometry) + '|' + o.castShadow + o.receiveShadow + '|' + (SIGB ? (w.top ? w.top.id : 0) : (w.dom ? w.dom.id : 0)) + '|' + cell;
         let L = B.get(key); if (!L) B.set(key, (L = [])); L.push(o);
       });
       queue = [];
@@ -326,9 +355,9 @@
       const geo = new T.BufferGeometry(); keys.forEach((k) => geo.setAttribute(k, new T.BufferAttribute(out[k], g0.attributes[k].itemSize, false)));
       geo.setIndex(new T.BufferAttribute(idx, 1)); geo.computeBoundingSphere(); geo.computeBoundingBox();
       const px = new T.Mesh(geo, M[0].material); px.matrixAutoUpdate = false; px.castShadow = M[0].castShadow; px.receiveShadow = M[0].receiveShadow; px.raycast = () => {}; px.userData.__lfProxy = true; px.userData.noCollide = true;
-      const cl = { M, px, mat: M.map((o) => o.material), geo: M.map((o) => o.geometry), ver: M.map((o) => o.geometry.attributes.position.version), mask: [] };
+      const cl = { M, px, mat: M.map((o) => o.material), geo: M.map((o) => o.geometry), ver: M.map((o) => o.geometry.attributes.position.version), mask: [], snap: SIGB ? M.map((o) => msnap(o.material)) : null };
       M.forEach((o, i) => { cl.mask[i] = KEEP.has(o) ? KEEP.get(o) : o.layers.mask; KEEP.delete(o); o.layers.mask = CULL; o.__lfB = cl; });
-      BOXB.add(px); CLS.add(cl); built++;
+      BOXB.add(px); CLS.add(cl); built++; window.__UNFIRE_BATCH_STATS = Object.assign(window.__UNFIRE_BATCH_STATS || {}, { built, live: CLS.size });
     }
     function dissolve(cl) {
       if (!CLS.has(cl)) return; CLS.delete(cl);
@@ -339,9 +368,9 @@
       for (const cl of CLS) {
         let v0 = null, bad = false;
         for (let i = 0; i < cl.M.length; i++) {
-          const o = cl.M[i]; if (o.material !== cl.mat[i] || o.geometry !== cl.geo[i] || o.geometry.attributes.position.version !== cl.ver[i]) { bad = true; break; }
+          const o = cl.M[i]; if (o.material !== cl.mat[i] || o.geometry !== cl.geo[i] || o.geometry.attributes.position.version !== cl.ver[i] || (cl.snap && !msame(o.material, cl.snap[i]))) { bad = true; const BS = window.__UNFIRE_BATCH_STATS || (window.__UNFIRE_BATCH_STATS = {}); BS[o.material !== cl.mat[i] ? 'mat' : o.geometry !== cl.geo[i] ? 'geo' : o.geometry.attributes.position.version !== cl.ver[i] ? 'ver' : 'snap'] = (BS[o.material !== cl.mat[i] ? 'mat' : o.geometry !== cl.geo[i] ? 'geo' : o.geometry.attributes.position.version !== cl.ver[i] ? 'ver' : 'snap'] || 0) + 1; break; }
           let v = o.visible, p = o; while (p.parent) { p = p.parent; if (!p.visible) v = false; }
-          if (p !== scene || (v0 !== null && v !== v0)) { bad = true; break; } v0 = v;
+          if (p !== scene || (v0 !== null && v !== v0)) { bad = true; const BS = window.__UNFIRE_BATCH_STATS || (window.__UNFIRE_BATCH_STATS = {}); BS[p !== scene ? 'detached' : 'vis'] = (BS[p !== scene ? 'detached' : 'vis'] || 0) + 1; break; } v0 = v;
         }
         if (bad) dissolve(cl); else cl.px.visible = !!v0;
       }
@@ -369,7 +398,7 @@
       // Umbral adaptativo: si hay demasiadas llamadas de dibujo, se ocultan antes los detalles lejanos más pequeños.
       // Los shaders ya compilados no se tiran aunque se borre su material: al volver a entrar no hay que recompilar.
       if (main && FR % 30 === 1) { const P = this.info.programs; if (P) for (let i = 0; i < P.length; i++) if (!P[i].__keep) { P[i].__keep = true; P[i].usedTimes++; } }
-      if (main) { const c = this.info.render.calls; /* per-device draw-call budget: desktop targets were applied to phones, which LOWERED the threshold there */ const cmp = window.__LOWDEV && window.__UNFIRE_ACTIVE_DEVICE && window.__UNFIRE_ACTIVE_DEVICE.tier === 'compact'; const hi = cmp ? 320 : window.__LOWDEV ? 900 : 1300, lo = cmp ? 220 : window.__LOWDEV ? 600 : 850, mx = cmp ? 6 : window.__LOWDEV ? 4 : 4; TH = Math.min(mx, Math.max(0.8, TH * (c > hi ? 1.04 : c < lo ? 0.985 : 1))); window.__UNFIRE_CULL_TH = TH; }
+      if (main) { const c = this.info.render.calls; /* per-device draw-call budget: desktop targets were applied to phones, which LOWERED the threshold there */ const cmp = window.__LOWDEV && window.__UNFIRE_ACTIVE_DEVICE && window.__UNFIRE_ACTIVE_DEVICE.tier === 'compact'; const hi = cmp ? 300 : window.__LOWDEV ? 560 : 1300, lo = cmp ? 200 : window.__LOWDEV ? 400 : 850, mx = cmp ? 7 : window.__LOWDEV ? 5 : 4; TH = Math.min(mx, Math.max(0.8, TH * (c > hi ? 1.04 : c < lo ? 0.985 : 1))); window.__UNFIRE_CULL_TH = TH; }
       return x;
     };
     // El motor de audio se prepara durante la carga (en pausa hasta el primer toque/tecla); antes se creaba al cruzar la puerta y congelaba ~1-2 s.
@@ -3091,7 +3120,9 @@
     const w=Math.max(1,Math.round(document.documentElement.clientWidth || innerWidth));
     const h=Math.max(1,Math.round(innerHeight || document.documentElement.clientHeight));
     const budget=window.__UNFIRE_AUTOCALIB;
-    if(budget&&S.renderer.getPixelRatio()>budget.maxDpr)S.renderer.setPixelRatio(budget.maxDpr);
+    // Respect the governor's earned ceiling (window.__perf.max) so a rotation or Safari toolbar resize does not undo it.
+    const dprCap=budget?Math.max(budget.maxDpr,(window.__perf&&window.__perf.max)||0):0;
+    if(budget&&S.renderer.getPixelRatio()>dprCap)S.renderer.setPixelRatio(dprCap);
     if(w===renderWidth&&h===renderHeight)return;
     renderWidth=w;renderHeight=h;
     S.renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();
@@ -3667,7 +3698,7 @@
     // Preserve the existing __perf telemetry contract (used by recovery/QA).
     const initial=S.renderer.getPixelRatio();
     const Q=window.__perf||(window.__perf={
-      a:LOWDEV?1/25:1/33,t:0,dpr:initial,max:Math.min(initial,DEVICE.maxDpr),f:0
+      a:LOWDEV?1/25:1/33,t:0,dpr:initial,max:Math.max(Math.min(initial,DEVICE.maxDpr),SOFTWARE_WEBGL?0:Math.min(DEVICE.ceilDpr||0,(window.devicePixelRatio||1))),f:0
     });
     Q.a=Q.a*0.88+frameSeconds*0.12;
     Q.f=(Q.f||0)+1;
@@ -3685,19 +3716,21 @@
     // change or a throttled background frame. Require sustained slow frames.
     adaptivePerf.frames++;
     if(frameSeconds>target*1.32)adaptivePerf.slow++;
-    if(frameSeconds<target*0.91)adaptivePerf.fast++;
+    // Capped devices render on a 30 fps cadence (~33 ms): a frame that lands on the cap with low CPU cost has headroom.
+    const onCap=LOWDEV&&frameSeconds<0.0375&&(window.__UNFIRE_FRAMECOST||99)<14;
+    if(frameSeconds<target*0.91||onCap)adaptivePerf.fast++;
     if(now-adaptivePerf.since<9000)return;
     const samples=adaptivePerf.frames;
     const sustainedSlow=samples>=20 && adaptivePerf.slow/samples>=0.7 && Q.a>target*1.32;
-    const sustainedFast=samples>=20 && adaptivePerf.fast/samples>=0.8 && Q.a<target*0.91;
+    const sustainedFast=samples>=20 && adaptivePerf.fast/samples>=0.8 && (Q.a<target*0.91||(LOWDEV&&Q.a<0.0375));
     adaptivePerf.since=now;adaptivePerf.frames=0;adaptivePerf.slow=0;adaptivePerf.fast=0;
     const current=Math.min(S.renderer.getPixelRatio(),Q.max);
     const floor=Math.min(Q.max,LOWDEV?0.60:0.75);
     let next=current;
     if(sustainedSlow && now-adaptivePerf.lastChange>=14000)
       next=Math.max(floor,Math.round((current-0.10)*100)/100);
-    else if(sustainedFast && now-adaptivePerf.lastChange>=24000)
-      next=Math.min(Q.max,Math.round((current+0.05)*100)/100);
+    else if(sustainedFast && now-adaptivePerf.lastChange>=(DEVICE.touch?12000:24000))
+      next=Math.min(Q.max,Math.round((current+(DEVICE.touch?0.1:0.05))*100)/100);
     if(Math.abs(next-current)<0.015)return;
     // Gradually restore full native detail after load subsides; never lock the
     // house at blurry quality after one temporary performance incident.
@@ -3817,7 +3850,7 @@
     // tick at 33.2 ms, which is the stutter while flying. Gate a few ms under the 2-vsync interval so the cadence locks to a
     // steady 30, and when the measured CPU cost of a frame is small (fast desktops) run at the display rate (max ~60).
     const fc = window.__UNFIRE_FRAMECOST || 20; if (!LOWDEV) window.__UNFIRE_FULLRATE = window.__UNFIRE_FULLRATE ? fc < 14.5 : fc < 10.5;
-    const gateMs = LOWDEV ? (DEVICE.tier==='compact' ? 42 : 29) : window.__UNFIRE_FULLRATE ? 13 : (window.ATM_OUT ? 29 : 25);
+    const gateMs = LOWDEV ? (DEVICE.tier==='compact' && fc > 24 ? 42 : 29) : window.__UNFIRE_FULLRATE ? 13 : (window.ATM_OUT ? 29 : 25);
     if (previousRenderAt && now - previousRenderAt < (window.__UNFIRE_GATE != null ? window.__UNFIRE_GATE : gateMs)) return;
     const __fs = performance.now(); queueMicrotask(() => { const c = performance.now() - __fs; window.__UNFIRE_FRAMECOST = (window.__UNFIRE_FRAMECOST || c) * 0.9 + c * 0.1; });
     // Case/camera animations must use real foreground elapsed time even if

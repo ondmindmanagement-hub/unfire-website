@@ -1,0 +1,17 @@
+/* Y2K ROBOTS · HUD layout guard (2026-11-23). Loaded last; pairs with hud-layout-guard.js. */
+[data-uf-yield]{visibility:hidden!important;pointer-events:none!important}
+/* A menu owns the screen: thumb controls step aside instead of sitting on top of it. */
+body.uf-panel-open #unfireTouchPad,
+body.uf-panel-open #unfireFly,
+body.uf-panel-open #unfireTalk,
+body.uf-panel-open #unfireDown{visibility:hidden!important;pointer-events:none!important}
+/* Menus always fit inside the visible, notch-safe screen and scroll if needed. */
+#storyHud.cfgOn{
+  box-sizing:border-box!important;
+  max-height:calc(100dvh - max(12px, env(safe-area-inset-top)) - max(12px, env(safe-area-inset-bottom)) - 96px);
+  overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+}
+#ufActionItems:not([hidden]){box-sizing:border-box;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+/* Credits button: a readable label, not a lone glyph. */
+#ufCredits{min-height:44px}
+@media (prefers-reduced-motion:reduce){[data-uf-yield]{transition:none!important}}
