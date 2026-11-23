@@ -823,6 +823,7 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
           s.textContent = '.brand,#hint,.keys,#restore{display:none!important}';
           d.head.appendChild(s); d.documentElement.setAttribute('data-theme', 'dark');
           hw = frameWin.__hw; mats = collect(hw.H.root);
+          try { var oc = hw.S.controls; oc.enablePan = false; oc.screenSpacePanning = false; oc.minDistance = Math.max(oc.minDistance || 0, 4.2); oc.maxDistance = 15; oc.update(); } catch (e) {}
           ['canopy', 'body', 'metal', 'pods'].forEach(apply);
           studio.classList.add('live'); statusEl.textContent = 'Live · drag to turn · pinch or scroll to zoom';
         } catch (e) { statusEl.textContent = 'The live atelier could not be opened here.'; }

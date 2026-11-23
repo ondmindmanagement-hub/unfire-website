@@ -12,7 +12,7 @@
     var root = host.attachShadow({mode:"open"});
     var sheet = document.createElement("link");
     sheet.rel = "stylesheet";
-    var CSS_URL = "/assets/css/ask-unfire.css?v=20261122-1";
+    var CSS_URL = "/assets/css/ask-unfire.css?v=20261123-1";
     sheet.href = CSS_URL;
     // Safari can leave a shadow-root <link> unapplied (stale cache or translation
     // rewrites). Verify the styles took effect; otherwise inline the same stylesheet.
