@@ -54,6 +54,8 @@
 /* Hyperwave atelier dialog */
 (function(){var d=document,dlg=d.getElementById('uf-atelier-dialog'),b=d.getElementById('uf-atelier-open');if(!dlg||!b)return;var fr=dlg.querySelector('iframe'),last=null;
 b.addEventListener('click',function(){if(typeof dlg.showModal!=='function'){location.href='/hyperwave-hardware/#atelier';return;}last=d.activeElement;if(!fr.getAttribute('src'))fr.src='/hyperwave-hardware/?embed=1';d.documentElement.classList.add('uf-dlg-lock');dlg.showModal();d.getElementById('uf-atelier-close').focus({preventScroll:true});});
+var expand=d.getElementById('uf-atelier-expand');
+if(expand)expand.addEventListener('click',function(){var expanded=dlg.classList.toggle('uf-adlg-expanded');expand.setAttribute('aria-pressed',String(expanded));expand.textContent=expanded?'Exit full screen':'Full screen';});
 d.getElementById('uf-atelier-close').addEventListener('click',function(){dlg.close();});
 dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close();});
-dlg.addEventListener('close',function(){d.documentElement.classList.remove('uf-dlg-lock');if(last&&last.focus)last.focus();});})();
+dlg.addEventListener('close',function(){d.documentElement.classList.remove('uf-dlg-lock');dlg.classList.remove('uf-adlg-expanded');if(expand){expand.setAttribute('aria-pressed','false');expand.textContent='Full screen';}if(last&&last.focus)last.focus();});})();
