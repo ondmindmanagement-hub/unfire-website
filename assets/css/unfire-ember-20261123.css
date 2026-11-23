@@ -399,3 +399,7 @@ html body section#reach::before{content:"";position:absolute;inset:0;pointer-eve
 #reach .uf-tier-body{border-top-color:#141414;}
 #reach .uf-tier-bring{border-color:rgba(20,20,20,.16);}
 .uf-ind-figure img{-webkit-mask-image:radial-gradient(ellipse 58% 60% at 50% 50%,#000 60%,transparent 100%)!important;mask-image:radial-gradient(ellipse 58% 60% at 50% 50%,#000 60%,transparent 100%)!important;filter:brightness(.988);}
+
+/* 3D explorer: no turntable video behind the model; model opens straight and fades in */
+.uf-dlg.has3d .uf-dlg-media video{display:none;}
+.uf-dlg.has3d .uf-3d{transition:opacity .55s ease .05s;}
