@@ -1,0 +1,141 @@
+/* Unfire · Industrial identity layer · 23 Nov 2026
+   Light engineering chapters (render backdrop #e1dfdb) + dark ember technology chapter.
+   Hardware imagery = labelled concept renders. Product screens = real captures. */
+:root{--uf-paper:#e1dfdb;--uf-ink:#141414;--uf-ink2:#3a3936;--uf-mute:#706c65;--uf-rule:rgba(20,20,20,.14);--uf-orange:#ff4f12;--uf-orange-t:#c73a06;
+  --uf-night:#0a0908;--uf-cream:#f3eee6;--uf-gold:#ffb85c;--uf-dim:#857e74;--uf-line:rgba(255,236,214,.10);--uf-mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;}
+.uf-mono{font-family:var(--uf-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;}
+
+/* ---------- Hero · industrial ---------- */
+.uf-ind-hero{position:relative;background:var(--uf-paper)!important;color:var(--uf-ink);overflow:hidden;padding:0!important;min-height:auto!important;display:block!important;}
+.uf-ind-hero .uf-ind-bar{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:22px 0 18px;border-bottom:1px solid var(--uf-rule);color:var(--uf-ink2);}
+.uf-ind-hero .uf-ind-bar b{color:var(--uf-orange-t);font-weight:600;}
+.uf-ind-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:24px;align-items:center;padding:56px 0 40px;}
+.uf-ind-hero .hero-kicker{font-family:var(--uf-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--uf-orange-t)!important;margin-bottom:22px;}
+.uf-ind-hero h1.uf-hero-title{color:var(--uf-ink)!important;font-size:clamp(46px,6.2vw,92px)!important;line-height:.98!important;letter-spacing:-.045em!important;font-weight:700;margin:0;}
+.uf-ind-hero h1 .uf-o{color:var(--uf-orange);}
+.uf-ind-hero p.uf-ind-lead{color:var(--uf-ink2)!important;font-size:18px;line-height:1.55;max-width:470px;margin:26px 0 0;}
+.uf-ind-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:32px;}
+.uf-btn{display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 20px;border-radius:999px;font-size:15px;font-weight:600;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease;}
+.uf-ind-hero .uf-btn.solid,.uf-btn.solid{background:var(--uf-ink)!important;color:var(--uf-paper)!important;border:0!important;box-shadow:none!important;}
+.uf-ind-hero .uf-btn.solid:hover{background:var(--uf-orange-t)!important;}
+.uf-ind-hero .uf-btn.line,.uf-btn.line{background:transparent!important;border:1px solid var(--uf-ink)!important;color:var(--uf-ink)!important;box-shadow:none!important;}
+.uf-ind-hero .uf-btn.line:hover{background:var(--uf-ink)!important;color:var(--uf-paper)!important;}
+.uf-btn:focus-visible{outline:2px solid var(--uf-orange);outline-offset:3px;}
+.uf-ind-figure{position:relative;margin:0 -4vw 0 0;}
+.uf-ind-figure img{display:block;width:100%;height:auto;-webkit-mask-image:radial-gradient(ellipse closest-side at 50% 50%,#000 70%,transparent 100%);mask-image:radial-gradient(ellipse closest-side at 50% 50%,#000 70%,transparent 100%);}
+.uf-callout{position:absolute;display:flex;align-items:center;gap:8px;color:var(--uf-ink);white-space:nowrap;}
+.uf-callout i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--uf-orange);box-shadow:0 0 0 4px rgba(255,79,18,.16);}
+.uf-callout span{background:rgba(225,223,219,.9);padding:4px 7px;border-radius:4px;}
+.uf-ind-figcap{position:absolute;right:4vw;bottom:2px;color:var(--uf-mute);}
+.uf-ind-index{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--uf-rule);}
+.uf-ind-index a{display:block;padding:22px 22px 26px 0;color:var(--uf-ink);text-decoration:none;border-right:1px solid var(--uf-rule);margin-right:22px;transition:color .2s;}
+.uf-ind-index a:last-child{border-right:0;margin-right:0;}
+.uf-ind-index a:hover{color:var(--uf-orange-t);}
+.uf-ind-index .n{color:var(--uf-mute);display:block;margin-bottom:10px;}
+.uf-ind-index strong{display:block;font-size:20px;letter-spacing:-.02em;font-weight:650;}
+.uf-ind-index em{display:block;font-style:normal;color:var(--uf-mute);font-size:14px;margin-top:4px;line-height:1.45;}
+
+/* ---------- Hardware ---------- */
+html body section#hardware{background:var(--uf-paper)!important;color:var(--uf-ink);padding:110px 0 120px!important;border-top:1px solid var(--uf-rule);}
+.uf-hw-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:40px;align-items:end;margin-bottom:48px;}
+.uf-hw-head .uf-mono{color:var(--uf-orange-t);}
+.uf-hw-head h2{font-size:clamp(40px,5.2vw,74px);line-height:1;letter-spacing:-.04em;margin:14px 0 0;font-weight:700;color:var(--uf-ink);}
+.uf-hw-head p{color:var(--uf-ink2);font-size:17px;line-height:1.55;margin:0;}
+.uf-hw-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--uf-ink);}
+.uf-hw-grid{column-gap:48px;}
+.uf-hw-item{position:relative;display:flex;flex-direction:column;min-width:0;}
+.uf-hw-item+.uf-hw-item::before{content:"";position:absolute;left:-24px;top:0;bottom:0;width:1px;background:var(--uf-rule);}
+.uf-hw-top{display:flex;justify-content:space-between;padding:14px 0;color:var(--uf-ink2);}
+.uf-hw-top .tag{color:var(--uf-orange-t);}
+.uf-hw-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--uf-paper);}
+.uf-hw-media img,.uf-hw-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.uf-hw-media video{opacity:0;transition:opacity .5s ease;}
+.uf-hw-media video.on{opacity:1;}
+.uf-hw-item h3{font-size:26px;letter-spacing:-.025em;margin:18px 0 8px;font-weight:650;color:var(--uf-ink);}
+.uf-hw-item p{color:var(--uf-ink2);font-size:15px;line-height:1.55;margin:0 0 16px;}
+.uf-spec{list-style:none;margin:auto 0 0;padding:0;border-top:1px solid var(--uf-rule);}
+.uf-spec li{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--uf-rule);font-size:13px;color:var(--uf-ink);}
+.uf-spec li span:first-child{font-family:var(--uf-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--uf-mute);padding-top:2px;}
+.uf-spec li span:last-child{text-align:right;}
+.uf-hw-commission{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center;margin-top:56px;padding:28px 32px;background:var(--uf-ink);color:var(--uf-paper);border-radius:18px;}
+.uf-hw-commission h3{margin:0 0 6px;font-size:22px;letter-spacing:-.02em;color:var(--uf-paper);}
+.uf-hw-commission p{margin:0;color:#b9b4ab;font-size:15px;line-height:1.5;}
+.uf-hw-commission .uf-btn.solid{background:var(--uf-orange)!important;color:#1a0a03!important;}
+.uf-hw-commission .uf-btn.solid:hover{background:#fff;color:var(--uf-ink)!important;}
+.uf-hw-note{margin-top:18px;color:var(--uf-mute);font-size:12px;line-height:1.5;}
+
+/* ---------- Technologies · dark ember ---------- */
+html body section#technologies{background:var(--uf-night)!important;padding:120px 0 128px!important;}
+.uf-tech-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-bottom:52px;}
+.uf-tech-head .uf-mono{color:var(--uf-gold);}
+.uf-tech-title{font-size:clamp(40px,5.2vw,72px);line-height:1.02;letter-spacing:-.04em;font-weight:700;margin:14px 0 0;color:var(--uf-cream);}
+.uf-tech-title span{color:#6a645c;}
+.uf-tech-lead{max-width:430px;color:#a39b90;font-size:17px;line-height:1.55;margin:0;}
+.uf-tech-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+.uf-tech-card{position:relative;display:flex;flex-direction:column;background:#100e0c;border:1px solid var(--uf-line);border-radius:20px;overflow:hidden;color:inherit;text-decoration:none;transition:border-color .35s ease,transform .35s ease;}
+.uf-tech-card:hover,.uf-tech-card:focus-visible{border-color:rgba(255,184,92,.4);transform:translateY(-3px);}
+.uf-tech-card:focus-visible{outline:2px solid var(--uf-gold);outline-offset:3px;}
+.uf-tech-card.wide{grid-column:span 2;}
+.uf-tech-media{position:relative;aspect-ratio:16/9;background:#060504;overflow:hidden;}
+.uf-tech-card.wide .uf-tech-media{aspect-ratio:21/9;}
+.uf-tech-media video,.uf-tech-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scale(1.06);
+  -webkit-mask-image:radial-gradient(70% 80% at 50% 50%,#000 55%,transparent 100%);mask-image:radial-gradient(70% 80% at 50% 50%,#000 55%,transparent 100%);}
+.uf-tech-body{padding:24px 26px 28px;display:flex;flex-direction:column;gap:9px;flex:1;}
+.uf-tech-body .uf-mono{color:var(--uf-gold);}
+.uf-tech-body h3{font-size:23px;line-height:1.15;letter-spacing:-.02em;margin:0;color:var(--uf-cream);font-weight:650;}
+.uf-tech-body p{margin:0;color:#a39b90;font-size:15px;line-height:1.55;}
+.uf-tech-link{margin-top:auto;padding-top:12px;font-size:14px;color:var(--uf-cream);}
+.uf-tech-link::after{content:" \2192";color:var(--uf-orange);}
+.uf-tech-foot{margin:20px 0 0;font-size:12px;color:var(--uf-dim);}
+
+/* ---------- Autonomy feature ---------- */
+html body section#autonomy-feature{background:#0d0b09!important;padding:120px 0!important;border-top:1px solid var(--uf-line);}
+.uf-auto-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:64px;align-items:center;}
+.uf-auto .uf-mono{color:var(--uf-gold);}
+.uf-auto h2{font-size:clamp(40px,5vw,68px);line-height:1.02;letter-spacing:-.04em;margin:14px 0 22px;color:var(--uf-cream);font-weight:700;}
+.uf-auto h2 span{color:var(--uf-orange);}
+.uf-auto p{color:#c9c1b6;font-size:18px;line-height:1.55;margin:0;max-width:520px;}
+.uf-gate{display:flex;gap:8px;flex-wrap:wrap;margin:28px 0 30px;}
+.uf-gate span{font-family:var(--uf-mono);font-size:12px;font-weight:600;letter-spacing:.1em;padding:8px 14px;border-radius:999px;}
+.uf-gate .a{background:#13291f;color:#8fe3b4}.uf-gate .r{background:#2e2511;color:#f2cf72}.uf-gate .b{background:#321416;color:#ff9aa0}
+.uf-auto .uf-btn.solid{background:var(--uf-cream)!important;color:var(--uf-night)!important;}
+.uf-auto .uf-btn.solid:hover{background:var(--uf-orange);color:#1a0a03!important;}
+.uf-auto .uf-btn.line{border:1px solid rgba(243,238,230,.5)!important;color:var(--uf-cream)!important;}
+.uf-auto .uf-btn.line:hover{background:var(--uf-cream);color:var(--uf-night)!important;}
+.uf-auto-small{margin-top:22px!important;font-size:13px!important;color:var(--uf-dim)!important;}
+.uf-auto figure{margin:0;}
+.uf-auto-shot{border-radius:18px;overflow:hidden;border:1px solid var(--uf-line);box-shadow:0 40px 120px -50px rgba(255,79,18,.35);background:#0d0f12;}
+.uf-auto-shot img{display:block;width:100%;height:auto;}
+.uf-auto figcaption{margin-top:12px;font-size:12px;color:var(--uf-dim);}
+
+@media (max-width:1020px){
+  .uf-ind-grid{grid-template-columns:1fr;padding-top:40px;}
+  .uf-ind-figure{margin:8px -6vw 0;}
+  .uf-callout{display:none;}
+  .uf-ind-index{grid-template-columns:1fr 1fr;}
+  .uf-ind-index a:nth-child(2){border-right:0;margin-right:0;}
+  .uf-ind-index a:nth-child(-n+2){border-bottom:1px solid var(--uf-rule);}
+  .uf-hw-head{grid-template-columns:1fr;}
+  .uf-hw-grid{grid-template-columns:1fr;border-top:0;}
+  .uf-hw-item{margin:0 0 40px;border-top:1px solid var(--uf-ink);}
+  .uf-hw-item+.uf-hw-item::before{display:none;}
+  .uf-tech-grid{grid-template-columns:1fr 1fr;}
+  .uf-auto-grid{grid-template-columns:1fr;gap:40px;}
+}
+@media (max-width:640px){
+  .uf-ind-bar .hide-s{display:none;}
+  .uf-ind-index{grid-template-columns:1fr;}
+  .uf-ind-index a{border-right:0!important;margin-right:0!important;border-bottom:1px solid var(--uf-rule);}
+  html body section#hardware,html body section#technologies,html body section#autonomy-feature{padding:84px 0!important;}
+  .uf-hw-commission{grid-template-columns:1fr;}
+  .uf-tech-grid{grid-template-columns:1fr;}
+  .uf-tech-card.wide{grid-column:auto;}
+  .uf-tech-card.wide .uf-tech-media{aspect-ratio:16/9;}
+}
+@media (prefers-reduced-motion:reduce){.uf-tech-card,.uf-btn,.uf-hw-media video{transition:none;}.uf-tech-card:hover{transform:none;}}
+
+html body #hardware h2,html body #hardware h3:not(.uf-hw-commission h3){color:var(--uf-ink)!important;}
+html body #hardware .uf-hw-commission h3{color:var(--uf-paper)!important;}
+html body #hardware p{color:var(--uf-ink2)!important;}html body #hardware .uf-hw-commission p{color:#b9b4ab!important;}html body #hardware .uf-hw-note{color:var(--uf-mute)!important;}
+html body .uf-ind-hero h1,html body .uf-ind-index strong{color:var(--uf-ink)!important;}
+html body #technologies h2,html body #technologies h3,html body #autonomy-feature h2{color:var(--uf-cream)!important;}
