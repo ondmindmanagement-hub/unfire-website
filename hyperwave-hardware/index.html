@@ -335,6 +335,12 @@ html.embed body{background:#0b0b0c!important}
 html.embed #atelier{padding:18px 0 24px!important;min-height:100vh;background:radial-gradient(120% 80% at 50% 0%,#17181b 0%,#0b0b0c 70%)!important}
 html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:18px!important}
 .chip.tex{background-size:cover!important}
+/* the 3D stage keeps a fixed, viewport-sized frame beside the long options column, so the instrument is always centred in view */
+@media (min-width:1101px){
+ .atelier-grid{align-items:start}
+ .studio{position:sticky;top:84px;height:min(calc(100vh - 110px),820px);min-height:520px}
+ html.embed .studio{top:18px;height:calc(100vh - 42px);min-height:440px}
+}
 </style>
 </head>
 <body>
@@ -823,7 +829,7 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
           s.textContent = '.brand,#hint,.keys,#restore{display:none!important}';
           d.head.appendChild(s); d.documentElement.setAttribute('data-theme', 'dark');
           hw = frameWin.__hw; mats = collect(hw.H.root);
-          try { var oc = hw.S.controls; oc.enablePan = false; oc.screenSpacePanning = false; oc.minDistance = Math.max(oc.minDistance || 0, 4.2); oc.maxDistance = 15; oc.update(); } catch (e) {}
+          try { var oc = hw.S.controls; oc.enablePan = false; oc.screenSpacePanning = false; oc.minDistance = Math.max(oc.minDistance || 0, 4.2); oc.maxDistance = 32; oc.update(); hw.view.pad = 1.18; hw.view.auto = true; } catch (e) {}
           ['canopy', 'body', 'metal', 'pods'].forEach(apply);
           studio.classList.add('live'); statusEl.textContent = 'Live · drag to turn · pinch or scroll to zoom';
         } catch (e) { statusEl.textContent = 'The live atelier could not be opened here.'; }
