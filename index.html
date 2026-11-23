@@ -4086,6 +4086,7 @@ main .uf-hero-title {
 #games .unfire-games-home-visual span{position:absolute;bottom:0;left:0;right:0;padding:26px 16px 14px;font-size:12px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.85))}
 @media(max-width:760px){#games .unfire-games-home-layout{grid-template-columns:1fr}#games .unfire-games-home-visual{aspect-ratio:16/9}}
 </style>
+<link rel="stylesheet" href="/assets/css/unfire-ember-20261123.css?v=5">
 </head>
 <body>
 <div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
@@ -4147,20 +4148,93 @@ main .uf-hero-title {
 
 </header>
 <main id="top">
-<section class="hero unfire-real-hero uf-hero-section">
-<div class="wrap hero-inner">
-<div class="hero-kicker" data-unfire-move="hero-eyebrow">Independent technology initiative</div>
-<h1 class="uf-hero-title" data-unfire-move="hero-title">
-      Build technology.<br/>
-      Turn it into products.
-    </h1>
-<p data-unfire-move="hero-copy">
-      <span class="notranslate" translate="no">Unfire</span>&nbsp;is an independent technology initiative creating software, AI systems and digital tools for real-world use across multiple industries.
-    </p>
-<div class="hero-actions">
-<a class="button primary unfire-lava-primary" data-unfire-move="hero-button-1" href="#work">Explore <span class="notranslate" translate="no">Unfire</span></a>
-<a class="button unfire-lava-secondary" data-unfire-move="hero-button-2" href="#funding">Funding &amp; collaboration</a>
+<section class="hero unfire-real-hero uf-hero-section uf-ind-hero" aria-labelledby="uf-hero-h">
+<div class="wrap">
+<div class="uf-ind-bar uf-mono"><span><b>Unfire</b> / Independent technology initiative · Spain</span><span class="hide-s">Software · AI systems · Audio · Hardware</span></div>
+<div class="uf-ind-grid">
+<div>
+<div class="hero-kicker" data-unfire-move="hero-eyebrow">Engineering products, end to end</div>
+<h1 class="uf-hero-title" id="uf-hero-h" data-unfire-move="hero-title">Build technology.<br/>Turn it into <span class="uf-o">products.</span></h1>
+<p class="uf-ind-lead" data-unfire-move="hero-copy"><span class="notranslate" translate="no">Unfire</span> designs software, AI systems, audio instruments and the hardware to hold them, from first prototype to a product people can use.</p>
+<div class="uf-ind-actions">
+<a class="uf-btn solid" data-unfire-move="hero-button-1" href="#work">Explore products</a>
+<a class="uf-btn line" data-unfire-move="hero-button-2" href="#funding">Invest &amp; collaborate</a>
 </div>
+</div>
+<figure class="uf-ind-figure">
+<img src="/assets/hardware/2026-11/family-1600.webp" srcset="/assets/hardware/2026-11/family-1000.webp 1000w, /assets/hardware/2026-11/family-1600.webp 1600w, /assets/hardware/2026-11/family-2400.webp 2400w" sizes="(max-width:1020px) 100vw, 60vw" width="2400" height="1350" alt="Concept renders of three Unfire hardware devices: a cream pocket synthesizer, a graphite God's Lamp instrument and a round Unfire Control camera puck." fetchpriority="high"/>
+<div class="uf-callout uf-mono" style="left:9%;top:17%"><i></i><span>01 · Synth Pocket</span></div>
+<div class="uf-callout uf-mono" style="left:63%;top:7%"><i></i><span>02 · God's Lamp Pocket</span></div>
+<div class="uf-callout uf-mono" style="left:30%;top:86%"><i></i><span>03 · Control Puck</span></div>
+<figcaption class="uf-ind-figcap uf-mono">Hardware concepts · 3D renders</figcaption>
+</figure>
+</div>
+<nav class="uf-ind-index" aria-label="Unfire product areas">
+<a href="#apps"><span class="n uf-mono">01</span><strong>Software</strong><em>Mac and mobile apps, with releases on the App Store.</em></a>
+<a href="/autonomy/"><span class="n uf-mono">02</span><strong>AI systems</strong><em>Autonomy and Bolt: automation with human approval.</em></a>
+<a href="#audio"><span class="n uf-mono">03</span><strong>Audio</strong><em>Synth, God's Lamp and Archer instruments and tools.</em></a>
+<a href="#hardware"><span class="n uf-mono">04</span><strong>Hardware</strong><em>Pocket instruments and control devices in development.</em></a>
+</nav>
+</div>
+</section>
+<section id="hardware" class="uf-hw" aria-labelledby="uf-hw-h">
+<div class="wrap">
+<div class="uf-hw-head"><div><span class="uf-mono">Hardware · in development</span><h2 id="uf-hw-h">Software you can hold.</h2></div>
+<p>Each device starts from an Unfire app that already runs. Its controls are mapped one to one from the real interface, so the hardware and the software share a single, tested design.</p></div>
+<div class="uf-hw-grid">
+<article class="uf-hw-item">
+<div class="uf-hw-top uf-mono"><span>01</span><span class="tag">Concept</span></div>
+<div class="uf-hw-media"><img src="/assets/hardware/2026-11/synth-1200.webp" width="1200" height="750" loading="lazy" alt="Concept render of the Unfire Synth Pocket, a cream pocket synthesizer with a wave display, orange volume knob and two-octave keyboard."/>
+<video data-uf-loop muted loop playsinline preload="none" poster="/assets/hardware/2026-11/synth-1200.webp" aria-hidden="true"><source src="/assets/hardware/2026-11/synth-turntable.mp4" type="video/mp4"/></video></div>
+<h3>Unfire Synth Pocket</h3><p>A pocket version of the Unfire Synth app: the same four engines, six modes and two-octave keyboard, with a physical volume dial.</p><ul class="uf-spec"><li><span>Mirrors</span><span>Unfire Synth app</span></li><li><span>Engines</span><span>Analog · FM · Glass · Sample</span></li><li><span>Modes</span><span>Song · Step · Sound · Tape · Voice · Play</span></li><li><span>I/O</span><span>USB-C · 3.5 mm out</span></li><li><span>Status</span><span>CAD render, no prototype yet</span></li></ul>
+</article>
+<article class="uf-hw-item">
+<div class="uf-hw-top uf-mono"><span>02</span><span class="tag">Concept</span></div>
+<div class="uf-hw-media"><img src="/assets/hardware/2026-11/godslamp-1200.webp" width="1200" height="750" loading="lazy" alt="Concept render of the God's Lamp Pocket, a graphite instrument with four green knobs, a song display, keys and a turquoise light line."/>
+<video data-uf-loop muted loop playsinline preload="none" poster="/assets/hardware/2026-11/godslamp-1200.webp" aria-hidden="true"><source src="/assets/hardware/2026-11/godslamp-turntable.mp4" type="video/mp4"/></video></div>
+<h3>God's Lamp Pocket</h3><p>God's Lamp as a dedicated instrument: four macro knobs, seven modes and the six-track song view, framed by its turquoise light line.</p><ul class="uf-spec"><li><span>Mirrors</span><span>God's Lamp app</span></li><li><span>Macros</span><span>Tone · Color · Shape · Space</span></li><li><span>Modes</span><span>7, from Song to Collage</span></li><li><span>Screen</span><span>Real Song view, as in the app</span></li><li><span>Status</span><span>CAD render, no prototype yet</span></li></ul>
+</article>
+<article class="uf-hw-item">
+<div class="uf-hw-top uf-mono"><span>03</span><span class="tag">Concept</span></div>
+<div class="uf-hw-media"><img src="/assets/hardware/2026-11/control-1200.webp" width="1200" height="750" loading="lazy" alt="Concept render of the Unfire Control Puck, a round black device with a camera lens, infrared emitters and an orange light ring, connected by a cable."/>
+<video data-uf-loop muted loop playsinline preload="none" poster="/assets/hardware/2026-11/control-1200.webp" aria-hidden="true"><source src="/assets/hardware/2026-11/control-turntable.mp4" type="video/mp4"/></video></div>
+<h3>Unfire Control Puck</h3><p>A USB camera and microphone puck for Unfire Control. Plug it into any computer and steer the cursor with hand gestures and voice, even without a good built-in camera.</p><ul class="uf-spec"><li><span>Software</span><span>Unfire Control</span></li><li><span>Sensors</span><span>Wide-angle camera · IR · 4 mics</span></li><li><span>Connection</span><span>USB-C, plug and play</span></li><li><span>Feedback</span><span>Orange status ring</span></li><li><span>Status</span><span>CAD render, no prototype yet</span></li></ul>
+</article>
+</div>
+<div class="uf-hw-commission"><div><h3>Hardware, designed to order.</h3><p>Instruments, controllers and enclosures for your product or brand, from concept and CAD to a costed prototype plan.</p></div>
+<a class="uf-btn solid" href="mailto:hello@unfire.technology?subject=Hardware%20project">Describe a hardware project</a></div>
+<p class="uf-hw-note">The devices above are concept renders created by Unfire. They are not products for sale, and no physical prototype, certification, price or delivery date exists yet. On-screen interfaces are taken from genuine captures of the corresponding apps.</p>
+</div>
+</section>
+<section id="technologies" class="uf-tech" aria-labelledby="uf-tech-h">
+<div class="wrap">
+<div class="uf-tech-head"><div><span class="uf-mono">Technologies</span><h2 class="uf-tech-title" id="uf-tech-h">One core. <span>Five fields.</span></h2></div>
+<p class="uf-tech-lead">Shared engineering across AI, energy, audio, infrastructure and networks. Every product focuses on one real problem, and what works is reused.</p></div>
+<div class="uf-tech-grid">
+<a class="uf-tech-card wide" href="/autonomy/"><div class="uf-tech-media"><video data-uf-loop muted loop playsinline preload="none" poster="/assets/video/ember/02-ai-core.jpg" aria-hidden="true"><source src="/assets/video/ember/02-ai-core.mp4" type="video/mp4"/></video></div>
+<div class="uf-tech-body"><span class="uf-mono">01 · AI systems</span><h3>Agents with boundaries.</h3><p>Automation that proposes, explains and waits for a person wherever a decision matters.</p><span class="uf-tech-link">Unfire Autonomy</span></div></a>
+<a class="uf-tech-card" href="/apps/power/"><div class="uf-tech-media"><video data-uf-loop muted loop playsinline preload="none" poster="/assets/video/ember/04-energy-network.jpg" aria-hidden="true"><source src="/assets/video/ember/04-energy-network.mp4" type="video/mp4"/></video></div>
+<div class="uf-tech-body"><span class="uf-mono">02 · Energy</span><h3>Energy, made legible.</h3><p>Market and consumption data turned into clear decisions on a phone screen.</p><span class="uf-tech-link">Unfire Power</span></div></a>
+<a class="uf-tech-card" href="/audio/"><div class="uf-tech-media"><video data-uf-loop muted loop playsinline preload="none" poster="/assets/video/ember/06-audio-chain.jpg" aria-hidden="true"><source src="/assets/video/ember/06-audio-chain.mp4" type="video/mp4"/></video></div>
+<div class="uf-tech-body"><span class="uf-mono">03 · Audio</span><h3>Sound you can shape.</h3><p>Instruments and studio tools, from pocket synths to precision clipping.</p><span class="uf-tech-link">Unfire Audio</span></div></a>
+<a class="uf-tech-card" href="#system"><div class="uf-tech-media"><video data-uf-loop muted loop playsinline preload="none" poster="/assets/video/ember/05-system-architecture.jpg" aria-hidden="true"><source src="/assets/video/ember/05-system-architecture.mp4" type="video/mp4"/></video></div>
+<div class="uf-tech-body"><span class="uf-mono">04 · Infrastructure</span><h3>Build once, reuse everywhere.</h3><p>Shared components, testing and delivery that let each new product start ahead.</p><span class="uf-tech-link">Unfire Suite</span></div></a>
+<a class="uf-tech-card" href="#scale"><div class="uf-tech-media"><video data-uf-loop muted loop playsinline preload="none" poster="/assets/video/ember/03-global-network.jpg" aria-hidden="true"><source src="/assets/video/ember/03-global-network.mp4" type="video/mp4"/></video></div>
+<div class="uf-tech-body"><span class="uf-mono">05 · Scale</span><h3>From prototype to production.</h3><p>Release processes designed to grow from a first pilot to wider use.</p><span class="uf-tech-link">How we scale</span></div></a>
+</div>
+<p class="uf-tech-foot">Animated illustrations are Unfire brand artwork, not product footage. Product screens shown elsewhere on this site are real captures.</p>
+</div>
+</section>
+<section id="autonomy-feature" class="uf-auto" aria-labelledby="uf-auto-h">
+<div class="wrap uf-auto-grid">
+<div><span class="uf-mono">Unfire Autonomy · Research prototype</span>
+<h2 id="uf-auto-h">Intelligence, <span>with boundaries.</span></h2>
+<p>Every proposed action passes a visible gate. Low-risk steps run, changes wait for a named person, and refunds, data exports or unknown actions are refused. Every decision is explained.</p>
+<div class="uf-gate" aria-label="Decision outcomes"><span class="a">ALLOW</span><span class="r">REVIEW</span><span class="b">BLOCK</span></div>
+<div class="uf-ind-actions"><a class="uf-btn solid" href="/autonomy/demo/">Open the live demo</a><a class="uf-btn line" href="/autonomy/">How it works</a></div>
+<p class="uf-auto-small">Fictional scenarios only. Not a production deployment or a certified system.</p></div>
+<figure><div class="uf-auto-shot"><img src="/assets/products/autonomy/autonomy-demo-1440.webp" srcset="/assets/products/autonomy/autonomy-demo-960.webp 960w, /assets/products/autonomy/autonomy-demo-1440.webp 1440w" sizes="(max-width:1020px) 100vw, 55vw" width="1440" height="1100" loading="lazy" alt="Real capture of the Unfire Autonomy demo: a fictional refrigeration incident with the decision Review required and zero executed actions."/></div>
+<figcaption>Real capture of the public demo at unfire.technology/autonomy/demo, 23 November 2026.</figcaption></figure>
 </div>
 </section>
 <section id="company">
@@ -6188,5 +6262,6 @@ console.log(
 <!-- Sr. Dante: Unfire public web assistant (speech opt-in) -->
 <script src="/assets/js/ask-unfire.js?v=20261122-1" defer></script>
 
+<script src="/assets/js/unfire-ember-20261123.js?v=1" defer></script>
 </body>
 </html>
