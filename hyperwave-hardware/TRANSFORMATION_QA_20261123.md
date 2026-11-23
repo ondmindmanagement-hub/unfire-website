@@ -24,3 +24,10 @@
 - Manual tests on physical iPhone/iPad and Safari interaction/accessibility have **not** been performed. CSS and JavaScript include Safari-compatible fallbacks, but this is not equivalent to a real-device acceptance run.
 - No production deployment, Apple submission, hardware manufacturing or purchase flow is implied by these local tests. The release integrator should verify the deployed asset, title, poster, expected load/seek behaviour and the homepage modal after merging.
 - This change does **not** alter the proposed physical manufacturing claims, commission wording, costs, warranties or legal disclosures.
+
+## Front-facing expansion refinement (same PR, 23 Nov)
+- Opening the embedded Atelier now triggers the actual 3D model's **Hyper/fully deployed** transition automatically and selects the matching form button. No manual rotate or extra button is necessary to see both extended pods, canopy, keyboard and controls.
+- The camera starts at a front-biased three-quarter view (0.15 rad yaw) and re-fits the real model bounds continuously as its geometry expands, keeping a safe margin around **both** speaker pods. The full instrument is centered on initial paint, not just after the animation starts.
+- Choosing a different stage automatically returns to this centered presentation angle; manual orbit, pan and zoom still work. The Fit view button returns to complete view after exploration. The small-screen help/status text was moved below the top controls to remove an overlap.
+- Repeated automated Chrome checks at **1440 × 900** and **390 × 844** recorded 12 separate positions along opening, including early, middle and speaker-extension phases: the projected 3D model stayed inside the viewport at all observed checkpoints. Initial mobile state now begins within frame instead of briefly exceeding its left boundary. Close/reopen and Fit recenter were also exercised, and final desktop/mobile full-extension screenshots were inspected.
+- As before, real Safari/device acceptance is not claimed and deployment remains under the release gate.

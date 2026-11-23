@@ -2291,7 +2291,15 @@ const HYPERWAVE = (() => {
 
   // ---------- transformación ----------
   const SPEED = 0.85;
-  function go(t) { st.target = Math.max(0, Math.min(H.TMAX, t)); if (PLUGIN && syn) syn.open(st.target); if (st.target < 2.9 && syn) { syn.allOff(); if (st.demo) { st.demo = false; syn.setDemo(false); } } }
+  function go(t) {
+    const next = Math.max(0, Math.min(H.TMAX, t));
+    // Each intentional Atelier transformation returns to an unobstructed
+    // presentation angle. A visitor never needs to rotate to find a speaker.
+    if (ATELIER && next !== st.target) { view.auto = true; view.reset = 1; }
+    st.target = next;
+    if (PLUGIN && syn) syn.open(st.target);
+    if (st.target < 2.9 && syn) { syn.allOff(); if (st.demo) { st.demo = false; syn.setDemo(false); } }
+  }
   function toggleOpen() { ensureSyn(); if (st.target >= 2.9 || st.T >= 2.9) go(0); else go(3); }
 
   // ---------- quitar / poner el sinte ----------
@@ -2404,7 +2412,22 @@ const HYPERWAVE = (() => {
   H.update(0, 0, { params: st.params });
   const cam = S.camera, tgt = OC.target; cam.position.set(2.2, 4.0, 8.6); tgt.set(0, 0.6, 0);
   let fc = new THREE.Vector3(0, 0.5, 0), fr = 3;
-  const DEF = { az: 0.32, el: 0.42 }, sph = new THREE.Spherical();
+  const DEF = { az: ATELIER ? 0.15 : 0.32, el: ATELIER ? 0.37 : 0.42 }, sph = new THREE.Spherical();
+  // Orientation-aware fit respects the changing instrument bounds, including
+  // both extended speaker pods. Shared by first paint and each animated frame.
+  function atelierFitDistance(s, dir) {
+    const halfV = Math.tan(cam.fov * Math.PI / 360);
+    const right = new THREE.Vector3(dir.z, 0, -dir.x).normalize();
+    const up = dir.clone().cross(right).normalize();
+    const hx = s.x * 0.5, hy = s.y * 0.5, hz = s.z * 0.5;
+    const projectedX = Math.abs(right.x) * hx + Math.abs(right.y) * hy + Math.abs(right.z) * hz;
+    const projectedY = Math.abs(up.x) * hx + Math.abs(up.y) * hy + Math.abs(up.z) * hz;
+    const forwardDepth = Math.abs(dir.x) * hx + Math.abs(dir.y) * hy + Math.abs(dir.z) * hz;
+    return Math.max(4.8, forwardDepth + Math.max(
+      projectedX / (halfV * Math.max(0.15, cam.aspect) * 0.78),
+      projectedY / (halfV * 0.76)
+    ) + 0.25);
+  }
 
   // ---------- bucle ----------
   const clock = new THREE.Clock(); let prevT = 0, scrT = 0, hue = 0;
@@ -2440,19 +2463,17 @@ const HYPERWAVE = (() => {
     // The native/plugin camera and ordinary synthesizer website keep their existing behavior.
     let atelierDistance = 0;
     if (ATELIER) {
-      const halfV = cam.fov * Math.PI / 360;
-      const halfFov = Math.atan(Math.tan(halfV) * Math.min(1, Math.max(0.15, cam.aspect)));
-      const radius = 0.5 * Math.hypot(s.x, s.y, s.z);
-      atelierDistance = Math.max(4.8, radius / Math.sin(halfFov) * 1.12 + 0.35);
-      OC.minDistance = Math.max(2.7, atelierDistance * 0.44);
+      const dir = cam.position.clone().sub(tgt).normalize();
+      atelierDistance = atelierFitDistance(s, dir);
+      OC.minDistance = Math.max(2.7, atelierDistance * 0.47);
       OC.maxDistance = atelierDistance * 2.05;
     }
     if (view.auto) {
-      tgt.lerp(new THREE.Vector3(fc.x, fc.y - s.y * 0.05, fc.z), snap ? 1 : 0.1);
+      tgt.lerp(new THREE.Vector3(fc.x, fc.y - s.y * 0.025, fc.z), snap ? 1 : 0.18);
       if (!drags.size) {
         const want = ATELIER ? atelierDistance : (fr / Math.tan((cam.fov * Math.PI) / 360)) * (cam.aspect < 1 ? 1.32 / cam.aspect : 1.08) + 1.6;
         const off = cam.position.clone().sub(tgt);
-        off.setLength(G3.lerp(off.length(), Math.max(OC.minDistance, Math.min(OC.maxDistance, want)), snap ? 1 : 0.07));
+        off.setLength(G3.lerp(off.length(), Math.max(OC.minDistance, Math.min(OC.maxDistance, want)), snap ? 1 : (ATELIER ? 0.20 : 0.07)));
         cam.position.copy(tgt).add(off);
       }
     }
@@ -2468,7 +2489,16 @@ const HYPERWAVE = (() => {
   }
   const rs = () => { const w = box.clientWidth, h = box.clientHeight; if (!w || !h) return; S.renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
   new ResizeObserver(rs).observe(box); rs();
-  { sph.set(1, Math.PI / 2 - DEF.el, DEF.az); cam.position.copy(tgt).add(new THREE.Vector3().setFromSpherical(sph).multiplyScalar(9)); }
+  {
+    sph.set(1, Math.PI / 2 - DEF.el, DEF.az);
+    const initialDir = new THREE.Vector3().setFromSpherical(sph);
+    if (ATELIER) {
+      const firstBox = frames[0];
+      tgt.copy(firstBox.getCenter(new THREE.Vector3()));
+      cam.position.copy(tgt).add(initialDir.multiplyScalar(atelierFitDistance(firstBox.getSize(new THREE.Vector3()), initialDir)));
+    } else cam.position.copy(tgt).add(initialDir.multiplyScalar(9));
+    OC.update();
+  }
   document.body.classList.add('ready');
   if (PLUGIN) { ensureSyn(); syn.ready(); }
   LOG('frames'); S.renderer.compile(S.scene, cam); LOG('compile'); window.__dbg ? (paused = true, frame()) : frame(); LOG('first');

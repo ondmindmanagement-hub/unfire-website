@@ -392,6 +392,7 @@ html.embed .atelier-embed-disclaimer{display:block}
  .studio-bar{gap:7px}
  .studio-tools button{min-width:34px;min-height:34px}
  .studio-tools .fit{min-width:57px;padding:0 7px}
+ .studio .status{top:auto!important;bottom:44px!important;left:12px!important;right:12px!important;max-width:none!important;text-align:center!important;font-size:9px!important;line-height:1.4}
 }
 .chip.tex{background-size:cover!important}
 </style>
@@ -1062,6 +1063,12 @@ html.embed .atelier-embed-disclaimer{display:block}
           hw = frameWin.__hw; mats = collect(hw.H.root);
           try { var oc = hw.S.controls; oc.enablePan = true; oc.screenSpacePanning = true; oc.update(); } catch (e) {}
           ['canopy', 'body', 'metal', 'pods'].forEach(apply);
+          // Display the complete instrument automatically. The opening motion
+          // remains visible while the camera tracks the widening silhouette.
+          hw.go(4); hw.fitView();
+          document.querySelectorAll('[data-form]').forEach(function (control) {
+            control.setAttribute('aria-pressed', control.getAttribute('data-form') === '4' ? 'true' : 'false');
+          });
           studio.classList.add('live'); statusEl.textContent = 'Live · drag to rotate · right-drag to pan · scroll or pinch to zoom · Fit view to recenter';
         } catch (e) { statusEl.textContent = 'The live atelier could not be opened here.'; }
       })();
