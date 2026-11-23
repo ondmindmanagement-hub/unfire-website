@@ -1,0 +1,48 @@
+name: Unfire Film - private trailer and gameplay review cuts
+on:
+  push:
+    branches:
+      - film/unfire-preview-trailer-gameplay-20261024
+    paths:
+      - film/previews/20261024/**
+      - .github/workflows/unfire-film-private-previews.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  render-review-cuts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Install offline open-source voice and video tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg espeak-ng fonts-dejavu-core
+          ffmpeg -version | head -1
+          espeak-ng --version
+      - name: Render two separate private previews from real game assets
+        run: python3 film/previews/20261024/build_previews.py
+      - name: Check output containers and timestamps
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=film/previews/20261024/output
+          test -s "$OUT/UNFIRE_TRAILER_HISTORIA_REVISION_ES.mp4"
+          test -s "$OUT/UNFIRE_GAMEPLAY_REAL_REVISION_ES.mp4"
+          for video in "$OUT"/*.mp4; do
+            ffprobe -v error -show_entries format=duration,format_name -of default=noprint_wrappers=1 "$video"
+          done
+          test -s "$OUT/REVIEW_NOT_RELEASE.json"
+      - name: Save review-only video files - NOT public release
+        uses: actions/upload-artifact@v4
+        with:
+          name: unfire-private-film-review-trailer-and-gameplay-20261024
+          path: |
+            film/previews/20261024/output/*.mp4
+            film/previews/20261024/output/REVIEW_NOT_RELEASE.json
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
