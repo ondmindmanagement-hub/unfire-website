@@ -139,3 +139,24 @@ html body #hardware .uf-hw-commission h3{color:var(--uf-paper)!important;}
 html body #hardware p{color:var(--uf-ink2)!important;}html body #hardware .uf-hw-commission p{color:#b9b4ab!important;}html body #hardware .uf-hw-note{color:var(--uf-mute)!important;}
 html body .uf-ind-hero h1,html body .uf-ind-index strong{color:var(--uf-ink)!important;}
 html body #technologies h2,html body #technologies h3,html body #autonomy-feature h2{color:var(--uf-cream)!important;}
+
+/* ---------- Technologies · real-capture stages (v6) ---------- */
+.uf-tech-stage{position:relative;aspect-ratio:16/11;overflow:hidden;isolation:isolate;
+  background:radial-gradient(120% 95% at 50% 108%,#4a1d06 0%,#1f0f06 38%,#0d0b09 72%);}
+.uf-tech-card.wide .uf-tech-stage{aspect-ratio:16/8.4;}
+.uf-tech-stage::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.5;
+  background-image:linear-gradient(rgba(255,236,214,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,236,214,.05) 1px,transparent 1px);background-size:40px 40px;
+  -webkit-mask-image:radial-gradient(80% 70% at 50% 60%,#000,transparent);mask-image:radial-gradient(80% 70% at 50% 60%,#000,transparent);}
+.uf-tech-stage::after{content:"";position:absolute;left:10%;right:10%;bottom:-30%;height:60%;z-index:-1;background:radial-gradient(closest-side,rgba(255,106,43,.35),transparent);filter:blur(10px);}
+.uf-tech-stage img{position:absolute;display:block;max-width:none;transition:transform .6s cubic-bezier(.2,.7,.2,1);
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,236,214,.08);}
+.uf-tech-stage.desk img{left:50%;top:12%;width:78%;height:auto;transform:translateX(-50%);border-radius:14px 14px 0 0;}
+.uf-tech-stage.win img{left:50%;top:14%;width:84%;height:auto;transform:translateX(-50%);border-radius:12px;}
+.uf-tech-stage.phone img{left:50%;top:11%;height:118%;width:auto;transform:translateX(-50%);border:9px solid #050505;border-radius:44px;}
+.uf-tech-stage.tablet img{left:50%;top:10%;height:122%;width:auto;transform:translateX(-50%);border:10px solid #050505;border-radius:30px;}
+.uf-tech-card:hover .uf-tech-stage img{transform:translateX(-50%) translateY(-8px);}
+@media (prefers-reduced-motion:reduce){.uf-tech-stage img{transition:none;}.uf-tech-card:hover .uf-tech-stage img{transform:translateX(-50%);}}
+@media (max-width:640px){.uf-tech-card.wide .uf-tech-stage{aspect-ratio:16/11;}.uf-tech-stage.desk img{width:88%;}}
+.uf-tech-card.wide+.uf-tech-card .uf-tech-stage{aspect-ratio:16/17.2;}
+.uf-tech-card.wide+.uf-tech-card .uf-tech-stage.phone img{top:9%;height:112%;}
+@media (max-width:1020px){.uf-tech-card.wide+.uf-tech-card .uf-tech-stage{aspect-ratio:16/11;}}
