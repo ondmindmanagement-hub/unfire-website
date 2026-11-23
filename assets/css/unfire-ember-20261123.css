@@ -325,3 +325,26 @@ html body #work-with-us .uf-lines-note{margin:32px 0 0;font-size:12px;line-heigh
 .uf-3d.used .uf-3d-hint{opacity:0;}
 .uf-dlg.loading3d .uf-dlg-media::after{content:"Loading 3D model";position:absolute;left:50%;top:22px;transform:translateX(-50%);font-family:var(--uf-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--uf-mute);background:rgba(225,223,219,.9);padding:7px 12px;border-radius:99px;}
 .uf-dlg.is3d .uf-dlg-badge{z-index:2;}
+
+/* ---------- Recognition (v12) ---------- */
+html body section#work{background:var(--uf-ink)!important;color:var(--uf-paper);padding:110px 0!important;border-top:0;}
+#work .uf-rec-head{margin-bottom:44px;}
+#work .uf-rec-head .uf-mono{color:var(--uf-orange);}
+html body #work h2{font-size:clamp(40px,5vw,74px);line-height:1;letter-spacing:-.045em;margin:14px 0 0;font-weight:700;color:var(--uf-paper)!important;}
+#work h2 span{color:#7d786f;}
+#work .uf-rec-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #3a3733;}
+#work article{padding:26px 26px 6px 0;display:flex;flex-direction:column;gap:10px;position:relative;}
+#work article+article{padding-left:26px;}
+#work article+article::before{content:"";position:absolute;left:0;top:26px;bottom:6px;width:1px;background:#3a3733;}
+#work article .uf-mono{color:#9a948b;font-size:10.5px;}
+html body #work article h3{font-size:22px;letter-spacing:-.02em;line-height:1.15;color:var(--uf-paper)!important;font-weight:650;margin:0;}
+html body #work article p{font-size:15px;line-height:1.5;color:#b9b4ab!important;margin:0;}
+#work .uf-rec-links{display:flex;gap:16px;flex-wrap:wrap;margin-top:auto;padding-top:12px;}
+#work .uf-rec-links a{color:var(--uf-paper);font-size:14px;text-decoration:none;border-bottom:1px solid rgba(225,223,219,.35);}
+#work .uf-rec-links a:hover{color:var(--uf-orange);border-color:var(--uf-orange);}
+html body #work .uf-rec-note{margin:40px 0 0;font-size:12px;line-height:1.5;color:#8a857d!important;}
+#work .uf-rec-note a{color:#b9b4ab;}
+@media (max-width:1020px){#work .uf-rec-grid{grid-template-columns:1fr 1fr;row-gap:24px;}#work article:nth-child(3){padding-left:0;}#work article:nth-child(3)::before{display:none;}}
+@media (max-width:640px){html body section#work{padding:84px 0!important;}#work .uf-rec-grid{grid-template-columns:1fr;}#work article{padding-left:0!important;border-bottom:1px solid #3a3733;padding-bottom:22px;}#work article::before{display:none;}}
+/* legacy chapters: align eyebrows with the system */
+html body section#apps .eyebrow,html body section#audio .eyebrow,html body section#funding .eyebrow,html body section#contact .eyebrow,html body section#games .eyebrow{font-family:var(--uf-mono);letter-spacing:.14em;text-transform:uppercase;font-size:11px;color:var(--uf-gold)!important;}

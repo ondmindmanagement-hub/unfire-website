@@ -27,3 +27,5 @@
 #unfire-global-bar[data-offset-header] ~ header{top:44px}
 @media print{#unfire-global-bar{display:none}}
 @media (forced-colors:active){#unfire-global-bar{border-bottom:1px solid CanvasText}}
+/* Section label replaces a repeated "Unfire" wordmark under the global bar · 23 Nov 2026 */
+#unfire-global-bar ~ * .uf-sub-label,.uf-sub-label{font-weight:650;letter-spacing:-.01em;text-transform:none;font-size:clamp(15px,1.2vw,17px);white-space:nowrap;}
