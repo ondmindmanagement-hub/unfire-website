@@ -258,3 +258,59 @@ html body .uf-dlg .uf-dlg-note{font-size:12px;line-height:1.5;color:var(--uf-mut
   .uf-dlg-info{border-left:0;border-top:1px solid var(--uf-rule);padding:22px 22px 26px;}
 }
 @media (prefers-reduced-motion:reduce){.uf-dlg[open],.uf-dlg[open]::backdrop,.uf-dlg.swap *{animation:none!important;}}
+
+/* ---------- Reach · from institutions to individuals (v10) ---------- */
+html body section#reach{background:var(--uf-paper)!important;color:var(--uf-ink);padding:128px 0!important;border-top:1px solid var(--uf-rule);}
+#reach .uf-reach-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);column-gap:48px;align-items:end;margin-bottom:64px;}
+#reach .uf-reach-head .uf-mono{grid-column:1/-1;color:var(--uf-orange-t);margin-bottom:16px;}
+html body #reach h2{font-size:clamp(46px,6vw,92px);line-height:.96;letter-spacing:-.048em;margin:0;font-weight:700;color:var(--uf-ink)!important;}
+#reach h2 span{color:#8a857d;}
+html body #reach .uf-reach-head p{font-size:19px;line-height:1.55;color:var(--uf-ink2)!important;margin:0;}
+#reach .uf-tiers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px 48px;}
+#reach .uf-tier{display:flex;flex-direction:column;}
+#reach .uf-tier.xl{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:48px;align-items:end;}
+#reach .uf-tier.wide{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:48px;align-items:center;}
+#reach .uf-tier.wide .uf-tier-media{order:2;aspect-ratio:16/8;}
+#reach .uf-tier-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:#e1dfdb;border-radius:6px;}
+#reach .uf-tier-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.2,.7,.2,1);}
+#reach .uf-tier:hover .uf-tier-media img{transform:scale(1.03);}
+#reach .uf-tier-cap{position:absolute;left:16px;bottom:14px;color:var(--uf-mute);background:rgba(225,223,219,.88);padding:5px 9px;border-radius:5px;font-size:10px;}
+#reach .uf-tier-body{padding-top:22px;border-top:1px solid var(--uf-ink);margin-top:18px;}
+#reach .uf-tier.xl .uf-tier-body,#reach .uf-tier.wide .uf-tier-body{margin-top:0;}
+#reach .uf-tier-body .uf-mono{color:var(--uf-orange-t);}
+html body #reach .uf-tier h3{font-size:clamp(28px,2.6vw,40px);line-height:1.04;letter-spacing:-.035em;margin:14px 0 12px;font-weight:700;color:var(--uf-ink)!important;}
+#reach .uf-tier.xl h3{font-size:clamp(34px,3.4vw,52px);}
+html body #reach .uf-tier p{font-size:16.5px;line-height:1.58;color:var(--uf-ink2)!important;margin:0 0 20px;max-width:560px;}
+#reach .uf-tier-bring{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-top:1px solid var(--uf-rule);border-bottom:1px solid var(--uf-rule);font-size:14px;color:var(--uf-ink);}
+#reach .uf-tier-bring .uf-mono{color:var(--uf-mute)!important;font-size:10.5px;padding-top:2px;}
+
+/* ---------- Ways to work with Unfire ---------- */
+html body section#work-with-us{background:#ebe9e5!important;color:var(--uf-ink);padding:120px 0 128px!important;border-top:1px solid var(--uf-rule);}
+#work-with-us .uf-lines-head{margin-bottom:48px;}
+#work-with-us .uf-lines-head .uf-mono{color:var(--uf-orange-t);}
+html body #work-with-us h2{font-size:clamp(44px,5.4vw,80px);line-height:.98;letter-spacing:-.045em;margin:14px 0 0;font-weight:700;color:var(--uf-ink)!important;}
+#work-with-us .uf-lines-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:48px;}
+#work-with-us .uf-line{display:flex;flex-direction:column;position:relative;}
+#work-with-us .uf-line+.uf-line::before{content:"";position:absolute;left:-24px;top:0;bottom:0;width:1px;background:var(--uf-rule);}
+#work-with-us .uf-line-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:#e1dfdb;border-radius:6px;margin-bottom:20px;}
+#work-with-us .uf-line-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+#work-with-us .uf-line .uf-mono{color:var(--uf-orange-t);}
+html body #work-with-us .uf-line h3{font-size:30px;letter-spacing:-.03em;line-height:1.05;margin:12px 0 10px;font-weight:700;color:var(--uf-ink)!important;}
+html body #work-with-us .uf-line p{font-size:15.5px;line-height:1.58;color:var(--uf-ink2)!important;margin:0 0 18px;}
+#work-with-us .uf-line .uf-spec{margin-top:auto;}
+#work-with-us .uf-line .uf-spec a{color:var(--uf-ink);border-bottom:1px solid rgba(20,20,20,.35);text-decoration:none;}
+#work-with-us .uf-line .uf-spec a:hover{color:var(--uf-orange-t);border-color:var(--uf-orange-t);}
+html body #work-with-us .uf-lines-note{margin:32px 0 0;font-size:12px;line-height:1.5;color:var(--uf-mute)!important;}
+@media (max-width:1020px){
+  #reach .uf-reach-head{grid-template-columns:1fr;row-gap:20px;}
+  #reach .uf-tiers{grid-template-columns:1fr;}
+  #reach .uf-tier.xl,#reach .uf-tier.wide{grid-template-columns:1fr;gap:0;}
+  #reach .uf-tier.xl .uf-tier-body,#reach .uf-tier.wide .uf-tier-body{margin-top:18px;}
+  #reach .uf-tier.wide .uf-tier-media{order:0;aspect-ratio:16/10;}
+  #work-with-us .uf-lines-grid{grid-template-columns:1fr;row-gap:56px;}
+  #work-with-us .uf-line+.uf-line::before{display:none;}
+}
+@media (max-width:640px){html body section#reach,html body section#work-with-us{padding:84px 0!important;}}
+@media (prefers-reduced-motion:reduce){#reach .uf-tier-media img{transition:none;}#reach .uf-tier:hover .uf-tier-media img{transform:none;}}
+
+#reach .uf-tier-bring .uf-mono,#fields .uf-f-today .uf-mono,.uf-spec li span:first-child{white-space:nowrap;}

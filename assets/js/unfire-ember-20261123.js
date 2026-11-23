@@ -32,7 +32,7 @@
   }
   function open(i){
     lastFocus=d.activeElement;items.forEach(function(it){var v=it.querySelector('video');if(v){v.dataset.held='1';v.pause();}});
-    fill(i);d.documentElement.classList.add('uf-dlg-lock');dlg.showModal();dlg.querySelector('.uf-dlg-close').focus();
+    fill(i);d.documentElement.classList.add('uf-dlg-lock');dlg.showModal();dlg.querySelector('.uf-dlg-close').focus({preventScroll:true});dlg.scrollTop=0;
   }
   function close(){dlg.close();}
   dlg.addEventListener('close',function(){mv.pause();d.documentElement.classList.remove('uf-dlg-lock');
