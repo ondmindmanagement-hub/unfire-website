@@ -1096,7 +1096,10 @@ const UNFIRE_SCENE=(()=>{
     const height=Math.round(window.visualViewport?.height||innerHeight||640);
     const touch=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;
     const mem=Number(navigator.deviceMemory||0),cores=Number(navigator.hardwareConcurrency||0);
-    const compact=touch&&(Math.min(width,height)<=390||(mem&&mem<=4)||(cores&&cores<=4));
+    // iOS/iPadOS WebKit clamps hardwareConcurrency to 2-4: core count must not force every iPhone/iPad to compact.
+    const apple=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+    const minSide=Math.min(width,height);
+    const compact=touch&&(apple?minSide<390:(minSide<=390||(mem&&mem<=4)||(cores&&cores<=4)));
     return {width,height,touch,tier:compact?'compact':touch?'balanced':'desktop'};
   };
   let profile=deviceProfile();window.__UNFIRE_DEVICE_PROFILE=profile;

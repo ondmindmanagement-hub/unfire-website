@@ -37,7 +37,9 @@ test('adaptive quality degrades slowly and returns to original pixel density whe
  assert.match(engine,/const sustainedSlow=/);
  assert.match(engine,/const sustainedFast=/);
  assert.match(engine,/adaptivePerf\.fast\/samples>=0\.8/);
- assert.match(engine,/now-adaptivePerf\.lastChange>=24000/);
- assert.match(engine,/Math\.min\(Q\.max,Math\.round\(\(current\+0\.05\)/);
+ // Desktop keeps the slow 24 s / +0.05 recovery; touch devices (2026-11-23) recover in 12 s / +0.1 steps
+ // toward their device ceiling, still only after a full sustained-fast sampling window.
+ assert.match(engine,/now-adaptivePerf\.lastChange>=\(DEVICE\.touch\?12000:24000\)/);
+ assert.match(engine,/Math\.min\(Q\.max,Math\.round\(\(current\+\(DEVICE\.touch\?0\.1:0\.05\)\)/);
  assert.match(engine,/dataset\.unfireAdaptiveQuality=next<Q\.max/);
 });
