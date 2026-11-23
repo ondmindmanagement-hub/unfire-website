@@ -20,7 +20,7 @@ const sea = segment("      const seaG = new THREE.PlaneGeometry", "sea.rotation.
 // The same mobile profile is used by recent iPhones and older devices.
 assert.match(gpu,/let LOWDEV = DEVICE\.tier!=='desktop'/);
 assert.match(gpu,/LOWDEV && DEVICE\.touch/);
-assert.match(gpu,/DEVICE\.tier === 'compact' \? 0\.70 : 0\.85/);
+assert.match(gpu,/DEVICE\.tier === 'compact' \? 0\.70 : 1\.0/);
 assert.match(gpu,/S\.renderer\.setPixelRatio\(Math\.min\(S\.renderer\.getPixelRatio\(\), DEVICE\.maxDpr\)\)/);
 assert.match(gpu,/if \(LOWDEV\) \{ S\.renderer\.shadowMap\.enabled = false; \}/);
 assert.match(alu,/aluSize = LOWDEV \? 512 : 1024/);
@@ -56,8 +56,9 @@ const assignments=[
 assert.ok(assignments.every(Boolean),'Actual budget expressions are available');
 for(const [low,tier,aluExpected,grassExpected,dprExpected] of [
   [true,'compact',512,512,.70],
-  [true,'balanced',512,512,.85],
-  [false,'desktop',1024,1024,.85]
+  // Balanced touch devices (iPhone/iPad since 2026-11-23) boot at native 1.0x; the expression is only applied to touch LOWDEV.
+  [true,'balanced',512,512,1.0],
+  [false,'desktop',1024,1024,1.0]
 ]){
   const context={LOWDEV:low,DEVICE:{tier}};
   const budgets=vm.runInNewContext(assignments.join('\n')+'({aluSize,grassSize,bootDpr})',context);

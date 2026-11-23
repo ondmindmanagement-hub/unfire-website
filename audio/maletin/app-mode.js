@@ -9,7 +9,7 @@
     const hud = document.getElementById('storyHud');
     if (!hud) { setTimeout(addCredits, 1500); return; }
     if (document.getElementById('ufCredits')) return;
-    const b = document.createElement('button'); b.id = 'ufCredits'; b.type = 'button'; b.textContent = 'ⓘ';
+    const b = document.createElement('button'); b.id = 'ufCredits'; b.type = 'button'; b.textContent = 'ⓘ CREDITS';
     b.title = window.__LANG === 'en' ? 'Credits and licences' : 'Créditos y licencias'; b.setAttribute('aria-label', b.title);
     b.onclick = (e) => { e.stopPropagation(); location.href = '../media-credits.html'; };
     hud.appendChild(b);

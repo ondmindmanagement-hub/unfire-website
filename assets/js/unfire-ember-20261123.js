@@ -27,7 +27,9 @@
     dlg.querySelector('.uf-dlg-desc').textContent=it.querySelector('p').textContent;
     dlg.querySelector('.uf-dlg-spec').innerHTML=it.querySelector('.uf-spec').innerHTML;
     mv.poster=img?img.currentSrc||img.src:'';mv.setAttribute('aria-label',img?img.alt:'');
-    if(src){mv.src=src.getAttribute('src');mv.load();if(!reduce){var p=mv.play();if(p&&p.catch)p.catch(function(){});}}
+    mv.dataset.src=src?src.getAttribute('src'):'';
+    if(dlg.classList.contains('has3d')){mv.pause();mv.removeAttribute('src');mv.removeAttribute('poster');}
+    else if(src){mv.src=mv.dataset.src;mv.load();if(!reduce){var p=mv.play();if(p&&p.catch)p.catch(function(){});}}
     dlg.classList.remove('swap');void dlg.offsetWidth;dlg.classList.add('swap');
     d.dispatchEvent(new CustomEvent('uf-hw-open',{detail:{key:it.dataset.hw}}));
   }

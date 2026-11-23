@@ -375,6 +375,7 @@ body.unfire-roaming #cv{touch-action:none}
 <link rel="stylesheet" href="mobile-hud-guard.css?v=20261023hudlayout1">
 <link rel="stylesheet" href="thumb-reach.css?v=20261023thumb1">
 <link rel="stylesheet" href="expanded-map.css?v=20261028nimbo3">
+<link rel="stylesheet" href="hud-layout-guard.css?v=20261123hud2">
 <canvas id="cv" aria-label="UNFIRE 3D case. Scroll to move closer and enter"></canvas>
 <div class="hud" id="hud"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button><button id="home" aria-label="Back to the case">⟲</button><div class="crumb" id="crumb">CASE</div></div>
 <div class="tip" id="tip"></div>
@@ -393,9 +394,16 @@ body.unfire-roaming #cv{touch-action:none}
     const gpu=detect.gpu!==undefined?detect.gpu:(detect.gpu=(()=>{try{const c=document.createElement('canvas'),g=c.getContext('webgl');if(!g)return '';const e=g.getExtension('WEBGL_debug_renderer_info');const n=String(g.getParameter(e?e.UNMASKED_RENDERER_WEBGL:g.RENDERER)||'');const l=g.getExtension('WEBGL_lose_context');if(l)l.loseContext();return n;}catch(_){return '';}})());
     // Entry/mid mobile GPUs (e.g. Mali-G52 in moto g06) cannot afford the 'balanced' scene even on wide screens.
     const weakGpu=touch&&/Mali-(G[0-9]{2}\b|T)|Adreno \(TM\) [1-6][0-9]{2}\b|Adreno [1-6][0-9]{2}\b|PowerVR|IMG BXM|Mali-G(52|57|68)/i.test(gpu);
-    const constrained=touch&&(Math.min(vw,vh)<=390||(memory&&memory<=4)||(cores&&cores<=4)||weakGpu);
+    // iOS/iPadOS WebKit clamps navigator.hardwareConcurrency to 2-4 and hides deviceMemory, so core count says
+    // nothing on Apple devices (it used to force EVERY iPhone and iPad into the compact 0.7x / 20 fps tier).
+    // Apple GPUs from the iPhone XR on run the balanced scene; only short sides under 390 CSS px stay compact.
+    const apple=/Apple/i.test(gpu)||/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+    const minSide=Math.min(vw,vh);
+    const constrained=touch&&(apple?minSide<390:(minSide<=390||(memory&&memory<=4)||(cores&&cores<=4)||weakGpu));
     const tier=forced==='compact'?'compact':constrained?'compact':touch?'balanced':'desktop';
-    return {tier,gpu,width:vw,height:vh,touch,maxDpr:tier==='compact'?0.8:tier==='balanced'?1:1.5,antialias:tier==='desktop'};
+    // ceilDpr: the sharpest resolution the adaptive governor may climb to while frames stay on time.
+    const ceilDpr=tier==='desktop'?1.5:tier==='balanced'?(apple?(minSide>=700?1.35:1.5):1.15):0.85;
+    return {tier,gpu,apple,width:vw,height:vh,touch,maxDpr:tier==='compact'?0.8:tier==='balanced'?1:1.5,ceilDpr,antialias:tier==='desktop'};
   };
   window.__UNFIRE_AUTOCALIB=detect();
   const calibrate=()=>{window.__UNFIRE_AUTOCALIB=detect();document.documentElement.dataset.qualityTier=window.__UNFIRE_AUTOCALIB.tier;};
@@ -5083,4 +5091,5 @@ window.STORY_INIT = function (H) {
 <!-- The intro and in-game settings honor the selected language. -->
 <script src="game-intro.js?v=20261029english1"></script>
 <script src="language-onboarding.js?v=20261104settings3"></script>
+<script src="hud-layout-guard.js?v=20261123hud1"></script>
 </body></html>
