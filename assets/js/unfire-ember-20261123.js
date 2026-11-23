@@ -49,3 +49,9 @@
   dlg.addEventListener('click',function(e){if(e.target===dlg)close();});
   dlg.addEventListener('keydown',function(e){if(e.key==='ArrowRight')fill(cur+1);else if(e.key==='ArrowLeft')fill(cur-1);});
 })();
+/* Hyperwave atelier dialog */
+(function(){var d=document,dlg=d.getElementById('uf-atelier-dialog'),b=d.getElementById('uf-atelier-open');if(!dlg||!b)return;var fr=dlg.querySelector('iframe'),last=null;
+b.addEventListener('click',function(){if(typeof dlg.showModal!=='function'){location.href='/hyperwave-hardware/#atelier';return;}last=d.activeElement;if(!fr.getAttribute('src'))fr.src='/hyperwave-hardware/?embed=1';d.documentElement.classList.add('uf-dlg-lock');dlg.showModal();d.getElementById('uf-atelier-close').focus({preventScroll:true});});
+d.getElementById('uf-atelier-close').addEventListener('click',function(){dlg.close();});
+dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close();});
+dlg.addEventListener('close',function(){d.documentElement.classList.remove('uf-dlg-lock');if(last&&last.focus)last.focus();});})();

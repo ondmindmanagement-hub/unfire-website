@@ -29,3 +29,13 @@
 @media (forced-colors:active){#unfire-global-bar{border-bottom:1px solid CanvasText}}
 /* Section label replaces a repeated "Unfire" wordmark under the global bar · 23 Nov 2026 */
 #unfire-global-bar ~ * .uf-sub-label,.uf-sub-label{font-weight:650;letter-spacing:-.01em;text-transform:none;font-size:clamp(15px,1.2vw,17px);white-space:nowrap;}
+
+/* One header, two tiers · the page header under the global bar becomes its sub-row · 23 Nov 2026 */
+body:has(#unfire-global-bar) > header:not(.uf-keep),body:has(#unfire-global-bar) > .site-header{
+  position:sticky!important;top:0;z-index:40;background:rgba(10,10,11,.92)!important;-webkit-backdrop-filter:saturate(1.4) blur(18px);backdrop-filter:saturate(1.4) blur(18px);
+  border-top:1px solid rgba(255,255,255,.07)!important;border-bottom:1px solid rgba(255,255,255,.07)!important;box-shadow:none!important;margin:0!important;color:#e9e6e1!important;}
+body:has(#unfire-global-bar) > header:not(.uf-keep) > .wrap,body:has(#unfire-global-bar) > header:not(.uf-keep) > div:first-child{min-height:46px!important;height:auto!important;padding-top:0!important;padding-bottom:0!important;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+body:has(#unfire-global-bar) > header:not(.uf-keep) .uf-sub-label{font:600 12px/1 ui-monospace,"SF Mono",Menlo,monospace!important;letter-spacing:.16em!important;text-transform:uppercase!important;color:#ffb85c!important;}
+body:has(#unfire-global-bar) > header:not(.uf-keep) nav a{font-size:13px!important;color:#bdb7ae!important;text-decoration:none;}
+body:has(#unfire-global-bar) > header:not(.uf-keep) nav a:hover,body:has(#unfire-global-bar) > header:not(.uf-keep) nav a[aria-current]{color:#fff!important;}
+body:has(#unfire-global-bar) #unfire-global-bar{border-bottom:0!important;}
