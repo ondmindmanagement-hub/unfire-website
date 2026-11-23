@@ -4086,7 +4086,7 @@ main .uf-hero-title {
 #games .unfire-games-home-visual span{position:absolute;bottom:0;left:0;right:0;padding:26px 16px 14px;font-size:12px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.85))}
 @media(max-width:760px){#games .unfire-games-home-layout{grid-template-columns:1fr}#games .unfire-games-home-visual{aspect-ratio:16/9}}
 </style>
-<link rel="stylesheet" href="/assets/css/unfire-ember-20261123.css?v=8">
+<link rel="stylesheet" href="/assets/css/unfire-ember-20261123.css?v=9">
 </head>
 <body>
 <div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
@@ -4169,7 +4169,7 @@ main .uf-hero-title {
 <figcaption class="uf-ind-figcap uf-mono">Hardware concepts · 3D renders</figcaption>
 </figure>
 </div>
-<nav class="uf-ind-index" aria-label="Unfire product areas">
+<nav class="uf-ind-index" data-uf-reveal aria-label="Unfire product areas">
 <a href="#apps"><span class="n uf-mono">01</span><strong>Software</strong><em>Mac and mobile apps, with releases on the App Store.</em></a>
 <a href="/autonomy/"><span class="n uf-mono">02</span><strong>AI systems</strong><em>Autonomy and Bolt: automation with human approval.</em></a>
 <a href="#audio"><span class="n uf-mono">03</span><strong>Audio</strong><em>Synth, God's Lamp and Archer instruments and tools.</em></a>
@@ -4179,76 +4179,76 @@ main .uf-hero-title {
 </section>
 <section id="hardware" class="uf-hw" aria-labelledby="uf-hw-h">
 <div class="wrap">
-<div class="uf-hw-head"><div><span class="uf-mono">Hardware · in development</span><h2 id="uf-hw-h">Software you can hold.</h2></div>
+<div class="uf-hw-head" data-uf-reveal><div><span class="uf-mono">Hardware · in development</span><h2 id="uf-hw-h">Software you can hold.</h2></div>
 <p>Each device starts from an Unfire app that already runs. Its controls are mapped one to one from the real interface, so the hardware and the software share a single, tested design.</p></div>
 <div class="uf-hw-grid">
-<article class="uf-hw-item">
-<div class="uf-hw-top uf-mono"><span>01</span><span class="tag">Concept</span></div>
+<article class="uf-hw-item" data-uf-reveal data-hw="synth" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Explore Unfire Synth Pocket">
+<div class="uf-hw-top uf-mono"><span>01</span><span class="tag">Concept · <b class="uf-hw-open">Explore +</b></span></div>
 <div class="uf-hw-media"><img src="/assets/hardware/2026-11/synth-1200.webp" width="1200" height="750" loading="lazy" alt="Concept render of the Unfire Synth Pocket, a cream pocket synthesizer with a wave display, orange volume knob and two-octave keyboard."/>
 <video data-uf-loop muted loop playsinline preload="none" poster="/assets/hardware/2026-11/synth-1200.webp" aria-hidden="true"><source src="/assets/hardware/2026-11/synth-turntable.mp4" type="video/mp4"/></video></div>
 <h3>Unfire Synth Pocket</h3><p>A pocket version of the Unfire Synth app: the same four engines, six modes and two-octave keyboard, with a physical volume dial.</p><ul class="uf-spec"><li><span>Mirrors</span><span>Unfire Synth app</span></li><li><span>Engines</span><span>Analog · FM · Glass · Sample</span></li><li><span>Modes</span><span>Song · Step · Sound · Tape · Voice · Play</span></li><li><span>I/O</span><span>USB-C · 3.5 mm out</span></li><li><span>Status</span><span>CAD render, no prototype yet</span></li></ul>
 </article>
-<article class="uf-hw-item">
-<div class="uf-hw-top uf-mono"><span>02</span><span class="tag">Concept</span></div>
+<article class="uf-hw-item" data-uf-reveal data-hw="godslamp" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Explore God&#39;s Lamp Pocket">
+<div class="uf-hw-top uf-mono"><span>02</span><span class="tag">Concept · <b class="uf-hw-open">Explore +</b></span></div>
 <div class="uf-hw-media"><img src="/assets/hardware/2026-11/godslamp-1200.webp" width="1200" height="750" loading="lazy" alt="Concept render of the God's Lamp Pocket, a graphite instrument with four green knobs, a song display, keys and a turquoise light line."/>
 <video data-uf-loop muted loop playsinline preload="none" poster="/assets/hardware/2026-11/godslamp-1200.webp" aria-hidden="true"><source src="/assets/hardware/2026-11/godslamp-turntable.mp4" type="video/mp4"/></video></div>
 <h3>God's Lamp Pocket</h3><p>God's Lamp as a dedicated instrument: four macro knobs, seven modes and the six-track song view, framed by its turquoise light line.</p><ul class="uf-spec"><li><span>Mirrors</span><span>God's Lamp app</span></li><li><span>Macros</span><span>Tone · Color · Shape · Space</span></li><li><span>Modes</span><span>7, from Song to Collage</span></li><li><span>Screen</span><span>Real Song view, as in the app</span></li><li><span>Status</span><span>CAD render, no prototype yet</span></li></ul>
 </article>
-<article class="uf-hw-item">
-<div class="uf-hw-top uf-mono"><span>03</span><span class="tag">Concept</span></div>
+<article class="uf-hw-item" data-uf-reveal data-hw="control" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Explore Unfire Control Puck">
+<div class="uf-hw-top uf-mono"><span>03</span><span class="tag">Concept · <b class="uf-hw-open">Explore +</b></span></div>
 <div class="uf-hw-media"><img src="/assets/hardware/2026-11/control-1200.webp" width="1200" height="750" loading="lazy" alt="Concept render of the Unfire Control Puck, a round black device with a camera lens, infrared emitters and an orange light ring, connected by a cable."/>
 <video data-uf-loop muted loop playsinline preload="none" poster="/assets/hardware/2026-11/control-1200.webp" aria-hidden="true"><source src="/assets/hardware/2026-11/control-turntable.mp4" type="video/mp4"/></video></div>
 <h3>Unfire Control Puck</h3><p>A USB camera and microphone puck for Unfire Control. Plug it into any computer and steer the cursor with hand gestures and voice, even without a good built-in camera.</p><ul class="uf-spec"><li><span>Software</span><span>Unfire Control</span></li><li><span>Sensors</span><span>Wide-angle camera · IR · 4 mics</span></li><li><span>Connection</span><span>USB-C, plug and play</span></li><li><span>Feedback</span><span>Orange status ring</span></li><li><span>Status</span><span>CAD render, no prototype yet</span></li></ul>
 </article>
 </div>
-<div class="uf-hw-commission"><div><h3>Hardware, designed to order.</h3><p>Instruments, controllers and enclosures for your product or brand, from concept and CAD to a costed prototype plan.</p></div>
+<div class="uf-hw-commission" data-uf-reveal><div><h3>Hardware, designed to order.</h3><p>Instruments, controllers and enclosures for your product or brand, from concept and CAD to a costed prototype plan.</p></div>
 <a class="uf-btn solid" href="mailto:hello@unfire.technology?subject=Hardware%20project">Describe a hardware project</a></div>
 <p class="uf-hw-note">The devices above are concept renders created by Unfire. They are not products for sale, and no physical prototype, certification, price or delivery date exists yet. On-screen interfaces are taken from genuine captures of the corresponding apps.</p>
 </div>
 </section>
 <section id="fields" class="uf-fields" aria-labelledby="uf-fields-h">
 <div class="wrap">
-<div class="uf-f-head"><div><span class="uf-mono">Five fields · one engineering core</span><h2 id="uf-fields-h">Built for institutions.<br/><span>Ready for everyone.</span></h2></div>
+<div class="uf-f-head" data-uf-reveal><div><span class="uf-mono">Five fields · one engineering core</span><h2 id="uf-fields-h">Built for institutions.<br/><span>Ready for everyone.</span></h2></div>
 <p>From public administrations and large enterprises to small teams and individuals. One engineering core, five fields, and products that already run.</p></div>
-<div class="uf-aud" role="list">
+<div class="uf-aud" data-uf-reveal role="list">
 <div role="listitem"><span class="uf-mono">01</span><strong>Public sector</strong><em>Governments, agencies and public programmes that need oversight and traceability.</em></div>
 <div role="listitem"><span class="uf-mono">02</span><strong>Enterprise</strong><em>Operations, infrastructure and energy teams working at scale.</em></div>
 <div role="listitem"><span class="uf-mono">03</span><strong>SMEs &amp; teams</strong><em>Focused tools that pay back quickly, without heavy integration.</em></div>
 <div role="listitem"><span class="uf-mono">04</span><strong>Individuals</strong><em>Creators, producers and people who want technology that respects them.</em></div>
 </div>
 <div class="uf-f-grid">
-<article class="uf-f-item big">
+<article class="uf-f-item big" data-uf-reveal>
 <div class="uf-f-top uf-mono"><span>01 · AI systems</span><span class="tag">Render</span></div>
 <div class="uf-f-media"><img src="/assets/fields/2026-11/gate-960.webp" srcset="/assets/fields/2026-11/gate-960.webp 960w, /assets/fields/2026-11/gate-1600.webp 1600w" sizes="(max-width:1020px) 100vw, 50vw" width="1600" height="1000" loading="lazy" alt="Illustrative render of an Unfire decision gate with Allow, Review and Block keys and a Review required display."/></div>
 <h3>AI that answers to people.</h3><p>Automation that proposes, explains and waits for a named person before anything changes. Designed for regulated, high-stakes work.</p><div class="uf-f-today"><span class="uf-mono">Today</span><span><a href="/autonomy/">Unfire Autonomy</a> · <a href="/bolt/">Bolt for Mac</a></span></div>
 </article>
-<article class="uf-f-item big">
+<article class="uf-f-item big" data-uf-reveal>
 <div class="uf-f-top uf-mono"><span>02 · Energy</span><span class="tag">Render</span></div>
 <div class="uf-f-media"><img src="/assets/fields/2026-11/meter-960.webp" srcset="/assets/fields/2026-11/meter-960.webp 960w, /assets/fields/2026-11/meter-1600.webp 1600w" sizes="(max-width:1020px) 100vw, 50vw" width="1600" height="1000" loading="lazy" alt="Illustrative render of an Unfire energy node with an e-ink price display and an orange dial."/></div>
 <h3>Energy, made legible.</h3><p>Market prices and consumption turned into decisions households and operators can act on.</p><div class="uf-f-today"><span class="uf-mono">Today</span><span><a href="/apps/power/">Power Energy Prices</a></span></div>
 </article>
-<article class="uf-f-item">
+<article class="uf-f-item" data-uf-reveal>
 <div class="uf-f-top uf-mono"><span>03 · Audio</span><span class="tag">Render</span></div>
 <div class="uf-f-media"><img src="/assets/fields/2026-11/console-960.webp" srcset="/assets/fields/2026-11/console-960.webp 960w, /assets/fields/2026-11/console-1600.webp 1600w" sizes="(max-width:1020px) 100vw, 33vw" width="1600" height="1000" loading="lazy" alt="Illustrative render of a dark Unfire audio console with knobs, faders and a level meter."/></div>
 <h3>Sound, engineered.</h3><p>Studio tools and instruments, from precision clipping to pocket synthesizers.</p><div class="uf-f-today"><span class="uf-mono">Today</span><span><a href="/archer/">Archer</a> · <a href="/audio/">Unfire Audio</a></span></div>
 </article>
-<article class="uf-f-item">
+<article class="uf-f-item" data-uf-reveal>
 <div class="uf-f-top uf-mono"><span>04 · Infrastructure</span><span class="tag">Render</span></div>
 <div class="uf-f-media"><img src="/assets/fields/2026-11/rack-960.webp" srcset="/assets/fields/2026-11/rack-960.webp 960w, /assets/fields/2026-11/rack-1600.webp 1600w" sizes="(max-width:1020px) 100vw, 33vw" width="1600" height="1000" loading="lazy" alt="Illustrative render of three stacked dark Unfire compute modules with orange status lights."/></div>
 <h3>Build once, reuse everywhere.</h3><p>Shared components, testing and release processes that let every new product start ahead.</p><div class="uf-f-today"><span class="uf-mono">Today</span><span><a href="#system">Unfire Suite</a> · internal platform</span></div>
 </article>
-<article class="uf-f-item">
+<article class="uf-f-item" data-uf-reveal>
 <div class="uf-f-top uf-mono"><span>05 · Scale</span><span class="tag">Render</span></div>
 <div class="uf-f-media"><img src="/assets/fields/2026-11/node-960.webp" srcset="/assets/fields/2026-11/node-960.webp 960w, /assets/fields/2026-11/node-1600.webp 1600w" sizes="(max-width:1020px) 100vw, 33vw" width="1600" height="1000" loading="lazy" alt="Illustrative render of a round Unfire network node with cables radiating outwards."/></div>
 <h3>From one pilot to many sites.</h3><p>Systems designed to grow across teams and locations while keeping the same controls.</p><div class="uf-f-today"><span class="uf-mono">Today</span><span>Continuum · in private development</span></div>
 </article>
 </div>
-<div class="uf-principles"><span class="uf-mono">Design principles</span><ul><li>Human oversight by default</li><li>An audit trail for every decision</li><li>Data kept local wherever possible</li><li>Remote, written-first delivery</li></ul></div>
+<div class="uf-principles" data-uf-reveal><span class="uf-mono">Design principles</span><ul><li>Human oversight by default</li><li>An audit trail for every decision</li><li>Data kept local wherever possible</li><li>Remote, written-first delivery</li></ul></div>
 <p class="uf-f-note">Objects in this section are illustrative renders created by Unfire to represent each field. They are not products for sale. Product screens elsewhere on this site are real captures.</p>
 </div>
 </section>
 <section id="autonomy-feature" class="uf-auto" aria-labelledby="uf-auto-h">
-<div class="wrap uf-auto-grid">
+<div class="wrap uf-auto-grid" data-uf-reveal>
 <div><span class="uf-mono">Unfire Autonomy · Research prototype</span>
 <h2 id="uf-auto-h">Intelligence, <span>with boundaries.</span></h2>
 <p>Every proposed action passes a visible gate. Low-risk steps run, changes wait for a named person, and refunds, data exports or unknown actions are refused. Every decision is explained.</p>
@@ -6284,6 +6284,15 @@ console.log(
 <!-- Sr. Dante: Unfire public web assistant (speech opt-in) -->
 <script src="/assets/js/ask-unfire.js?v=20261122-1" defer></script>
 
-<script src="/assets/js/unfire-ember-20261123.js?v=1" defer></script>
+<dialog id="uf-hw-dialog" class="uf-dlg" aria-labelledby="uf-dlg-title">
+<div class="uf-dlg-inner">
+<div class="uf-dlg-media"><video muted loop playsinline preload="none"></video><span class="uf-dlg-badge uf-mono">Concept · 3D render</span></div>
+<div class="uf-dlg-info">
+<div class="uf-dlg-top uf-mono"><span class="uf-dlg-num"></span><button type="button" class="uf-dlg-close" aria-label="Close">Close ✕</button></div>
+<h2 id="uf-dlg-title"></h2><p class="uf-dlg-desc"></p><ul class="uf-spec uf-dlg-spec"></ul>
+<p class="uf-dlg-note">Concept render created by Unfire. No physical prototype, certification, price or delivery date exists yet. The on-screen interface is taken from a genuine capture of the app.</p>
+<div class="uf-dlg-nav"><button type="button" class="uf-btn line uf-dlg-prev" aria-label="Previous device">← Previous</button><button type="button" class="uf-btn solid uf-dlg-next" aria-label="Next device">Next →</button></div>
+</div></div></dialog>
+<script src="/assets/js/unfire-ember-20261123.js?v=2" defer></script>
 </body>
 </html>

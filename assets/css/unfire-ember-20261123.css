@@ -215,3 +215,46 @@ html body #fields .uf-f-note{margin:18px 0 0;font-size:12px;line-height:1.5;colo
   #fields .uf-principles ul{grid-template-columns:1fr;}
 }
 @media (prefers-reduced-motion:reduce){#fields .uf-f-media img{transition:none;}#fields .uf-f-item:hover .uf-f-media img{transform:none;}}
+
+/* ---------- Immersive layer (v9) ---------- */
+html.uf-reveal-on [data-uf-reveal]{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1) var(--uf-d,0ms),transform .9s cubic-bezier(.2,.7,.2,1) var(--uf-d,0ms);}
+html.uf-reveal-on [data-uf-reveal].in{opacity:1;transform:none;}
+html.uf-dlg-lock{overflow:hidden;}
+/* hardware cards as explorable objects */
+.uf-hw-item[data-hw]{cursor:pointer;outline:none;}
+.uf-hw-item[data-hw] .uf-hw-media{border-radius:6px;transition:box-shadow .5s ease;}
+.uf-hw-item[data-hw]:hover .uf-hw-media,.uf-hw-item[data-hw]:focus-visible .uf-hw-media{box-shadow:0 0 0 2px var(--uf-ink),0 30px 60px -40px rgba(20,20,20,.5);}
+.uf-hw-item[data-hw]:focus-visible h3{text-decoration:underline;text-decoration-color:var(--uf-orange);text-underline-offset:6px;}
+.uf-hw-open{font-weight:600;color:var(--uf-ink);transition:color .2s;}
+.uf-hw-item[data-hw]:hover .uf-hw-open{color:var(--uf-orange-t);}
+/* explorer dialog */
+.uf-dlg{border:0;padding:0;margin:auto;width:min(1240px,94vw);max-height:92vh;background:var(--uf-paper);color:var(--uf-ink);border-radius:24px;overflow:hidden;box-shadow:0 60px 160px -40px rgba(0,0,0,.6);}
+.uf-dlg::backdrop{background:rgba(10,9,8,.62);-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);}
+.uf-dlg[open]{animation:ufDlgIn .55s cubic-bezier(.2,.8,.2,1);}
+.uf-dlg[open]::backdrop{animation:ufFade .4s ease;}
+@keyframes ufDlgIn{from{opacity:0;transform:translateY(30px) scale(.97);}to{opacity:1;transform:none;}}
+@keyframes ufFade{from{opacity:0;}to{opacity:1;}}
+.uf-dlg-inner{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);min-height:min(680px,88vh);}
+.uf-dlg-media{position:relative;background:var(--uf-paper);}
+.uf-dlg-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;}
+.uf-dlg-badge{position:absolute;left:24px;bottom:20px;color:var(--uf-mute);background:rgba(225,223,219,.85);padding:6px 10px;border-radius:6px;}
+.uf-dlg-info{padding:32px 40px 34px;display:flex;flex-direction:column;border-left:1px solid var(--uf-rule);overflow:auto;}
+.uf-dlg-top{display:flex;justify-content:space-between;align-items:center;color:var(--uf-mute);margin-bottom:28px;}
+.uf-dlg-close{font:inherit;letter-spacing:inherit;text-transform:inherit;background:none;border:1px solid var(--uf-rule);border-radius:999px;padding:8px 14px;color:var(--uf-ink);cursor:pointer;}
+.uf-dlg-close:hover{background:var(--uf-ink);color:var(--uf-paper);}
+.uf-dlg-close:focus-visible,.uf-dlg-nav button:focus-visible{outline:2px solid var(--uf-orange);outline-offset:3px;}
+html body .uf-dlg h2{font-size:clamp(34px,3.4vw,48px);line-height:1.02;letter-spacing:-.035em;margin:0 0 14px;font-weight:700;color:var(--uf-ink)!important;}
+html body .uf-dlg .uf-dlg-desc{font-size:17px;line-height:1.55;color:var(--uf-ink2)!important;margin:0 0 22px;}
+.uf-dlg .uf-spec{margin:0 0 18px;}
+html body .uf-dlg .uf-dlg-note{font-size:12px;line-height:1.5;color:var(--uf-mute)!important;margin:auto 0 20px;}
+.uf-dlg-nav{display:flex;gap:10px;justify-content:space-between;}
+.uf-dlg-nav .uf-btn{cursor:pointer;font-family:inherit;}
+.uf-dlg.swap .uf-dlg-info>*:not(.uf-dlg-top),.uf-dlg.swap .uf-dlg-media video{animation:ufSwap .5s cubic-bezier(.2,.7,.2,1);}
+@keyframes ufSwap{from{opacity:0;transform:translateX(14px);}to{opacity:1;transform:none;}}
+@media (max-width:860px){
+  .uf-dlg{width:100vw;max-height:100vh;height:100dvh;border-radius:0;}
+  .uf-dlg-inner{grid-template-columns:1fr;grid-template-rows:auto 1fr;min-height:100%;}
+  .uf-dlg-media{aspect-ratio:16/10;}
+  .uf-dlg-info{border-left:0;border-top:1px solid var(--uf-rule);padding:22px 22px 26px;}
+}
+@media (prefers-reduced-motion:reduce){.uf-dlg[open],.uf-dlg[open]::backdrop,.uf-dlg.swap *{animation:none!important;}}
