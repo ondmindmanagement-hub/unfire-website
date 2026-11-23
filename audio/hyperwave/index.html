@@ -2245,6 +2245,7 @@ const HYPERWAVE = (() => {
 (async () => {
   const $ = (id) => document.getElementById(id);
   const PLUGIN = NATIVE.available();
+  const ATELIER = !PLUGIN && /(?:^|[?&])atelier=1(?:&|$)/.test(location.search);
   if (PLUGIN) document.documentElement.classList.add('plugin');
   const _t0 = performance.now(), LOG = (m) => window.__dbg && console.log(m, Math.round(performance.now() - _t0));
   await Y2K.fonts(); LOG('fonts');
@@ -2434,9 +2435,26 @@ const HYPERWAVE = (() => {
     const i = Math.min(H.TMAX - 1, Math.floor(st.T)), u = G3.clamp(st.T - i), A = frames[i], B = frames[i + 1];
     const c = A.getCenter(new THREE.Vector3()).lerp(B.getCenter(new THREE.Vector3()), u), s = A.getSize(new THREE.Vector3()).lerp(B.getSize(new THREE.Vector3()), u);
     const k = snap ? 1 : 0.08; fc.lerp(c, k); const R = Math.max(s.x * 0.5, s.y * 0.62, s.z * 0.5); fr = G3.lerp(fr, R, k);
+    // The atelier presents a transforming object: fit the entire bounding sphere in both
+    // portrait and landscape canvases, then bound user zoom relative to that actual size.
+    // The native/plugin camera and ordinary synthesizer website keep their existing behavior.
+    let atelierDistance = 0;
+    if (ATELIER) {
+      const halfV = cam.fov * Math.PI / 360;
+      const halfFov = Math.atan(Math.tan(halfV) * Math.min(1, Math.max(0.15, cam.aspect)));
+      const radius = 0.5 * Math.hypot(s.x, s.y, s.z);
+      atelierDistance = Math.max(4.8, radius / Math.sin(halfFov) * 1.12 + 0.35);
+      OC.minDistance = Math.max(2.7, atelierDistance * 0.44);
+      OC.maxDistance = atelierDistance * 2.05;
+    }
     if (view.auto) {
       tgt.lerp(new THREE.Vector3(fc.x, fc.y - s.y * 0.05, fc.z), snap ? 1 : 0.1);
-      if (!drags.size) { const want = (fr / Math.tan((cam.fov * Math.PI) / 360)) * (cam.aspect < 1 ? 1.32 / cam.aspect : 1.08) + 1.6, off = cam.position.clone().sub(tgt); off.setLength(G3.lerp(off.length(), Math.max(OC.minDistance, Math.min(OC.maxDistance, want)), snap ? 1 : 0.05)); cam.position.copy(tgt).add(off); }
+      if (!drags.size) {
+        const want = ATELIER ? atelierDistance : (fr / Math.tan((cam.fov * Math.PI) / 360)) * (cam.aspect < 1 ? 1.32 / cam.aspect : 1.08) + 1.6;
+        const off = cam.position.clone().sub(tgt);
+        off.setLength(G3.lerp(off.length(), Math.max(OC.minDistance, Math.min(OC.maxDistance, want)), snap ? 1 : 0.07));
+        cam.position.copy(tgt).add(off);
+      }
     }
     if (view.reset > 0) { // vuelve suavemente al ángulo inicial
       sph.setFromVector3(cam.position.clone().sub(tgt)); const ta = DEF.az, tp = Math.PI / 2 - DEF.el;
@@ -2456,7 +2474,16 @@ const HYPERWAVE = (() => {
   LOG('frames'); S.renderer.compile(S.scene, cam); LOG('compile'); window.__dbg ? (paused = true, frame()) : frame(); LOG('first');
   // prueba de impacto para el plugin (las zonas vacías dejan pasar el clic a Logic)
   window.__hwHit = (x, y) => drags.size > 0 || !!pick({ clientX: x, clientY: y });
-  window.__hw = { st, H, S, go, press, view, pause(v) { paused = v; }, renderAt(T, az, el, zoom, ty) { paused = true; st.T = st.target = prevT = T; if (az != null) { const r = cam.position.distanceTo(tgt); cam.position.set(tgt.x + Math.sin(az) * Math.cos(el) * r, tgt.y + Math.sin(el) * r, tgt.z + Math.cos(az) * Math.cos(el) * r); } scrT = 1; step(0.016, true); step(0.016, true); if (zoom) { if (ty != null) { tgt.y += ty; } const off = cam.position.clone().sub(tgt).multiplyScalar(zoom); cam.position.copy(tgt).add(off); cam.lookAt(tgt); S.renderer.render(S.scene, cam); } }, get syn() { return syn; }, ensureSyn, noteDown, noteUp, panBy, showSynth };
+  function fitView() { view.auto = true; view.reset = 1; }
+  function zoomBy(factor) {
+    if (!Number.isFinite(factor) || factor <= 0) return;
+    view.auto = false; view.reset = 0;
+    const offset = cam.position.clone().sub(tgt);
+    offset.setLength(Math.max(OC.minDistance, Math.min(OC.maxDistance, offset.length() * factor)));
+    cam.position.copy(tgt).add(offset);
+    OC.update();
+  }
+  window.__hw = { st, H, S, go, press, view, fitView, zoomBy, pause(v) { paused = v; }, renderAt(T, az, el, zoom, ty) { paused = true; st.T = st.target = prevT = T; if (az != null) { const r = cam.position.distanceTo(tgt); cam.position.set(tgt.x + Math.sin(az) * Math.cos(el) * r, tgt.y + Math.sin(el) * r, tgt.z + Math.cos(az) * Math.cos(el) * r); } scrT = 1; step(0.016, true); step(0.016, true); if (zoom) { if (ty != null) { tgt.y += ty; } const off = cam.position.clone().sub(tgt).multiplyScalar(zoom); cam.position.copy(tgt).add(off); cam.lookAt(tgt); S.renderer.render(S.scene, cam); } }, get syn() { return syn; }, ensureSyn, noteDown, noteUp, panBy, showSynth };
 })();
 
 </script>

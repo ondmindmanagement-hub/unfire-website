@@ -107,10 +107,24 @@ section{position:relative;scroll-margin-top:70px}
 .facts-note{margin-top:26px;font-size:11.5px;color:var(--muted)}
 
 /* transformation theatre */
-.theatre{height:560vh;background:#06070a}
+.theatre{height:450vh;background:#06070a}
 .theatre-sticky{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.62fr);align-items:center}
 .stage{position:relative;height:100%;display:flex;align-items:center;justify-content:center;background:radial-gradient(70% 60% at 50% 50%,#121a2a 0,#07080a 72%)}
-.stage img{width:min(100%,1280px);height:auto;aspect-ratio:16/9;object-fit:cover;-webkit-mask-image:radial-gradient(80% 78% at 50% 50%,#000 62%,transparent 100%);mask-image:radial-gradient(80% 78% at 50% 50%,#000 62%,transparent 100%)}
+.stage-visual{position:relative;flex:0 0 auto;width:min(100%,1280px);max-height:calc(100% - 128px);aspect-ratio:16/9;transform-origin:50% 50%;transform:scale(var(--stage-zoom,1));transition:transform .16s ease-out;will-change:transform}
+.stage-visual img,.stage-visual video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;-webkit-mask-image:radial-gradient(85% 85% at 50% 50%,#000 74%,transparent 100%);mask-image:radial-gradient(85% 85% at 50% 50%,#000 74%,transparent 100%)}
+.stage-visual video{opacity:0;transition:opacity .25s;pointer-events:none}
+.stage.video-ready .stage-visual video{opacity:1}
+.stage.video-ready .stage-visual img{opacity:0}
+.stage-tools{position:absolute;z-index:3;right:28px;bottom:100px;display:flex;align-items:center;gap:2px;padding:3px;border:1px solid rgba(219,189,134,.24);background:rgba(6,8,12,.85);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.stage-tools button{border:0;min-width:38px;min-height:36px;padding:9px 12px;background:transparent;color:#f4efe4;font:600 11px/1.2 var(--body);cursor:pointer;white-space:nowrap}
+.stage-tools button:hover,.stage-tools button:focus-visible{background:#e5d0a6;color:#0b0c0e;outline:2px solid #e5d0a6;outline-offset:-2px}
+.stage-tools button[aria-pressed="true"]{background:#d6b77f;color:#111}
+.stage-tools .stage-play{min-width:72px}
+.stage:fullscreen{width:100vw;height:100dvh!important;min-height:0!important;padding:0!important;background:#07090d}
+.stage:fullscreen .stage-visual{max-height:calc(100dvh - 110px)}
+.stage:fullscreen .stage-head{top:22px}
+.stage:fullscreen .stage-tools{bottom:65px}
+.stage:fullscreen .progress{bottom:30px}
 .stage-head .label{position:static}
 .stage-head{position:absolute;left:28px;top:96px;right:28px;display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
 .timecode{font:500 11px/1.5 ui-monospace,"SF Mono",Menlo,monospace;letter-spacing:.08em;color:#bfb9ad;text-align:right}
@@ -141,7 +155,15 @@ section{position:relative;scroll-margin-top:70px}
 .film-frame .label{position:absolute;left:16px;bottom:16px}
 dialog.film-dialog{width:min(1280px,94vw);max-width:none;padding:0;border:1px solid var(--line2);background:#000;color:var(--linen)}
 dialog.film-dialog::backdrop{background:rgba(3,4,6,.88)}
-.film-dialog video{width:100%;height:auto;aspect-ratio:16/9;background:#000}
+.film-view{width:100%;overflow:hidden;background:#000;display:grid;place-items:center}
+.film-dialog video{width:100%;height:auto;max-height:calc(94dvh - 68px);aspect-ratio:16/9;object-fit:contain;background:#000;transform-origin:50% 50%;transform:scale(var(--film-zoom,1));transition:transform .18s ease-out}
+.film-dialog:fullscreen{width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;display:flex;flex-direction:column}
+.film-dialog:fullscreen .film-view{flex:1;min-height:0}
+.film-dialog:fullscreen video{max-height:calc(100dvh - 68px)}
+.film-controls{display:flex;align-items:center;gap:7px}
+.film-controls button{min-height:36px;min-width:38px;border:1px solid var(--line2);padding:8px 11px;background:#101114;color:var(--linen);font:600 11px/1 var(--body);cursor:pointer}
+.film-controls button:hover,.film-controls button:focus-visible{background:#e4d0a6;color:#0b0c0e;outline:2px solid #e4d0a6}
+@media(max-width:640px){.film-dialog .bar{flex-wrap:wrap}.film-controls{justify-content:flex-end;width:100%}.film-dialog video{max-height:calc(100dvh - 124px)}}
 .film-dialog .bar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 16px;font-size:11px;letter-spacing:.06em;color:#cfc9bd}
 .film-dialog button{background:none;border:1px solid var(--line2);padding:8px 14px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
 
@@ -172,6 +194,14 @@ dialog.film-dialog::backdrop{background:rgba(3,4,6,.88)}
 .studio.live .studio-poster{display:none}
 .studio-bar{position:absolute;left:16px;right:16px;top:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;pointer-events:none}
 .studio-bar>*{pointer-events:auto}
+.studio-tools{display:flex;gap:2px;align-items:center;background:rgba(7,8,10,.83);border:1px solid var(--line2);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.studio-tools button{min-width:37px;min-height:37px;border:0;background:transparent;color:#f1eadc;font:600 13px/1 var(--body);cursor:pointer}
+.studio-tools button:hover,.studio-tools button:focus-visible{background:#e9d6b5;color:#090a0b;outline:2px solid #e9d6b5;outline-offset:-2px}
+.studio-tools .fit{min-width:65px;padding:0 12px;font-size:10px;letter-spacing:.07em}
+.studio:fullscreen{width:100vw;height:100dvh!important;min-height:0!important}
+.studio.studio-max{position:fixed!important;inset:0!important;z-index:10000;width:100vw!important;height:100dvh!important;min-height:0!important}
+body.studio-fullscreen-fallback{overflow:hidden}
+
 .forms{display:inline-flex;border:1px solid var(--line2);background:rgba(7,8,10,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .forms button{border:0;background:transparent;padding:10px 14px;font:600 10px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:#cfc9bd}
 .forms button[aria-pressed="true"]{background:var(--linen);color:#0b0c0e}
@@ -277,6 +307,8 @@ footer a:hover{color:var(--gold2)}
  .stage-head{top:84px}
  .theatre-sticky{align-content:center}
  .stage{height:auto;padding:120px 0 84px}
+ .stage-visual{max-height:none}
+ .stage-tools{right:16px;bottom:52px}
  .studio .status{bottom:auto;top:58px;right:16px;left:auto;max-width:60%;text-align:right}
  .atelier-grid{grid-template-columns:1fr}
  .panel{border-left:0;border-top:1px solid var(--line2)}
@@ -295,10 +327,14 @@ footer a:hover{color:var(--gold2)}
  .hero-actions .cta{flex:1 1 100%}
  .hero-foot span:nth-child(n+3){display:none}
  .facts b{font-size:30px}
- .theatre{height:460vh}
+ .theatre{height:400vh}
  .stage-head{left:16px;right:16px;top:74px}
  .stage .label{left:16px;bottom:18px}
- .progress{left:16px;right:16px;bottom:56px}
+ .progress{left:16px;right:16px;bottom:24px}
+ .stage-tools{left:12px;right:12px;bottom:45px;gap:0;justify-content:center}
+ .stage-tools button{padding:9px 7px;min-width:30px;min-height:35px;font-size:10px}
+ .stage-tools .stage-play{min-width:53px}
+ .stage-visual{width:100%}
  .timecode b{font-size:24px}
  .detail-grid{grid-template-columns:1fr}.d1,.d2,.d3,.d4{grid-column:auto}
  .systems{grid-template-columns:1fr}
@@ -334,6 +370,29 @@ html.embed .site-header,html.embed main>section:not(#atelier),html.embed footer,
 html.embed body{background:#0b0b0c!important}
 html.embed #atelier{padding:18px 0 24px!important;min-height:100vh;background:radial-gradient(120% 80% at 50% 0%,#17181b 0%,#0b0b0c 70%)!important}
 html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:18px!important}
+/* Embedded atelier: the instrument must remain fully visible; only the finish panel scrolls. */
+html.embed,html.embed body{height:100%;overflow:hidden}
+html.embed #atelier{height:100dvh;min-height:0!important;box-sizing:border-box;padding:10px!important;overflow:hidden}
+html.embed #atelier>.shell{box-sizing:border-box;width:100%;max-width:none;height:100%;min-height:0;display:flex;flex-direction:column}
+html.embed #atelier .atelier-grid{flex:1;min-height:0;grid-template-columns:minmax(0,1fr) clamp(310px,32%,440px)}
+html.embed #atelier .studio{height:100%;min-height:0}
+html.embed #atelier .panel{height:100%;min-height:0;box-sizing:border-box;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#72685c #0b0b0c}
+html.embed #atelier .studies,html.embed #atelier .atelier-fine{display:none!important}
+.atelier-embed-disclaimer{display:none;font-size:11px;line-height:1.65;color:#aaa49b;border-top:1px solid var(--line2);padding-top:18px;margin-top:4px}
+html.embed .atelier-embed-disclaimer{display:block}
+@media(max-width:820px){
+ html.embed,html.embed body{height:auto;min-height:100%;overflow:auto}
+ html.embed #atelier{height:auto;min-height:100dvh!important;overflow:visible;padding:8px!important}
+ html.embed #atelier>.shell{height:auto}
+ html.embed #atelier .atelier-grid{display:grid;grid-template-columns:minmax(0,1fr);height:auto;flex:none}
+ html.embed #atelier .studio{height:clamp(300px,55dvh,650px);min-height:0}
+ html.embed #atelier .panel{height:auto;overflow:visible}
+}
+@media(max-width:480px){
+ .studio-bar{gap:7px}
+ .studio-tools button{min-width:34px;min-height:34px}
+ .studio-tools .fit{min-width:57px;padding:0 7px}
+}
 .chip.tex{background-size:cover!important}
 </style>
 </head>
@@ -394,11 +453,24 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
 
  <section class="theatre" id="transformation" aria-labelledby="theatre-title">
   <div class="theatre-sticky">
-   <div class="stage">
-    <img id="seq" src="media/seq/t00.webp" width="1280" height="720" alt="Hyperwave 2000 transformation sequence, captured frame by frame from the real-time digital instrument" decoding="async">
+   <div class="stage" id="transformation-stage">
+    <div class="stage-visual" id="stage-visual">
+     <img id="seq" src="media/seq/t00.webp" width="1280" height="720" alt="Hyperwave 2000 digital instrument transforming through its six movements" decoding="async">
+     <video id="seq-video" muted playsinline preload="none" disablepictureinpicture aria-label="Continuous digital model transformation, captured from the real Hyperwave 3D simulator" poster="media/seq/t00.webp">
+      <source data-src="media/hyperwave-2000-transformation-50fps.mp4" type="video/mp4">
+     </video>
+    </div>
     <div class="stage-head">
      <span class="label">Digital concept visualisation · real-time model</span>
      <div class="timecode" aria-hidden="true"><b id="tc">0.0 s</b>digital sequence</div>
+    </div>
+    <div class="stage-tools" role="group" aria-label="Transformation playback and camera controls">
+     <button type="button" class="stage-play" id="seq-play" aria-label="Play continuous transformation">Play</button>
+     <button type="button" id="seq-slow" aria-pressed="false" title="Slight slow motion">0.75×</button>
+     <button type="button" id="seq-out" aria-label="Zoom out" title="Zoom out">−</button>
+     <button type="button" id="seq-in" aria-label="Zoom in" title="Zoom in">+</button>
+     <button type="button" id="seq-fit" title="Show the entire instrument">Fit</button>
+     <button type="button" id="seq-full" aria-pressed="false" title="Full-screen transformation viewer">Expand</button>
     </div>
     <div class="progress" aria-hidden="true"><i id="bar"></i></div>
    </div>
@@ -445,10 +517,20 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
   </div>
  </section>
  <dialog class="film-dialog" id="film-dialog" aria-label="Hyperwave 2000 digital concept film">
-  <video id="film-video" controls playsinline muted preload="none" poster="media/film-poster.webp" width="1280" height="720">
-   <source src="media/hyperwave-2000-digital-concept-film.mp4" type="video/mp4">
-  </video>
-  <div class="bar"><span>Digital concept visualisation — captured from the real-time digital instrument. No physical unit has been built.</span><button type="button" id="film-close">Close</button></div>
+  <div class="film-view" id="film-view">
+   <video id="film-video" controls playsinline muted preload="none" poster="media/film-poster.webp" width="1280" height="720">
+    <source src="media/hyperwave-2000-digital-concept-film.mp4" type="video/mp4">
+   </video>
+  </div>
+  <div class="bar"><span>Digital concept visualisation — captured from the real-time digital instrument. No physical unit has been built.</span>
+   <div class="film-controls" role="group" aria-label="Trailer zoom controls">
+    <button type="button" id="film-out" aria-label="Zoom trailer out">−</button>
+    <button type="button" id="film-in" aria-label="Zoom trailer in">+</button>
+    <button type="button" id="film-fit" aria-label="Fit entire trailer frame">Fit</button>
+    <button type="button" id="film-full" aria-label="View trailer full screen">Expand</button>
+    <button type="button" id="film-close">Close</button>
+   </div>
+  </div>
  </dialog>
 
  <section class="details" aria-label="Details of the digital instrument">
@@ -476,12 +558,18 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
       <button class="cta cta-gold" type="button" id="studio-load">Enter the live atelier</button>
       <p>Loads the real-time digital instrument (about 1.2 MB). Drag to turn it; use the form buttons to open and close it. Sound plays only if you touch its controls.</p>
      </div>
-     <iframe id="studio-frame" title="Interactive Hyperwave 2000 digital instrument" loading="lazy" allow="autoplay; midi" referrerpolicy="same-origin"></iframe>
+     <iframe id="studio-frame" title="Interactive Hyperwave 2000 digital instrument" loading="lazy" allow="autoplay; midi; fullscreen" allowfullscreen referrerpolicy="same-origin"></iframe>
      <div class="studio-bar">
       <div class="forms" role="group" aria-label="Instrument form">
        <button type="button" data-form="0" aria-pressed="true">Closed</button>
        <button type="button" data-form="3" aria-pressed="false">Open</button>
        <button type="button" data-form="4" aria-pressed="false">Hyper</button>
+      </div>
+      <div class="studio-tools" role="group" aria-label="3D camera controls">
+       <button type="button" id="studio-zoom-out" aria-label="Zoom out" title="Zoom out">−</button>
+       <button type="button" id="studio-zoom-in" aria-label="Zoom in" title="Zoom in">+</button>
+       <button type="button" class="fit" id="studio-fit" title="Show the whole instrument">Fit view</button>
+       <button type="button" class="fit" id="studio-fullscreen" aria-pressed="false" title="Full-screen 3D preview">Expand</button>
       </div>
      </div>
      <span class="label">Digital finish study · real-time model</span>
@@ -514,6 +602,7 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
        <button class="cta cta-line" type="button" id="brief-copy">Copy</button>
       </div>
      </div>
+     <p class="atelier-embed-disclaimer">Digital finish study only. Physical production is subject to engineering and supplier review; no price or order is generated.</p>
     </form>
    </div>
    <div class="studies">
@@ -632,43 +721,191 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
     reveals.forEach(function (el) { io.observe(el); });
   } else { reveals.forEach(function (el) { el.classList.add('in'); }); }
 
-  /* transformation theatre: real captured frames, scrubbed by scroll */
-  var N = 49, theatre = document.getElementById('transformation'), seq = document.getElementById('seq');
+  /* Smooth transformation theatre: original WebGL captures encoded at 50 fps,
+     all-intra for responsive, reversible scroll scrubbing. Still frames fallback. */
+  var N = 49, theatre = document.getElementById('transformation'), stage = document.getElementById('transformation-stage');
+  var seq = document.getElementById('seq'), movie = document.getElementById('seq-video');
   var tc = document.getElementById('tc'), bar = document.getElementById('bar'), chapters = document.querySelectorAll('#chapters .chapter');
-  var frames = [], loaded = false, cur = -1, ticking = false;
+  var visual = document.getElementById('stage-visual'), playBtn = document.getElementById('seq-play');
+  var loaded = false, ready = false, failed = false, playing = false, wantPlay = false, resumePlayback = false;
+  var scrollProgress = 0, playStartProgress = 0, targetTime = 0, shownTime = 0;
+  var lastFallback = -1, active = false, raf = 0, duration = 4.8, zoom = 1;
+  var clamp = function (n, a, b) { return Math.min(b, Math.max(a, n)); };
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
-  function loadFrames() {
-    if (loaded) return; loaded = true;
-    for (var i = 0; i < N; i++) { var im = new Image(); im.decoding = 'async'; im.src = 'media/seq/t' + pad(i) + '.webp'; frames.push(im); }
-  }
   function chapterFor(T) { return T < 0.12 ? 0 : T < 1 ? 1 : T < 2 ? 2 : T < 3 ? 3 : T < 3.86 ? 4 : 5; }
-  function renderTheatre() {
-    ticking = false;
-    var r = theatre.getBoundingClientRect(), span = theatre.offsetHeight - window.innerHeight;
-    var p = Math.min(1, Math.max(0, -r.top / (span || 1)));
-    var k = Math.round(p * (N - 1));
-    if (k !== cur) {
-      cur = k;
-      var f = frames[k];
-      if (f && f.complete && f.naturalWidth) seq.src = f.src; else seq.src = 'media/seq/t' + pad(k) + '.webp';
-      var T = 4 * k / (N - 1);
-      tc.textContent = (T / 0.85).toFixed(1) + ' s';
-      var c = chapterFor(T);
-      chapters.forEach(function (el, i) { el.classList.toggle('on', i === c); });
-    }
+  function showPosition(p) {
+    p = clamp(p, 0, 1);
+    var T = 4 * p, chapter = chapterFor(T);
+    tc.textContent = (T / 0.85).toFixed(1) + ' s';
+    chapters.forEach(function (el, i) { el.classList.toggle('on', i === chapter); });
     bar.style.width = (p * 100).toFixed(2) + '%';
   }
+  function stillAt(p) {
+    if (!failed && ready) return;
+    var k = Math.round(clamp(p, 0, 1) * (N - 1));
+    if (k !== lastFallback) { lastFallback = k; seq.src = 'media/seq/t' + pad(k) + '.webp'; }
+  }
+  function failMovie() {
+    failed = true; ready = false; playing = false; wantPlay = false;
+    stage.classList.remove('video-ready');
+    playBtn.disabled = true; playBtn.textContent = 'Stills';
+    playBtn.title = 'High-frame-rate video unavailable; original images remain visible';
+    stillAt(scrollProgress);
+  }
+  function loadMovie() {
+    if (loaded || failed || reduce) return;
+    loaded = true;
+    var source = movie.querySelector('source');
+    source.src = source.getAttribute('data-src');
+    movie.preload = 'auto';
+    movie.load();
+  }
+  movie.addEventListener('loadedmetadata', function () {
+    if (Number.isFinite(movie.duration) && movie.duration > 1) duration = movie.duration;
+  });
+  movie.addEventListener('loadeddata', function () {
+    ready = true; stage.classList.add('video-ready');
+    shownTime = targetTime = clamp(scrollProgress * duration, 0, duration - 1 / 50);
+    movie.currentTime = shownTime;
+    if (wantPlay) beginPlayback();
+  });
+  movie.addEventListener('error', failMovie);
+  function stopPlayback(manual) {
+    if (!playing && !wantPlay) return;
+    resumePlayback = !!manual;
+    playing = false; wantPlay = false; movie.pause();
+    if (manual) targetTime = shownTime = movie.currentTime;
+    playBtn.textContent = 'Play'; playBtn.setAttribute('aria-label', 'Play continuous transformation');
+  }
+  function beginPlayback() {
+    loadMovie();
+    if (failed) return;
+    if (!ready) { wantPlay = true; playBtn.textContent = 'Loading'; return; }
+    if (playing) { stopPlayback(true); return; }
+    if (!resumePlayback || movie.currentTime >= duration - 0.7) movie.currentTime = 0;
+    resumePlayback = false;
+    movie.playbackRate = document.getElementById('seq-slow').getAttribute('aria-pressed') === 'true' ? 0.75 : 1;
+    playStartProgress = scrollProgress;
+    playing = true; wantPlay = false;
+    playBtn.textContent = 'Pause'; playBtn.setAttribute('aria-label', 'Pause continuous transformation');
+    var result = movie.play();
+    if (result && result.catch) result.catch(function () { stopPlayback(); });
+    startLoop();
+  }
+  movie.addEventListener('ended', function () {
+    stopPlayback();
+    targetTime = shownTime = Math.max(0, duration - 1 / 50);
+    showPosition(1);
+  });
+  playBtn.addEventListener('click', function () { playing ? stopPlayback(true) : beginPlayback(); });
+  var slow = document.getElementById('seq-slow');
+  slow.addEventListener('click', function () {
+    var value = slow.getAttribute('aria-pressed') !== 'true';
+    slow.setAttribute('aria-pressed', String(value));
+    movie.playbackRate = value ? 0.75 : 1;
+  });
+  function setZoom(z) {
+    zoom = clamp(z, 0.78, 1.65);
+    visual.style.setProperty('--stage-zoom', zoom.toFixed(3));
+  }
+  document.getElementById('seq-in').addEventListener('click', function () { setZoom(zoom * 1.15); });
+  document.getElementById('seq-out').addEventListener('click', function () { setZoom(zoom / 1.15); });
+  document.getElementById('seq-fit').addEventListener('click', function () { setZoom(1); });
+  // Ordinary wheel movement scrolls the six movements; Shift/Control + wheel zooms.
+  stage.addEventListener('wheel', function (e) {
+    if (e.shiftKey || e.ctrlKey || e.metaKey) { e.preventDefault(); setZoom(zoom * (e.deltaY < 0 ? 1.09 : 1 / 1.09)); }
+  }, { passive: false });
+  var pinch = 0;
+  function fingerDistance(e) {
+    var a = e.touches[0], b = e.touches[1];
+    return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+  }
+  stage.addEventListener('touchstart', function (e) {
+    if (e.touches.length === 2) pinch = fingerDistance(e);
+  }, { passive: true });
+  stage.addEventListener('touchmove', function (e) {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      var now = fingerDistance(e);
+      if (pinch > 0) setZoom(zoom * now / pinch);
+      pinch = now;
+    }
+  }, { passive: false });
+  stage.addEventListener('touchend', function () { pinch = 0; }, { passive: true });
+  var fullBtn = document.getElementById('seq-full');
+  function syncFull() {
+    var full = document.fullscreenElement === stage;
+    fullBtn.textContent = full ? 'Collapse' : 'Expand';
+    fullBtn.setAttribute('aria-pressed', String(full));
+  }
+  fullBtn.addEventListener('click', function () {
+    if (document.fullscreenElement === stage) document.exitFullscreen();
+    else if (stage.requestFullscreen) {
+      var r = stage.requestFullscreen();
+      if (r && r.catch) r.catch(function () {});
+    }
+  });
+  document.addEventListener('fullscreenchange', syncFull);
+  function currentScroll() {
+    var r = theatre.getBoundingClientRect(), span = theatre.offsetHeight - window.innerHeight;
+    return clamp(-r.top / (span || 1), 0, 1);
+  }
+  function onScroll() {
+    scrollProgress = currentScroll();
+    resumePlayback = false;
+    if (playing && Math.abs(scrollProgress - playStartProgress) > 0.004) stopPlayback();
+    if (!playing) {
+      targetTime = clamp(scrollProgress * duration, 0, duration - 1 / 50);
+      if (!ready) stillAt(scrollProgress);
+      showPosition(scrollProgress);
+    }
+    if (active) startLoop();
+  }
+  function tick() {
+    raf = 0;
+    if (!active && !playing) return;
+    if (ready && playing) {
+      showPosition(movie.currentTime / duration);
+    } else if (ready && !movie.seeking) {
+      var diff = targetTime - shownTime;
+      // Smooth motion while dragging the page without sacrificing seek responsiveness.
+      shownTime += Math.abs(diff) > 0.3 ? diff * 0.42 : diff * 0.24;
+      if (Math.abs(diff) < 1 / 80) shownTime = targetTime;
+      if (Math.abs(movie.currentTime - shownTime) >= 1 / 50) movie.currentTime = shownTime;
+    }
+    if (active || playing) raf = requestAnimationFrame(tick);
+  }
+  function startLoop() { if (!raf) raf = requestAnimationFrame(tick); }
   if (!reduce) {
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) { if (es[0].isIntersecting) loadFrames(); }, { rootMargin: '120% 0px' }).observe(theatre);
-    } else loadFrames();
-    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(renderTheatre); } }, { passive: true });
-    window.addEventListener('resize', renderTheatre);
-    renderTheatre();
+      new IntersectionObserver(function (entries) {
+        active = entries[0].isIntersecting;
+        if (active) { loadMovie(); startLoop(); }
+        else if (!playing && raf) { cancelAnimationFrame(raf); raf = 0; }
+      }, { rootMargin: '80% 0px' }).observe(theatre);
+    } else { active = true; loadMovie(); startLoop(); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
   }
 
   /* film dialog */
   var dlg = document.getElementById('film-dialog'), vid = document.getElementById('film-video');
+  var filmZoom = 1, filmFull = document.getElementById('film-full');
+  function filmSetZoom(v) {
+    filmZoom = clamp(v, 0.82, 1.65);
+    vid.style.setProperty('--film-zoom', filmZoom.toFixed(3));
+  }
+  document.getElementById('film-out').addEventListener('click', function () { filmSetZoom(filmZoom / 1.15); });
+  document.getElementById('film-in').addEventListener('click', function () { filmSetZoom(filmZoom * 1.15); });
+  document.getElementById('film-fit').addEventListener('click', function () { filmSetZoom(1); });
+  filmFull.addEventListener('click', function () {
+    if (document.fullscreenElement === dlg) document.exitFullscreen();
+    else if (dlg.requestFullscreen) { var res = dlg.requestFullscreen(); if (res && res.catch) res.catch(function () {}); }
+  });
+  document.addEventListener('fullscreenchange', function () {
+    filmFull.textContent = document.fullscreenElement === dlg ? 'Collapse' : 'Expand';
+  });
   function openFilm() {
     if (dlg && typeof dlg.showModal === 'function') { dlg.showModal(); try { vid.currentTime = 0; var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
     else { window.location.href = 'media/hyperwave-2000-digital-concept-film.mp4'; }
@@ -823,21 +1060,40 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
           s.textContent = '.brand,#hint,.keys,#restore{display:none!important}';
           d.head.appendChild(s); d.documentElement.setAttribute('data-theme', 'dark');
           hw = frameWin.__hw; mats = collect(hw.H.root);
-          try { var oc = hw.S.controls; oc.enablePan = false; oc.screenSpacePanning = false; oc.minDistance = Math.max(oc.minDistance || 0, 4.2); oc.maxDistance = 15; oc.update(); } catch (e) {}
+          try { var oc = hw.S.controls; oc.enablePan = true; oc.screenSpacePanning = true; oc.update(); } catch (e) {}
           ['canopy', 'body', 'metal', 'pods'].forEach(apply);
-          studio.classList.add('live'); statusEl.textContent = 'Live · drag to turn · pinch or scroll to zoom';
+          studio.classList.add('live'); statusEl.textContent = 'Live · drag to rotate · right-drag to pan · scroll or pinch to zoom · Fit view to recenter';
         } catch (e) { statusEl.textContent = 'The live atelier could not be opened here.'; }
       })();
     }, { once: true });
     frameEl.src = '../audio/hyperwave/?atelier=1';
   }
   document.getElementById('studio-load').addEventListener('click', loadStudio);
+  document.getElementById('studio-zoom-in').addEventListener('click', function () { if (!hw) { loadStudio(); return; } hw.zoomBy(0.82); });
+  document.getElementById('studio-zoom-out').addEventListener('click', function () { if (!hw) { loadStudio(); return; } hw.zoomBy(1.22); });
+  document.getElementById('studio-fit').addEventListener('click', function () { if (!hw) { loadStudio(); return; } hw.fitView(); });
+  var studioFull = document.getElementById('studio-fullscreen');
+  function syncStudioFull(){
+    var isFull = document.fullscreenElement === studio || studio.classList.contains('studio-max');
+    studioFull.textContent = isFull ? 'Collapse' : 'Expand';
+    studioFull.setAttribute('aria-pressed', String(isFull));
+    if(hw)hw.fitView();
+  }
+  studioFull.addEventListener('click', function () {
+    if (document.fullscreenElement === studio) { document.exitFullscreen(); return; }
+    if (studio.classList.contains('studio-max')) { studio.classList.remove('studio-max'); document.body.classList.remove('studio-fullscreen-fallback'); syncStudioFull(); return; }
+    function fallback(){studio.classList.add('studio-max');document.body.classList.add('studio-fullscreen-fallback');syncStudioFull();}
+    if (studio.requestFullscreen) { try { var result=studio.requestFullscreen(); if(result && result.catch)result.catch(fallback); } catch(e){fallback();} }
+    else fallback();
+  });
+  document.addEventListener('fullscreenchange', syncStudioFull);
+
   if (doc.classList.contains('embed')) setTimeout(loadStudio, 60);
   document.querySelectorAll('[data-form]').forEach(function (b) {
     b.addEventListener('click', function () {
       document.querySelectorAll('[data-form]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
       if (!hw) { loadStudio(); return; }
-      try { hw.go(parseFloat(b.getAttribute('data-form'))); } catch (e) {}
+      try { hw.go(parseFloat(b.getAttribute('data-form'))); hw.fitView(); } catch (e) {}
     });
   });
 
