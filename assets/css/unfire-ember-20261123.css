@@ -575,3 +575,17 @@ html.uf-reveal-on main [data-uf-reveal],html.uf-reveal-on main [data-uf-reveal].
 #uf-hw-dialog .uf-dlg-tools{min-width:0;flex-wrap:wrap;}
 @media(max-width:1020px){#hardware .uf-hw-grid{grid-template-columns:minmax(0,1fr);row-gap:32px;}#hardware .uf-hw-item{margin:0;}#hardware .uf-hw-head{gap:18px;margin-bottom:32px;}#hardware .uf-hw-media{max-width:100%;}}
 @media(max-width:400px){#hardware .uf-hw-top{font-size:10px;letter-spacing:.08em;}#hardware .uf-hw-item h3{font-size:clamp(1.25rem,6vw,1.625rem);}#hardware .uf-spec li{flex-wrap:wrap;}#hardware .uf-spec li>span:first-child{flex-basis:100%;}#hardware .uf-spec li>span:last-child{text-align:start;}}
+
+/* One continuous paper surface: feather the actual poster/video edges, not the product. */
+#hardware .uf-hw-item[data-hw] .uf-hw-media{border:0;border-radius:0;box-shadow:none;background:var(--uf-paper);transition:none;}
+#hardware .uf-hw-item[data-hw]:hover .uf-hw-media,#hardware .uf-hw-item[data-hw]:focus-visible .uf-hw-media{box-shadow:none;}
+#hardware .uf-hw-item[data-hw]:focus-visible{outline:1px solid var(--uf-ink);outline-offset:5px;}
+#hardware .uf-hw-media img,#hardware .uf-hw-media video{
+  inset:0;margin:auto;width:92%;height:auto;max-height:100%;aspect-ratio:16/10;padding:0;object-fit:contain;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent),linear-gradient(to bottom,transparent,#000 12%,#000 88%,transparent);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent),linear-gradient(to bottom,transparent,#000 12%,#000 88%,transparent);
+  mask-composite:intersect;
+  mask-repeat:no-repeat;
+}
+#hardware .uf-hw-item+.uf-hw-item::before{width:1px;background:var(--uf-rule);}

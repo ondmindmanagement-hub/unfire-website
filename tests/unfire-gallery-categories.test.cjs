@@ -93,6 +93,13 @@ const viewports = [
         assert.equal(hardware.allWithin,true,'Translated hardware overflow at '+viewport.width);
         assert.equal(hardware.overflow,false,'Translated homepage document overflow at '+viewport.width);
         assert.equal(hardware.columns,viewport.width<=1020?1:3,'Hardware responsive columns');
+        const seamless=await page.evaluate(()=>[...document.querySelectorAll('#hardware .uf-hw-media')].map(el=>{
+          const styles=getComputedStyle(el),media=[...el.querySelectorAll('img,video')].map(m=>{const cs=getComputedStyle(m);return {mask:cs.maskImage||cs.webkitMaskImage,composite:cs.maskComposite||cs.webkitMaskComposite,fit:cs.objectFit};});
+          return {radius:styles.borderRadius,shadow:styles.boxShadow,media};
+        }));
+        assert.equal(seamless.length,3);
+        for(const card of seamless){assert.equal(card.radius,'0px');assert.equal(card.shadow,'none');assert.equal(card.media.length,2);for(const m of card.media){assert.match(m.mask,/linear-gradient/);assert.equal(m.fit,'contain');}}
+
         console.log('PASS gallery viewport ' + viewport.width + 'x' + viewport.height + ': 4 categories, 9 cards, no overflow, real images');
       } finally { await page.close(); }
     }
