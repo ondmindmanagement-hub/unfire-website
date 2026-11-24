@@ -164,6 +164,8 @@ dialog.film-dialog::backdrop{background:rgba(3,4,6,.88)}
 .studio{position:relative;min-height:600px;background:radial-gradient(70% 70% at 50% 45%,#1b2638,#07080a 75%);overflow:hidden}
 .studio iframe{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 1s var(--ease)}
 .studio.live iframe{opacity:1;visibility:visible;pointer-events:auto}
+.android-stable .studio iframe{transition:none}
+.android-stable .studio .forms{backdrop-filter:none;-webkit-backdrop-filter:none;background:#11151b}
 .studio-poster{z-index:2}.studio-bar{z-index:3}.studio{scroll-margin-top:72px}
 .studio-poster{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;padding:30px;background:center/cover no-repeat}
 .studio-poster:before{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 50%,rgba(7,8,10,.25),rgba(7,8,10,.82))}
@@ -336,7 +338,7 @@ footer a:hover{color:var(--gold2)}
  body,section{background:#fff!important;color:#111}
 }
 </style>
-<script>if(/[?&]embed=1/.test(location.search))document.documentElement.classList.add('embed');</script>
+<script>if(/[?&]embed=1/.test(location.search))document.documentElement.classList.add('embed');if(/Android/i.test(navigator.userAgent))document.documentElement.classList.add('android-stable');</script>
 <style>
 html.embed #unfire-global-bar,html.embed .site-header,html.embed main>section:not(#atelier),html.embed footer,html.embed #atelier .atelier-head{display:none!important}
 html.embed body{background:#0b0b0c!important}
@@ -858,7 +860,7 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
       loadButton.textContent = 'Retry live atelier'; error.textContent = 'The live instrument could not load. Please try again.'; error.hidden = false;
       statusEl.textContent = 'Loading failed. Retry available.';
     }
-    frameEl.src = '../audio/hyperwave/?atelier=1&v=20261124audiofit';
+    frameEl.src = '../audio/hyperwave/?atelier=1&v=20261124audiofit2';
     // Yield for the loading indicator, then poll readiness with a bounded deadline.
     setTimeout(function wait() {
         if (generation !== loadGeneration) return;

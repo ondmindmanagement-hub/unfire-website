@@ -151,3 +151,38 @@ test('atelier fits portrait camera by projected bounds, never a fixed distance c
  assert.match(h,/OC.maxDistance = atelierDistance \* 2.05/);assert.match(h,/distance > off.length\(\) \? distance/);
  assert.doesNotMatch(a,/oc.maxDistance = 32/);assert.match(a,/id="studio-fit"/);assert.match(a,/hw.go\(f\); hw.fitView\(\)/);
 });
+
+test('Android graphics policy has bounded frame pacing and pauses until context recovery',()=>{
+ const h=fs.readFileSync('audio/hyperwave/index.html','utf8');
+ const a=fs.readFileSync('hyperwave-hardware/index.html','utf8');
+ const detect=h.match(/const ANDROID_STABLE = ([^;]+);/)[1];
+ for(const [ua,plugin,expected] of [['Android',false,true],['iPhone',false,false],['Macintosh',false,false],['Android',true,false]]){
+  assert.equal(vm.runInNewContext(detect,{PLUGIN:plugin,navigator:{userAgent:ua}}),expected);
+ }
+ assert.match(h,/antialias: !o.stable, alpha: !o.stable/);
+ assert.match(h,/renderer.shadowMap.enabled = !o.stable/);
+ assert.match(h,/reflect: PLUGIN \|\| MOBILE \|\| ANDROID_STABLE \? false/);
+ assert.match(a,/\.android-stable \.studio iframe\{transition:none\}/);
+ const code=h.slice(h.indexOf('  let paused = false, contextLost'),h.indexOf('  function step(dt, snap)'));
+ const listeners={}, draws=[], queued=[], cls=new Set(['ready']); const notice={textContent:''};
+ const doc={hidden:false,body:{classList:{add:x=>cls.add(x),remove:x=>cls.delete(x)}}};
+ const sb={ANDROID_STABLE:true,PLUGIN:false,document:doc,cv:{addEventListener:(n,f)=>listeners[n]=f},$:()=>notice,clock:{getDelta:()=>.016},requestAnimationFrame:f=>queued.push(f),step:dt=>draws.push(dt),performance:{now:()=>0}};
+ vm.createContext(sb);vm.runInContext(code+'\nthis.draw=frame;',sb);
+ for(let i=0;i<=60;i++)sb.draw(i*1000/60);
+ assert.equal(draws.length,31); assert.ok(draws.every(x=>x>0&&x<=.1));
+ let prevented=false;listeners.webglcontextlost({preventDefault(){prevented=true}});assert.ok(prevented);assert.ok(!cls.has('ready'));
+ const n=draws.length;sb.draw(1100);assert.equal(draws.length,n);
+ listeners.webglcontextrestored();assert.ok(!cls.has('ready'));sb.draw(1200);assert.equal(draws.length,n+1);assert.ok(cls.has('ready'));
+ doc.hidden=true;sb.draw(30000);assert.equal(draws.length,n+1);doc.hidden=false;sb.draw(31000);assert.ok(draws.at(-1)<.04);
+ sb.ANDROID_STABLE=false;const last=draws.length;sb.draw(31001);sb.draw(31002);assert.equal(draws.length,last+2);
+});
+test('Android resize budget avoids resetting an unchanged drawing buffer',()=>{
+ const h=fs.readFileSync('audio/hyperwave/index.html','utf8');
+ const code=h.slice(h.indexOf('  let lastWidth = 0, lastHeight = 0;'),h.indexOf('  new ResizeObserver(rs)'));
+ const dprs=[],sizes=[];const box={clientWidth:412,clientHeight:900};const cam={updateProjectionMatrix(){}};
+ const sb={box,cam,ANDROID_STABLE:true,window:{devicePixelRatio:2},S:{renderer:{setPixelRatio:x=>dprs.push(x),setSize:(w,h)=>sizes.push([w,h])}}};
+ vm.createContext(sb);vm.runInContext(code+'\nthis.resize=rs;',sb);
+ sb.resize();sb.resize();assert.equal(sizes.length,1);assert.ok(dprs[0]**2*412*900<=450001);
+ box.clientWidth=900;box.clientHeight=412;sb.resize();assert.equal(sizes.length,2);assert.equal(cam.aspect,900/412);
+ box.clientWidth=0;sb.resize();assert.equal(sizes.length,2);
+});

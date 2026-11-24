@@ -93,7 +93,7 @@ function pauseClosed(){if(!atelierPause(true))fr.removeAttribute('src');}
 d.addEventListener('visibilitychange',function(){if(dlg.open)atelierPause(d.hidden);});
 window.addEventListener('pagehide',function(){atelierPause(true);});
 window.addEventListener('pageshow',function(){if(dlg.open)atelierPause(d.hidden);});
-b.addEventListener('click',function(){if(typeof dlg.showModal!=='function'){location.href='/hyperwave-hardware/#atelier';return;}last=d.activeElement;if(!fr.getAttribute('src')){startWait();fr.src='/hyperwave-hardware/?embed=1&v=20261124audiofit';}else endWait();d.documentElement.classList.add('uf-dlg-lock');dlg.showModal();d.dispatchEvent(new CustomEvent('uf-atelier-state',{detail:true}));atelierPause(false);d.getElementById('uf-atelier-close').focus({preventScroll:true});});
+b.addEventListener('click',function(){if(typeof dlg.showModal!=='function'){location.href='/hyperwave-hardware/#atelier';return;}last=d.activeElement;if(!fr.getAttribute('src')){startWait();fr.src='/hyperwave-hardware/?embed=1&v=20261124audiofit2';}else endWait();d.documentElement.classList.add('uf-dlg-lock');dlg.showModal();d.dispatchEvent(new CustomEvent('uf-atelier-state',{detail:true}));atelierPause(false);d.getElementById('uf-atelier-close').focus({preventScroll:true});});
 d.getElementById('uf-atelier-close').addEventListener('click',function(){dlg.close();});
 dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close();});
 dlg.addEventListener('close',function(){endWait();pauseClosed();d.dispatchEvent(new CustomEvent('uf-atelier-state',{detail:false}));d.documentElement.classList.remove('uf-dlg-lock');if(last&&last.focus)last.focus();});})();

@@ -23,6 +23,10 @@ body.open .brand, body.open .keys { opacity: 0; }
 .keys { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); font: 10px/1.6 'Share Tech Mono', ui-monospace, monospace; color: var(--soft); text-align: right; pointer-events: none; opacity: .8; }
 #load { position: fixed; inset: 0; display: grid; place-items: center; font-size: 11px; letter-spacing: .3em; color: var(--soft); transition: opacity .5s; pointer-events: none; }
 body.ready #load { opacity: 0; }
+.android-stable body::before,.android-stable body::after{display:none}
+.android-stable{--ink:#e8eef8;--soft:#9aa8be}
+.android-stable #stage{isolation:isolate}
+.android-stable #gl{background:#101827}
 #load{align-content:center;gap:16px}
 #load:before{content:"";width:30px;height:30px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:hw-spin .9s linear infinite}
 body.ready #load:before{animation:none}
@@ -1557,19 +1561,19 @@ const Y2K = (() => {
 
   // ---------- Escenario ----------
   function stage(canvas, o = {}) {
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance', preserveDrawingBuffer: !!o.preserve });
-    renderer.setClearColor(0x000000, 0); renderer.outputEncoding = THREE.sRGBEncoding; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = o.exposure ?? 0.92;
-    renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap; renderer.setPixelRatio(Math.min(o.maxDpr || 2, window.devicePixelRatio || 1));
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: !o.stable, alpha: !o.stable, powerPreference: o.stable ? 'default' : 'high-performance', preserveDrawingBuffer: !!o.preserve });
+    renderer.setClearColor(o.stable ? 0x101827 : 0x000000, o.stable ? 1 : 0); renderer.outputEncoding = THREE.sRGBEncoding; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = o.exposure ?? 0.92;
+    renderer.shadowMap.enabled = !o.stable; renderer.shadowMap.type = THREE.PCFSoftShadowMap; renderer.setPixelRatio(Math.min(o.maxDpr || 2, window.devicePixelRatio || 1));
     renderer.physicallyCorrectLights = false;
     const scene = new THREE.Scene(); scene.environment = envMap(renderer, o.env || {});
     const camera = new THREE.PerspectiveCamera(o.fov || 28, 1, 0.1, 200); camera.position.set(0, 3, 9);
-    const key = new THREE.DirectionalLight(0xfff4e6, o.key ?? 1.7); key.position.set(4, 9, 6); key.castShadow = true;
+    const key = new THREE.DirectionalLight(0xfff4e6, o.key ?? 1.7); key.position.set(4, 9, 6); key.castShadow = !o.stable;
     key.shadow.mapSize.set(o.shadowSize || 2048, o.shadowSize || 2048); key.shadow.bias = -0.00025; key.shadow.normalBias = 0.012; key.shadow.radius = 4; scene.add(key, key.target);
     const rim = new THREE.DirectionalLight(0xcfe3ff, o.rim ?? 1.3); rim.position.set(-6, 4, -6); scene.add(rim);
     const fill = new THREE.HemisphereLight(0xe4eeff, 0x5a5048, o.fill ?? 0.4); scene.add(fill);
     // suelo
     const floor = new THREE.Group(); scene.add(floor);
-    const catcher = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: o.shadow ?? 0.42 })); catcher.rotation.x = -Math.PI / 2; catcher.receiveShadow = true; catcher.userData.noGround = true; catcher.userData.noReflect = true; floor.add(catcher);
+    const catcher = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: o.shadow ?? 0.42 })); catcher.rotation.x = -Math.PI / 2; catcher.receiveShadow = true; catcher.userData.noGround = true; catcher.userData.noReflect = true; catcher.visible = !o.stable; floor.add(catcher);
     const ct = contactTex(), contact = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: ct, transparent: true, depthWrite: false, opacity: 0.75, toneMapped: false }));
     contact.rotation.x = -Math.PI / 2; contact.position.y = 0.002; contact.renderOrder = -1; contact.userData.noGround = true; contact.userData.noReflect = true; floor.add(contact);
     const contact2 = contact.clone(); contact2.material = contact.material.clone(); contact2.material.opacity = 0.35; contact2.position.y = 0.0015; floor.add(contact2);
@@ -2270,12 +2274,16 @@ const HYPERWAVE = (() => {
   const PLUGIN = NATIVE.available();
   const ATELIER = new URLSearchParams(location.search).get('atelier')==='1';
   const MOBILE = !PLUGIN && (matchMedia('(pointer: coarse)').matches || (navigator.deviceMemory||8)<=4);
+  // Keep the native/iOS/desktop presentation intact. Android avoids the
+  // alpha-composited WebGL + CSS blend + shadow-map combination.
+  const ANDROID_STABLE = !PLUGIN && /Android/i.test(navigator.userAgent);
+  if (ANDROID_STABLE) document.documentElement.classList.add('android-stable');
   if (PLUGIN) document.documentElement.classList.add('plugin');
   if (ATELIER) document.documentElement.classList.add('atelier-mode');
   const _t0 = performance.now(), LOG = (m) => window.__dbg && console.log(m, Math.round(performance.now() - _t0));
   await Y2K.fonts(); LOG('fonts');
   const box = $('stage'), cv = $('gl');
-  const S = Y2K.stage(cv, { reflect: PLUGIN || MOBILE ? false : 0.18, zoom: true, exposure: 0.9, minPolar: 0.02, maxPolar: Math.PI - 0.02, maxDpr: MOBILE ? 1.1 : 1.75, shadowSize: MOBILE ? 1024 : 2048 });
+  const S = Y2K.stage(cv, { reflect: PLUGIN || MOBILE || ANDROID_STABLE ? false : 0.18, zoom: true, exposure: 0.9, minPolar: 0.02, maxPolar: Math.PI - 0.02, maxDpr: MOBILE ? 1.1 : 1.75, shadowSize: MOBILE ? 1024 : 2048, stable: ANDROID_STABLE });
   const OC = S.controls; OC.minDistance = 2.2; OC.maxDistance = 40; OC.enablePan = true; OC.screenSpacePanning = true; OC.panSpeed = 0.9; OC.zoomSpeed = 0.9; OC.rotateSpeed = 0.6;
   OC.minAzimuthAngle = -Infinity; OC.maxAzimuthAngle = Infinity;
   LOG('stage'); const H = HYPERWAVE.build(); S.scene.add(H.root); LOG('build');
@@ -2506,8 +2514,27 @@ const HYPERWAVE = (() => {
 
   // ---------- bucle ----------
   const clock = new THREE.Clock(); let prevT = 0, scrT = 0, hue = 0;
-  let paused = false;
-  function frame() { if (!paused) step(Math.min(0.1, clock.getDelta()), false); requestAnimationFrame(frame); }
+  let paused = false, contextLost = false, recovering = false, lastDraw = null;
+  const lossNotice = $('load');
+  cv.addEventListener('webglcontextlost', e => {
+    e.preventDefault(); contextLost = true; lastDraw = null;
+    document.body.classList.remove('ready'); lossNotice.textContent = 'Restoring graphics…';
+  });
+  cv.addEventListener('webglcontextrestored', () => {
+    // Three.js reinitializes its GPU resources before this listener.
+    contextLost = false; recovering = true; lastDraw = null;
+    lossNotice.textContent = 'Restoring graphics…';
+  });
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (paused || contextLost || (!PLUGIN && document.hidden)) { lastDraw = null; clock.getDelta(); return; }
+    if (!ANDROID_STABLE) { step(Math.min(0.1, clock.getDelta()), false); finishRecovery(); return; }
+    const t = Number.isFinite(now) ? now : performance.now();
+    const elapsed = lastDraw == null ? 1000/30 : t-lastDraw;
+    if (elapsed < 1000/30-1) return;
+    lastDraw = t; step(Math.min(0.1, elapsed/1000), false); finishRecovery();
+  }
+  function finishRecovery() { if (recovering && !contextLost) { recovering = false; lossNotice.textContent = 'Loading…'; document.body.classList.add('ready'); } }
   function step(dt, snap) {
     if (st.T !== st.target) { const dir = Math.sign(st.target - st.T); st.T += dir * dt * SPEED; if ((dir > 0 && st.T >= st.target) || (dir < 0 && st.T <= st.target)) st.T = st.target; }
     // sonido de servos y clacs
@@ -2528,7 +2555,7 @@ const HYPERWAVE = (() => {
     if (syn) st.demo = syn.demo;
     H.update(st.T, dt, st);
     // pantalla a ~30 fps
-    scrT += dt; if (scrT > 0.033) { scrT = 0; HYPERWAVE.drawVFD(H.vfd.canvas, { boot: st.boot, patch: st.patch, patchName: VA.PRESETS[st.patch].name, bpm: syn ? Math.round(syn.bpm) : 138, T: st.T, demo: st.demo, wave: st.waveData, spec: st.spec, waveName: VA.WAVE_NAME[st.wave], oct: st.oct, arp: st.arp, hold: st.hold, voices: st.voices, edit: st.edit }); H.vfd.tex.needsUpdate = true; }
+    scrT += dt; if (scrT > (ANDROID_STABLE ? 0.066 : 0.033)) { scrT = 0; HYPERWAVE.drawVFD(H.vfd.canvas, { boot: st.boot, patch: st.patch, patchName: VA.PRESETS[st.patch].name, bpm: syn ? Math.round(syn.bpm) : 138, T: st.T, demo: st.demo, wave: st.waveData, spec: st.spec, waveName: VA.WAVE_NAME[st.wave], oct: st.oct, arp: st.arp, hold: st.hold, voices: st.voices, edit: st.edit }); H.vfd.tex.needsUpdate = true; }
     // encuadre automático (hasta que el usuario desplaza o acerca; doble clic lo recupera)
     const i = Math.min(H.TMAX - 1, Math.floor(st.T)), u = G3.clamp(st.T - i), A = frames[i], B = frames[i + 1];
     const c = A.getCenter(new THREE.Vector3()).lerp(B.getCenter(new THREE.Vector3()), u), s = A.getSize(new THREE.Vector3()).lerp(B.getSize(new THREE.Vector3()), u);
@@ -2566,7 +2593,17 @@ const HYPERWAVE = (() => {
     S.renderer.render(S.scene, cam);
     $('hint').classList.toggle('gone', st.T > 0.1); document.body.classList.toggle('open', st.T > 0.3);
   }
-  const rs = () => { const w = box.clientWidth, h = box.clientHeight; if (!w || !h) return; S.renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
+  let lastWidth = 0, lastHeight = 0;
+  const rs = () => {
+    const w = box.clientWidth, h = box.clientHeight;
+    if (!w || !h || (w === lastWidth && h === lastHeight)) return;
+    lastWidth = w; lastHeight = h;
+    if (ANDROID_STABLE) {
+      const dpr = Math.min(1.1, window.devicePixelRatio || 1, Math.sqrt(450000 / (w*h)));
+      S.renderer.setPixelRatio(dpr);
+    }
+    S.renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix();
+  };
   new ResizeObserver(rs).observe(box); rs();
   {
     sph.set(1, Math.PI / 2 - DEF.el, DEF.az);
@@ -2594,7 +2631,7 @@ const HYPERWAVE = (() => {
     cam.position.copy(tgt).add(offset);
     OC.update();
   }
-  window.__hw = { st, H, S, go, press, view, fitView, zoomBy, pause(v) { paused = v; if (ATELIER && v && syn) { syn.allOff(); if (st.demo) { st.demo = false; syn.setDemo(false); } held.clear(); H.keys.forEach(k => { k.pressed = 0; }); } }, renderAt(T, az, el, zoom, ty) { paused = true; st.T = st.target = prevT = T; if (az != null) { const r = cam.position.distanceTo(tgt); cam.position.set(tgt.x + Math.sin(az) * Math.cos(el) * r, tgt.y + Math.sin(el) * r, tgt.z + Math.cos(az) * Math.cos(el) * r); } scrT = 1; step(0.016, true); step(0.016, true); if (zoom) { if (ty != null) { tgt.y += ty; } const off = cam.position.clone().sub(tgt).multiplyScalar(zoom); cam.position.copy(tgt).add(off); cam.lookAt(tgt); S.renderer.render(S.scene, cam); } }, get syn() { return syn; }, ensureSyn, unlockAudio, noteDown, noteUp, panBy, showSynth };
+  window.__hw = { st, H, S, go, press, view, fitView, zoomBy, pause(v) { paused = v; lastDraw = null; if (ATELIER && v && syn) { syn.allOff(); if (st.demo) { st.demo = false; syn.setDemo(false); } held.clear(); H.keys.forEach(k => { k.pressed = 0; }); } }, renderAt(T, az, el, zoom, ty) { paused = true; st.T = st.target = prevT = T; if (az != null) { const r = cam.position.distanceTo(tgt); cam.position.set(tgt.x + Math.sin(az) * Math.cos(el) * r, tgt.y + Math.sin(el) * r, tgt.z + Math.cos(az) * Math.cos(el) * r); } scrT = 1; step(0.016, true); step(0.016, true); if (zoom) { if (ty != null) { tgt.y += ty; } const off = cam.position.clone().sub(tgt).multiplyScalar(zoom); cam.position.copy(tgt).add(off); cam.lookAt(tgt); S.renderer.render(S.scene, cam); } }, get syn() { return syn; }, ensureSyn, unlockAudio, noteDown, noteUp, panBy, showSynth };
 })();
 
 </script>
