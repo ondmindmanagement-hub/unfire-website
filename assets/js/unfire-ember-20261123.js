@@ -80,7 +80,10 @@
   dlg.addEventListener('keydown',function(e){if(e.key==='ArrowRight')fill(cur+1);else if(e.key==='ArrowLeft')fill(cur-1);});
 })();
 /* Hyperwave atelier dialog */
-(function(){var d=document,dlg=d.getElementById('uf-atelier-dialog'),b=d.getElementById('uf-atelier-open');if(!dlg||!b)return;var fr=dlg.querySelector('iframe'),last=null;
+(function(){var d=document,dlg=d.getElementById('uf-atelier-dialog'),b=d.getElementById('uf-atelier-open');if(!dlg||!b)return;var fr=dlg.querySelector('iframe'),last=null,wait=d.getElementById('uf-atelier-wait'),waitTimer=0;
+function endWait(){clearTimeout(waitTimer);if(wait)wait.hidden=true;}
+fr.addEventListener('load',function(){try{if(fr.contentDocument.getElementById('studio-load'))endWait();}catch(e){}});
+function startWait(){if(!wait)return;clearTimeout(waitTimer);wait.hidden=false;wait.textContent='Opening Hyperwave 2000…';waitTimer=setTimeout(function(){wait.textContent='Still connecting. Close and reopen if needed.';},15000);}
 function atelierPause(value){
   try{var nested=fr.contentDocument&&fr.contentDocument.getElementById('studio-frame'),hw=nested&&nested.contentWindow.__hw;
     if(hw&&typeof hw.pause==='function'){hw.pause(value);return true;}
@@ -90,7 +93,7 @@ function pauseClosed(){if(!atelierPause(true))fr.removeAttribute('src');}
 d.addEventListener('visibilitychange',function(){if(dlg.open)atelierPause(d.hidden);});
 window.addEventListener('pagehide',function(){atelierPause(true);});
 window.addEventListener('pageshow',function(){if(dlg.open)atelierPause(d.hidden);});
-b.addEventListener('click',function(){if(typeof dlg.showModal!=='function'){location.href='/hyperwave-hardware/#atelier';return;}last=d.activeElement;if(!fr.getAttribute('src'))fr.src='/hyperwave-hardware/?embed=1';d.documentElement.classList.add('uf-dlg-lock');dlg.showModal();d.dispatchEvent(new CustomEvent('uf-atelier-state',{detail:true}));atelierPause(false);d.getElementById('uf-atelier-close').focus({preventScroll:true});});
+b.addEventListener('click',function(){if(typeof dlg.showModal!=='function'){location.href='/hyperwave-hardware/#atelier';return;}last=d.activeElement;if(!fr.getAttribute('src')){startWait();fr.src='/hyperwave-hardware/?embed=1&v=20261124audio';}else endWait();d.documentElement.classList.add('uf-dlg-lock');dlg.showModal();d.dispatchEvent(new CustomEvent('uf-atelier-state',{detail:true}));atelierPause(false);d.getElementById('uf-atelier-close').focus({preventScroll:true});});
 d.getElementById('uf-atelier-close').addEventListener('click',function(){dlg.close();});
 dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close();});
-dlg.addEventListener('close',function(){pauseClosed();d.dispatchEvent(new CustomEvent('uf-atelier-state',{detail:false}));d.documentElement.classList.remove('uf-dlg-lock');if(last&&last.focus)last.focus();});})();
+dlg.addEventListener('close',function(){endWait();pauseClosed();d.dispatchEvent(new CustomEvent('uf-atelier-state',{detail:false}));d.documentElement.classList.remove('uf-dlg-lock');if(last&&last.focus)last.focus();});})();
