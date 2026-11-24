@@ -158,6 +158,12 @@ def main():
             body = text_of(tgt).lower()
             for c in p.get("claims_on_target", []):
                 if c.lower() not in body: err("TRUTH", f"{pid}: claim '{c}' not found on {p['url']}")
+        # APP IDENTITY — all published apps and web tools need an owned icon.
+        icon = p.get("icon")
+        if p.get("listed") and p.get("kind") in ("app", "web-app", "extension") and not icon:
+            err("ICONS", f"{pid}: listed app has no icon")
+        if icon and (not icon.startswith("/assets/products/") or not resolve(icon)):
+            err("ICONS", f"{pid}: invalid or missing local icon {icon}")
         # CAPTURES
         v = p.get("visual")
         if v:

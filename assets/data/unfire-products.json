@@ -115,7 +115,8 @@
         "/bolt/",
         "/apps/bolt-mobile/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/apps-2026/bolt-icon-256.webp"
     },
     {
       "id": "autonomy",
@@ -149,7 +150,8 @@
         "/autonomy/",
         "/autonomy/demo/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/icons/autonomy.svg"
     },
     {
       "id": "unfire-control",
@@ -180,7 +182,8 @@
         "/apps/unfire-control/"
       ],
       "note": "macOS 1.0 was rejected in App Store Connect (2026-11-22). Keep as development preview; no store link.",
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/unfire-control-icon.webp"
     },
     {
       "id": "continuum",
@@ -253,7 +256,8 @@
       "evidence": [
         "/apps/power/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/apps-2026/power-icon-256.webp"
     },
     {
       "id": "power-web",
@@ -275,7 +279,8 @@
       "evidence": [
         "/apps/power-web/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/icons/power-web.svg"
     },
     {
       "id": "pocket-capture",
@@ -311,7 +316,8 @@
       "evidence": [
         "/apps/pocket-capture/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/apps-2026/pocket-capture-icon-256.webp"
     },
     {
       "id": "ai-token-counter",
@@ -333,7 +339,8 @@
       "evidence": [
         "/apps/ai-token-counter/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/icons/ai-token-counter.svg"
     },
     {
       "id": "app-ready",
@@ -355,7 +362,8 @@
       "evidence": [
         "/apps/app-ready/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/icons/app-ready.svg"
     },
     {
       "id": "privacy-lens",
@@ -377,7 +385,8 @@
       "evidence": [
         "/apps/privacy-lens/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/icons/privacy-lens.svg"
     },
     {
       "id": "file-prep",
@@ -399,7 +408,8 @@
       "evidence": [
         "/apps/file-prep/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/icons/file-prep.svg"
     },
     {
       "id": "banner-fit",
@@ -421,7 +431,8 @@
       "evidence": [
         "/apps/banner-fit/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/icons/banner-fit.svg"
     },
     {
       "id": "signals",
@@ -447,7 +458,8 @@
       "evidence": [
         "/signals/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/icons/signals.svg"
     },
     {
       "id": "human-intelligence",
@@ -527,7 +539,8 @@
       "routes": [
         "/archer/",
         "/apps/archer-mobile/"
-      ]
+      ],
+      "icon": "/assets/products/apps-2026/archer-icon-256.webp"
     },
     {
       "id": "archer-web",
@@ -549,7 +562,8 @@
       "evidence": [
         "/apps/archer-web/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/icons/archer-web.svg"
     },
     {
       "id": "portable-synth",
@@ -587,7 +601,8 @@
         "/portable-synth/beta/"
       ],
       "note": "The separate iOS build was rejected in App Store Connect (2026-11-22); do not imply an iOS edition.",
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/icons/portable-synth.svg"
     },
     {
       "id": "portable-synth-studio",
@@ -609,7 +624,8 @@
       "evidence": [
         "/portable-synth/studio/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/icons/portable-synth-studio.svg"
     },
     {
       "id": "sound-lab",
@@ -631,7 +647,8 @@
       "evidence": [
         "/portable-synth/play/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/icons/sound-lab.svg"
     },
     {
       "id": "hyperwave-2000",
@@ -659,7 +676,8 @@
         "/audio/hyperwave/",
         "/games/"
       ],
-      "evidence_checked_at": "2026-11-22"
+      "evidence_checked_at": "2026-11-22",
+      "icon": "/assets/products/icons/hyperwave-2000.svg"
     },
     {
       "id": "gods-lamp",

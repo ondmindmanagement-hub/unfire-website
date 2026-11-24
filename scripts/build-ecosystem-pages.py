@@ -123,11 +123,11 @@ def edition_html(ed, statuses, product=None):
 
 def row(p, fam, statuses):
     plats = sorted({PLATFORM[x] for ed in p["editions"] if ed.get("public", True) for x in ed["platforms"]})
-    v = p.get("visual")
-    if v and v.get("type") == "icon":
-        mark = f'<img src="{e(v["src"])}" alt="" width="52" height="52" loading="lazy" decoding="async">'
-    else:
-        mark = e(p["name"][0])
+    v = p.get("visual") or {}
+    icon = p.get("icon") or (v.get("src") if v.get("type") == "icon" else None)
+    if not icon:
+        raise ValueError(f"Missing product icon: {p['id']}")
+    mark = f'<img src="{e(icon)}" alt="" width="52" height="52" loading="lazy" decoding="async">'
     eds = "".join(edition_html(ed, statuses, p) for ed in p["editions"] if ed.get("public", True))
     plat_txt = f' <span class="ue-sr">Platforms: {e(", ".join(plats))}.</span>' if plats else ""
     return (f'<li class="ue-row" data-fam="{fam["id"]}">'
