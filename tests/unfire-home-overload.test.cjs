@@ -1,10 +1,14 @@
 'use strict';
 const {test}=require('node:test'), assert=require('node:assert/strict'), fs=require('node:fs'), vm=require('node:vm');
 const home=fs.readFileSync('index.html','utf8'), css=fs.readFileSync('assets/css/unfire-ember-20261123.css','utf8'), ember=fs.readFileSync('assets/js/unfire-ember-20261123.js','utf8'), hw=fs.readFileSync('assets/js/unfire-hw3d-20261123.js','utf8');
-test('hero markers positioned relative to image, not wrapping legend',()=>{
- assert.match(home,/<div class="uf-ind-image">[\s\S]*?class="uf-pin"[\s\S]*?<\/div>\s*<figcaption class="uf-legend/);
- assert.match(css,/\.uf-ind-image\{position:relative/);
- assert.match(css,/\.uf-ind-hero \.uf-legend\{grid-template-columns:1fr/);
+test('institutional hero has a clean image and no numbered markers',()=>{
+ const hero=home.slice(home.indexOf('class="hero unfire-real-hero'),home.indexOf('<section id="reach"'));
+ assert.match(hero,/<div class="uf-ind-image">[\s\S]*?<img[\s\S]*?<\/div>\s*<figcaption class="uf-hero-caption">/);
+ assert.doesNotMatch(hero,/class="uf-pin"|class="uf-legend|class="n uf-mono"/);
+ assert.match(hero,/href="\/enterprise\/"/);
+ assert.match(hero,/href="\/public-record\/"/);
+ assert.match(hero,/<b>Independent technology<\/b>/);
+ assert.match(css,/\.uf-ind-hero \.uf-ind-grid\{grid-template-columns:1fr/);
 });
 test('one active hardware video, pause on hidden and resume only visible',async()=>{
  const events={}, observers=[];
