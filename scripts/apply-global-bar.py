@@ -12,7 +12,7 @@ Usage:
 import html, importlib.util, json, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-CSS = "/assets/css/unfire-global-bar-20261122.css?v=1"
+CSS = "/assets/css/unfire-global-bar-20261122.css?v=3"
 START, END = "<!-- unfire-global-bar:start -->", "<!-- unfire-global-bar:end -->"
 CSS_TAG = f'<link rel="stylesheet" href="{CSS}" data-unfire-global-bar>'
 
@@ -28,11 +28,14 @@ ROOT_PAGES = ["privacy.html", "cookies.html", "legal.html", "terms.html", "refun
 
 spec = importlib.util.spec_from_file_location("eco", ROOT / "scripts/build-ecosystem-pages.py")
 eco = importlib.util.module_from_spec(spec); spec.loader.exec_module(eco)
-NAV = eco.NAV
+# Keep the generated navigation aligned with the *published* global bar.
+# The ecosystem metadata still exposes the older /unfire-audio/ alias, while
+# the active navbar intentionally uses /audio/.
+NAV = [(label, "/audio/" if label == "Audio" else url) for label, url in eco.NAV]
 REG = json.loads((ROOT / "assets/data/unfire-products.json").read_text(encoding="utf-8"))
 FAMILY_NAV = {"ai-systems": "/ai-systems/", "apps-tools": "/apps/", "audio": "/unfire-audio/",
               "games": "/games/", "research": "/about/", "business": "/enterprise/"}
-SECTION_PREFIX = [("/enterprise/", "/enterprise/"), ("/pilot/", "/enterprise/"), ("/freelance/", "/enterprise/"),
+SECTION_PREFIX = [("/hyperwave-hardware/", "/unfire-audio/"), ("/enterprise/", "/enterprise/"), ("/pilot/", "/enterprise/"), ("/freelance/", "/enterprise/"),
                   ("/audit/", "/enterprise/"), ("/education/", "/enterprise/"), ("/early-access/", "/enterprise/"),
                   ("/games/", "/games/"), ("/mutants/", "/games/"), ("/contact/", "/contact/"),
                   ("/support/", "/contact/"), ("/apps/", "/apps/")]
@@ -79,11 +82,14 @@ def section(path):
 def bar(path, offset=False):
     cur = section(path)
     def li(label, href):
-        ac = ' aria-current="true"' if href == cur else ""
+        active = href == cur or (href == "/audio/" and cur == "/unfire-audio/")
+        ac = ' aria-current="true"' if active else ""
         return f'<li><a href="{href}"{ac}>{html.escape(label)}</a></li>'
     items = "".join(li(l, h) for l, h in NAV)
     return (f'{START}<div id="unfire-global-bar" data-section="{cur}"{" data-offset-header" if offset else ""}><div class="ugb-in">'
-            f'<a class="ugb-brand" href="/" aria-label="Unfire home">UNFIRE</a>'
+            f'<a class="ugb-brand notranslate" href="/" aria-label="Unfire home" translate="no">'
+            f'<img class="ugb-logo" src="/assets/logo/unfire-logo-white.png" alt="" width="29" height="29">'
+            f'<span>Unfire</span></a>'
             f'<nav class="ugb-links" aria-label="Unfire">' f"<ul>{items}</ul></nav>"
             f'<details class="ugb-menu"><summary>Unfire menu</summary><nav aria-label="Unfire (compact)"><ul>{items}</ul></nav></details>'
             f"</div></div>{END}")
@@ -107,7 +113,9 @@ def allow_self_styles(h):
 def render(h, path, offset=False):
     h = allow_self_styles(h)
     h = re.sub(r"\n?" + re.escape(START) + r"[\s\S]*?" + re.escape(END) + r"\n?", "", h)
-    h = h.replace(CSS_TAG + "\n", "").replace(CSS_TAG, "")
+    # Do not duplicate obsolete stylesheet versions on the next design refresh.
+    # Match only links marked as belonging to this generated global bar.
+    h = re.sub(r'<link\b[^>]*\bdata-unfire-global-bar\b[^>]*>\n?', '', h, flags=re.I)
     lower = h.lower()
     i = lower.find("</head>")
     if i < 0:

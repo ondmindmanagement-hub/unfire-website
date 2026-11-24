@@ -19,6 +19,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Generator consistency and published-brand regression tests
+        run: python3 tests/test_global_bar_generator.py
       - name: Every public page carries the current bar
         run: python3 scripts/apply-global-bar.py --check
       - name: Install Chromium test runtime

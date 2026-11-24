@@ -36,14 +36,14 @@ const CLIPPED=new Set(['/archer/']);                      // decorative wordmark
           const links=[...bar.querySelectorAll('.ugb-links a')].map(a=>a.textContent.trim());
           return {count:bars.length,top:Math.round(bb.top),h:Math.round(bb.height),ownHit:!!(hit&&bar.contains(hit)),covering,links,
             current:bar.querySelectorAll('.ugb-links a[aria-current]').length,
-            styled:getComputedStyle(bar).backgroundColor==='rgb(9, 11, 16)',
+            styled:getComputedStyle(bar).backgroundColor==='rgb(29, 29, 31)',
             overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth};
         });
         const t=`${width} ${r}`;
         if(m.count!==1){fails.push(`${t}: ${m.count} bars`);await page.close();continue;}
         if(!m.styled)fails.push(`${t}: bar stylesheet blocked or missing`);
         if(!PADDED.has(r)&&m.top!==0)fails.push(`${t}: bar not at top (${m.top})`);
-        if(m.h<40||m.h>50)fails.push(`${t}: bar height ${m.h}`);
+        if(m.h!==55)fails.push(`${t}: bar height ${m.h}`);
         if(!m.ownHit)fails.push(`${t}: bar covered`);
         if(m.covering.length)fails.push(`${t}: positioned element over bar ${m.covering.join(',')}`);
         assert.deepEqual(m.links,LABELS,`${t}: items`);
