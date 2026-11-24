@@ -5,8 +5,8 @@
   /* 1 · Reveal on scroll */
   var rv=[].slice.call(d.querySelectorAll('[data-uf-reveal]'));
   if(!reduce&&IO){
-    d.documentElement.classList.add('uf-reveal-on');
-    var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:.08});
+    // Keep all section content visible immediately; the observer is retained for lightweight state only.
+    var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}});},{rootMargin:'0px 0px 240px 0px',threshold:.08});
     rv.forEach(function(el,i){el.style.setProperty('--uf-d',(i%3)*90+'ms');ro.observe(el);});
   }
 
