@@ -14,7 +14,7 @@ import html, json, pathlib, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 REG = ROOT / "assets/data/unfire-products.json"
-CSS = "/assets/css/unfire-ecosystem-20261122.css?v=1"
+CSS = "/assets/css/unfire-ecosystem-20261122.css?v=2"
 SITE = "https://unfire.technology"
 EMAIL = "hello@unfire.technology"
 
@@ -203,7 +203,7 @@ def page_audio(reg):
                  f'<figcaption>HYPERWAVE 2000, an interactive synthesizer you can play in the browser.</figcaption></figure>')
     body = f"""<main id="main">
 <section class="ue-hero"><div class="ue-wrap">
-<p class="ue-kicker"><a href="/apps/">Products</a> / Audio</p>
+<p class="ue-kicker ue-audio-brand"><img src="/audio/img/logo-unfire-256.webp?v=20261124butterfly" alt="" width="24" height="24" decoding="async"><span><a href="/apps/">Products</a> / Unfire Audio</span></p>
 <h1>{e(fam["tagline"])}</h1>
 <p class="ue-lede">{e(fam["summary"])} Native apps for Mac and Android, plus instruments that run directly in your browser.</p>
 <div class="ue-actions"><a class="ue-btn ue-btn--primary" href="/archer/">Explore ARCHER</a><a class="ue-btn" href="/audio/">Enter the 3D world</a></div>
