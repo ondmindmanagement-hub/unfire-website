@@ -505,6 +505,7 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
        <button type="button" data-form="0" aria-pressed="true">Closed</button>
        <button type="button" data-form="3" aria-pressed="false">Open</button>
        <button type="button" data-form="4" aria-pressed="false">Hyper</button>
+       <button type="button" id="studio-fit" aria-label="Show the whole instrument">Fit view</button>
       </div>
      </div>
      <span class="label">Digital finish study · real-time model</span>
@@ -831,7 +832,6 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
     });
     return out;
   }
-  var PAD = { 0: 1.12, 3: 1.08, 4: 1.08 }; // breathing room around the instrument per form
   var studio = document.getElementById('studio'), frameEl = document.getElementById('studio-frame');
   function loadStudio() {
     if (frameEl.getAttribute('src')) return;
@@ -847,21 +847,22 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
           s.textContent = '.brand,#hint,.keys,#restore{display:none!important}';
           d.head.appendChild(s); d.documentElement.setAttribute('data-theme', 'dark');
           hw = frameWin.__hw; mats = collect(hw.H.root);
-          try { var oc = hw.S.controls; oc.enablePan = false; oc.screenSpacePanning = false; oc.minDistance = Math.max(oc.minDistance || 0, 4.2); oc.maxDistance = 32; oc.update(); hw.view.pad = PAD[0]; hw.view.auto = true; } catch (e) {}
+          try { var oc = hw.S.controls; oc.enablePan = false; oc.screenSpacePanning = false; hw.fitView(); oc.update(); } catch (e) {}
           ['canopy', 'body', 'metal', 'pods'].forEach(apply);
           studio.classList.add('live'); statusEl.textContent = 'Live · drag to turn · pinch or scroll to zoom';
         } catch (e) { statusEl.textContent = 'The live atelier could not be opened here.'; }
       })();
     }, { once: true });
-    frameEl.src = '../audio/hyperwave/?atelier=1';
+    frameEl.src = '../audio/hyperwave/?atelier=1&fit=20261124';
   }
   document.getElementById('studio-load').addEventListener('click', loadStudio);
   if (doc.classList.contains('embed') && !matchMedia('(any-pointer:coarse), (max-width:860px)').matches) setTimeout(loadStudio, 60);
+  document.getElementById('studio-fit').addEventListener('click',function(){if(hw)hw.fitView();});
   document.querySelectorAll('[data-form]').forEach(function (b) {
     b.addEventListener('click', function () {
       document.querySelectorAll('[data-form]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
       if (!hw) { loadStudio(); return; }
-      try { var f = parseFloat(b.getAttribute('data-form')); hw.view.pad = PAD[f] || PAD[0]; hw.go(f); } catch (e) {}
+      try { var f = parseFloat(b.getAttribute('data-form')); hw.go(f); hw.fitView(); } catch (e) {}
     });
   });
 

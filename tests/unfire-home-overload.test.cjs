@@ -94,3 +94,10 @@ test('Hyperwave mobile first-entry is bounded and MIDI is opt-in only',()=>{
  assert.equal((h.match(/requestMIDIAccess\(/g)||[]).length,1);
  assert.match(h,/maxDpr: MOBILE \? 1\.1 : 1\.75/);
 });
+
+test('atelier fits portrait camera by projected bounds, never a fixed distance cap',()=>{
+ const a=fs.readFileSync('hyperwave-hardware/index.html','utf8'), h=fs.readFileSync('audio/hyperwave/index.html','utf8');
+ assert.match(h,/function atelierFitDistance/);assert.match(h,/projectedX \/ \(halfV \* Math.max\(0.15, cam.aspect\)/);
+ assert.match(h,/OC.maxDistance = atelierDistance \* 2.05/);assert.match(h,/distance > off.length\(\) \? distance/);
+ assert.doesNotMatch(a,/oc.maxDistance = 32/);assert.match(a,/id="studio-fit"/);assert.match(a,/hw.go\(f\); hw.fitView\(\)/);
+});

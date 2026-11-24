@@ -2306,7 +2306,15 @@ const HYPERWAVE = (() => {
 
   // ---------- transformación ----------
   const SPEED = 0.85;
-  function go(t) { st.target = Math.max(0, Math.min(H.TMAX, t)); if (PLUGIN && syn) syn.open(st.target); if (st.target < 2.9 && syn) { syn.allOff(); if (st.demo) { st.demo = false; syn.setDemo(false); } } }
+  function go(t) {
+    const next = Math.max(0, Math.min(H.TMAX, t));
+    // Each intentional Atelier transformation returns to an unobstructed
+    // presentation angle. A visitor never needs to rotate to find a speaker.
+    if (ATELIER && next !== st.target) { view.auto = true; view.reset = 1; }
+    st.target = next;
+    if (PLUGIN && syn) syn.open(st.target);
+    if (st.target < 2.9 && syn) { syn.allOff(); if (st.demo) { st.demo = false; syn.setDemo(false); } }
+  }
   function toggleOpen() { ensureSyn(); if (st.target >= 2.9 || st.T >= 2.9) go(0); else go(3); }
 
   // ---------- quitar / poner el sinte ----------
@@ -2419,7 +2427,22 @@ const HYPERWAVE = (() => {
   H.update(0, 0, { params: st.params });
   const cam = S.camera, tgt = OC.target; cam.position.set(2.2, 4.0, 8.6); tgt.set(0, 0.6, 0);
   let fc = new THREE.Vector3(0, 0.5, 0), fr = 3;
-  const DEF = { az: 0.32, el: 0.42 }, sph = new THREE.Spherical();
+  const DEF = { az: ATELIER ? 0.15 : 0.32, el: ATELIER ? 0.37 : 0.42 }, sph = new THREE.Spherical();
+  // Orientation-aware fit respects the changing instrument bounds, including
+  // both extended speaker pods. Shared by first paint and each animated frame.
+  function atelierFitDistance(s, dir) {
+    const halfV = Math.tan(cam.fov * Math.PI / 360);
+    const right = new THREE.Vector3(dir.z, 0, -dir.x).normalize();
+    const up = dir.clone().cross(right).normalize();
+    const hx = s.x * 0.5, hy = s.y * 0.5, hz = s.z * 0.5;
+    const projectedX = Math.abs(right.x) * hx + Math.abs(right.y) * hy + Math.abs(right.z) * hz;
+    const projectedY = Math.abs(up.x) * hx + Math.abs(up.y) * hy + Math.abs(up.z) * hz;
+    const forwardDepth = Math.abs(dir.x) * hx + Math.abs(dir.y) * hy + Math.abs(dir.z) * hz;
+    return Math.max(4.8, forwardDepth + Math.max(
+      projectedX / (halfV * Math.max(0.15, cam.aspect) * 0.78),
+      projectedY / (halfV * 0.76)
+    ) + 0.25);
+  }
 
   // ---------- bucle ----------
   const clock = new THREE.Clock(); let prevT = 0, scrT = 0, hue = 0;
@@ -2450,15 +2473,34 @@ const HYPERWAVE = (() => {
     const i = Math.min(H.TMAX - 1, Math.floor(st.T)), u = G3.clamp(st.T - i), A = frames[i], B = frames[i + 1];
     const c = A.getCenter(new THREE.Vector3()).lerp(B.getCenter(new THREE.Vector3()), u), s = A.getSize(new THREE.Vector3()).lerp(B.getSize(new THREE.Vector3()), u);
     const k = snap ? 1 : 0.08; fc.lerp(c, k); const R = Math.max(s.x * 0.5, s.y * 0.62, s.z * 0.5); fr = G3.lerp(fr, R, k);
+    // The atelier presents a transforming object: fit the entire bounding sphere in both
+    // portrait and landscape canvases, then bound user zoom relative to that actual size.
+    // The native/plugin camera and ordinary synthesizer website keep their existing behavior.
+    let atelierDistance = 0;
+    if (ATELIER) {
+      const dir = cam.position.clone().sub(tgt).normalize();
+      atelierDistance = atelierFitDistance(s, dir);
+      if (st.T !== st.target) { const envelope=A.clone().union(B); const ec=envelope.getCenter(new THREE.Vector3()); const es=envelope.getSize(new THREE.Vector3()); const shift=ec.sub(c); es.x+=2*Math.abs(shift.x); es.y+=2*Math.abs(shift.y); es.z+=2*Math.abs(shift.z); atelierDistance=Math.max(atelierDistance,atelierFitDistance(es,dir)); }
+      OC.minDistance = Math.max(2.7, atelierDistance * 0.47);
+      OC.maxDistance = atelierDistance * 2.05;
+    }
     if (view.auto) {
-      tgt.lerp(new THREE.Vector3(fc.x, fc.y - s.y * 0.05, fc.z), snap ? 1 : 0.1);
-      if (!drags.size) { const want = (fr / Math.tan((cam.fov * Math.PI) / 360)) * (cam.aspect < 1 ? 1.32 / cam.aspect : 1.08 * (view.pad || 1)) + 1.6, off = cam.position.clone().sub(tgt); off.setLength(G3.lerp(off.length(), Math.max(OC.minDistance, Math.min(OC.maxDistance, want)), snap ? 1 : 0.05)); cam.position.copy(tgt).add(off); }
+      if (ATELIER) { const shift=c.clone().sub(tgt); tgt.copy(c); cam.position.add(shift); }
+      else tgt.lerp(new THREE.Vector3(fc.x, fc.y - s.y * 0.05, fc.z), snap ? 1 : 0.1);
+      if (!drags.size) {
+        const want = ATELIER ? atelierDistance : (fr / Math.tan((cam.fov * Math.PI) / 360)) * (cam.aspect < 1 ? 1.32 / cam.aspect : 1.08 * (view.pad || 1)) + 1.6;
+        const off = cam.position.clone().sub(tgt);
+        const distance = Math.max(OC.minDistance, Math.min(OC.maxDistance, want));
+        off.setLength(ATELIER && distance > off.length() ? distance : G3.lerp(off.length(), distance, snap ? 1 : (ATELIER ? 0.20 : 0.05)));
+        cam.position.copy(tgt).add(off);
+      }
     }
     if (view.reset > 0) { // vuelve suavemente al ángulo inicial
       sph.setFromVector3(cam.position.clone().sub(tgt)); const ta = DEF.az, tp = Math.PI / 2 - DEF.el;
       let da = ta - sph.theta; da = Math.atan2(Math.sin(da), Math.cos(da)); sph.theta += da * 0.12; sph.phi += (tp - sph.phi) * 0.12;
       cam.position.copy(tgt).add(new THREE.Vector3().setFromSpherical(sph)); if (Math.abs(da) < 0.002 && Math.abs(tp - sph.phi) < 0.002) view.reset = 0;
     }
+    if (ATELIER && view.auto && !drags.size) { const off=cam.position.clone().sub(tgt); const safe=atelierFitDistance(s,off.clone().normalize()); if(off.length()<safe){OC.maxDistance=Math.max(OC.maxDistance,safe*2.05);cam.position.copy(tgt).add(off.setLength(safe));} }
     OC.update();
     _b.copy(A).union(B); S.fit(_b);
     S.renderer.render(S.scene, cam);
@@ -2466,13 +2508,33 @@ const HYPERWAVE = (() => {
   }
   const rs = () => { const w = box.clientWidth, h = box.clientHeight; if (!w || !h) return; S.renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
   new ResizeObserver(rs).observe(box); rs();
-  { sph.set(1, Math.PI / 2 - DEF.el, DEF.az); cam.position.copy(tgt).add(new THREE.Vector3().setFromSpherical(sph).multiplyScalar(9)); }
+  {
+    sph.set(1, Math.PI / 2 - DEF.el, DEF.az);
+    const initialDir = new THREE.Vector3().setFromSpherical(sph);
+    if (ATELIER) {
+      const firstBox = frames[0];
+      tgt.copy(firstBox.getCenter(new THREE.Vector3()));
+      const initialDistance=atelierFitDistance(firstBox.getSize(new THREE.Vector3()), initialDir);
+      OC.minDistance=Math.max(2.7,initialDistance*0.47); OC.maxDistance=initialDistance*2.05;
+      cam.position.copy(tgt).add(initialDir.multiplyScalar(initialDistance));
+    } else cam.position.copy(tgt).add(initialDir.multiplyScalar(9));
+    OC.update();
+  }
   document.body.classList.add('ready');
   if (PLUGIN) { ensureSyn(); syn.ready(); }
   LOG('frames'); S.renderer.compile(S.scene, cam); LOG('compile'); window.__dbg ? (paused = true, frame()) : frame(); LOG('first');
   // prueba de impacto para el plugin (las zonas vacías dejan pasar el clic a Logic)
   window.__hwHit = (x, y) => drags.size > 0 || !!pick({ clientX: x, clientY: y });
-  window.__hw = { st, H, S, go, press, view, pause(v) { paused = v; }, renderAt(T, az, el, zoom, ty) { paused = true; st.T = st.target = prevT = T; if (az != null) { const r = cam.position.distanceTo(tgt); cam.position.set(tgt.x + Math.sin(az) * Math.cos(el) * r, tgt.y + Math.sin(el) * r, tgt.z + Math.cos(az) * Math.cos(el) * r); } scrT = 1; step(0.016, true); step(0.016, true); if (zoom) { if (ty != null) { tgt.y += ty; } const off = cam.position.clone().sub(tgt).multiplyScalar(zoom); cam.position.copy(tgt).add(off); cam.lookAt(tgt); S.renderer.render(S.scene, cam); } }, get syn() { return syn; }, ensureSyn, noteDown, noteUp, panBy, showSynth };
+  function fitView() { view.auto = true; view.reset = 1; }
+  function zoomBy(factor) {
+    if (!Number.isFinite(factor) || factor <= 0) return;
+    view.auto = false; view.reset = 0;
+    const offset = cam.position.clone().sub(tgt);
+    offset.setLength(Math.max(OC.minDistance, Math.min(OC.maxDistance, offset.length() * factor)));
+    cam.position.copy(tgt).add(offset);
+    OC.update();
+  }
+  window.__hw = { st, H, S, go, press, view, fitView, zoomBy, pause(v) { paused = v; }, renderAt(T, az, el, zoom, ty) { paused = true; st.T = st.target = prevT = T; if (az != null) { const r = cam.position.distanceTo(tgt); cam.position.set(tgt.x + Math.sin(az) * Math.cos(el) * r, tgt.y + Math.sin(el) * r, tgt.z + Math.cos(az) * Math.cos(el) * r); } scrT = 1; step(0.016, true); step(0.016, true); if (zoom) { if (ty != null) { tgt.y += ty; } const off = cam.position.clone().sub(tgt).multiplyScalar(zoom); cam.position.copy(tgt).add(off); cam.lookAt(tgt); S.renderer.render(S.scene, cam); } }, get syn() { return syn; }, ensureSyn, noteDown, noteUp, panBy, showSynth };
 })();
 
 </script>
