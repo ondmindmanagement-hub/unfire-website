@@ -136,11 +136,18 @@ test('gold entry shows a spinner immediately, prevents duplicate loads, times ou
  now=30001;queue.shift()();assert.equal(progress.hidden,true);assert.equal(button.disabled,false);assert.equal(error.hidden,false);assert.equal(src,'');assert.equal(attrs['aria-busy'],undefined);
  sandbox.loadStudio();assert.equal(writes,2);assert.equal(progress.hidden,false);assert.equal(error.hidden,true);
  const doc={body:{classList:{contains:()=>true}},createElement:()=>({}),head:{appendChild(){}},documentElement:{setAttribute(){}}};
- frame.contentWindow={document:doc,__hw:{H:{root:{}},S:{controls:{update(){}}},view:{}}};
+ frame.contentWindow={document:doc,__hw:{H:{root:{}},S:{controls:{update(){}}},view:{},fitView(){}}};
  queue.shift()();assert.equal(progress.hidden,true);assert.equal(classes.has('live'),true);assert.equal(attrs['aria-busy'],undefined);
  sandbox.loadStudio();assert.equal(writes,2);
  assert.match(a,/\.studio-progress\[hidden\]/);
  assert.match(a,/prefers-reduced-motion:reduce\)\{\.studio-progress:before\{animation:none/);
  assert.match(ember,/startWait\(\);fr\.src=/);
  assert.match(home,/id="uf-atelier-wait"[^>]*role="status" hidden/);
+});
+
+test('atelier fits portrait camera by projected bounds, never a fixed distance cap',()=>{
+ const a=fs.readFileSync('hyperwave-hardware/index.html','utf8'), h=fs.readFileSync('audio/hyperwave/index.html','utf8');
+ assert.match(h,/function atelierFitDistance/);assert.match(h,/projectedX \/ \(halfV \* Math.max\(0.15, cam.aspect\)/);
+ assert.match(h,/OC.maxDistance = atelierDistance \* 2.05/);assert.match(h,/distance > off.length\(\) \? distance/);
+ assert.doesNotMatch(a,/oc.maxDistance = 32/);assert.match(a,/id="studio-fit"/);assert.match(a,/hw.go\(f\); hw.fitView\(\)/);
 });
