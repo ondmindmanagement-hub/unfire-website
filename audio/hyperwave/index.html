@@ -2436,7 +2436,7 @@ const HYPERWAVE = (() => {
     const k = snap ? 1 : 0.08; fc.lerp(c, k); const R = Math.max(s.x * 0.5, s.y * 0.62, s.z * 0.5); fr = G3.lerp(fr, R, k);
     if (view.auto) {
       tgt.lerp(new THREE.Vector3(fc.x, fc.y - s.y * 0.05, fc.z), snap ? 1 : 0.1);
-      if (!drags.size) { const want = (fr / Math.tan((cam.fov * Math.PI) / 360)) * (cam.aspect < 1 ? 1.32 / cam.aspect : 1.08) + 1.6, off = cam.position.clone().sub(tgt); off.setLength(G3.lerp(off.length(), Math.max(OC.minDistance, Math.min(OC.maxDistance, want)), snap ? 1 : 0.05)); cam.position.copy(tgt).add(off); }
+      if (!drags.size) { const want = (fr / Math.tan((cam.fov * Math.PI) / 360)) * (cam.aspect < 1 ? 1.32 / cam.aspect : 1.08 * (view.pad || 1)) + 1.6, off = cam.position.clone().sub(tgt); off.setLength(G3.lerp(off.length(), Math.max(OC.minDistance, Math.min(OC.maxDistance, want)), snap ? 1 : 0.05)); cam.position.copy(tgt).add(off); }
     }
     if (view.reset > 0) { // vuelve suavemente al ángulo inicial
       sph.setFromVector3(cam.position.clone().sub(tgt)); const ta = DEF.az, tp = Math.PI / 2 - DEF.el;

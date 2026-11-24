@@ -4086,7 +4086,7 @@ main .uf-hero-title {
 #games .unfire-games-home-visual span{position:absolute;bottom:0;left:0;right:0;padding:26px 16px 14px;font-size:12px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.85))}
 @media(max-width:760px){#games .unfire-games-home-layout{grid-template-columns:1fr}#games .unfire-games-home-visual{aspect-ratio:16/9}}
 </style>
-<link rel="stylesheet" href="/assets/css/unfire-ember-20261123.css?v=17">
+<link rel="stylesheet" href="/assets/css/unfire-ember-20261123.css?v=18">
 </head>
 <body>
 <div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
@@ -4162,10 +4162,12 @@ main .uf-hero-title {
 </div>
 </div>
 <figure class="uf-ind-figure">
+<div class="uf-ind-image">
 <img src="/assets/hardware/2026-11/family-1600.webp?v=3" srcset="/assets/hardware/2026-11/family-1000.webp?v=3 1000w, /assets/hardware/2026-11/family-1600.webp?v=3 1600w, /assets/hardware/2026-11/family-2400.webp?v=3 2400w" sizes="(max-width:1020px) 100vw, 60vw" width="2400" height="1350" alt="Concept renders of three Unfire hardware devices: a cream pocket synthesizer, a graphite God's Lamp instrument and a round Unfire Control camera puck." fetchpriority="high"/>
 <span class="uf-pin" style="left:2.4%;top:52%" aria-hidden="true">01</span>
 <span class="uf-pin" style="left:84.5%;top:31%" aria-hidden="true">02</span>
 <span class="uf-pin" style="left:32.5%;top:73%" aria-hidden="true">03</span>
+</div>
 <figcaption class="uf-legend uf-mono"><span><b>01</b> <span translate="no">Synth Pocket</span></span><span><b>02</b> <span translate="no">God’s Lamp Pocket</span></span><span><b>03</b> <span translate="no">Control Puck</span></span><span class="uf-legend-note">Hardware concepts · 3D renders</span></figcaption>
 </figure>
 </div>
@@ -5052,57 +5054,28 @@ We coordinate initial enquiries by email. No call or in-person meeting is requir
 <script id="unfire-brand-lock-script">
 (function(){
 
-const replacements = [
-  [/\bDesenfo\b/g, "Unfire"],
-  [/\bUnfire\b/g, "Unfire"]
-];
-
-function repair(root){
-    if(!root) return;
-
-    const walker = document.createTreeWalker(
-        root,
-        NodeFilter.SHOW_TEXT
-    );
-
-    const nodes = [];
-
-    while(walker.nextNode()){
-        nodes.push(walker.currentNode);
-    }
-
-    nodes.forEach(node => {
-        const parent = node.parentElement;
-
-        if(!parent) return;
-
-        if(
-            parent.closest("script,style,textarea,code,pre")
-        ) return;
-
-        let value = node.nodeValue;
-
-        replacements.forEach(([from,to])=>{
-            value = value.replace(from,to);
-        });
-
-        if(value !== node.nodeValue){
-            node.nodeValue = value;
-        }
-    });
+function repairText(node){
+    const parent=node.parentElement;
+    if(!parent||parent.closest("script,style,textarea,code,pre"))return;
+    const value=node.nodeValue;
+    if(!value||!value.includes("Desenfo"))return;
+    const repaired=value.replace(/\bDesenfo\b/g,"Unfire");
+    if(repaired!==value)node.nodeValue=repaired;
 }
-
+function repair(root){
+    if(root.nodeType===Node.TEXT_NODE){repairText(root);return;}
+    if(root.nodeType!==Node.ELEMENT_NODE)return;
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+    while(walker.nextNode())repairText(walker.currentNode);
+}
 repair(document.body);
-
-const observer = new MutationObserver(function(){
-    repair(document.body);
+const observer=new MutationObserver(function(records){
+    for(const record of records){
+        if(record.type==="characterData")repairText(record.target);
+        else for(const node of record.addedNodes)repair(node);
+    }
 });
-
-observer.observe(document.documentElement,{
-    subtree:true,
-    childList:true,
-    characterData:true
-});
+observer.observe(document.documentElement,{subtree:true,childList:true,characterData:true});
 
 })();
 </script>
@@ -6161,7 +6134,7 @@ console.log(
 <div class="uf-dlg-nav"><button type="button" class="uf-btn line uf-dlg-prev" aria-label="Previous device">← Previous</button><button type="button" class="uf-btn solid uf-dlg-next" aria-label="Next device">Next →</button></div>
 </div></div></dialog>
 <dialog id="uf-atelier-dialog" class="uf-adlg" aria-label="Hyperwave 2000 atelier"><div class="uf-adlg-bar"><span class="uf-mono"><span translate="no">Hyperwave 2000</span> · Atelier</span><button type="button" class="uf-dlg-close" id="uf-atelier-close" aria-label="Close the atelier">Close ✕</button></div><iframe title="Hyperwave 2000 atelier: interactive finish studies" loading="lazy" allow="autoplay; midi"></iframe></dialog>
-<script src="/assets/js/unfire-hw3d-20261123.js?v=2" defer></script>
-<script src="/assets/js/unfire-ember-20261123.js?v=6" defer></script>
+<script src="/assets/js/unfire-hw3d-20261123.js?v=3" defer></script>
+<script src="/assets/js/unfire-ember-20261123.js?v=7" defer></script>
 </body>
 </html>
