@@ -56,7 +56,7 @@
   el.innerHTML = `<div class="bg"></div><div class="stars"></div>
     <div class="st" data-s="studio"><div class="studio" translate="no"><img class="ug" src="../../unfire-dragon-transparent.png" alt=""><span class="ugt">UNFIRE GAMES</span><small>PRESENTS</small></div></div>
     <div class="st" data-s="logos"><div class="logos">
-      <figure><img src="../img/logo-unfire-256.webp" alt="UNFIRE AUDIO"><figcaption translate="no">UNFIRE AUDIO</figcaption></figure>
+      <figure><img src="../img/logo-unfire-256.webp?v=20261124butterfly" alt="UNFIRE AUDIO"><figcaption translate="no">UNFIRE AUDIO</figcaption></figure>
       <div class="sep"></div>
       <figure><img src="../img/emblem-butterfly.webp" alt=""><figcaption>&nbsp;</figcaption></figure></div></div>
     <div class="st" data-s="title"><div class="title" translate="no"><h1>Y2K<br>ROBOTS</h1><p>ISLAND ADVENTURE</p></div><div class="shine"></div></div>
