@@ -73,3 +73,24 @@ test('hardware performance budget and mobile expansion guard',()=>{
  assert.match(hw,/webglcontextlost/);
  assert.match(hw,/fallback\(true\)/);
 });
+
+test('lightweight hero bridge is present and content never waits on scroll reveal',()=>{
+ assert.match(home,/class="uf-hero-bridge" href="#hardware"/);
+ assert.match(home,/Software\. Systems\. Objects\./);
+ assert.match(home,/id="ufHomeInstantPaint"/);
+ assert.doesNotMatch(ember,/classList\.add\('uf-reveal-on'\)/);
+ assert.match(css,/main \[data-uf-reveal\].*opacity:1;transform:none;transition:none/);
+ const below=home.slice(home.indexOf('<section id="reach"'),home.indexOf('</main>'));
+ for(const tag of below.match(/<img\b[^>]*>/g)||[]){assert.match(tag,/loading="lazy"/);assert.match(tag,/decoding="async"/);}
+});
+test('Hyperwave mobile first-entry is bounded and MIDI is opt-in only',()=>{
+ const atelier=fs.readFileSync('hyperwave-hardware/index.html','utf8'), h=fs.readFileSync('audio/hyperwave/index.html','utf8');
+ assert.match(css,/#uf-atelier-dialog\{box-sizing:border-box;inset:0;width:100%;max-width:100%;height:100dvh/);
+ assert.match(atelier,/\.studio-poster\{[^}]*overflow-y:auto/);
+ assert.match(atelier,/!matchMedia\('\(any-pointer:coarse\), \(max-width:860px\)'\)\.matches\) setTimeout\(loadStudio, 60\)/);
+ assert.match(atelier,/allow="autoplay; midi 'none'"/);
+ assert.match(h,/if\(!PLUGIN&&!ATELIER&&navigator\.requestMIDIAccess\)/);
+ assert.match(h,/midiButton\.addEventListener\('click',async\(\)=>\{[\s\S]*?await navigator\.requestMIDIAccess\(\{sysex:false\}\)/);
+ assert.equal((h.match(/requestMIDIAccess\(/g)||[]).length,1);
+ assert.match(h,/maxDpr: MOBILE \? 1\.1 : 1\.75/);
+});

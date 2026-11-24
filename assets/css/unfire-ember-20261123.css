@@ -536,3 +536,22 @@ html body .uf-ind-hero h1.uf-hero-title{font-size:clamp(48px,5.5vw,84px)!importa
  #hardware [data-hw="godslamp"] .uf-hw-media video.on{animation:ufLampArrival 4s cubic-bezier(.23,.7,.27,1) both;}
  @keyframes ufLampArrival{0%{transform:perspective(800px) rotateZ(-12deg) rotateY(18deg) scale(.84)}45%{transform:perspective(800px) rotateZ(5deg) rotateY(-7deg) scale(.93)}100%{transform:none}}
 }
+
+/* Lightweight editorial bridge; no images, video, JS or remote fonts. */
+.uf-ind-hero .uf-hero-caption{display:grid;gap:18px;padding-top:13px;}
+.uf-hero-caption-line{display:flex;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;}
+.uf-hero-bridge{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:clamp(10px,2vw,20px);padding:clamp(13px,2.1vw,24px);border:1px solid var(--uf-rule);border-radius:10px;background:rgba(255,255,255,.17);color:var(--uf-ink)!important;text-decoration:none;min-width:0;}
+.uf-bridge-mark{color:#655f56;display:grid;place-items:center;}.uf-bridge-mark svg{width:clamp(42px,5.5vw,80px);height:auto;display:block;}
+.uf-bridge-copy{display:grid;gap:5px;min-width:0;}.uf-bridge-copy small{font:10px/1.4 var(--uf-mono);text-transform:uppercase;letter-spacing:.09em;color:#706c65;}.uf-bridge-copy strong{font-size:clamp(14px,1.45vw,20px);letter-spacing:-.025em;line-height:1.25;font-weight:650;overflow-wrap:anywhere;}.uf-hero-bridge .uf-bridge-arrow{font-size:18px;color:#a92d03;}.uf-hero-bridge:hover{border-color:#706c65;background:rgba(255,255,255,.28);}.uf-hero-bridge:focus-visible{outline:2px solid #a92d03;outline-offset:3px;}
+@media(max-width:640px){.uf-ind-hero .uf-hero-caption{gap:12px;}.uf-hero-bridge{padding:14px;gap:12px;}.uf-bridge-copy small{font-size:9px;}}
+/* Content is visible before any observer fires: scrolling never waits on an entrance fade. */
+html.uf-reveal-on main [data-uf-reveal],html.uf-reveal-on main [data-uf-reveal].in{opacity:1;transform:none;transition:none;}
+/* Compact atelier entry uses the actual dynamic viewport, including browser chrome. */
+@media(max-width:860px),(any-pointer:coarse){
+ #uf-atelier-dialog{box-sizing:border-box;inset:0;width:100%;max-width:100%;height:100dvh;max-height:100dvh;margin:0;border-radius:0;}
+ #uf-atelier-dialog .uf-adlg-bar{padding:max(8px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) 8px max(12px,env(safe-area-inset-left));flex-wrap:nowrap;}
+ #uf-atelier-dialog .uf-adlg-bar .uf-mono{min-width:0;overflow-wrap:anywhere;font-size:10px;line-height:1.4;}
+ #uf-atelier-dialog iframe{flex:1 1 0;min-height:0;min-width:0;display:block;}
+ #uf-atelier-dialog::backdrop{backdrop-filter:none;-webkit-backdrop-filter:none;}
+ #uf-atelier-dialog[open]{animation:none;}
+}
