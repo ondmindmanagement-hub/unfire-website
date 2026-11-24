@@ -168,3 +168,5 @@ body[data-fam]{--fam:var(--c)}
 @media (forced-colors:active){
   .ue-status::before,.ue-spectrum a::before,.ue-family-intro h2::before{forced-color-adjust:none}
 }
+
+.ue-audio-brand{display:flex;align-items:center;gap:8px}.ue-audio-brand img{width:24px;height:24px;object-fit:contain;flex:none}

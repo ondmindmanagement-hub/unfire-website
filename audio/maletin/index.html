@@ -14,7 +14,7 @@
 })();</script>
 <link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261024combinedqa1">
 <script defer src="/assets/js/unfire-adaptive-loading.js?v=20261029en2"></script>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261110en2" as="script"></head><body>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261110en2" as="script"><link rel="icon" href="/audio/img/emblem-butterfly.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/audio/img/audio-touch-icon.png"></head><body>
 <div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
   <div class="uf-load-card">
     <span class="uf-load-emblem" aria-hidden="true"></span>
@@ -2791,7 +2791,7 @@ const GEAR4 = (() => {
     }
     function emblem(r = 0.15) {
       const g = new THREE.Group(), tier = [0, 7, 13, 16, 18].includes(A) ? 2 : [1, 4, 5, 9, 10, 12, 14, 17].includes(A) ? 1 : 0; let map;
-      if (tier === 1) { const em = Y2K.cnv(256, 256); G3.drawEmblem(em.getContext('2d'), 256, accCss); map = Y2K.toTex(em, { color: true }); } else { map = new THREE.TextureLoader().load((window.UNFIRE_IMG || '../img/') + (tier === 2 ? 'dragon.webp' : 'logo-unfire-256.webp')); map.encoding = THREE.sRGBEncoding; }
+      if (tier === 1) { const em = Y2K.cnv(256, 256); G3.drawEmblem(em.getContext('2d'), 256, accCss); map = Y2K.toTex(em, { color: true }); } else { map = new THREE.TextureLoader().load((window.UNFIRE_IMG || '../img/') + (tier === 2 ? 'dragon.webp' : 'logo-unfire-256.webp?v=20261124butterfly')); map.encoding = THREE.sRGBEncoding; }
       if (tier === 2) put(g, mesh(new THREE.CylinderGeometry(r, r, 0.028, 48).rotateX(H2), M.blackGloss), 0, 0, 0.01);
       put(g, mesh(new THREE.CylinderGeometry(r, r, 0.03, 48).rotateX(H2), new THREE.MeshBasicMaterial({ map, transparent: tier === 2, toneMapped: false })), 0, 0, 0.02);
       put(g, mesh(new THREE.TorusGeometry(r + 0.01, 0.02, 12, 48), M.chrome));
@@ -5089,7 +5089,7 @@ window.STORY_INIT = function (H) {
 }
 </style>
 <!-- The intro and in-game settings honor the selected language. -->
-<script src="game-intro.js?v=20261029english1"></script>
+<script src="game-intro.js?v=20261124butterfly"></script>
 <script src="language-onboarding.js?v=20261104settings3"></script>
 <script src="hud-layout-guard.js?v=20261123hud1"></script>
 </body></html>
