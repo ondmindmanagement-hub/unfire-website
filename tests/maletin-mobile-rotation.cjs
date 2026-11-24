@@ -70,7 +70,22 @@ const {chromium}=require(process.env.UNFIRE_PLAYWRIGHT_PATH||'playwright');
     [768,1024],[1024,768],   // portrait and landscape tablet
     [390,844]                // return to phone without losing progress
   ])await check(w,h);
-  await page.evaluate(()=>{const b=document.getElementById('onlB');if(!b)throw Error('Online button missing');b.click();});
+  const onlineAction=await page.evaluate(()=>{
+    const toggle=document.getElementById('ufActionsToggle');
+    const group=document.getElementById('ufActionItems');
+    const online=document.getElementById('onlB');
+    if(!toggle||!group||!online)throw Error('Online compact Actions menu missing');
+    if(!group.hidden)toggle.click();
+    const collapsed=group.hidden&&getComputedStyle(group).display==='none';
+    toggle.click();
+    const opened=!group.hidden&&toggle.getAttribute('aria-expanded')==='true';
+    const r=online.getBoundingClientRect();
+    const bounds=r.width>=55&&r.height>=36&&r.x>=0&&r.right<=innerWidth+2&&r.y>=0&&r.bottom<=innerHeight+2;
+    if(opened&&bounds)online.click();
+    return {collapsed,opened,bounds,closedAfterClick:group.hidden};
+  });
+  assert(onlineAction.collapsed&&onlineAction.opened&&onlineAction.bounds&&onlineAction.closedAfterClick,
+    'Online action must be visible and reachable from the compact menu: '+JSON.stringify(onlineAction));
   await page.waitForTimeout(200);
   const modal=await page.evaluate(()=>{const o=document.getElementById('onl');const b=o.querySelector('.b').getBoundingClientRect();return {display:getComputedStyle(o).display,width:b.width,height:b.height,viewport:innerHeight};});
   assert.equal(modal.display,'flex','online dialog hidden');
