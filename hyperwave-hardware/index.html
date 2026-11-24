@@ -164,12 +164,22 @@ dialog.film-dialog::backdrop{background:rgba(3,4,6,.88)}
 .studio{position:relative;min-height:600px;background:radial-gradient(70% 70% at 50% 45%,#1b2638,#07080a 75%);overflow:hidden}
 .studio iframe{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 1s var(--ease)}
 .studio.live iframe{opacity:1;visibility:visible;pointer-events:auto}
+.android-stable .studio iframe{transition:none}
+.android-stable .studio .forms{backdrop-filter:none;-webkit-backdrop-filter:none;background:#11151b}
 .studio-poster{z-index:2}.studio-bar{z-index:3}.studio{scroll-margin-top:72px}
 .studio-poster{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;padding:30px;background:center/cover no-repeat}
 .studio-poster:before{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 50%,rgba(7,8,10,.25),rgba(7,8,10,.82))}
 .studio-poster>*{position:relative}
 .studio-poster p{font-size:12.5px;color:#d8d2c6;max-width:44ch}
 .studio.live .studio-poster{display:none}
+.studio:not(.live) .studio-bar{visibility:hidden}
+.studio-progress{display:flex;align-items:center;justify-content:center;gap:12px;color:#f4e2b6;font:600 13px system-ui,sans-serif;max-width:100%;text-align:center}
+.studio-progress[hidden]{display:none!important}
+.studio-progress:before{content:"";width:26px;height:26px;flex:0 0 26px;border:2px solid #d2b67b55;border-top-color:#e6ce91;border-radius:50%;animation:atelier-spin .85s linear infinite}
+@keyframes atelier-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.studio-progress:before{animation:none}}
+.studio-poster .cta[hidden],.studio-poster [hidden]{display:none!important}
+.studio-poster .cta:disabled{opacity:.65;cursor:wait}
 .studio-bar{position:absolute;left:16px;right:16px;top:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;pointer-events:none}
 .studio-bar>*{pointer-events:auto}
 .forms{display:inline-flex;border:1px solid var(--line2);background:rgba(7,8,10,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
@@ -328,7 +338,7 @@ footer a:hover{color:var(--gold2)}
  body,section{background:#fff!important;color:#111}
 }
 </style>
-<script>if(/[?&]embed=1/.test(location.search))document.documentElement.classList.add('embed');</script>
+<script>if(/[?&]embed=1/.test(location.search))document.documentElement.classList.add('embed');if(/Android/i.test(navigator.userAgent))document.documentElement.classList.add('android-stable');</script>
 <style>
 html.embed #unfire-global-bar,html.embed .site-header,html.embed main>section:not(#atelier),html.embed footer,html.embed #atelier .atelier-head{display:none!important}
 html.embed body{background:#0b0b0c!important}
@@ -497,9 +507,11 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
      <div class="studio-poster" style="background-image:url(media/open-front.webp)">
       <span class="eyebrow">Live 3D atelier</span>
       <button class="cta cta-gold" type="button" id="studio-load">Enter the live atelier</button>
+      <div id="studio-progress" class="studio-progress" role="status" aria-live="polite" hidden>Loading Hyperwave 2000…</div>
+      <p id="studio-error" role="alert" hidden></p>
       <p>Loads the real-time digital instrument (about 1.2 MB). Drag to turn it; use the form buttons to open and close it. Sound plays only if you touch its controls.</p>
      </div>
-     <iframe id="studio-frame" title="Interactive Hyperwave 2000 digital instrument" loading="lazy" allow="autoplay; midi 'none'" referrerpolicy="same-origin"></iframe>
+     <iframe id="studio-frame" title="Interactive Hyperwave 2000 digital instrument" loading="eager" allow="autoplay; midi 'none'" referrerpolicy="same-origin"></iframe>
      <div class="studio-bar">
       <div class="forms" role="group" aria-label="Instrument form">
        <button type="button" data-form="0" aria-pressed="true">Closed</button>
@@ -833,15 +845,29 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
     return out;
   }
   var studio = document.getElementById('studio'), frameEl = document.getElementById('studio-frame');
+  var loadButton = document.getElementById('studio-load'), progress = document.getElementById('studio-progress'), error = document.getElementById('studio-error');
+  var loadGeneration = 0;
   function loadStudio() {
-    if (frameEl.getAttribute('src')) return;
+    if (hw || loadButton.disabled) return;
+    var generation = ++loadGeneration, deadline = Date.now() + 30000;
+    loadButton.disabled = true; loadButton.hidden = true; progress.hidden = false; error.hidden = true;
+    studio.setAttribute('aria-busy','true');
     statusEl.textContent = 'Loading the digital instrument…';
-    frameEl.addEventListener('load', function () {
-      frameWin = frameEl.contentWindow; var tries = 0;
-      (function wait() {
+    function failed() {
+      if (generation !== loadGeneration) return;
+      ++loadGeneration; frameEl.removeAttribute('src'); hw = null; mats = null;
+      studio.removeAttribute('aria-busy'); progress.hidden = true; loadButton.hidden = false; loadButton.disabled = false;
+      loadButton.textContent = 'Retry live atelier'; error.textContent = 'The live instrument could not load. Please try again.'; error.hidden = false;
+      statusEl.textContent = 'Loading failed. Retry available.';
+    }
+    frameEl.src = '../audio/hyperwave/?atelier=1&v=20261124audiofit2';
+    // Yield for the loading indicator, then poll readiness with a bounded deadline.
+    setTimeout(function wait() {
+        if (generation !== loadGeneration) return;
+        frameWin = frameEl.contentWindow;
         var ready = false;
-        try { ready = frameWin.__hw && frameWin.document.body.classList.contains('ready'); } catch (e) { statusEl.textContent = 'The live atelier could not be opened here.'; return; }
-        if (!ready) { if (++tries < 300) return setTimeout(wait, 100); statusEl.textContent = 'The live instrument is taking longer than expected.'; return; }
+        try { ready = frameWin && frameWin.__hw && frameWin.document.body.classList.contains('ready'); } catch (e) {}
+        if (!ready) { if (Date.now() < deadline) return setTimeout(wait, 150); failed(); return; }
         try {
           var d = frameWin.document, s = d.createElement('style');
           s.textContent = '.brand,#hint,.keys,#restore{display:none!important}';
@@ -849,11 +875,10 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
           hw = frameWin.__hw; mats = collect(hw.H.root);
           try { var oc = hw.S.controls; oc.enablePan = false; oc.screenSpacePanning = false; hw.fitView(); oc.update(); } catch (e) {}
           ['canopy', 'body', 'metal', 'pods'].forEach(apply);
-          studio.classList.add('live'); statusEl.textContent = 'Live · drag to turn · pinch or scroll to zoom';
-        } catch (e) { statusEl.textContent = 'The live atelier could not be opened here.'; }
-      })();
-    }, { once: true });
-    frameEl.src = '../audio/hyperwave/?atelier=1&fit=20261124';
+          studio.classList.add('live'); studio.removeAttribute('aria-busy'); progress.hidden = true;
+          loadButton.disabled = false; statusEl.textContent = 'Live · drag to turn · pinch or scroll to zoom';
+        } catch (e) { failed(); }
+    }, 150);
   }
   document.getElementById('studio-load').addEventListener('click', loadStudio);
   if (doc.classList.contains('embed') && !matchMedia('(any-pointer:coarse), (max-width:860px)').matches) setTimeout(loadStudio, 60);
@@ -862,7 +887,7 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
     b.addEventListener('click', function () {
       document.querySelectorAll('[data-form]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
       if (!hw) { loadStudio(); return; }
-      try { var f = parseFloat(b.getAttribute('data-form')); hw.go(f); hw.fitView(); } catch (e) {}
+      try { var f = parseFloat(b.getAttribute('data-form')); if (hw.unlockAudio) hw.unlockAudio(); hw.go(f); hw.fitView(); } catch (e) {}
     });
   });
 

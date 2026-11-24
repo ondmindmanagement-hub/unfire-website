@@ -79,6 +79,27 @@ const viewports = [
           await image.evaluate(el => el.decode());
           assert.equal(await image.evaluate(el => el.naturalWidth > 0 && el.naturalHeight > 0), true, 'Failed product image');
         }
+        // Translation stress test: preserve protected names and test longer Spanish labels.
+        const hardware = await page.evaluate(() => {
+          const root=document.querySelector('#hardware');
+          root.querySelector('h2').textContent='Software que puedes sostener.';
+          for(const tag of root.querySelectorAll('.uf-hw-top .tag')) tag.textContent='CONCEPTO DE DISEÑO · EXPLORAR DETALLES +';
+          for(const li of root.querySelectorAll('.uf-spec li:last-child>span:last-child')) li.textContent='Representación CAD, todavía no existe un prototipo físico';
+          const within=e=>{const r=e.getBoundingClientRect();return r.left>=-2&&r.right<=innerWidth+2&&e.scrollWidth<=e.clientWidth+2;};
+          const cards=[...root.querySelectorAll('.uf-hw-item')];
+          return {count:cards.length,allWithin:[...root.querySelectorAll('.uf-hw-item,.uf-hw-top,.uf-spec li,h3,.uf-hw-head')].every(within),overflow:document.documentElement.scrollWidth>innerWidth+2,columns:getComputedStyle(root.querySelector('.uf-hw-grid')).gridTemplateColumns.split(' ').length};
+        });
+        assert.equal(hardware.count,3,'Preserve all hardware concepts');
+        assert.equal(hardware.allWithin,true,'Translated hardware overflow at '+viewport.width);
+        assert.equal(hardware.overflow,false,'Translated homepage document overflow at '+viewport.width);
+        assert.equal(hardware.columns,viewport.width<=1020?1:3,'Hardware responsive columns');
+        const seamless=await page.evaluate(()=>[...document.querySelectorAll('#hardware .uf-hw-media')].map(el=>{
+          const styles=getComputedStyle(el),media=[...el.querySelectorAll('img,video')].map(m=>{const cs=getComputedStyle(m);return {mask:cs.maskImage||cs.webkitMaskImage,composite:cs.maskComposite||cs.webkitMaskComposite,fit:cs.objectFit};});
+          return {radius:styles.borderRadius,shadow:styles.boxShadow,media};
+        }));
+        assert.equal(seamless.length,3);
+        for(const card of seamless){assert.equal(card.radius,'0px');assert.equal(card.shadow,'none');assert.equal(card.media.length,2);for(const m of card.media){assert.match(m.mask,/linear-gradient/);assert.equal(m.fit,'contain');}}
+
         console.log('PASS gallery viewport ' + viewport.width + 'x' + viewport.height + ': 4 categories, 9 cards, no overflow, real images');
       } finally { await page.close(); }
     }

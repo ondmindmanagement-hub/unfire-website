@@ -95,9 +95,94 @@ test('Hyperwave mobile first-entry is bounded and MIDI is opt-in only',()=>{
  assert.match(h,/maxDpr: MOBILE \? 1\.1 : 1\.75/);
 });
 
+// Regression: verify the actual inline audio gate and loader logic, without creating WebGL.
+test('Hyperwave inline scripts parse, iOS audio resumes on real touch completion and after interruption',async()=>{
+ const h=fs.readFileSync('audio/hyperwave/index.html','utf8');
+ const a=fs.readFileSync('hyperwave-hardware/index.html','utf8');
+ for(const page of [h,a]) for(const m of page.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)){
+  if(!/\bsrc\s*=|\btype\s*=/.test(m[1]) && m[2].trim()) new vm.Script(m[2]);
+ }
+ const fn=h.slice(h.indexOf('  function resume() {'),h.indexOf('  const onInit ='));
+ let calls=0;
+ const c={state:'suspended',resume(){calls++;this.state='running';return Promise.resolve()}};
+ const r=vm.runInNewContext(fn+'\nresume',{init:()=>c});
+ assert.equal(await r(),true);assert.equal(calls,1);
+ c.state='interrupted';assert.equal(await r(),true);assert.equal(calls,2);
+ assert.equal(await r(),true);assert.equal(calls,2);
+ c.state='closed';assert.equal(await r(),false);assert.equal(calls,2);
+ c.state='suspended';c.resume=()=>Promise.reject(new Error('blocked'));
+ assert.equal(await r(),false);
+ assert.match(h,/box\.addEventListener\('pointerup', recover, true\)/);
+ assert.match(h,/box\.addEventListener\('touchend', recover/);
+ assert.match(h,/soundButton\.addEventListener\('click', unlockAudio\)/);
+ assert.match(h,/observedAudio\.addEventListener\('statechange', soundState\)/);
+ assert.match(h,/pendingOpen\.delete\(e\.pointerId\).*e\.type === 'pointerup'/);
+ assert.match(a,/if \(hw\.unlockAudio\) hw\.unlockAudio\(\); hw\.go\(f\)/);
+ assert.match(h,/\.plugin #hw-audio-enable\{display:none!important\}/);
+});
+test('gold entry shows a spinner immediately, prevents duplicate loads, times out and retries',()=>{
+ const a=fs.readFileSync('hyperwave-hardware/index.html','utf8');
+ const code=a.slice(a.indexOf('  var loadButton ='),a.indexOf("  document.getElementById('studio-load').addEventListener"));
+ let now=0,queue=[],writes=0,src='';
+ const el=()=>({hidden:false,disabled:false,textContent:''});
+ const button=el(),progress=el(),error=el(),status=el(),attrs={},classes=new Set();
+ progress.hidden=error.hidden=true;
+ const frame={contentWindow:{},set src(v){writes++;src=v},get src(){return src},removeAttribute(){src=''}};
+ const studio={setAttribute(k,v){attrs[k]=v},removeAttribute(k){delete attrs[k]},classList:{add(k){classes.add(k)}}};
+ const sandbox={hw:null,mats:null,frameWin:null,frameEl:frame,studio,statusEl:status,document:{getElementById(id){return {'studio-load':button,'studio-progress':progress,'studio-error':error}[id]}},Date:{now:()=>now},setTimeout(fn){queue.push(fn)},collect:()=>({}),apply:()=>{},PAD:{0:1.12}};
+ vm.createContext(sandbox);vm.runInContext(code,sandbox);
+ sandbox.loadStudio();assert.equal(progress.hidden,false);assert.equal(button.hidden,true);assert.equal(attrs['aria-busy'],'true');assert.equal(writes,1);
+ sandbox.loadStudio();assert.equal(writes,1);
+ now=30001;queue.shift()();assert.equal(progress.hidden,true);assert.equal(button.disabled,false);assert.equal(error.hidden,false);assert.equal(src,'');assert.equal(attrs['aria-busy'],undefined);
+ sandbox.loadStudio();assert.equal(writes,2);assert.equal(progress.hidden,false);assert.equal(error.hidden,true);
+ const doc={body:{classList:{contains:()=>true}},createElement:()=>({}),head:{appendChild(){}},documentElement:{setAttribute(){}}};
+ frame.contentWindow={document:doc,__hw:{H:{root:{}},S:{controls:{update(){}}},view:{},fitView(){}}};
+ queue.shift()();assert.equal(progress.hidden,true);assert.equal(classes.has('live'),true);assert.equal(attrs['aria-busy'],undefined);
+ sandbox.loadStudio();assert.equal(writes,2);
+ assert.match(a,/\.studio-progress\[hidden\]/);
+ assert.match(a,/prefers-reduced-motion:reduce\)\{\.studio-progress:before\{animation:none/);
+ assert.match(ember,/startWait\(\);fr\.src=/);
+ assert.match(home,/id="uf-atelier-wait"[^>]*role="status" hidden/);
+});
+
 test('atelier fits portrait camera by projected bounds, never a fixed distance cap',()=>{
  const a=fs.readFileSync('hyperwave-hardware/index.html','utf8'), h=fs.readFileSync('audio/hyperwave/index.html','utf8');
  assert.match(h,/function atelierFitDistance/);assert.match(h,/projectedX \/ \(halfV \* Math.max\(0.15, cam.aspect\)/);
  assert.match(h,/OC.maxDistance = atelierDistance \* 2.05/);assert.match(h,/distance > off.length\(\) \? distance/);
  assert.doesNotMatch(a,/oc.maxDistance = 32/);assert.match(a,/id="studio-fit"/);assert.match(a,/hw.go\(f\); hw.fitView\(\)/);
+});
+
+test('Android graphics policy has bounded frame pacing and pauses until context recovery',()=>{
+ const h=fs.readFileSync('audio/hyperwave/index.html','utf8');
+ const a=fs.readFileSync('hyperwave-hardware/index.html','utf8');
+ const detect=h.match(/const ANDROID_STABLE = ([^;]+);/)[1];
+ for(const [ua,plugin,expected] of [['Android',false,true],['iPhone',false,false],['Macintosh',false,false],['Android',true,false]]){
+  assert.equal(vm.runInNewContext(detect,{PLUGIN:plugin,navigator:{userAgent:ua}}),expected);
+ }
+ assert.match(h,/antialias: !o.stable, alpha: !o.stable/);
+ assert.match(h,/renderer.shadowMap.enabled = !o.stable/);
+ assert.match(h,/reflect: PLUGIN \|\| MOBILE \|\| ANDROID_STABLE \? false/);
+ assert.match(a,/\.android-stable \.studio iframe\{transition:none\}/);
+ const code=h.slice(h.indexOf('  let paused = false, contextLost'),h.indexOf('  function step(dt, snap)'));
+ const listeners={}, draws=[], queued=[], cls=new Set(['ready']); const notice={textContent:''};
+ const doc={hidden:false,body:{classList:{add:x=>cls.add(x),remove:x=>cls.delete(x)}}};
+ const sb={ANDROID_STABLE:true,PLUGIN:false,document:doc,cv:{addEventListener:(n,f)=>listeners[n]=f},$:()=>notice,clock:{getDelta:()=>.016},requestAnimationFrame:f=>queued.push(f),step:dt=>draws.push(dt),performance:{now:()=>0}};
+ vm.createContext(sb);vm.runInContext(code+'\nthis.draw=frame;',sb);
+ for(let i=0;i<=60;i++)sb.draw(i*1000/60);
+ assert.equal(draws.length,31); assert.ok(draws.every(x=>x>0&&x<=.1));
+ let prevented=false;listeners.webglcontextlost({preventDefault(){prevented=true}});assert.ok(prevented);assert.ok(!cls.has('ready'));
+ const n=draws.length;sb.draw(1100);assert.equal(draws.length,n);
+ listeners.webglcontextrestored();assert.ok(!cls.has('ready'));sb.draw(1200);assert.equal(draws.length,n+1);assert.ok(cls.has('ready'));
+ doc.hidden=true;sb.draw(30000);assert.equal(draws.length,n+1);doc.hidden=false;sb.draw(31000);assert.ok(draws.at(-1)<.04);
+ sb.ANDROID_STABLE=false;const last=draws.length;sb.draw(31001);sb.draw(31002);assert.equal(draws.length,last+2);
+});
+test('Android resize budget avoids resetting an unchanged drawing buffer',()=>{
+ const h=fs.readFileSync('audio/hyperwave/index.html','utf8');
+ const code=h.slice(h.indexOf('  let lastWidth = 0, lastHeight = 0;'),h.indexOf('  new ResizeObserver(rs)'));
+ const dprs=[],sizes=[];const box={clientWidth:412,clientHeight:900};const cam={updateProjectionMatrix(){}};
+ const sb={box,cam,ANDROID_STABLE:true,window:{devicePixelRatio:2},S:{renderer:{setPixelRatio:x=>dprs.push(x),setSize:(w,h)=>sizes.push([w,h])}}};
+ vm.createContext(sb);vm.runInContext(code+'\nthis.resize=rs;',sb);
+ sb.resize();sb.resize();assert.equal(sizes.length,1);assert.ok(dprs[0]**2*412*900<=450001);
+ box.clientWidth=900;box.clientHeight=412;sb.resize();assert.equal(sizes.length,2);assert.equal(cam.aspect,900/412);
+ box.clientWidth=0;sb.resize();assert.equal(sizes.length,2);
 });
