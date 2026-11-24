@@ -1,0 +1,32 @@
+name: Maletin soundbank integrity
+
+on:
+  pull_request:
+    paths:
+      - 'audio/maletin/samples/**'
+      - 'audio/maletin/index.html'
+      - 'audio/maletin/hyperwave-harmony.js'
+      - 'audio/maletin/game-engine-v50.js'
+      - 'scripts/audit-maletin-audio.py'
+      - 'tests/maletin-audio-assets.test.cjs'
+      - '.github/workflows/maletin-soundbank-integrity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  soundbank:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify source sample manifests and output safety chain
+        run: node tests/maletin-audio-assets.test.cjs
+      - name: Install FFmpeg decoder on CI runner
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: Decode entire original real-sample bank and flag true-peak hot spots
+        run: python3 scripts/audit-maletin-audio.py --decode --all --json /tmp/maletin-audio-decode-report.json
