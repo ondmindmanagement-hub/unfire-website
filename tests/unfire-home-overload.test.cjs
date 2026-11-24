@@ -10,7 +10,7 @@ test('institutional hero has a clean image and no numbered markers',()=>{
  assert.match(hero,/<b>Independent technology<\/b>/);
  assert.match(css,/\.uf-ind-hero \.uf-ind-grid\{grid-template-columns:1fr/);
 });
-test('one active hardware video, pause on hidden and resume only visible',async()=>{
+test('one active video on mobile, pause on hidden and resume only visible',async()=>{
  const events={}, observers=[];
  const makeVideo=()=>({dataset:{},paused:true,getAttribute:()=> 'none',setAttribute(){},pause(){this.paused=true},play(){this.paused=false;return Promise.resolve()},classList:{add(){}}});
  const videos=[makeVideo(),makeVideo(),makeVideo()];
@@ -25,6 +25,26 @@ test('one active hardware video, pause on hidden and resume only visible',async(
  doc.hidden=false;events.visibilitychange();assert.equal(videos.filter(v=>!v.paused).length,1);
  events['uf-atelier-state']({detail:true});assert.equal(videos.filter(v=>!v.paused).length,0);
  events['uf-atelier-state']({detail:false});assert.equal(videos.filter(v=>!v.paused).length,1);
+});
+test('desktop plays all three visible hardware cards, not unrelated videos',async()=>{
+ const events={},observers=[];let wide=true;
+ const v=(hw=true)=>({dataset:{},paused:true,closest:()=>hw?{}:null,getAttribute:()=> 'none',setAttribute(){},pause(){this.paused=true},play(){this.paused=false;return Promise.resolve()},classList:{add(){}}});
+ const videos=[v(),v(),v(),v(false)];
+ const doc={hidden:false,querySelectorAll:s=>s.includes('video')?videos:[],getElementById:()=>null,documentElement:{classList:{add(){}}},addEventListener(n,f){events[n]=f}};
+ const IO=function(f){this.observe=()=>{};observers.push(f)};
+ const media={get matches(){return wide},addEventListener(n,f){events.resize=f}};
+ vm.runInNewContext(ember,{document:doc,window:{navigator:{hardwareConcurrency:8},IntersectionObserver:IO,matchMedia:s=>s.includes('min-width')?media:{matches:false},addEventListener(){}},IntersectionObserver:IO});
+ const entry=(target,ratio)=>({target,isIntersecting:ratio>0,intersectionRatio:ratio});
+ observers[1](videos.map(x=>entry(x,.8)));await Promise.resolve();
+ assert.deepEqual(videos.map(x=>x.paused),[false,false,false,true]);
+ observers[1]([entry(videos[0],0)]);assert.equal(videos[0].paused,true);
+ wide=false;events.resize();assert.equal(videos.filter(x=>!x.paused).length,1);
+ doc.hidden=true;events.visibilitychange();assert.equal(videos.filter(x=>!x.paused).length,0);
+});
+test('hero visual aligns low on desktop, hardware stages contain complete frames',()=>{
+ assert.match(css,/\.uf-ind-hero \.uf-ind-grid\{align-items:end/);
+ assert.match(css,/object-fit:contain;object-position:50% 50%/);
+ assert.match(css,/ufLampArrival/);
 });
 test('graphics idle and async close guards',()=>{
  assert.match(hw,/if\(quiet>=3\)\{stop\(\);return;\}/);
