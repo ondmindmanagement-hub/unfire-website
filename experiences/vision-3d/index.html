@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050a0e">
+<meta name="description" content="Unfire. An independent technology and R&D initiative. Explore our vision for connected, human-centered technology.">
+<title>Unfire · The integrated perspective</title>
+<style>
+:root{color-scheme:dark;--mint:#b8f2d9;--mint2:#89d7b9;--ink:#f5f9f7;--secondary:#b5c5c1;--quiet:#79958e;--line:rgba(193,230,216,.14)}
+*{box-sizing:border-box}html{background:#04080b}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;background:#04080b;color:var(--ink);-webkit-font-smoothing:antialiased}
+button,a{font:inherit}button{cursor:pointer}a{color:inherit}
+#uf10{position:relative;isolation:isolate;width:100%;height:min(820px,97svh);min-height:610px;overflow:hidden;border:1px solid rgba(157,220,195,.17);background:radial-gradient(ellipse 73% 76% at 83% 46%,#102b2c 0%,#09191e 35%,#050e12 66%,#04080b 100%);color:var(--ink)}
+#uf10 .canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+#uf10 .grain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.25;background:linear-gradient(180deg,rgba(255,255,255,.008),transparent 39%),radial-gradient(ellipse 70% 80% at 26% 53%,rgba(1,5,8,.7) 0%,rgba(1,5,8,.24) 72%,transparent 100%)}
+#uf10 .horizon{position:absolute;inset:0;z-index:0;opacity:.29;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 94px,rgba(152,210,198,.036) 95px,transparent 96px)}
+#uf10 .top{position:absolute;z-index:9;top:0;left:0;right:0;min-height:76px;padding:0 clamp(25px,5.9%,87px);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(4,11,14,.88),rgba(4,11,14,.26))}
+#uf10 .brand{display:flex;gap:15px;align-items:center;font-size:15px;font-weight:710;letter-spacing:.235em;text-decoration:none;line-height:1}
+#uf10 .brand svg{width:24px;height:24px;flex:0 0 auto}
+#uf10 .topright{display:flex;align-items:center;gap:19px;color:#a3b5ac;font:10px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.145em;text-transform:uppercase}
+#uf10 .topright .light{width:5px;height:5px;border-radius:100%;background:#b9ebd3;box-shadow:0 0 12px rgba(170,247,205,.6)}
+#uf10 .scroll{position:absolute;inset:0;z-index:4;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none;scroll-behavior:smooth}
+#uf10 .scroll::-webkit-scrollbar{display:none}
+#uf10 .chapter{height:100%;min-height:100%;scroll-snap-align:start;display:flex;align-items:center;padding:101px clamp(25px,6.1%,93px) 112px;position:relative}
+#uf10 .copy{position:relative;width:min(49%,590px);z-index:3;text-shadow:0 2px 38px rgba(1,6,9,.78)}
+#uf10 .eyebrow{display:flex;align-items:center;gap:14px;margin:0 0 27px;color:#b7e3d0;font:10px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.17em;text-transform:uppercase}
+#uf10 .eyebrow:before{content:"";height:1px;width:26px;background:#96ddc1;opacity:.95}
+#uf10 h1,#uf10 h2{font-size:clamp(49px,5.1vw,73px);font-weight:565;line-height:1.055;letter-spacing:-.069em;margin:0 0 27px;max-width:740px}
+#uf10 h1 em,#uf10 h2 em{font-style:normal;color:var(--mint);display:block}
+#uf10 .desc{color:var(--secondary);font-size:clamp(14px,1.3vw,18px);line-height:1.68;max-width:390px;margin:0;font-weight:375}
+#uf10 .action{display:inline-flex;gap:28px;align-items:center;justify-content:space-between;padding:12px 0 11px;margin-top:32px;color:#c6f4dc;border:0;border-bottom:1px solid rgba(179,236,206,.73);background:transparent;text-decoration:none;font:12px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.025em;text-shadow:none}
+#uf10 .action span{font-size:17px;line-height:1}
+#uf10 .action:hover{color:#fff;border-color:#fff}
+#uf10 .proof{margin-top:38px;border-top:1px solid rgba(162,210,190,.15);padding-top:13px;max-width:385px;display:flex;justify-content:space-between;gap:14px;color:#809a91;font:9px/1.6 ui-monospace,Menlo,monospace;letter-spacing:.085em;text-transform:uppercase}
+#uf10 .proof b{font-weight:460;color:#b2d8c6}
+#uf10 .upperright{position:absolute;top:101px;right:clamp(25px,5.9%,85px);z-index:3;pointer-events:none;text-align:right;font:9px/1.7 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#74918c}
+#uf10 .upperright strong{display:block;color:#c0ddcf;font-weight:500}
+#uf10 .figure-caption{position:absolute;bottom:127px;right:clamp(25px,5.9%,85px);z-index:3;text-align:right;pointer-events:none;color:#8aada2;font:9px/1.8 ui-monospace,Menlo,monospace;letter-spacing:.13em;text-transform:uppercase}
+#uf10 .figure-caption strong{display:block;color:#c1e2d2;font-size:10px;font-weight:450}
+#uf10 .bottom{position:absolute;bottom:0;left:0;right:0;z-index:9;height:86px;padding:0 clamp(25px,5.9%,87px);border-top:1px solid var(--line);background:rgba(3,10,13,.72);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;gap:25px}
+#uf10 .steps{display:flex;gap:11px;align-items:center}
+#uf10 .step-btn{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:48px;padding:9px 0 3px;border:0;background:none;color:#698780;font:10px/1.3 ui-monospace,Menlo,monospace;letter-spacing:.06em;text-align:left}
+#uf10 .step-btn:before{content:"";display:block;width:35px;height:2px;border-radius:5px;background:rgba(175,228,203,.28)}
+#uf10 .step-btn[aria-current="step"]{color:#d7f6e5}#uf10 .step-btn[aria-current="step"]:before{background:var(--mint);box-shadow:0 0 12px rgba(174,241,209,.45)}
+#uf10 .footcenter{font:10px/1.6 ui-monospace,Menlo,monospace;color:#70968a;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+#uf10 .ctrl{display:flex;gap:18px;align-items:center}
+#uf10 .count{font:10px ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#9bb6aa;white-space:nowrap}
+#uf10 .motion{padding:10px 14px;border:1px solid rgba(177,232,206,.31);border-radius:30px;color:#c5e8d6;background:rgba(13,29,27,.45);font:10px ui-monospace,Menlo,monospace;white-space:nowrap}
+#uf10 .caption{position:absolute;z-index:4;left:clamp(25px,6.1%,93px);bottom:111px;color:#668579;font:9px ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
+#uf10 button:focus-visible,#uf10 a:focus-visible,#uf10 .scroll:focus-visible{outline:2px solid #bdffe0;outline-offset:4px}
+@media(max-width:850px){#uf10 .footcenter{display:none}#uf10 .topright{font-size:9px}#uf10 h1,#uf10 h2{font-size:clamp(43px,5.8vw,65px)}}
+@media(max-width:680px){#uf10{height:690px;min-height:620px;background:radial-gradient(ellipse 83% 57% at 51% 31%,#13362f 0%,#08191e 58%,#04080b 100%)}#uf10 .grain{background:linear-gradient(0deg,rgba(3,7,10,.98) 0%,rgba(3,7,10,.78) 26%,rgba(3,7,10,.24) 59%,transparent 81%)}#uf10 .top{min-height:65px;padding:0 23px}#uf10 .topright{font-size:8px;max-width:180px;text-align:right;line-height:1.4;gap:9px}#uf10 .brand{font-size:13px;gap:10px}#uf10 .brand svg{width:20px;height:20px}#uf10 .chapter{align-items:flex-end;padding:78px 25px 122px}#uf10 .copy{width:100%;max-width:480px}#uf10 .eyebrow{margin-bottom:16px;font-size:9px}#uf10 h1,#uf10 h2{font-size:clamp(43px,10vw,61px);margin-bottom:17px;line-height:1.045}#uf10 .desc{font-size:13px;line-height:1.55;max-width:410px}#uf10 .action{margin-top:16px;font-size:11px}#uf10 .proof{margin-top:20px;padding-top:10px;font-size:8px}#uf10 .upperright{top:81px;right:22px;font-size:8px}#uf10 .figure-caption{bottom:auto;top:195px;right:22px;font-size:8px;opacity:.7}#uf10 .bottom{height:76px;padding:0 21px}#uf10 .steps{gap:5px}#uf10 .step-btn{min-width:27px;font-size:9px}#uf10 .step-btn:before{width:23px}#uf10 .ctrl{gap:9px}#uf10 .motion{padding:9px 10px;font-size:9px}#uf10 .count{font-size:9px}#uf10 .caption{display:none}}
+@media(max-width:380px){#uf10 h1,#uf10 h2{font-size:41px}#uf10 .topright{display:none}#uf10 .proof{max-width:320px}}
+@media(prefers-reduced-motion:reduce){#uf10 .scroll{scroll-behavior:auto}}
+
+/* Product-aware visual layers. Pure HTML and CSS, no network assets. */
+#uf10 .story-overlay{position:absolute;right:clamp(25px,6%,88px);top:52%;transform:translateY(-50%);z-index:5;width:min(32%,360px);pointer-events:none}
+#uf10 .story-card{position:absolute;right:0;top:50%;width:100%;transform:translate(10px,-47%);opacity:0;visibility:hidden;transition:opacity .38s ease,transform .38s ease,visibility .38s}
+#uf10[data-act="1"] .story-card[data-visual="1"],#uf10[data-act="2"] .story-card[data-visual="2"],#uf10[data-act="3"] .story-card[data-visual="3"]{opacity:1;visibility:visible;transform:translate(0,-50%);pointer-events:auto}
+#uf10 .glass{border:1px solid rgba(198,243,220,.22);background:linear-gradient(145deg,rgba(14,37,39,.91),rgba(5,15,21,.9));box-shadow:0 20px 100px rgba(1,5,7,.33),inset 0 1px rgba(255,255,255,.045);backdrop-filter:blur(18px);border-radius:10px;padding:24px 25px;color:#d9eee4}
+#uf10 .glass-top{display:flex;justify-content:space-between;gap:8px;align-items:center;padding-bottom:21px;border-bottom:1px solid rgba(178,226,206,.13);font:10px ui-monospace,Menlo,monospace;letter-spacing:.16em;color:#d5f6e5}
+#uf10 .glass-top small{color:#94b9ab;letter-spacing:.07em;font-size:9px}
+#uf10 .glass-copy{font-size:13px;line-height:1.55;color:#a7c5b8;margin:18px 0 4px}
+#uf10 .flow-nodes{display:grid;grid-template-columns:1fr 22px 1fr;gap:5px;align-items:center;margin:22px 0 15px}
+#uf10 .flow-nodes span{display:flex;min-height:61px;align-items:center;justify-content:center;border:1px solid rgba(164,228,201,.19);background:rgba(141,236,192,.045);font:10px ui-monospace,Menlo,monospace;letter-spacing:.09em;color:#cef5e2}
+#uf10 .flow-nodes b{font-size:17px;font-weight:300;text-align:center;color:#96dcc1}
+#uf10 .glass-foot{display:flex;align-items:center;gap:8px;margin-top:16px;color:#819f93;font:9px ui-monospace,Menlo,monospace;letter-spacing:.05em}
+#uf10 .glass-foot:before{content:"";width:6px;height:6px;border:1px solid #83cbb0;border-radius:50%}
+#uf10 .review-task{margin:22px 0 10px;padding:16px;border:1px solid rgba(171,222,205,.16);background:rgba(10,25,27,.75)}
+#uf10 .review-task small{display:block;color:#799e8f;font:9px ui-monospace,Menlo,monospace;letter-spacing:.11em;text-transform:uppercase;margin-bottom:8px}
+#uf10 .review-task strong{font-weight:470;font-size:14px}
+#uf10 .review-state{margin-top:15px;padding-top:12px;border-top:1px solid rgba(198,245,218,.12);font:11px ui-monospace,Menlo,monospace;color:#c5e9d8}
+#uf10 .review-state b{font-weight:550;color:#9ce8c3}
+#uf10 .review-actions{display:flex;gap:9px;margin-top:17px}
+#uf10 .review-actions button{border:1px solid rgba(194,243,215,.38);background:rgba(134,229,188,.1);padding:11px 12px;font:10px ui-monospace,Menlo,monospace;color:#defbea;white-space:nowrap}
+#uf10 .review-actions button.stop{border-color:rgba(255,225,199,.33);color:#f0d1bc;background:rgba(150,100,72,.08)}
+#uf10 .evidence-link{display:flex;flex-direction:column;gap:5px;padding:15px 0;text-decoration:none;border-bottom:1px solid rgba(167,217,199,.15);color:#ddf4e6}
+#uf10 .evidence-link:last-of-type{border-bottom:0}
+#uf10 .evidence-link strong{font-size:13px;font-weight:550}
+#uf10 .evidence-link small{font:10px ui-monospace,Menlo,monospace;color:#8da99f}
+#uf10 .evidence-link:hover strong{text-decoration:underline;text-underline-offset:4px}
+@media(max-width:920px){#uf10 .story-overlay{width:30%}#uf10 .glass{padding:18px}#uf10 .glass-top{font-size:9px}#uf10 .review-actions{flex-wrap:wrap}}
+@media(max-width:680px){#uf10 .story-overlay{display:none}}
+@media(prefers-reduced-motion:reduce){#uf10 .story-card{transition:none}}
+</style>
+</head>
+<body>
+<div id="uf10" data-act="0">
+<canvas class="canvas" aria-hidden="true"></canvas><div class="horizon" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
+<header class="top">
+  <a href="https://unfire.technology" class="brand" aria-label="Unfire homepage"><svg viewBox="0 0 32 32" fill="none" stroke="#b8efd5" stroke-width="1.4" aria-hidden="true"><path d="M16 2.5 29.5 16 16 29.5 2.5 16Z"/><path d="M16 9 23 16 16 23 9 16Z" opacity=".65"/></svg>UNFIRE</a>
+  <div class="topright"><span class="light" aria-hidden="true"></span>Independent technology &amp; R&amp;D initiative</div>
+</header>
+
+<aside class="story-overlay" aria-label="Optional visual concept and research context">
+  <div class="story-card glass" data-visual="1">
+    <div class="glass-top">UNFIRE BRIDGE <small>RESEARCH</small></div>
+    <p class="glass-copy">Optional connection between existing environments.</p>
+    <div class="flow-nodes"><span>EXISTING<br>TOOLS</span><b>⇄</b><span>PERMISSIONED<br>BRIDGE</span></div>
+    <p class="glass-foot">Concept visual, not a live integration</p>
+  </div>
+  <div class="story-card glass" data-visual="2">
+    <div class="glass-top">HUMAN OVERSIGHT <small>SYNTHETIC</small></div>
+    <div class="review-task"><small>Fictional task · No external action</small><strong>Request access to a workspace</strong><div class="review-state">Decision: <b id="uf10-decision">Review required</b></div></div>
+    <div class="review-actions"><button id="uf10-review" type="button">Review example</button><button class="stop" id="uf10-stop" type="button">STOP</button></div>
+    <p class="glass-foot">Local illustration only. Not a product demo</p>
+  </div>
+  <div class="story-card glass" data-visual="3">
+    <div class="glass-top">PUBLIC RESEARCH <small>PROTOTYPES</small></div>
+    <a class="evidence-link" href="https://github.com/ondmindmanagement-hub/apertus-gate" target="_blank" rel="noopener"><strong>Apertus Gate ↗</strong><small>AI action review · Local prototype</small></a>
+    <a class="evidence-link" href="https://github.com/ondmindmanagement-hub/bolt-agent-control-plane" target="_blank" rel="noopener"><strong>BOLT Agent Control Plane ↗</strong><small>Governed agent policy · Mock research</small></a>
+    <a class="evidence-link" href="https://github.com/ondmindmanagement-hub/unfire-energy-lens" target="_blank" rel="noopener"><strong>Energy Lens ↗</strong><small>Synthetic scenario demonstrator</small></a>
+    <p class="glass-foot">Linked public repositories, not certifications</p>
+  </div>
+</aside>
+<div class="upperright"><strong>Interactive perspective</strong>Explore the idea, not just the page</div>
+<div class="figure-caption" aria-hidden="true"><strong id="uf10-figtitle">FIG. 01 · ORIGIN</strong><span id="uf10-figdesc">PROCEDURAL SYSTEM STUDY</span></div>
+<main class="scroll" tabindex="0" aria-label="Five chapters of the Unfire vision">
+  <section class="chapter" aria-label="Chapter 1 Vision"><div class="copy"><div class="eyebrow">01 / The ambition</div><h1>One vision.<em>Infinite possibility.</em></h1><p class="desc">Unfire explores a more natural relationship between people and technology. Less friction. Clearer control. Greater possibility.</p><button type="button" class="action" data-next="1">Explore the vision <span aria-hidden="true">↓</span></button><div class="proof"><span>Independent technology initiative</span><b>Catalonia · 2026</b></div></div></section>
+  <section class="chapter" aria-label="Chapter 2 Connection"><div class="copy"><div class="eyebrow">02 / The connection</div><h2>Different tools.<em>One direction.</em></h2><p class="desc">We are exploring how devices, applications and institutions can connect through an optional bridge, without losing their independence.</p><button type="button" class="action" data-next="2">Continue <span aria-hidden="true">↓</span></button><div class="proof"><span>Unfire Bridge</span><b>Research direction</b></div></div></section>
+  <section class="chapter" aria-label="Chapter 3 Control"><div class="copy"><div class="eyebrow">03 / The principle</div><h2>More capability.<em>Human control.</em></h2><p class="desc">For intelligent workflows, meaningful control starts before an action is executed. Permission, oversight and STOP are essential.</p><button type="button" class="action" data-next="3">Continue <span aria-hidden="true">↓</span></button><div class="proof"><span>Control · Bolt</span><b>Research and prototypes</b></div></div></section>
+  <section class="chapter" aria-label="Chapter 4 Creation"><div class="copy"><div class="eyebrow">04 / The evidence</div><h2>Beyond ideas.<em>Visible work.</em></h2><p class="desc">Explore selected public research prototypes. Each has a defined scope, a real codebase and clear limits. Evidence before promises.</p><button type="button" class="action" data-next="4">Continue <span aria-hidden="true">↓</span></button><div class="proof"><span>Open research examples</span><b>Prototype evidence</b></div></div></section>
+  <section class="chapter" aria-label="Chapter 5 Collaboration"><div class="copy"><div class="eyebrow">05 / The invitation</div><h2>Tomorrow needs<em>people who build.</em></h2><p class="desc">Unfire is an independent technology and R&amp;D initiative. We welcome thoughtful technical exploration, collaboration and new challenges.</p><a class="action" href="mailto:hello@unfire.technology?subject=Unfire%20Collaboration">Contact Unfire <span aria-hidden="true">↗</span></a><div class="proof"><span>Catalonia, Spain</span><b>Independent · 2026</b></div></div></section>
+</main>
+<div class="caption">An independent technology &amp; R&amp;D initiative · Vision prototype</div>
+<footer class="bottom"><nav class="steps" aria-label="Presentation chapters"><button class="step-btn" type="button" data-chapter="0" aria-label="Vision" aria-current="step">01</button><button class="step-btn" type="button" data-chapter="1" aria-label="Connection">02</button><button class="step-btn" type="button" data-chapter="2" aria-label="Human control">03</button><button class="step-btn" type="button" data-chapter="3" aria-label="Creation">04</button><button class="step-btn" type="button" data-chapter="4" aria-label="Collaboration">05</button></nav><span class="footcenter">A continuous perspective</span><div class="ctrl"><span class="count">01 / 05</span><button class="motion" type="button" aria-pressed="true">Motion on</button></div></footer>
+</div>
+<script>
+(()=>{
+  const root=document.getElementById('uf10');if(!root||root.dataset.ready)return;root.dataset.ready='1';
+  const cv=root.querySelector('canvas'),ctx=cv.getContext('2d',{alpha:true});if(!ctx)return;
+  const scroller=root.querySelector('.scroll'),nav=[...root.querySelectorAll('[data-chapter]')],counter=root.querySelector('.count'),motion=root.querySelector('.motion'),fig=root.querySelector('#uf10-figtitle'),figdesc=root.querySelector('#uf10-figdesc');
+  const reduce=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches||false;
+  let moving=!reduce,progress=0,smooth=0,mx=0,my=0,ex=0,ey=0,w=1,h=1,visible=true,pending=false,rafCount=0;
+  const N=840,golden=2.399963229728653,T=Math.PI*2;
+  const hash=n=>{const v=Math.sin(n*116.13+52.9)*43758.5453;return v-Math.floor(v)};
+  const cloud=Array.from({length:N},(_,i)=>{const y=1-2*(i+.5)/N;const a=i*golden;const r=Math.sqrt(1-y*y);return {x:Math.cos(a)*r,y,z:Math.sin(a)*r,size:.65+hash(i+44)*1.32,alpha:.28+hash(i+498)*.7,hue:i%17};});
+  const captions=[['FIG. 01 · ORIGIN','PROCEDURAL SYSTEM STUDY'],['FIG. 02 · FLOW','OPTIONAL INTERCONNECTION'],['FIG. 03 · TRUST','HUMAN-LED INTELLIGENCE'],['FIG. 04 · EVIDENCE','PUBLIC RESEARCH PROTOTYPES'],['FIG. 05 · HORIZON','A CONTINUOUS VISION']];
+  function resize(){const b=root.getBoundingClientRect();if(b.width<50||b.height<50)return;w=b.width;h=b.height;const d=Math.min(window.devicePixelRatio||1,1.3);cv.width=Math.ceil(w*d);cv.height=Math.ceil(h*d);ctx.setTransform(d,0,0,d,0,0);schedule();}
+  if(window.ResizeObserver)new ResizeObserver(resize).observe(root);else window.addEventListener('resize',resize);resize();
+  if(window.IntersectionObserver)new IntersectionObserver(e=>{visible=e[0].isIntersecting;if(visible)schedule()},{threshold:.01}).observe(root);
+  function update(){progress=Math.max(0,Math.min(4,scroller.scrollTop/Math.max(1,scroller.clientHeight)));const n=Math.round(progress);counter.textContent=String(n+1).padStart(2,'0')+' / 05';nav.forEach((b,i)=>b.setAttribute('aria-current',i===n?'step':'false'));fig.textContent=captions[n][0];figdesc.textContent=captions[n][1];root.dataset.act=String(n);schedule();}
+  function go(n){scroller.scrollTo({top:n*scroller.clientHeight,behavior:reduce?'auto':'smooth'});}
+  nav.forEach(b=>b.addEventListener('click',()=>go(+b.dataset.chapter)));
+  root.querySelectorAll('[data-next]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.next)));
+  scroller.addEventListener('scroll',update,{passive:true});update();
+  root.addEventListener('pointermove',e=>{if(!moving)return;const r=root.getBoundingClientRect();mx=((e.clientX-r.left)/r.width-.5)*2;my=((e.clientY-r.top)/r.height-.5)*2;schedule()},{passive:true});
+  root.addEventListener('pointerleave',()=>{mx=0;my=0;schedule()});
+  function sync(){motion.textContent=moving?'Motion on':'Motion off';motion.setAttribute('aria-pressed',String(moving));}
+  motion.addEventListener('click',()=>{moving=!moving;if(!moving){mx=0;my=0}sync();schedule()});sync();
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)schedule()});
+  const decision=root.querySelector('#uf10-decision');
+  root.querySelector('#uf10-review').addEventListener('click',()=>{decision.textContent='Human review requested';});
+  root.querySelector('#uf10-stop').addEventListener('click',()=>{decision.textContent='Blocked · STOP';});
+  function surface(mode,p,i){let x=p.x,y=p.y,z=p.z,phi=Math.atan2(z,x),t=i/N;
+    if(mode===0)return[x,y,z];
+    if(mode===1){const a=phi*1.75+y*2.6;const r=.7+.19*Math.sin(a*1.6);return [.85*Math.cos(a)*r+.32*x,y*.92,.82*Math.sin(a)*r+.23*z];}
+    if(mode===2){const shell=.33+(i%3)*.28;return [x*shell*1.25,y*shell*1.18,z*shell*1.17];}
+    if(mode===3){const a=(t-.5)*2;return [a*1.18,.52*Math.sin(a*7)+y*.18,.40*Math.cos(a*5)+z*.21];}
+    const a=.87+.12*Math.sin(phi*4+y*3);return [x*a,y*.91,z*a];
+  }
+  function schedule(){if(!pending&&root.isConnected){pending=true;requestAnimationFrame(draw)}}
+  function draw(){pending=false;if(!root.isConnected||document.hidden||!visible||w<20)return;
+    smooth+=(progress-smooth)*(moving?.083:.16);ex+=(mx-ex)*.08;ey+=(my-ey)*.08;
+    const mob=w<680,CX=w*(mob?.54:.789),CY=h*(mob?.295:.49),R=Math.min(w*(mob?.515:.34),h*(mob?.355:.42));ctx.clearRect(0,0,w,h);
+    const g=ctx.createRadialGradient(CX,CY,R*.02,CX,CY,R*1.3);g.addColorStop(0,'rgba(60,193,155,.16)');g.addColorStop(.55,'rgba(34,105,127,.073)');g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(CX,CY,R*1.3,0,T);ctx.fill();
+    // A few curved orbits, never a distracting grid of geometry.
+    ctx.save();ctx.translate(CX,CY);ctx.rotate(-.21+ex*.03);ctx.lineWidth=.7;for(let i=0;i<3;i++){ctx.strokeStyle='rgba(127,208,187,'+(.09-i*.022)+')';ctx.beginPath();ctx.ellipse(0,0,R*(.94+i*.17),R*(.29+i*.06),0,0,T);ctx.stroke()}ctx.restore();
+    const mode=Math.min(4,Math.floor(smooth)),frac=smooth-mode,morph=frac*frac*(3-2*frac),yaw=.08+ex*.095,pitch=-.045+ey*.05,cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+    const limit=mob?430:N;
+    for(let j=0;j<limit;j++){
+      const i=mob?Math.floor(j*N/limit):j,p=cloud[i],A=surface(mode,p,i),B=surface(Math.min(4,mode+1),p,i);
+      const x=A[0]+(B[0]-A[0])*morph,y=A[1]+(B[1]-A[1])*morph,z=A[2]+(B[2]-A[2])*morph;
+      const xx=x*cy-z*sy,zz=x*sy+z*cy,yy=y*cp-zz*sp,depth=y*sp+zz*cp;
+      const perspective=2.9/(2.9+.3*depth),sx=CX+xx*R*perspective,syy=CY+yy*R*perspective;
+      if(sx<-3||sx>w+3||syy<-3||syy>h+3)continue;
+      const alpha=Math.max(.13,Math.min(.92,p.alpha*(.73+.24*depth))),rad=p.size*(depth>.1?1.15:.85);
+      ctx.fillStyle=(p.hue===0?'rgba(148,176,255,':p.hue===5?'rgba(218,241,236,':'rgba(155,236,196,')+alpha+')';ctx.beginPath();ctx.arc(sx,syy,rad,0,T);ctx.fill();
+    }
+    if(Math.abs(progress-smooth)>.0015||Math.abs(mx-ex)>.0015||Math.abs(my-ey)>.0015)schedule();
+  }
+  schedule();
+})();
+</script>
+</body>
+</html>
