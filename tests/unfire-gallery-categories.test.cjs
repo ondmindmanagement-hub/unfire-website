@@ -79,6 +79,20 @@ const viewports = [
           await image.evaluate(el => el.decode());
           assert.equal(await image.evaluate(el => el.naturalWidth > 0 && el.naturalHeight > 0), true, 'Failed product image');
         }
+        // Translation stress test: preserve protected names and test longer Spanish labels.
+        const hardware = await page.evaluate(() => {
+          const root=document.querySelector('#hardware');
+          root.querySelector('h2').textContent='Software que puedes sostener.';
+          for(const tag of root.querySelectorAll('.uf-hw-top .tag')) tag.textContent='CONCEPTO DE DISEÑO · EXPLORAR DETALLES +';
+          for(const li of root.querySelectorAll('.uf-spec li:last-child>span:last-child')) li.textContent='Representación CAD, todavía no existe un prototipo físico';
+          const within=e=>{const r=e.getBoundingClientRect();return r.left>=-2&&r.right<=innerWidth+2&&e.scrollWidth<=e.clientWidth+2;};
+          const cards=[...root.querySelectorAll('.uf-hw-item')];
+          return {count:cards.length,allWithin:[...root.querySelectorAll('.uf-hw-item,.uf-hw-top,.uf-spec li,h3,.uf-hw-head')].every(within),overflow:document.documentElement.scrollWidth>innerWidth+2,columns:getComputedStyle(root.querySelector('.uf-hw-grid')).gridTemplateColumns.split(' ').length};
+        });
+        assert.equal(hardware.count,3,'Preserve all hardware concepts');
+        assert.equal(hardware.allWithin,true,'Translated hardware overflow at '+viewport.width);
+        assert.equal(hardware.overflow,false,'Translated homepage document overflow at '+viewport.width);
+        assert.equal(hardware.columns,viewport.width<=1020?1:3,'Hardware responsive columns');
         console.log('PASS gallery viewport ' + viewport.width + 'x' + viewport.height + ': 4 categories, 9 cards, no overflow, real images');
       } finally { await page.close(); }
     }
