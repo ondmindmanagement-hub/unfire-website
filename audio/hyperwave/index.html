@@ -23,6 +23,11 @@ body.open .brand, body.open .keys { opacity: 0; }
 .keys { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); font: 10px/1.6 'Share Tech Mono', ui-monospace, monospace; color: var(--soft); text-align: right; pointer-events: none; opacity: .8; }
 #load { position: fixed; inset: 0; display: grid; place-items: center; font-size: 11px; letter-spacing: .3em; color: var(--soft); transition: opacity .5s; pointer-events: none; }
 body.ready #load { opacity: 0; }
+#load{align-content:center;gap:16px}
+#load:before{content:"";width:30px;height:30px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:hw-spin .9s linear infinite}
+body.ready #load:before{animation:none}
+@keyframes hw-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#load:before{animation:none}}
 @media (max-width: 640px) { .keys { display: none; } }
 #restore { position: fixed; left: 50%; bottom: max(56px, calc(env(safe-area-inset-bottom) + 40px)); transform: translateX(-50%); z-index: 6; font: 11px/1 'Michroma', sans-serif; letter-spacing: .16em; text-transform: uppercase;
   color: #fff; background: linear-gradient(#3a8dff, #0b4fd6); border: 1px solid rgba(255,255,255,.35); border-radius: 999px; padding: 12px 20px; cursor: pointer; box-shadow: 0 6px 20px rgba(10,60,180,.35), inset 0 1px 0 rgba(255,255,255,.5); }
@@ -38,6 +43,14 @@ body.ready #load { opacity: 0; }
 <div id="load">LOADING…</div>
 <button id="restore" hidden>Show HYPERWAVE</button>
 <button id="connect-midi" type="button" hidden>Connect MIDI</button>
+<button id="hw-audio-enable" type="button" hidden>Enable sound</button>
+<style>
+#hw-audio-enable{position:fixed;z-index:8;left:50%;top:max(14px,env(safe-area-inset-top));transform:translateX(-50%);min-height:44px;max-width:calc(100% - 24px);padding:10px 18px;border:1px solid #bca16c;border-radius:999px;background:#111821;color:#f6e4b7;font:600 12px system-ui,sans-serif;box-shadow:0 3px 18px #0005;cursor:pointer;touch-action:manipulation}
+#hw-audio-enable:focus-visible{outline:2px solid #f6e4b7;outline-offset:3px}
+.plugin #hw-audio-enable{display:none!important}
+.atelier-mode #hw-audio-enable{top:max(64px,calc(env(safe-area-inset-top) + 56px))}
+@media(min-width:640px){.atelier-mode #hw-audio-enable{top:16px;left:auto;right:12px;transform:none}}
+</style>
 <style>#connect-midi{position:fixed;z-index:7;right:max(12px,env(safe-area-inset-right));top:max(12px,env(safe-area-inset-top));max-width:calc(100% - 24px);min-height:44px;padding:10px 14px;background:#16273c;color:#edf4ff;border:1px solid #73839a;border-radius:999px;font:12px/1.4 system-ui;cursor:pointer;white-space:normal}#connect-midi:focus-visible{outline:2px solid #86cfff;outline-offset:3px}@media(max-width:640px){#connect-midi{top:max(64px,calc(env(safe-area-inset-top) + 54px));font-size:11px;min-height:44px;}.brand{max-width:calc(100% - 32px);}}</style>
 
 <script src="../vendor/three/three.min.js"></script>
@@ -176,7 +189,7 @@ const UA = (() => {
   const listeners = [];
 
   function init() {
-    if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return ctx; }
+    if (ctx) return ctx;
     const AC = window.AudioContext || window.webkitAudioContext;
     ctx = new AC({ latencyHint: 'interactive' });
     bus.master = ctx.createGain(); bus.master.gain.value = 0.85;
@@ -191,6 +204,14 @@ const UA = (() => {
     bus.src.connect(bus.srcAn);
     listeners.forEach((f) => f(ctx));
     return ctx;
+  }
+  // Resume from a real user gesture; Safari can also report "interrupted".
+  function resume() {
+    const c = init();
+    if (c.state === 'running') return Promise.resolve(true);
+    if (c.state === 'closed') return Promise.resolve(false);
+    try { return c.resume().then(() => c.state === 'running', () => false); }
+    catch (e) { return Promise.resolve(false); }
   }
   const onInit = (f) => { listeners.push(f); if (ctx) f(ctx); };
 
@@ -364,7 +385,7 @@ const UA = (() => {
   const smooth = (param, v, tc = 0.03) => { param.setTargetAtTime(v, ctx.currentTime, tc); };
 
   return {
-    init, onInit, get ctx() { return ctx; }, bus, Sampler, hit, loadKit, sub, Clock, Source, SOURCES, curve, db, smooth, buffer,
+    init, resume, onInit, get ctx() { return ctx; }, bus, Sampler, hit, loadKit, sub, Clock, Source, SOURCES, curve, db, smooth, buffer,
   };
 })();
 
@@ -2250,6 +2271,7 @@ const HYPERWAVE = (() => {
   const ATELIER = new URLSearchParams(location.search).get('atelier')==='1';
   const MOBILE = !PLUGIN && (matchMedia('(pointer: coarse)').matches || (navigator.deviceMemory||8)<=4);
   if (PLUGIN) document.documentElement.classList.add('plugin');
+  if (ATELIER) document.documentElement.classList.add('atelier-mode');
   const _t0 = performance.now(), LOG = (m) => window.__dbg && console.log(m, Math.round(performance.now() - _t0));
   await Y2K.fonts(); LOG('fonts');
   const box = $('stage'), cv = $('gl');
@@ -2284,6 +2306,41 @@ const HYPERWAVE = (() => {
     });
     return syn;
   }
+  const soundButton = $('hw-audio-enable');
+  let observedAudio = null;
+  function soundState() {
+    if (PLUGIN) return;
+    soundButton.hidden = !!UA.ctx && UA.ctx.state === 'running';
+  }
+  function unlockAudio() {
+    if (PLUGIN) { ensureSyn(); return Promise.resolve(true); }
+    try {
+      // Set the session to media playback only after an intentional sound interaction.
+      if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback';
+    } catch (e) {}
+    try {
+      UA.init();
+      const result = UA.resume();
+      ensureSyn();
+      if (observedAudio !== UA.ctx) {
+        observedAudio = UA.ctx;
+        observedAudio.addEventListener('statechange', soundState);
+      }
+      soundState();
+      return result.then((ok) => { soundState(); return ok; });
+    } catch (e) { soundState(); return Promise.resolve(false); }
+  }
+  if (!PLUGIN) {
+    // Touch pointerdown does not unlock Web Audio reliably in iOS WebKit.
+    soundButton.hidden = false;
+    soundButton.addEventListener('click', unlockAudio);
+    const recover = (e) => { if (e.isTrusted && (syn || pendingOpen.has(e.pointerId)) && (!UA.ctx || UA.ctx.state !== 'running')) unlockAudio(); };
+    box.addEventListener('pointerup', recover, true);
+    box.addEventListener('touchend', recover, {capture:true, passive:true});
+    box.addEventListener('click', recover, true);
+    window.addEventListener('pageshow', soundState);
+    document.addEventListener('visibilitychange', soundState);
+  }
   const midiButton=$('connect-midi');
   if(!PLUGIN&&!ATELIER&&navigator.requestMIDIAccess){
     midiButton.hidden=false;
@@ -2307,7 +2364,7 @@ const HYPERWAVE = (() => {
   // ---------- transformación ----------
   const SPEED = 0.85;
   function go(t) { st.target = Math.max(0, Math.min(H.TMAX, t)); if (PLUGIN && syn) syn.open(st.target); if (st.target < 2.9 && syn) { syn.allOff(); if (st.demo) { st.demo = false; syn.setDemo(false); } } }
-  function toggleOpen() { ensureSyn(); if (st.target >= 2.9 || st.T >= 2.9) go(0); else go(3); }
+  function toggleOpen() { unlockAudio(); if (st.target >= 2.9 || st.T >= 2.9) go(0); else go(3); }
 
   // ---------- quitar / poner el sinte ----------
   function hideSynth() {
@@ -2328,13 +2385,13 @@ const HYPERWAVE = (() => {
   }
   const playable = () => st.T >= 2.9;
   const always = (c) => ['power', 'close', 'exit', 'move'].includes(c.id);
-  const held = new Map();
-  function noteDown(m, vel, src) { ensureSyn(); syn.keyDown(m, vel); const k = keyByMidi[m]; if (k) k.pressed++; held.set(src + m, m); }
+  const held = new Map(), pendingOpen = new Set();
+  function noteDown(m, vel, src) { if (!syn || (!PLUGIN && UA.ctx.state !== 'running')) unlockAudio(); if (!syn) return; syn.keyDown(m, vel); const k = keyByMidi[m]; if (k) k.pressed++; held.set(src + m, m); }
   function noteUp(m, src) { const mm = held.get(src + m); if (mm == null) return; held.delete(src + m); syn.keyUp(mm); const k = keyByMidi[m]; if (k) k.pressed = Math.max(0, k.pressed - 1); }
   function setBend(v) { st.bend = v; syn && syn.setBend(v); }
   function setMod(v) { st.mod = v; syn && syn.setMod(v); }
   function press(c) {
-    ensureSyn(); c.down = 1; setTimeout(() => (c.down = 0), 140); fx.clack('claves');
+    unlockAudio(); if (!syn) return; c.down = 1; setTimeout(() => (c.down = 0), 140); fx.clack('claves');
     const id = c.id;
     if (id === 'exit') return hideSynth();
     if (id === 'move') return;
@@ -2362,12 +2419,13 @@ const HYPERWAVE = (() => {
     if (e.button !== 0 && e.pointerType === 'mouse') return;
     const h = pick(e); if (!h) return;
     const c = h.object.userData.ctl;
-    if (!c) { if (st.T < 0.05) { e.stopPropagation(); ensureSyn(); go(3); } return; }
+    const needsTouchUnlock = !PLUGIN && e.pointerType !== 'mouse' && (!UA.ctx || UA.ctx.state !== 'running');
+    if (!c) { if (st.T < 0.05) { e.stopPropagation(); if (needsTouchUnlock) { pendingOpen.add(e.pointerId); } else { unlockAudio(); go(3); } } return; }
     if (!always(c) && !playable()) return;
     e.stopPropagation(); e.preventDefault(); try { box.setPointerCapture(e.pointerId); } catch (er) {}
     const d = { c, x: e.clientX, y: e.clientY, sx: e.screenX, sy: e.screenY, v0: c.type === 'knob' ? st.params[c.id] : c.id === 'mod' ? st.mod : 0, midi: null };
     drags.set(e.pointerId, d);
-    if (c.type === 'button') press(c);
+    if (c.type === 'button') { if (needsTouchUnlock && (c.id === 'power' || c.id === 'close')) d.deferPress = true; else press(c); }
     else if (c.type === 'key') { d.midi = c.midi; noteDown(c.midi, 0.6 + Math.random() * 0.3, 'p' + e.pointerId); }
     else if (c.type === 'ribbon') { ensureSyn(); st.ribbon = ribbonAt(e); syn.setRibbon(st.ribbon); }
     else if (c.type === 'knob') ensureSyn();
@@ -2384,7 +2442,9 @@ const HYPERWAVE = (() => {
   }, true);
   const end = (e) => {
     pointers.delete(e.pointerId);
+    if (pendingOpen.delete(e.pointerId) && e.type === 'pointerup') { unlockAudio(); go(3); }
     const d = drags.get(e.pointerId); if (!d) return; drags.delete(e.pointerId);
+    if (d.deferPress && e.type === 'pointerup') press(d.c);
     if (d.c.type === 'key' && d.midi != null) noteUp(d.midi, 'p' + e.pointerId);
     if (d.c.id === 'pitch') { const v0 = st.bend, t0 = performance.now(); const back = () => { const u = Math.min(1, (performance.now() - t0) / 180); setBend(v0 * (1 - u)); if (u < 1) requestAnimationFrame(back); }; back(); }
     if (d.c.type === 'ribbon') { st.ribbon = null; syn.setRibbon(null); }
@@ -2472,7 +2532,7 @@ const HYPERWAVE = (() => {
   LOG('frames'); S.renderer.compile(S.scene, cam); LOG('compile'); window.__dbg ? (paused = true, frame()) : frame(); LOG('first');
   // prueba de impacto para el plugin (las zonas vacías dejan pasar el clic a Logic)
   window.__hwHit = (x, y) => drags.size > 0 || !!pick({ clientX: x, clientY: y });
-  window.__hw = { st, H, S, go, press, view, pause(v) { paused = v; }, renderAt(T, az, el, zoom, ty) { paused = true; st.T = st.target = prevT = T; if (az != null) { const r = cam.position.distanceTo(tgt); cam.position.set(tgt.x + Math.sin(az) * Math.cos(el) * r, tgt.y + Math.sin(el) * r, tgt.z + Math.cos(az) * Math.cos(el) * r); } scrT = 1; step(0.016, true); step(0.016, true); if (zoom) { if (ty != null) { tgt.y += ty; } const off = cam.position.clone().sub(tgt).multiplyScalar(zoom); cam.position.copy(tgt).add(off); cam.lookAt(tgt); S.renderer.render(S.scene, cam); } }, get syn() { return syn; }, ensureSyn, noteDown, noteUp, panBy, showSynth };
+  window.__hw = { st, H, S, go, press, view, pause(v) { paused = v; if (ATELIER && v && syn) { syn.allOff(); if (st.demo) { st.demo = false; syn.setDemo(false); } held.clear(); H.keys.forEach(k => { k.pressed = 0; }); } }, renderAt(T, az, el, zoom, ty) { paused = true; st.T = st.target = prevT = T; if (az != null) { const r = cam.position.distanceTo(tgt); cam.position.set(tgt.x + Math.sin(az) * Math.cos(el) * r, tgt.y + Math.sin(el) * r, tgt.z + Math.cos(az) * Math.cos(el) * r); } scrT = 1; step(0.016, true); step(0.016, true); if (zoom) { if (ty != null) { tgt.y += ty; } const off = cam.position.clone().sub(tgt).multiplyScalar(zoom); cam.position.copy(tgt).add(off); cam.lookAt(tgt); S.renderer.render(S.scene, cam); } }, get syn() { return syn; }, ensureSyn, unlockAudio, noteDown, noteUp, panBy, showSynth };
 })();
 
 </script>

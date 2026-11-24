@@ -555,3 +555,10 @@ html.uf-reveal-on main [data-uf-reveal],html.uf-reveal-on main [data-uf-reveal].
  #uf-atelier-dialog::backdrop{backdrop-filter:none;-webkit-backdrop-filter:none;}
  #uf-atelier-dialog[open]{animation:none;}
 }
+
+/* Hyperwave entry: immediate low-cost feedback, independent of WebGL. */
+.uf-atelier-wait{position:absolute;z-index:5;inset:68px 0 0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;background:#0b0b0c;color:#e9d3a0;text-align:center;padding:20px;font:600 13px system-ui,sans-serif}
+.uf-atelier-wait[hidden]{display:none!important}
+.uf-atelier-wait:before{content:"";width:30px;height:30px;border:2px solid #d2b67b55;border-top-color:#e6ce91;border-radius:50%;animation:uf-atelier-spin .85s linear infinite}
+@keyframes uf-atelier-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.uf-atelier-wait:before{animation:none}}
