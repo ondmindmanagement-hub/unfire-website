@@ -38,3 +38,21 @@ test('hardware modal separates persistent controls from scrollable detail region
  assert.match(css,/grid-template-areas:"top" "media" "info" "nav"/);
  assert.match(css,/grid-template-areas:"top top" "media info" "nav nav"/);
 });
+test('model can expand and restore without losing navigation',()=>{
+ assert.match(home,/class="uf-dlg-expand" aria-pressed="false"/);
+ assert.match(css,/\.is-expanded \.uf-dlg-inner\{[^}]*grid-template-areas:"top" "media" "nav"/);
+ assert.match(css,/\.uf-ind-hero \.uf-ind-bar b\{color:var\(--uf-ink\)/);
+});
+test('Hyperwave MIDI is opt-in and atelier has no MIDI access',()=>{
+ const wave=fs.readFileSync('audio/hyperwave/index.html','utf8');
+ const atelier=fs.readFileSync('hyperwave-hardware/index.html','utf8');
+ const init=wave.slice(wave.indexOf('function ensureSyn()'),wave.indexOf('const midiButton='));
+ assert.doesNotMatch(init,/requestMIDIAccess/);
+ assert.match(wave,/midiButton\.addEventListener\('click',async/);
+ assert.match(wave,/requestMIDIAccess\(\{sysex:false\}\)/);
+ assert.match(home,/midi 'none'/);
+ assert.match(atelier,/midi 'none'/);
+ assert.match(wave,/MOBILE \? 1\.1 : 1\.75/);
+ assert.match(wave,/function pauseFrame\(v\).*cancelAnimationFrame/);
+ assert.match(atelier,/!reduce && !doc\.classList\.contains\('embed'\)/);
+});

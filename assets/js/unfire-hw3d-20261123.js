@@ -5,7 +5,7 @@
   var media=dlg.querySelector('.uf-dlg-media'),V='/assets/vendor/three-r147/',M='/assets/hardware/2026-11/models/';
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var libs=null,st=null,cache={},want=null,running=false,raf=0;
-  var capable=webgl(),generation=0;
+  var capable=webgl(),generation=0,mobile=window.matchMedia&&window.matchMedia('(pointer: coarse)').matches;
   if(capable)dlg.classList.add('has3d');
 
   function load(src){return new Promise(function(ok,ko){var s=d.createElement('script');s.src=src;s.onload=ok;s.onerror=ko;d.head.appendChild(s);});}
@@ -16,12 +16,12 @@
     var T=THREE,wrap=d.createElement('div');wrap.className='uf-3d';
     var hint=d.createElement('div');hint.className='uf-3d-hint uf-mono';hint.textContent='Drag to rotate · Scroll or pinch to zoom';
     var r=new T.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
-    r.setPixelRatio(Math.min(window.devicePixelRatio||1,2));r.outputEncoding=T.sRGBEncoding;r.toneMapping=T.ACESFilmicToneMapping;r.toneMappingExposure=1.05;
+    r.setPixelRatio(Math.min(window.devicePixelRatio||1,mobile?1.25:2));r.outputEncoding=T.sRGBEncoding;r.toneMapping=T.ACESFilmicToneMapping;r.toneMappingExposure=1.05;
     r.shadowMap.enabled=true;r.shadowMap.type=T.PCFSoftShadowMap;r.setClearColor(0x000000,0);
     wrap.appendChild(r.domElement);wrap.appendChild(hint);media.appendChild(wrap);
     var sc=new T.Scene(),pm=new T.PMREMGenerator(r);sc.environment=pm.fromScene(new T.RoomEnvironment(),.04).texture;
     var cam=new T.PerspectiveCamera(30,1,.005,20);
-    var key=new T.DirectionalLight(0xffffff,1.6);key.position.set(-.35,.9,.45);key.castShadow=true;key.shadow.mapSize.set(2048,2048);key.shadow.radius=6;key.shadow.bias=-.0004;
+    var key=new T.DirectionalLight(0xffffff,1.6);key.position.set(-.35,.9,.45);key.castShadow=true;key.shadow.mapSize.set(mobile?1024:2048,mobile?1024:2048);key.shadow.radius=6;key.shadow.bias=-.0004;
     var s=key.shadow.camera;s.left=s.bottom=-.4;s.right=s.top=.4;s.near=.05;s.far=3;sc.add(key);sc.add(new T.HemisphereLight(0xffffff,0xd8d4cc,.55));
     var floor=new T.Mesh(new T.PlaneGeometry(4,4),new T.ShadowMaterial({opacity:.16}));floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;sc.add(floor);
     var pivot=new T.Group();sc.add(pivot);
