@@ -33,7 +33,8 @@ const viewports = [
           const allCards = [...root.querySelectorAll('.uf-gallery-card:not([data-archer-mobile-pending])')];
           const tags = [...root.querySelectorAll('.uf-gallery-availability')].map(x => x.textContent.trim());
           const nav = root.querySelector('.uf-gallery-taxonomy');
-          const images = [...root.querySelectorAll('.uf-gallery-card img')];
+          const images = [...root.querySelectorAll('.uf-gallery-media img')];
+          const icons = [...root.querySelectorAll('.uf-gallery-app-name img')];
           const within = el => {
             const r = el.getBoundingClientRect();
             return r.width > 0 && r.right <= innerWidth + 2 && r.left >= -2;
@@ -44,6 +45,8 @@ const viewports = [
             cards: allCards.length,
             tags,
             images: images.length,
+            icons: icons.length,
+            badIcons: icons.filter(i=>i.alt!==''||!i.getAttribute('src').startsWith('/assets/products/')).length,
             emptyAlt: images.filter(i=>!i.alt.trim()).length,
             categoryHeadersWithin: groups.every(g=>within(g.querySelector('.uf-gallery-category-head'))),
             cardsWithin: allCards.every(within),
@@ -56,9 +59,11 @@ const viewports = [
         assert.equal(summary.cards, 9);
         assert.equal(summary.images, 9); // Two authentic ARCHER Mobile device images; KeyBridge stays text-only
         assert.equal(summary.emptyAlt, 0);
-        assert.equal(await page.locator('#apps .uf-gallery-card--control img').count(), 1, 'Control must use its original app icon');
+        assert.equal(summary.icons, 9);
+        assert.equal(summary.badIcons, 0);
+        assert.equal(await page.locator('#apps .uf-gallery-card--control .uf-gallery-media img').count(), 1, 'Control must use its original app icon');
         assert.equal(await page.locator('#apps .uf-gallery-card--control a[href="/apps/unfire-control/"]').count(), 1, 'Control must offer product details');
-        assert.equal(await page.locator('#apps .uf-gallery-card img[src*="keybridge"]').count(), 0, 'Never restore the unpublished private device capture');
+        assert.equal(await page.locator('#apps .uf-gallery-media img[src*="keybridge"]').count(), 0, 'Never restore the unpublished private device capture');
         assert.equal(summary.bodyOverflow, false, 'Horizontal overflow at ' + viewport.width);
         assert.equal(summary.cardsWithin, true, 'Cards spill out at ' + viewport.width + ': ' + JSON.stringify({outside:summary.outside,layout:summary.layout}));
         assert.equal(summary.categoryHeadersWithin, true, 'Category headings spill out at ' + viewport.width);
