@@ -1,0 +1,46 @@
+name: Y2K Robots rights declaration QA
+
+on:
+  pull_request:
+    paths:
+      - 'audio/game-terms.html'
+      - 'audio/game-license.html'
+      - 'audio/maletin/fonts/LICENSES/**'
+      - 'audio/maletin/fonts/*.ttf'
+      - '.github/y2k-game-rights-release.json'
+      - 'scripts/y2k-game-rights-preflight.cjs'
+      - 'tests/y2k-game-rights-preflight.test.cjs'
+      - 'tests/y2k-game-font-license.test.cjs'
+      - '.github/workflows/y2k-game-rights-gate.yml'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'audit checks schema; release requires independently approved evidence'
+        required: true
+        type: choice
+        default: audit
+        options:
+          - audit
+          - release
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-declaration:
+    name: Validate legal gate metadata (not legal clearance)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check scripts/y2k-game-rights-preflight.cjs
+      - run: node --test tests/y2k-game-rights-preflight.test.cjs tests/y2k-game-font-license.test.cjs
+      - run: node scripts/y2k-game-rights-preflight.cjs --audit
+      - name: Fail closed when release approval is explicitly requested
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'release' }}
+        run: node scripts/y2k-game-rights-preflight.cjs --release
