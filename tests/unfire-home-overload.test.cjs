@@ -56,3 +56,13 @@ test('Hyperwave MIDI is opt-in and atelier has no MIDI access',()=>{
  assert.match(wave,/function pauseFrame\(v\).*cancelAnimationFrame/);
  assert.match(atelier,/!reduce && !doc\.classList\.contains\('embed'\)/);
 });
+test('hardware performance budget and mobile expansion guard',()=>{
+ assert.match(ember,/any-pointer: coarse/);
+ assert.match(ember,/on=!!on&&!compact.matches&&!dlg.classList.contains\('uf-low-gpu'\)/);
+ assert.match(css,/\.uf-dlg-expand\[hidden\]/);
+ assert.match(hw,/maxPixels=low\?280000:1400000/);
+ assert.match(hw,/Math.sqrt\(maxPixels\/\(w\*h\)\)/);
+ assert.match(hw,/if\(!low&&window.__ufHwMat\)/);
+ assert.match(hw,/webglcontextlost/);
+ assert.match(hw,/fallback\(true\)/);
+});

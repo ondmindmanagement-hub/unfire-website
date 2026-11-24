@@ -516,3 +516,8 @@ html body .uf-ind-hero h1.uf-hero-title{font-size:clamp(48px,5.5vw,84px)!importa
 #uf-atelier-dialog .uf-adlg-bar{flex:none;gap:8px;}
 #uf-atelier-dialog .uf-adlg-bar .uf-dlg-close{min-height:44px;flex:none;}
 #uf-atelier-dialog iframe{min-height:0;}
+
+/* Performance-first hardware: no full-screen GPU workload on touch/compact devices. */
+#uf-hw-dialog .uf-dlg-expand[hidden],#uf-hw-dialog.uf-low-gpu .uf-dlg-expand{display:none!important}
+#uf-hw-dialog.has3d:not(.is3d) .uf-dlg-media video{display:block;opacity:1;}
+@media (any-pointer:coarse),(max-width:860px){#uf-hw-dialog .uf-dlg-expand{display:none!important}#uf-hw-dialog .uf-3d{transition:none}#uf-hw-dialog::backdrop{backdrop-filter:none;-webkit-backdrop-filter:none}#uf-hw-dialog[open],#uf-hw-dialog.swap .uf-dlg-info>*{animation:none}}

@@ -35,8 +35,12 @@
   var dlg=d.getElementById('uf-hw-dialog'),items=[].slice.call(d.querySelectorAll('.uf-hw-item[data-hw]'));
   if(!dlg||!items.length||typeof dlg.showModal!=='function')return;
   var mv=dlg.querySelector('video'),cur=0,lastFocus=null,expand=dlg.querySelector('.uf-dlg-expand');
-  function expanded(on){dlg.classList.toggle('is-expanded',on);if(expand){expand.setAttribute('aria-pressed',String(on));expand.setAttribute('aria-label',on?'Restore details view':'Expand model view');expand.querySelector('span').textContent=on?'Restore':'Expand';}}
+  var compact=window.matchMedia('(any-pointer: coarse), (max-width: 860px)');
+  function expanded(on){on=!!on&&!compact.matches&&!dlg.classList.contains('uf-low-gpu');dlg.classList.toggle('is-expanded',on);if(expand){expand.setAttribute('aria-pressed',String(on));expand.setAttribute('aria-label',on?'Restore details view':'Expand model view');expand.querySelector('span').textContent=on?'Restore':'Expand';}}
+  function updateExpand(){if(compact.matches||dlg.classList.contains('uf-low-gpu'))expanded(false);if(expand)expand.hidden=compact.matches||dlg.classList.contains('uf-low-gpu');}
   if(expand)expand.addEventListener('click',function(){expanded(!dlg.classList.contains('is-expanded'));});
+  if(compact.addEventListener)compact.addEventListener('change',updateExpand);else if(compact.addListener)compact.addListener(updateExpand);
+  d.addEventListener('uf-hw-low-gpu',updateExpand);updateExpand();
   function fill(i){
     cur=(i+items.length)%items.length;var it=items[cur],src=it.querySelector('video source'),img=it.querySelector('img');
     dlg.querySelector('.uf-dlg-num').textContent=String(cur+1).padStart(2,'0')+' / '+String(items.length).padStart(2,'0');
@@ -46,8 +50,8 @@
     dlg.querySelector('.uf-dlg-info').scrollTop=0;
     mv.poster=img?img.currentSrc||img.src:'';mv.setAttribute('aria-label',img?img.alt:'');
     mv.dataset.src=src?src.getAttribute('src'):'';
-    if(dlg.classList.contains('has3d')){mv.pause();mv.removeAttribute('src');mv.removeAttribute('poster');}
-    else if(src){mv.src=mv.dataset.src;mv.load();if(!reduce){var p=mv.play();if(p&&p.catch)p.catch(function(){});}}
+    if(dlg.classList.contains('has3d')){mv.pause();mv.removeAttribute('src');}
+    else if(src&&!dlg.classList.contains('uf-low-gpu')&&!compact.matches){mv.src=mv.dataset.src;mv.load();if(!reduce){var p=mv.play();if(p&&p.catch)p.catch(function(){});}}
     dlg.classList.remove('swap');void dlg.offsetWidth;dlg.classList.add('swap');
     d.dispatchEvent(new CustomEvent('uf-hw-open',{detail:{key:it.dataset.hw}}));
   }
