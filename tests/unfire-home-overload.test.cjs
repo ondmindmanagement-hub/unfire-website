@@ -32,3 +32,9 @@ test('graphics idle and async close guards',()=>{
  assert.match(ember,/pauseClosed\(\)/);
  assert.match(home,/for\(const record of records\)/);
 });
+test('hardware modal separates persistent controls from scrollable detail region',()=>{
+ const dialog=home.slice(home.indexOf('<dialog id="uf-hw-dialog"'),home.indexOf('<dialog id="uf-atelier-dialog"'));
+ assert.match(dialog,/<div class="uf-dlg-top[\s\S]*?<div class="uf-dlg-media[\s\S]*?<div class="uf-dlg-info[\s\S]*?<\/div>\s*<div class="uf-dlg-nav">/);
+ assert.match(css,/grid-template-areas:"top" "media" "info" "nav"/);
+ assert.match(css,/grid-template-areas:"top top" "media info" "nav nav"/);
+});

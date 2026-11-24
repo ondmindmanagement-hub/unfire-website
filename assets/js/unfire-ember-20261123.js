@@ -41,6 +41,7 @@
     dlg.querySelector('h2').textContent=it.querySelector('h3').textContent;
     dlg.querySelector('.uf-dlg-desc').textContent=it.querySelector('p').textContent;
     dlg.querySelector('.uf-dlg-spec').innerHTML=it.querySelector('.uf-spec').innerHTML;
+    dlg.querySelector('.uf-dlg-info').scrollTop=0;
     mv.poster=img?img.currentSrc||img.src:'';mv.setAttribute('aria-label',img?img.alt:'');
     mv.dataset.src=src?src.getAttribute('src'):'';
     if(dlg.classList.contains('has3d')){mv.pause();mv.removeAttribute('src');mv.removeAttribute('poster');}
