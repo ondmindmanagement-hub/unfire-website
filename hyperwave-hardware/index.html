@@ -485,7 +485,7 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
       <button class="cta cta-gold" type="button" id="studio-load">Enter the live atelier</button>
       <p>Loads the real-time digital instrument (about 1.2 MB). Drag to turn it; use the form buttons to open and close it. Sound plays only if you touch its controls.</p>
      </div>
-     <iframe id="studio-frame" title="Interactive Hyperwave 2000 digital instrument" loading="lazy" allow="autoplay; midi" referrerpolicy="same-origin"></iframe>
+     <iframe id="studio-frame" title="Interactive Hyperwave 2000 digital instrument" loading="lazy" allow="autoplay; midi 'none'" referrerpolicy="same-origin"></iframe>
      <div class="studio-bar">
       <div class="forms" role="group" aria-label="Instrument form">
        <button type="button" data-form="0" aria-pressed="true">Closed</button>
@@ -667,7 +667,7 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
     }
     bar.style.width = (p * 100).toFixed(2) + '%';
   }
-  if (!reduce) {
+  if (!reduce && !doc.classList.contains('embed')) {
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) { if (es[0].isIntersecting) loadFrames(); }, { rootMargin: '120% 0px' }).observe(theatre);
     } else loadFrames();
@@ -818,7 +818,7 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
     return out;
   }
   var PAD = { 0: 1.12, 3: 1.08, 4: 1.08 }; // breathing room around the instrument per form
-  var studio = document.getElementById('studio'), frameEl = document.getElementById('studio-frame');
+  var studio = document.getElementById('studio'), frameEl = document.getElementById('studio-frame'), pendingForm=0;
   function loadStudio() {
     if (frameEl.getAttribute('src')) return;
     statusEl.textContent = 'Loading the digital instrument…';
@@ -835,17 +835,19 @@ html.embed #atelier h2{font-size:clamp(30px,3.4vw,46px)!important;margin-bottom:
           hw = frameWin.__hw; mats = collect(hw.H.root);
           try { var oc = hw.S.controls; oc.enablePan = false; oc.screenSpacePanning = false; oc.minDistance = Math.max(oc.minDistance || 0, 4.2); oc.maxDistance = 32; oc.update(); hw.view.pad = PAD[0]; hw.view.auto = true; } catch (e) {}
           ['canopy', 'body', 'metal', 'pods'].forEach(apply);
+          if(pendingForm){hw.view.pad=PAD[pendingForm]||PAD[0];hw.go(pendingForm);}
           studio.classList.add('live'); statusEl.textContent = 'Live · drag to turn · pinch or scroll to zoom';
         } catch (e) { statusEl.textContent = 'The live atelier could not be opened here.'; }
       })();
     }, { once: true });
-    frameEl.src = '../audio/hyperwave/?atelier=1';
+    frameEl.src = '../audio/hyperwave/?atelier=1&v=20261124perf';
   }
   document.getElementById('studio-load').addEventListener('click', loadStudio);
-  if (doc.classList.contains('embed')) setTimeout(loadStudio, 60);
+  if (doc.classList.contains('embed')) requestAnimationFrame(function(){setTimeout(loadStudio,100);});
   document.querySelectorAll('[data-form]').forEach(function (b) {
     b.addEventListener('click', function () {
       document.querySelectorAll('[data-form]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      pendingForm=parseFloat(b.getAttribute('data-form'));
       if (!hw) { loadStudio(); return; }
       try { var f = parseFloat(b.getAttribute('data-form')); hw.view.pad = PAD[f] || PAD[0]; hw.go(f); } catch (e) {}
     });
