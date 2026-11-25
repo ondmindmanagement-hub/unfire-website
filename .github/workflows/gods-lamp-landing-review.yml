@@ -1,0 +1,49 @@
+name: God's Lamp review-only landing validation
+on:
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'apps/gods-lamp/**'
+      - 'tests/gods-lamp-landing.test.cjs'
+      - 'tests/gods-lamp-landing-browser.cjs'
+      - '.github/workflows/gods-lamp-landing-review.yml'
+permissions:
+  contents: read
+jobs:
+  static-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audio identity, platform, privacy, noindex and CSS guards
+        run: node --test tests/gods-lamp-landing.test.cjs
+
+  browser-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser test engines
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Responsive, accessibility and privacy smoke
+        run: |
+          python3 -m http.server 8891 --bind 127.0.0.1 > /tmp/unfire-godslamp.log 2>&1 &
+          echo $! >/tmp/unfire-godslamp.pid
+          trap 'kill $(cat /tmp/unfire-godslamp.pid) || true' EXIT
+          node tests/gods-lamp-landing-browser.cjs
+      - name: Keep browser screenshots for presentation review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gods-lamp-website-preview
+          path: artifacts/gods-lamp/*.png
+          retention-days: 7
+          if-no-files-found: ignore
