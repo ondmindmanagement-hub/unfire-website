@@ -61,7 +61,7 @@ function verifyFilter(s,topic,device){
 test('catalogue cards remain categorized with real device labels',()=>{
   const s=simulate();
   assert.ok(s.cards.length>=11,'browser products must not displace existing apps');
-  assert.equal(s.families.length,4);
+  assert.equal(s.families.length,5);
   verifyFilter(s,'all','all');
   assert.ok(s.cards.every(x=>x.dataset.devices&&x.dataset.topics));
   assert.ok(s.cards.every(x=>!x.hidden),'all cards start visible');
@@ -166,4 +166,16 @@ test('App Ready is one discoverable functional browser experiment without Apple 
  assert.match(html,/Does not inspect binaries, submit to Apple or certify approval/);
  const state=simulate();state.select('device','web');verifyFilter(state,'all','web');
  assert.ok(state.cards.filter(x=>!x.hidden).length>=8);
+});
+
+
+test('Energy category contains verified electricity products and explicitly synthetic research',()=>{
+ const s=simulate(); s.select('topic','energy'); verifyFilter(s,'energy','all');
+ assert.equal(s.cards.filter(x=>!x.hidden).length,3);
+ s.select('device','web'); verifyFilter(s,'energy','web');
+ assert.equal(s.cards.filter(x=>!x.hidden).length,2);
+ assert.match(html,/Research demo · Synthetic data/);
+ assert.match(html,/not announcements of released apps/);
+ for(const url of ['/apps/power/','/apps/power-web/','/ai4climate-power/']) assert.equal(html.split('href="'+url+'"').length,2);
+ assert.ok(!html.includes('href="/essentials/'));
 });
