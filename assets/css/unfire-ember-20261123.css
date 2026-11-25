@@ -323,7 +323,7 @@ html body #work-with-us .uf-lines-note{margin:32px 0 0;font-size:12px;line-heigh
 .uf-dlg.is3d .uf-dlg-media video{opacity:0;transition:opacity .4s ease;}
 .uf-3d-hint{position:absolute;left:50%;top:22px;transform:translateX(-50%);color:var(--uf-ink2);background:rgba(225,223,219,.9);padding:7px 12px;border-radius:99px;white-space:nowrap;transition:opacity .6s ease;pointer-events:none;}
 .uf-3d.used .uf-3d-hint{opacity:0;}
-.uf-dlg.loading3d .uf-dlg-media::after{content:"Loading 3D model";position:absolute;left:50%;top:22px;transform:translateX(-50%);font-family:var(--uf-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--uf-mute);background:rgba(225,223,219,.9);padding:7px 12px;border-radius:99px;}
+
 .uf-dlg.is3d .uf-dlg-badge{z-index:2;}
 
 /* ---------- Recognition (v12) ---------- */
@@ -519,7 +519,7 @@ html body .uf-ind-hero h1.uf-hero-title{font-size:clamp(48px,5.5vw,84px)!importa
 
 /* Performance-first hardware: no full-screen GPU workload on touch/compact devices. */
 #uf-hw-dialog .uf-dlg-expand[hidden],#uf-hw-dialog.uf-low-gpu .uf-dlg-expand{display:none!important}
-#uf-hw-dialog.has3d:not(.is3d) .uf-dlg-media video{display:block;opacity:1;}
+
 @media (any-pointer:coarse),(max-width:860px){#uf-hw-dialog .uf-dlg-expand{display:none!important}#uf-hw-dialog .uf-3d{transition:none}#uf-hw-dialog::backdrop{backdrop-filter:none;-webkit-backdrop-filter:none}#uf-hw-dialog[open],#uf-hw-dialog.swap .uf-dlg-info>*{animation:none}}
 
 /* Showroom composition: align the complete visual block with the lower action rail. */
@@ -601,3 +601,13 @@ html.uf-reveal-on main [data-uf-reveal],html.uf-reveal-on main [data-uf-reveal].
 #apps .uf-gallery-card--archer-mobile .uf-gallery-media:hover .uf-archer-device--iphone,
 #apps .uf-gallery-card--archer-mobile .uf-gallery-media:hover .uf-archer-device--ipad,
 #apps .uf-gallery-card--archer-mobile .uf-archer-device{transform:none;transition:none;animation:none;}
+
+
+/* Direct 3D: the first visible frame is the actual rendered model.
+   No image/video proxy or old model while a new selection loads. */
+#uf-hw-dialog[open]{animation:none;}
+#uf-hw-dialog .uf-3d{visibility:hidden;opacity:0;transition:none;pointer-events:none;}
+#uf-hw-dialog.is3d .uf-3d{visibility:visible;opacity:1;pointer-events:auto;transition:none;}
+#uf-hw-dialog .uf-3d-status{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:24px;color:var(--uf-ink2);font:500 12px/1.6 var(--uf-mono);letter-spacing:.045em;}
+#uf-hw-dialog .uf-3d-status[hidden]{display:none;}
+#uf-hw-dialog.loading3d .uf-dlg-badge,#uf-hw-dialog.error3d .uf-dlg-badge{visibility:hidden;}

@@ -131,6 +131,21 @@ const viewports = [
       await page.evaluate(()=>{for(const id of ['hardware','reach','apps','reach'])document.getElementById(id).scrollIntoView({behavior:'instant'});});
       assert.equal(await page.locator('#reach .uf-tier-media img').evaluateAll(imgs=>imgs.every(i=>i.complete&&i.naturalWidth>0)),true);
       console.log('PASS rapid editorial pointer and scroll reversals');
+      // Hold the first library request to exercise the cold-open path, not a warm cache.
+      let release;const hold=new Promise(resolve=>{release=resolve;});
+      await page.route('**/assets/vendor/three-r147/three.min.js',async route=>{await hold;await route.abort();});
+      for(const key of ['synth','godslamp','control']){
+        await page.locator('[data-hw="'+key+'"]').click();
+        const dialog=page.locator('#uf-hw-dialog');
+        assert.equal(await dialog.evaluate(el=>el.open),true);
+        assert.equal(await dialog.locator('.uf-dlg-media img,.uf-dlg-media video').count(),0);
+        assert.equal(await dialog.locator('.uf-3d-status').isVisible(),true);
+        assert.equal(await dialog.locator('.uf-3d').count(),0);
+        await dialog.locator('.uf-dlg-close').click();
+      }
+      release();
+      console.log('PASS cold open: no photo/video fallback on any hardware detail');
+
     }finally{await page.close();}
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });
