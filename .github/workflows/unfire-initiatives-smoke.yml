@@ -1,0 +1,33 @@
+name: Unfire initiatives - static and synthetic example smoke test
+on:
+  pull_request:
+    paths:
+      - 'initiatives/**'
+      - 'challenge/**'
+      - 'developers/**'
+      - 'science/**'
+      - 'pilot-marketplace/**'
+      - '.github/tests/unfire-initiatives-smoke.test.cjs'
+      - '.github/workflows/unfire-initiatives-smoke.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'initiatives/**'
+      - 'challenge/**'
+      - 'developers/**'
+      - 'science/**'
+      - 'pilot-marketplace/**'
+      - '.github/tests/unfire-initiatives-smoke.test.cjs'
+      - '.github/workflows/unfire-initiatives-smoke.yml'
+permissions:
+  contents: read
+jobs:
+  static-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify public initiative markup and links
+        run: node --test .github/tests/unfire-initiatives-smoke.test.cjs
+      - name: Verify synthetic developer reference
+        run: node --test developers/examples/approval-gate.test.mjs
