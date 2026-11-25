@@ -531,7 +531,7 @@ html body .uf-ind-hero h1.uf-hero-title{font-size:clamp(48px,5.5vw,84px)!importa
 @media(max-width:1020px){.uf-ind-hero .uf-ind-figure{justify-self:center;}}
 /* A fixed safe stage, never crop a full turntable frame or let the border cover it. */
 #hardware .uf-hw-media{aspect-ratio:16/11;isolation:isolate;background:var(--uf-paper);}
-#hardware .uf-hw-media img,#hardware .uf-hw-media video{box-sizing:border-box;padding:4%;object-fit:contain;object-position:50% 50%;}
+#hardware .uf-hw-media video{box-sizing:border-box;padding:4%;object-fit:contain;object-position:50% 50%;}
 
 
 /* Lightweight editorial bridge; no images, video, JS or remote fonts. */
@@ -577,7 +577,7 @@ html.uf-reveal-on main [data-uf-reveal],html.uf-reveal-on main [data-uf-reveal].
 #hardware .uf-hw-item[data-hw] .uf-hw-media{border:0;border-radius:0;box-shadow:none;background:var(--uf-paper);transition:none;}
 #hardware .uf-hw-item[data-hw]:hover .uf-hw-media,#hardware .uf-hw-item[data-hw]:focus-visible .uf-hw-media{box-shadow:none;}
 #hardware .uf-hw-item[data-hw]:focus-visible{outline:1px solid var(--uf-ink);outline-offset:5px;}
-#hardware .uf-hw-media img,#hardware .uf-hw-media video{
+#hardware .uf-hw-media video{
   inset:0;margin:auto;width:92%;height:auto;max-height:100%;aspect-ratio:16/10;padding:0;object-fit:contain;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent),linear-gradient(to bottom,transparent,#000 12%,#000 88%,transparent);
   -webkit-mask-composite:source-in;
@@ -588,10 +588,10 @@ html.uf-reveal-on main [data-uf-reveal],html.uf-reveal-on main [data-uf-reveal].
 #hardware .uf-hw-item+.uf-hw-item::before{width:1px;background:var(--uf-rule);}
 
 /* Keep the stage and the media edges stationary. The MP4 contains the full turntable motion. */
-#hardware .uf-hw-media img,#hardware .uf-hw-media video{transform:none;animation:none;transition:none;}
+#hardware .uf-hw-media video{transform:none;animation:none;transition:none;}
 #hardware .uf-hw-media video{opacity:0;}
 #hardware .uf-hw-media video.on{opacity:1;}
-#hardware .uf-hw-media:has(>video.on)>img{visibility:hidden;}
+#hardware .uf-hw-media video.on,#hardware .uf-hw-media video.uf-frame{opacity:1;}
 
 
 /* Static editorial media: rapid pointer/scroll changes must never enqueue transforms.
