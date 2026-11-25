@@ -1,0 +1,23 @@
+name: Unfire Challenges — proposal safety
+on:
+  pull_request:
+    paths:
+      - 'docs/challenges-program/**'
+      - '.github/workflows/challenges-catalog-gate.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/challenges-program/**'
+      - '.github/workflows/challenges-catalog-gate.yml'
+permissions:
+  contents: read
+jobs:
+  concept-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail closed on unsafe draft catalog
+        run: node docs/challenges-program/concepts-gate.mjs
+      - name: Regression tests — prelaunch only
+        run: node --test docs/challenges-program/concepts-gate.test.mjs
