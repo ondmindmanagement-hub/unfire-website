@@ -532,10 +532,7 @@ html body .uf-ind-hero h1.uf-hero-title{font-size:clamp(48px,5.5vw,84px)!importa
 /* A fixed safe stage, never crop a full turntable frame or let the border cover it. */
 #hardware .uf-hw-media{aspect-ratio:16/11;isolation:isolate;background:var(--uf-paper);}
 #hardware .uf-hw-media img,#hardware .uf-hw-media video{box-sizing:border-box;padding:4%;object-fit:contain;object-position:50% 50%;}
-@media(min-width:1021px) and (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
- #hardware [data-hw="godslamp"] .uf-hw-media video.on{animation:ufLampArrival 4s cubic-bezier(.23,.7,.27,1) both;}
- @keyframes ufLampArrival{0%{transform:perspective(800px) rotateZ(-12deg) rotateY(18deg) scale(.84)}45%{transform:perspective(800px) rotateZ(5deg) rotateY(-7deg) scale(.93)}100%{transform:none}}
-}
+
 
 /* Lightweight editorial bridge; no images, video, JS or remote fonts. */
 .uf-ind-hero .uf-hero-caption{display:grid;grid-template-columns:minmax(0,1fr);justify-content:stretch;align-items:stretch;gap:18px;padding-top:13px;width:100%;box-sizing:border-box;}
@@ -589,3 +586,9 @@ html.uf-reveal-on main [data-uf-reveal],html.uf-reveal-on main [data-uf-reveal].
   mask-repeat:no-repeat;
 }
 #hardware .uf-hw-item+.uf-hw-item::before{width:1px;background:var(--uf-rule);}
+
+/* Keep the stage and the media edges stationary. The MP4 contains the full turntable motion. */
+#hardware .uf-hw-media img,#hardware .uf-hw-media video{transform:none;animation:none;transition:none;}
+#hardware .uf-hw-media video{opacity:0;}
+#hardware .uf-hw-media video.on{opacity:1;}
+#hardware .uf-hw-media:has(>video.on)>img{visibility:hidden;}

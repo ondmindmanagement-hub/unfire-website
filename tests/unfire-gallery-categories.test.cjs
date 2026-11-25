@@ -100,6 +100,23 @@ const viewports = [
         assert.equal(seamless.length,3);
         for(const card of seamless){assert.equal(card.radius,'0px');assert.equal(card.shadow,'none');assert.equal(card.media.length,2);for(const m of card.media){assert.match(m.mask,/linear-gradient/);assert.equal(m.fit,'contain');}}
 
+        // The poster and turntable must never appear together, or change stage geometry.
+        const layerChecks=await page.evaluate(()=>[...document.querySelectorAll('#hardware .uf-hw-media')].map(stage=>{
+          const image=stage.querySelector('img'),video=stage.querySelector('video');
+          const initial=video.classList.contains('on');
+          const state=()=>{const v=getComputedStyle(video),i=getComputedStyle(image),m=getComputedStyle(stage),r=video.getBoundingClientRect();return {poster:i.visibility,opacity:v.opacity,transform:v.transform,animation:v.animationName,shadow:m.boxShadow,rect:[r.x,r.y,r.width,r.height]};};
+          video.classList.remove('on');const still=state();
+          video.classList.add('on');const playing=state();
+          video.classList.toggle('on',initial);
+          return {still,playing};
+        }));
+        for(const {still,playing} of layerChecks){
+          assert.equal(still.poster,'visible');assert.equal(still.opacity,'0');
+          assert.equal(playing.poster,'hidden');assert.equal(playing.opacity,'1');
+          assert.equal(playing.transform,'none');assert.equal(playing.animation,'none');
+          assert.equal(playing.shadow,'none');assert.deepEqual(still.rect,playing.rect);
+        }
+
         console.log('PASS gallery viewport ' + viewport.width + 'x' + viewport.height + ': 4 categories, 9 cards, no overflow, real images');
       } finally { await page.close(); }
     }
