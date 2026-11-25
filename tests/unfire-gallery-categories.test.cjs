@@ -120,5 +120,25 @@ const viewports = [
         console.log('PASS gallery viewport ' + viewport.width + 'x' + viewport.height + ': 4 categories, 9 cards, no overflow, real images');
       } finally { await page.close(); }
     }
+    // Real pointer churn without reduced-motion, including rapid scroll reversals.
+    const page = await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'no-preference'});
+    try {
+      await page.goto(base,{waitUntil:'domcontentloaded'});
+      const images=page.locator('#reach .uf-tier-media img');
+      assert.equal(await images.count(),4);
+      for(const image of await images.all()){
+        await image.evaluate(el=>el.decode());
+        await image.scrollIntoViewIfNeeded();
+        const before=await image.boundingBox();
+        for(let j=0;j<6;j++){await page.mouse.move(before.x+before.width/2,before.y+before.height/2);await page.mouse.move(1,1);}
+        await image.hover();
+        const state=await image.evaluate(el=>({transform:getComputedStyle(el).transform,transition:getComputedStyle(el).transitionDuration,decoded:el.naturalWidth>0}));
+        assert.equal(state.transform,'none');assert.equal(state.transition,'0s');assert.equal(state.decoded,true);
+        assert.deepEqual(await image.boundingBox(),before);
+      }
+      await page.evaluate(()=>{for(const id of ['hardware','reach','apps','reach'])document.getElementById(id).scrollIntoView({behavior:'instant'});});
+      assert.equal(await page.locator('#reach .uf-tier-media img').evaluateAll(imgs=>imgs.every(i=>i.complete&&i.naturalWidth>0)),true);
+      console.log('PASS rapid editorial pointer and scroll reversals');
+    }finally{await page.close();}
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });
