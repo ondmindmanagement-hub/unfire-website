@@ -45,8 +45,10 @@ test('hero visual aligns low on desktop, hardware stages contain complete frames
  assert.match(css,/\.uf-ind-hero \.uf-ind-grid\{align-items:end/);
  assert.match(css,/object-fit:contain;object-position:50% 50%/);
  assert.doesNotMatch(css,/ufLampArrival/,'Never rotate the whole video rectangle');
- assert.match(css,/#hardware \.uf-hw-media img,#hardware \.uf-hw-media video\{transform:none;animation:none;transition:none;\}/);
- assert.match(css,/#hardware \.uf-hw-media:has\(>video\.on\)>img\{visibility:hidden;\}/);
+ assert.match(css,/#hardware \.uf-hw-media video\{transform:none;animation:none;transition:none;\}/);
+ const cards=[...home.matchAll(/<div class="uf-hw-media">([\s\S]*?)<\/div>/g)];
+ assert.equal(cards.length,3);for(const [,card] of cards){assert.doesNotMatch(card,/<img\b|\sposter=/);assert.match(card,/<video data-uf-loop/);assert.match(card,/data-dialog-poster=/);}
+ assert.match(ember,/rootMargin:'700px 0px'/);
  assert.match(css,/#hardware \.uf-hw-media video\.on\{opacity:1;\}/);
 });
 test('graphics idle and async close guards',()=>{
@@ -113,5 +115,18 @@ test('editorial image hover is stationary and startup has a light fallback',()=>
  assert.match(css,/#reach::before\{content:none;\}/);
  assert.match(css,/#reach \.uf-tier-media img,#fields \.uf-f-media img\{transition:none;animation:none;transform:none;\}/);
  assert.match(home,/html,body\{background-color:#e1dfdb!important\}/);
- assert.match(home,/v=20261125staticmedia1/);
+ assert.match(home,/v=20261125videoonly1/);
+});
+
+test('hardware pre-roll starts before intersection and pauses beyond approach zone',async()=>{
+ const observers=[],events={};
+ const video=()=>({dataset:{},paused:true,closest:()=>({}),preload:'none',getAttribute(){return this.preload},setAttribute(k,v){this.preload=v},pause(){this.paused=true},play(){this.paused=false;return Promise.resolve()},classList:{add(){}}});
+ const videos=[video(),video(),video()];
+ const doc={hidden:false,querySelectorAll:s=>s.includes('video')?videos:[],getElementById:()=>null,documentElement:{classList:{add(){}}},addEventListener(n,f){events[n]=f}};
+ const IO=function(f,opts){this.observe=()=>{};observers.push({f,opts})};
+ vm.runInNewContext(ember,{document:doc,window:{navigator:{hardwareConcurrency:8},IntersectionObserver:IO,matchMedia:s=>({matches:s.includes('min-width')}),addEventListener(){}},IntersectionObserver:IO});
+ assert.equal(observers[2].opts.rootMargin,'700px 0px');
+ observers[2].f(videos.map(target=>({target,isIntersecting:true})));await Promise.resolve();
+ assert.equal(videos.filter(v=>!v.paused).length,3);assert.ok(videos.every(v=>v.preload==='auto'));
+ observers[2].f(videos.map(target=>({target,isIntersecting:false})));assert.ok(videos.every(v=>v.paused));
 });
