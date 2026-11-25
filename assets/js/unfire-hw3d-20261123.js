@@ -4,7 +4,7 @@
   var d=document,dlg=d.getElementById('uf-hw-dialog');if(!dlg)return;
   var media=dlg.querySelector('.uf-dlg-media'),V='/assets/vendor/three-r147/',M='/assets/hardware/2026-11/models/';
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var libs=null,st=null,cache={},want=null,running=false,raf=0;
+  var libs=null,st=null,cache={},want=null,running=false,raf=0,loadTimer=0;
   var capable=webgl(),generation=0,mobile=window.matchMedia&&window.matchMedia('(any-pointer: coarse), (max-width: 860px)').matches;
   var low=mobile||(navigator.deviceMemory||8)<=4,scale=1,slow=0,lastTick=0,lastRender=0;
   var maxPixels=low?280000:1400000;
@@ -12,7 +12,7 @@
   if(capable)dlg.classList.add('has3d');else limitExpand();if(low&&!mobile)limitExpand();
 
   function load(src){return new Promise(function(ok,ko){var s=d.createElement('script');s.src=src;s.onload=ok;s.onerror=ko;d.head.appendChild(s);});}
-  function ensureLibs(){if(!libs){libs=load(V+'three.min.js').then(function(){return Promise.all([load(V+'OrbitControls.js'),load(V+'RoomEnvironment.js'),load(V+'GLTFLoader.js')]);});}return libs;}
+  function ensureLibs(){if(!libs){libs=load(V+'three.min.js').then(function(){return Promise.all([load(V+'OrbitControls.js'),load(V+'RoomEnvironment.js'),load(V+'GLTFLoader.js')]);}).catch(function(e){libs=null;throw e;});}return libs;}
   function webgl(){try{var c=d.createElement('canvas');var gl=window.WebGLRenderingContext&&(c.getContext('webgl2')||c.getContext('webgl'));if(gl){var ext=gl.getExtension('WEBGL_lose_context');if(ext)ext.loseContext();}return !!gl;}catch(e){return false;}}
 
   function setup(){
@@ -52,13 +52,18 @@
     st.ctl.target.set(0,sz.y*.42,0);st.cam.position.set(0,sz.y*.42+fit*.5,fit*.87);st.ctl.minDistance=fit*.38;st.ctl.maxDistance=fit*1.8;
     st.ctl.enableDamping=false;st.ctl.update();st.ctl.enableDamping=true;st.ctl.saveState();
   }
+  function status(message){var el=dlg.querySelector('.uf-3d-status');el.textContent=message;el.hidden=!message;}
   function show(key,token){stop();var loader=new st.T.GLTFLoader();
-    var go=function(g){if(want!==key||generation!==token)return;st.pivot.clear();var o=g.scene.clone(true);o.traverse(function(m){if(m.isMesh){m.castShadow=!low;m.receiveShadow=!low;if(!low&&window.__ufHwMat)window.__ufHwMat(m,st.T);}});
-      st.pivot.add(o);st.reset();frame(o);size();st.r.shadowMap.needsUpdate=true;start();requestAnimationFrame(function(){if(want===key&&generation===token)dlg.classList.add('is3d');});};
-    dlg.classList.remove('is3d');
+    var go=function(g){if(want!==key||generation!==token||!dlg.open)return;
+      try{st.pivot.clear();var o=g.scene.clone(true);o.traverse(function(m){if(m.isMesh){m.castShadow=!low;m.receiveShadow=!low;if(!low&&window.__ufHwMat)window.__ufHwMat(m,st.T);}});
+      st.pivot.add(o);st.reset();size();frame(o);st.r.shadowMap.needsUpdate=true;
+      // Render synchronously while hidden, then reveal only the actual model.
+      stop();st.r.render(st.sc,st.cam);
+      if(want!==key||generation!==token||!dlg.open)return;
+      clearTimeout(loadTimer);dlg.classList.remove('loading3d','error3d');dlg.classList.add('is3d');status('');start();
+      }catch(e){if(generation===token)fallback(false);}};
     if(cache[key])return go(cache[key]);
-    dlg.classList.add('loading3d');
-    loader.load(M+key+'.glb?v=2',function(g){cache[key]=g;if(generation!==token)return;dlg.classList.remove('loading3d');go(g);},undefined,function(){if(generation!==token)return;dlg.classList.remove('loading3d','is3d');fallback(low);});
+    loader.load(M+key+'.glb?v=2',function(g){cache[key]=g;if(generation===token)go(g);},undefined,function(){if(generation===token)fallback(false);});
   }
   /* micro-surface: object-space value noise perturbs roughness and normal (no UVs needed); colours untouched */
   var NZ='float ufH(vec3 p){return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453);}\nfloat ufN(vec3 p){vec3 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(mix(ufH(i),ufH(i+vec3(1,0,0)),f.x),mix(ufH(i+vec3(0,1,0)),ufH(i+vec3(1,1,0)),f.x),f.y),mix(mix(ufH(i+vec3(0,0,1)),ufH(i+vec3(1,0,1)),f.x),mix(ufH(i+vec3(0,1,1)),ufH(i+vec3(1,1,1)),f.x),f.y),f.z);}\nfloat ufF(vec3 p){return ufN(p)*.55+ufN(p*2.13)*.3+ufN(p*4.7)*.15;}\n';
@@ -77,10 +82,10 @@
     mt.customProgramCacheKey=function(){return 'uf'+sc+amp+bmp+(brushed?1:0);};mt.needsUpdate=true;
   }
   window.__ufHwMat=function(m){try{micro(m);}catch(e){}};
-  function fallback(still){stop();if(still){capable=false;limitExpand();}dlg.classList.remove('has3d','is3d','loading3d');var v=dlg.querySelector('video');if(v){v.pause();if(still||low||reduce){v.removeAttribute('src');v.load();}else if(v.dataset.src){v.src=v.dataset.src;v.load();var p=v.play();if(p&&p.catch)p.catch(function(){});}}var badge=dlg.querySelector('.uf-dlg-badge');if(badge)badge.textContent=still||low||reduce?'Concept · product image':'Concept · turntable preview';}
+  function fallback(still){stop();clearTimeout(loadTimer);++generation;want=null;if(still){capable=false;limitExpand();}dlg.classList.remove('is3d','loading3d');dlg.classList.add('error3d');status(still?'Interactive 3D is unavailable on this device. Device details remain available.':'The 3D model could not load. Close and reopen to retry.');}
   var quiet=0;
   function loop(now){
-    if(!running||!want||d.hidden||!capable){stop();return;}
+    if(!running||!want||d.hidden||!capable||!dlg.classList.contains('is3d')){stop();return;}
     var elapsed=lastTick?now-lastTick:0;lastTick=now;
     if(elapsed>55&&elapsed<1000)slow++;else if(elapsed&&elapsed<40)slow=Math.max(0,slow-1);
     if(slow>=8){slow=0;if(scale>.66){scale*=.72;limitExpand();size();}else{fallback(true);return;}}
@@ -96,15 +101,18 @@
     if(quiet>=3){stop();return;}
     raf=requestAnimationFrame(loop);
   }
-  function start(){if(running||!st||!want||d.hidden||!capable)return;quiet=0;lastTick=0;lastRender=0;running=true;raf=requestAnimationFrame(loop);}
+  function start(){if(running||!st||!want||d.hidden||!capable||!dlg.classList.contains('is3d'))return;quiet=0;lastTick=0;lastRender=0;running=true;raf=requestAnimationFrame(loop);}
   function stop(){running=false;cancelAnimationFrame(raf);raf=0;}
   d.addEventListener('visibilitychange',function(){if(d.hidden)stop();else if(dlg.open)start();});
   window.addEventListener('pagehide',stop);
   window.addEventListener('pageshow',function(){if(dlg.open)start();});
   d.addEventListener('uf-hw-open',function(e){
-    if(!capable){fallback(true);return;}var badge=dlg.querySelector('.uf-dlg-badge');if(badge)badge.textContent='Concept · interactive 3D model';var key=e.detail&&e.detail.key;if(!key)return;
+    stop();clearTimeout(loadTimer);dlg.classList.remove('is3d','error3d');dlg.classList.add('loading3d');status('Preparing 3D model…');
+    if(!capable){fallback(true);return;}var key=e.detail&&e.detail.key;if(!key)return;
     want=key;var token=++generation;
-    ensureLibs().then(function(){if(generation!==token||want!==key)return;if(!st)setup();show(key,token);}).catch(function(){if(generation!==token)return;libs=null;dlg.classList.remove('is3d','loading3d');fallback(low);});
+    loadTimer=setTimeout(function(){if(generation===token)fallback(false);},15000);
+    ensureLibs().then(function(){if(generation!==token||want!==key||!dlg.open)return;if(!st)setup();show(key,token);}).catch(function(){if(generation!==token)return;libs=null;fallback(false);});
   });
-  d.addEventListener('uf-hw-close',function(){stop();want=null;++generation;dlg.classList.remove('is3d','loading3d');});
+  d.addEventListener('uf-hw-close',function(){stop();clearTimeout(loadTimer);want=null;++generation;dlg.classList.remove('is3d','loading3d','error3d');status('');});
+
 })();

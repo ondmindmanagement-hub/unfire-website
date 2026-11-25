@@ -47,7 +47,7 @@ test('hero visual aligns low on desktop, hardware stages contain complete frames
  assert.doesNotMatch(css,/ufLampArrival/,'Never rotate the whole video rectangle');
  assert.match(css,/#hardware \.uf-hw-media video\{transform:none;animation:none;transition:none;\}/);
  const cards=[...home.matchAll(/<div class="uf-hw-media">([\s\S]*?)<\/div>/g)];
- assert.equal(cards.length,3);for(const [,card] of cards){assert.doesNotMatch(card,/<img\b|\sposter=/);assert.match(card,/<video data-uf-loop/);assert.match(card,/data-dialog-poster=/);}
+ assert.equal(cards.length,3);for(const [,card] of cards){assert.doesNotMatch(card,/<img\b|\sposter=/);assert.match(card,/<video data-uf-loop/);assert.doesNotMatch(card,/data-dialog-poster=/);}
  assert.match(ember,/rootMargin:'700px 0px'/);
  assert.match(css,/#hardware \.uf-hw-media video\.on\{opacity:1;\}/);
 });
@@ -115,7 +115,7 @@ test('editorial image hover is stationary and startup has a light fallback',()=>
  assert.match(css,/#reach::before\{content:none;\}/);
  assert.match(css,/#reach \.uf-tier-media img,#fields \.uf-f-media img\{transition:none;animation:none;transform:none;\}/);
  assert.match(home,/html,body\{background-color:#e1dfdb!important\}/);
- assert.match(home,/v=20261125videoonly1/);
+ assert.match(home,/v=20261125direct3d1/);
 });
 
 test('hardware pre-roll starts before intersection and pauses beyond approach zone',async()=>{
@@ -129,4 +129,16 @@ test('hardware pre-roll starts before intersection and pauses beyond approach zo
  observers[2].f(videos.map(target=>({target,isIntersecting:true})));await Promise.resolve();
  assert.equal(videos.filter(v=>!v.paused).length,3);assert.ok(videos.every(v=>v.preload==='auto'));
  observers[2].f(videos.map(target=>({target,isIntersecting:false})));assert.ok(videos.every(v=>v.paused));
+});
+
+test('hardware detail is 3D only from cold open through model selection',()=>{
+ const dialog=home.slice(home.indexOf('<dialog id="uf-hw-dialog"'),home.indexOf('<dialog id="uf-atelier-dialog"'));
+ assert.doesNotMatch(dialog,/<img\b|<video\b|\sposter=/);
+ assert.match(dialog,/class="uf-3d-status" role="status"/);
+ assert.doesNotMatch(ember,/mv\.poster|mv\.play/);
+ assert.match(hw,/st\.r\.render\(st\.sc,st\.cam\);[\s\S]*?dlg\.classList\.add\('is3d'\)/);
+ assert.match(hw,/generation!==token\|\|!dlg.open/);
+ assert.match(hw,/15000/);
+ assert.match(css,/#uf-hw-dialog \.uf-3d\{visibility:hidden;opacity:0;transition:none/);
+ assert.match(css,/#uf-hw-dialog.is3d \.uf-3d\{visibility:visible;opacity:1/);
 });
