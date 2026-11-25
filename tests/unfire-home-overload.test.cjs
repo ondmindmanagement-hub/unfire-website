@@ -84,7 +84,9 @@ test('lightweight hero bridge is present and content never waits on scroll revea
  assert.doesNotMatch(ember,/classList\.add\('uf-reveal-on'\)/);
  assert.match(css,/main \[data-uf-reveal\].*opacity:1;transform:none;transition:none/);
  const below=home.slice(home.indexOf('<section id="reach"'),home.indexOf('</main>'));
- for(const tag of below.match(/<img\b[^>]*>/g)||[]){assert.match(tag,/loading="lazy"/);assert.match(tag,/decoding="async"/);}
+ let early=0;
+ for(const tag of below.match(/<img\b[^>]*>/g)||[]){if(/src="\/assets\/reach\/2026-11\/(civic|factory|office|small)-960/.test(tag)){assert.match(tag,/loading="eager" fetchpriority="low"/);early++;}else assert.match(tag,/loading="lazy"/);assert.match(tag,/decoding="async"/);}
+ assert.equal(early,4,'Only the four small editorial images load early');
 });
 test('Hyperwave mobile first-entry is bounded and MIDI is opt-in only',()=>{
  const atelier=fs.readFileSync('hyperwave-hardware/index.html','utf8'), h=fs.readFileSync('audio/hyperwave/index.html','utf8');
@@ -103,4 +105,13 @@ test('atelier fits portrait camera by projected bounds, never a fixed distance c
  assert.match(h,/function atelierFitDistance/);assert.match(h,/projectedX \/ \(halfV \* Math.max\(0.15, cam.aspect\)/);
  assert.match(h,/OC.maxDistance = atelierDistance \* 2.05/);assert.match(h,/distance > off.length\(\) \? distance/);
  assert.doesNotMatch(a,/oc.maxDistance = 32/);assert.match(a,/id="studio-fit"/);assert.match(a,/hw.go\(f\); hw.fitView\(\)/);
+});
+
+test('editorial image hover is stationary and startup has a light fallback',()=>{
+ assert.match(css,/#reach \.uf-tier:hover \.uf-tier-media img\{transform:none;\}/);
+ assert.match(css,/#fields \.uf-f-item:hover \.uf-f-media img\{transform:none;\}/);
+ assert.match(css,/#reach::before\{content:none;\}/);
+ assert.match(css,/#reach \.uf-tier-media img,#fields \.uf-f-media img\{transition:none;animation:none;transform:none;\}/);
+ assert.match(home,/html,body\{background-color:#e1dfdb!important\}/);
+ assert.match(home,/v=20261125staticmedia1/);
 });

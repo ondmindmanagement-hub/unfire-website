@@ -182,7 +182,7 @@ html body #fields .uf-f-head p{font-size:19px;line-height:1.55;color:var(--uf-in
 #fields .uf-f-top .tag{color:var(--uf-mute);}
 #fields .uf-f-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:#e1dfdb;border-radius:4px;}
 #fields .uf-f-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1);}
-#fields .uf-f-item:hover .uf-f-media img{transform:scale(1.035);}
+#fields .uf-f-item:hover .uf-f-media img{transform:none;}
 html body #fields .uf-f-item h3{font-size:28px;letter-spacing:-.03em;margin:22px 0 8px;font-weight:680;color:var(--uf-ink)!important;}
 #fields .uf-f-item.big h3{font-size:34px;}
 html body #fields .uf-f-item p{font-size:16px;line-height:1.55;color:var(--uf-ink2)!important;margin:0 0 18px;max-width:560px;}
@@ -272,8 +272,8 @@ html body #reach .uf-reach-head p{font-size:19px;line-height:1.55;color:var(--uf
 #reach .uf-tier.wide{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:48px;align-items:center;}
 #reach .uf-tier.wide .uf-tier-media{order:2;aspect-ratio:16/8;}
 #reach .uf-tier-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:#e1dfdb;border-radius:6px;}
-#reach .uf-tier-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.2,.7,.2,1);}
-#reach .uf-tier:hover .uf-tier-media img{transform:scale(1.03);}
+#reach .uf-tier-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:none;}
+#reach .uf-tier:hover .uf-tier-media img{transform:none;}
 #reach .uf-tier-cap{position:absolute;left:16px;bottom:14px;color:var(--uf-mute);background:rgba(225,223,219,.88);padding:5px 9px;border-radius:5px;font-size:10px;}
 #reach .uf-tier-body{padding-top:22px;border-top:1px solid var(--uf-ink);margin-top:18px;}
 #reach .uf-tier.xl .uf-tier-body,#reach .uf-tier.wide .uf-tier-body{margin-top:0;}
@@ -392,9 +392,9 @@ html body #commissions p{font-size:17px;line-height:1.58;color:#bfb8ad!important
 
 /* ---------- Reach · gallery contrast (v15) ---------- */
 html body section#reach{background:linear-gradient(180deg,#d3d1cc 0%,#c9c7c2 100%)!important;position:relative;}
-html body section#reach::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 3px);mix-blend-mode:overlay;}
+html body section#reach::before{content:none;}
 #reach .wrap{position:relative;}
-#reach .uf-tier-media{background:#202023;border-radius:10px;box-shadow:0 30px 70px -40px rgba(10,10,12,.55),0 0 0 1px rgba(20,20,20,.08);}
+#reach .uf-tier-media{background:#d1cfca;border-radius:10px;box-shadow:0 12px 24px -18px rgba(10,10,12,.24),0 0 0 1px rgba(20,20,20,.08);}
 #reach .uf-tier-cap{background:rgba(20,20,22,.72);color:#bdb7ae;}
 #reach .uf-tier-body{border-top-color:#141414;}
 #reach .uf-tier-bring{border-color:rgba(20,20,20,.16);}
@@ -592,3 +592,12 @@ html.uf-reveal-on main [data-uf-reveal],html.uf-reveal-on main [data-uf-reveal].
 #hardware .uf-hw-media video{opacity:0;}
 #hardware .uf-hw-media video.on{opacity:1;}
 #hardware .uf-hw-media:has(>video.on)>img{visibility:hidden;}
+
+
+/* Static editorial media: rapid pointer/scroll changes must never enqueue transforms.
+   Preserve image proportions, link focus, stable dimensions and the hardware video budget. */
+#reach .uf-tier-media img,#fields .uf-f-media img{transition:none;animation:none;transform:none;}
+#apps .uf-gallery-media img,#apps .uf-gallery-media:hover img,
+#apps .uf-gallery-card--archer-mobile .uf-gallery-media:hover .uf-archer-device--iphone,
+#apps .uf-gallery-card--archer-mobile .uf-gallery-media:hover .uf-archer-device--ipad,
+#apps .uf-gallery-card--archer-mobile .uf-archer-device{transform:none;transition:none;animation:none;}
