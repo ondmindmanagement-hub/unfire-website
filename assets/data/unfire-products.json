@@ -605,6 +605,9 @@
         "/portable-synth/",
         "/portable-synth/beta/"
       ],
+      "routes": [
+        "/portable-synth/beta/"
+      ],
       "note": "The separate iOS build was rejected in App Store Connect (2026-11-22); do not imply an iOS edition.",
       "evidence_checked_at": "2026-11-22",
       "icon": "/assets/products/icons/portable-synth.svg"
