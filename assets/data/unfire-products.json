@@ -572,6 +572,9 @@
       "kind": "app",
       "listed": true,
       "url": "/portable-synth/",
+      "routes": [
+        "/portable-synth/beta/"
+      ],
       "summary": "A free Android music studio: four synth engines, six-track recording, effects and WAV export. Works offline.",
       "editions": [
         {
@@ -588,8 +591,13 @@
           "platforms": [
             "android"
           ],
-          "status": "closed-test",
-          "url": "/portable-synth/beta/"
+          "status": "available",
+          "store": {
+            "name": "Google Play",
+            "url": "https://play.google.com/store/apps/details?id=technology.unfire.synth",
+            "listing_name": "Portable Synth: Beat Maker DAW",
+            "verified_on": "2026-11-26"
+          }
         }
       ],
       "claims_on_target": [
