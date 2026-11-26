@@ -52,7 +52,7 @@ def _(r): prod(r, "archer")["editions"][0]["store"]["verified_on"] = (TODAY + dt
 def _(r): prod(r, "bolt")["editions"][0]["store"]["url"] = "https://example.com/bolt"
 
 @case("claim missing from target page", "not found on")
-def _(r): prod(r, "pilot")["claims_on_target"] = ["€99"]
+def _(r): prod(r, "pilot")["claims_on_target"] = ["€99.13"]
 
 @case("retired capture reused", "[CAPTURES]")
 def _(r): prod(r, "archer")["visual"]["src"] = "/assets/products/archer-mac.webp"
