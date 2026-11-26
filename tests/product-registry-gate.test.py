@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """Negative tests: each registry defect must be caught by scripts/check-product-registry.py."""
-import copy, json, os, pathlib, subprocess, sys, tempfile
+import copy, datetime as dt, json, os, pathlib, subprocess, sys, tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 GATE = ROOT / "scripts/check-product-registry.py"
 BASE = json.loads((ROOT / "assets/data/unfire-products.json").read_text())
+TODAY = dt.date.today()
 
 
 def run(reg):
     with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
         json.dump(reg, f)
-    r = subprocess.run([sys.executable, str(GATE), "--today", "2026-11-22"], capture_output=True, text=True,
+    r = subprocess.run([sys.executable, str(GATE), "--today", TODAY.isoformat()], capture_output=True, text=True,
                        env={**os.environ, "UNFIRE_REGISTRY": f.name})
     os.unlink(f.name)
     return r.returncode, r.stdout
@@ -42,7 +43,10 @@ def _(r): prod(r, "power")["url"] = "/apps/power-does-not-exist/"
 def _(r): prod(r, "unfire-control")["editions"][0]["status"] = "available"
 
 @case("stale store verification", "days old")
-def _(r): prod(r, "archer")["editions"][0]["store"]["verified_on"] = "2026-01-01"
+def _(r): prod(r, "archer")["editions"][0]["store"]["verified_on"] = (TODAY - dt.timedelta(days=121)).isoformat()
+
+@case("future store verification", "verified_on is in the future")
+def _(r): prod(r, "archer")["editions"][0]["store"]["verified_on"] = (TODAY + dt.timedelta(days=1)).isoformat()
 
 @case("non-store host as store", "approved store host")
 def _(r): prod(r, "bolt")["editions"][0]["store"]["url"] = "https://example.com/bolt"
