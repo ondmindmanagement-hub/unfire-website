@@ -572,6 +572,9 @@
       "kind": "app",
       "listed": true,
       "url": "/portable-synth/",
+      "routes": [
+        "/portable-synth/beta/"
+      ],
       "summary": "A free Android music studio: four synth engines, six-track recording, effects and WAV export. Works offline.",
       "editions": [
         {
