@@ -206,7 +206,7 @@ def page_audio(reg):
 <p class="ue-kicker"><a href="/apps/">Products</a> / Audio</p>
 <h1>{e(fam["tagline"])}</h1>
 <p class="ue-lede">{e(fam["summary"])} Native apps for Mac and Android, plus instruments that run directly in your browser.</p>
-<div class="ue-actions"><a class="ue-btn ue-btn--primary" href="/archer/">Explore ARCHER</a><a class="ue-btn" href="/audio/">Enter the 3D world</a></div>
+<div class="ue-actions"><a class="ue-btn ue-btn--primary" href="/archer/">Explore ARCHER</a><a class="ue-btn" href="/audio/">Enter the 3D world</a><a class="ue-btn" href="/unfire-audio/sounds/">Free sound library</a></div>
 {media}
 </div></section>
 <div class="ue-wrap">{spectrum(reg["families"], "/unfire-audio/")}</div>
@@ -216,7 +216,7 @@ def page_audio(reg):
 <p>The original 3D experience — robots, flight, music and HYPERWAVE — still lives at its own address. It loads a full 3D scene, so a desktop browser gives the best result.</p></div>
 <div class="ue-actions"><a class="ue-btn ue-btn--primary" href="/audio/">Open the 3D experience</a><a class="ue-btn" href="/games/">Unfire Games</a></div>
 </div></section>
-</main>
+<section class="ue-section" aria-labelledby="h-free-sounds"><div class="ue-wrap ue-callout"><div><h2 id="h-free-sounds">Free samples, loops and recorded vocals</h2><p>Explore the Unfire Audio Free Sound Library by genre, scene and era. Download CC0 WAV packs, recorded human voices and original rhythms without signup.</p></div><div class="ue-actions"><a class="ue-btn ue-btn--primary" href="/unfire-audio/sounds/">Explore free sounds</a></div></div></section></main>
 """
     archer = next((p for p in prods if p["id"] == "archer"), None)
     names = []
