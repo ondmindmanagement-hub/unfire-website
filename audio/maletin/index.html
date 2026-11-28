@@ -1,4 +1,28 @@
 <!doctype html><html lang="en"><head>
+<script id="ufDirectWebPhoneGuard">(function(){
+  // Direct browser links must not bypass the phone safety screen on the parent site.
+  // Native Apple app bundles are deliberately exempt: same HTML is used by WKWebView.
+  try {
+    var ua=String(navigator.userAgent||'');
+    var nativeSession=false;
+    try { nativeSession=sessionStorage.getItem('unfire_app')==='1'; } catch(storageError) {}
+    var nativeApp=!/^https?:$/i.test(location.protocol) ||
+      /Y2KRobotsApp/i.test(ua) ||
+      /(?:[?&])app=1(?:&|$)/.test(location.search) ||
+      nativeSession;
+    if(nativeApp)return;
+    var android=/Android/i.test(ua);
+    var isPhone=!!(navigator.userAgentData&&navigator.userAgentData.mobile===true)||
+      /iPhone|iPod|Windows Phone/i.test(ua)||
+      (android&&/Mobile/i.test(ua))||
+      (android&&matchMedia('(max-width: 540px) and (pointer: coarse)').matches);
+    if(!isPhone)return;
+    window.__ufDirectBrowserPhone=true;
+    // Stop the original HTML fetch so the speculative parser cannot keep prefetching assets.
+    if(typeof window.stop==='function')window.stop();
+    location.replace(new URL('../#hero',location.href).href);
+  } catch(e) { /* A navigation failure must not corrupt native application startup. */ }
+})();</script>
 <!-- Adaptive loading: low-power mobile/tablet at startup, all devices only for detected stalls. -->
 <script src="app-mode.js?v=20261027app2"></script>
 <script id="ufAdaptiveBoot">(function(){
@@ -14,7 +38,12 @@
 })();</script>
 <link rel="stylesheet" href="/assets/css/unfire-adaptive-loading.css?v=20261024combinedqa1">
 <script defer src="/assets/js/unfire-adaptive-loading.js?v=20261029en2"></script>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="preload" href="game-engine-v50.js?v=20261105onlineen5" as="script"></head><body>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><script id="ufConditionalEnginePreload">(function(){
+  if(window.__ufDirectBrowserPhone)return;
+  var p=document.createElement('link');
+  p.rel='preload';p.as='script';p.href='game-engine-v50.js?v=20261105onlineen5';
+  document.head.appendChild(p);
+})();</script></head><body>
 <div id="ufAdaptiveLoader" role="status" aria-live="polite" aria-hidden="true" data-active="false">
   <div class="uf-load-card">
     <span class="uf-load-emblem" aria-hidden="true"></span>
